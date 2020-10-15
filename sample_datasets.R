@@ -87,15 +87,15 @@ icmbio <- read_delim("Data_raw/icmbio/portalbio_export_28-09-2020-17-41-57.csv",
 icmbio_s <- sample_n(icmbio, 10000)
 
 # Save file
-data.table::fwrite(icmbio_s, "Input_files/icmbio_s.csv")
+data.table::fwrite(icmbio_s, "Input_files/icmbio.csv")
 
 
 
 
 # idigibio ----------------------------------------------------------------
-idigbio_brazil <- read_csv("Data_raw/idigbio/occurrence_c7525055-fd26-4c13-9859-dc298d57ff09.csv")
+idigbio_brazil <- read_csv("Data_raw/idigbio/c7525055-fd26-4c13-9859-dc298d57ff09_occurrence_raw.csv")
 
-idigbio_brasil <- read_csv("Data_raw/idigbio/occurrence_eee7a8c2-aa07-4a83-b15b-ee02d260e369.csv")
+idigbio_brasil <- read_csv("Data_raw/idigbio/eee7a8c2-aa07-4a83-b15b-ee02d260e369_occurrence_raw.csv")
 
 # Merge datasets
 idigbio <- rbind(idigbio_brazil, idigbio_brasil)
