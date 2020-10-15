@@ -1,9 +1,11 @@
 # Install and load the following packages ---------------------------------
 
 # Install package flora, vroom and CoordinateCleaner directly from github
-install_github("gustavobio/flora")
-devtools::install_github("r-lib/vroom")
+# install.packages('devtools')
+# install.packages('pacman')
+
 devtools::install_github("ropensci/CoordinateCleaner")
+devtools::install_github("gustavobio/flora")
 
 # ipak function: install and load multiple R packages.
 # Check to see if packages are installed.
@@ -23,34 +25,58 @@ ipak(c("tidyverse", "data.table", "skimr", "naniar", "devtools", "stringr",
 
 
 # Load the taxonomic checked database (11584695 | 22)
+# data_03 <-
+#   vroom::vroom(
+#     "data/clean/03_dataset_taxonomic_cleaning/data_02_TAXONOMIC_CHECKING.csv",
+#     delim = ",",
+#     locale = locale(encoding = "UTF-8"))
+
 data_03 <-
   vroom::vroom(
-    "data/clean/03_dataset_taxonomic_cleaning/data_02_TAXONOMIC_CHECKING.csv",
-    delim = ",",
-    locale = locale(encoding = "UTF-8"))
+    "https://raw.githubusercontent.com/brunobrr/risk_assessment_flora_Brazil/master/Input_files/gbif.csv")
+data_03 <- data_03 %>% 
+  dplyr::rename(.scientific.name=species, longitude=decimalLongitude, latitude=decimalLatitude) %>% 
+  dplyr::filter(!is.na(.scientific.name), !is.na(longitude), !is.na(latitude)) 
+plot(data_03[, c("longitude", "latitude")])
 
-# Pallete
-pal <- viridisLite::viridis(10)
+##%######################################################%##
+#                                                          #
+####              Flagging common spatial               ####
+####           errors using CoordinateCleaner           ####
+#                                                          #
+##%######################################################%##
 
+# Use wrapper function "clean_coordinates" for checking several issues present in lat/long coordinates using multiple empirical tests to flag potentially erroneous coordinates. 
+# All coordinates must be in WGS84 to use the clean_coordinates function.
 
-
-
-
-
-
-# Flagging common spatial errors using CoordinateCleaner ------------------
-# "countries" and "outliers" removed
-tests.names <- c("capitals", "centroids", "duplicates", "equals", 
-                 "gbif", "institutions", "seas", "urban", "zeros") 
-
-
-# Use wrapper function "clean_coordinates" for checking several issues present in lat/long coordinates using multiple empirical tests to flag pottentially erroneous coordinates.
 data_03 <- clean_coordinates(
-  data_03,
+  x =  data_03,
   lon = "longitude",
   lat = "latitude",
   species = ".scientific.name",
-  tests = tests.names,
+  countries = NULL,
+  tests = c("capitals", "centroids", "duplicates", 
+            "equal", "gbif", "institutions", "outliers",
+            "seas", "zeros"),
+  capitals_rad = 10000,
+  centroids_rad = 1000,
+  centroids_detail = "both",
+  inst_rad = 100,
+  outliers_method = "quantile",
+  outliers_mtp = 5,
+  outliers_td = 1000,
+  outliers_size = 7, #acho que esse aqui podemos aumentar visando que existem muitas espéceis pouco amostradas 
+  range_rad = 0,
+  zeros_rad = 0.5,
+  capitals_ref = NULL,
+  centroids_ref = NULL,
+  country_ref = NULL,
+  country_refcol = "iso_a3",
+  inst_ref = NULL,
+  range_ref = NULL,
+  seas_ref = NULL,
+  seas_scale = 50,
+  urban_ref = NULL,
   value = "spatialvalid"
 )
 
@@ -58,19 +84,7 @@ data_03 <- clean_coordinates(
 summary(data_03$.summary)
 
 # Number of records flagged per issue
-temp2 <- data_03[,23:32] %>% colSums()
-nrow(data_03) - temp2
-# .val = 0
-# .zer = 3032
-# .cap 84198
-# .cen = 58912
-# .sea = 218391
-# .urb = 663663
-# .gbf = 0
-# .inst = 13659
-# .dpl = 6116495
-# .summary = 6506619 
-
+temp2 <- (!(data_03 %>% dplyr::select(.val:.summary))) %>% colSums()
 
 # Flag problems associated with coordinate conversions and rounding, based on dataset properties.
 round_issue <- clean_dataset(x = data_03, 
