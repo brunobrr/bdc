@@ -1,3 +1,5 @@
+# Configurar o git em um computador
+
 install.packages("usethis")
 library(usethis)
 
@@ -15,3 +17,31 @@ usethis::browse_github_token()
 
 # Abra o arquivo .Renviron:
 usethis::edit_r_environ()
+
+# git status
+# git reset HEAD
+# get ignore
+
+
+### Configuração por repositorio
+git remote add origin https://github.com/brunobrr/risk_assessment_flora_Brazil.git
+git branch -M master
+
+git add . # Add todos os arquivos
+
+git add .gitignore # Adicionar apenas um arquivo
+git commit -m "Adicionando gitignore"
+git status
+# Para sair do vim digitar (esc e ":q", sem aspas)
+git push -u origin master # utilizar apenas a primeira vez. Depois é preciso utilizar apenas (git push)
+git push
+
+
+
+
+
+
+
+
+# Depois de add os arquivos
+
