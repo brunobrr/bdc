@@ -81,21 +81,24 @@ data_03 <- clean_coordinates(
 )
 
 data_03 <- as_tibble(data_03)
-points(data_03 %>% filter(!.summary) %>% select(longitude, latitude), col='blue')
-
-# 6506619 records flagged
-summary(data_03$.summary)
+points(data_03 %>% filter(!.summary) %>% select(longitude, latitude), col='red')
 
 # Number of records flagged per issue
 temp2 <- (!(data_03 %>% dplyr::select(.val:.summary))) %>% colSums()
 
 # Flag problems associated with coordinate conversions and rounding, based on dataset properties.
+data_03$database_source <- 'gbif'
 round_issue <- clean_dataset(x = data_03, 
                              lon = "longitude",
                              lat = "latitude",
                              ds = "database_source",
                              value = "flagged",
                              verbose = TRUE)
+table(round_issue) #mmmm esta função estpa indicando que com erro todos os registros???
+
+# Real round error to test clean_dataset
+((data_03$latitude%%1==0.5)&(data_03$longitude%%1==0.5)) %>% sum #round to 0.5
+((data_03$latitude%%1==0.0)&(data_03$longitude%%1==0.0)) %>% sum #round to 0 decimals 
 
 # no coords with rounding problem
 summary(round_issue$ddmm)
@@ -106,7 +109,7 @@ summary(round_issue$periodicity)
 m <- rworldmap::getMap() # rworldmap
 brazil <- m[which(m$NAME == "Brazil"), ]
 
-# Figures: Map of geeographic distribution of problematic coordinates. 
+# Figures: Map of geographic distribution of problematic coordinates. 
 # We create each map by change the issue and its respective name
 issue <- data_03 %>% filter(.dpl == FALSE) # change this  
 ggplot()+
@@ -130,16 +133,16 @@ ggplot()+
 ggsave("output/figures/f09_duplicate.tiff", units = "cm", width = 16, height = 10, dpi = 400) # change the name of the output 
 
 
+##%######################################################%##
+#                                                          #
+####         Standardize temporal information           ####
+#                                                          #
+##%######################################################%##
 
-
-
-
-
-# Standardize temporal information ---------------------------------------
 parse_date <- function(data_frame, column_to_test){
   col <- data_frame[[column_to_test]]
-  .year <- str_extract(col, "[[:digit:]]{4}")
-  .year_val <- if_else(.year %in% 1500:year(Sys.Date()), 
+  .year <- stringr::str_extract(col, "[[:digit:]]{4}")
+  .year_val <- dplyr::if_else(.year %in% 1500:year(Sys.Date()), 
                    "TRUE", "FALSE")
   res <- cbind(data_frame, .year_val, .year)
   return(res)
