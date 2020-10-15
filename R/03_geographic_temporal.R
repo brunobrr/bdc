@@ -75,10 +75,13 @@ data_03 <- clean_coordinates(
   inst_ref = NULL,
   range_ref = NULL,
   seas_ref = NULL,
-  seas_scale = 50,
+  seas_scale = 110,
   urban_ref = NULL,
   value = "spatialvalid"
 )
+
+data_03 <- as_tibble(data_03)
+points(data_03 %>% filter(!.summary) %>% select(longitude, latitude), col='blue')
 
 # 6506619 records flagged
 summary(data_03$.summary)
