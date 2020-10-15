@@ -225,6 +225,11 @@ fwrite(data_03, "data/clean/04_database_geographic_temporal_checking/data_03.csv
 
 # This database contains information on many group (angio, gymno, bryoph, lyco) # For some reason, get.taxa did not return the establishment of some plant. So we used BFG 2018 database for searching species establishment
 library(readr)
+data_03 <- vroom("C:/Users/santi/Downloads/Occ_Flora_Brasil/data_04.csv")
+set.seed(0)
+data_03 <- data_03%>% sample_n(1000)
+data_03 <- dplyr::left_join(data_03, bfg_2018[,c('.id', 'scientificName')], by=c('.scientific.name'='scientificName'), ) 
+
 bfg_2018 <-
   read_delim(
     "data/raw/Flora_do_Brasil/BGF-2018.txt",
@@ -233,7 +238,6 @@ bfg_2018 <-
     col_types = cols(ID = col_number()),
     trim_ws = TRUE
   )
-
 colnames(bfg_2018)[1] <- ".id"
 
 data_03 <- left_join(data_03, bfg_2018, by = ".id")
@@ -268,22 +272,21 @@ data_03 <- data_03 %>%
 
 
 
-# Filter species range ----------------------------------------------------
+##%######################################################%##
+#                                                          #
+####                Filter species range                ####
+#                                                          #
+##%######################################################%##
+
 # Check whether the species records occurs in the known species distribution (i.e., Brazilian state). Species distribution information were obtained from Brazilian Flora group (2018)
 
 ## Download data from gadm.org 
-# bra_states <- raster::getData("GADM", country= "Brazil", level=1)
-bra_states <- read_rds("data/raw/state_brazil/gadm36_BRA_1_sp.rds")
+bra_states <- raster::getData("GADM", country= "Brazil", level=1)
 
 bra_states@data <- bra_states@data %>% dplyr::select(HASC_1)
 bra_states@data$fill <- 1
 bra_states@data$HASC_1 <- gsub("BR.", "", bra_states@data$HASC_1)
-OCC <- data_03 %>% dplyr::select(longitude, latitude)
-
-start_time <- Sys.time()
-selec_points <- raster::extract(bra_states, OCC)
-end_time <- Sys.time()
-end_time - start_time # ~2 h
+selec_points <- raster::extract(bra_states, data_03 %>% dplyr::select(longitude, latitude))
 
 occ <- data_03$.occurrence
 fill <- selec_points$fill
@@ -292,14 +295,16 @@ uf <- selec_points$HASC_1
 # Function for checking whether the records in inside species range
 range <-NULL
 for (i in 1:length(occ)){
-  range[i] <-  str_detect(occ[i], regex(uf[i], ignore_case = TRUE))
+  range[i] <-  stringr::str_detect(occ[i], stringr::regex(uf[i], ignore_case = TRUE))
 }
+range <- ifelse(is.na(range), FALSE, range)
 
 # Add the column
 data_03$.recordState <- uf
 data_03$.range <- range
+table(data_03$.range)
 
-# Save the table (11584695  | 41)
+# Save the table
 fwrite(data_03, "data/clean/04_database_geographic_temporal_checking/data_03_1.csv")
 
 
