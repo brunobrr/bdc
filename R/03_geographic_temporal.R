@@ -86,6 +86,63 @@ points(data_03 %>% filter(!.summary) %>% select(longitude, latitude), col='red')
 # Number of records flagged per issue
 temp2 <- (!(data_03 %>% dplyr::select(.val:.summary))) %>% colSums()
 
+
+##%######################################################%##
+#                                                          #
+####          Flagging low decimal precision            ####
+#                                                          #
+##%######################################################%##
+
+# Function to test round coordinates
+round_dec <- function(data, lon = "longitude", lat = "latitude", ndec=c(0,1,2)){
+  # data: data.frame. A data.frame with coordinates data
+  # lon: character. Column names with longitude values
+  # lat: character. Column names with latitude values
+  # ndec: numeric. A vector with number of decimal to be tested. Default ndec=c(0,1,2) 
+  data <- data[, c(lon, lat)] %>% as.data.frame()
+  ndec_lat <- (data[, lat] %>%
+                 as.character %>% stringr::str_split_fixed(., pattern = '[.]', n = 2))[, 2] %>%
+    stringr::str_length()
+  ndec_lon <- (data[, lon] %>%
+                 as.character %>% stringr::str_split_fixed(., pattern = '[.]', n = 2))[, 2] %>%
+    stringr::str_length()
+  rm(data)
+  ndec_list <- as.list(ndec)
+  names(ndec_list) <- paste0('.', 'ndec', ndec)
+  for (i in 1:length(ndec)) {
+    message('Testing coordinate with ', ndec[i],' decimal')
+    ndec_list[[i]] <- !(ndec_lat == ndec[i] & ndec_lon == ndec[i])
+    message('Flagged ', sum(!ndec_list[[i]]), ' records')
+  }
+  ndec_list <- dplyr::bind_cols(ndec_list)
+  ndec_list$.ndec_all <- apply(ndec_list, 1, all) #all flagged as low decimal precision 
+  return(ndec_list)
+}
+
+
+round_issue <-
+  round_dec(
+    data = data_03,
+    lon = 'longitude',
+    lat = 'latitude',
+    ndec = c(0, 1, 2) #number of decimals to be tested
+  )
+colSums(!round_issue)
+
+data_03 <- dplyr::bind_cols(data_03 %>% dplyr::select(-.summary), 
+                  round_issue,
+                  data_03 %>% dplyr::select(.summary))
+rm(round_issue)
+
+# update .summary column
+data_03 <- data_03 %>% rowwise() %>% mutate(.summary=all(.ndec_all, .summary))
+data_03 %>% select(starts_with('.'))
+
+
+
+
+
+# REVISAR!!!! o procedimento do clean_dataset-------------
 # Flag problems associated with coordinate conversions and rounding, based on dataset properties.
 data_03$database_source <- 'gbif'
 round_issue <- clean_dataset(x = data_03, 
@@ -95,16 +152,15 @@ round_issue <- clean_dataset(x = data_03,
                              value = "flagged",
                              verbose = TRUE)
 table(round_issue) #mmmm esta função estpa indicando que com erro todos os registros???
-
-# Real round error to test clean_dataset
-((data_03$latitude%%1==0.5)&(data_03$longitude%%1==0.5)) %>% sum #round to 0.5
-((data_03$latitude%%1==0.0)&(data_03$longitude%%1==0.0)) %>% sum #round to 0 decimals 
-
 # no coords with rounding problem
 summary(round_issue$ddmm)
-
 # zero potentially problematic coordinates that have been collected in large scale lattice designs were flagged.
 summary(round_issue$periodicity) 
+# ----------------------------
+
+
+
+
 
 m <- rworldmap::getMap() # rworldmap
 brazil <- m[which(m$NAME == "Brazil"), ]
@@ -152,8 +208,9 @@ parse_date <- function(data_frame, column_to_test){
 data_03 <- parse_date(data_frame = data_03, column_to_test = "year")
 table(data_03$.year)
 table(data_03$.year_val)
-# FALSE    TRUE 
-# 4236235 7348460 
+
+# update .summary column (VER se deixamos esta atualização do .summary)
+# data_03 <- data_03 %>% rowwise() %>% mutate(.summary=all(.year_val, .summary))
 
 # Save the table
 fwrite(data_03, "data/clean/04_database_geographic_temporal_checking/data_03.csv")
@@ -168,6 +225,11 @@ fwrite(data_03, "data/clean/04_database_geographic_temporal_checking/data_03.csv
 
 # This database contains information on many group (angio, gymno, bryoph, lyco) # For some reason, get.taxa did not return the establishment of some plant. So we used BFG 2018 database for searching species establishment
 library(readr)
+data_03 <- vroom("C:/Users/santi/Downloads/Occ_Flora_Brasil/data_04.csv")
+set.seed(0)
+data_03 <- data_03%>% sample_n(1000)
+data_03 <- dplyr::left_join(data_03, bfg_2018[,c('.id', 'scientificName')], by=c('.scientific.name'='scientificName'), ) 
+
 bfg_2018 <-
   read_delim(
     "data/raw/Flora_do_Brasil/BGF-2018.txt",
@@ -176,7 +238,6 @@ bfg_2018 <-
     col_types = cols(ID = col_number()),
     trim_ws = TRUE
   )
-
 colnames(bfg_2018)[1] <- ".id"
 
 data_03 <- left_join(data_03, bfg_2018, by = ".id")
@@ -211,22 +272,21 @@ data_03 <- data_03 %>%
 
 
 
-# Filter species range ----------------------------------------------------
+##%######################################################%##
+#                                                          #
+####                Filter species range                ####
+#                                                          #
+##%######################################################%##
+
 # Check whether the species records occurs in the known species distribution (i.e., Brazilian state). Species distribution information were obtained from Brazilian Flora group (2018)
 
 ## Download data from gadm.org 
-# bra_states <- raster::getData("GADM", country= "Brazil", level=1)
-bra_states <- read_rds("data/raw/state_brazil/gadm36_BRA_1_sp.rds")
+bra_states <- raster::getData("GADM", country= "Brazil", level=1)
 
 bra_states@data <- bra_states@data %>% dplyr::select(HASC_1)
 bra_states@data$fill <- 1
 bra_states@data$HASC_1 <- gsub("BR.", "", bra_states@data$HASC_1)
-OCC <- data_03 %>% dplyr::select(longitude, latitude)
-
-start_time <- Sys.time()
-selec_points <- raster::extract(bra_states, OCC)
-end_time <- Sys.time()
-end_time - start_time # ~2 h
+selec_points <- raster::extract(bra_states, data_03 %>% dplyr::select(longitude, latitude))
 
 occ <- data_03$.occurrence
 fill <- selec_points$fill
@@ -235,14 +295,16 @@ uf <- selec_points$HASC_1
 # Function for checking whether the records in inside species range
 range <-NULL
 for (i in 1:length(occ)){
-  range[i] <-  str_detect(occ[i], regex(uf[i], ignore_case = TRUE))
+  range[i] <-  stringr::str_detect(occ[i], stringr::regex(uf[i], ignore_case = TRUE))
 }
+range <- ifelse(is.na(range), FALSE, range)
 
 # Add the column
 data_03$.recordState <- uf
 data_03$.range <- range
+table(data_03$.range)
 
-# Save the table (11584695  | 41)
+# Save the table
 fwrite(data_03, "data/clean/04_database_geographic_temporal_checking/data_03_1.csv")
 
 
