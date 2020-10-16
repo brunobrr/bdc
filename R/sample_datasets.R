@@ -82,11 +82,15 @@ data.table::fwrite(gbif_s, "Input_files/gbif.csv")
 icmbio <- read_delim("Data_raw/icmbio/portalbio_export_28-09-2020-17-41-57.csv", 
                      ";", escape_double = FALSE, trim_ws = TRUE)
 
+# Replace "Sem Informação" by "NA"
+icmbio[icmbio == "Sem Informações"] <- NA
 
 # Select a sub-sample
 icmbio_s <- sample_n(icmbio, 10000)
 
+
 # Save file
+data.table::fwrite(icmbio, "Data_raw/icmbio/portalbio_export_28-09-2020-17-41-57.csv")
 data.table::fwrite(icmbio_s, "Input_files/icmbio.csv")
 
 
