@@ -70,7 +70,8 @@ standardize_dataset <- function(metadata) {
         dplyr::select(database_id, dplyr::everything())
 
       standard_dataset %>%
-        dplyr::select(database_id, scientific_name, decimal_latitude, decimal_longitude) %>%
+        # # NOTE: comment out the line below to store each databse with standard columns
+        # dplyr::select(database_id, scientific_name, decimal_latitude, decimal_longitude) %>%
         vroom::vroom_write(save_in_filename)
 
     } else {
