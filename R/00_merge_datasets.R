@@ -1,7 +1,7 @@
 #' Standardize datasets columns based on metadata file
 #'
-#' @param metadata a table containing information about which columns of the 
-#'   original dataset need to be renamed following the names adopted by GBIF. 
+#' @param metadata a table containing information about which columns of the
+#'   original dataset need to be renamed following the names adopted by GBIF.
 #'   Please see the `Config/DatabaseInfo.csv` file.
 #'
 #' @importFrom dplyr pull filter select select_if mutate n everything
@@ -11,7 +11,7 @@
 #' @importFrom janitor clean_names make_clean_names
 #' @importFrom purrr set_names
 #' @importFrom readr read_csv write_csv
-#' 
+#'
 #' @export
 standardize_dataset <- function(metadata) {
 
@@ -37,7 +37,7 @@ standardize_dataset <- function(metadata) {
       dplyr::select(dataset_name) %>%
       dplyr::pull()
 
-    save_in_filename <- paste0(save_in_dir, "/standard_", dataset_name, ".csv")
+    save_in_filename <- paste0(save_in_dir, "/standard_", dataset_name, ".xz")
 
     if (!file.exists(save_in_filename)) {
 
@@ -62,7 +62,7 @@ standardize_dataset <- function(metadata) {
 
       standard_dataset <-
         here::here(input_file[file_index]) %>%
-        readr::read_csv(guess_max = 10^6) %>%
+        vroom::vroom(guess_max = 10^6) %>%
         janitor::clean_names() %>%
         dplyr::select(all_of(vector_for_recode)) %>%
         purrr::set_names(names(vector_for_recode)) %>%
@@ -71,7 +71,7 @@ standardize_dataset <- function(metadata) {
 
       standard_dataset %>%
         dplyr::select(database_id, scientific_name, decimal_latitude, decimal_longitude) %>%
-        readr::write_csv(save_in_filename)
+        vroom::vroom_write(save_in_filename)
 
     } else {
 
