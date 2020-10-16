@@ -84,14 +84,8 @@ standardize_dataset <- function(metadata) {
 
 }
 
-# Testing ----------------------------------------------------------------------
-ipak <- function(pkg) {
-  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-  if (length(new.pkg)) {
-    install.packages(new.pkg, dependencies = TRUE)
-  }
-  suppressPackageStartupMessages(sapply(pkg, require, character.only = TRUE))
-}
+# Testing standardize_dataset function ----------------------------------------
+source(here::here("R/aux_functions.R"))
 
 ipak(
   c(
@@ -99,7 +93,9 @@ ipak(
     "here",
     "glue",
     "fs",
-    "janitor"
+    "janitor",
+    "vroom",
+    "waldo"
   )
 )
 
@@ -107,17 +103,43 @@ metadata <- readr::read_csv(here::here("Config/DatabaseInfo.csv"))
 
 standardize_dataset(metadata = metadata)
 
-here::here("data", "temp") %>%
-  fs::dir_ls(regexp = "*.csv") %>%
+# Testing if vroom can concatenate all the resulting standandized databases ---
+merged_database <-
+  here::here("data", "temp") %>%
+  fs::dir_ls(regexp = "*.xz") %>%
   purrr::map_dfr(
-    ~ readr::read_csv(
+    ~ vroom::vroom(
         file = .x,
         guess_max = 10^6,
         col_types = readr::cols(
-          database_id       = readr::col_character(),
-          scientific_name   = readr::col_character(),
-          decimal_latitude  = readr::col_double(),
-          decimal_longitude = readr::col_double()
+          # # NOTE: adjust the specification for each columns; col_character
+          # #       for all columns is a trick.
+          database_id                      = readr::col_character(),
+          occurrence_id                    = readr::col_character(),
+          scientific_name                  = readr::col_character(),
+          decimal_latitude                 = readr::col_character(),
+          decimal_longitude                = readr::col_character(),
+          event_date                       = readr::col_character(),
+          family                           = readr::col_character(),
+          country                          = readr::col_character(),
+          state_province                   = readr::col_character(),
+          county                           = readr::col_character(),
+          coordinate_precision             = readr::col_character(),
+          taxon_rank                       = readr::col_character(),
+          identified_by                    = readr::col_character(),
+          coordinate_uncertainty_in_meters = readr::col_character(),
+          recorded_by                      = readr::col_character()
         )
       )
   )
+
+merged_database %>%
+  mutate(database_name = str_remove(database_id, "_[0-9].*")) %>%
+  distinct(database_name)
+
+waldo::compare(
+  x = merged_database %>% names(),
+  y = metadata %>% names() %>% make_clean_names()
+  )
+
+
