@@ -1,7 +1,7 @@
 #' Standardize datasets columns based on metadata file
 #'
 #' @param metadata a table containing information about which columns of the
-#'   original dataset need to be renamed following the names adopted by GBIF.
+#'   original dataset need to be renamed following Darwin Core terminology.
 #'   Please see the `Config/DatabaseInfo.csv` file.
 #'
 #' @importFrom dplyr pull filter select select_if mutate n everything
@@ -73,7 +73,6 @@ standardize_dataset <- function(metadata) {
         # # NOTE: comment out the line below to store each databse with standard columns
         # dplyr::select(database_id, scientific_name, decimal_latitude, decimal_longitude) %>%
         vroom::vroom_write(save_in_filename)
-
     } else {
 
       message(glue::glue("{save_in_filename} already exists!"))
@@ -115,11 +114,11 @@ merged_database <-
           # # NOTE: adjust the specification for each columns; col_character
           # #       for all columns is a trick.
           database_id                      = readr::col_character(),
-          occurrence_id                    = readr::col_character(),
+          occurrence_id                    = readr::col_double(),
           scientific_name                  = readr::col_character(),
-          decimal_latitude                 = readr::col_character(),
-          decimal_longitude                = readr::col_character(),
-          event_date                       = readr::col_character(),
+          decimal_latitude                 = readr::col_double(),
+          decimal_longitude                = readr::col_double(),
+          event_date                       = readr::col_date(),
           family                           = readr::col_character(),
           country                          = readr::col_character(),
           state_province                   = readr::col_character(),
@@ -142,4 +141,5 @@ waldo::compare(
   y = metadata %>% names() %>% make_clean_names()
   )
 
-
+merged_database %>% 
+vroom::vroom_write(paste0(save_in_dir, "/standard_database", ".xz"))
