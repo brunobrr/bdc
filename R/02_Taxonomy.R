@@ -12,26 +12,26 @@ ipak(
 merged_database <-
   here::here("data", "temp", "standard_database.xz") %>%
   vroom::vroom(
-      file = .,
-      guess_max = 10^6,
-      col_types = readr::cols(
-        database_id                      = readr::col_character(),
-        occurrence_id                    = readr::col_double(),
-        scientific_name                  = readr::col_character(),
-        decimal_latitude                 = readr::col_double(),
-        decimal_longitude                = readr::col_double(),
-        event_date                       = readr::col_date(),
-        family                           = readr::col_character(),
-        country                          = readr::col_character(),
-        state_province                   = readr::col_character(),
-        county                           = readr::col_character(),
-        coordinate_precision             = readr::col_character(),
-        taxon_rank                       = readr::col_character(),
-        identified_by                    = readr::col_character(),
-        coordinate_uncertainty_in_meters = readr::col_character(),
-        recorded_by                      = readr::col_character()
-      )
+    file = .,
+    guess_max = 10^6,
+    col_types = readr::cols(
+      database_id                      = readr::col_character(),
+      occurrence_id                    = readr::col_double(),
+      scientific_name                  = readr::col_character(),
+      decimal_latitude                 = readr::col_double(),
+      decimal_longitude                = readr::col_double(),
+      event_date                       = readr::col_date(),
+      family                           = readr::col_character(),
+      country                          = readr::col_character(),
+      state_province                   = readr::col_character(),
+      county                           = readr::col_character(),
+      coordinate_precision             = readr::col_character(),
+      taxon_rank                       = readr::col_character(),
+      identified_by                    = readr::col_character(),
+      coordinate_uncertainty_in_meters = readr::col_character(),
+      recorded_by                      = readr::col_character()
     )
+  )
 
 # Test sample
 set.seed(1234)
@@ -61,7 +61,7 @@ stand_taxonomy <- function(sci_names,
   
   # if taxo_authority = blablalbla 
   # if taxo_authority == flora...
- 
+  
   # This one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user 
   taxadb::td_create(taxo_authority, schema = "dwc")
   
@@ -75,82 +75,110 @@ stand_taxonomy <- function(sci_names,
     dplyr::mutate(temp_id = cur_group_id()) %>%
     dplyr::ungroup()
   
-    
-  # Get names ids or each (unique) names
+  
+  # Get names of each (unique) names
   start_time <- Sys.time()
   query_one <- 
     df %>% 
     dplyr::distinct(input) %>% 
     dplyr::pull(input) %>% 
     taxadb::filter_name(., provider = taxo_authority) %>% 
-    dplyr::filter(taxonomicStatus == "accepted") %>% 
+    # dplyr::filter(taxonomicStatus == "accepted") %>% 
     dplyr::select(scientificName, scientificNameAuthorship, family, 
                   taxonRank, taxonomicStatus, input)
-    end_time <- Sys.time()
+  end_time <- Sys.time()
   print(end_time - start_time)
   
   
-  df <- dplyr::left_join(df, query_one, by = "input")
-    
+  # Merge data
+  df <- dplyr::left_join(df, query_one, by = "input") %>% 
+    dplyr::mutate(names_cleaned = NA)
+  
   
   # Clean names
   clean_names <- 
     df %>% 
     dplyr::filter(is.na(scientificName)) %>% 
     dplyr::select(input, temp_id) %>% 
-    mutate(names_cleaned = taxadb::clean_names(input, binomial_only = T)) %>% 
-    dplyr::select(-input)
+    mutate(names_cleaned = taxadb::clean_names(input, binomial_only = T))
   
   
   query_two <- 
     clean_names %>% 
     dplyr::pull(names_cleaned) %>% 
     taxadb::filter_name(., provider = taxo_authority) %>% 
-    # dplyr::filter(taxonomicStatus == "accepted") %>% 
+    # dplyr::filter(taxonomicStatus == "accepted") %>%
     dplyr::select(scientificName, scientificNameAuthorship, family, 
                   taxonRank, taxonomicStatus, input) %>% 
     dplyr::rename(names_cleaned = input)
   
   
-  query_two <- left_join(query_two, clean_names, by = "names_cleaned")
+  # Add temp_id and reorder columns
+  query_two <-
+    left_join(query_two, clean_names, by = "names_cleaned") %>%
+    dplyr::select(names(df))
   
   
   # Merge data
-  w <- which(df$temp_id %in% query_two$temp_id)
+  df <- df %>% 
+    dplyr::filter(!is.na(scientificName)) %>%
+    dplyr::bind_rows(., query_two)
   
-  df$scientificName[w] <- query_two$scientificName
-  df$scientificNameAuthorship[w] <- query_two$scientificNameAuthorship
-  df$family[w] <- query_two$family
-  df$taxonRank[w] <- query_two$taxonRank
-  df$taxonomicStatus[w] <- query_two$taxonomicStatus
   
-  df <- left_join(df, clean_names, by = "temp_id")
-  
-
   # Query unresolved names in taxize
-  query_three <- 
+  query_taxize <- 
     df %>% 
     dplyr::filter(is.na(scientificName)) %>% 
-    dplyr::pull(names_cleaned) %>% 
+    dplyr::pull(names_cleaned) %>%
     taxize::iplant_resolve(., retrieve = "best", http = "post") %>% 
-    dplyr::filter(scientificscore > 0.9) %>% 
-    dplyr::select(acceptedname) %>% 
-    dplyr::rename(scientificName = acceptedname) %>% 
-    as_tibble()
+    dplyr::select(namesubmitted, acceptedname, scientificscore) %>% 
+    dplyr::rename(names_cleaned = namesubmitted, names_cleaned2 = acceptedname)
   
   
-
-  taxadb::filter_name("Pourouma guianensis", provider = taxo_authority)
+  # Add temp_id
+  query_taxize <-
+    left_join(query_taxize, clean_names, by = "names_cleaned") 
   
   
- 
- # Get names
-  teste2 <- 
-    teste %>% 
-    filter(!is.na(taxoid)) %>% 
-    # arrange(desc(sci_names)) %>% 
-    dplyr::mutate(verified_name = taxadb::get_names(taxoid, db = taxo_authority))
+  # FIXEme filter names according to the score (eg > 0.9)
   
+  
+  # Using names retrieved from taxize to search to resolve names by using taxadb
+  query_three <- 
+    query_taxize %>% 
+    dplyr::pull(names_cleaned2) %>% 
+    taxadb::filter_name(., provider = taxo_authority) %>% 
+    # dplyr::filter(taxonomicStatus == "accepted") %>%
+    dplyr::select(scientificName, scientificNameAuthorship, family, 
+                  taxonRank, taxonomicStatus, input) %>% 
+    dplyr::rename(names_cleaned2 = input)
+  
+  
+  query_three <-
+    left_join(query_three, query_taxize, by = "names_cleaned2") %>%
+    dplyr::select(-c(names_cleaned, scientificscore)) %>% 
+    dplyr::rename(names_cleaned = names_cleaned2) %>% 
+    dplyr::select(names(df))
+  
+  
+  # Merge data
+  df <- df %>% 
+    dplyr::filter(!is.na(scientificName)) %>%
+    dplyr::bind_rows(., query_three)
+  
+  
+  f1 <- df %>% distinct(c())
+  for (i in 1:length(n)){
+   dup <- 
+     df %>% 
+     janitor::get_dupes(temp_id)
+    sp <- sp %>% count(input)
+    
+  }
+  unresolved_names <- 
+    df %>% 
+    group_by(scientificName) %>% 
+    mutate(teste = )
   
   
   
