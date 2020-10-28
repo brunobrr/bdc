@@ -166,28 +166,62 @@ stand_taxonomy <- function(sci_names,
     dplyr::filter(!is.na(scientificName)) %>%
     dplyr::bind_rows(., query_three)
   
-  
-  f1 <- df %>% distinct(c())
-  for (i in 1:length(n)){
-   dup <- 
-     df %>% 
-     janitor::get_dupes(temp_id)
-    sp <- sp %>% count(input)
-    
-  }
-  unresolved_names <- 
-    df %>% 
-    group_by(scientificName) %>% 
-    mutate(teste = )
+
+  # Filter only accepted names
+  df_accep <- 
+    df %>%
+    dplyr::filter(taxonomicStatus == "accepted")
   
   
+  # Find names with more than one accepted names whose will be added to the table containing unresolved names
+  dup_accep <- 
+    df_accep %>% 
+    janitor::get_dupes(temp_id)
+  
+  
+  # Remove names with more than one accepted name
+  df_accep <- 
+    df_accep %>% 
+    dplyr::filter(!temp_id %in% dup_accep$temp_id)
+
+  
+    # Filter names not accepted and/or not found names
+  not_resolved <-
+    df %>%
+    dplyr::filter(!(taxonomicStatus == "accepted") | is.na(taxonomicStatus))
+  
+  
+  # Identify synonym names already resolved and merge names with more than one accepted name 
+  not_resolved <- 
+    not_resolved %>% 
+    dplyr::filter(!temp_id %in% df_acep$temp_id) %>% 
+    dplyr::bind_rows(., dup_accep)
+  
+
   
   
   
-  
-  
-  
-  
+  # # Get unique accepted names
+  # df_accep_final <-
+  #   df_accep[!(df_accep$temp_id %in% dup_accep$temp_id),]
+  # 
+  # # Filter not accepted and/or not found names
+  # not_resolved<- 
+  #   df %>%
+  #   dplyr::filter(!(taxonomicStatus=="accepted")) 
+  # 
+  # # Identify  synonym names already resolved: accepted name founded  
+  # not_resolved<- not_resolved[-c(which(not_resolved$temp_id %in% df_acep$temp_id)), ] 
+  # 
+  # # Add to unsolved names, those names with more than one accepted name s
+  # not_resolved_final <-
+  #   bind_rows(not_resolved, df_accep[(df_accep$temp_id %in% dup_accep$temp_id),])
+  # 
+  # # Remove duplicated names
+  # not_resolved_final <-
+  #   not_resolved_final[!duplicated(not_resolved_final$temp_id),] 
+  # 
+  # 
   
   
   
