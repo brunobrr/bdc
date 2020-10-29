@@ -15,10 +15,6 @@
 #' @export
 standardize_dataset <- function(metadata) {
 
-  metadata <-
-    metadata %>%
-    janitor::clean_names()
-
   save_in_dir <- here::here("data", "temp")
 
   if (!fs::dir_exists(save_in_dir)) {
@@ -27,29 +23,25 @@ standardize_dataset <- function(metadata) {
 
   input_file <-
     metadata %>%
-    dplyr::pull(file_name_to_load)
+    dplyr::pull(File_name_to_load)
 
   for (file_index in seq_along(input_file)) {
 
     dataset_name <-
       metadata %>%
-      dplyr::filter(file_name_to_load == input_file[file_index]) %>%
-      dplyr::select(dataset_name) %>%
+      dplyr::filter(File_name_to_load == input_file[file_index]) %>%
+      dplyr::select(datasetName) %>%
       dplyr::pull()
 
     save_in_filename <- paste0(save_in_dir, "/standard_", dataset_name, ".xz")
 
     if (!file.exists(save_in_filename)) {
 
-      # FIXME: for now, just remove these columns
-      problem <- c("basis_of_record", "basisofrecord", "locality_site", "locality")
-
       basename_names <-
         metadata %>%
-        dplyr::filter(file_name_to_load == input_file[file_index]) %>%
-        janitor::clean_names() %>%
+        dplyr::filter(File_name_to_load == input_file[file_index]) %>%
         dplyr::select_if(~ !is.na(.)) %>%
-        dplyr::select(-dataset_name, -file_name_to_load, -any_of(problem))
+        dplyr::select(-datasetName, -File_name_to_load)
 
       standard_names <-
         basename_names %>%
@@ -57,13 +49,13 @@ standardize_dataset <- function(metadata) {
 
       vector_for_recode <-
         basename_names %>%
-        janitor::make_clean_names() %>%
-        purrr::set_names(standard_names)
+        purrr::set_names(standard_names) %>%
+        { c(.) } %>%
+        unlist()
 
       standard_dataset <-
         here::here(input_file[file_index]) %>%
-        vroom::vroom(guess_max = 10^6) %>%
-        janitor::clean_names() %>%
+        vroom::vroom(guess_max = 10^6, col_types = cols(.default = "c")) %>%
         dplyr::select(all_of(vector_for_recode)) %>%
         purrr::set_names(names(vector_for_recode)) %>%
         dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
