@@ -1,11 +1,11 @@
 datasetName,File_name_to_load,occurrenceID,scientificName,decimalLatitude,decimalLongitude,basisOfRecord,eventDate,taxonRank,family,country,stateProvince,county,locality,identifiedBy,coordinateUncertaintyInMeters,coordinatePrecision,recordedBy
 AT_EPIPHYTES,Input_files/at_epiphytes.csv,RECORD_ID,EPIPHYTE_SPECIES,LATITUDE_Y,LONGITUDE_X,NA,YEAR_FINISH,NA,EPIPHYTE_FAMILY,COUNTRY,STATE,MUNICIPALITY,REGIONAL_NAME_OF_STUDY_SITE,NA,NA,PRECISION,NA
 BIEN,Input_files/bien.csv,datasource_id,scrubbed_species_binomial,latitude,longitude,NA,date_collected,NA,scrubbed_family,NA,NA,NA,NA,NA,NA,NA,NA
-DRYFLOR,Input_files/dryflor.csv,NA,Accepted_name,Latitude,Longitude,NA,NA,NA,NA,Country,NA,NA,locality/site,NA,NA,NA,NA
-GBIF,Input_files/gbif.csv,gbifID,scientificName,decimalLatitude,decimalLongitude,basisofrecord,EventDate,taxonRank,family,countryCode,stateProvince,NA,locality/site,identifiedBy,coordinateUncertaintyInMeters,coordinatePrecision,recordedBy
-ICMBIO,Input_files/icmbio.csv,Numero do registro no portal,Nome cientifico na base de dados,Latitude,Longitude,NA,Data_do_registro,Nivel taxonomico,Familia,Pais,Estado/Provincia,Municipio,Localidade,NA,NA,NA,NA
+DRYFLOR,Input_files/dryflor.csv,NA,Accepted name,Latitude,Longitude,NA,NA,NA,NA,Country,NA,NA,locality/site,NA,NA,NA,NA
+GBIF,Input_files/gbif.csv,gbifID,scientificName,decimalLatitude,decimalLongitude,basisOfRecord,eventDate,taxonRank,family,countryCode,stateProvince,NA,locality,identifiedBy,coordinateUncertaintyInMeters,coordinatePrecision,recordedBy
+ICMBIO,Input_files/icmbio.csv,Numero do registro no portal,Nome cientifico na base de dados,Latitude,Longitude,NA,Data do registro,Nivel taxonomico,Familia,Pais,Estado/Provincia,Municipio,Localidade,NA,NA,NA,NA
 IDIGBIO,Input_files/idigbio.csv,coreid,dwc:scientificName,dwc:decimalLatitude,dwc:decimalLongitude,dwc:basisOfRecord,dwc:eventDate,dwc:taxonRank,dwc:family,dwc:country,dwc:stateProvince,dwc:county,dwc:locality,dwc:identifiedBy,dwc:coordinateUncertaintyInMeters,dwc:coordinatePrecision,dwc:recordedBy
 NEOTROPTREE,Input_files/neotroptree.csv,original_site_code,species_name,lat,long,NA,NA,NA,NA,country,NA,NA,sitename,NA,NA,NA,NA
-SIBBR,Input_files/sibbr.csv,id,scientificName,decimalLatitude,decimalLongitude,basisOfRecord,EventDate,taxonRank,family,country,stateProvince,municipality,locality,identifiedBy,NA,NA,recordedBy
+SIBBR,Input_files/sibbr.csv,id,scientificName,decimalLatitude,decimalLongitude,basisOfRecord,eventDate,taxonRank,family,country,stateProvince,municipality,locality,identifiedBy,NA,NA,recordedBy
 SPECIESLINK,Input_files/specieslink.csv,catalognumber,scientificname,latitude,longitude,basisofrecord,yearcollected,NA,family,country,stateprovince,county,locality,identifiedby,NA,coordinateprecision,collector
 AT_TREES,Input_files/at_trees.csv,NA,SpName,Latitude,Longitude,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
