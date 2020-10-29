@@ -43,7 +43,8 @@ taxo_authority <- "gbif"
 
 
 stand_taxonomy <- function(sci_names, 
-                           taxo_authority = "gbif"){ 
+                           taxo_authority = "gbif", 
+                           ){ 
   
   # Select one taxonomic authority. Options currently recognized by taxadb are:
   # - itis: Integrated Taxonomic Information System
@@ -148,7 +149,6 @@ stand_taxonomy <- function(sci_names,
     query_taxize %>% 
     dplyr::pull(names_cleaned2) %>% 
     taxadb::filter_name(., provider = taxo_authority) %>% 
-    # dplyr::filter(taxonomicStatus == "accepted") %>%
     dplyr::select(scientificName, scientificNameAuthorship, family, 
                   taxonRank, taxonomicStatus, input) %>% 
     dplyr::rename(names_cleaned2 = input)
@@ -197,7 +197,11 @@ stand_taxonomy <- function(sci_names,
     dplyr::filter(!temp_id %in% df_acep$temp_id) %>% 
     dplyr::bind_rows(., dup_accep)
   
-
+  # Garantir que a tabela de resultados está na mesma order do vetor inicial
+  # Salvar as tabela de resultados (nome aceitos e não encontrados)
+  # Fechar a função
+  # Criar o diretório onde as tabelas serão salvas
+  
   
   
   
