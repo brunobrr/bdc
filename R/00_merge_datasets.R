@@ -102,25 +102,7 @@ merged_database <-
     ~ vroom::vroom(
         file = .x,
         guess_max = 10^6,
-        col_types = readr::cols(
-          # # NOTE: adjust the specification for each columns; col_character
-          # #       for all columns is a trick.
-          database_id                      = readr::col_character(),
-          occurrence_id                    = readr::col_double(),
-          scientific_name                  = readr::col_character(),
-          decimal_latitude                 = readr::col_double(),
-          decimal_longitude                = readr::col_double(),
-          event_date                       = readr::col_date(),
-          family                           = readr::col_character(),
-          country                          = readr::col_character(),
-          state_province                   = readr::col_character(),
-          county                           = readr::col_character(),
-          coordinate_precision             = readr::col_character(),
-          taxon_rank                       = readr::col_character(),
-          identified_by                    = readr::col_character(),
-          coordinate_uncertainty_in_meters = readr::col_character(),
-          recorded_by                      = readr::col_character()
-        )
+        col_types = cols(.default = "c") #,
       )
   )
 
@@ -130,8 +112,8 @@ merged_database %>%
 
 waldo::compare(
   x = merged_database %>% names(),
-  y = metadata %>% names() %>% make_clean_names()
+  y = metadata %>% names()
   )
 
-merged_database %>% 
-vroom::vroom_write(paste0(save_in_dir, "/standard_database", ".xz"))
+merged_database %>%
+  vroom::vroom_write(here::here("data", "temp", "standard_database.xz"))
