@@ -27,6 +27,11 @@ standardize_dataset <- function(metadata) {
 
   for (file_index in seq_along(input_file)) {
 
+    input_filename <-
+      metadata %>%
+      dplyr::filter(File_name_to_load == input_file[file_index]) %>%
+      pull(File_name_to_load)
+
     dataset_name <-
       metadata %>%
       dplyr::filter(File_name_to_load == input_file[file_index]) %>%
@@ -53,21 +58,57 @@ standardize_dataset <- function(metadata) {
         { c(.) } %>%
         unlist()
 
-      standard_dataset <-
+      imported_raw_dataset <-
         here::here(input_file[file_index]) %>%
-        vroom::vroom(guess_max = 10^6, col_types = cols(.default = "c")) %>%
-        dplyr::select(all_of(vector_for_recode)) %>%
-        purrr::set_names(names(vector_for_recode)) %>%
-        dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
-        dplyr::select(database_id, dplyr::everything())
+        vroom::vroom(guess_max = 10^6, col_types = cols(.default = "c"), n_max = 1)
 
-      standard_dataset %>%
-        # # NOTE: comment out the line below to store each database with standard columns
-        # dplyr::select(database_id, scientific_name, decimal_latitude, decimal_longitude) %>%
-        vroom::vroom_write(save_in_filename)
+      skip_to_next <- FALSE
+
+      error_message <-
+        paste("[ERROR]: Column names defined in the metadata do not match column names in the", input_filename)
+
+      tryCatch(
+
+        if (sum(!vector_for_recode %in% names(imported_raw_dataset)) != 0) {
+
+          stop(error_message)
+
+        } else {
+
+          standard_dataset <-
+            here::here(input_file[file_index]) %>%
+            vroom::vroom(guess_max = 10^6, col_types = cols(.default = "c")) %>%
+            dplyr::select(all_of(vector_for_recode)) %>%
+            purrr::set_names(names(vector_for_recode)) %>%
+            dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
+            dplyr::select(database_id, dplyr::everything())
+
+          message(paste("Creating", save_in_filename))
+
+          standard_dataset %>%
+            vroom::vroom_write(save_in_filename)
+
+        },
+
+        error = function(e) {
+
+          message(error_message)
+
+          skip_to_next <<- TRUE
+
+        }
+
+      )
+
+      if (skip_to_next) {
+
+        next
+
+      }
+
     } else {
 
-      message(glue::glue("{save_in_filename} already exists!"))
+      message(paste(save_in_filename, "already exists!"))
 
     }
 
@@ -76,44 +117,54 @@ standardize_dataset <- function(metadata) {
 }
 
 # Testing standardize_dataset function ----------------------------------------
-source(here::here("R/aux_functions.R"))
+merged_filename <- here::here("data", "temp", "standard_database.xz")
 
-ipak(
-  c(
-    "tidyverse",
-    "here",
-    "glue",
-    "fs",
-    "janitor",
-    "vroom",
-    "waldo"
-  )
-)
+if (!file.exists(merged_filename)) {
 
-metadata <- readr::read_csv(here::here("Config/DatabaseInfo.csv"))
+  source(here::here("R/aux_functions.R"))
 
-standardize_dataset(metadata = metadata)
-
-# Testing if vroom can concatenate all the resulting standandized databases ---
-merged_database <-
-  here::here("data", "temp") %>%
-  fs::dir_ls(regexp = "*.xz") %>%
-  purrr::map_dfr(
-    ~ vroom::vroom(
-        file = .x,
-        guess_max = 10^6,
-        col_types = cols(.default = "c") #,
-      )
+  ipak(
+    c(
+      "tidyverse",
+      "here",
+      "glue",
+      "fs",
+      "janitor",
+      "vroom",
+      "waldo"
+    )
   )
 
-merged_database %>%
-  mutate(database_name = str_remove(database_id, "_[0-9].*")) %>%
-  distinct(database_name)
+  metadata <- readr::read_csv(here::here("Config/DatabaseInfo.csv"))
 
-waldo::compare(
-  x = merged_database %>% names(),
-  y = metadata %>% names()
-  )
+  standardize_dataset(metadata = metadata)
 
-merged_database %>%
-  vroom::vroom_write(here::here("data", "temp", "standard_database.xz"))
+  # Testing if vroom can concatenate all the resulting standandized databases ---
+  merged_database <-
+    here::here("data", "temp") %>%
+    fs::dir_ls(regexp = "*.xz") %>%
+    purrr::map_dfr(
+      ~ vroom::vroom(
+          file = .x,
+          guess_max = 10^6,
+          col_types = cols(.default = "c") #,
+        )
+    )
+
+  merged_database %>%
+    mutate(database_name = str_remove(database_id, "_[0-9].*")) %>%
+    distinct(database_name)
+
+  waldo::compare(
+    x = merged_database %>% names(),
+    y = metadata %>% names()
+    )
+
+  merged_database %>%
+    vroom::vroom_write(merged_filename)
+
+} else {
+
+  message(paste(merged_filename, "already exists!"))
+
+}
