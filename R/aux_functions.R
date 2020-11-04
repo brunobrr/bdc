@@ -101,8 +101,8 @@ extract_cntr_names <- function(x){
 } 
 
 
-# stadard_country is a function to correct, standardize, and assign a ISO code to country names 
-stadard_country <- function(data, cntry, cntry_names_db) {
+# standard_country is a function to correct, standardize, and assign a ISO code to country names 
+standard_country <- function(data, cntry, cntry_names_db) {
   # Create a country database based on occ database
   cntr_db <-
     data %>%
