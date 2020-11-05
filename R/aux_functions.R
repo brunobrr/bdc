@@ -1,4 +1,9 @@
-ipak
+##%######################################################%##
+#                                                          #
+####                        ipak                        ####
+#                                                          #
+##%######################################################%##
+
 ipak <- function(pkg) {
   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
   if (length(new.pkg)) {
@@ -199,6 +204,10 @@ standard_country <- function(data, cntry, cntry_names_db) {
 }
 
 
+
+
+
+
 ##%######################################################%##
 #                                                          #
 ####                correct_coordinates                 ####
@@ -292,19 +301,18 @@ correct_coordinates <- function(data, x, y, sp, id, cntr_iso2, world_poly, world
     my_country2 <-
       raster::buffer(my_country, width = 0.5) #0.5 degree ~50km near to equator
     
-    plot(my_country)
-    plot(my_country2, add = T)
-    
     coord_sp <- sp::SpatialPoints(coord_test[[i]] %>%
                                     dplyr::select_(x, y))
     
     coord_sp@proj4string <- my_country2@proj4string
     over_occ <- sp::over(coord_sp, my_country2)
     
-    coord_test[[i]] %>%
-      dplyr::filter(over_occ == 1) %>%
-      dplyr::select_(x, y) %>%
-      points(., pch = 19, col = 'red')
+    # plot(my_country)
+    # plot(my_country2, add = T)
+    # coord_test[[i]] %>%
+    #   dplyr::filter(over_occ == 1) %>%
+    #   dplyr::select_(x, y) %>%
+    #   points(., pch = 19, col = 'red')
     
     # Eliminate as corrected those records too close to country border
     coord_test[[i]] <-
@@ -315,7 +323,15 @@ correct_coordinates <- function(data, x, y, sp, id, cntr_iso2, world_poly, world
   coord_test <-
     dplyr::bind_rows(coord_test) %>% as_tibble() # binding dataframes allocated in the list in a single one
   coord_test <-
-    coord_test %>% dplyr::distinct_(., id, .keep_all = T) %>% as_tibble
+    coord_test %>%
+    dplyr::distinct_(., id, .keep_all = T) %>%
+    as_tibble %>%
+    dplyr::relocate(id, x, y)
+  
+  # Merge coord_test with other columns of occurrence database
+  coord_test <- left_join(coord_test,
+                          data %>% dplyr::select(-c(x, y, cntr_iso2)),
+                          by = id)
   
   return(coord_test)
 }
