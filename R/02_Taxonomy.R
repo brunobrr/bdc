@@ -269,6 +269,8 @@ standardize_taxonomy <- function(sci_names,
 
   unresolved_names %>%
     vroom::vroom_write(paste0(save_in_dir, "/02_unresolved_names.csv"))
+  
+  return(names_resolved)
 }
 
 
