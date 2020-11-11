@@ -4,34 +4,12 @@ ipak(
     "tidyverse",
     "vroom",
     "here",
-    "taxize"
+    "rgnparser"
   )
 )
 
 # Load the database
-merged_database <-
-  here::here("data", "temp", "standard_database.xz") %>%
-  vroom::vroom(
-    file = .,
-    guess_max = 10^6,
-    col_types = readr::cols(
-      database_id = readr::col_character(),
-      occurrence_id = readr::col_double(),
-      scientific_name = readr::col_character(),
-      decimal_latitude = readr::col_double(),
-      decimal_longitude = readr::col_double(),
-      event_date = readr::col_date(),
-      family = readr::col_character(),
-      country = readr::col_character(),
-      state_province = readr::col_character(),
-      county = readr::col_character(),
-      coordinate_precision = readr::col_character(),
-      taxon_rank = readr::col_character(),
-      identified_by = readr::col_character(),
-      coordinate_uncertainty_in_meters = readr::col_character(),
-      recorded_by = readr::col_character()
-    )
-  )
+merged_database <- vroom("data/temp/standard_database.xz")
 
 
 # Test sample
@@ -44,76 +22,140 @@ sci_names <-
 
 taxo_authority <- "gbif"
 
+
+# Select one taxonomic authority. Options currently recognized by taxadb are:
+# - itis: Integrated Taxonomic Information System
+# - ncbi: National Center for Biotechnology Information
+# - col: Catalogue of Life
+# - tpl: The Plant List
+# - gbif: Global Biodiversity Information Facility
+# - fb: FishBase
+# - slb: SeaLifeBase
+# - wd: Wikidata
+# - ott: OpenTree Taxonomy
+# - iucn: IUCN Red List
+
+
 # Function for standardize names
 standardize_taxonomy <- function(sci_names,
                                  taxo_authority = "gbif",
                                  match_dist = 6) {
 
-  # Select one taxonomic authority. Options currently recognized by taxadb are:
-  # - itis: Integrated Taxonomic Information System
-  # - ncbi: National Center for Biotechnology Information
-  # - col: Catalogue of Life
-  # - tpl: The Plant List
-  # - gbif: Global Biodiversity Information Facility
-  # - fb: FishBase
-  # - slb: SeaLifeBase
-  # - wd: Wikidata
-  # - ott: OpenTree Taxonomy
-  # - iucn: IUCN Red List
-
-
 
   # if taxo_authority = blablalbla
   # if taxo_authority == flora...
 
-  # This one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user
+  # this one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user
   taxadb::td_create(taxo_authority, schema = "dwc")
 
+  # one-time setup to download and install rgnparser
+  rgnparser::install_gnparser()
 
-  # Vector with names provided
-  sci_names <- sci_names
-
-
-  # Table containing names and a temporary ID for unique names (e.g. a same name will has the same id)
-  df <-
+  
+  # create a temporary ID for unique names (e.g. a same name will has the same id)
+  df0 <-
     sci_names %>%
     as_tibble() %>%
     dplyr::rename(input = value) %>%
     dplyr::group_by(input) %>%
     dplyr::mutate(temp_id = cur_group_id()) %>%
-    dplyr::ungroup()
-
-
-  # Get names of each (unique) names
-  start_time <- Sys.time()
+    dplyr::ungroup() 
+  
+  
+  # select only unique names
+  df <- 
+    df0 %>% 
+    distinct(temp_id, .keep_all = T)
+  
+  
+  # query one: look up taxonomic information by scientific name in taxadb using verbatim scientific name
+  
   query_one <- df %>%
     dplyr::distinct(input) %>%
     dplyr::pull(input) %>%
     taxadb::filter_name(., provider = taxo_authority) %>%
-    dplyr::select(
-      scientificName, scientificNameAuthorship,
-      family, taxonRank, taxonomicStatus, input
-    )
-  end_time <- Sys.time()
-  print(end_time - start_time)
+    dplyr::select(scientificName,
+                  scientificNameAuthorship,
+                  family,
+                  taxonRank,
+                  taxonomicStatus,
+                  input)
+  
+  
+  # merge data
+  df <- dplyr::full_join(df, query_one, by = "input")
 
-
-  # Merge data
-  df <- dplyr::left_join(df, query_one, by = "input") %>%
-    dplyr::mutate(names_cleaned = NA)
-
-
-  # Clean names
-  clean_names <-
+  
+  # routines to clean and parse names (see script "aux_function" for checking functions used to clean and parse names)
+  
+  parse_names <- 
     df %>%
     dplyr::filter(is.na(scientificName)) %>%
-    dplyr::select(input, temp_id) %>%
-    mutate(names_cleaned = taxadb::clean_names(input, binomial_only = T))
+    dplyr::select(input, temp_id)
 
+  
+  # remove family names 
+  rem_family <-
+    parse_names %>% 
+    pull(input) %>%
+    rem_family_names()
+  
+  parse_names <- 
+    parse_names %>% 
+    mutate(clean_family_names = rem_family)
+  
+  
+  # Remove taxonomic uncertainty terms
+  rem_uncer <- 
+    parse_names %>% 
+    pull(clean_family_names) %>%
+    rem_taxo_unc()
+  
+  parse_names <- 
+    parse_names %>% 
+    mutate(clean_uncer_terms = rem_uncer)
+  
+  
+  # Flag taxonomic uncertainty terms
+  flag_uncer<- 
+    parse_names %>% 
+    pull(clean_family_names) %>%
+    flag_taxo_unc()
+  
+  parse_names <- 
+    parse_names %>% 
+    mutate(uncer_terms = flag_uncer$term_uncertainty) %>% 
+    mutate(flag_uncer_terms = flag_uncer$taxo_uncertainty)
+  
+  
+  # Remove duplicated generic names, extra spaces, capitalize the generic name
+  other_issues <-
+    parse_names %>% 
+    pull(clean_uncer_terms) %>% 
+    rem_other_issues(.)
+  
+  parse_names <- 
+    parse_names %>% 
+    mutate(clean_other_issues = other_issues) %>% 
+    mutate(parse_name = clean_other_issues )
+  
+  
+  # Parse names using rgnparser 
+  gnparser <-
+    parse_names %>%
+    pull(clean_other_issues) %>%
+    rgnparser::gn_parse_tidy() %>%
+    select(verbatim, cardinality, canonicalfull, quality) %>% 
+    rename(parse_name = verbatim)
+  
+  parse_names <- full_join(parse_names, gnparser, by = "parse_name")
+  
+  
+  # query two: look up taxonomic information by scientific name in taxadb using parsed scientific name
 
   query_two <-
-    clean_names %>%
-    dplyr::pull(names_cleaned) %>%
+    parse_names %>%
+    dplyr::pull(parse_name) %>%
     taxadb::filter_name(., provider = taxo_authority) %>%
     dplyr::select(
       scientificName, scientificNameAuthorship, family,
@@ -144,13 +186,11 @@ standardize_taxonomy <- function(sci_names,
 
   if (!fs::file_exists(wfo_data)) {
     fs::dir_create(wfo_dir)
-
-    WorldFlora::WFO.download(
-      WFO.url = "http://104.198.143.165/files/WFO_Backbone/_WFOCompleteBackbone/WFO_Backbone.zip",
-      save.dir = wfo_dir,
-      WFO.remember = T
-    )
-
+    
+    WorldFlora::WFO.download(WFO.url = "http://104.198.143.165/files/WFO_Backbone/_WFOCompleteBackbone/WFO_Backbone.zip",
+                             save.dir = wfo_dir,
+                             WFO.remember = T)
+    
     utils::unzip("data/WFO_Backbone/WFO_Backbone.zip", exdir = wfo_dir)
   }
 
