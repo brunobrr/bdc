@@ -404,7 +404,7 @@ flag_taxo_unc <- function(spp_names) {
 
 # rem_other_issues --------------------------------------------------------
 
-# Remove duplicated genus, substitute empty cells by NA, capitalize genus name
+# Remove duplicated genus, substitute empty cells by NA, capitalize generic name
 rem_other_issues <- function(spp_names) {
   rem_dup_names <- function(x) {
     res <- x
