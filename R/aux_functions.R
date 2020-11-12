@@ -28,6 +28,7 @@ ipak <- function(pkg) {
 
 # Remove family names from species names
 rem_family_names <- function(sp_names) {
+  sp_names_raw <- sp_names
   df <- data.frame(str_count(sp_names, "\\S+"), sp_names)
   n_string <- ifelse(df[, 1] < 2, FALSE, TRUE)
   n_string <- ifelse(is.na(n_string), FALSE, n_string)
@@ -44,7 +45,8 @@ rem_family_names <- function(sp_names) {
   rem_fam <- str_squish(rem_fam)
   sp_names[w_rem] <- rem_fam
   
-  return(sp_names)
+  fag_family <- sp_names_raw == sp_names
+  return(data.frame(sp_names, fag_family))
 }
 
 
