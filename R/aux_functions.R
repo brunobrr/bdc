@@ -1,5 +1,10 @@
 
-# ipak --------------------------------------------------------------------
+############################################################
+#                                                          #
+#                           ipak                           #
+#                                                          #
+############################################################
+
 
 # usefull to install and load packages
 ipak <- function(pkg) {
@@ -11,7 +16,13 @@ ipak <- function(pkg) {
 }
 
 
-############################# TAXONOMY ####################################
+
+############################################################
+#                                                          #
+#                         TAXONOMY                         #
+#                                                          #
+############################################################
+
 
 # rem_family_names --------------------------------------------------------
 
@@ -409,11 +420,17 @@ rem_other_issues <- function(spp_names) {
   rem_dup_names <- function(x) {
     res <- x
     word_count <- stringr::str_count(x, "\\w+")
+    
+    w1 <- which(word_count == 1)
+    res[w1] <- stringr::str_to_lower(res[w1])
+    res[w1] <- Hmisc::capitalize(res[w1])
+    
     w3 <- which(word_count >= 3)
-
+    
     for (i in w3)
     {
       sp <- x[i]
+      sp <- gsub(pattern = "-", " ", sp)
       t <- trimws(sp)
       u <- unlist(
         strsplit(t, split = " ", fixed = F, perl = T)
@@ -426,17 +443,19 @@ rem_other_issues <- function(spp_names) {
     return(res)
   }
   remDup <- rem_dup_names(spp_names)
-  v1 <- stringr::str_replace_all(remDup, "[0-9]+", " ")
-  v2 <- stringr::str_squish(v1)
-  v3 <- gsub("^$", NA, v2) # substitue empty records by NA
-  v4 <- stringr::str_to_lower(v3)
-  v5 <- Hmisc::capitalize(v4)
-  return(v5)
+  v3 <- gsub("^$", NA, remDup) # substitue empty records by NA
+  v4 <- Hmisc::capitalize(v3)
+  return(v4)
 }
 
 
 
-#################################### SPACE #################################
+############################################################
+#                                                          #
+#                          SPACE                           #
+#                                                          #
+############################################################
+
 
 # coord_trans -------------------------------------------------------------
 
