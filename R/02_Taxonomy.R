@@ -20,7 +20,7 @@ sci_names <-
   dplyr::pull(scientificName)
 
 taxo_authority <- "gbif"
-
+taxo_authority <- "itis"
 # Select one taxonomic authority. Options currently recognized by taxadb are:
 # - itis: Integrated Taxonomic Information System
 # - ncbi: National Center for Biotechnology Information
