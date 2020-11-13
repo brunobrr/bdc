@@ -13,7 +13,7 @@ merged_database <- vroom("data/temp/standard_database.xz")
 
 # Test sample
 set.seed(1234)
-samp_df <- dplyr::slice_sample(.data = merged_database, n = 50)
+samp_df <- dplyr::slice_sample(.data = merged_database, n = 300)
 
 sci_names <-
   samp_df %>%
@@ -67,6 +67,7 @@ standardize_taxonomy <- function(sci_names,
   # query one: look up taxonomic information by scientific name in taxadb using verbatim scientific name
   query_one <- df %>%
     dplyr::distinct(input) %>%
+    dplyr::filter(!is.na(input)) %>% 
     dplyr::pull(input) %>%
     taxadb::filter_name(., provider = taxo_authority) %>%
     dplyr::select(scientificName,
@@ -85,6 +86,7 @@ standardize_taxonomy <- function(sci_names,
   
   parse_names <- 
     df %>%
+    dplyr::filter(!is.na(input)) %>%
     dplyr::filter(is.na(scientificName)) %>%
     dplyr::select(input, temp_id)
   
@@ -141,26 +143,37 @@ standardize_taxonomy <- function(sci_names,
   
   parse_names <-
     left_join(parse_names, gnparser, by = "name_clean") %>% 
-    rename(gnparser_name = canonicalfull) %>% 
+    rename(input_cleaned = canonicalfull) %>% 
     distinct(temp_id, .keep_all = T)
   
-  
+  parse_names_sel <- 
+    parse_names %>% 
+    dplyr::select(input, temp_id, input_cleaned)
   
   # query two: look up taxonomic information by scientific name in taxadb using parsed scientific name
+  
+  # filter names already not found
+  not_found_names <- which(parse_names_sel$input == parse_names_sel$input_cleaned)
+  
+  if (length(not_found_names) > 0) {
+    parse_names_sel <- parse_names_sel[-not_found_names,]
+  }
+  
   query_two <-
-    parse_names %>%
-    dplyr::pull(gnparser_name) %>%
+    parse_names_sel %>%
+    dplyr::pull(input_cleaned) %>%
     taxadb::filter_name(., provider = taxo_authority) %>%
     dplyr::select(
       scientificName, scientificNameAuthorship, family,
       taxonRank, taxonomicStatus, input
     ) %>%
-    dplyr::rename(gnparser_name = input)
+    dplyr::rename(input_cleaned = input)
 
 
   # Add temp_id and reorder columns
   query_two <-
-    full_join(query_two, parse_names, by = "gnparser_name") %>%
+    full_join(query_two, parse_names_sel, by = "input_cleaned") %>%
+    dplyr::select(-input_cleaned) %>% 
     dplyr::select(names(df))
 
   # Merge data
@@ -169,13 +182,20 @@ standardize_taxonomy <- function(sci_names,
     dplyr::filter(!is.na(scientificName)) %>%
     dplyr::bind_rows(., query_two)
 
-    
+
   
+   # Query unresolved names using wfo database
   
-  # Query unresolved names using wfo database
-  n_NA <- df$scientificName %>% is.na() %>% sum()
+  # Number of unresolved names
+  names_NA <- 
+    df %>%
+    dplyr::filter(is.na(scientificName))
   
-  if (n_NA != 0){
+  w <- which(parse_names_sel$input %in% names_NA$input)
+  names_NA$input_cleaned <- parse_names_sel$input_cleaned[w]
+  
+
+  if (nrow(names_NA) != 0){
     
     # Download WFO database
     wfo_data <- here::here("data", "WFO_Backbone", "classification.txt")
@@ -192,27 +212,13 @@ standardize_taxonomy <- function(sci_names,
     }
     
     query_wfo <-
-      df %>%
-      dplyr::filter(is.na(scientificName)) %>%
-      dplyr::pull(names_cleaned) %>%
-      WorldFlora::WFO.match(.,
-                            WFO.file = "data/WFO_Backbone/classification.txt",
-                            Fuzzy.min = T,
-                            squish = F,
-                            spec.name.nonumber = F,
-                            spec.name.nobrackets = F,
-                            spec.name.sub = F,
-                            verbose = F,
-                            counter = T)
+      names_NA %>%
+      dplyr::pull(input_cleaned) %>%
+      query_wfo(., match_dist = 6)
     
-    query_wfo_filter <-
-      query_wfo %>%
-      dplyr::select(Fuzzy.dist, taxonRank, scientificName, spec.name) %>%
-      dplyr::rename(names_cleaned = spec.name) %>%
-      mutate(query_match_dist = if_else(Fuzzy.dist <= match_dist, T, F)) %>%
-      mutate(scientificName = ifelse(query_match_dist == T,
-                                     scientificName,
-                                     NA))
+    
+    
+
     
     query_wfo_filter <-
       df %>%
