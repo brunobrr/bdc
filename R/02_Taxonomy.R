@@ -20,7 +20,7 @@ sci_names <-
   dplyr::pull(scientificName)
 
 taxo_authority <- "gbif"
-taxo_authority <- "itis"
+
 # Select one taxonomic authority. Options currently recognized by taxadb are:
 # - itis: Integrated Taxonomic Information System
 # - ncbi: National Center for Biotechnology Information
@@ -60,14 +60,16 @@ standardize_taxonomy <- function(sci_names,
   # select only unique names
   df <- 
     df0 %>% 
-    distinct(temp_id, .keep_all = T)
+    distinct(temp_id, .keep_all = T) %>% 
+    dplyr::filter(!is.na(input)) 
   
   
+  df0 %>% 
+    dplyr::filter(!is.na(input)) 
   
   # query one: look up taxonomic information by scientific name in taxadb using verbatim scientific name
   query_one <- df %>%
     dplyr::distinct(input) %>%
-    dplyr::filter(!is.na(input)) %>% 
     dplyr::pull(input) %>%
     taxadb::filter_name(., provider = taxo_authority) %>%
     dplyr::select(scientificName,
@@ -86,7 +88,6 @@ standardize_taxonomy <- function(sci_names,
   
   parse_names <- 
     df %>%
-    dplyr::filter(!is.na(input)) %>%
     dplyr::filter(is.na(scientificName)) %>%
     dplyr::select(input, temp_id)
   
@@ -176,14 +177,12 @@ standardize_taxonomy <- function(sci_names,
     dplyr::select(-input_cleaned) %>% 
     dplyr::select(names(df))
 
-  # Merge data
+  # Merge data found at first and second search
   df <-
     df %>%
     dplyr::filter(!is.na(scientificName)) %>%
     dplyr::bind_rows(., query_two)
 
-
-  
    # Query unresolved names using wfo database
   
   # Number of unresolved names
@@ -211,67 +210,73 @@ standardize_taxonomy <- function(sci_names,
       utils::unzip("data/WFO_Backbone/WFO_Backbone.zip", exdir = wfo_dir)
     }
     
-    query_wfo <-
+    query_names_wfo <-
       names_NA %>%
       dplyr::pull(input_cleaned) %>%
-      query_wfo(., match_dist = 6)
+      query_wfo(., match_dist = 6) %>% 
+      dplyr::rename(names_cleaned2 = scientificName)
     
     
+    Wfo_not_found <- is.na(query_names_wfo$names_cleaned2) %>% all
     
-
-    
-    query_wfo_filter <-
-      df %>%
-      dplyr::select(input, temp_id, names_cleaned) %>%
-      left_join(query_wfo_filter, ., by = "names_cleaned")
-    
-    query_wfo_filter <-
-      query_wfo_filter %>%
-      rename(names_cleaned2 = scientificName) %>%
-      dplyr::filter(!names_cleaned2 %>% is.na()) %>%
-      dplyr::select(names_cleaned2, input, temp_id)
-    
-    # FIXEme: Add if here if query_wfo_filter$names_cleaned2 == 0?
-    query_three <-
-      query_wfo_filter %>%
-      dplyr::pull(names_cleaned2) %>%
-      taxadb::filter_name(., provider = taxo_authority) %>%
-      dplyr::select(
-        scientificName, scientificNameAuthorship, family,
-        taxonRank, taxonomicStatus, input
-      ) %>%
-      dplyr::rename(names_cleaned2 = input)
-    
-    query_three <-
-      dplyr::left_join(query_three, query_wfo_filter, by = "names_cleaned2") %>%
-      dplyr::rename(names_cleaned = names_cleaned2) %>%
-      dplyr::select(names(df))
+    #Fixme select only names different from original names
+    if (Wfo_not_found == F) {
+      query_three <-
+        query_names_wfo %>%
+        dplyr::filter(!is.na(names_cleaned2)) %>%
+        dplyr::pull(names_cleaned2) %>%
+        taxadb::filter_name(., provider = taxo_authority) %>%
+        dplyr::select(
+          scientificName,
+          scientificNameAuthorship,
+          family,
+          taxonRank,
+          taxonomicStatus,
+          input
+        ) %>%
+        dplyr::rename(names_cleaned2 = input)
+      
+      
+      query_three_join <-
+        query_names_wfo %>%
+        dplyr::select(names_cleaned2, spec.name) %>%
+        full_join(., query_three, by = "names_cleaned2") %>%
+        rename(input_cleaned = spec.name)
+      
+      query_three_join <-
+        left_join(query_three_join, parse_names_sel, by = "input_cleaned") %>%
+        dplyr::select(-input_cleaned) %>%
+        dplyr::select(names(df))
+      
+    }
     
     # Merge data
-    df_temp <-
-      df %>%
-      dplyr::filter(!(is.na(scientificName) & input %in% query_three$input))
+    df_temp <- dplyr::bind_rows(df, query_three_join)
     
-    df <- dplyr::bind_rows(df_temp, query_three)
-    
+  }else{
+    df_temp <- names_NA %>%
+      dplyr::select(-input_cleaned) %>%
+      dplyr::bind_rows(df, .)
   }
-
-
+  
+  
   # Filter only accepted names
   names_resolved <-
-    df %>%
+    df_temp %>%
     dplyr::filter(taxonomicStatus == "accepted")
 
   # Find names with more than one accepted names whose will be added to the table containing unresolved names
+    # criar aqui uma tablea com os nomes duplicados para inserir na tabela final?
   names_accDup <-
     names_resolved %>%
     janitor::get_dupes(temp_id)
 
+    
   # Remove names with more than one accepted name
   if (nrow(names_accDup) != 0) {
-    names_resolved <-
-      names_accDup %>%
-      dplyr::filter(!temp_id %in% dup_accep$temp_id)
+      names_resolved <-
+      names_resolved %>%
+      dplyr::filter(!temp_id %in% names_accDup$temp_id)
   }
 
   # Filter names not accepted and/or not found names
@@ -283,10 +288,15 @@ standardize_taxonomy <- function(sci_names,
   unresolved_names <-
     unresolved_names %>%
     dplyr::filter(!temp_id %in% names_resolved$temp_id) %>%
-    dplyr::bind_rows(., dup_accep) %>%
+    dplyr::bind_rows(., names_accDup) %>%
     dplyr::select(-dupe_count)
 
-
+  ## It is working!!!
+  ###nrow(names_resolved)+nrow(unresolved_names)  
+  
+  teste<-rbind(names_resolved, unresolved_names)
+  
+  
   # FIXEME: Add this part at the end (out taxadb and flora functions)
   save_in_dir <- here::here("output", "02_taxonomy")
 
