@@ -38,15 +38,14 @@ taxo_authority <- "gbif"
 standardize_taxonomy <- function(sci_names,
                                  taxo_authority = "gbif",
                                  match_dist = 6) {
-
-  # if taxo_authority = blablalbla
+  
   # if taxo_authority == flora...
-
+  
   # this one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user
   taxadb::td_create(taxo_authority, schema = "dwc", overwrite = FALSE)
-
+  
   # one-time setup to download and install rgnparser
-  rgnparser::install_gnparser()
+  rgnparser::install_gnparser(force = F)
   
   # create a temporary ID for unique names (e.g. a same name will has the same id)
   df0 <-
@@ -61,14 +60,13 @@ standardize_taxonomy <- function(sci_names,
   df <- 
     df0 %>% 
     distinct(temp_id, .keep_all = T) %>% 
-    dplyr::filter(!is.na(input)) 
+    dplyr::mutate_all(na_if,"") %>% 
+    dplyr::filter(!is.na(input))
   
-  
-  df0 %>% 
-    dplyr::filter(!is.na(input)) 
   
   # query one: look up taxonomic information by scientific name in taxadb using verbatim scientific name
-  query_one <- df %>%
+  query_one <- 
+    df %>%
     dplyr::distinct(input) %>%
     dplyr::pull(input) %>%
     taxadb::filter_name(., provider = taxo_authority) %>%
@@ -81,7 +79,6 @@ standardize_taxonomy <- function(sci_names,
   
   # merge data
   df <- dplyr::full_join(df, query_one, by = "input")
-
   
   
   # routines to clean and parse names (see script "aux_function" for checking functions used to clean and parse names)
@@ -151,13 +148,16 @@ standardize_taxonomy <- function(sci_names,
     parse_names %>% 
     dplyr::select(input, temp_id, input_cleaned)
   
+  
   # query two: look up taxonomic information by scientific name in taxadb using parsed scientific name
   
-  # filter names already not found
-  not_found_names <- which(parse_names_sel$input == parse_names_sel$input_cleaned)
+  # filter names not found and with no modification after parse
+  w <- which(parse_names_sel$input == parse_names_sel$input_cleaned)
+  not_changed_names <- parse_names_sel[w,]
+  not_changed_names <- df[which(df$temp_id %in% not_changed_names$temp_id), ] 
   
-  if (length(not_found_names) > 0) {
-    parse_names_sel <- parse_names_sel[-not_found_names,]
+  if (length(not_changed_names) > 0) {
+    parse_names_sel <- parse_names_sel[-w,]
   }
   
   query_two <-
@@ -169,21 +169,21 @@ standardize_taxonomy <- function(sci_names,
       taxonRank, taxonomicStatus, input
     ) %>%
     dplyr::rename(input_cleaned = input)
-
-
+  
+  
   # Add temp_id and reorder columns
   query_two <-
     full_join(query_two, parse_names_sel, by = "input_cleaned") %>%
     dplyr::select(-input_cleaned) %>% 
     dplyr::select(names(df))
-
+  
   # Merge data found at first and second search
   df <-
     df %>%
     dplyr::filter(!is.na(scientificName)) %>%
     dplyr::bind_rows(., query_two)
-
-   # Query unresolved names using wfo database
+  
+  # Query unresolved names using wfo database
   
   # Number of unresolved names
   names_NA <- 
@@ -193,7 +193,7 @@ standardize_taxonomy <- function(sci_names,
   w <- which(parse_names_sel$input %in% names_NA$input)
   names_NA$input_cleaned <- parse_names_sel$input_cleaned[w]
   
-
+  
   if (nrow(names_NA) != 0){
     
     # Download WFO database
@@ -264,52 +264,65 @@ standardize_taxonomy <- function(sci_names,
   names_resolved <-
     df_temp %>%
     dplyr::filter(taxonomicStatus == "accepted")
-
+  
   # Find names with more than one accepted names whose will be added to the table containing unresolved names
-    # criar aqui uma tablea com os nomes duplicados para inserir na tabela final?
+  # criar aqui uma tablea com os nomes duplicados para inserir na tabela final?
   names_accDup <-
     names_resolved %>%
     janitor::get_dupes(temp_id)
-
-    
+  
+  
   # Remove names with more than one accepted name
   if (nrow(names_accDup) != 0) {
-      names_resolved <-
+    names_resolved <-
       names_resolved %>%
       dplyr::filter(!temp_id %in% names_accDup$temp_id)
   }
-
+  
   # Filter names not accepted and/or not found names
   unresolved_names <-
     df %>%
     dplyr::filter(!(taxonomicStatus == "accepted") | is.na(taxonomicStatus))
-
+  
   # Identify synonym names already resolved and merge names with more than one accepted name
+  # and add names not found and not modified by parse
   unresolved_names <-
     unresolved_names %>%
     dplyr::filter(!temp_id %in% names_resolved$temp_id) %>%
     dplyr::bind_rows(., names_accDup) %>%
-    dplyr::select(-dupe_count)
-
-  ## It is working!!!
-  ###nrow(names_resolved)+nrow(unresolved_names)  
+    dplyr::select(-dupe_count) %>% 
+    #distinct(temp_id, .keep_all = T) %>% 
+    bind_rows(., not_changed_names)
   
-  teste<-rbind(names_resolved, unresolved_names)
   
+  unresolved_names_filter <- 
+    unresolved_names %>% 
+    distinct(temp_id, .keep_all = T)
+  
+  # fixme tem que ver se vai colocar NA nas colunas para as espécies que tiveram duplo nome aceito
+  # senão na tablea final que junta tudo elas vão confundir
+  
+  # It is working!!!
+  
+  ## Criar tabela com dados encontrado e não encontrado   
+  df_final <-
+    rbind(names_resolved, unresolved_names_filter) %>% 
+    dplyr::full_join(df0, ., by = c("temp_id", "input")) %>% 
+    dplyr::mutate()
   
   # FIXEME: Add this part at the end (out taxadb and flora functions)
-  save_in_dir <- here::here("output", "02_taxonomy")
-
-  if (!fs::dir_exists(save_in_dir)) {
-    fs::dir_create(save_in_dir)
+  save_in_dir_ch <- here::here("output", "Check", "02_taxonomy")
+  save_in_dir_in <- here::here("output", "Intermediate", "02_taxonomy")
+  
+  if (!fs::dir_exists(save_in_dir) & !fs::dir_exists(save_in_dir)) {
+    fs::dir_create(save_in_dir_ch)
+    fs::dir_create(save_in_dir_in)
   }
-
-
+  
+  
   # Save files
-  names_resolved %>%
-    arrange(factor(input, levels = sci_names)) %>%
-    vroom::vroom_write(paste0(save_in_dir, "/02_db_taxonomy.csv"))
-
+  df_final %>%
+    vroom::vroom_write(paste0(save_in_dir, "/02_names_resolved.csv"))
 
   unresolved_names %>%
     vroom::vroom_write(paste0(save_in_dir, "/02_unresolved_names.csv"))
@@ -324,12 +337,12 @@ standardize_taxonomy <- function(sci_names,
 
 
 
-
-
-devtools::install_github("cboettig/taxalight")
-
-# install.packages("digest")
-# library(digest)
-
-library(taxalight)
-tl_create("gbif")
+# 
+# 
+# devtools::install_github("cboettig/taxalight")
+# 
+# # install.packages("digest")
+# # library(digest)
+# 
+# library(taxalight)
+# tl_create("gbif")
