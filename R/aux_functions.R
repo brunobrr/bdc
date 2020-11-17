@@ -874,4 +874,183 @@ correct_coordinates <-
               by = id)
   
   return(coord_test)
-}
+  }
+
+get.taxa.taxadb <- 
+  function (taxa, replace.synonyms = TRUE, suggest.names = TRUE, 
+            drop = c("authorship", "genus", "specific.epiteth", "infra.epiteth", "name.status"), 
+            suggestion.distance = 0.9, parse = FALSE, db = NULL) 
+  {
+    taxa <- trim(taxa)
+    taxa <- taxa[nzchar(taxa)]
+    if (length(taxa) == 0L) 
+      stop("No valid names provided.")
+    original.search <- taxa
+    col_names <- suppressWarnings(colnames(taxadb::filter_name(NA, provider = db)))
+    ncol.taxa <- length(col_names)
+    res <- data.frame(matrix(vector(), length(taxa), ncol.taxa + 
+                               3, dimnames = list(c(), c(col_names, "notes", "original.search", "distance"))), 
+                      stringsAsFactors = FALSE)
+    minus.notes <- seq_len(ncol.taxa)
+    index <- 0
+    for (taxon in taxa) {
+      notes <- NULL
+      index <- index + 1
+      if (parse) {
+        url <- "http://api.gbif.org/v1/parser/name"
+        request <- try(POST(url, body = list(taxon), encode = "json"))
+        if (inherits(request, "try-error")) {
+          warning("Couldn't connect with the GBIF data servers. Check your internet connection or try again later.")
+        }
+        else {
+          warn_for_status(request)
+          taxon <- content(request)[[1]]$canonicalName
+        }
+      }
+      taxon <- fixCase(taxon)
+      uncertain <- regmatches(taxon, regexpr("[a|c]f+\\.", 
+                                             taxon))
+      if (length(uncertain) != 0L) {
+        taxon <- gsub("\\s[a|c]f+\\.", "", taxon)
+      }
+      ident <- regmatches(taxon, regexpr("\\s+sp\\.+\\w*", 
+                                         taxon))
+      if (length(ident) != 0L) {
+        split.name <- unlist(strsplit(taxon, " "))
+        taxon <- split.name[1]
+        infra <- split.name[2]
+      }
+      found <- !is.na(suppressWarnings(taxadb::get_ids(taxon, db = db)))
+      
+      if (!found) {
+        if (suggest.names) {
+          suggested <- suggest.names.taxadb(taxon, max.distance = suggestion.distance, provide = db)
+          taxon <- suggested[1]
+          res[index, "distance"] <- suggested[2]
+        }
+        else {
+          res[index, "notes"] <- "not found"
+          next
+        }
+        if (is.na(taxon)) {
+          res[index, "notes"] <- "not found"
+          next
+        }
+        else {
+          notes <- "was misspelled"
+        }
+      }
+      found_name <-suppressWarnings(taxadb::filter_name(taxon, provider = db)) 
+      n_found <- sum(found_name$taxonomicStatus =="accepted")
+      
+      if (n_found > 0) {
+        if (n_found == 1L) {
+          res[index, minus.notes] <- found_name
+        }
+        else {
+          notes <- c(notes, "check +1 accepted")
+        }
+        res[index, "notes"] <- paste(notes, collapse = "|")
+        res[index, "original.search"] <- original.search
+        next
+      }
+      
+      nrow.synonym <- sum(found_name$taxonomicStatus =="synonym")
+      if (nrow.synonym > 0L) {
+        if (replace.synonyms) {
+          accepted <- suppressWarnings(taxadb::get_names(found_name$acceptedNameUsageID, db)) 
+          nrow.accepted <- sum(!is.na(accepted))
+          if (nrow.accepted == 0L) {
+            if (nrow.synonym == 1L) {
+              notes <- c(notes, "check no accepted name")
+              res[index, minus.notes] <- found_name
+            }
+            if (nrow.synonym > 1L) {
+              notes <- c(notes, "check no accepted +1 synonyms")
+            }
+          }
+          if (nrow.accepted == 1L) {
+            notes <- c(notes, "replaced synonym")
+            replace <- suppressWarnings(taxadb::filter_name(accepted, provider = db)) 
+            res[index, minus.notes] <- replace 
+          }
+          if (nrow.accepted > 1L) {
+            notes <- c(notes, "check +1 accepted")
+            if (nrow.synonym == 1L) {
+              res[index, minus.notes] <- found_name
+            }
+          }
+        }
+        else {
+          if (nrow.synonym == 1L) {
+            res[index, minus.notes] <- found_name
+          }
+          if (nrow.synonym > 1L) {
+            notes <- c(notes, "check +1 entries")
+          }
+        }
+        res[index, "notes"] <- paste(notes, collapse = "|")
+        res[index, "original.search"] <- original.search
+        next
+      }
+    }
+    res
+  }
+
+suggest.names.taxadb <- 
+  function (taxon, max.distance = 0.75, return.na = TRUE, ignore.words = NULL, provider) 
+  {
+    taxon <- fixCase(taxon)
+    taxon.orig <- taxon
+    uncertain <- regmatches(taxon, regexpr("[a|c]f+\\.", 
+                                           taxon))
+    taxon <- gsub("^\\s+|\\s+$", "", taxon)
+    if (length(uncertain) != 0L) 
+      taxon <- gsub("[a|c]f+\\.", "", taxon)
+    ident <- regmatches(taxon, regexpr("\\s+sp\\.+\\w*", 
+                                       taxon))
+    if (length(ident) != 0L) 
+      taxon <- unlist(strsplit(taxon, " "))[1]
+    if (!nzchar(taxon)) 
+      return(NA)
+    
+    first.letter <- strsplit(taxon, "")[[1]][1]
+    species.first.letter <- suppressWarnings(taxadb::name_starts_with("C", provider = provider))[, c( "taxonID", "scientificName", 
+                                                                                                      "taxonRank", "taxonomicStatus",         
+                                                                                                      "acceptedNameUsageID" )]
+    
+    
+    l1 <- length(taxon)
+    l2 <- length(species.first.letter$scientificName)
+    out <- stringdist::stringdist(taxon, species.first.letter$scientificName)
+    distance <- 1 - (out/pmax(nchar(taxon), nchar(species.first.letter$scientificName)))
+    max.dist <- max(distance, na.rm = TRUE)
+    if (max.dist >= max.distance) {
+      if (length(ident) == 0L) {
+        dis <- max(distance, na.rm = TRUE)
+        res <- species.first.letter$scientificName[distance == dis][1]
+        
+        if (length(uncertain) == 0L) {
+          
+          return(c(res, dis))
+        }
+        else {
+          res <- unlist(strsplit(res, " "))
+          return(c(paste(res[1], uncertain, res[2:length(res)]), dis))
+        }
+      }
+      else {
+        paste(species.first.letter$scientificName[distance == max(distance, 
+                                                                  na.rm = TRUE)][1], ident, sep = "")
+      }
+    }
+    else {
+      if (return.na) {
+        NA
+      }
+      else {
+        taxon.orig
+      }
+    }
+  }
+
