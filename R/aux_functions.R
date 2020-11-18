@@ -878,7 +878,6 @@ correct_coordinates <-
 
 get.taxa.taxadb <- 
   function (taxa, replace.synonyms = TRUE, suggest.names = TRUE, 
-            drop = c("authorship", "genus", "specific.epiteth", "infra.epiteth", "name.status"), 
             suggestion.distance = 0.9, parse = FALSE, db = NULL) 
   {
     taxa <- trim(taxa)
@@ -1015,7 +1014,7 @@ suggest.names.taxadb <-
       return(NA)
     
     first.letter <- strsplit(taxon, "")[[1]][1]
-    species.first.letter <- suppressWarnings(taxadb::name_starts_with("C", provider = provider))[, c( "taxonID", "scientificName", 
+    species.first.letter <- suppressWarnings(taxadb::name_starts_with(first.letter, provider = provider))[, c( "taxonID", "scientificName", 
                                                                                                       "taxonRank", "taxonomicStatus",         
                                                                                                       "acceptedNameUsageID" )]
     
