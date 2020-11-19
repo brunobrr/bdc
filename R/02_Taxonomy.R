@@ -20,6 +20,8 @@ sci_names <-
   dplyr::pull(scientificName)
 
 taxo_authority <- "gbif"
+wfo_match_dist = 6
+replace_synonyms = T
 
 # Select one taxonomic authority. Options currently recognized by taxadb are:
 # - itis: Integrated Taxonomic Information System
@@ -37,10 +39,10 @@ taxo_authority <- "gbif"
 # Function for standardize names
 standardize_taxonomy <- function(sci_names,
                                  taxo_authority = "gbif",
-                                 match_dist = 6) {
+                                 wfo_match_dist = 6,
+                                 replace_synonyms = TRUE) {
   
-  # if taxo_authority == flora...
-  
+
   # this one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user
   taxadb::td_create(taxo_authority, schema = "dwc", overwrite = FALSE)
   
@@ -64,29 +66,9 @@ standardize_taxonomy <- function(sci_names,
     dplyr::filter(!is.na(input))
   
   
-  # query one: look up taxonomic information by scientific name in taxadb using verbatim scientific name
-  query_one <- 
-    df %>%
-    dplyr::distinct(input) %>%
-    dplyr::pull(input) %>%
-    taxadb::filter_name(., provider = taxo_authority) %>%
-    dplyr::select(scientificName,
-                  scientificNameAuthorship,
-                  family,
-                  taxonRank,
-                  taxonomicStatus,
-                  input)
-  
-  # merge data
-  df <- dplyr::full_join(df, query_one, by = "input")
-  
-  
   # routines to clean and parse names (see script "aux_function" for checking functions used to clean and parse names)
   
-  parse_names <- 
-    df %>%
-    dplyr::filter(is.na(scientificName)) %>%
-    dplyr::select(input, temp_id)
+  parse_names <- df
   
   # remove family names 
   rem_family <-
@@ -139,64 +121,55 @@ standardize_taxonomy <- function(sci_names,
     select(verbatim, cardinality, canonicalfull, quality) %>% 
     rename(name_clean = verbatim)
   
+  
+  # Names parsed
   parse_names <-
-    left_join(parse_names, gnparser, by = "name_clean") %>% 
+    full_join(parse_names, gnparser, by = "name_clean") %>% 
     rename(input_cleaned = canonicalfull) %>% 
     distinct(temp_id, .keep_all = T)
   
+  # FIXEME: Delete line code below
+  # parse_names <- read.csv("parse_names.csv", h=T)
   parse_names_sel <- 
     parse_names %>% 
     dplyr::select(input, temp_id, input_cleaned)
   
   
-  # query two: look up taxonomic information by scientific name in taxadb using parsed scientific name
+  # Merge with df
+  df <- full_join(df, parse_names_sel)
   
-  # filter names not found and with no modification after parse
-  w <- which(parse_names_sel$input == parse_names_sel$input_cleaned)
-  not_changed_names <- parse_names_sel[w,]
-  not_changed_names <- df[which(df$temp_id %in% not_changed_names$temp_id), ] 
   
-  if (length(not_changed_names) > 0) {
-    parse_names_sel <- parse_names_sel[-w,]
-  }
-  
-  query_two <-
-    parse_names_sel %>%
+  # query one: look up taxonomic information in taxadb
+  query_one <- 
+    df %>%
+    dplyr::distinct(input_cleaned, .keep_all = T) %>%
     dplyr::pull(input_cleaned) %>%
     taxadb::filter_name(., provider = taxo_authority) %>%
-    dplyr::select(
-      scientificName, scientificNameAuthorship, family,
-      taxonRank, taxonomicStatus, input
-    ) %>%
-    dplyr::rename(input_cleaned = input)
+    dplyr::select(scientificName,
+                  scientificNameAuthorship,
+                  family,
+                  taxonRank,
+                  taxonomicStatus,
+                  acceptedNameUsageID,
+                  input) %>% 
+    rename(input_cleaned = input)
+  
+  # merge data
+  df <- dplyr::full_join(df, query_one, by = "input_cleaned")
   
   
-  # Add temp_id and reorder columns
-  query_two <-
-    full_join(query_two, parse_names_sel, by = "input_cleaned") %>%
-    dplyr::select(-input_cleaned) %>% 
-    dplyr::select(names(df))
   
-  # Merge data found at first and second search
-  df <-
-    df %>%
-    dplyr::filter(!is.na(scientificName)) %>%
-    dplyr::bind_rows(., query_two)
   
-  # Query unresolved names using wfo database
+  # Search for another possible names (synonyms or accepted ones) of unresolved names in World Flora online (WFO) database
   
   # Number of unresolved names
   names_NA <- 
     df %>%
     dplyr::filter(is.na(scientificName))
   
-  w <- which(parse_names_sel$input %in% names_NA$input)
-  names_NA$input_cleaned <- parse_names_sel$input_cleaned[w]
-  
-  
   if (nrow(names_NA) != 0){
     
-    # Download WFO database
+    # One-time setup: download WFO database
     wfo_data <- here::here("data", "WFO_Backbone", "classification.txt")
     wfo_dir <- here::here("data", "WFO_Backbone")
     
@@ -213,18 +186,19 @@ standardize_taxonomy <- function(sci_names,
     query_names_wfo <-
       names_NA %>%
       dplyr::pull(input_cleaned) %>%
-      query_wfo(., match_dist = 6) %>% 
-      dplyr::rename(names_cleaned2 = scientificName)
+      query_wfo(., wfo_match_dist) %>% 
+      dplyr::rename(names_suggested_wfo = scientificName)
     
     
-    Wfo_not_found <- is.na(query_names_wfo$names_cleaned2) %>% all
+    Wfo_not_found <- is.na(query_names_wfo$names_suggested_wfo) %>% all
     
-    #Fixme select only names different from original names
     if (Wfo_not_found == F) {
-      query_three <-
+    
+    # Use names retrieved from WFO to carry out a new query for accepted names in taxadb
+      query_two <-
         query_names_wfo %>%
-        dplyr::filter(!is.na(names_cleaned2)) %>%
-        dplyr::pull(names_cleaned2) %>%
+        dplyr::filter(!is.na(names_suggested_wfo)) %>%
+        dplyr::pull(names_suggested_wfo) %>%
         taxadb::filter_name(., provider = taxo_authority) %>%
         dplyr::select(
           scientificName,
@@ -232,117 +206,184 @@ standardize_taxonomy <- function(sci_names,
           family,
           taxonRank,
           taxonomicStatus,
+          acceptedNameUsageID,
           input
         ) %>%
-        dplyr::rename(names_cleaned2 = input)
+        dplyr::rename(names_suggested_wfo = input)
       
       
-      query_three_join <-
+      query_two <-
         query_names_wfo %>%
-        dplyr::select(names_cleaned2, spec.name) %>%
-        full_join(., query_three, by = "names_cleaned2") %>%
-        rename(input_cleaned = spec.name)
+        dplyr::select(names_suggested_wfo, spec.name) %>%
+        dplyr::full_join(., query_two, by = "names_suggested_wfo") %>%
+        dplyr::rename(input_cleaned = spec.name)
       
-      query_three_join <-
-        left_join(query_three_join, parse_names_sel, by = "input_cleaned") %>%
-        dplyr::select(-input_cleaned) %>%
+      
+      query_two_join <-
+        df %>% 
+        dplyr::select(input, input_cleaned, temp_id) %>% 
+        dplyr::filter(input_cleaned %in% query_two$input_cleaned) %>% 
+        dplyr::full_join(query_two, ., by = "input_cleaned") %>%
+        dplyr::select(-names_suggested_wfo) %>%
         dplyr::select(names(df))
       
     }
     
     # Merge data
-    df_temp <- dplyr::bind_rows(df, query_three_join)
+    df_temp <- dplyr::bind_rows(df, query_two_join)
     
   }else{
     df_temp <- names_NA %>%
-      dplyr::select(-input_cleaned) %>%
       dplyr::bind_rows(df, .)
   }
   
   
-  # Filter only accepted names
+  # filter only accepted names
   names_resolved <-
     df_temp %>%
     dplyr::filter(taxonomicStatus == "accepted")
   
-  # Find names with more than one accepted names whose will be added to the table containing unresolved names
-  # criar aqui uma tablea com os nomes duplicados para inserir na tabela final?
+  # find names with more than one accepted names. Those names will be added to the table of unresolved names
   names_accDup <-
     names_resolved %>%
-    janitor::get_dupes(temp_id)
+    janitor::get_dupes(temp_id) %>% 
+    dplyr::select(-dupe_count) %>% 
+    dplyr::select(names(df))
   
+  rem_accNames <- ifelse(nrow(names_accDup) > 0, T, F)
   
-  # Remove names with more than one accepted name
-  if (nrow(names_accDup) != 0) {
+  # remove names with more than one accepted name
+  if (rem_accNames == T) {
     names_resolved <-
       names_resolved %>%
       dplyr::filter(!temp_id %in% names_accDup$temp_id)
   }
   
-  # Filter names not accepted and/or not found names
+  # filter names not accepted and/or those that remain unresolved
   unresolved_names <-
     df %>%
     dplyr::filter(!(taxonomicStatus == "accepted") | is.na(taxonomicStatus))
   
-  # Identify synonym names already resolved and merge names with more than one accepted name
-  # and add names not found and not modified by parse
+  # identify synonym names already resolved and merge names with more than one accepted name
   unresolved_names <-
     unresolved_names %>%
-    dplyr::filter(!temp_id %in% names_resolved$temp_id) %>%
-    dplyr::bind_rows(., names_accDup) %>%
-    dplyr::select(-dupe_count) %>% 
-    #distinct(temp_id, .keep_all = T) %>% 
-    bind_rows(., not_changed_names)
+    dplyr::filter(!temp_id %in% names_resolved$temp_id) %>% 
+    filter(!temp_id %in% names_accDup$temp_id)
   
   
+  
+  # resolve synonyms that have only one accepted name id
+  
+  if (replace_synonyms == T){
+    
+    df_synonyms <- 
+      unresolved_names %>% 
+      group_by(input, scientificName, temp_id) %>% 
+      summarise(unique_accepName = n_distinct(acceptedNameUsageID)) %>% 
+      ungroup() %>% 
+      filter(unique_accepName == 1 & !is.na(scientificName)) %>% 
+      dplyr::select(-unique_accepName)
+    
+    # Add column acceptedNameUsageID
+    df_synonyms_id <- 
+      unresolved_names %>% 
+      dplyr::select(temp_id, acceptedNameUsageID) %>% 
+      dplyr::distinct(., .keep_all = T) %>% 
+      dplyr::filter(!is.na(acceptedNameUsageID)) %>% 
+      full_join(df_synonyms, unresolved_names, by = "temp_id") %>% 
+      dplyr::filter(!is.na(scientificName)) %>% 
+      dplyr::rename(input_cleaned = scientificName)
+    
+    # Use synonyms' id to query for accepted names (a vector is retrieved)
+    search_accNames <- 
+      df_synonyms_id %>% 
+      dplyr::pull(acceptedNameUsageID) %>%
+      taxadb::get_names(., db = taxo_authority)
+
+    # Add accepted names
+    df_synonyms_id <- 
+      df_synonyms_id %>% 
+      dplyr::mutate(retrieved_accepName = search_accNames)
+    
+    
+    # use the name retrieved in filter_name function (taxadb)
+    query_synonyms <-
+      df_synonyms_id %>%
+      dplyr::filter(!is.na(retrieved_accepName)) %>% 
+      dplyr::pull(retrieved_accepName) %>%
+      taxadb::filter_name(., provider = taxo_authority) %>%
+      dplyr::select(
+        scientificName, scientificNameAuthorship, family,
+        taxonRank, taxonomicStatus, acceptedNameUsageID, input
+      ) %>%
+      dplyr::rename(retrieved_accepName = input)
+    
+    query_synonyms_join <-
+      df_synonyms_id %>% 
+      dplyr::select(temp_id, input, input_cleaned, retrieved_accepName) %>% 
+      dplyr::full_join(query_synonyms, df_synonyms_id, by = "retrieved_accepName") %>%
+      dplyr::select(-retrieved_accepName) %>% 
+      dplyr::select(names(df))
+    
+    # Add names to resolved or unresolved tables
+    names_resolved <- 
+      query_synonyms_join %>% 
+      dplyr::filter(!is.na(scientificName)) %>% 
+      dplyr::bind_rows(names_resolved, .)
+    
+    unresolved_names <- 
+      unresolved_names %>% 
+      dplyr::filter(!temp_id %in% query_synonyms_join$temp_id) # replace found names
+      
+    unresolved_names <- 
+      query_synonyms_join %>% 
+      dplyr::filter(is.na(scientificName)) %>% 
+      dplyr::bind_rows(unresolved_names, .)
+  }
+  
+  # Unresolved names are those not resolved or with more than one accepted name (or synonyms if replace_synonyms == T)
+  unresolved_names <- 
+  dplyr::bind_rows(unresolved_names, names_accDup)
+
+  # Replace to NA
   unresolved_names_filter <- 
     unresolved_names %>% 
-    distinct(temp_id, .keep_all = T)
+    mutate(across(scientificName:acceptedNameUsageID, 
+                  ~if_else(!is.na(.), NA, NA))) %>% 
+    dplyr::distinct(input, .keep_all = T)
   
-  # fixme tem que ver se vai colocar NA nas colunas para as espécies que tiveram duplo nome aceito
-  # senão na tablea final que junta tudo elas vão confundir
-  
-  # It is working!!!
-  
-  ## Criar tabela com dados encontrado e não encontrado   
   df_final <-
     rbind(names_resolved, unresolved_names_filter) %>% 
-    dplyr::full_join(df0, ., by = c("temp_id", "input")) %>% 
-    dplyr::mutate()
+    dplyr::full_join(df0, ., by = c("temp_id", "input"))
   
-  # FIXEME: Add this part at the end (out taxadb and flora functions)
-  save_in_dir_ch <- here::here("output", "Check", "02_taxonomy")
-  save_in_dir_in <- here::here("output", "Intermediate", "02_taxonomy")
+  df_final <- 
+    parse_names %>% 
+    dplyr::select(uncer_terms, flag_uncer_terms, temp_id) %>% 
+    dplyr::full_join(df_final, ., by = "temp_id") %>% 
+    rename(.flag_uncer_terms = flag_uncer_terms) %>% 
+    dplyr::select(-temp_id)
+
   
-  if (!fs::dir_exists(save_in_dir) & !fs::dir_exists(save_in_dir)) {
-    fs::dir_create(save_in_dir_ch)
-    fs::dir_create(save_in_dir_in)
+  # create  directories to salve files
+  save_in_dir_che <- here::here("output", "Check", "02_taxonomy")
+  save_in_dir_int <- here::here("output", "Intermediate", "02_taxonomy")
+  
+  if (!fs::dir_exists(save_in_dir_che) & !fs::dir_exists(save_in_dir_int)) {
+    fs::dir_create(save_in_dir_che)
+    fs::dir_create(save_in_dir_int)
   }
   
   
-  # Save files
-  df_final %>%
-    vroom::vroom_write(paste0(save_in_dir, "/02_names_resolved.csv"))
-
-  unresolved_names %>%
-    vroom::vroom_write(paste0(save_in_dir, "/02_unresolved_names.csv"))
+  # save files
   
-  return(names_resolved)
+  df_final %>%
+    vroom::vroom_write(paste0(save_in_dir_int, "/02_taxonomy.csv"))
+  
+  unresolved_names %>%
+    vroom::vroom_write(paste0(save_in_dir_che, "/02_unresolved_names.csv"))
+  
+  parse_names %>%
+    vroom::vroom_write(paste0(save_in_dir_che, "/02_names_parsed.csv"))
+  
+  return(df_final)
 }
-
-
-
-
-
-
-
-
-# 
-# 
-# devtools::install_github("cboettig/taxalight")
-# 
-# # install.packages("digest")
-# # library(digest)
-# 
-# library(taxalight)
-# tl_create("gbif")
