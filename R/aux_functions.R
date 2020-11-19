@@ -1169,3 +1169,178 @@ standardize_dataset <- function(metadata) {
 
   }
 
+}
+
+# map our data quickly. it always assume that decimalL* variables are the coordinates to map
+
+quickmap <- function(data) {
+
+  n_nrow_data <- format(x = nrow(data), big.mark = ",")
+
+  world_borders <-
+    borders(
+      database = "world",
+      # regions = "Brazil",
+      fill = "white",
+      colour = "grey90",
+      # xlim = c(0, 0),
+      # ylim = c(0, 0)
+    )
+
+  our_map <-
+    data %>%
+    ggplot() +
+    world_borders +
+    theme_bw() +
+    labs(
+      x = "Longitude (decimals)",
+      y = "Latitude (decimals)",
+      title = paste("Based on ", n_nrow_data, "points")
+    ) +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_line(colour = "grey80"),
+      panel.grid.minor = element_blank()
+    ) +
+    geom_point(
+      aes(
+        x = decimalLongitude, 
+        y = decimalLatitude
+      ), 
+      alpha = 0.5,
+      size = 0.1
+    )
+
+  print(our_map)
+
+}
+
+# filter and save data not in filtered data
+# ex: raw_data %>% not_in(filtered_data)
+
+export_rejected_data <- function(raw_data, filtered_data, save_in_filename, comment = NULL) {
+
+  if (!file.exists(save_in_filename)) {
+
+    n_raw_data <- nrow(raw_data)
+
+    n_filtered_data <- nrow(filtered_data)
+
+    rejected_data <-
+      anti_join(raw_data, filtered_data, by = "database_id")
+
+    n_rejected_data <- nrow(rejected_data)
+
+    log_file <- here::here("output", "log.csv")
+
+    if (!is.null(comment)) {
+
+      comment <- str_replace_all(comment, ",", ".")
+
+    } else {
+
+      comment <- NA
+
+    }
+
+    prepare_log <-
+      data.frame(
+        timestamp = Sys.time(),
+        raw_data = paste(deparse(substitute(raw_data))),
+        nrow_raw_data = n_raw_data,
+        filtered_data = paste(deparse(substitute(filtered_data))),
+        nrow_filtered_data = n_filtered_data,
+        rejected_data = paste(save_in_filename),
+        nrow_rejected_daat = n_rejected_data,
+        comment = comment
+      )
+
+    if (!file.exists(log_file)) {
+
+      log_template <-
+        data.frame(
+          "timestamp",
+          "raw_data",
+          "nrow_raw_data",
+          "filtered_data",
+          "nrow_filtered_data",
+          "rejected_data",
+          "nrow_rejected_data",
+          "comment"
+        )
+
+      write_csv(log_template, log_file, append = TRUE)
+
+    }
+
+    message(paste("Saving rejected data in ", save_in_filename))
+
+    write_csv(rejected_data, save_in_filename)
+
+    message(paste("Appending log in ", log_file))
+
+    write_csv(prepare_log, log_file, append = TRUE)
+
+    message(paste("Check latest ", log_file))
+
+    suppressPackageStartupMessages({
+
+      read_csv(log_file)
+
+    })
+
+  } else {
+
+    message(paste(save_in_filename, "already exists!"))
+
+  }
+
+}
+
+# get wiki countries
+get_wiki_country <- function() {
+
+  wiki_cntr <-
+    here::here("data", "wiki_country_names.txt") %>%
+    vroom::vroom()
+
+  return(wiki_cntr)
+
+}
+
+# get worldmap
+
+get_world_map <- function() {
+
+  worldmap <- rnaturalearth::ne_countries(scale='large') 
+
+  # worldmap@data
+
+  # Add some iso code to some countries polygons 
+  iso2c <- countrycode::countrycode(unique(worldmap$name_en),
+                                    origin = 'country.name.en',
+                                    destination = 'iso2c')
+
+  iso3c <- countrycode::countrycode(unique(worldmap$name_en),
+                                    origin = 'country.name.en',
+                                    destination = 'iso3c')
+
+  iso <- data.frame(worldmap@data %>% dplyr::select(name_en, starts_with('iso')),
+                    iso2c,
+                    iso3c)
+
+  filt <- !is.na(iso$iso_a2) & is.na(iso$iso2c)
+  iso$iso2c[filt] <- iso$iso_a2[filt]
+
+  filt <- !is.na(iso$iso_a3) & is.na(iso$iso3c)
+  iso$iso3c[filt] <- iso$iso_a3[filt]
+
+  worldmap@data <- iso
+  is.na(iso) %>% colSums() #number of polygons without isocode
+  worldmap@data <- worldmap@data %>% dplyr::select(iso2c, iso3c)
+
+  rm(list=c('iso', 'iso2c', 'iso3c', 'filt'))
+
+  return(worldmap)
+
+}
