@@ -5,3 +5,9 @@
 data/WFO_Backbone
 R/backup
 Data_raw
+
+.Rprofile
+renv.lock
+renv/.gitignore
+renv/activate.R
+renv/settings.dcf
