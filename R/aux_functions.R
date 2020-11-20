@@ -1052,6 +1052,7 @@ flag_taxo_unc <- function(spp_names) {
 
 # rem_other_issues --------------------------------------------------------
 
+<<<<<<< HEAD
 #' Title: Remove duplicated genus, substitute empty cells by NA, capitalize generic name
 #'
 #' @param spp_names 
@@ -1061,6 +1062,385 @@ flag_taxo_unc <- function(spp_names) {
 #'
 #' @examples
 rem_other_issues <- function(spp_names) {
+=======
+# Remove duplicated genus, substitute empty cells by NA, capitalize generic name
+rem_other_issues <- function(spp_names) {
+  rem_dup_names <- function(x) {
+    res <- x
+    word_count <- stringr::str_count(x, "\\w+")
+    
+    w1 <- which(word_count == 1)
+    res[w1] <- stringr::str_to_lower(res[w1])
+    res[w1] <- Hmisc::capitalize(res[w1])
+    
+    w3 <- which(word_count >= 3)
+    
+    for (i in w3)
+    {
+      sp <- x[i]
+      sp <- gsub(pattern = "-", " ", sp)
+      t <- trimws(sp)
+      u <- unlist(
+        strsplit(t, split = " ", fixed = F, perl = T)
+      )
+      dup <- paste(tolower(unique(c(u[1], u[2]))), sep = " ", collapse = " ")
+      remain <- paste(u[3:length(u)], sep = " ", collapse = " ")
+      p <- paste(dup, remain)
+      res[i] <- p
+    }
+    return(res)
+  }
+  remDup <- rem_dup_names(spp_names)
+  v3 <- gsub("^$", NA, remDup) # substitue empty records by NA
+  v4 <- Hmisc::capitalize(v3)
+  return(v4)
+}
+
+
+# Query names in WorldFlora Online database
+query_wfo <- function(species_name, match_dist) {
+  
+  # Download WFO database
+  wfo_data <- here::here("data", "WFO_Backbone", "classification.txt")
+  wfo_dir <- here::here("data", "WFO_Backbone")
+  
+  if (!fs::file_exists(wfo_data)) {
+    fs::dir_create(wfo_dir)
+    
+    WorldFlora::WFO.download(
+      WFO.url = "http://104.198.143.165/files/WFO_Backbone/_WFOCompleteBackbone/WFO_Backbone.zip",
+      save.dir = wfo_dir,
+      WFO.remember = T
+    )
+    
+    utils::unzip("data/WFO_Backbone/WFO_Backbone.zip", exdir = wfo_dir)
+  }
+  
+  query_names <-
+    WorldFlora::WFO.match(species_name,
+                          WFO.file = "data/WFO_Backbone/classification.txt",
+                          Fuzzy.min = T,
+                          squish = F,
+                          spec.name.nonumber = F,
+                          spec.name.nobrackets = F,
+                          spec.name.sub = F,
+                          verbose = F,
+                          counter = T
+    )
+  
+  query_names_filter <-
+    query_names %>%
+    dplyr::select(Fuzzy.dist, taxonRank, scientificName, spec.name) %>%
+    mutate(query_match_dist = if_else(Fuzzy.dist <= match_dist |
+                                        is.na(Fuzzy.dist), T, F)) %>%
+    dplyr::mutate(scientificName = ifelse(query_match_dist == T,
+                                          scientificName,
+                                          NA
+    ))
+  return(query_names_filter)
+}
+
+
+
+############################################################
+#                                                          #
+#                          SPACE                           #
+#                                                          #
+############################################################
+
+
+# coord_trans -------------------------------------------------------------
+
+# Corrected inverted coordinates
+coord_trans <-
+  function(data,
+           x,
+           y,
+           country_code,
+           id,
+           worldmap,
+           worldmap_cntr_code
+  ) {
+  
+  data <- data %>% dplyr::select(x, y, country_code, id)
+  d1 <- data.frame(x = data[, x], y = -data[, y])
+  d2 <- data.frame(x = -data[, x], y = data[, y])
+  d3 <- data.frame(x = -data[, x], y = -data[, y])
+  d4 <- data.frame(x = data[, y], y = data[, x])
+  d5 <- data.frame(x = data[, y], y = -data[, x])
+  d6 <- data.frame(x = -data[, y], y = data[, x])
+  d7 <- data.frame(x = -data[, y], y = -data[, x])
+
+  d.list <- list(d1, d2, d3, d4, d5, d6, d7)
+  rm(list = paste0("d", 1:7))
+  d.list <- lapply(d.list, function(x) {
+    colnames(x) <- c("x", "y")
+    return(x)
+  })
+
+  over_list <- list()
+
+  for (d in 1:length(d.list)) {
+    caluse <- sp::SpatialPoints(d.list[[d]])
+    caluse@proj4string <- worldmap@proj4string
+    overresult <- sp::over(caluse, worldmap)
+    colnames(d.list[[d]]) <- c(paste0(x, "_modified"), paste0(y, "_modified"))
+    over_list[[d]] <- data.frame(d.list[[d]], data, overresult)
+    rm(caluse)
+    filt <-
+      which(over_list[[d]][country_code] == over_list[[d]][worldmap_cntr_code])
+    if (length(filt) > 0) {
+      over_list[[d]] <- over_list[[d]][filt, ]
+    } else {
+      over_list[[d]] <- NULL
+    }
+    rm(list = c("caluse", "overresult", "filt"))
+  }
+
+  rm(d.list)
+
+  over_list <- over_list[!sapply(over_list <- over_list, is.null)]
+  over_list <- dplyr::bind_rows(over_list)
+  
+  return(over_list)
+}
+
+
+
+# extract_cntr_names ------------------------------------------------------
+
+# extract_cntr_names is a function used to extracting country names in different names from wikipedia in different languages
+
+extract_cntr_names <- function(x) {
+  if (stringr::str_detect(x, "Note")) {
+    x <- stringr::str_split(x, "Note")[[1]][1]
+  }
+  if (stringr::str_detect(x, "[*]")) {
+    x <- stringr::str_split(x, "[*]")[[1]][1]
+  }
+  if (stringr::str_detect(x, "Alternate, older forms")) {
+    x <- stringr::str_split(x, "Alternate, older forms")[[1]][1]
+  }
+  x <-
+    stringr::str_split(x, pattern = "[)]")[[1]] %>%
+    stringr::str_split_fixed(., pattern = "[(]", n = 2)
+  x <- x[, 1]
+  x <-
+    x %>%
+    stringr::str_split(., pattern = ", ") %>%
+    unlist() %>%
+    stringr::str_split(., pattern = " ,") %>%
+    unlist() %>%
+    stringr::str_split(., pattern = ",") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_subset(., pattern = "", negate = FALSE)
+
+  x2 <- x[!str_detect(x, "/|-")]
+  
+  x3.1 <- x[str_detect(x, "/")] %>%
+    stringr::str_split(., pattern = "/") %>%
+    unlist() %>%
+    stringr::str_trim()
+  x3.2 <- x[str_detect(x, "-")] %>%
+    stringr::str_split(., pattern = " -", n = 2) %>%
+    unlist() %>%
+    stringr::str_trim()
+
+  x <- c(x2, x3.1, x3.2) %>%
+    sort() %>%
+    stringr::str_split(., pattern = "/") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = " -") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = "- ") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = " or ") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = "or ") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = ". ") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = "[\n]") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_subset(., pattern = "", negate = FALSE) %>%
+    sort() %>%
+    unique()
+
+  x <- x[!(str_length(x) == 1 & grepl(".", x))]
+  if (any(x == "Afghanistan")) {
+    x <- x[-1]
+  }
+  x <- x %>%
+    data.frame() %>%
+    as_tibble()
+
+  return(x) # Country name in different language
+}
+
+
+
+# standard_country --------------------------------------------------------
+
+# standard_country is a function to correct, standardize, and assign a ISO code to country names 
+
+standard_country <-
+  function(data,
+           cntry,
+           cntry_names_db
+  ) {
+  # Create a country database based on occ database
+  cntr_db <-
+    data %>%
+    dplyr::distinct_(cntry, .keep_all = FALSE) %>%
+    dplyr::arrange_(cntry) %>%
+    rename(cntr_original = cntry)
+
+  cntr_db$cntr_original2 <-
+    stringr::str_replace_all(cntr_db$cntr_original, "[[:punct:]]", " ") %>%
+    str_trim() %>%
+    stringi::stri_trans_general("Latin-ASCII") %>%
+    tolower()
+
+  cntr_db <- cntr_db %>% mutate(cntr_suggested = NA)
+
+  # Assign country names based on different character matching.
+  cntry_names_db <-
+    cntry_names_db %>%
+    mutate(names_2 = names_in_different_languages %>%
+      stringi::stri_trans_general("Latin-ASCII") %>%
+      tolower())
+
+  cn <- cntry_names_db %>%
+    dplyr::distinct(english_name) %>%
+    pull(1)
+  for (i in 1:length(cn)) {
+    cntry_names_db_name <-
+      cntry_names_db %>%
+      dplyr::filter(english_name == cn[i]) %>%
+      pull(names_2)
+    
+    filt <-
+      which(tolower(cntr_db$cntr_original2) %in% tolower(cntry_names_db_name))
+    
+    if (length(filt) > 0) {
+      message("country found: ", cn[i])
+      cntr_db$cntr_suggested[filt] <- toupper(cn[i])
+    }
+  }
+
+  cntr_db$cntr_suggested[is.na(cntr_db$cntr_suggested)] <-
+    rangeBuilder::standardizeCountry(cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested)],
+                                     fuzzyDist = 1,
+                                     nthreads = 1)
+
+  # Standardization of all names founds in cntr_suggested
+  cntr_db$cntr_suggested2 <-
+    rangeBuilder::standardizeCountry(cntr_db$cntr_suggested,
+                                     fuzzyDist = 1,
+                                     nthreads = 1)
+  cntr_db <-
+    cntr_db %>% 
+    mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
+
+  # Second standardization of all names cntr_original2 not
+  cntr_db$cntr_suggested2[is.na(cntr_db$cntr_suggested)] <-
+    rangeBuilder::standardizeCountry(cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested2)],
+                                     fuzzyDist = 1,
+                                     nthreads = 1)
+  cntr_db <-
+    cntr_db %>% mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
+
+
+
+  # Country code based on iso2c (it is possible use another code like iso3c, see ?codelist)
+  cntr_db$cntr_iso2c <-
+    countrycode::countrycode(
+      cntr_db$cntr_suggested,
+      origin = "country.name.en",
+      destination = "iso2c",
+      warn = FALSE
+    )
+
+  cntr_db <-
+    cntr_db %>%
+    dplyr::select(-cntr_original2, -cntr_suggested) %>%
+    dplyr::rename(cntr_suggested = cntr_suggested2)
+
+  # data <- left_join(data, cntr_db, by=c('country'="cntr_original"))
+  return(cntr_db)
+}
+
+
+
+# correct_coordinates -----------------------------------------------------
+
+# correct_coordinates is a function that will detect those occurrences georreferenced outside their country by testing with different coordinate transformation
+
+correct_coordinates <-
+  function(data,
+           x,
+           y,
+           sp,
+           id,
+           cntr_iso2,
+           world_poly,
+           world_poly_iso) {
+    
+  x_mod <- paste0(x, "_modified")
+  y_mod <- paste0(y, "_modified")
+  
+  occ_country <- data %>% dplyr::filter(!is.na(data[cntr_iso2]))
+  
+  # Filter occurrences database to avoid error in clean_coordiantes errors
+  occ_country <-
+    occ_country %>%
+    dplyr::filter(!is.na(occ_country[x]) |
+                    !is.na(occ_country[y]))
+  occ_country <-
+    occ_country %>%
+    dplyr::filter(occ_country[x] >= -180,
+                  occ_country[x] <= 180,
+                  occ_country[y] >= -90,
+                  occ_country[y] <= 90)
+  
+  
+  # Detect those record georeferenced outside a country
+  occ_country <- CoordinateCleaner::clean_coordinates(
+    x =  occ_country,
+    lon = x,
+    lat = y,
+    species = sp,
+    countries = cntr_iso2,
+    # iso2 code column of our database
+    tests = c("seas", "countries"),
+    #Will be tested records located in the see and outside georeferenced countries
+    country_ref = world_poly,
+    #Here we are using a high resolution countries border database
+    country_refcol = world_poly_iso,
+    #iso2 code column of country polygon database
+    seas_ref = world_poly,
+    #Here we are using a high resolution countries border database
+    value = "spatialvalid"
+  )
+  
+  summary(occ_country)
+  
+  # Separate those records outside their countries
+  occ_country <- 
+    occ_country %>%
+    as_tibble() %>%
+    dplyr::filter(!.summary,!is.na(occ_country[cntr_iso2]))
+  
+  message(occ_country %>% nrow, " ocurrences will be tested") #now this database have all those records with potential error that will try to correct
+>>>>>>> e387839c8b4672557d8d44e9bc7814ea3f51cf0c
   
   res <- spp_names
   word_count <- stringr::str_count(res, "\\w+")
