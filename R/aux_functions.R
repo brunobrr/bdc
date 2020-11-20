@@ -5,8 +5,7 @@
 #                                                          #
 ############################################################
 
-
-# usefull to install and load packages
+# usefull to install and load multiple R packages
 ipak <- function(pkg) {
   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
   if (length(new.pkg)) {
@@ -17,16 +16,638 @@ ipak <- function(pkg) {
 
 
 
+
 ############################################################
 #                                                          #
-#                         TAXONOMY                         #
+#                    00_MERGE_DATASETS                     #
+#                                                          #
+############################################################
+
+#' Title: Standardize datasets columns based on metadata file
+#' 
+#' @param metadata a table containing information about which columns of the
+#'   original dataset need to be renamed following Darwin Core terminology.
+#'   Please see the `Config/DatabaseInfo.csv` file.
+#'
+#' @importFrom dplyr pull filter select select_if mutate n everything
+#' @importFrom fs dir_exists dir_create
+#' @importFrom glue glue
+#' @importFrom here here
+#' @importFrom janitor clean_names make_clean_names
+#' @importFrom purrr set_names
+#' @importFrom readr read_csv write_csv
+#'
+#' @export
+standardize_dataset <- function(metadata) {
+  
+  save_in_dir <- here::here("data", "temp")
+  
+  if (!fs::dir_exists(save_in_dir)) {
+    fs::dir_create(save_in_dir)
+  }
+  
+  input_file <-
+    metadata %>%
+    dplyr::pull(File_name_to_load)
+  
+  for (file_index in seq_along(input_file)) {
+    
+    input_filename <-
+      metadata %>%
+      dplyr::filter(File_name_to_load == input_file[file_index]) %>%
+      pull(File_name_to_load)
+    
+    dataset_name <-
+      metadata %>%
+      dplyr::filter(File_name_to_load == input_file[file_index]) %>%
+      dplyr::select(datasetName) %>%
+      dplyr::pull()
+    
+    save_in_filename <- paste0(save_in_dir, "/standard_", dataset_name, ".xz")
+    
+    if (!file.exists(save_in_filename)) {
+      
+      basename_names <-
+        metadata %>%
+        dplyr::filter(File_name_to_load == input_file[file_index]) %>%
+        dplyr::select_if(~ !is.na(.)) %>%
+        dplyr::select(-datasetName, -File_name_to_load)
+      
+      standard_names <-
+        basename_names %>%
+        names(.)
+      
+      vector_for_recode <-
+        basename_names %>%
+        purrr::set_names(standard_names) %>%
+        { c(.) } %>%
+        unlist()
+      
+      imported_raw_dataset <-
+        here::here(input_file[file_index]) %>%
+        vroom::vroom(guess_max = 10^6, col_types = cols(.default = "c"), n_max = 1)
+      
+      skip_to_next <- FALSE
+      
+      error_message <-
+        paste("[ERROR]: Column names defined in the metadata do not match column names in the", input_filename)
+      
+      tryCatch(
+        
+        if (sum(!vector_for_recode %in% names(imported_raw_dataset)) != 0) {
+          
+          stop(error_message)
+          
+        } else {
+          
+          standard_dataset <-
+            here::here(input_file[file_index]) %>%
+            vroom::vroom(guess_max = 10^6, col_types = cols(.default = "c")) %>%
+            dplyr::select(all_of(vector_for_recode)) %>%
+            purrr::set_names(names(vector_for_recode)) %>%
+            dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
+            dplyr::select(database_id, dplyr::everything())
+          
+          message(paste("Creating", save_in_filename))
+          
+          standard_dataset %>%
+            vroom::vroom_write(save_in_filename)
+          
+        },
+        
+        error = function(e) {
+          
+          message(error_message)
+          
+          skip_to_next <<- TRUE
+          
+        }
+        
+      )
+      
+      if (skip_to_next) {
+        
+        next
+        
+      }
+      
+    } else {
+      
+      message(paste(save_in_filename, "already exists!"))
+      
+    }
+    
+  }
+  
+}
+
+
+
+
+############################################################
+#                                                          #
+#                      01_PRE-FILTER                       #
+#                                                          #
+############################################################
+
+
+# coord_trans -------------------------------------------------------------
+
+#' Title: Corrected inverted xy coordinates
+#'
+#' @param data 
+#' @param x 
+#' @param y 
+#' @param country_code 
+#' @param id 
+#' @param worldmap 
+#' @param worldmap_cntr_code 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+coord_trans <-
+  function(data,
+           x,
+           y,
+           country_code,
+           id,
+           worldmap,
+           worldmap_cntr_code
+  ) {
+    
+    data <- data %>% dplyr::select(x, y, country_code, id)
+    d1 <- data.frame(x = data[, x], y = -data[, y])
+    d2 <- data.frame(x = -data[, x], y = data[, y])
+    d3 <- data.frame(x = -data[, x], y = -data[, y])
+    d4 <- data.frame(x = data[, y], y = data[, x])
+    d5 <- data.frame(x = data[, y], y = -data[, x])
+    d6 <- data.frame(x = -data[, y], y = data[, x])
+    d7 <- data.frame(x = -data[, y], y = -data[, x])
+    
+    d.list <- list(d1, d2, d3, d4, d5, d6, d7)
+    rm(list = paste0("d", 1:7))
+    d.list <- lapply(d.list, function(x) {
+      colnames(x) <- c("x", "y")
+      return(x)
+    })
+    
+    over_list <- list()
+    
+    for (d in 1:length(d.list)) {
+      caluse <- sp::SpatialPoints(d.list[[d]])
+      caluse@proj4string <- worldmap@proj4string
+      overresult <- sp::over(caluse, worldmap)
+      colnames(d.list[[d]]) <- c(paste0(x, "_modified"), paste0(y, "_modified"))
+      over_list[[d]] <- data.frame(d.list[[d]], data, overresult)
+      rm(caluse)
+      filt <-
+        which(over_list[[d]][country_code] == over_list[[d]][worldmap_cntr_code])
+      if (length(filt) > 0) {
+        over_list[[d]] <- over_list[[d]][filt, ]
+      } else {
+        over_list[[d]] <- NULL
+      }
+      rm(list = c("caluse", "overresult", "filt"))
+    }
+    
+    rm(d.list)
+    
+    over_list <- over_list[!sapply(over_list <- over_list, is.null)]
+    over_list <- dplyr::bind_rows(over_list)
+    
+    return(over_list)
+  }
+
+
+
+# extract_cntr_names ------------------------------------------------------
+
+#' Title: Extract_cntr_names is a function used to extracting country names in different names from wikipedia in different languages
+#'
+#' @param x 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+extract_cntr_names <- function(x) {
+  if (stringr::str_detect(x, "Note")) {
+    x <- stringr::str_split(x, "Note")[[1]][1]
+  }
+  if (stringr::str_detect(x, "[*]")) {
+    x <- stringr::str_split(x, "[*]")[[1]][1]
+  }
+  if (stringr::str_detect(x, "Alternate, older forms")) {
+    x <- stringr::str_split(x, "Alternate, older forms")[[1]][1]
+  }
+  x <-
+    stringr::str_split(x, pattern = "[)]")[[1]] %>%
+    stringr::str_split_fixed(., pattern = "[(]", n = 2)
+  x <- x[, 1]
+  x <-
+    x %>%
+    stringr::str_split(., pattern = ", ") %>%
+    unlist() %>%
+    stringr::str_split(., pattern = " ,") %>%
+    unlist() %>%
+    stringr::str_split(., pattern = ",") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_subset(., pattern = "", negate = FALSE)
+  
+  x2 <- x[!str_detect(x, "/|-")]
+  
+  x3.1 <- x[str_detect(x, "/")] %>%
+    stringr::str_split(., pattern = "/") %>%
+    unlist() %>%
+    stringr::str_trim()
+  x3.2 <- x[str_detect(x, "-")] %>%
+    stringr::str_split(., pattern = " -", n = 2) %>%
+    unlist() %>%
+    stringr::str_trim()
+  
+  x <- c(x2, x3.1, x3.2) %>%
+    sort() %>%
+    stringr::str_split(., pattern = "/") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = " -") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = "- ") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = " or ") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = "or ") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = ". ") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_split(., pattern = "[\n]") %>%
+    unlist() %>%
+    stringr::str_trim() %>%
+    stringr::str_subset(., pattern = "", negate = FALSE) %>%
+    sort() %>%
+    unique()
+  
+  x <- x[!(str_length(x) == 1 & grepl(".", x))]
+  if (any(x == "Afghanistan")) {
+    x <- x[-1]
+  }
+  x <- x %>%
+    data.frame() %>%
+    as_tibble()
+  
+  return(x) # Country name in different language
+}
+
+
+
+# standard_country --------------------------------------------------------
+
+#' Title: standard_country is a function to correct, standardize, and assign a ISO code to country names 
+#'
+#' @param data 
+#' @param cntry 
+#' @param cntry_names_db 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+standard_country <-
+  function(data,
+           cntry,
+           cntry_names_db
+  ) {
+    # Create a country database based on occ database
+    cntr_db <-
+      data %>%
+      dplyr::distinct_(cntry, .keep_all = FALSE) %>%
+      dplyr::arrange_(cntry) %>%
+      rename(cntr_original = cntry)
+    
+    cntr_db$cntr_original2 <-
+      stringr::str_replace_all(cntr_db$cntr_original, "[[:punct:]]", " ") %>%
+      str_trim() %>%
+      stringi::stri_trans_general("Latin-ASCII") %>%
+      tolower()
+    
+    cntr_db <- cntr_db %>% mutate(cntr_suggested = NA)
+    
+    # Assign country names based on different character matching.
+    cntry_names_db <-
+      cntry_names_db %>%
+      mutate(names_2 = names_in_different_languages %>%
+               stringi::stri_trans_general("Latin-ASCII") %>%
+               tolower())
+    
+    cn <- cntry_names_db %>%
+      dplyr::distinct(english_name) %>%
+      pull(1)
+    for (i in 1:length(cn)) {
+      cntry_names_db_name <-
+        cntry_names_db %>%
+        dplyr::filter(english_name == cn[i]) %>%
+        pull(names_2)
+      
+      filt <-
+        which(tolower(cntr_db$cntr_original2) %in% tolower(cntry_names_db_name))
+      
+      if (length(filt) > 0) {
+        message("country found: ", cn[i])
+        cntr_db$cntr_suggested[filt] <- toupper(cn[i])
+      }
+    }
+    
+    cntr_db$cntr_suggested[is.na(cntr_db$cntr_suggested)] <-
+      rangeBuilder::standardizeCountry(cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested)],
+                                       fuzzyDist = 1,
+                                       nthreads = 1)
+    
+    # Standardization of all names founds in cntr_suggested
+    cntr_db$cntr_suggested2 <-
+      rangeBuilder::standardizeCountry(cntr_db$cntr_suggested,
+                                       fuzzyDist = 1,
+                                       nthreads = 1)
+    cntr_db <-
+      cntr_db %>% 
+      mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
+    
+    # Second standardization of all names cntr_original2 not
+    cntr_db$cntr_suggested2[is.na(cntr_db$cntr_suggested)] <-
+      rangeBuilder::standardizeCountry(cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested2)],
+                                       fuzzyDist = 1,
+                                       nthreads = 1)
+    cntr_db <-
+      cntr_db %>% mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
+    
+    
+    
+    # Country code based on iso2c (it is possible use another code like iso3c, see ?codelist)
+    cntr_db$cntr_iso2c <-
+      countrycode::countrycode(
+        cntr_db$cntr_suggested,
+        origin = "country.name.en",
+        destination = "iso2c",
+        warn = FALSE
+      )
+    
+    cntr_db <-
+      cntr_db %>%
+      dplyr::select(-cntr_original2, -cntr_suggested) %>%
+      dplyr::rename(cntr_suggested = cntr_suggested2)
+    
+    # data <- left_join(data, cntr_db, by=c('country'="cntr_original"))
+    return(cntr_db)
+  }
+
+
+
+# correct_coordinates -----------------------------------------------------
+
+#' Title: correct_coordinates is a function that will detect those occurrences georreferenced outside their country different coordinate transformation
+#'
+#' @param data 
+#' @param x 
+#' @param y 
+#' @param sp 
+#' @param id 
+#' @param cntr_iso2 
+#' @param world_poly 
+#' @param world_poly_iso 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+correct_coordinates <-
+  function(data,
+           x,
+           y,
+           sp,
+           id,
+           cntr_iso2,
+           world_poly,
+           world_poly_iso) {
+    
+    x_mod <- paste0(x, "_modified")
+    y_mod <- paste0(y, "_modified")
+    
+    occ_country <- data %>% dplyr::filter(!is.na(data[cntr_iso2]))
+    
+    # Filter occurrences database to avoid error in clean_coordiantes errors
+    occ_country <-
+      occ_country %>%
+      dplyr::filter(!is.na(occ_country[x]) |
+                      !is.na(occ_country[y]))
+    occ_country <-
+      occ_country %>%
+      dplyr::filter(occ_country[x] >= -180,
+                    occ_country[x] <= 180,
+                    occ_country[y] >= -90,
+                    occ_country[y] <= 90)
+    
+    
+    # Detect those record georeferenced outside a country
+    occ_country <- CoordinateCleaner::clean_coordinates(
+      x =  occ_country,
+      lon = x,
+      lat = y,
+      species = sp,
+      countries = cntr_iso2,
+      # iso2 code column of our database
+      tests = c("seas", "countries"),
+      #Will be tested records located in the see and outside georeferenced countries
+      country_ref = world_poly,
+      #Here we are using a high resolution countries border database
+      country_refcol = world_poly_iso,
+      #iso2 code column of country polygon database
+      seas_ref = world_poly,
+      #Here we are using a high resolution countries border database
+      value = "spatialvalid"
+    )
+    
+    summary(occ_country)
+    
+    # Separate those records outside their countries
+    occ_country <- 
+      occ_country %>%
+      as_tibble() %>%
+      dplyr::filter(!.summary,!is.na(occ_country[cntr_iso2]))
+    
+    message(occ_country %>% nrow, " ocurrences will be tested") #now this database have all those records with potential error that will try to correct
+    
+    # Split database
+    occ_country <-
+      occ_country %>% dplyr::group_by_(cntr_iso2) %>% group_split()
+    
+    
+    # coord_trans() function will try different coordinate transformations to correct georeferenced occurrences
+    coord_test <- list()
+    
+    for (i in 1:length(occ_country)) {
+      message('Processing occurrence from: ',
+              occ_country[[i]][cntr_iso2] %>% unique,
+              paste0(" (", nrow(occ_country[[i]]), ")"))
+      try(coord_test[[i]] <-
+            coord_trans(
+              data = occ_country[[i]],
+              x = x,
+              y = y,
+              country_code = cntr_iso2,
+              id = id,
+              worldmap = world_poly,
+              worldmap_cntr_code = world_poly_iso
+            ))
+    }
+    
+    filt <- sapply(coord_test, function(x)
+      nrow(x) > 0)
+    coord_test <-
+      coord_test[filt] # elimination from the list those countries without correction
+    
+    # Elimination of those records near to country border (to avoid flip coordinates or sign that fall too close to country border)
+    
+    for (i in 1:length(coord_test)) {
+      n <- 
+        coord_test[[i]] %>%
+        dplyr::select_(cntr_iso2) %>% 
+        unique %>% 
+        pull
+      
+      my_country <-
+        world_poly[which(world_poly@data[, world_poly_iso] == n),] #Here filter polygon based on your country iso2c code
+      my_country2 <-
+        raster::buffer(my_country, width = 0.5) #0.5 degree ~50km near to equator
+      
+      coord_sp <- sp::SpatialPoints(coord_test[[i]] %>%
+                                      dplyr::select_(x, y))
+      
+      coord_sp@proj4string <- my_country2@proj4string
+      over_occ <- sp::over(coord_sp, my_country2)
+      
+      # plot(my_country)
+      # plot(my_country2, add = T)
+      # coord_test[[i]] %>%
+      #   dplyr::filter(over_occ == 1) %>%
+      #   dplyr::select_(x, y) %>%
+      #   points(., pch = 19, col = 'red')
+      
+      # Eliminate as corrected those records too close to country border
+      coord_test[[i]] <-
+        coord_test[[i]] %>% dplyr::filter(is.na(over_occ))
+    }
+    
+    # Elimination of those records with more than two possible correction
+    coord_test <-
+      dplyr::bind_rows(coord_test) %>% 
+      as_tibble() # binding dataframes allocated in the list in a single one
+    
+    coord_test <-
+      coord_test %>%
+      dplyr::distinct_(., id, .keep_all = T) %>%
+      as_tibble %>%
+      dplyr::relocate(id, x, y)
+    
+    # Merge coord_test with other columns of occurrence database
+    coord_test <-
+      left_join(coord_test,
+                data %>% dplyr::select(-c(x, y, cntr_iso2)),
+                by = id)
+    
+    return(coord_test)
+  }
+
+
+# get wiki countries ------------------------------------------------------
+
+# 
+#' Title. Wrapped funciton to get cuntry names from Wikipedia
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_wiki_country <- function() {
+  
+  wiki_cntr <-
+    here::here("data", "wiki_country_names.txt") %>%
+    vroom::vroom()
+  
+  return(wiki_cntr)
+  
+}
+
+
+# get worldmap ------------------------------------------------------------
+
+#' Title: FIXEME ####################################
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_world_map <- function() {
+  
+  worldmap <- rnaturalearth::ne_countries(scale='large') 
+  
+  # worldmap@data
+  
+  # Add some iso code to some countries polygons 
+  iso2c <- countrycode::countrycode(unique(worldmap$name_en),
+                                    origin = 'country.name.en',
+                                    destination = 'iso2c')
+  
+  iso3c <- countrycode::countrycode(unique(worldmap$name_en),
+                                    origin = 'country.name.en',
+                                    destination = 'iso3c')
+  
+  iso <- data.frame(worldmap@data %>% dplyr::select(name_en, starts_with('iso')),
+                    iso2c,
+                    iso3c)
+  
+  filt <- !is.na(iso$iso_a2) & is.na(iso$iso2c)
+  iso$iso2c[filt] <- iso$iso_a2[filt]
+  
+  filt <- !is.na(iso$iso_a3) & is.na(iso$iso3c)
+  iso$iso3c[filt] <- iso$iso_a3[filt]
+  
+  worldmap@data <- iso
+  is.na(iso) %>% colSums() #number of polygons without isocode
+  worldmap@data <- worldmap@data %>% dplyr::select(iso2c, iso3c)
+  
+  rm(list=c('iso', 'iso2c', 'iso3c', 'filt'))
+  
+  return(worldmap)
+  
+}
+
+
+
+
+############################################################
+#                                                          #
+#                       02_TAXONOMY                        #
 #                                                          #
 ############################################################
 
 
 # rem_family_names --------------------------------------------------------
 
-# Remove family names from species names
+#' Title: Remove family names from species names
+#'
+#' @param sp_names 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 rem_family_names <- function(sp_names) {
   sp_names_raw <- sp_names
   df <- data.frame(str_count(sp_names, "\\S+"), sp_names)
@@ -53,7 +674,14 @@ rem_family_names <- function(sp_names) {
 
 # rem_taxo_unc ------------------------------------------------------------
 
-# Remove terms denoting taxonomic uncertainty (e.g., cf., sp., aff)
+#' Title: Remove terms denoting taxonomic uncertainty (e.g., cf., sp., aff)
+#'
+#' @param spp_names 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 rem_taxo_unc <- function(spp_names) {
   # confer
   spp_names_clean <-
@@ -249,7 +877,14 @@ rem_taxo_unc <- function(spp_names) {
 
 # flag_taxo_unc -----------------------------------------------------------
 
-# Flag terms denoting taxonomic uncertainty (T = no terms found; F = term found)
+#' Title: Flag terms denoting taxonomic uncertainty (T = no terms found; F = term found)
+#'
+#' @param spp_names 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 flag_taxo_unc <- function(spp_names) {
   # confer
   cf0 <- str_detect(
@@ -417,41 +1052,57 @@ flag_taxo_unc <- function(spp_names) {
 
 # rem_other_issues --------------------------------------------------------
 
-# Remove duplicated genus, substitute empty cells by NA, capitalize generic name
+#' Title: Remove duplicated genus, substitute empty cells by NA, capitalize generic name
+#'
+#' @param spp_names 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 rem_other_issues <- function(spp_names) {
-  rem_dup_names <- function(x) {
-    res <- x
-    word_count <- stringr::str_count(x, "\\w+")
-    
-    w1 <- which(word_count == 1)
-    res[w1] <- stringr::str_to_lower(res[w1])
-    res[w1] <- Hmisc::capitalize(res[w1])
-    
-    w3 <- which(word_count >= 3)
-    
-    for (i in w3)
-    {
-      sp <- x[i]
-      sp <- gsub(pattern = "-", " ", sp)
-      t <- trimws(sp)
-      u <- unlist(
-        strsplit(t, split = " ", fixed = F, perl = T)
-      )
-      dup <- paste(tolower(unique(c(u[1], u[2]))), sep = " ", collapse = " ")
-      remain <- paste(u[3:length(u)], sep = " ", collapse = " ")
-      p <- paste(dup, remain)
-      res[i] <- p
-    }
-    return(res)
+  
+  res <- spp_names
+  word_count <- stringr::str_count(res, "\\w+")
+  
+  w1 <- which(word_count == 1)
+  res[w1] <- stringr::str_to_lower(res[w1])
+  res[w1] <- Hmisc::capitalize(res[w1])
+  
+  w3 <- which(word_count >= 3)
+  
+  for (i in w3)
+  {
+    sp <- spp_names[i]
+    sp <- tolower(spp_names[i])
+    sp <- gsub(pattern = "-", " ", sp)
+    t <- trimws(sp)
+    u <- unlist(
+      strsplit(t, split = " ", fixed = F, perl = T)
+    )
+    dup <- paste(tolower(unique(c(u[1], u[2]))), sep = " ", collapse = " ")
+    remain <- paste(u[3:length(u)], sep = " ", collapse = " ")
+    p <- paste(dup, remain)
+    res[i] <- p
   }
-  remDup <- rem_dup_names(spp_names)
-  v3 <- gsub("^$", NA, remDup) # substitue empty records by NA
+  v3 <- gsub("^$", NA, res) # substitute empty records by NA
   v4 <- Hmisc::capitalize(v3)
   return(v4)
 }
 
 
-# Query names in WorldFlora Online database
+
+# query_wfo ---------------------------------------------------------------
+
+#' Title: Query names in WorldFlora Online database
+#'
+#' @param species_name 
+#' @param match_dist 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 query_wfo <- function(species_name, match_dist) {
   
   # Download WFO database
@@ -496,390 +1147,28 @@ query_wfo <- function(species_name, match_dist) {
 
 
 
-############################################################
-#                                                          #
-#                          SPACE                           #
-#                                                          #
-############################################################
+# get.taxa.taxadb ---------------------------------------------------------
 
-
-# coord_trans -------------------------------------------------------------
-
-# Corrected inverted coordinates
-coord_trans <-
-  function(data,
-           x,
-           y,
-           country_code,
-           id,
-           worldmap,
-           worldmap_cntr_code
-  ) {
-  
-  data <- data %>% dplyr::select(x, y, country_code, id)
-  d1 <- data.frame(x = data[, x], y = -data[, y])
-  d2 <- data.frame(x = -data[, x], y = data[, y])
-  d3 <- data.frame(x = -data[, x], y = -data[, y])
-  d4 <- data.frame(x = data[, y], y = data[, x])
-  d5 <- data.frame(x = data[, y], y = -data[, x])
-  d6 <- data.frame(x = -data[, y], y = data[, x])
-  d7 <- data.frame(x = -data[, y], y = -data[, x])
-
-  d.list <- list(d1, d2, d3, d4, d5, d6, d7)
-  rm(list = paste0("d", 1:7))
-  d.list <- lapply(d.list, function(x) {
-    colnames(x) <- c("x", "y")
-    return(x)
-  })
-
-  over_list <- list()
-
-  for (d in 1:length(d.list)) {
-    caluse <- sp::SpatialPoints(d.list[[d]])
-    caluse@proj4string <- worldmap@proj4string
-    overresult <- sp::over(caluse, worldmap)
-    colnames(d.list[[d]]) <- c(paste0(x, "_modified"), paste0(y, "_modified"))
-    over_list[[d]] <- data.frame(d.list[[d]], data, overresult)
-    rm(caluse)
-    filt <-
-      which(over_list[[d]][country_code] == over_list[[d]][worldmap_cntr_code])
-    if (length(filt) > 0) {
-      over_list[[d]] <- over_list[[d]][filt, ]
-    } else {
-      over_list[[d]] <- NULL
-    }
-    rm(list = c("caluse", "overresult", "filt"))
-  }
-
-  rm(d.list)
-
-  over_list <- over_list[!sapply(over_list <- over_list, is.null)]
-  over_list <- dplyr::bind_rows(over_list)
-  
-  return(over_list)
-}
-
-
-
-# extract_cntr_names ------------------------------------------------------
-
-# extract_cntr_names is a function used to extracting country names in different names from wikipedia in different languages
-
-extract_cntr_names <- function(x) {
-  if (stringr::str_detect(x, "Note")) {
-    x <- stringr::str_split(x, "Note")[[1]][1]
-  }
-  if (stringr::str_detect(x, "[*]")) {
-    x <- stringr::str_split(x, "[*]")[[1]][1]
-  }
-  if (stringr::str_detect(x, "Alternate, older forms")) {
-    x <- stringr::str_split(x, "Alternate, older forms")[[1]][1]
-  }
-  x <-
-    stringr::str_split(x, pattern = "[)]")[[1]] %>%
-    stringr::str_split_fixed(., pattern = "[(]", n = 2)
-  x <- x[, 1]
-  x <-
-    x %>%
-    stringr::str_split(., pattern = ", ") %>%
-    unlist() %>%
-    stringr::str_split(., pattern = " ,") %>%
-    unlist() %>%
-    stringr::str_split(., pattern = ",") %>%
-    unlist() %>%
-    stringr::str_trim() %>%
-    stringr::str_subset(., pattern = "", negate = FALSE)
-
-  x2 <- x[!str_detect(x, "/|-")]
-  
-  x3.1 <- x[str_detect(x, "/")] %>%
-    stringr::str_split(., pattern = "/") %>%
-    unlist() %>%
-    stringr::str_trim()
-  x3.2 <- x[str_detect(x, "-")] %>%
-    stringr::str_split(., pattern = " -", n = 2) %>%
-    unlist() %>%
-    stringr::str_trim()
-
-  x <- c(x2, x3.1, x3.2) %>%
-    sort() %>%
-    stringr::str_split(., pattern = "/") %>%
-    unlist() %>%
-    stringr::str_trim() %>%
-    stringr::str_split(., pattern = " -") %>%
-    unlist() %>%
-    stringr::str_trim() %>%
-    stringr::str_split(., pattern = "- ") %>%
-    unlist() %>%
-    stringr::str_trim() %>%
-    stringr::str_split(., pattern = " or ") %>%
-    unlist() %>%
-    stringr::str_trim() %>%
-    stringr::str_split(., pattern = "or ") %>%
-    unlist() %>%
-    stringr::str_trim() %>%
-    stringr::str_split(., pattern = ". ") %>%
-    unlist() %>%
-    stringr::str_trim() %>%
-    stringr::str_split(., pattern = "[\n]") %>%
-    unlist() %>%
-    stringr::str_trim() %>%
-    stringr::str_subset(., pattern = "", negate = FALSE) %>%
-    sort() %>%
-    unique()
-
-  x <- x[!(str_length(x) == 1 & grepl(".", x))]
-  if (any(x == "Afghanistan")) {
-    x <- x[-1]
-  }
-  x <- x %>%
-    data.frame() %>%
-    as_tibble()
-
-  return(x) # Country name in different language
-}
-
-
-
-# standard_country --------------------------------------------------------
-
-# standard_country is a function to correct, standardize, and assign a ISO code to country names 
-
-standard_country <-
-  function(data,
-           cntry,
-           cntry_names_db
-  ) {
-  # Create a country database based on occ database
-  cntr_db <-
-    data %>%
-    dplyr::distinct_(cntry, .keep_all = FALSE) %>%
-    dplyr::arrange_(cntry) %>%
-    rename(cntr_original = cntry)
-
-  cntr_db$cntr_original2 <-
-    stringr::str_replace_all(cntr_db$cntr_original, "[[:punct:]]", " ") %>%
-    str_trim() %>%
-    stringi::stri_trans_general("Latin-ASCII") %>%
-    tolower()
-
-  cntr_db <- cntr_db %>% mutate(cntr_suggested = NA)
-
-  # Assign country names based on different character matching.
-  cntry_names_db <-
-    cntry_names_db %>%
-    mutate(names_2 = names_in_different_languages %>%
-      stringi::stri_trans_general("Latin-ASCII") %>%
-      tolower())
-
-  cn <- cntry_names_db %>%
-    dplyr::distinct(english_name) %>%
-    pull(1)
-  for (i in 1:length(cn)) {
-    cntry_names_db_name <-
-      cntry_names_db %>%
-      dplyr::filter(english_name == cn[i]) %>%
-      pull(names_2)
-    
-    filt <-
-      which(tolower(cntr_db$cntr_original2) %in% tolower(cntry_names_db_name))
-    
-    if (length(filt) > 0) {
-      message("country found: ", cn[i])
-      cntr_db$cntr_suggested[filt] <- toupper(cn[i])
-    }
-  }
-
-  cntr_db$cntr_suggested[is.na(cntr_db$cntr_suggested)] <-
-    rangeBuilder::standardizeCountry(cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested)],
-                                     fuzzyDist = 1,
-                                     nthreads = 1)
-
-  # Standardization of all names founds in cntr_suggested
-  cntr_db$cntr_suggested2 <-
-    rangeBuilder::standardizeCountry(cntr_db$cntr_suggested,
-                                     fuzzyDist = 1,
-                                     nthreads = 1)
-  cntr_db <-
-    cntr_db %>% 
-    mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
-
-  # Second standardization of all names cntr_original2 not
-  cntr_db$cntr_suggested2[is.na(cntr_db$cntr_suggested)] <-
-    rangeBuilder::standardizeCountry(cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested2)],
-                                     fuzzyDist = 1,
-                                     nthreads = 1)
-  cntr_db <-
-    cntr_db %>% mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
-
-
-
-  # Country code based on iso2c (it is possible use another code like iso3c, see ?codelist)
-  cntr_db$cntr_iso2c <-
-    countrycode::countrycode(
-      cntr_db$cntr_suggested,
-      origin = "country.name.en",
-      destination = "iso2c",
-      warn = FALSE
-    )
-
-  cntr_db <-
-    cntr_db %>%
-    dplyr::select(-cntr_original2, -cntr_suggested) %>%
-    dplyr::rename(cntr_suggested = cntr_suggested2)
-
-  # data <- left_join(data, cntr_db, by=c('country'="cntr_original"))
-  return(cntr_db)
-}
-
-
-
-# correct_coordinates -----------------------------------------------------
-
-# correct_coordinates is a function that will detect those occurrences georreferenced outside their country different coordinate transformation
-
-correct_coordinates <-
-  function(data,
-           x,
-           y,
-           sp,
-           id,
-           cntr_iso2,
-           world_poly,
-           world_poly_iso) {
-    
-  x_mod <- paste0(x, "_modified")
-  y_mod <- paste0(y, "_modified")
-  
-  occ_country <- data %>% dplyr::filter(!is.na(data[cntr_iso2]))
-  
-  # Filter occurrences database to avoid error in clean_coordiantes errors
-  occ_country <-
-    occ_country %>%
-    dplyr::filter(!is.na(occ_country[x]) |
-                    !is.na(occ_country[y]))
-  occ_country <-
-    occ_country %>%
-    dplyr::filter(occ_country[x] >= -180,
-                  occ_country[x] <= 180,
-                  occ_country[y] >= -90,
-                  occ_country[y] <= 90)
-  
-  
-  # Detect those record georeferenced outside a country
-  occ_country <- CoordinateCleaner::clean_coordinates(
-    x =  occ_country,
-    lon = x,
-    lat = y,
-    species = sp,
-    countries = cntr_iso2,
-    # iso2 code column of our database
-    tests = c("seas", "countries"),
-    #Will be tested records located in the see and outside georeferenced countries
-    country_ref = world_poly,
-    #Here we are using a high resolution countries border database
-    country_refcol = world_poly_iso,
-    #iso2 code column of country polygon database
-    seas_ref = world_poly,
-    #Here we are using a high resolution countries border database
-    value = "spatialvalid"
-  )
-  
-  summary(occ_country)
-  
-  # Separate those records outside their countries
-  occ_country <- 
-    occ_country %>%
-    as_tibble() %>%
-    dplyr::filter(!.summary,!is.na(occ_country[cntr_iso2]))
-  
-  message(occ_country %>% nrow, " ocurrences will be tested") #now this database have all those records with potential error that will try to correct
-  
-  # Split database
-  occ_country <-
-    occ_country %>% dplyr::group_by_(cntr_iso2) %>% group_split()
-  
-  
-  # coord_trans() function will try different coordinate transformations to correct georeferenced occurrences
-  coord_test <- list()
-  
-  for (i in 1:length(occ_country)) {
-    message('Processing occurrence from: ',
-            occ_country[[i]][cntr_iso2] %>% unique,
-            paste0(" (", nrow(occ_country[[i]]), ")"))
-    try(coord_test[[i]] <-
-          coord_trans(
-            data = occ_country[[i]],
-            x = x,
-            y = y,
-            country_code = cntr_iso2,
-            id = id,
-            worldmap = world_poly,
-            worldmap_cntr_code = world_poly_iso
-          ))
-  }
-  
-  filt <- sapply(coord_test, function(x)
-    nrow(x) > 0)
-  coord_test <-
-    coord_test[filt] # elimination from the list those countries without correction
-  
-  # Elimination of those records near to country border (to avoid flip coordinates or sign that fall too close to country border)
-  
-  for (i in 1:length(coord_test)) {
-    n <- 
-      coord_test[[i]] %>%
-      dplyr::select_(cntr_iso2) %>% 
-      unique %>% 
-      pull
-    
-    my_country <-
-      world_poly[which(world_poly@data[, world_poly_iso] == n),] #Here filter polygon based on your country iso2c code
-    my_country2 <-
-      raster::buffer(my_country, width = 0.5) #0.5 degree ~50km near to equator
-    
-    coord_sp <- sp::SpatialPoints(coord_test[[i]] %>%
-                                    dplyr::select_(x, y))
-    
-    coord_sp@proj4string <- my_country2@proj4string
-    over_occ <- sp::over(coord_sp, my_country2)
-    
-    # plot(my_country)
-    # plot(my_country2, add = T)
-    # coord_test[[i]] %>%
-    #   dplyr::filter(over_occ == 1) %>%
-    #   dplyr::select_(x, y) %>%
-    #   points(., pch = 19, col = 'red')
-    
-    # Eliminate as corrected those records too close to country border
-    coord_test[[i]] <-
-      coord_test[[i]] %>% dplyr::filter(is.na(over_occ))
-  }
-  
-  # Elimination of those records with more than two possible correction
-  coord_test <-
-    dplyr::bind_rows(coord_test) %>% 
-    as_tibble() # binding dataframes allocated in the list in a single one
-  
-  coord_test <-
-    coord_test %>%
-    dplyr::distinct_(., id, .keep_all = T) %>%
-    as_tibble %>%
-    dplyr::relocate(id, x, y)
-  
-  # Merge coord_test with other columns of occurrence database
-  coord_test <-
-    left_join(coord_test,
-              data %>% dplyr::select(-c(x, y, cntr_iso2)),
-              by = id)
-  
-  return(coord_test)
-  }
-
-get.taxa.taxadb <- 
-  function (taxa, replace.synonyms = TRUE, suggest.names = TRUE, 
-            suggestion.distance = 0.9, parse = FALSE, db = NULL) 
-  {
+#' Title: Get names using taxadb R package. Fuzzy match is allowed by using a modification version of taxadb get_filter names function
+#'
+#' @param taxa 
+#' @param replace.synonyms 
+#' @param suggest.names 
+#' @param suggestion.distance 
+#' @param parse 
+#' @param db 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get.taxa.taxadb <-
+  function (taxa,
+            replace.synonyms = TRUE,
+            suggest.names = TRUE,
+            suggestion.distance = 0.9,
+            parse = FALSE,
+            db = NULL) {
     taxa <- trim(taxa)
     taxa <- taxa[nzchar(taxa)]
     if (length(taxa) == 0L) 
@@ -996,9 +1285,29 @@ get.taxa.taxadb <-
     res
   }
 
-suggest.names.taxadb <- 
-  function (taxon, max.distance = 0.75, return.na = TRUE, ignore.words = NULL, provider) 
-  {
+
+# suggest.names.taxadb ----------------------------------------------------
+
+#' Title: Function used to standardized taxonomic names using taxadb R packpage. This functions is a modification of get.taxa function (flora package) inserted in get_names function (taxadb package) for allowing fuzzy matching.
+#'
+#' @param taxon 
+#' @param max.distance 
+#' @param return.na 
+#' @param ignore.words 
+#' @param provider 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+suggest.names.taxadb <-
+  function (taxon,
+            max.distance = 0.75,
+            return.na = TRUE,
+            ignore.words = NULL,
+            provider
+            
+  ) {
     taxon <- fixCase(taxon)
     taxon.orig <- taxon
     uncertain <- regmatches(taxon, regexpr("[a|c]f+\\.", 
@@ -1015,8 +1324,8 @@ suggest.names.taxadb <-
     
     first.letter <- strsplit(taxon, "")[[1]][1]
     species.first.letter <- suppressWarnings(taxadb::name_starts_with(first.letter, provider = provider))[, c( "taxonID", "scientificName", 
-                                                                                                      "taxonRank", "taxonomicStatus",         
-                                                                                                      "acceptedNameUsageID" )]
+                                                                                                               "taxonRank", "taxonomicStatus",         
+                                                                                                               "acceptedNameUsageID" )]
     
     
     l1 <- length(taxon)
@@ -1053,126 +1362,34 @@ suggest.names.taxadb <-
     }
   }
 
-#' Standardize datasets columns based on metadata file
+
+
+
+############################################################
+#                                                          #
+#                          SPACE                           #
+#                                                          #
+############################################################
+
+
+
+
+############################################################
+#                                                          #
+#                     OTHER FUNCTIONS                      #
+#                                                          #
+############################################################
+
+# quickmap ----------------------------------------------------------------
+
+#' Title: Create a map of points using ggplot2
 #'
-#' @param metadata a table containing information about which columns of the
-#'   original dataset need to be renamed following Darwin Core terminology.
-#'   Please see the `Config/DatabaseInfo.csv` file.
+#' @param data 
 #'
-#' @importFrom dplyr pull filter select select_if mutate n everything
-#' @importFrom fs dir_exists dir_create
-#' @importFrom glue glue
-#' @importFrom here here
-#' @importFrom janitor clean_names make_clean_names
-#' @importFrom purrr set_names
-#' @importFrom readr read_csv write_csv
-#'
+#' @return
 #' @export
-standardize_dataset <- function(metadata) {
-
-  save_in_dir <- here::here("data", "temp")
-
-  if (!fs::dir_exists(save_in_dir)) {
-    fs::dir_create(save_in_dir)
-  }
-
-  input_file <-
-    metadata %>%
-    dplyr::pull(File_name_to_load)
-
-  for (file_index in seq_along(input_file)) {
-
-    input_filename <-
-      metadata %>%
-      dplyr::filter(File_name_to_load == input_file[file_index]) %>%
-      pull(File_name_to_load)
-
-    dataset_name <-
-      metadata %>%
-      dplyr::filter(File_name_to_load == input_file[file_index]) %>%
-      dplyr::select(datasetName) %>%
-      dplyr::pull()
-
-    save_in_filename <- paste0(save_in_dir, "/standard_", dataset_name, ".xz")
-
-    if (!file.exists(save_in_filename)) {
-
-      basename_names <-
-        metadata %>%
-        dplyr::filter(File_name_to_load == input_file[file_index]) %>%
-        dplyr::select_if(~ !is.na(.)) %>%
-        dplyr::select(-datasetName, -File_name_to_load)
-
-      standard_names <-
-        basename_names %>%
-        names(.)
-
-      vector_for_recode <-
-        basename_names %>%
-        purrr::set_names(standard_names) %>%
-        { c(.) } %>%
-        unlist()
-
-      imported_raw_dataset <-
-        here::here(input_file[file_index]) %>%
-        vroom::vroom(guess_max = 10^6, col_types = cols(.default = "c"), n_max = 1)
-
-      skip_to_next <- FALSE
-
-      error_message <-
-        paste("[ERROR]: Column names defined in the metadata do not match column names in the", input_filename)
-
-      tryCatch(
-
-        if (sum(!vector_for_recode %in% names(imported_raw_dataset)) != 0) {
-
-          stop(error_message)
-
-        } else {
-
-          standard_dataset <-
-            here::here(input_file[file_index]) %>%
-            vroom::vroom(guess_max = 10^6, col_types = cols(.default = "c")) %>%
-            dplyr::select(all_of(vector_for_recode)) %>%
-            purrr::set_names(names(vector_for_recode)) %>%
-            dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
-            dplyr::select(database_id, dplyr::everything())
-
-          message(paste("Creating", save_in_filename))
-
-          standard_dataset %>%
-            vroom::vroom_write(save_in_filename)
-
-        },
-
-        error = function(e) {
-
-          message(error_message)
-
-          skip_to_next <<- TRUE
-
-        }
-
-      )
-
-      if (skip_to_next) {
-
-        next
-
-      }
-
-    } else {
-
-      message(paste(save_in_filename, "already exists!"))
-
-    }
-
-  }
-
-}
-
-# map our data quickly. it always assume that decimalL* variables are the coordinates to map
-
+#'
+#' @examples
 quickmap <- function(data) {
 
   n_nrow_data <- format(x = nrow(data), big.mark = ",")
@@ -1218,6 +1435,21 @@ quickmap <- function(data) {
 # filter and save data not in filtered data
 # ex: raw_data %>% not_in(filtered_data)
 
+
+
+# export_rejected_data ----------------------------------------------------
+
+#' Title
+#'
+#' @param raw_data 
+#' @param filtered_data 
+#' @param save_in_filename 
+#' @param comment 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 export_rejected_data <- function(raw_data, filtered_data, save_in_filename, comment = NULL) {
 
   if (!file.exists(save_in_filename)) {
@@ -1297,50 +1529,3 @@ export_rejected_data <- function(raw_data, filtered_data, save_in_filename, comm
 
 }
 
-# get wiki countries
-get_wiki_country <- function() {
-
-  wiki_cntr <-
-    here::here("data", "wiki_country_names.txt") %>%
-    vroom::vroom()
-
-  return(wiki_cntr)
-
-}
-
-# get worldmap
-
-get_world_map <- function() {
-
-  worldmap <- rnaturalearth::ne_countries(scale='large') 
-
-  # worldmap@data
-
-  # Add some iso code to some countries polygons 
-  iso2c <- countrycode::countrycode(unique(worldmap$name_en),
-                                    origin = 'country.name.en',
-                                    destination = 'iso2c')
-
-  iso3c <- countrycode::countrycode(unique(worldmap$name_en),
-                                    origin = 'country.name.en',
-                                    destination = 'iso3c')
-
-  iso <- data.frame(worldmap@data %>% dplyr::select(name_en, starts_with('iso')),
-                    iso2c,
-                    iso3c)
-
-  filt <- !is.na(iso$iso_a2) & is.na(iso$iso2c)
-  iso$iso2c[filt] <- iso$iso_a2[filt]
-
-  filt <- !is.na(iso$iso_a3) & is.na(iso$iso3c)
-  iso$iso3c[filt] <- iso$iso_a3[filt]
-
-  worldmap@data <- iso
-  is.na(iso) %>% colSums() #number of polygons without isocode
-  worldmap@data <- worldmap@data %>% dplyr::select(iso2c, iso3c)
-
-  rm(list=c('iso', 'iso2c', 'iso3c', 'filt'))
-
-  return(worldmap)
-
-}
