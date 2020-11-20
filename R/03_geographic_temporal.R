@@ -1,43 +1,54 @@
-# Install and load the following packages ---------------------------------
+##%######################################################%##
+#                                                          #
+####       Geographical and temporal corrections        ####
+#                                                          #
+##%######################################################%##
 
-# Install package flora, vroom and CoordinateCleaner directly from github
-# install.packages('devtools')
-# install.packages('pacman')
+####      Load package and functions       ####
+source("https://raw.githubusercontent.com/brunobrr/risk_assessment_flora_Brazil_I/master/R/aux_functions.R")
 
-devtools::install_github("ropensci/CoordinateCleaner")
-devtools::install_github("gustavobio/flora")
+ipak(
+  c(
+    "tidyverse",
+    "data.table",
+    "skimr",
+    "naniar",
+    "devtools",
+    "stringr",
+    "tm",
+    "vroom",
+    "furrr",
+    "parallel",
+    "doParallel",
+    "tidylog",
+    "colorspace",
+    "taxize",
+    "qdap",
+    "DT",
+    "flora",
+    "CoordinateCleaner"
+  )
+)
 
-# ipak function: install and load multiple R packages.
-# Check to see if packages are installed.
-# Install them if they are not, then load them into the R session.
-# Forked from: https://gist.github.com/stevenworthington/3178163
-ipak <- function(pkg) {
-  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-  if (length(new.pkg)) {
-    install.packages(new.pkg, dependencies = TRUE)
-  }
-  suppressPackageStartupMessages(sapply(pkg, require, character.only = TRUE))
-}
+####                 Import database                  ####
+temp <- tempfile(fileext = ".xz")
 
-ipak(c("tidyverse", "data.table", "skimr", "naniar", "devtools", "stringr", 
-       "tm", "vroom", "furrr", "parallel", "doParallel", "tidylog", 
-       "colorspace", "taxize", "qdap", "DT", "flora", "CoordinateCleaner"))
+download.file(
+  "https://github.com/brunobrr/risk_assessment_flora_Brazil_I/raw/master/data/temp/standard_database.xz",
+  destfile = temp
+)
 
-
-# Load the taxonomic checked database (11584695 | 22)
-# data_03 <-
-#   vroom::vroom(
-#     "data/clean/03_dataset_taxonomic_cleaning/data_02_TAXONOMIC_CHECKING.csv",
-#     delim = ",",
-#     locale = locale(encoding = "UTF-8"))
+data_03 <- vroom::vroom(temp) #Occurrence database
+names(data_03)
 
 data_03 <-
-  vroom::vroom(
-    "https://raw.githubusercontent.com/brunobrr/risk_assessment_flora_Brazil/master/Input_files/gbif.csv")
-data_03 <- data_03 %>% 
-  dplyr::rename(.scientific.name=species, longitude=decimalLongitude, latitude=decimalLatitude) %>% 
-  dplyr::filter(!is.na(.scientific.name), !is.na(longitude), !is.na(latitude)) 
-plot(data_03[, c("longitude", "latitude")])
+  data_03 %>%
+  # filter coordinates impossible to test or without species
+  dplyr::filter(!is.na(scientificName) | !is.na(decimalLatitude) | !is.na(decimalLongitude)) %>%
+  dplyr::filter(dplyr::between(decimalLatitude, -90, 90),
+                dplyr::between(decimalLongitude, -180, 180))
+plot(data_03[, c("decimalLongitude", "decimalLatitude")])
+
 
 ##%######################################################%##
 #                                                          #
@@ -51,9 +62,9 @@ plot(data_03[, c("longitude", "latitude")])
 
 data_03 <- clean_coordinates(
   x =  data_03,
-  lon = "longitude",
-  lat = "latitude",
-  species = ".scientific.name",
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
+  species = "scientificName",
   countries = NULL,
   tests = c("capitals", "centroids", "duplicates", 
             "equal", "gbif", "institutions", "outliers",
@@ -65,7 +76,7 @@ data_03 <- clean_coordinates(
   outliers_method = "quantile",
   outliers_mtp = 5,
   outliers_td = 1000,
-  outliers_size = 7, #acho que esse aqui podemos aumentar visando que existem muitas espéceis pouco amostradas 
+  outliers_size = 7, #acho que esse aqui podemos aumentar visando que existem muitas especeis pouco amostradas 
   range_rad = 0,
   zeros_rad = 0.5,
   capitals_ref = NULL,
@@ -151,7 +162,7 @@ round_issue <- clean_dataset(x = data_03,
                              ds = "database_source",
                              value = "flagged",
                              verbose = TRUE)
-table(round_issue) #mmmm esta função estpa indicando que com erro todos os registros???
+table(round_issue) #mmmm esta fun??o estpa indicando que com erro todos os registros???
 # no coords with rounding problem
 summary(round_issue$ddmm)
 # zero potentially problematic coordinates that have been collected in large scale lattice designs were flagged.
@@ -209,7 +220,7 @@ data_03 <- parse_date(data_frame = data_03, column_to_test = "year")
 table(data_03$.year)
 table(data_03$.year_val)
 
-# update .summary column (VER se deixamos esta atualização do .summary)
+# update .summary column (VER se deixamos esta atualiza??o do .summary)
 # data_03 <- data_03 %>% rowwise() %>% mutate(.summary=all(.year_val, .summary))
 
 # Save the table
