@@ -1,28 +1,70 @@
-# Install and load the following packages ---------------------------------
+##%######################################################%##
+#                                                          #
+####       Geographical and temporal corrections        ####
+#                                                          #
+##%######################################################%##
 
-# Install package flora, vroom and CoordinateCleaner directly from github
-# install.packages('devtools')
-# install.packages('pacman')
-
-devtools::install_github("ropensci/CoordinateCleaner")
-devtools::install_github("gustavobio/flora")
-
-# ipak function: install and load multiple R packages.
-# Check to see if packages are installed.
-# Install them if they are not, then load them into the R session.
-# Forked from: https://gist.github.com/stevenworthington/3178163
-ipak <- function(pkg) {
-  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-  if (length(new.pkg)) {
-    install.packages(new.pkg, dependencies = TRUE)
+# TRANSFER THIS FUNCTION INTO auxiliary FUNCTIONS
+# Function to test round coordinates
+bdc_round_dec <- function(data, lon = "decimalLongitude", lat = "decimalLatitude", ndec=c(0,1,2)){
+  # data: data.frame. A data.frame with coordinates data
+  # lon: character. Column names with longitude values
+  # lat: character. Column names with latitude values
+  # ndec: numeric. A vector with number of decimal to be tested. Default ndec=c(0,1,2) 
+  data <- data[, c(lon, lat)] %>% as.data.frame()
+  ndec_lat <- (data[, lat] %>%
+                 as.character %>% stringr::str_split_fixed(., pattern = '[.]', n = 2))[, 2] %>%
+    stringr::str_length()
+  ndec_lon <- (data[, lon] %>%
+                 as.character %>% stringr::str_split_fixed(., pattern = '[.]', n = 2))[, 2] %>%
+    stringr::str_length()
+  rm(data)
+  ndec_list <- as.list(ndec)
+  names(ndec_list) <- paste0('.', 'ndec', ndec)
+  for (i in 1:length(ndec)) {
+    message('Testing coordinate with ', ndec[i],' decimal')
+    ndec_list[[i]] <- !(ndec_lat == ndec[i] & ndec_lon == ndec[i])
+    message('Flagged ', sum(!ndec_list[[i]]), ' records')
   }
-  suppressPackageStartupMessages(sapply(pkg, require, character.only = TRUE))
+  ndec_list <- dplyr::bind_cols(ndec_list)
+  ndec_list$.ndec_all <- apply(ndec_list, 1, all) #all flagged as low decimal precision 
+  return(ndec_list)
 }
 
-ipak(c("tidyverse", "data.table", "skimr", "naniar", "devtools", "stringr", 
-       "tm", "vroom", "furrr", "parallel", "doParallel", "tidylog", 
-       "colorspace", "taxize", "qdap", "DT", "flora", "CoordinateCleaner"))
 
+bdc_parse_date <- function(data_frame, column_to_test){
+  col <- data_frame[[column_to_test]]
+  .year <- stringr::str_extract(col, "[[:digit:]]{4}") %>% as.integer()
+  .year_val <- dplyr::if_else(.year %in% 1500:year(Sys.Date()), 
+                              TRUE, FALSE)
+  res <- cbind(data_frame, .year_val, .year)
+  return(res)
+}
+
+bdc_parse_date <- function(data_frame, column_to_test, old = NULL) {
+  col <- data_frame[[column_to_test]]
+  year_corrected <- stringr::str_extract(col, "[[:digit:]]{4}") %>% as.numeric()
+  
+  if(is.null(old)){
+    .year_val <-
+      dplyr::if_else(year_corrected %in% 1500:lubridate::year(Sys.Date()),
+                     TRUE,
+                     FALSE)
+  } else if(is.numeric(old)){
+    .year_val <-
+      dplyr::if_else(year_corrected %in% 1500:lubridate::year(Sys.Date()),
+                     TRUE,
+                     FALSE)
+    .year_val <- .year_val & year_corrected>old 
+  } else {
+    
+    stop("The 'old' argument should be used with one year as a numeric data")
+    
+  }
+  
+  res <- cbind(data_frame, .year_val, year_corrected)
+  return(res)
+}
 
 # Load the taxonomic checked database (11584695 | 22)
 # data_03 <-
@@ -48,6 +90,7 @@ plot(data_03[, c("longitude", "latitude")])
 
 # Use wrapper function "clean_coordinates" for checking several issues present in lat/long coordinates using multiple empirical tests to flag potentially erroneous coordinates. 
 # All coordinates must be in WGS84 to use the clean_coordinates function.
+continent_border <- rnaturalearth::ne_download(scale = "large", type = 'land', category = 'physical')
 
 data_03 <- clean_coordinates(
   x =  data_03,
@@ -65,7 +108,7 @@ data_03 <- clean_coordinates(
   outliers_method = "quantile",
   outliers_mtp = 5,
   outliers_td = 1000,
-  outliers_size = 7, #acho que esse aqui podemos aumentar visando que existem muitas espéceis pouco amostradas 
+  outliers_size = 7, #acho que esse aqui podemos aumentar visando que existem muitas espÃ©ceis pouco amostradas 
   range_rad = 0,
   zeros_rad = 0.5,
   capitals_ref = NULL,
@@ -74,12 +117,13 @@ data_03 <- clean_coordinates(
   country_refcol = "iso_a3",
   inst_ref = NULL,
   range_ref = NULL,
-  seas_ref = NULL,
+  seas_ref = continent_border,
   seas_scale = 110,
   urban_ref = NULL,
   value = "spatialvalid"
 )
 
+summary(data_03)
 data_03 <- as_tibble(data_03)
 points(data_03 %>% filter(!.summary) %>% select(longitude, latitude), col='red')
 
@@ -151,7 +195,7 @@ round_issue <- clean_dataset(x = data_03,
                              ds = "database_source",
                              value = "flagged",
                              verbose = TRUE)
-table(round_issue) #mmmm esta função estpa indicando que com erro todos os registros???
+table(round_issue) #mmmm esta funÃ§Ã£o estpa indicando que com erro todos os registros???
 # no coords with rounding problem
 summary(round_issue$ddmm)
 # zero potentially problematic coordinates that have been collected in large scale lattice designs were flagged.
@@ -205,20 +249,16 @@ parse_date <- function(data_frame, column_to_test){
 }
 
 # Flag incorrect date information (e.g. 0, 2021, NA, 1)
-data_03 <- parse_date(data_frame = data_03, column_to_test = "year")
+data_03 <- data_03 %>% dplyr::mutate(eventDate=as.integer(eventDate)) 
+data_03 <- parse_date(data_frame = data_03, column_to_test = "eventDate")
 table(data_03$.year)
 table(data_03$.year_val)
-
-# update .summary column (VER se deixamos esta atualização do .summary)
-# data_03 <- data_03 %>% rowwise() %>% mutate(.summary=all(.year_val, .summary))
+data_03
+# update .summary column (VER se deixamos esta atualiza??o do .summary)
+# data_03 <- data_03 %>% mutate(.summary=.year_val & .summary)
 
 # Save the table
 fwrite(data_03, "data/clean/04_database_geographic_temporal_checking/data_03.csv")
-
-
-
-
-
 
 
 # Add species information from the Brazilian Flora Group database ---------
