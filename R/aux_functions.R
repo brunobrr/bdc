@@ -736,7 +736,7 @@ standard_country <-
 
 # correct_coordinates -----------------------------------------------------
 
-# correct_coordinates is a function that will detect those occurrences georreferenced outside their country different coordinate transformation
+# correct_coordinates is a function that will detect those occurrences georreferenced outside their country by testing with different coordinate transformation
 
 correct_coordinates <-
   function(data,
