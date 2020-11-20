@@ -4,7 +4,7 @@
 #                                                          #
 ##%######################################################%##
 
-# TRANSFER THIS FUNCTION INTO auxyliary FUNCTIONS
+# TRANSFER THIS FUNCTION INTO auxiliary FUNCTIONS
 # Function to test round coordinates
 bdc_round_dec <- function(data, lon = "decimalLongitude", lat = "decimalLatitude", ndec=c(0,1,2)){
   # data: data.frame. A data.frame with coordinates data
@@ -34,14 +34,37 @@ bdc_round_dec <- function(data, lon = "decimalLongitude", lat = "decimalLatitude
 
 bdc_parse_date <- function(data_frame, column_to_test){
   col <- data_frame[[column_to_test]]
-  .year <- stringr::str_extract(col, "[[:digit:]]{4}")
+  .year <- stringr::str_extract(col, "[[:digit:]]{4}") %>% as.integer()
   .year_val <- dplyr::if_else(.year %in% 1500:year(Sys.Date()), 
                               TRUE, FALSE)
   res <- cbind(data_frame, .year_val, .year)
   return(res)
 }
 
-
+bdc_parse_date <- function(data_frame, column_to_test, old = NULL) {
+  col <- data_frame[[column_to_test]]
+  year_corrected <- stringr::str_extract(col, "[[:digit:]]{4}") %>% as.numeric()
+  
+  if(is.null(old)){
+    .year_val <-
+      dplyr::if_else(year_corrected %in% 1500:lubridate::year(Sys.Date()),
+                     TRUE,
+                     FALSE)
+  } else if(is.numeric(old)){
+    .year_val <-
+      dplyr::if_else(year_corrected %in% 1500:lubridate::year(Sys.Date()),
+                     TRUE,
+                     FALSE)
+    .year_val <- .year_val & year_corrected>old 
+  } else {
+    
+    stop("The 'old' argument should be used with one year as a numeric data")
+    
+  }
+  
+  res <- cbind(data_frame, .year_val, year_corrected)
+  return(res)
+}
 
 ####      Load package and functions       ####
 source("https://raw.githubusercontent.com/brunobrr/risk_assessment_flora_Brazil_I/master/R/aux_functions.R")
@@ -97,6 +120,7 @@ data_03 <-
 
 # Use wrapper function "clean_coordinates" for checking several issues present in lat/long coordinates using multiple empirical tests to flag potentially erroneous coordinates. 
 # All coordinates must be in WGS84 to use the clean_coordinates function.
+continent_border <- rnaturalearth::ne_download(scale = "large", type = 'land', category = 'physical')
 
 data_03 <- clean_coordinates(
   x =  data_03,
@@ -123,12 +147,13 @@ data_03 <- clean_coordinates(
   country_refcol = "iso_a3",
   inst_ref = NULL,
   range_ref = NULL,
-  seas_ref = rnaturalearth::ne_download(scale = "large", type = 'land', category = 'physical'),
+  seas_ref = continent_border,
   seas_scale = 110,
   urban_ref = NULL,
   value = "spatialvalid"
 )
 
+summary(data_03)
 data_03 <- as_tibble(data_03)
 data_03 %>% filter(!.summary) %>% quickmap()
 
@@ -165,20 +190,16 @@ data_03 %>% select(starts_with('.'))
 ##%######################################################%##
 
 # Flag incorrect date information (e.g. 0, 2021, NA, 1)
-data_03 <- bdc_parse_date(data_frame = data_03, column_to_test = "year")
+data_03 <- data_03 %>% dplyr::mutate(eventDate=as.integer(eventDate)) 
+data_03 <- parse_date(data_frame = data_03, column_to_test = "eventDate")
 table(data_03$.year)
 table(data_03$.year_val)
-data_03 %>% names
+data_03
 # update .summary column (VER se deixamos esta atualiza??o do .summary)
-# data_03 <- data_03 %>% rowwise() %>% mutate(.summary=all(.year_val, .summary))
+# data_03 <- data_03 %>% mutate(.summary=.year_val & .summary)
 
 # Save the table
 fwrite(data_03, "data/clean/04_database_geographic_temporal_checking/data_03.csv")
-
-
-
-
-
 
 
 # Add species information from the Brazilian Flora Group database ---------
