@@ -47,7 +47,6 @@ data_03 <-
   dplyr::filter(!is.na(scientificName) | !is.na(decimalLatitude) | !is.na(decimalLongitude)) %>%
   dplyr::filter(dplyr::between(decimalLatitude, -90, 90),
                 dplyr::between(decimalLongitude, -180, 180))
-plot(data_03[, c("decimalLongitude", "decimalLatitude")])
 
 
 ##%######################################################%##
@@ -85,17 +84,14 @@ data_03 <- clean_coordinates(
   country_refcol = "iso_a3",
   inst_ref = NULL,
   range_ref = NULL,
-  seas_ref = NULL,
+  seas_ref = rnaturalearth::ne_download(scale = "large", type = 'land', category = 'physical'),
   seas_scale = 110,
   urban_ref = NULL,
   value = "spatialvalid"
 )
 
 data_03 <- as_tibble(data_03)
-points(data_03 %>% filter(!.summary) %>% select(longitude, latitude), col='red')
-
-# Number of records flagged per issue
-temp2 <- (!(data_03 %>% dplyr::select(.val:.summary))) %>% colSums()
+data_03 %>% filter(!.summary) %>% quickmap()
 
 
 ##%######################################################%##
@@ -105,7 +101,7 @@ temp2 <- (!(data_03 %>% dplyr::select(.val:.summary))) %>% colSums()
 ##%######################################################%##
 
 # Function to test round coordinates
-round_dec <- function(data, lon = "longitude", lat = "latitude", ndec=c(0,1,2)){
+round_dec <- function(data, lon = "decimalLongitude", lat = "decimalLatitude", ndec=c(0,1,2)){
   # data: data.frame. A data.frame with coordinates data
   # lon: character. Column names with longitude values
   # lat: character. Column names with latitude values
@@ -134,8 +130,8 @@ round_dec <- function(data, lon = "longitude", lat = "latitude", ndec=c(0,1,2)){
 round_issue <-
   round_dec(
     data = data_03,
-    lon = 'longitude',
-    lat = 'latitude',
+    lon = 'decimalLongitude',
+    lat = 'decimalLatitude',
     ndec = c(0, 1, 2) #number of decimals to be tested
   )
 colSums(!round_issue)
@@ -146,58 +142,8 @@ data_03 <- dplyr::bind_cols(data_03 %>% dplyr::select(-.summary),
 rm(round_issue)
 
 # update .summary column
-data_03 <- data_03 %>% rowwise() %>% mutate(.summary=all(.ndec_all, .summary))
+data_03 <- data_03 %>% mutate(.summary=.ndec_all & .summary)
 data_03 %>% select(starts_with('.'))
-
-
-
-
-
-# REVISAR!!!! o procedimento do clean_dataset-------------
-# Flag problems associated with coordinate conversions and rounding, based on dataset properties.
-data_03$database_source <- 'gbif'
-round_issue <- clean_dataset(x = data_03, 
-                             lon = "longitude",
-                             lat = "latitude",
-                             ds = "database_source",
-                             value = "flagged",
-                             verbose = TRUE)
-table(round_issue) #mmmm esta fun??o estpa indicando que com erro todos os registros???
-# no coords with rounding problem
-summary(round_issue$ddmm)
-# zero potentially problematic coordinates that have been collected in large scale lattice designs were flagged.
-summary(round_issue$periodicity) 
-# ----------------------------
-
-
-
-
-
-m <- rworldmap::getMap() # rworldmap
-brazil <- m[which(m$NAME == "Brazil"), ]
-
-# Figures: Map of geographic distribution of problematic coordinates. 
-# We create each map by change the issue and its respective name
-issue <- data_03 %>% filter(.dpl == FALSE) # change this  
-ggplot()+
-  geom_polygon(
-    data = brazil, 
-    aes(x = long, y = lat, group = group),
-    fill = "gray70"
-    # colour = "black"
-  ) +
-  geom_hex(data = issue, 
-           aes(x = longitude, y = latitude),
-           pch = 19,
-           colour = "blue",
-           size = 0.1,
-           bins = 150) +
-  coord_equal() +
-  theme_void() +
-  labs(fill = "# of Records") +
-  scale_fill_viridis_c()
-
-ggsave("output/figures/f09_duplicate.tiff", units = "cm", width = 16, height = 10, dpi = 400) # change the name of the output 
 
 
 ##%######################################################%##
