@@ -1765,23 +1765,22 @@ suggest.names.taxadb <-
 #' Title: Create a map of points using ggplot2
 #'
 #' @param data 
+#' @param lon 
+#' @param lat 
 #'
 #' @return
 #' @export
 #'
 #' @examples
-quickmap <- function(data) {
+quickmap <- function(data, lat, lon) {
 
   n_nrow_data <- format(x = nrow(data), big.mark = ",")
 
   world_borders <-
     borders(
       database = "world",
-      # regions = "Brazil",
       fill = "white",
       colour = "grey90",
-      # xlim = c(0, 0),
-      # ylim = c(0, 0)
     )
 
   our_map <-
@@ -1801,8 +1800,8 @@ quickmap <- function(data) {
     ) +
     geom_point(
       aes(
-        x = decimalLongitude, 
-        y = decimalLatitude
+        x = {{ lat }}, 
+        y = {{ lon }}
       ), 
       alpha = 0.5,
       size = 0.1
