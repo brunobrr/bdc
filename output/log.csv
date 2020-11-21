@@ -1,6 +1,0 @@
-timestamp,raw_data,nrow_raw_data,filtered_data,nrow_filtered_data,rejected_data,nrow_rejected_data,comment
-2020-11-19T15:08:24Z,merged,100000,with_valid_coordinates,82170,/home/karlo/GoogleDrive2/git-repos/risk_flora/output/00_prefilter/invalid_coordinates.csv,17830,prefilter step reporting data with invalid coordinates
-2020-11-19T15:08:25Z,with_valid_coordinates,82170,with_valid_names,79368,/home/karlo/GoogleDrive2/git-repos/risk_flora/output/00_prefilter/invalid_names.csv,2802,prefilter step reporting data with invalid names
-2020-11-19T15:08:26Z,with_valid_names,79368,inside_brazil,61591,/home/karlo/GoogleDrive2/git-repos/risk_flora/output/00_prefilter/outside_brazil.csv,17777,prefilter step reporting data outside Brazil borders
-2020-11-19T15:08:26Z,inside_brazil,61591,valid_provenance,61562,/home/karlo/GoogleDrive2/git-repos/risk_flora/output/00_prefilter/invalid_provenance.csv,29,prefilter step reporting data wit invalid provenance
-2020-11-19T15:08:27Z,merged,100000,with_locality,13135,/home/karlo/GoogleDrive2/git-repos/risk_flora/output/00_prefilter/no_coordinates_but_locality.csv,86865,prefilter step reporting data without coordinates. but with locality info
