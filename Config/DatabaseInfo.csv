@@ -6,6 +6,6 @@ GBIF,Input_files/gbif.csv,gbifID,scientificName,decimalLatitude,decimalLongitude
 ICMBIO,Input_files/icmbio.csv,Numero do registro no portal,Nome cientifico na base de dados,Latitude,Longitude,NA,Data do registro,Nivel taxonomico,Familia,Pais,Estado/Provincia,Municipio,Localidade,NA,NA,NA,NA
 IDIGBIO,Input_files/idigbio.csv,coreid,dwc:scientificName,dwc:decimalLatitude,dwc:decimalLongitude,dwc:basisOfRecord,dwc:eventDate,dwc:taxonRank,dwc:family,dwc:country,dwc:stateProvince,dwc:county,dwc:locality,dwc:identifiedBy,dwc:coordinateUncertaintyInMeters,dwc:coordinatePrecision,dwc:recordedBy
 NEOTROPTREE,Input_files/neotroptree.csv,original_site_code,species_name,lat,long,NA,NA,NA,NA,country,NA,NA,sitename,NA,NA,NA,NA
-SIBBR,Input_files/sibbr.csv,id,scientificName,decimalLatitude,decimalLongitude,basisOfRecord,eventDate,taxonRank,family,country,stateProvince,municipality,locality,identifiedBy,NA,NA,recordedBy
+SIBBR,Input_files/sibbr.csv,Record ID,Scientific Name,Latitude,Longitude,Basis Of Record,Year,Taxon Rank,Family,Country - parsed,State - parsed,NA,Locality,identified _ by,Coordinate Uncertainty in Metres,NA,NA
 SPECIESLINK,Input_files/specieslink.csv,catalognumber,scientificname,latitude,longitude,basisofrecord,yearcollected,NA,family,country,stateprovince,county,locality,identifiedby,NA,coordinateprecision,collector
 AT_TREES,Input_files/at_trees.csv,NA,SpName,Latitude,Longitude,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
