@@ -37,11 +37,20 @@
 # git push
 
 
+######### Trabalhando com branch
+
+# git branch novo_branch  # criar branch
+# git checkout novo_branch  # mudar para o brach
+
+# git add
+# git commit -m "..."
+# git push origin my branch
+
+
+######## Materias para estudo
+# Computatation skills for biology https://b-ok.lat/book/3698934/3ac99a
+# https://www.datascienceatthecommandline.com/2e/
 
 
 
-
-
-
-# # Depois de add os arquivos
 
