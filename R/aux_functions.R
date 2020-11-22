@@ -491,7 +491,7 @@ bdc_correct_coordinates <-
       occ_country %>% dplyr::group_by_(cntr_iso2) %>% group_split()
     
     
-    # coord_trans() function will try different coordinate transformations to correct georeferenced occurrences
+    # bdc_coord_trans() function will try different coordinate transformations to correct georeferenced occurrences
     coord_test <- list()
     
     for (i in 1:length(occ_country)) {
@@ -499,7 +499,7 @@ bdc_correct_coordinates <-
               occ_country[[i]][cntr_iso2] %>% unique,
               paste0(" (", nrow(occ_country[[i]]), ")"))
       try(coord_test[[i]] <-
-            coord_trans(
+            bdc_coord_trans(
               data = occ_country[[i]],
               x = x,
               y = y,
@@ -579,13 +579,13 @@ bdc_correct_coordinates <-
 #'
 #' @examples
 bdc_get_wiki_country <- function() {
-  
+
   wiki_cntr <-
     here::here("data", "wiki_country_names.txt") %>%
     vroom::vroom()
-  
+
   return(wiki_cntr)
-  
+
 }
 
 
@@ -1396,7 +1396,7 @@ bdc_suggest_names_taxadb <-
 #' @export
 #'
 #' @examples
-bdc_quickmap <- function(data, lat, lon) {
+bdc_quickmap <- function(data, long, lat) {
 
   n_nrow_data <- format(x = nrow(data), big.mark = ",")
 
@@ -1424,9 +1424,9 @@ bdc_quickmap <- function(data, lat, lon) {
     ) +
     geom_point(
       aes(
-        x = {{ lat }}, 
-        y = {{ lon }}
-      ), 
+        x = {{ long }},
+        y = {{ lat }}
+      ),
       alpha = 0.5,
       size = 0.1
     )
@@ -1440,95 +1440,117 @@ bdc_quickmap <- function(data, lat, lon) {
 
 
 
-# bdc_export_rejected_data ------------------------------------------------
+## bdc_export_rejected_data ------------------------------------------------
 
-#' Title
-#'
-#' @param raw_data 
-#' @param filtered_data 
-#' @param save_in_filename 
-#' @param comment 
-#'
-#' @return
-#' @export
-#'
-#' @examples
-bdc_export_rejected_data <- function(raw_data, filtered_data, save_in_filename, comment = NULL) {
+##' Title
+##'
+##' @param raw_data 
+##' @param filtered_data 
+##' @param save_in_filename 
+##' @param comment 
+##'
+##' @return
+##' @export
+##'
+##' @examples
+## TODO: incluir argumento para salvar arquivo ou não
+#bdc_export_data_to_check <- function(raw_data, filtered_data, save_in_filename, save_data_file = FALSE, report_name, comment = NULL) {
 
-  if (!file.exists(save_in_filename)) {
+#  if (!file.exists(save_in_filename)) {
 
-    n_raw_data <- nrow(raw_data)
+#    n_raw_data <- nrow(raw_data)
 
-    n_filtered_data <- nrow(filtered_data)
+#    n_filtered_data <- nrow(filtered_data)
 
-    rejected_data <-
-      anti_join(raw_data, filtered_data, by = "database_id")
+#    data_to_check <-
+#      anti_join(raw_data, filtered_data, by = "database_id")
 
-    n_rejected_data <- nrow(rejected_data)
+#    n_rejected_data <- nrow(data_to_check)
 
-    log_file <- here::here("output", "log.csv")
+#    log_file <- report_name
 
-    if (!is.null(comment)) {
+#    if (!is.null(comment)) {
 
-      comment <- str_replace_all(comment, ",", ".")
+#      comment <- str_replace_all(comment, ",", ".")
 
-    } else {
+#    } else {
 
-      comment <- NA
+#      comment <- NA
 
-    }
+#    }
 
-    prepare_log <-
-      data.frame(
-        timestamp = Sys.time(),
-        raw_data = paste(deparse(substitute(raw_data))),
-        nrow_raw_data = n_raw_data,
-        filtered_data = paste(deparse(substitute(filtered_data))),
-        nrow_filtered_data = n_filtered_data,
-        rejected_data = paste(save_in_filename),
-        nrow_rejected_daat = n_rejected_data,
-        comment = comment
-      )
+#    if (save_data_file == FALSE) {
 
-    if (!file.exists(log_file)) {
+#      save_in_filename <- "data not saved"
 
-      log_template <-
-        data.frame(
-          "timestamp",
-          "raw_data",
-          "nrow_raw_data",
-          "filtered_data",
-          "nrow_filtered_data",
-          "rejected_data",
-          "nrow_rejected_data",
-          "comment"
-        )
+#    }
 
-      write_csv(log_template, log_file, append = TRUE)
+#    prepare_log <-
+#      data.frame(
+#        timestamp = Sys.time(),
+#        raw_data = paste(deparse(substitute(raw_data))),
+#        nrow_raw_data = n_raw_data,
+#        filtered_data = paste(deparse(substitute(filtered_data))),
+#        nrow_filtered_data = n_filtered_data,
+#        data_to_check = paste(save_in_filename),
+#        nrow_rejected_daat = n_rejected_data,
+#        comment = comment
+#      )
 
-    }
+#    if (!file.exists(log_file)) {
 
-    message(paste("Saving rejected data in ", save_in_filename))
+#      log_template <-
+#        data.frame(
+#          "timestamp",
+#          "raw_data",
+#          "nrow_raw_data",
+#          "filtered_data",
+#          "nrow_filtered_data",
+#          "data_to_check",
+#          "nrow_rejected_data",
+#          "comment"
+#        )
 
-    write_csv(rejected_data, save_in_filename)
+#      write_csv(log_template, log_file, append = TRUE)
 
-    message(paste("Appending log in ", log_file))
+#    }
 
-    write_csv(prepare_log, log_file, append = TRUE)
 
-    message(paste("Check latest ", log_file))
+#    if (save_data_file) {
 
-    suppressPackageStartupMessages({
+#      message(paste("Saving data to check in ", save_in_filename))
 
-      read_csv(log_file)
+#      write_csv(data_to_check, save_in_filename)
 
-    })
+#    }
 
-  } else {
+#    message(paste("Appending log in ", log_file))
 
-    message(paste(save_in_filename, "already exists!"))
+#    write_csv(prepare_log, log_file, append = TRUE)
 
-  }
+#    message(paste("Check latest ", log_file))
+
+#    suppressPackageStartupMessages({
+
+#      read_csv(log_file)
+
+#    })
+
+#  } else {
+
+#    message(paste(save_in_filename, "already exists!"))
+
+#  }
+
+#}
+
+bdc_check_flags <- function(data) {
+
+  data %>%
+  select(contains(".")) %>%
+  pivot_longer(everything()) %>%
+  group_by(name) %>%
+  distinct() %>%
+  arrange(name)
 
 }
-
