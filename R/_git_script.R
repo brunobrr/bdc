@@ -39,21 +39,21 @@
 
 ######### Trabalhando com branch
 
-git branch bruno_bdc
-git checkout bruno_bdc # Mudar de branch
-git add 
-git commit
-git push origin bruno_bdc
+# git branch bruno_bdc
+# git checkout bruno_bdc # Mudar de branch
+# git add 
+# git commit
+# git push origin bruno_bdc
 
 # Ver github
 # Abrir pull request e fazer (apertar verde)
 
-git checkout master
-git pull
+# git checkout master
+# git pull
 
 
 
-git brach # (lista dos branch. O branch em uso é o com *)
+# git brach # (lista dos branch. O branch em uso é o com *)
 
 
 ######## Materias para estudo
