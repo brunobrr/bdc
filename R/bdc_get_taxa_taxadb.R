@@ -24,7 +24,9 @@ bdc_get_taxa_taxadb <-
     if (length(taxa) == 0L) 
       stop("No valid names provided.")
     original.search <- taxa
-    col_names <- suppressWarnings(colnames(taxadb::filter_name(NA, provider = db)))
+    col_names <- c("sort", "taxonID", "scientificName", "taxonRank", "taxonomicStatus", "acceptedNameUsageID", "kingdom",                  "phylum"                   "class"                    "order"                   
+                                "family", "genus", "specificEpithet", "infraspecificEpithet", "parentNameUsageID", "originalNameUsageID", 
+                                "scientificNameAuthorship", "vernacularName", "input")
     ncol.taxa <- length(col_names)
     res <- data.frame(matrix(vector(), length(taxa), ncol.taxa + 
                                3, dimnames = list(c(), c(col_names, "notes", "original.search", "distance"))), 
@@ -35,12 +37,16 @@ bdc_get_taxa_taxadb <-
       notes <- NULL
       index <- index + 1
       taxon <- fixCase(taxon)
-      found <- !is.na(suppressWarnings(taxadb::get_ids(taxon, db = db)))
+      # posso colocar para buscar todos os nomes encontrados e nao encontrados de uma vez
+      # depois os processos sao filtrados para cada categoria
+      found <- !is.na(suppressWarnings(taxadb::get_ids(taxon, db = db))) # gargalo
       
       if (!found) {
         if (suggest.names) {
-          suggested <- bdc_suggest_names_taxadb(taxon, max.distance = suggestion.distance, provide = db)
+          # criar um suggest_name para multiplos taxa
+          suggested <- bdc_suggest_names_taxadb(taxon, max.distance = suggestion.distance, provide = db) #gargalo
           taxon <- suggested[1]
+          #o index vai ter que ser por cada nome nao encontrado
           res[index, "distance"] <- round(as.numeric(suggested[2]), 2)
         }
         else {
@@ -55,7 +61,8 @@ bdc_get_taxa_taxadb <-
           notes <- "was misspelled"
         }
       }
-      found_name <-suppressWarnings(taxadb::filter_name(taxon, provider = db)) 
+      # somente para os encontrados e e sugeridos
+      found_name <-suppressWarnings(taxadb::filter_name(taxon, provider = db)) # gargalo
       n_found <- sum(found_name$taxonomicStatus =="accepted")
       
       if (n_found > 0) {
@@ -70,10 +77,11 @@ bdc_get_taxa_taxadb <-
         next
       }
       
+      # somente para os que tem sinonimia
       nrow.synonym <- sum(found_name$taxonomicStatus =="synonym")
       if (nrow.synonym > 0L) {
         if (replace.synonyms) {
-          accepted <- suppressWarnings(taxadb::get_names(found_name$acceptedNameUsageID, db)) 
+          accepted <- suppressWarnings(taxadb::get_names(found_name$acceptedNameUsageID, db)) #gargalo 
           nrow.accepted <- sum(!is.na(accepted))
           if (nrow.accepted == 0L) {
             if (nrow.synonym == 1L) {
@@ -86,7 +94,7 @@ bdc_get_taxa_taxadb <-
           }
           if (nrow.accepted == 1L) {
             notes <- c(notes, "replaced synonym")
-            replace <- suppressWarnings(taxadb::filter_name(accepted, provider = db)) 
+            replace <- suppressWarnings(taxadb::filter_name(accepted, provider = db)) #gargalo
             res[index, minus.notes] <- replace 
           }
           if (nrow.accepted > 1L) {
