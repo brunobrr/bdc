@@ -53,7 +53,7 @@ git pull
 
 
 
-git brach # (lista dos branch)
+git brach # (lista dos branch. O branch em uso é o com *)
 
 
 ######## Materias para estudo
