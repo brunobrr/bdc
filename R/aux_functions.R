@@ -1188,37 +1188,14 @@ bdc_get_taxa_taxadb <-
     for (taxon in taxa) {
       notes <- NULL
       index <- index + 1
-      if (parse) {
-        url <- "http://api.gbif.org/v1/parser/name"
-        request <- try(POST(url, body = list(taxon), encode = "json"))
-        if (inherits(request, "try-error")) {
-          warning("Couldn't connect with the GBIF data servers. Check your internet connection or try again later.")
-        }
-        else {
-          warn_for_status(request)
-          taxon <- content(request)[[1]]$canonicalName
-        }
-      }
       taxon <- fixCase(taxon)
-      uncertain <- regmatches(taxon, regexpr("[a|c]f+\\.", 
-                                             taxon))
-      if (length(uncertain) != 0L) {
-        taxon <- gsub("\\s[a|c]f+\\.", "", taxon)
-      }
-      ident <- regmatches(taxon, regexpr("\\s+sp\\.+\\w*", 
-                                         taxon))
-      if (length(ident) != 0L) {
-        split.name <- unlist(strsplit(taxon, " "))
-        taxon <- split.name[1]
-        infra <- split.name[2]
-      }
       found <- !is.na(suppressWarnings(taxadb::get_ids(taxon, db = db)))
       
       if (!found) {
         if (suggest.names) {
-          suggested <- suggest.names.taxadb(taxon, max.distance = suggestion.distance, provide = db)
+          suggested <- bdc_suggest_names_taxadb(taxon, max.distance = suggestion.distance, provide = db)
           taxon <- suggested[1]
-          res[index, "distance"] <- suggested[2]
+          res[index, "distance"] <- round(as.numeric(suggested[2]), 2)
         }
         else {
           res[index, "notes"] <- "not found"
@@ -1243,7 +1220,7 @@ bdc_get_taxa_taxadb <-
           notes <- c(notes, "check +1 accepted")
         }
         res[index, "notes"] <- paste(notes, collapse = "|")
-        res[index, "original.search"] <- original.search
+        res[index, "original.search"] <- original.search[index]
         next
       }
       
@@ -1282,7 +1259,7 @@ bdc_get_taxa_taxadb <-
           }
         }
         res[index, "notes"] <- paste(notes, collapse = "|")
-        res[index, "original.search"] <- original.search
+        res[index, "original.search"] <- original.search[index]
         next
       }
     }
