@@ -14,6 +14,7 @@ ipak(
 # Load the database
 merged_database <- vroom("data/temp/standard_database.xz")
 
+# FIXEME: delete this file 
 # Test sample
 set.seed(1234)
 samp_df <- dplyr::slice_sample(.data = merged_database, n = 300)
