@@ -42,10 +42,24 @@ bdc_standardize_dataset <- function(metadata) {
     
     if (!file.exists(save_in_filename)) {
       
-      basename_names <-
-        metadata %>%
+      base_names<-metadata %>%
         dplyr::filter(File_name_to_load == input_file[file_index]) %>%
-        dplyr::select_if(~ !is.na(.)) %>%
+        dplyr::select_if(~ !is.na(.))
+      
+      standard_names <-
+        base_names %>%
+        names(.)
+      
+      required<-c("datasetName", "File_name_to_load", "scientificName",
+                  "decimalLatitude","decimalLongitude")
+      
+      if(!(required%in% standard_names %>% all)){
+        stop(paste("Required field is missing from Column names defined in the metadata for", input_filename)
+        )
+        
+      }
+      
+      basename_names <-base_names %>%
         dplyr::select(-datasetName, -File_name_to_load)
       
       standard_names <-
