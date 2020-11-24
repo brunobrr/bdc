@@ -1,5 +1,5 @@
-# Prefiltering data -----------------------------------------------------------
-source(here::here("R/aux_functions.R"))
+# Load all function required
+devtools::load_all()
 
 ipak(
   c(
@@ -51,11 +51,12 @@ corrected_coordinates <-
   )
 
 rows_to_remove <-
-  corrected_coordinates %>% pull(database_id)
+  corrected_coordinates %>%
+  pull(database_id)
 
 rows_to_insert <-
   corrected_coordinates %>%
-  # remove columns with wrong coords
+  # remove columns with coordinates transposed
   select(-decimalLatitude, -decimalLongitude) %>%
   # new columns coordinates with the corrected info
   rename(
@@ -63,23 +64,23 @@ rows_to_insert <-
     decimalLongitude = decimalLongitude_modified
   ) %>%
   # flag all of them
-  mutate(.inverted_xy = TRUE)
+  mutate(.transposed_xy = TRUE)
 
 merged <-
   merged %>%
   # remove wrong coordinates
   filter(!database_id %in% rows_to_remove) %>%
   # flag no issued rows as FALSE
-  mutate(.inverted_xy = FALSE) %>%
+  mutate(.transposed_xy = FALSE) %>%
   # add corrected coordinates
   bind_rows(rows_to_insert)
 
-merged %>%
-  bdc_check_flags()
+merged %>% bdc_check_flags()
 
 corrected_coordinates %>%
-  select(database_id, contains("decimal")) %>%
-  write_csv(here::here("Output", "Check", "01_prefilter_inverted_coordinates.csv"))
+  select(database_id, scientificName, contains("decimal"), 
+         locality, stateProvince, cntr_suggested) %>%
+  write_csv(here::here("Output", "Check", "01_prefilter_transposed_coordinates.csv"))
 
 # CHECK: 2. Remover registros com coordenadas inválidas (NA, empty)
 # NOTE: no log
@@ -88,14 +89,14 @@ merged <-
   merged %>%
   mutate(
     .invalid_xy = case_when(
-                    is.na(decimalLatitude) ~ TRUE,
-                    is.na(decimalLongitude) ~ TRUE,
-                    # flag empty coordinates
-                    nzchar(decimalLatitude) == FALSE ~ TRUE,
-                    nzchar(decimalLongitude) == FALSE ~ TRUE,
-                    # opposite cases are flagged as FALSE
-                    TRUE ~ FALSE
-                  )
+      is.na(decimalLatitude) ~ TRUE,
+      is.na(decimalLongitude) ~ TRUE,
+      # flag empty coordinates
+      nzchar(decimalLatitude) == FALSE ~ TRUE,
+      nzchar(decimalLongitude) == FALSE ~ TRUE,
+      # opposite cases are flagged as FALSE
+      TRUE ~ FALSE
+    )
   )
 
 merged %>%
@@ -107,10 +108,10 @@ merged <-
   merged %>%
   mutate(
     .outside_xy = case_when(
-                    decimalLatitude < -90 | decimalLatitude > 90 ~ TRUE,
-                    decimalLongitude < -180 | decimalLongitude > 180 ~ TRUE,
-                    TRUE ~ FALSE
-                  )
+      decimalLatitude < -90 | decimalLatitude > 90 ~ TRUE,
+      decimalLongitude < -180 | decimalLongitude > 180 ~ TRUE,
+      TRUE ~ FALSE
+    )
   )
 
 merged %>%
@@ -118,7 +119,7 @@ merged %>%
 
 merged %>%
   filter(
-    .inverted_xy == FALSE,
+    .transposed_xy == FALSE,
     .invalid_xy == FALSE,
     .outside_xy == FALSE
   ) %>%
@@ -130,14 +131,14 @@ merged <-
   merged %>%
   mutate(
     .no_xy = case_when(
-              is.na(decimalLatitude) ~ TRUE,
-              is.na(decimalLongitude) ~ TRUE,
-              # flag empty coordinates
-              nzchar(decimalLatitude) == FALSE ~ TRUE,
-              nzchar(decimalLongitude) == FALSE ~ TRUE,
-              # opposite cases are flagged as FALSE
-              TRUE ~ FALSE
-             )
+      is.na(decimalLatitude) ~ TRUE,
+      is.na(decimalLongitude) ~ TRUE,
+      # flag empty coordinates
+      nzchar(decimalLatitude) == FALSE ~ TRUE,
+      nzchar(decimalLongitude) == FALSE ~ TRUE,
+      # opposite cases are flagged as FALSE
+      TRUE ~ FALSE
+    )
   )
 
 merged %>%
@@ -145,7 +146,7 @@ merged %>%
 
 merged %>%
   filter(
-    .inverted_xy == FALSE,
+    .transposed_xy == FALSE,
     .invalid_xy == FALSE,
     .outside_xy == FALSE,
     .no_xy == FALSE
@@ -162,8 +163,8 @@ merged %>%
   bdc_check_flags()
 
 merged %>%
-    filter(
-    .inverted_xy == FALSE,
+  filter(
+    .transposed_xy == FALSE,
     .invalid_xy == FALSE,
     .outside_xy == FALSE,
     .no_xy == FALSE,
@@ -176,33 +177,33 @@ merged %>%
 # TODO: testar cc_sea e manualmente: ver issue #32
 
 if (FALSE) {
-
+  
   brazil_polygon <-
     rnaturalearth::ne_countries(country = "brazil", scale = "large", returnclass = "sp")
-
+  
   filter_for_brazil <-
     merged %>%
     filter(
       .invalid_xy == FALSE,
       .outside_xy == FALSE,
-      .inverted_xy == FALSE,
+      .transposed_xy == FALSE,
       .no_xy == FALSE,
     ) %>%
     mutate(.in_brazil = cc_sea(
-                    x = .,
-                    lon = "decimalLongitude",
-                    lat = "decimalLatitude",
-                    ref = brazil_polygon,
-                    value = "flagged"
-                  )
+      x = .,
+      lon = "decimalLongitude",
+      lat = "decimalLatitude",
+      ref = brazil_polygon,
+      value = "flagged"
     )
-
+    )
+  
   filter_for_brazil %>%
     bdc_check_flags()
-
+  
   filter_for_brazil %>%
     filter(
-      .inverted_xy == FALSE,
+      .transposed_xy == FALSE,
       .invalid_xy == FALSE,
       .outside_xy == FALSE,
       .no_xy == FALSE,
@@ -210,10 +211,10 @@ if (FALSE) {
       .in_brazil == FALSE
     ) %>%
     bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
-
+  
   filter_for_brazil %>%
     filter(
-      .inverted_xy == FALSE,
+      .transposed_xy == FALSE,
       .invalid_xy == FALSE,
       .outside_xy == FALSE,
       .no_xy == FALSE,
@@ -221,48 +222,48 @@ if (FALSE) {
       .in_brazil == TRUE
     ) %>%
     bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
-
+  
 }
 
 # NOTE: WIP do not run
 if (FALSE) {
-
+  
   world_polygon <- rworldmap::getMap()
-
+  
   brazil <- world_polygon[which(world_polygon$NAME == "Brazil"), ]
-
+  
   brazil@data <- brazil@data %>% dplyr::select(ADMIN)
-
+  
   brazil@data$fill <- 1
-
+  
   occurrences <-
     merged %>%
     filter(
-      .inverted_xy == FALSE,
+      .transposed_xy == FALSE,
       .invalid_xy == FALSE,
       .outside_xy == FALSE,
       .no_xy == FALSE,
     )
-
+  
   selec_points <-
     raster::extract(
       brazil,
       occurrences %>% select(decimalLongitude, decimalLatitude),
       buffer = 2000
     )
-
+  
   filter_for_brazil_by_hand <-
     occurrences %>%
     mutate(.in_brazil = selec_points$fill)
-
+  
   filter_for_brazil_by_hand %>%
     filter(.in_brazil == 1) %>%
     bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
-
+  
   filter_for_brazil_by_hand %>%
     filter(is.na(.in_brazil)) %>%
     bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
-
+  
 }
 
 # CHECK: 6. Remover registros fósseis ou com origem duvidosa
