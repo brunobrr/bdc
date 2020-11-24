@@ -45,6 +45,10 @@ if (!file.exists(merged_filename)) {
     y = metadata %>% names()
     )
 
+  merged_database<-
+    merged_database %>% 
+    select_if((function(x) any(!is.na(x))))
+  
   merged_database %>%
     vroom::vroom_write(merged_filename)
 
