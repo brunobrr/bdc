@@ -29,7 +29,7 @@ bdc_get_taxa_taxadb <-
                   "scientificNameAuthorship", "vernacularName", "input")
     
     found_name <-suppressWarnings(taxadb::filter_name(taxa, provider = db))
-    found_name <- found_name[found_name$sort, ]
+    found_name <- found_name[order(found_name$sort), ]
     found_name[, c("notes", "original.search", "distance")] <- rep("", nrow(found_name)) # tenho que melhorar a criaçao das colunas para as classes corretas
     found_name[, "original.search"] <- taxa
     not_found <- is.na(found_name$scientificName)
@@ -38,7 +38,7 @@ bdc_get_taxa_taxadb <-
       if(suggest.names == TRUE){
     
         not_found_index <- which(not_found == TRUE)
-        suggested_search <- sapply(taxa[not_found], FUN = bdc_suggest_names_taxadb, max.distance = suggestion.distance, provide = db) #mudar para suggest multiplo nomes
+        suggested_search <- sapply(taxa[not_found], FUN = bdc_suggest_names_taxadb, max.distance = suggestion.distance, provide = db) #mudar para suggest multiplo nomes, voltar a distancia correta para os nao encontrados ao inves de 0
         suggested_name <- suggested_search[1, ]
         distance <- suggested_search[2, ]
         suggested <- !is.na(suggested_name)
@@ -48,7 +48,7 @@ bdc_get_taxa_taxadb <-
           suggested_index <- not_found_index[suggested]
           found_name[suggested_index, 1:19] <- suppressWarnings(taxadb::filter_name(suggested_name[suggested], provider = db))
           found_name[suggested_index, "notes"] <- "was misspelled"
-          found_name[suggested_index, "distance"] <- as.character(round(as.numeric(distance[suggested_index], 2))) # corrigir para ser numeric ja de inicio
+          found_name[not_found_index, "distance"] <- as.character(round(as.numeric(distance, 2))) # corrigir para ser numeric ja de inicio
         
         }
           
@@ -76,7 +76,7 @@ bdc_get_taxa_taxadb <-
         if (any(one_accepted & accepted_empty == FALSE)) {
           
           replace <- synonym_index[one_accepted]
-          found_name[replace, 1:18] <- accepted_list[[replace]][, -1] 
+          found_name[replace, 1:18] <- accepted_list[[one_accepted]][, -1] 
           found_name[replace, "notes"] <- paste(found_name[replace, "notes"], "replaced synonym", sep = "|")
         }
           
@@ -93,5 +93,6 @@ bdc_get_taxa_taxadb <-
             
       }
     }
+  found_name[, 1] <- 1:nrow(found_name)
   found_name
   }
