@@ -65,7 +65,7 @@ bdc_suggest_names_taxadb <-
     }
     else {
       if (return.na) {
-        NA
+        c(NA, "0")
       }
       else {
         taxon.orig
