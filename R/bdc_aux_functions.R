@@ -21,24 +21,25 @@ ipak <- function(pkg) {
 #                                                          #
 ############################################################
 
+
 # bdc_get_wiki_country ----------------------------------------------------
-
-# 
-#' Title. Wrapped function to get country names from Wikipedia
-#'
-#' @return
-#' @export
-#'
-#' @examples
-bdc_get_wiki_country <- function() {
-
-  wiki_cntr <-
-    here::here("data", "wiki_country_names.txt") %>%
-    vroom::vroom()
-
-  return(wiki_cntr)
-
-}
+#' 
+#' # 
+#' #' Title. Wrapped function to get country names from Wikipedia
+#' #'
+#' #' @return
+#' #' @export
+#' #'
+#' #' @examples
+#' bdc_get_wiki_country <- function() {
+#' 
+#'   wiki_cntr <-
+#'     here::here("data", "wiki_country_names.txt") %>%
+#'     vroom::vroom()
+#' 
+#'   return(wiki_cntr)
+#' 
+#' }
 
 
 # bdc_get_world_map -------------------------------------------------------

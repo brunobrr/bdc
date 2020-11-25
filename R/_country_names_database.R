@@ -47,7 +47,7 @@ if (FALSE) {
     # wiki_cntr[[i]] <- janitor::clean_names(temp)
     temp <-
       lapply(wiki_cntr[[i]][, 2] %>%
-        pull(1), extract_cntr_names)
+        pull(1), bdc_extract_cntr_names)
 
     names(temp) <-
       wiki_cntr[[i]] %>%
