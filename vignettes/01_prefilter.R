@@ -1,6 +1,5 @@
-# Load all function required
-devtools::load_all()
 
+# Install and load packages
 ipak(
   c(
     "tidyverse",
@@ -12,23 +11,28 @@ ipak(
   )
 )
 
-fs::dir_create(here::here("Output/Check"))
+# Load all functions of BDC workflow
+devtools::load_all()
 
+# Create directories for saving the outputs
+fs::dir_create(here::here("Output/Check"))
+fs::dir_create(here::here("Output/Intermediate"))
+
+# Load the merge database
 merged <-
   here::here("data", "temp", "standard_database.xz") %>%
   vroom()
 
-# NOTE: todas as etapas serão aplicadas no merged, sem exclusão
-# NOTE: tudo com .flag
 
-# CHECK: 1. Usar a função que o @sjevelazco criou para corrigir xy trocados
+# CHECK 1. Correct latitude and longitude transposed
 
-wiki_cntr <- bdc_get_wiki_country()
+# load functions
+wiki_cntr <- bdc_get_wiki_country() # get country names from Wikipedia
+worldmap <- bdc_get_world_map()  # 
 
-worldmap <- bdc_get_world_map()
-
-standard_country_names <-
-  bdc_standard_country(
+# standardize the name of countries
+standardize_country_names <-
+  bdc_standardize_country(
     data = merged,
     cntry = "country",
     cntry_names_db = wiki_cntr
@@ -36,8 +40,9 @@ standard_country_names <-
 
 merged <-
   merged %>%
-  left_join(standard_country_names, by = c("country" = "cntr_original"))
+  dplyr::left_join(standard_country_names, by = c("country" = "cntr_original"))
 
+# Correct latitude and longitude transposed
 corrected_coordinates <-
   bdc_correct_coordinates(
     data = merged,
@@ -52,42 +57,45 @@ corrected_coordinates <-
 
 rows_to_remove <-
   corrected_coordinates %>%
-  pull(database_id)
+  dplyr::pull(database_id)
 
 rows_to_insert <-
   corrected_coordinates %>%
   # remove columns with coordinates transposed
-  select(-decimalLatitude, -decimalLongitude) %>%
+  dplyr::select(-decimalLatitude,-decimalLongitude) %>%
   # new columns coordinates with the corrected info
-  rename(
-    decimalLatitude = decimalLatitude_modified,
-    decimalLongitude = decimalLongitude_modified
-  ) %>%
+  dplyr::rename(decimalLatitude = decimalLatitude_modified,
+                decimalLongitude = decimalLongitude_modified) %>%
   # flag all of them
-  mutate(.transposed_xy = TRUE)
+  dplyr::mutate(.transposed_xy = TRUE)
 
 merged <-
   merged %>%
   # remove wrong coordinates
-  filter(!database_id %in% rows_to_remove) %>%
+  dplyr::filter(!database_id %in% rows_to_remove) %>%
   # flag no issued rows as FALSE
-  mutate(.transposed_xy = FALSE) %>%
+  dplyr::mutate(.transposed_xy = FALSE) %>%
   # add corrected coordinates
-  bind_rows(rows_to_insert)
+  dplyr::bind_rows(rows_to_insert)
 
 merged %>% bdc_check_flags()
 
 corrected_coordinates %>%
-  select(database_id, scientificName, contains("decimal"), 
-         locality, stateProvince, cntr_suggested) %>%
+  dplyr::select(
+    database_id,
+    scientificName,
+    contains("decimal"),
+    locality,
+    stateProvince,
+    cntr_suggested
+  ) %>%
   write_csv(here::here("Output", "Check", "01_prefilter_transposed_coordinates.csv"))
 
-# CHECK: 2. Remover registros com coordenadas inválidas (NA, empty)
-# NOTE: no log
 
+# CHECK: 2. Invalid coordinates (i.e empty or NAs)
 merged <-
   merged %>%
-  mutate(
+  dplyr::mutate(
     .invalid_xy = case_when(
       is.na(decimalLatitude) ~ TRUE,
       is.na(decimalLongitude) ~ TRUE,
@@ -106,7 +114,7 @@ merged %>%
 
 merged <-
   merged %>%
-  mutate(
+  dplyr::mutate(
     .outside_xy = case_when(
       decimalLatitude < -90 | decimalLatitude > 90 ~ TRUE,
       decimalLongitude < -180 | decimalLongitude > 180 ~ TRUE,
@@ -118,18 +126,17 @@ merged %>%
   bdc_check_flags()
 
 merged %>%
-  filter(
-    .transposed_xy == FALSE,
-    .invalid_xy == FALSE,
-    .outside_xy == FALSE
-  ) %>%
+  dplyr::filter(.transposed_xy == FALSE,
+                .invalid_xy == FALSE,
+                .outside_xy == FALSE) %>%
   bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
 
-# CHECK: 3. Remover registros sem lat ou sem long
+
+# CHECK: 3. Records without latitude or longitude
 
 merged <-
   merged %>%
-  mutate(
+  dplyr::mutate(
     .no_xy = case_when(
       is.na(decimalLatitude) ~ TRUE,
       is.na(decimalLongitude) ~ TRUE,
@@ -145,25 +152,23 @@ merged %>%
   bdc_check_flags()
 
 merged %>%
-  filter(
-    .transposed_xy == FALSE,
-    .invalid_xy == FALSE,
-    .outside_xy == FALSE,
-    .no_xy == FALSE
-  ) %>%
+  dplyr::filter(.transposed_xy == FALSE,
+                .invalid_xy == FALSE,
+                .outside_xy == FALSE,
+                .no_xy == FALSE) %>%
   bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
 
-# CHECK: 4. Registros sem nome ou com nome vazio
 
+# CHECK: 4. Invalid scientific name (i.e empty or NA)
 merged <-
   merged %>%
-  mutate(.no_name = if_else(is.na(scientificName), TRUE, FALSE))
+  dplyr::mutate(.no_name = if_else(is.na(scientificName), TRUE, FALSE))
 
 merged %>%
   bdc_check_flags()
 
 merged %>%
-  filter(
+  dplyr::filter(
     .transposed_xy == FALSE,
     .invalid_xy == FALSE,
     .outside_xy == FALSE,
@@ -183,26 +188,25 @@ if (FALSE) {
   
   filter_for_brazil <-
     merged %>%
-    filter(
-      .invalid_xy == FALSE,
-      .outside_xy == FALSE,
-      .transposed_xy == FALSE,
-      .no_xy == FALSE,
-    ) %>%
-    mutate(.in_brazil = cc_sea(
-      x = .,
-      lon = "decimalLongitude",
-      lat = "decimalLatitude",
-      ref = brazil_polygon,
-      value = "flagged"
-    )
+    dplyr::filter(.invalid_xy == FALSE,
+                  .outside_xy == FALSE,
+                  .transposed_xy == FALSE,
+                  .no_xy == FALSE,) %>%
+    dplyr::mutate(
+      .in_brazil = cc_sea(
+        x = .,
+        lon = "decimalLongitude",
+        lat = "decimalLatitude",
+        ref = brazil_polygon,
+        value = "flagged"
+      )
     )
   
   filter_for_brazil %>%
     bdc_check_flags()
   
   filter_for_brazil %>%
-    filter(
+    dplyr::filter(
       .transposed_xy == FALSE,
       .invalid_xy == FALSE,
       .outside_xy == FALSE,
@@ -213,7 +217,7 @@ if (FALSE) {
     bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
   
   filter_for_brazil %>%
-    filter(
+    dplyr::filter(
       .transposed_xy == FALSE,
       .invalid_xy == FALSE,
       .outside_xy == FALSE,
@@ -238,12 +242,10 @@ if (FALSE) {
   
   occurrences <-
     merged %>%
-    filter(
-      .transposed_xy == FALSE,
-      .invalid_xy == FALSE,
-      .outside_xy == FALSE,
-      .no_xy == FALSE,
-    )
+    dplyr::filter(.transposed_xy == FALSE,
+                  .invalid_xy == FALSE,
+                  .outside_xy == FALSE,
+                  .no_xy == FALSE,)
   
   selec_points <-
     raster::extract(
@@ -254,7 +256,7 @@ if (FALSE) {
   
   filter_for_brazil_by_hand <-
     occurrences %>%
-    mutate(.in_brazil = selec_points$fill)
+    dplyr::mutate(.in_brazil = selec_points$fill)
   
   filter_for_brazil_by_hand %>%
     filter(.in_brazil == 1) %>%
@@ -266,7 +268,7 @@ if (FALSE) {
   
 }
 
-# CHECK: 6. Remover registros fósseis ou com origem duvidosa
+# CHECK: 6. Invalid provenance
 # FIXME: rever doubt
 
 doubt <- c("Amost", "DrawingOrPhotograph", "Dupli", "EX", "E", "Extra", "F",
@@ -276,29 +278,30 @@ doubt <- c("Amost", "DrawingOrPhotograph", "Dupli", "EX", "E", "Extra", "F",
 
 merged <-
   merged %>%
-  mutate(.doubtful_provenance = if_else(basisOfRecord %in% doubt, TRUE, FALSE))
+  dplyr::mutate(.doubtful_provenance = if_else(basisOfRecord %in% doubt, TRUE, FALSE))
 
 # CHECK: 7. Salvar tabela de nomes sem coordenadas (x ou y) mas que contém informações sobre localidade
 
 rows_to_insert <-
   merged %>%
-  filter(!is.na(scientificName)) %>%
-  filter(is.na(decimalLatitude) | is.na(decimalLongitude)) %>%
-  filter(!is.na(locality)) %>%
-  mutate(.locality_no_xy = TRUE)
+  dplyr::filter(!is.na(scientificName)) %>%
+  dplyr::filter(is.na(decimalLatitude) |
+                  is.na(decimalLongitude)) %>%
+  dplyr::filter(!is.na(locality)) %>%
+  dplyr::mutate(.locality_no_xy = TRUE)
 
 rows_to_remove <-
   rows_to_insert %>%
-  pull(database_id)
+  dplyr::pull(database_id)
 
 merged <-
   merged %>%
-  # remove rows wihout xy but with locality
-  filter(!database_id %in% rows_to_remove) %>%
+  # remove rows without xy but with locality
+  dplyr::filter(!database_id %in% rows_to_remove) %>%
   # flag no issued rows as FALSE
-  mutate(.locality_no_xy = FALSE) %>%
-  # insert rows flagedd as TRUE
-  bind_rows(rows_to_insert)
+  dplyr::mutate(.locality_no_xy = FALSE) %>%
+  # insert rows flagged as TRUE
+  dplyr::bind_rows(rows_to_insert)
 
 rows_to_insert %>%
   write_csv(here::here("Output", "Check", "01_prefilter_no_coordinates_but_locality.csv"))

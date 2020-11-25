@@ -4,7 +4,8 @@
 #                                                          #
 ##%######################################################%##
 
-source("https://raw.githubusercontent.com/brunobrr/risk_assessment_flora_Brazil_I/master/R/aux_functions.R")
+# Load all function required
+devtools::load_all()
 
 # devtools::install_github("ropensci/rnaturalearth")
 # devtools::install_github("ropensci/rnaturalearthhires")
@@ -36,16 +37,10 @@ ipak(
 #                                                          #
 ##%######################################################%##
 
-temp <- tempfile(fileext = ".xz")
+occ <-
+  here::here("data", "temp", "standard_database.xz") %>%
+  vroom()
 
-download.file(
-  "https://github.com/brunobrr/risk_assessment_flora_Brazil_I/raw/master/data/temp/standard_database.xz",
-  destfile = temp
-)
-
-# Occurrence database
-occ <- vroom::vroom(temp) #Occurrence database
-occ
 
 
 ##%######################################################%##

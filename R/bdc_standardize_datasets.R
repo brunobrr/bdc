@@ -13,7 +13,7 @@
 #' @importFrom readr read_csv write_csv
 #'
 #' @export
-bdc_standardize_dataset <- function(metadata) {
+bdc_standardize_datasets <- function(metadata) {
   
   save_in_dir <- here::here("data", "temp")
   

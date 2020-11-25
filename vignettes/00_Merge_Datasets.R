@@ -22,7 +22,7 @@ if (!file.exists(merged_filename)) {
 
   metadata <- readr::read_csv(here::here("Config/DatabaseInfo.csv"))
 
-  bdc_standardize_dataset(metadata = metadata)
+  bdc_standardize_datasets(metadata = metadata)
 
   # Concatenate all the resulting standardized databases
   merged_database <-

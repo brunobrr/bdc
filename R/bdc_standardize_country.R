@@ -2,24 +2,24 @@
 #' Title: standard_country is a function to correct, standardize, and assign a ISO code to country names 
 #'
 #' @param data 
-#' @param cntry 
-#' @param cntry_names_db 
+#' @param country 
+#' @param country_names_db 
 #'
 #' @return
 #' @export
 #'
 #' @examples
-bdc_standard_country <-
+bdc_standardize_country <-
   function(data,
-           cntry,
-           cntry_names_db
+           country,
+           country_names_db
   ) {
     # Create a country database based on occ database
     cntr_db <-
       data %>%
-      dplyr::distinct_(cntry, .keep_all = FALSE) %>%
-      dplyr::arrange_(cntry) %>%
-      rename(cntr_original = cntry)
+      dplyr::distinct_(country, .keep_all = FALSE) %>%
+      dplyr::arrange_(country) %>%
+      rename(cntr_original = country)
     
     cntr_db$cntr_original2 <-
       stringr::str_replace_all(cntr_db$cntr_original, "[[:punct:]]", " ") %>%
@@ -30,23 +30,24 @@ bdc_standard_country <-
     cntr_db <- cntr_db %>% mutate(cntr_suggested = NA)
     
     # Assign country names based on different character matching.
-    cntry_names_db <-
-      cntry_names_db %>%
+    country_names_db <-
+      country_names_db %>%
       mutate(names_2 = names_in_different_languages %>%
                stringi::stri_trans_general("Latin-ASCII") %>%
                tolower())
     
-    cn <- cntry_names_db %>%
+    cn <- country_names_db %>%
       dplyr::distinct(english_name) %>%
       pull(1)
+    
     for (i in 1:length(cn)) {
-      cntry_names_db_name <-
-        cntry_names_db %>%
+      country_names_db_name <-
+        country_names_db %>%
         dplyr::filter(english_name == cn[i]) %>%
         pull(names_2)
       
       filt <-
-        which(tolower(cntr_db$cntr_original2) %in% tolower(cntry_names_db_name))
+        which(tolower(cntr_db$cntr_original2) %in% tolower(country_names_db_name))
       
       if (length(filt) > 0) {
         message("country found: ", cn[i])
@@ -92,7 +93,6 @@ bdc_standard_country <-
       dplyr::select(-cntr_original2, -cntr_suggested) %>%
       dplyr::rename(cntr_suggested = cntr_suggested2)
     
-    # data <- left_join(data, cntr_db, by=c('country'="cntr_original"))
     return(cntr_db)
   }
 
