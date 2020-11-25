@@ -3,7 +3,7 @@ devtools::load_all()
 
 if (!require("here")) install.packages("here")
 
-merged_filename <- here::here("data", "temp", "standard_database.xz")
+merged_filename <- here::here("Data", "temp", "standard_database.xz")
 
 if (!file.exists(merged_filename)) {
 

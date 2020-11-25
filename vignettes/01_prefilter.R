@@ -1,3 +1,5 @@
+# Load all functions of BDC workflow
+devtools::load_all()
 
 # Install and load packages
 ipak(
@@ -7,12 +9,12 @@ ipak(
     "fs",
     "vroom",
     "CoordinateCleaner",
-    "rnaturalearth"
+    "rnaturalearth",
+    "dplyr",
+    "xml2",
+    "rvest"
   )
 )
-
-# Load all functions of BDC workflow
-devtools::load_all()
 
 # Create directories for saving the outputs
 fs::dir_create(here::here("Output/Check"))
