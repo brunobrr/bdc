@@ -24,7 +24,7 @@ ipak <- function(pkg) {
 # bdc_get_wiki_country ----------------------------------------------------
 
 # 
-#' Title. Wrapped funciton to get cuntry names from Wikipedia
+#' Title. Wrapped function to get country names from Wikipedia
 #'
 #' @return
 #' @export
@@ -43,7 +43,7 @@ bdc_get_wiki_country <- function() {
 
 # bdc_get_world_map -------------------------------------------------------
 
-#' Title: FIXEME ####################################
+#' Title
 #'
 #' @return
 #' @export
@@ -52,8 +52,6 @@ bdc_get_wiki_country <- function() {
 bdc_get_world_map <- function() {
   
   worldmap <- rnaturalearth::ne_countries(scale='large') 
-  
-  # worldmap@data
   
   # Add some iso code to some countries polygons 
   iso2c <- countrycode::countrycode(unique(worldmap$name_en),
@@ -64,7 +62,8 @@ bdc_get_world_map <- function() {
                                     origin = 'country.name.en',
                                     destination = 'iso3c')
   
-  iso <- data.frame(worldmap@data %>% dplyr::select(name_en, starts_with('iso')),
+  iso <- data.frame(worldmap@data %>% 
+                    dplyr::select(name_en, starts_with('iso')),
                     iso2c,
                     iso3c)
   
@@ -74,11 +73,14 @@ bdc_get_world_map <- function() {
   filt <- !is.na(iso$iso_a3) & is.na(iso$iso3c)
   iso$iso3c[filt] <- iso$iso_a3[filt]
   
-  worldmap@data <- iso
-  is.na(iso) %>% colSums() #number of polygons without isocode
-  worldmap@data <- worldmap@data %>% dplyr::select(iso2c, iso3c)
+  worldmap@data <- 
+  iso
+  is.na(iso) %>% 
+  colSums() #number of polygons without isocode
   
-  rm(list=c('iso', 'iso2c', 'iso3c', 'filt'))
+  worldmap@data <-
+    worldmap@data %>% 
+    dplyr::select(iso2c, iso3c)
   
   return(worldmap)
   

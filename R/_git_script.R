@@ -42,7 +42,7 @@
 # git branch bruno_bdc
 # git checkout bruno_bdc # Mudar de branch
 # git add 
-# git commit
+# git commit -m
 # git push origin bruno_bdc
 
 # Ver github
