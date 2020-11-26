@@ -12,7 +12,10 @@ ipak(
     "rnaturalearth",
     "CoordinateCleaner",
     "stringr",
-    "rworldmap" # Check this
+    "rworldmap", # Check this
+    "geobr", # Check this
+    "raster", # Check this
+    "flora"
   )
 )
 
@@ -62,7 +65,7 @@ space_issues  <-
     outliers_mtp = 5,
     outliers_td = 1000,
     outliers_size = 7,
-    #acho que esse aqui podemos aumentar visando que existem muitas espéceis pouco amostradas
+    #acho que esse aqui podemos aumentar visando que existem muitas esp?ceis pouco amostradas
     range_rad = 0,
     zeros_rad = 0.5,
     capitals_ref = NULL,
