@@ -38,7 +38,7 @@ bdc_get_taxa_taxadb <-
       if(suggest.names == TRUE){
     
         not_found_index <- which(not_found == TRUE)
-        suggested_search <- sapply(taxa[not_found], FUN = bdc_suggest_names_taxadb, max.distance = suggestion.distance, provide = db) #mudar para suggest multiplo nomes, voltar a distancia correta para os nao encontrados ao inves de 0
+        suggested_search <- sapply(taxa[not_found], FUN = bdc_suggest_names_taxadb, max.distance = suggestion.distance, provide = db) 
         suggested_name <- suggested_search[1, ]
         distance <- suggested_search[2, ]
         suggested <- !is.na(suggested_name)
