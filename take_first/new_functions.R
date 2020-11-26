@@ -7,7 +7,7 @@ min_get_names <- function (id, db = getOption("taxadb_default_provider", "itis")
   prefix_ids <- switch(format, prefix = id, taxadb:::as_prefix(id, db))
   df <- filter_id(prefix_ids, provider = db, version = version, 
                   collect = FALSE, db = taxadb_db) %>% dplyr::select("scientificName", 
-                                                                     "taxonID", "sort") %>% dplyr::distinct() %>% min_take_first_duplicate() %>% 
+                                                                     "taxonID", "sort", "taxonomicStatus") %>% dplyr::distinct() %>% min_take_first_duplicate() %>% 
     dplyr::collect()
   if (dim(df)[1] != n) {
     stop(paste("Error in resolving possible duplicate names.", 
@@ -25,7 +25,7 @@ max_get_names <- function (id, db = getOption("taxadb_default_provider", "itis")
   prefix_ids <- switch(format, prefix = id, taxadb:::as_prefix(id, db))
   df <- filter_id(prefix_ids, provider = db, version = version, 
                   collect = FALSE, db = taxadb_db) %>% dplyr::select("scientificName", 
-                                                                     "taxonID", "sort") %>% dplyr::distinct() %>% max_take_first_duplicate() %>% 
+                                                                     "taxonID", "sort", "taxonomicStatus") %>% dplyr::distinct() %>% max_take_first_duplicate() %>% 
     dplyr::collect()
   if (dim(df)[1] != n) {
     stop(paste("Error in resolving possible duplicate names.", 
@@ -45,7 +45,8 @@ min_take_first_duplicate <- function (df)
   if (max_repeated == 1) 
     return(df)
   df %>% dplyr::arrange(scientificName) %>% dplyr::mutate(row_num = dplyr::row_number()) %>% 
-    dplyr::group_by(sort) %>% dplyr::filter(row_num == min(row_num, na.rm = TRUE)) %>% 
+    dplyr::group_by(sort) %>% 
+    dplyr::filter(taxonomicStatus == "accepted") %>%
     dplyr::ungroup() %>% dplyr::arrange(sort)
 }
 
@@ -61,6 +62,7 @@ max_take_first_duplicate <- function (df)
   if (max_repeated == 1) 
     return(df)
   df %>% dplyr::arrange(scientificName) %>% dplyr::mutate(row_num = dplyr::row_number()) %>% 
-    dplyr::group_by(sort) %>% dplyr::filter(row_num == max(row_num, na.rm = TRUE)) %>% 
+    dplyr::group_by(sort) %>% 
+    dplyr::filter(taxonomicStatus == "accepted") %>%
     dplyr::ungroup() %>% dplyr::arrange(sort)
 }
