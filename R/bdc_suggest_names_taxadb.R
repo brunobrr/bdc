@@ -19,7 +19,7 @@ bdc_suggest_names_taxadb <-
             provider
             
   ) {
-    taxon <- fixCase(taxon)
+    taxon <- flora::fixCase(taxon)
     taxon.orig <- taxon
     uncertain <- regmatches(taxon, regexpr("[a|c]f+\\.", 
                                            taxon))
@@ -65,7 +65,7 @@ bdc_suggest_names_taxadb <-
     }
     else {
       if (return.na) {
-        NA
+        c(NA, "0")
       }
       else {
         taxon.orig
