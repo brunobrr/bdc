@@ -19,58 +19,42 @@ bdc_suggest_names_taxadb <-
             provider
             
   ) {
-    taxon <- flora::fixCase(taxon)
+    taxon <- sapply(taxon, flora::fixCase, USE.NAMES = FALSE)
     taxon.orig <- taxon
-    uncertain <- regmatches(taxon, regexpr("[a|c]f+\\.", 
-                                           taxon))
+    uncertain <- sapply(taxon, function(i) regmatches(i, regexpr("[a|c]f+\\.", 
+                                           i)))
     taxon <- gsub("^\\s+|\\s+$", "", taxon)
-    if (length(uncertain) != 0L) 
-      taxon <- gsub("[a|c]f+\\.", "", taxon)
-    ident <- regmatches(taxon, regexpr("\\s+sp\\.+\\w*", 
-                                       taxon))
-    if (length(ident) != 0L) 
-      taxon <- unlist(strsplit(taxon, " "))[1]
-    if (!nzchar(taxon)) 
-      return(NA)
+    uncertain_test <- sapply(uncertain, function(i) length(i) != 0L)
+    if (any(uncertain_test)){ 
+      taxon[uncertain_test] <- gsub("[a|c]f+\\.", "", taxon[uncertain_test])
+    }
     
-    first.letter <- strsplit(taxon, "")[[1]][1]
+    ident_n <- sapply(taxon, function(i) regmatches(i, regexpr("\\s+sp\\.+\\w*", 
+                                       i)))
+    ident_test <- sapply(ident_n, function(i) length(i) != 0L)
+    
+    if (any(ident_test)){ # corrigir aqui o length(ident_n)
+      taxon[ident_test] <- sapply(taxon[ident_test], function(i) unlist(strsplit(i, " "))[1], USE.NAMES = FALSE)
+    }
+    if (any(!nzchar(taxon))){# se algum elemento for vazio talvez separar antes para nao precisar rodar o resto
+      taxon[!nzchar(taxon)] <- NA
+    }
+    
+    first.letter <- unique(sapply(taxon, function(i) strsplit(i, "")[[1]][1], USE.NAMES = FALSE))
+    
     species.first.letter <- suppressWarnings(taxadb::name_starts_with(first.letter, provider = provider))[, c( "taxonID", "scientificName", 
                                                                                                                "taxonRank", "taxonomicStatus",         
                                                                                                                "acceptedNameUsageID" )]
     
     
-    l1 <- length(taxon)
-    l2 <- length(species.first.letter$scientificName)
-    out <- stringdist::stringdist(taxon, species.first.letter$scientificName)
-    distance <- 1 - (out/pmax(nchar(taxon), nchar(species.first.letter$scientificName)))
-    max.dist <- max(distance, na.rm = TRUE)
-    if (max.dist >= max.distance) {
-      if (length(ident) == 0L) {
-        dis <- max(distance, na.rm = TRUE)
-        res <- species.first.letter$scientificName[distance == dis][1]
-        
-        if (length(uncertain) == 0L) {
-          
-          return(c(res, dis))
-        }
-        else {
-          res <- unlist(strsplit(res, " "))
-          return(c(paste(res[1], uncertain, res[2:length(res)]), dis))
-        }
-      }
-      else {
-        paste(species.first.letter$scientificName[distance == max(distance, 
-                                                                  na.rm = TRUE)][1], ident, sep = "")
-      }
-    }
-    else {
-      if (return.na) {
-        c(NA, "0")
-      }
-      else {
-        taxon.orig
-      }
-    }
+    #l1 <- length(taxon)
+    #l2 <- length(species.first.letter$scientificName)
+    out <- lapply(taxon, function(i) stringdist::stringdist(i, species.first.letter$scientificName))
+    distance <- lapply(seq_along(taxon), function(i) 1 - (out[[i]]/pmax(nchar(taxon[i]), nchar(species.first.letter$scientificName))))
+    max.dist <- sapply(distance, function(i) max(i, na.rm = TRUE), USE.NAMES = FALSE)
+    
+    suggested_names <- sapply(seq_along(taxon), function(i) return_names(max.distance, max.dist[i], distance[[i]], species.first.letter, uncertain[[i]], ident_n[[i]], return.na))
+    suggested_names
   }
 
 
