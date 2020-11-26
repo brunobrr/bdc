@@ -46,7 +46,8 @@ bdc_get_taxa_taxadb <-
         if(any(suggested == TRUE)){
           
           suggested_index <- not_found_index[suggested]
-          found_name[suggested_index, 1:19] <- suppressWarnings(taxadb::filter_name(suggested_name[suggested], provider = db))
+          suggest_data <- suppressWarnings(taxadb::filter_name(suggested_name[suggested], provider = db))
+          found_name[suggested_index, colnames(suggest_data)] <- suggest_data 
           found_name[suggested_index, "notes"] <- "was misspelled"
           found_name[not_found_index, "distance"] <- as.character(round(as.numeric(distance, 2))) # corrigir para ser numeric ja de inicio
         
