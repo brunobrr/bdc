@@ -23,8 +23,18 @@ right_name <- dup %>% filter(taxonomicStatus == "accepted") %>% pull(scientificN
 # Testing take_first ------------------------------------------------------
 
 
-max_name <- max_get_names(x$acceptedNameUsageID, "fb")
+new_name <- new_get_names(x$acceptedNameUsageID, "fb")
 
-min_name <- min_get_names(x$acceptedNameUsageID, "fb")
 
-c(max_name, min_name) == right_name
+
+# Multiple names ----------------------------------------------------------
+
+
+dat <- read.csv("./parse_names.csv", header = TRUE)
+names_test <- dat %>% pull(input_cleaned)
+txdb <- filter_name(names_test, "gbif")
+
+res <- new_get_names(txdb$acceptedNameUsageID, "gbif")
+
+
+
