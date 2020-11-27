@@ -59,7 +59,7 @@ wiki_cntr # this is a database with country names in different languages constru
 # stadard_country function tray to correct and standardize country names and attribute a two character
 # country code based on ISO norms
 standar_country <-
-  standard_country(data = occ, # your occurrence database
+  bdc_standardize_country(data = occ, # your occurrence database
                   cntry = 'country', # column names with country names 
                   cntry_names_db = wiki_cntr) # a dataframe with country names in different language 
 standar_country
