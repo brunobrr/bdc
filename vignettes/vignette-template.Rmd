@@ -1,0 +1,30 @@
+---
+title: "Vignette template"
+author: "BDC Team"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette template}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+# carregue as funções
+devtools::load_all()
+```
+
+Texto normal aqui.
+
+```{r}
+# dentro dos chunks é código do R
+```
+
+Texto normal aqui.
