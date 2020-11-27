@@ -28,13 +28,15 @@ new_name <- new_get_names(x$acceptedNameUsageID, "fb")
 
 
 # Multiple names ----------------------------------------------------------
-
+# col e tpl nao esta funcionando, mas na do taxadb tbm nao
 
 dat <- read.csv("./parse_names.csv", header = TRUE)
 names_test <- dat %>% pull(input_cleaned)
 txdb <- filter_name(names_test, "gbif")
 
-res <- new_get_names(txdb$acceptedNameUsageID, "gbif")
+res <- new_get_names(txdb$acceptedNameUsageID, "tpl")
+res <- taxadb::get_names(txdb$acceptedNameUsageID, "tpl")
 
+names_test[is.na(res)]
 
 
