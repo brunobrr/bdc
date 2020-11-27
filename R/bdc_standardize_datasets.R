@@ -6,9 +6,7 @@
 #'
 #' @importFrom dplyr pull filter select select_if mutate n everything
 #' @importFrom fs dir_exists dir_create
-#' @importFrom glue glue
 #' @importFrom here here
-#' @importFrom janitor clean_names make_clean_names
 #' @importFrom purrr set_names
 #' @importFrom readr read_csv write_csv
 #'
