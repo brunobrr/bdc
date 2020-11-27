@@ -25,159 +25,73 @@ merged <-
   here::here("data", "temp", "standard_database.xz") %>%
   vroom()
 
-
 # CHECK 1. Correct latitude and longitude transposed
 
-# load functions
-wiki_cntr <- bdc_get_wiki_country() # get country names from Wikipedia
-worldmap <- bdc_get_world_map()  # 
+data_pf1 <- merged %>%
+  bcd_flag_transposed_xy()
 
-# standardize the name of countries
-standardize_country_names <-
-  bdc_standardize_country(
-    data = merged,
-    cntry = "country",
-    cntry_names_db = wiki_cntr
-  )
+data_pf1 %>% 
+  bdc_check_flags()
 
-merged <-
-  merged %>%
-  dplyr::left_join(standard_country_names, by = c("country" = "cntr_original"))
-
-# Correct latitude and longitude transposed
-corrected_coordinates <-
-  bdc_correct_coordinates(
-    data = merged,
-    x = "decimalLongitude",
-    y = "decimalLatitude",
-    sp = "scientificName",
-    id = "database_id",
-    cntr_iso2 = "cntr_iso2c",
-    world_poly = worldmap,
-    world_poly_iso = "iso2c"
-  )
-
-rows_to_remove <-
-  corrected_coordinates %>%
-  dplyr::pull(database_id)
-
-rows_to_insert <-
-  corrected_coordinates %>%
-  # remove columns with coordinates transposed
-  dplyr::select(-decimalLatitude,-decimalLongitude) %>%
-  # new columns coordinates with the corrected info
-  dplyr::rename(decimalLatitude = decimalLatitude_modified,
-                decimalLongitude = decimalLongitude_modified) %>%
-  # flag all of them
-  dplyr::mutate(.transposed_xy = TRUE)
-
-merged <-
-  merged %>%
-  # remove wrong coordinates
-  dplyr::filter(!database_id %in% rows_to_remove) %>%
-  # flag no issued rows as FALSE
-  dplyr::mutate(.transposed_xy = FALSE) %>%
-  # add corrected coordinates
-  dplyr::bind_rows(rows_to_insert)
-
-merged %>% bdc_check_flags()
-
-corrected_coordinates %>%
-  dplyr::select(
-    database_id,
-    scientificName,
-    contains("decimal"),
-    locality,
-    stateProvince,
-    cntr_suggested
-  ) %>%
-  write_csv(here::here("Output", "Check", "01_prefilter_transposed_coordinates.csv"))
-
+data_pf1 %>% 
+  bdc_filter_out_flags() %>%
+  bdc_check_flags()
 
 # CHECK: 2. Invalid coordinates (i.e empty or NAs)
-merged <-
-  merged %>%
-  dplyr::mutate(
-    .invalid_xy = case_when(
-      is.na(decimalLatitude) ~ TRUE,
-      is.na(decimalLongitude) ~ TRUE,
-      # flag empty coordinates
-      nzchar(decimalLatitude) == FALSE ~ TRUE,
-      nzchar(decimalLongitude) == FALSE ~ TRUE,
-      # opposite cases are flagged as FALSE
-      TRUE ~ FALSE
-    )
-  )
 
-merged %>%
+data_pf2 <-
+  merged %>%
+  bdc_flag_invalid_xy()
+
+data_pf2 %>%
+  bdc_check_flags()
+
+data_pf2 %>%
+  bdc_filter_out_flags() %>%
   bdc_check_flags()
 
 # TODO: remover coordenadas além dos limites 90, 180
 
-merged <-
+data_pf3 <-
   merged %>%
-  dplyr::mutate(
-    .outside_xy = case_when(
-      decimalLatitude < -90 | decimalLatitude > 90 ~ TRUE,
-      decimalLongitude < -180 | decimalLongitude > 180 ~ TRUE,
-      TRUE ~ FALSE
-    )
-  )
+  bdc_flag_outside_xy()
 
-merged %>%
+data_pf3 %>%
   bdc_check_flags()
 
-merged %>%
-  dplyr::filter(.transposed_xy == FALSE,
-                .invalid_xy == FALSE,
-                .outside_xy == FALSE) %>%
-  bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
+data_pf3 %>%
+  bdc_filter_out_flags() %>%
+  bdc_check_flags()
 
+data_pf3 %>%
+  bdc_filter_out_flags() %>%
+  bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
 
 # CHECK: 3. Records without latitude or longitude
 
-merged <-
+data_pf4 <-
   merged %>%
-  dplyr::mutate(
-    .no_xy = case_when(
-      is.na(decimalLatitude) ~ TRUE,
-      is.na(decimalLongitude) ~ TRUE,
-      # flag empty coordinates
-      nzchar(decimalLatitude) == FALSE ~ TRUE,
-      nzchar(decimalLongitude) == FALSE ~ TRUE,
-      # opposite cases are flagged as FALSE
-      TRUE ~ FALSE
-    )
-  )
+  bdc_flag_no_xy()
 
-merged %>%
+data_pf4 %>%
   bdc_check_flags()
 
-merged %>%
-  dplyr::filter(.transposed_xy == FALSE,
-                .invalid_xy == FALSE,
-                .outside_xy == FALSE,
-                .no_xy == FALSE) %>%
-  bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
-
+data_pf4 %>%
+  bdc_filter_out_flags() %>%
+  bdc_check_flags()
 
 # CHECK: 4. Invalid scientific name (i.e empty or NA)
-merged <-
-  merged %>%
-  dplyr::mutate(.no_name = if_else(is.na(scientificName), TRUE, FALSE))
 
-merged %>%
+data_pf5 <-
+  merged %>%
+  bdc_flag_no_name()
+
+data_pf5 %>%
   bdc_check_flags()
 
-merged %>%
-  dplyr::filter(
-    .transposed_xy == FALSE,
-    .invalid_xy == FALSE,
-    .outside_xy == FALSE,
-    .no_xy == FALSE,
-    .no_name == FALSE
-  ) %>%
-  bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
+data_pf5 %>%
+  bdc_filter_out_flags() %>%
+  bdc_check_flags()
 
 # CHECK: 5. Registros fora do país selecionado
 # TODO: filtrar pelo polígono
