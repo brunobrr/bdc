@@ -12,4 +12,14 @@ renv/.gitignore
 renv/activate.R
 renv/settings.dcf
 
-
+data/temp_datasets/merged_database.xz
+data/temp_datasets/standard_AT_EPIPHYTES.xz
+data/temp_datasets/standard_AT_TREES.xz
+data/temp_datasets/standard_BIEN.xz
+data/temp_datasets/standard_DRYFLOR.xz
+data/temp_datasets/standard_GBIF.xz
+data/temp_datasets/standard_ICMBIO.xz
+data/temp_datasets/standard_IDIGBIO.xz
+data/temp_datasets/standard_NEOTROPTREE.xz
+data/temp_datasets/standard_SIBBR.xz
+data/temp_datasets/standard_SPECIESLINK.xz
