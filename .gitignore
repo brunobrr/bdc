@@ -12,5 +12,4 @@ renv/.gitignore
 renv/activate.R
 renv/settings.dcf
 
-data/temp_datasets/*
-input_files_all/*
+input_files/*
