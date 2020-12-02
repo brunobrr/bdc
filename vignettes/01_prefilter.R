@@ -41,7 +41,7 @@ data_pf1 %>%
 
 data_pf2 <-
   merged %>%
-  bdc_flag_invalid_xy()
+  bdc_flag_invalid_xy(long = "decimalLongitude", lat = "decimalLatitude")
 
 data_pf2 %>%
   bdc_check_flags()
