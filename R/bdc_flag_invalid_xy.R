@@ -14,17 +14,17 @@
 #' data %>%
 #'   bdc_flag_invalid_xy()
 #' }
-bdc_flag_invalid_xy <- function(data) {
+bdc_flag_invalid_xy <- function(data, long, lat) {
 
   data <-
     data %>%
     dplyr::mutate(
       .invalid_xy = dplyr::case_when(
-        is.na(decimalLatitude) ~ TRUE,
-        is.na(decimalLongitude) ~ TRUE,
+        is.na(lat) ~ TRUE,
+        is.na(long) ~ TRUE,
         # flag empty coordinates
-        nzchar(decimalLatitude) == FALSE ~ TRUE,
-        nzchar(decimalLongitude) == FALSE ~ TRUE,
+        nzchar(lat) == FALSE ~ TRUE,
+        nzchar(long) == FALSE ~ TRUE,
         # opposite cases are flagged as FALSE
         TRUE ~ FALSE
       )
