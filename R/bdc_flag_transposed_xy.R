@@ -3,7 +3,7 @@
 #' Flag transposed coordinates
 #'
 #' @description
-#' This function add a new column `.transposed_xy` in the returned dataset
+#' This function add a new column `transposed_xy` in the returned dataset
 #'
 #' @param data a data.frame with the default column names: "database_id", "scientificName", "decimalLongitude", "decimalLatitude"
 #' 
@@ -76,14 +76,14 @@ bcd_flag_transposed_xy <- function(data) {
     dplyr::rename(decimalLatitude = decimalLatitude_modified,
                   decimalLongitude = decimalLongitude_modified) %>%
     # flag all of them
-    dplyr::mutate(.transposed_xy = TRUE)
+    dplyr::mutate(transposed_xy = TRUE)
 
   data <-
     data %>%
     # remove wrong coordinates
     dplyr::filter(!database_id %in% rows_to_remove) %>%
     # flag no issued rows as FALSE
-    dplyr::mutate(.transposed_xy = FALSE) %>%
+    dplyr::mutate(transposed_xy = FALSE) %>%
     # add corrected coordinates
     dplyr::bind_rows(rows_to_insert)
 
