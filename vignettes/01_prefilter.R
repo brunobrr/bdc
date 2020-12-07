@@ -22,7 +22,7 @@ fs::dir_create(here::here("Output/Intermediate"))
 
 # Load the merge database
 merged <-
-  here::here("data", "temp", "standard_database.xz") %>%
+  here::here("data", "temp", "standard_ICMBIO.xz") %>%
   vroom()
 
 # CHECK 1. Correct latitude and longitude transposed
