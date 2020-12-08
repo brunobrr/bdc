@@ -10,7 +10,7 @@ bcd_flag_transposed_xy(data)
 \item{data}{a data.frame with the default column names: "database_id", "scientificName", "decimalLongitude", "decimalLatitude"}
 }
 \description{
-This function add a new column \code{.transposed_xy} in the returned dataset
+This function add a new column \code{transposed_xy} in the returned dataset
 }
 \examples{
 \dontrun{
