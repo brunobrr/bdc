@@ -4,7 +4,7 @@
 \alias{bdc_flag_invalid_xy}
 \title{Flag invalid coordinates}
 \usage{
-bdc_flag_invalid_xy(data)
+bdc_flag_invalid_xy(data, long, lat)
 }
 \arguments{
 \item{data}{a data.frame with the default column names: "database_id", "scientificName", "decimalLongitude", "decimalLatitude"}
