@@ -20,7 +20,7 @@ bdc_flag_invalid_xy <- function(data, long, lat) {
   suppressWarnings({
     data <-
       data %>%
-      dplyr::mutate_all(as.numeric)
+      dplyr::mutate(long = as.numeric(long), lat = as.numeric(lat))
   })
 
   data <-
