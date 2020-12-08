@@ -19,6 +19,7 @@ Imports:
     dplyr,
     purrr,
     readr,
-    fs
+    fs,
+    rlang
 Suggests: 
     testthat,
