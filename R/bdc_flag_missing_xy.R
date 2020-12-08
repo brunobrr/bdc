@@ -1,24 +1,43 @@
-#' Title Flag records missing latitude or longitude
+#' Flag invalid coordinates
 #'
-#' @param data. data.frame containing longitude and latitude
-#' @param lon. character string. The column with longitude coordinates
-#' @param lat.  character string. The column with latitude coordinates
+#' @description
+#' This function add a new column `.invalid_xy` in the returned dataset
 #'
-#' @return a logical vector with TRUE = valid records and FALSE = invalid records
+#' @param data a data.frame with the default column names: "database_id",
+#'      "scientificName", "decimalLongitude", "decimalLatitude"
+#'
+#' @importFrom dplyr mutate case_when
+#'
 #' @export
 #'
 #' @examples
-#' @details Flag non-numeric latitude or longitude (e.g. NA, "NA", ",", "", "Brazil")
-bdc_flag_missing_xy <- function(data, lon = "decimalLongitude", lat = "decimalLatitude"){
-  lo <- suppressWarnings({ purrr::map_lgl(data[[lon]], 
-                                          function(i) i == as.numeric(i)) }) 
-  lo <- ifelse(is.na(lo), FALSE, lo)
+#' \dontrun{
+#' data %>%
+#'   bdc_flag_invalid_xy()
+#' }
+bdc_flag_missing_xy <- function(data, lon, lat) {
+  suppressWarnings({
+    data <-
+      data %>%
+      dplyr::mutate_all(as.numeric)
+  })
   
-  la <- suppressWarnings({ purrr::map_lgl(data[[lat]], 
-                                          function(i) i == as.numeric(i)) }) 
-  la <- ifelse(is.na(la), FALSE, la)
+  data <-
+    data %>%
+    dplyr::mutate(
+      .missing_xy = dplyr::case_when(
+        is.na(!!rlang::sym(lat)) | is.na(!!rlang::sym(lon)) ~ TRUE,
+        # flag empty coordinates
+        nzchar(!!rlang::sym(lat)) == FALSE |
+          nzchar(!!rlang::sym(lon)) == FALSE ~ TRUE,
+        # flag empty coordinates
+        is.numeric(!!rlang::sym(lat)) == FALSE |
+          is.numeric(!!rlang::sym(lon)) == FALSE ~ TRUE,
+        # opposite cases are flagged as FALSE
+        TRUE ~ FALSE
+      )
+    )
   
-  .missing_xy <- ifelse(la == TRUE & lo == TRUE, TRUE, FALSE)
+  return(data %>% pull(.missing_xy))
   
-  return(.missing_xy)
 }
