@@ -1,14 +1,14 @@
-
-#' Title Flag records missing coordinates
+#' Title Flag records missing latitude or longitude
 #'
 #' @param data. data.frame containing longitude and latitude
 #' @param lon. character string. The column with longitude coordinates
 #' @param lat.  character string. The column with latitude coordinates
 #'
-#' @return
+#' @return a logical vector with TRUE = valid records and FALSE = invalid records
 #' @export
 #'
 #' @examples
+#' @details Flag non-numeric latitude or longitude (e.g. NA, "NA", ",", "", "Brazil")
 bdc_flag_missing_xy <- function(data, lon = "decimalLongitude", lat = "decimalLatitude"){
   lo <- suppressWarnings({ purrr::map_lgl(data[[lon]], 
                                           function(i) i == as.numeric(i)) }) 
@@ -20,7 +20,5 @@ bdc_flag_missing_xy <- function(data, lon = "decimalLongitude", lat = "decimalLa
   
   .missing_xy <- ifelse(la == TRUE & lo == TRUE, TRUE, FALSE)
   
-  data$.missing_xy <- .missing_xy
-  
-  return(data)
+  return(.missing_xy)
 }

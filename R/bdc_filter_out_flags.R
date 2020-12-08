@@ -24,7 +24,7 @@ bdc_filter_out_flags <- function(data) {
 
   data <-
     data %>%
-    dplyr::filter_at(vars(column_names), all_vars(. == FALSE))
+    dplyr::filter_at(vars(column_names), all_vars(. == TRUE))
 
   message("Filtering out columns: ", paste(column_names, collapse = ", "))
 
