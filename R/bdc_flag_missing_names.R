@@ -14,7 +14,7 @@ bdc_flag_missing_names <- function(data, sci_name = "scientificName") {
   
   data <-
     data %>%
-    pull(sci_names) %>% 
+    pull(sci_name) %>% 
     ifelse(. == "", NA, .)
   
   .missing_name <- ifelse(is.na(data) == FALSE, TRUE, FALSE)

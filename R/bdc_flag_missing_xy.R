@@ -1,4 +1,4 @@
-#' Flag invalid coordinates
+#' Flag missing coordinates
 #'
 #' @description
 #' This function add a new column `.invalid_xy` in the returned dataset
@@ -26,15 +26,15 @@ bdc_flag_missing_xy <- function(data, lon, lat) {
     data %>%
     dplyr::mutate(
       .missing_xy = dplyr::case_when(
-        is.na(!!rlang::sym(lat)) | is.na(!!rlang::sym(lon)) ~ TRUE,
+        is.na(!!rlang::sym(lat)) | is.na(!!rlang::sym(lon)) ~ FALSE,
         # flag empty coordinates
         nzchar(!!rlang::sym(lat)) == FALSE |
-          nzchar(!!rlang::sym(lon)) == FALSE ~ TRUE,
+          nzchar(!!rlang::sym(lon)) == FALSE ~ FALSE,
         # flag empty coordinates
         is.numeric(!!rlang::sym(lat)) == FALSE |
-          is.numeric(!!rlang::sym(lon)) == FALSE ~ TRUE,
+          is.numeric(!!rlang::sym(lon)) == FALSE ~ FALSE,
         # opposite cases are flagged as FALSE
-        TRUE ~ FALSE
+        TRUE ~ TRUE
       )
     )
   
