@@ -4,12 +4,18 @@
 \alias{bdc_flag_xy_provenance}
 \title{Title Flag records from doubtful provenance (e.g., 'fossil', 'HUCP') whose can be unreliable or unsuitable for certain analyses}
 \usage{
-bdc_flag_xy_provenance(data, basisOfRecord)
+bdc_flag_xy_provenance(
+  data,
+  basisOfRecord = "basisOfRecord",
+  names_to_keep = NULL
+)
 }
 \arguments{
+\item{data}{}
+
 \item{basisOfRecord}{character string. The column with basis of records}
 
-\item{data.}{data.frame. Containing basis of records column.}
+\item{names_to_keep}{character string. Elements of the column BasisOfRecords to keep}
 }
 \value{
 
