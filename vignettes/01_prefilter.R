@@ -12,7 +12,8 @@ ipak(
     "rnaturalearth",
     "dplyr",
     "xml2",
-    "rvest"
+    "rvest",
+    "qs"
   )
 )
 
@@ -22,162 +23,62 @@ fs::dir_create(here::here("Output/Intermediate"))
 
 # Load the merge database
 merged <-
-  here::here("data", "temp", "standard_database.xz") %>%
-  vroom()
+  here::here("data", "temp", "standard_database.qs") %>%
+  qs::qread()
+
+# CHECK 1: Flag records missing scientific name (i.e empty or NA)
+data_pf1 <-
+  merged %>%
+  mutate(.missing_name =
+           bdc_flag_missing_names(data = ., sci_name = "scientificName"))
+
+# CKECK 2: Flag records missing latitude or longitude 
+data_pf2 <-
+  data_pf1 %>%
+  mutate(.missing_xy =
+           bdc_flag_missing_xy(., lon = "decimalLongitude", 
+                               lat = "decimalLatitude"))
+
+# CHECK 3: Flag records with invalid coordinates
+# data_pf3 <-
+#   data_pf2 %>%
+#   mutate(.invalid_xy =
+#            bdc_flag_invalid_xy(., lon = "decimalLongitude", 
+#                                lat = "decimalLatitude"))
+data_pf3 <-
+  data_pf2 %>%
+  mutate(.invalid_xy =
+           CoordinateCleaner::cc_val(x = ., 
+                                     lon = "decimalLongitude", 
+                                     lat = "decimalLongitude", 
+                                     value = "flag"))
+                                      
+# CKECK 4: Flag records from doubtful provenance
+data_pf4 <-
+  data_pf3 %>%
+  mutate(.xy_provenance =
+           bdc_flag_xy_provenance(., basisOfRecord = "basisOfRecord"))
+
+
+
 
 
 # CHECK 1. Correct latitude and longitude transposed
 
-# load functions
-wiki_cntr <- bdc_get_wiki_country() # get country names from Wikipedia
-worldmap <- bdc_get_world_map()  # 
+data_pf1 <- merged %>%
+  bcd_flag_transposed_xy()
 
-# standardize the name of countries
-standardize_country_names <-
-  bdc_standardize_country(
-    data = merged,
-    cntry = "country",
-    cntry_names_db = wiki_cntr
-  )
-
-merged <-
-  merged %>%
-  dplyr::left_join(standard_country_names, by = c("country" = "cntr_original"))
-
-# Correct latitude and longitude transposed
-corrected_coordinates <-
-  bdc_correct_coordinates(
-    data = merged,
-    x = "decimalLongitude",
-    y = "decimalLatitude",
-    sp = "scientificName",
-    id = "database_id",
-    cntr_iso2 = "cntr_iso2c",
-    world_poly = worldmap,
-    world_poly_iso = "iso2c"
-  )
-
-rows_to_remove <-
-  corrected_coordinates %>%
-  dplyr::pull(database_id)
-
-rows_to_insert <-
-  corrected_coordinates %>%
-  # remove columns with coordinates transposed
-  dplyr::select(-decimalLatitude,-decimalLongitude) %>%
-  # new columns coordinates with the corrected info
-  dplyr::rename(decimalLatitude = decimalLatitude_modified,
-                decimalLongitude = decimalLongitude_modified) %>%
-  # flag all of them
-  dplyr::mutate(.transposed_xy = TRUE)
-
-merged <-
-  merged %>%
-  # remove wrong coordinates
-  dplyr::filter(!database_id %in% rows_to_remove) %>%
-  # flag no issued rows as FALSE
-  dplyr::mutate(.transposed_xy = FALSE) %>%
-  # add corrected coordinates
-  dplyr::bind_rows(rows_to_insert)
-
-merged %>% bdc_check_flags()
-
-corrected_coordinates %>%
-  dplyr::select(
-    database_id,
-    scientificName,
-    contains("decimal"),
-    locality,
-    stateProvince,
-    cntr_suggested
-  ) %>%
-  write_csv(here::here("Output", "Check", "01_prefilter_transposed_coordinates.csv"))
-
-
-# CHECK: 2. Invalid coordinates (i.e empty or NAs)
-merged <-
-  merged %>%
-  dplyr::mutate(
-    .invalid_xy = case_when(
-      is.na(decimalLatitude) ~ TRUE,
-      is.na(decimalLongitude) ~ TRUE,
-      # flag empty coordinates
-      nzchar(decimalLatitude) == FALSE ~ TRUE,
-      nzchar(decimalLongitude) == FALSE ~ TRUE,
-      # opposite cases are flagged as FALSE
-      TRUE ~ FALSE
-    )
-  )
-
-merged %>%
+data_pf1 %>% 
   bdc_check_flags()
 
-# TODO: remover coordenadas além dos limites 90, 180
-
-merged <-
-  merged %>%
-  dplyr::mutate(
-    .outside_xy = case_when(
-      decimalLatitude < -90 | decimalLatitude > 90 ~ TRUE,
-      decimalLongitude < -180 | decimalLongitude > 180 ~ TRUE,
-      TRUE ~ FALSE
-    )
-  )
-
-merged %>%
+data_pf1 %>% 
+  bdc_filter_out_flags() %>%
   bdc_check_flags()
 
-merged %>%
-  dplyr::filter(.transposed_xy == FALSE,
-                .invalid_xy == FALSE,
-                .outside_xy == FALSE) %>%
-  bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
 
 
-# CHECK: 3. Records without latitude or longitude
-
-merged <-
-  merged %>%
-  dplyr::mutate(
-    .no_xy = case_when(
-      is.na(decimalLatitude) ~ TRUE,
-      is.na(decimalLongitude) ~ TRUE,
-      # flag empty coordinates
-      nzchar(decimalLatitude) == FALSE ~ TRUE,
-      nzchar(decimalLongitude) == FALSE ~ TRUE,
-      # opposite cases are flagged as FALSE
-      TRUE ~ FALSE
-    )
-  )
-
-merged %>%
-  bdc_check_flags()
-
-merged %>%
-  dplyr::filter(.transposed_xy == FALSE,
-                .invalid_xy == FALSE,
-                .outside_xy == FALSE,
-                .no_xy == FALSE) %>%
-  bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
 
 
-# CHECK: 4. Invalid scientific name (i.e empty or NA)
-merged <-
-  merged %>%
-  dplyr::mutate(.no_name = if_else(is.na(scientificName), TRUE, FALSE))
-
-merged %>%
-  bdc_check_flags()
-
-merged %>%
-  dplyr::filter(
-    .transposed_xy == FALSE,
-    .invalid_xy == FALSE,
-    .outside_xy == FALSE,
-    .no_xy == FALSE,
-    .no_name == FALSE
-  ) %>%
-  bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
 
 # CHECK: 5. Registros fora do país selecionado
 # TODO: filtrar pelo polígono
@@ -270,17 +171,7 @@ if (FALSE) {
   
 }
 
-# CHECK: 6. Invalid provenance
-# FIXME: rever doubt
-
-doubt <- c("Amost", "DrawingOrPhotograph", "Dupli", "EX", "E", "Extra", "F",
-           "FOSSIL_SPECIMEN", "FossilSpecimen", "HS", "HUCP",
-           "MACHINE_OBSERVATION", "MachineObservation", "MultimediaObject",
-           "QQQQQ", "REPET", "RON", "V",  "X", "XS", "O", "S")
-
-merged <-
-  merged %>%
-  dplyr::mutate(.doubtful_provenance = if_else(basisOfRecord %in% doubt, TRUE, FALSE))
+(.doubtful_provenance = if_else(basisOfRecord %in% doubt, TRUE, FALSE))
 
 # CHECK: 7. Salvar tabela de nomes sem coordenadas (x ou y) mas que contém informações sobre localidade
 
