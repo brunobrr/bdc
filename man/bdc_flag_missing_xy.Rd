@@ -2,20 +2,20 @@
 % Please edit documentation in R/bdc_flag_missing_xy.R
 \name{bdc_flag_missing_xy}
 \alias{bdc_flag_missing_xy}
-\title{Title Flag records missing coordinates}
+\title{Flag missing coordinates}
 \usage{
-bdc_flag_missing_xy(data, lon = "decimalLongitude", lat = "decimalLatitude")
+bdc_flag_missing_xy(data, lon, lat)
 }
 \arguments{
-\item{data.}{data.frame containing longitude and latitude}
-
-\item{lon.}{character string. The column with longitude coordinates}
-
-\item{lat.}{character string. The column with latitude coordinates}
-}
-\value{
-
+\item{data}{a data.frame with the default column names: "database_id",
+"scientificName", "decimalLongitude", "decimalLatitude"}
 }
 \description{
-Title Flag records missing coordinates
+This function add a new column \code{.invalid_xy} in the returned dataset
+}
+\examples{
+\dontrun{
+data \%>\%
+  bdc_flag_invalid_xy()
+}
 }

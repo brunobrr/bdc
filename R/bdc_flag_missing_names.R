@@ -1,4 +1,4 @@
-#' Flag records missing scientific name
+#' @title Flag records missing scientific name
 #'
 #' @description
 #' This function add a new column `.missing_name` in the returned dataset

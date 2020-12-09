@@ -4,22 +4,12 @@
 \alias{bdc_suggest_names_taxadb}
 \title{Title: Function used to standardized taxonomic names using taxadb R packpage. This functions is a modification of get.taxa function (flora package) inserted in get_names function (taxadb package) for allowing fuzzy matching.}
 \usage{
-bdc_suggest_names_taxadb(
-  taxon,
-  max.distance = 0.75,
-  return.na = TRUE,
-  ignore.words = NULL,
-  provider
-)
+bdc_suggest_names_taxadb(sci_name, max.distance = 0.75, provider)
 }
 \arguments{
-\item{taxon}{}
+\item{sci_name}{}
 
 \item{max.distance}{}
-
-\item{return.na}{}
-
-\item{ignore.words}{}
 
 \item{provider}{}
 }
