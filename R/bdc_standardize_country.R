@@ -1,14 +1,19 @@
 
-#' Title: standard_country is a function to correct, standardize, and assign a ISO code to country names 
+#' Title: standard_country is a function to correct, standardize, and assign a ISO code to country names.
 #'
-#' @param data 
-#' @param country 
-#' @param country_names_db 
+#' @param data A data.frame with a column of country names. 
+#' @param country Column name with the country names. 
+#' @param country_names_db A database to match country names and return the suggested one.
 #'
-#' @return
+#' @return Return a data.frame with original country names, suggested names and ISO code to country names. 
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' data %>%
+#'   bdc_flag_transposed_xy() %>%
+#'   bdc_filter_out_flags()
+#' }
 bdc_standardize_country <-
   function(data,
            country,
