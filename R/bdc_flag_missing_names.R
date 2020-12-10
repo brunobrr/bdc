@@ -5,7 +5,6 @@
 #'
 #' @param data a data.frame containing a column of species names: 
 #' 
-#' @importFrom ifelse
 #'
 #' @export
 #'

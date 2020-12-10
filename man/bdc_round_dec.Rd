@@ -12,17 +12,23 @@ bdc_round_dec(
 )
 }
 \arguments{
-\item{data:}{data.frame. A data.frame with coordinates data}
+\item{data:}{data.frame. A data.frame with coordinates data.}
 
-\item{lon:}{character. Column names with longitude values}
+\item{lon:}{character. Column names with longitude values.}
 
-\item{lat:}{character. Column names with latitude values}
+\item{lat:}{character. Column names with latitude values.}
 
-\item{ndec:}{ndec: numeric. A vector with number of decimal to be tested. Default ndec=c(0,1,2)}
+\item{ndec:}{numeric. A vector with number of decimal to be tested. Default ndec=c(0,1,2).}
 }
 \value{
-
+The function returns a data.frame with logical values indicating whether values are rounded by the specified decimal number (ndec).
+Colnames indicates which decimal numbers were tested and the testes combined for all columns (.ndec_all)
 }
 \description{
 Title: Function to test round coordinates
+}
+\examples{
+"data <- data.frame(lon = c(-55.389, -13.897, 30.678, 90.675) , lat = c(-21.345, 23.567, 16.798, -10.468))"
+"bdc_round_dec(data = data, lon = "lon", lat = "lat", ndec = c(0, 2))"
+
 }
