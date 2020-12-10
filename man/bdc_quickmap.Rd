@@ -4,14 +4,14 @@
 \alias{bdc_quickmap}
 \title{Title: Create a map of points using ggplot2}
 \usage{
-bdc_quickmap(data, long, lat)
+bdc_quickmap(data, lon, lat, column_to_map)
 }
 \arguments{
 \item{data}{}
 
-\item{lat}{}
-
 \item{lon}{}
+
+\item{lat}{}
 }
 \value{
 
