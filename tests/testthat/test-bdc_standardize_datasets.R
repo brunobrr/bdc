@@ -50,26 +50,6 @@ metadata <- tibble::tribble(
    "datafake3",    "tests/testthat/datafake3.csv",            NA, "nome_das_especies",              "y",               "x"
   )
 
-devtools::load_all()
-
-# Install and load packages
-ipak(
-  c(
-    "tidyverse",
-    "here",
-    "fs",
-    "vroom",
-    "CoordinateCleaner",
-    "rnaturalearth",
-    "dplyr",
-    "xml2",
-    "rvest",
-    "qs",
-    "sf",
-    "rnaturalearth"
-  )
-)
-
 bdc_standardize_datasets(metadata = metadata)
 
 test_that("bdc_standardize_datasets can create qs files", {
