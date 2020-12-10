@@ -1,26 +1,35 @@
-remotes::install_github("ropensci/rnaturalearthhires")
 
-merged <-
-  here::here("data", "temp", "standard_database.qs") %>%
-  qread()
+
 
 wiki_cntr <- bdc_get_wiki_country()
 worldmap <- bdc_get_world_map()
 
+data <- data.frame(country = c("brezil", "USA", "Bolibia", "Vietnam"))
 
 x <-  bdc_standardize_country(
-      data = merged,
+      data = data,
       country = "country",
       country_names_db = wiki_cntr
   )
 
 
-
-
-
 test_that("bdc_standardize_country standardize country names", {
-  expect_equal(bdc_standardize_country(data = merged, country = "country", country_names_db = wiki_cntr), 
-               x)
+  expect_equal(x$cntr_suggested, 
+               list("BOLIVIA", "BRAZIL", "UNITED STATES", "VIETNAM"))
   
-  }
+}
+)
+
+test_that("bdc_standardize_country original names", {
+  expect_equal(x$cntr_original, 
+               c("Bolibia", "brezil", "USA", "Vietnam"))
+  
+}
+)
+
+test_that("bdc_standardize_country iso", {
+  expect_equal(x$cntr_iso2c, 
+               c("BO", "BR", "US", "VN"))
+  
+}
 )
