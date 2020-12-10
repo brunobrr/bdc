@@ -13,7 +13,9 @@ ipak(
     "dplyr",
     "xml2",
     "rvest",
-    "qs"
+    "qs", 
+    "sf", 
+    "rnaturalearth"
   )
 )
 
@@ -87,14 +89,26 @@ data_pf1 %>%
 if (FALSE) {
   
   brazil_polygon <-
-    rnaturalearth::ne_countries(country = "brazil", scale = "large", returnclass = "sp")
+    rnaturalearth::ne_countries(country = "brazil",
+                                scale = "large",
+                                returnclass = "sp")
+  
+  
+  
+  # continent_border <-
+  #   rnaturalearth::ne_download(scale = "large",
+  #                              type = 'land',
+  #                              category = 'physical')
+  
+  teste <- cc_val(x = merged, lon = "decimalLongitude", "decimalLatitude")
   
   filter_for_brazil <-
-    merged %>%
-    dplyr::filter(.invalid_xy == FALSE,
-                  .outside_xy == FALSE,
-                  .transposed_xy == FALSE,
-                  .no_xy == FALSE,) %>%
+    # merged %>%
+    # dplyr::filter(.invalid_xy == FALSE,
+    #               .outside_xy == FALSE,
+    #               .transposed_xy == FALSE,
+    #               .no_xy == FALSE,) %>%
+    teste %>% 
     dplyr::mutate(
       .in_brazil = cc_sea(
         x = .,
@@ -110,22 +124,22 @@ if (FALSE) {
   
   filter_for_brazil %>%
     dplyr::filter(
-      .transposed_xy == FALSE,
-      .invalid_xy == FALSE,
-      .outside_xy == FALSE,
-      .no_xy == FALSE,
-      .no_name == FALSE,
+      # .transposed_xy == FALSE,
+      # .invalid_xy == FALSE,
+      # .outside_xy == FALSE,
+      # .no_xy == FALSE,
+      # .no_name == FALSE,
       .in_brazil == FALSE
     ) %>%
     bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
   
   filter_for_brazil %>%
     dplyr::filter(
-      .transposed_xy == FALSE,
-      .invalid_xy == FALSE,
-      .outside_xy == FALSE,
-      .no_xy == FALSE,
-      .no_name == FALSE,
+      # .transposed_xy == FALSE,
+      # .invalid_xy == FALSE,
+      # .outside_xy == FALSE,
+      # .no_xy == FALSE,
+      # .no_name == FALSE,
       .in_brazil == TRUE
     ) %>%
     bdc_quickmap(long = decimalLongitude, lat = decimalLatitude)
