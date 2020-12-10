@@ -2,7 +2,7 @@
 % Please edit documentation in R/bdc_standardize_datasets.R
 \name{bdc_standardize_datasets}
 \alias{bdc_standardize_datasets}
-\title{Title: Standardize datasets columns based on metadata file}
+\title{Standardize datasets columns based on metadata file}
 \usage{
 bdc_standardize_datasets(metadata)
 }
@@ -12,5 +12,5 @@ original dataset need to be renamed following Darwin Core terminology.
 Please see the \code{Config/DatabaseInfo.csv} file.}
 }
 \description{
-Title: Standardize datasets columns based on metadata file
+Standardize datasets columns based on metadata file
 }
