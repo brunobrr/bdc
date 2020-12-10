@@ -1,6 +1,5 @@
 #' Countries names in different language
 #' 
-#' @importFrom base colnames
 #' @importFrom dplyr as_tibble filter pull bind_rows arrange
 #' @importFrom fs file_exists dir_exists
 #' @importFrom here here

@@ -2,7 +2,7 @@
 % Please edit documentation in R/bdc_parse_date.R
 \name{bdc_parse_date}
 \alias{bdc_parse_date}
-\title{Title: Extract and flag year from date}
+\title{Extract and flag year from date}
 \usage{
 bdc_parse_date(x, column_to_test, year_threshold = NULL)
 }
@@ -13,12 +13,6 @@ bdc_parse_date(x, column_to_test, year_threshold = NULL)
 
 \item{year_threshold:}{Numeric. Four digit year used as a threshold to flag od records. Default = NULL.}
 }
-\value{
-
-}
 \description{
-Title: Extract and flag year from date
-}
-\examples{
-
+Extract and flag year from date
 }
