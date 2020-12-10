@@ -2,13 +2,10 @@
 % Please edit documentation in R/bdc_get_wiki_country.R
 \name{bdc_get_wiki_country}
 \alias{bdc_get_wiki_country}
-\title{Title: Countries names in different language}
+\title{Countries names in different language}
 \usage{
 bdc_get_wiki_country()
 }
-\value{
-
-}
 \description{
-Title: Countries names in different language
+Countries names in different language
 }

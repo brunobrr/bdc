@@ -1,10 +1,16 @@
-
-#' Title: Countries names in different language
-#'
-#' @return
+#' Countries names in different language
+#' 
+#' @importFrom base colnames
+#' @importFrom dplyr as_tibble filter pull bind_rows arrange
+#' @importFrom fs file_exists dir_exists
+#' @importFrom here here
+#' @importFrom plyr ldply
+#' @importFrom rvest html_nodes html_table
+#' @importFrom utils write.table
+#' @importFrom vroom vroom
+#' @importFrom xml2 read_html
+#' 
 #' @export
-#'
-#' @examples
 bdc_get_wiki_country <- function() {
   
   # Test if file was downloaded
@@ -44,7 +50,7 @@ bdc_get_wiki_country <- function() {
       
       # wiki_cntr[[i]] <- janitor::clean_names(temp)
       temp <-
-        lapply(wiki_cntr[[i]][, 2] %>% pull(1), bdc_extract_cntr_names)
+        lapply(wiki_cntr[[i]][, 2] %>% dplyr::pull(1), bdc_extract_cntr_names)
       
       names(temp) <-
         wiki_cntr[[i]] %>%
@@ -60,12 +66,12 @@ bdc_get_wiki_country <- function() {
     wiki_cntr <- dplyr::bind_rows(wiki_cntr) %>% dplyr::arrange(english_name)
     
     # Delete some names
-    wiki_cntr <- wiki_cntr %>% filter(
+    wiki_cntr <- wiki_cntr %>% dplyr::filter(
       !wiki_cntr$english_name %in% c("Burma", "Lower Austria", "Persia"),
       !wiki_cntr$names_in_different_languages == c("Se")
     )
     
-    write.table(wiki_cntr, "teste.txt", sep = "/t")
+    utils::write.table(wiki_cntr, "teste.txt", sep = "/t")
     
     wiki_cntr %>%
       vroom_write(here::here("data", "countries_names",
