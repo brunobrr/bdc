@@ -1,26 +1,26 @@
-
-#' Title: Extract and flag year from date
+#' Extract and flag year from date
 #'
 #' @param x: data.frame. Containing column of event date.
 #' @param column_to_test: Numeric or date. The column with event date information.
 #' @param year_threshold: Numeric. Four digit year used as a threshold to flag od records. Default = NULL.
-#'
-#' @return
+#' 
+#' @importFrom dplyr if_else
+#' @importFrom lubridate year
+#' @importFrom stringr str_extract
+#' 
 #' @export
 #'
-#' @examples
-#' 
-bdc_parse_date <- 
-  function(x, 
-           column_to_test, 
+bdc_parse_date <-
+  function(x,
+           column_to_test,
            year_threshold = NULL) {
-    
+
     col <- x[[column_to_test]]
-    
-    year_corrected <- 
-      stringr::str_extract(col, "[[:digit:]]{4}") %>% 
+
+    year_corrected <-
+      stringr::str_extract(col, "[[:digit:]]{4}") %>%
       as.numeric()
-    
+
     if (is.null(year_threshold)) {
       .year_val <-
         dplyr::if_else(
@@ -39,7 +39,7 @@ bdc_parse_date <-
     } else {
       stop("The 'year_threshold' argument should be used with one year as a numeric data")
     }
-    
+
     res <- cbind(x, .year_val, year_corrected)
     return(res)
   }

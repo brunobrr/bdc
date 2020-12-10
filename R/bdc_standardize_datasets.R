@@ -1,14 +1,16 @@
-#' Title: Standardize datasets columns based on metadata file
+#' Standardize datasets columns based on metadata file
 #' 
 #' @param metadata a table containing information about which columns of the
 #'   original dataset need to be renamed following Darwin Core terminology.
 #'   Please see the `Config/DatabaseInfo.csv` file.
 #'
+#' @importFrom data.table fread
 #' @importFrom dplyr pull filter select select_if mutate n everything
 #' @importFrom fs dir_exists dir_create
 #' @importFrom here here
 #' @importFrom purrr set_names
-#' @importFrom readr read_csv write_csv
+#' @importFrom qs qsave
+#' @importFrom vroom vroom cols
 #'
 #' @export
 bdc_standardize_datasets <- function(metadata) {
@@ -26,7 +28,7 @@ bdc_standardize_datasets <- function(metadata) {
     input_filename <-
       metadata %>%
       dplyr::filter(File_name_to_load == input_file[file_index]) %>%
-      pull(File_name_to_load)
+      dplyr::pull(File_name_to_load)
     
     dataset_name <-
       metadata %>%
@@ -72,7 +74,7 @@ bdc_standardize_datasets <- function(metadata) {
       
       imported_raw_dataset <-
         here::here(input_file[file_index]) %>%
-        vroom::vroom(guess_max = 10^6, col_types = cols(.default = "c"), n_max = 1)
+        vroom::vroom(guess_max = 10^6, col_types = vroom::cols(.default = "c"), n_max = 1)
       
       skip_to_next <- FALSE
       
