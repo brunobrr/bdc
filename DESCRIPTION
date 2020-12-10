@@ -20,6 +20,18 @@ Imports:
     purrr,
     readr,
     fs,
-    rlang
+    rlang,
+    sf,
+    data.table,
+    flora,
+    geobr,
+    lubridate,
+    plyr,
+    qs,
+    rvest,
+    sp,
+    stringr,
+    vroom,
+    xml2
 Suggests: 
     testthat,
