@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-bdc_quickmap <- function(data, long, lat) {
+bdc_quickmap <- function(data, lon, lat, column_to_map) {
   
   n_nrow_data <- format(x = nrow(data), big.mark = ",")
   
@@ -36,8 +36,9 @@ bdc_quickmap <- function(data, long, lat) {
     ) +
     geom_point(
       aes(
-        x = {{ long }},
-        y = {{ lat }}
+        x = {{ lon }},
+        y = {{ lat }}, 
+        col = {{ column_to_map }}
       ),
       alpha = 0.5,
       size = 0.1
