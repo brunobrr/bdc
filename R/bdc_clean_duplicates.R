@@ -1,3 +1,12 @@
+#' Title: Filter duplicated names in bdc_get_taxa_taxadb function.
+#' Function only to internal use of bdc_get_taxa_taxadb function.
+#' 
+#' @param data A data.frame created in bdc_get_taxa_taxadb.  
+#'
+#' @return Return the data.frame without duplicates. 
+#' @export
+#'
+#' @examples
 clean_duplicates <- function(data){
 data <- data[order(data$taxonomicStatus), ]
 data <- data[!(duplicated(data$input) & data$taxonomicStatus != "accepted"), ] # por um alert no notes que havia synonyms
