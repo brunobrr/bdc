@@ -1,6 +1,5 @@
-# conferir se ha situacao onde dois nome buscados tem o mesmo nome aceito
 
-#' Title: Get names using taxadb R package. Fuzzy match is allowed by using a modification version of taxadb get_filter names function
+#' Title: Get taxa information from taxadb R package. Fuzzy match is allowed by using a modification version of taxadb get_filter names function
 #'
 #' @param taxa 
 #' @param replace.synonyms 
@@ -18,7 +17,6 @@ bdc_get_taxa_taxadb <-
             replace.synonyms = TRUE,
             suggest.names = TRUE,
             suggestion.distance = 0.9,
-            parse = FALSE,
             db = NULL) {
     taxa <- flora::trim(taxa)
     taxa <- taxa[nzchar(taxa)]
@@ -29,41 +27,50 @@ bdc_get_taxa_taxadb <-
                   "scientificNameAuthorship", "vernacularName", "input")
     
     found_name <-suppressWarnings(taxadb::filter_name(taxa, provider = db))
+    found_name[, c("notes", "original.search", "distance")] <- tibble(notes = character(nrow(found_name)), original.search = character(nrow(found_name)), distance =  numeric(nrow(found_name)))
+    if(nrow(found_name) != length(taxa)){
+      found_name <- clean_duplicates(found_name)
+    } 
     found_name <- found_name[order(found_name$sort), ]
-    found_name[, c("notes", "original.search", "distance")] <- rep("", nrow(found_name)) # tenho que melhorar a criaçao das colunas para as classes corretas
     found_name[, "original.search"] <- taxa
-    not_found <- is.na(found_name$scientificName)
+    not_found <- is.na(found_name$scientificName) & !grepl("check \\+1 accepted", found_name$notes)
     
     if(any(not_found == TRUE)){
       if(suggest.names == TRUE){
     
         not_found_index <- which(not_found == TRUE)
-        suggested_search <- sapply(taxa[not_found], FUN = bdc_suggest_names_taxadb, max.distance = suggestion.distance, provide = db) 
-        suggested_name <- suggested_search[1, ]
-        distance <- suggested_search[2, ]
+        suggested_search <- bdc_suggest_names_taxadb(taxa[not_found_index], max.distance = suggestion.distance, provide = db) 
+        suggested_name <- suggested_search[, "suggested"]
+        distance <- suggested_search[, "distance"]
         suggested <- !is.na(suggested_name)
+        found_name[not_found_index, "distance"] <- round(as.numeric(distance, 2))
         
         if(any(suggested == TRUE)){
           
           suggested_index <- not_found_index[suggested]
           suggest_data <- suppressWarnings(taxadb::filter_name(suggested_name[suggested], provider = db))
+          suggest_data[, c("notes", "original.search", "distance")] <- tibble(notes = character(nrow(suggest_data)), original.search = character(nrow(suggest_data)), distance =  numeric(nrow(suggest_data)))
+          if(nrow(suggest_data) > length(suggested_index)){
+          suggest_data <- clean_duplicates(suggest_data)
+          }
           found_name[suggested_index, colnames(suggest_data)] <- suggest_data 
           found_name[suggested_index, "notes"] <- "was misspelled"
-          found_name[not_found_index, "distance"] <- as.character(round(as.numeric(distance, 2))) # corrigir para ser numeric ja de inicio
+          
+          found_name[suggested_index, "original.search"] <- suggested_search[, "original"]
         
         }
           
-        found_name[is.na(found_name$scientificName), "notes"] <- "not found"
+        found_name[is.na(found_name$scientificName)& !grepl("check \\+1 accepted", found_name$notes), "notes"] <- "not found"
         
       }
       else{
       
-      found_name[is.na(found_name$scientificName), "notes"] <- "not found"
+      found_name[is.na(found_name$scientificName)& !grepl("check \\+1 accepted", found_name$notes), "notes"] <- "not found"
       
       } 
     }
     
-    synonym_index <- which(found_name$taxonomicStatus =="synonym")
+    synonym_index <- which(found_name$taxonomicStatus !="accepted")
     nrow.synonym <- length(synonym_index)
     
     if (nrow.synonym > 0L) {
@@ -77,10 +84,12 @@ bdc_get_taxa_taxadb <-
         if (any(one_accepted & accepted_empty == FALSE)) {
           
           replace <- synonym_index[one_accepted]
-          found_name[replace, 1:18] <- accepted_list[[one_accepted]][, -1] 
-          found_name[replace, "notes"] <- paste(found_name[replace, "notes"], "replaced synonym", sep = "|")
+          replace_tab <- purrr::map_dfr(accepted_list[one_accepted], function(i)i)[, -1]
+          replace_tab <- replace_tab[order(replace_tab$sort), ]
+          found_name[replace, 1:18] <- replace_tab
+          found_name[replace, "notes"] <- paste(found_name$notes[replace], "replaced synonym", sep = "|")
         }
-          
+        
         if(any(accepted_empty == TRUE)){
           
           found_name[accepted_empty, "notes"] <- paste(found_name[accepted_empty, "notes"], "check no accepted name", sep = "|")
