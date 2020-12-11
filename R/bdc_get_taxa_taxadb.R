@@ -1,45 +1,48 @@
 
-#' Title: Get taxa information from taxadb R package. Fuzzy match is allowed by using a modification version of taxadb get_filter names function
+#' Title: Get taxa information from taxadb R package by fuzzy match.
+#'This function was inspired by get.taxa function in flora R package.
+#' @param sci_name A character vector of species names. The function does not clean species names (eg.: infraspecific, var., inf.), it is expected clean names.
+#' @param replace.synonyms A logical value (default = TRUE) whether synonyms must be replaced by the valid names found in taxadb database.
+#' @param suggest.names A logical value (default = TRUE) whether species names must be suggested if it is not found in the first search. 
+#' @param suggestion.distance A numeric value (default = 0.9). It is the accepted distance between the searched names and suggested ones. Distances higher than specified here are not suggested and NA is returned.  
+#' @param db A character vector with the name of the database where information sould be searched. The available databases are those provided by taxadb package.  
 #'
-#' @param taxa 
-#' @param replace.synonyms 
-#' @param suggest.names 
-#' @param suggestion.distance 
-#' @param parse 
-#' @param db 
-#'
-#' @return
+#' @return This function returns a data.frame with the same number of rows and order than sci_name with the information provided by the database.
 #' @export
 #'
 #' @examples
+#' sci_names <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
+#' "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
+#' test <- bdc_get_taxa_taxadb(sci_names, suggestion.distance = 0.9, db = "gbif")
+
 bdc_get_taxa_taxadb <-
-  function (taxa,
+  function (sci_name,
             replace.synonyms = TRUE,
             suggest.names = TRUE,
             suggestion.distance = 0.9,
             db = NULL) {
-    taxa <- flora::trim(taxa)
-    taxa <- taxa[nzchar(taxa)]
-    if (length(taxa) == 0L) 
+    sci_name <- flora::trim(sci_name)
+    sci_name <- sci_name[nzchar(sci_name)]
+    if (length(sci_name) == 0L) 
       stop("No valid names provided.")
     col_names <- c("sort", "taxonID", "scientificName", "taxonRank", "taxonomicStatus", "acceptedNameUsageID", "kingdom", "phylum", "class" , "order",                   
                    "family", "genus", "specificEpithet", "infraspecificEpithet", "parentNameUsageID", "originalNameUsageID", 
                   "scientificNameAuthorship", "vernacularName", "input")
     
-    found_name <-suppressWarnings(taxadb::filter_name(taxa, provider = db))
+    found_name <-suppressWarnings(taxadb::filter_name(sci_name, provider = db))
     found_name[, c("notes", "original.search", "distance")] <- tibble(notes = character(nrow(found_name)), original.search = character(nrow(found_name)), distance =  numeric(nrow(found_name)))
-    if(nrow(found_name) != length(taxa)){
+    if(nrow(found_name) != length(sci_name)){
       found_name <- clean_duplicates(found_name)
     } 
     found_name <- found_name[order(found_name$sort), ]
-    found_name[, "original.search"] <- taxa
+    found_name[, "original.search"] <- sci_name
     not_found <- is.na(found_name$scientificName) & !grepl("check \\+1 accepted", found_name$notes)
     
     if(any(not_found == TRUE)){
       if(suggest.names == TRUE){
     
         not_found_index <- which(not_found == TRUE)
-        suggested_search <- bdc_suggest_names_taxadb(taxa[not_found_index], max.distance = suggestion.distance, provide = db) 
+        suggested_search <- bdc_suggest_names_taxadb(sci_name[not_found_index], max.distance = suggestion.distance, provide = db) 
         suggested_name <- suggested_search[, "suggested"]
         distance <- suggested_search[, "distance"]
         suggested <- !is.na(suggested_name)
