@@ -22,34 +22,12 @@ ipak <- function(pkg) {
 ############################################################
 
 
-# bdc_get_wiki_country ----------------------------------------------------
-#' 
-#' # 
-#' #' Title. Wrapped function to get country names from Wikipedia
-#' #'
-#' #' @return
-#' #' @export
-#' #'
-#' #' @examples
-#' bdc_get_wiki_country <- function() {
-#' 
-#'   wiki_cntr <-
-#'     here::here("data", "wiki_country_names.txt") %>%
-#'     vroom::vroom()
-#' 
-#'   return(wiki_cntr)
-#' 
-#' }
-
-
 # bdc_get_world_map -------------------------------------------------------
 
 #' Title
 #'
-#' @return
 #' @export
 #'
-#' @examples
 bdc_get_world_map <- function() {
   
   worldmap <- rnaturalearth::ne_countries(scale='large') 
@@ -91,18 +69,18 @@ bdc_get_world_map <- function() {
 
 ## bdc_export_rejected_data ------------------------------------------------
 
-##' Title
-##'
-##' @param raw_data 
-##' @param filtered_data 
-##' @param save_in_filename 
-##' @param comment 
-##'
-##' @return
-##' @export
-##'
-##' @examples
-## TODO: incluir argumento para salvar arquivo ou não
+#' Title
+#'
+#' @param raw_data 
+#' @param filtered_data 
+#' @param save_in_filename 
+#' @param comment 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+# TODO: incluir argumento para salvar arquivo ou não
 #bdc_export_data_to_check <- function(raw_data, filtered_data, save_in_filename, save_data_file = FALSE, report_name, comment = NULL) {
 
 #  if (!file.exists(save_in_filename)) {

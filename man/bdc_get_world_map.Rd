@@ -2,24 +2,10 @@
 % Please edit documentation in R/bdc_aux_functions.R
 \name{bdc_get_world_map}
 \alias{bdc_get_world_map}
-\title{#' Title. Wrapped function to get country names from Wikipedia
-#'
-#' @return
-#' @export
-#'
-#' @examples
-bdc_get_wiki_country <- function() {}
+\title{Title}
 \usage{
 bdc_get_world_map()
 }
-\value{
-
-}
 \description{
-wiki_cntr <-
-here::here("data", "wiki_country_names.txt") \%>\%
-vroom::vroom()
-}
-\details{
-
+Title
 }

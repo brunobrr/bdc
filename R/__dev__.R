@@ -1,4 +1,5 @@
 if (FALSE) {
+
   if (!require("usethis")) install.packages("usethis")
   if (!require("prefixer")) install.packages("prefixer")
   if (!require("rstudioapi")) install.packages("rstudioapi")
@@ -12,7 +13,7 @@ if (FALSE) {
   #          workflow será baseada no objeto `func`          #
   #                                                          #
   ############################################################
-  func <- "bdc_coord_trans"
+  func <- "bdc_flag_invalid_xy"
   func_file <- paste0("R/", func, ".R")
   
   # cria arquivo de teste para a função
@@ -41,4 +42,5 @@ if (FALSE) {
   # ver: https://r-pkgs.org/man.html
   # ou: https://rstudio.com/wp-content/uploads/2015/03/devtools-cheatsheet.pdf
   devtools::document()
+
 }
