@@ -1,0 +1,17 @@
+clean_duplicates <- function(data){
+data <- data[order(data$taxonomicStatus), ]
+data <- data[!(duplicated(data$input) & data$taxonomicStatus != "accepted"), ] # por um alert no notes que havia synonyms
+valid_duplicates <- data[duplicated(data$input) & data$taxonomicStatus == "accepted", "scientificName"]
+data <- data[!duplicated(data$input), ]
+if(length(valid_duplicates) > 0){
+  for(i in valid_duplicates$scientificName){
+    index <- grep(i, data$scientificName)
+    data[index, 2:21] <- NA 
+    data[index, "notes"] <- "check +1 accepted" 
+    data$input[index] <- i
+  }
+}
+
+data
+
+}

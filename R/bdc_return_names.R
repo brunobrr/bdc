@@ -24,12 +24,12 @@ bdc_return_names <- function(sci_name, max.distance, species.first.letter){
   
   if (max.dist >= max.distance) {
     
-    return(data.frame(suggested = min_dist_name, distance = round(max.dist, 2)))
+    return(data.frame(original = sci_name, suggested = min_dist_name, distance = round(max.dist, 2)))
     
   }
   else {
     
-    return(data.frame(suggested = NA, distance = round(max.dist, 2)))
+    return(data.frame(original = sci_name, suggested = NA, distance = round(max.dist, 2)))
     
   }
 }
