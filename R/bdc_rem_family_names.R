@@ -17,7 +17,7 @@ bdc_rem_family_names <- function(sp_names) {
   
   rem_fam <- str_replace_all(
     sp_names[w_rem],
-    regex("^[a-zA-Z]+aceae|Leguminosae|Compositae",
+    regex("[a-zA-Z]+aceae|Leguminosae|Compositae",
           ignore_case = TRUE),
     replacement = " "
   )

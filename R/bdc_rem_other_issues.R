@@ -12,7 +12,7 @@ bdc_rem_other_issues <- function(spp_names) {
   res <- spp_names
   word_count <- stringr::str_count(spp_names, "\\w+")
   
-  w1 <- which(word_count == 1)
+  w1 <- which(word_count == 1 | word_count == 2)
   res[w1] <- stringr::str_to_lower(res[w1])
   res[w1] <- Hmisc::capitalize(res[w1])
   
