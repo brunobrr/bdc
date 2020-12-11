@@ -18,47 +18,52 @@
 #' data %>%
 #'   bdc_flag_transposed_xy()
 #' }
-bcd_flag_transposed_xy <- function(data) {
 
-  minimum_colnames <- c("database_id", "scientificName", "decimalLongitude", "decimalLatitude")
-  check_minimum_colnames <-
-    data %>%
-    dplyr::select(minimum_colnames) %>% {
-      names(.) %in% minimum_colnames
-    }
+bcd_flag_transposed_xy <- function(data, id, sci_name, lon, lat, country) {
 
-  if (sum(check_minimum_colnames) < length(check_minimum_colnames)) {
+  minimum_colnames <- c(id, sci_name, lon, lat, country)
+  
+  if (length(minimum_colnames) < 5) {
+    stop("Fill all function arguments: data, id, sci_name, lon, lat, and country")
+  }
+  
+  if (!all(minimum_colnames %in% colnames(data))) {
     stop(
-      "Your data does not have the minimum default columns names: ",
-      paste(minimum_colnames, collapse = ", "), call. = FALSE
+      "These columns names were not found in your database: ",
+      paste(minimum_colnames[!minimum_colnames %in% colnames(data)], collapse = ", "),
+      call. = FALSE
     )
   }
-
-
+  
   # load auxiliar data
+  message('Loading auxiliary data\n')
   wiki_cntr <- bdc_get_wiki_country() # get country names from Wikipedia
   worldmap <- bdc_get_world_map()  # 
 
   # standardize the name of countries
+  message('Standardizing country names\n')
   standard_country_names <-
     bdc_standardize_country(
       data = data,
-      country = "country",
+      country = country,
       country_names_db = wiki_cntr
     )
-
+  
+  cntr <- 'cntr_original'
+  names(cntr) <- country
   data <-
     data %>%
-    dplyr::left_join(standard_country_names, by = c("country" = "cntr_original"))
+    dplyr::left_join(standard_country_names, by =  cntr)
 
   # Correct latitude and longitude transposed
+  message("Correcting latitude and longitude transposed\n")
   corrected_coordinates <-
     bdc_correct_coordinates(
       data = data,
-      x = "decimalLongitude",
-      y = "decimalLatitude",
-      sp = "scientificName",
-      id = "database_id",
+      x = lon,
+      y = lat,
+      sp = sci_name,
+      id = id,
       cntr_iso2 = "cntr_iso2c",
       world_poly = worldmap,
       world_poly_iso = "iso2c"
@@ -66,41 +71,41 @@ bcd_flag_transposed_xy <- function(data) {
 
   rows_to_remove <-
     corrected_coordinates %>%
-    dplyr::pull(database_id)
+    dplyr::pull({{id}})
 
   rows_to_insert <-
     corrected_coordinates %>%
     # remove columns with coordinates transposed
-    dplyr::select(-decimalLatitude, -decimalLongitude) %>%
+    dplyr::select(-{{lat}}, -{{lon}}) 
     # new columns coordinates with the corrected info
-    dplyr::rename(decimalLatitude = decimalLatitude_modified,
-                  decimalLongitude = decimalLongitude_modified) %>%
+  colnames(rows_to_insert)[
+    colnames(rows_to_insert) %in% 
+      c('decimalLatitude_modified', 'decimalLongitude_modified')] <- c(lat, lon)
     # flag all of them
-    dplyr::mutate(transposed_xy = TRUE)
-
+  rows_to_insert <- rows_to_insert %>% dplyr::mutate(transposed_xy = TRUE)
+dim(data)
   data <-
     data %>%
     # remove wrong coordinates
-    dplyr::filter(!database_id %in% rows_to_remove) %>%
+    dplyr::filter(!(!!rlang::sym(id) %in% rows_to_remove)) %>%
     # flag no issued rows as FALSE
     dplyr::mutate(transposed_xy = FALSE) %>%
     # add corrected coordinates
     dplyr::bind_rows(rows_to_insert)
 
   # save issued coordinates
-  message("Saving issued coordinates in Output/Check/01_prefilter_transposed_coordinates.csv")
+  message("Saving issued coordinates in: Output/Check/01_prefilter_transposed_coordinates.csv\n")
 
   corrected_coordinates %>%
     dplyr::select(
-      database_id,
-      scientificName,
+      {{id}},
+      {{sci_name}},
+      {{lon}},
+      {{lat}},
       dplyr::contains("decimal"),
-      locality,
-      stateProvince,
       cntr_suggested
     ) %>%
     readr::write_csv(here::here("Output", "Check", "01_prefilter_transposed_coordinates.csv"))
 
   return(data)
-
 }
