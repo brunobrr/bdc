@@ -10,7 +10,7 @@
 #'
 #' @export
 #'
-bdc_flag_invalid_xy  <- function(data, long, lat) {
+bdc_flag_invalid_xy  <- function(data, lon, lat) {
 
   data <-
     data %>%
@@ -18,23 +18,23 @@ bdc_flag_invalid_xy  <- function(data, long, lat) {
 
   data_filtered <-
     data %>%
-    dplyr::select(intid, .data[[long]], .data[[lat]]) %>%
-    dplyr::rename(long = .data[[long]], lat = .data[[lat]]) %>%
+    dplyr::select(intid, .data[[lon]], .data[[lat]]) %>%
+    dplyr::rename(lon = .data[[lon]], lat = .data[[lat]]) %>%
     dplyr::mutate_all(as.numeric)
 
   data_flag <-
     data_filtered %>%
     dplyr::mutate(
       .invalid_xy = dplyr::case_when(
-        lat < -90 | lat > 90 ~ TRUE,
-        is.na(lat) | is.na(lat) ~ TRUE,
-        long < -180 | long > 180 ~ TRUE,
-        is.na(long) | is.na(long)~ TRUE,
-        TRUE ~ FALSE
+        lat < -90 | lat > 90 ~ FALSE,
+        is.na(lat) | is.na(lat) ~ FALSE,
+        lon < -180 | lon > 180 ~ FALSE,
+        is.na(lon) | is.na(lon)~ FALSE,
+        TRUE ~ TRUE
       )
     ) %>%
-    select(intid, .invalid_xy)
+    dplyr::select(intid, .invalid_xy)
 
-  return(dplyr::full_join(data, data_flag) %>% dplyr::select(-intid))
+  return(data_flag %>% dplyr::pull(.invalid_xy))
 
 }
