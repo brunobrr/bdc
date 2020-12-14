@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-bdc_xy_in_country <- function(data,
+bdc_flag_xy_out_country <- function(data,
                               country_name,
                               lon = "decimalLongitude",
                               lat = "decimalLatitude",
@@ -29,12 +29,14 @@ bdc_xy_in_country <- function(data,
       scale = "large",
       returnclass = "sf"
     )
+  
   # Spatial points
-  data <-
+  data_sp <-
     CoordinateCleaner::cc_val(
       x = data,
       lon = "decimalLongitude",
-      lat = "decimalLatitude"
+      lat = "decimalLatitude",
+      verbose = F
     ) %>%
     sf::st_as_sf(.,
       coords = c("decimalLongitude", "decimalLatitude"),
@@ -44,49 +46,63 @@ bdc_xy_in_country <- function(data,
 
 
   # buffer
-  buf <- sf::st_buffer(country_shp, dist = dist)
+  suppressWarnings({  buf <- sf::st_buffer(country_shp, dist = dist) })
 
 
   # Extract points within the buffer
-  data <-
-    data %>%
-    dplyr::mutate(points_in_buf = st_intersects(data, buf, sparse = F))
-
+  suppressMessages({
+    data_sp <-
+      data_sp %>%
+      dplyr::mutate(points_in_buf = st_intersects(data_sp, buf, sparse = F))
+  })
+  
   # Filter points within the buffer
   data_fil <-
-    data %>%
+    data_sp %>%
     dplyr::filter(points_in_buf == TRUE)
 
   # Points in other countries
+  suppressMessages({
+  suppressWarnings({
   all_countries <-
     rnaturalearth::ne_countries(returnclass = "sf") %>%
     dplyr::select(name_long) %>%
     st_crop(., st_bbox(data_fil)) # Crop according to points bbox
-
+  })
+  })
+  
   # Extract country names from points
-  ext_country <- st_intersection(data, all_countries)
-  data$geometry <- NULL
+  suppressWarnings({
+  ext_country <- st_intersection(data_sp, all_countries)
+  })
+  data_sp$geometry <- NULL
   ext_country$geometry <- NULL
 
   names_to_join <-
     ext_country %>%
     dplyr::select(id, name_long)
 
+  data_to_join <-
+    dplyr::full_join(data_sp, names_to_join, by = "id") %>%
+    dplyr::mutate(.xy_out_country =
+                    case_when(
+                      (points_in_buf == TRUE & is.na(name_long)) ~ TRUE,
+                      (points_in_buf == FALSE) ~ FALSE,
+                      (points_in_buf == TRUE &
+                         name_long != country_name) ~ FALSE,
+                      (points_in_buf == TRUE & name_long == country_name) ~ TRUE
+                    )) %>%
+    dplyr::select(id, .xy_out_country)
+
   data_join <-
-    dplyr::full_join(data, names_to_join, by = "id") %>%
-    mutate(
-      .xy_in_country =
-        case_when(
-          (points_in_buf == TRUE & is.na(name_long)) ~ TRUE,
-          (points_in_buf == FALSE) ~ FALSE,
-          (points_in_buf == TRUE & name_long != country_name) ~ FALSE,
-          (points_in_buf == TRUE & name_long == country_name) ~ TRUE
-        )
-    )
+    dplyr::full_join(data, data_to_join, by = "id") %>%
+    dplyr::mutate(.xy_out_country = 
+                    ifelse(is.na(.xy_out_country), FALSE, .xy_out_country))
+    
+    
+  message(paste("Flagged", sum(data_join$.xy_out_country == FALSE), "out", nrow(data_join), "records"))
 
-  message(paste("Flagged", sum(data_join$.xy_in_country == FALSE), "out", nrow(data_join), "records"))
-
-  return(data_join %>% pull(.xy_in_country))
+  return(data_join %>% pull(.xy_out_country))
 
   # test <-
   #   st_as_sf(
