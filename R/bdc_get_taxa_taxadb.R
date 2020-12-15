@@ -32,7 +32,7 @@ bdc_get_taxa_taxadb <-
     found_name <-suppressWarnings(taxadb::filter_name(sci_name, provider = db))
     found_name[, c("notes", "original.search", "distance")] <- tibble(notes = character(nrow(found_name)), original.search = character(nrow(found_name)), distance =  numeric(nrow(found_name)))
     if(nrow(found_name) != length(sci_name)){
-      found_name <- clean_duplicates(found_name)
+      found_name <- bdc_clean_duplicates(found_name)
     } 
     found_name <- found_name[order(found_name$sort), ]
     found_name[, "original.search"] <- sci_name
@@ -54,7 +54,7 @@ bdc_get_taxa_taxadb <-
           suggest_data <- suppressWarnings(taxadb::filter_name(suggested_name[suggested], provider = db))
           suggest_data[, c("notes", "original.search", "distance")] <- tibble(notes = character(nrow(suggest_data)), original.search = character(nrow(suggest_data)), distance =  numeric(nrow(suggest_data)))
           if(nrow(suggest_data) > length(suggested_index)){
-          suggest_data <- clean_duplicates(suggest_data)
+          suggest_data <- bdc_clean_duplicates(suggest_data)
           }
           found_name[suggested_index, colnames(suggest_data)] <- suggest_data 
           found_name[suggested_index, "notes"] <- "was misspelled"

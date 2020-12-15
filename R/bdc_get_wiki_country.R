@@ -20,6 +20,7 @@ bdc_get_wiki_country <- function() {
     # create a directory to salve the file
     save_in_dir <- here::here("data", "countries_names")
     fs::dir_create(save_in_dir)
+
     
     # Sourced from wikipedia
     URL <-

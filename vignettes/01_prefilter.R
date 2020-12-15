@@ -33,7 +33,6 @@ merged <-
   here::here("data", "temp", "standard_database.qs") %>%
   qs::qread()
 
-
 # CHECK 1 -----------------------------------------------------------------
 # Flag records missing scientific name (i.e empty or NA)
 data_pf1 <-
@@ -117,7 +116,9 @@ data_to_check <-
   )
 
 
-#TODO: Save figures
+#TODO: Figures
+# 
+
 
 # REMOVE PROBLEMATIC RECORDS ----------------------------------------------
 # Removing flagged records (potentially problematic ones) and saving a clean database
