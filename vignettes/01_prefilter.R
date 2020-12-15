@@ -25,9 +25,7 @@ fs::dir_create(here::here("Output/Check"))
 fs::dir_create(here::here("Output/Intermediate"))
 fs::dir_create(here::here("Output/Report"))
 
-
 # Load data ---------------------------------------------------------------
-
 # Load the merge database
 ###########  how add locale information?
 merged <-
@@ -92,7 +90,6 @@ data_pf6 <-
   ))
 
 # REPORT ------------------------------------------------------------------
-
 # Create a summary column. This column is FALSE if any test was flagged as FALSE (i.e. potentially invalid or problematic record)
 data_pf6 <- 
   data_pf6 %>% 
