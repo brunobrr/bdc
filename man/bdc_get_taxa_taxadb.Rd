@@ -2,33 +2,37 @@
 % Please edit documentation in R/bdc_get_taxa_taxadb.R
 \name{bdc_get_taxa_taxadb}
 \alias{bdc_get_taxa_taxadb}
-\title{Title: Get names using taxadb R package. Fuzzy match is allowed by using a modification version of taxadb get_filter names function}
+\title{Title: Get taxa information from taxadb R package by fuzzy match.
+This function was inspired by get.taxa function in flora R package.}
 \usage{
 bdc_get_taxa_taxadb(
-  taxa,
+  sci_name,
   replace.synonyms = TRUE,
   suggest.names = TRUE,
   suggestion.distance = 0.9,
-  parse = FALSE,
   db = NULL
 )
 }
 \arguments{
-\item{taxa}{}
+\item{sci_name}{A character vector of species names. The function does not clean species names (eg.: infraspecific, var., inf.), it is expected clean names.}
 
-\item{replace.synonyms}{}
+\item{replace.synonyms}{A logical value (default = TRUE) whether synonyms must be replaced by the valid names found in taxadb database.}
 
-\item{suggest.names}{}
+\item{suggest.names}{A logical value (default = TRUE) whether species names must be suggested if it is not found in the first search.}
 
-\item{suggestion.distance}{}
+\item{suggestion.distance}{A numeric value (default = 0.9). It is the accepted distance between the searched names and suggested ones. Distances higher than specified here are not suggested and NA is returned.}
 
-\item{parse}{}
-
-\item{db}{}
+\item{db}{A character vector with the name of the database where information sould be searched. The available databases are those provided by taxadb package.}
 }
 \value{
-
+This function returns a data.frame with the same number of rows and order than sci_name with the information provided by the database.
 }
 \description{
-Title: Get names using taxadb R package. Fuzzy match is allowed by using a modification version of taxadb get_filter names function
+Title: Get taxa information from taxadb R package by fuzzy match.
+This function was inspired by get.taxa function in flora R package.
+}
+\examples{
+sci_names <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
+"Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
+test <- bdc_get_taxa_taxadb(sci_names, suggestion.distance = 0.9, db = "gbif")
 }

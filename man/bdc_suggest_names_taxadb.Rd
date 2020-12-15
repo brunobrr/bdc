@@ -2,19 +2,20 @@
 % Please edit documentation in R/bdc_suggest_names_taxadb.R
 \name{bdc_suggest_names_taxadb}
 \alias{bdc_suggest_names_taxadb}
-\title{Title: Suggests valid names based on taxadb R package.}
+\title{Title: Suggest valid names based on taxadb R package.}
 \usage{
 bdc_suggest_names_taxadb(sci_name, max.distance = 0.75, provider)
 }
 \arguments{
 \item{sci_name}{A vector of scientific names to be searched in taxadb database. The function does not clean names (eg.: infraspecific names), so this procedure should be done previously.}
 
-\item{max.distance}{A numeric value specifying the minimum distance between the sci_name and that found in taxadb. The default is 0.7.}
+\item{max.distance}{A numeric value specifying the minimum distance between the sci_name and that found in taxadb. The default is 0.75.}
 
 \item{provider}{A database where the valid name should be searched. The options are those provided by taxadb package.}
 }
 \value{
 This function returns a data.frame whose first column is the suggested name and the second column is the distance between the sci_name and the suggested name.
+It is worth to note that if there are two names with equal distances, only the first one is returned.
 }
 \description{
 This function is a modification of suggest.name function (flora package) accessing taxadb database for fuzzy matching.
