@@ -33,11 +33,20 @@ bdc_flag_missing_xy <- function(data, lon, lat) {
         # flag empty coordinates
         is.numeric(!!rlang::sym(lat)) == FALSE |
           is.numeric(!!rlang::sym(lon)) == FALSE ~ FALSE,
-        # opposite cases are flagged as FALSE
+        # opposite cases are flagged as TRUE
         TRUE ~ TRUE
       )
     )
   
+  message(paste(
+    "Flagged",
+    sum(data$.missing_xy == FALSE),
+    "out",
+    nrow(data),
+    "records"
+  ))
+  
   return(data %>% pull(.missing_xy))
   
+
 }

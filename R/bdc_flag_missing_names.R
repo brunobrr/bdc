@@ -13,11 +13,19 @@ bdc_flag_missing_names <- function(data, sci_name = "scientificName") {
   
   data <-
     data %>%
-    pull(sci_name) %>%
+    dplyr::pull(sci_name) %>%
     trimws(.) %>% 
     ifelse(. == ""|. == "NA", NA, .)
   
   .missing_name <- ifelse(is.na(data) == FALSE, TRUE, FALSE)
+  
+  message(paste(
+    "Flagged",
+    sum(.missing_name == FALSE),
+    "out",
+    length(.missing_name),
+    "records"
+  ))
   
   return(.missing_name)
   

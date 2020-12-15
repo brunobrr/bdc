@@ -40,22 +40,27 @@ bdc_flag_xy_provenance <- function(data, basisOfRecord = "basisOfRecord",
       )
   }
   
-  
   data <-
     data %>%
-    mutate(.xy_provenance = .data[[basisOfRecord]] %in% names_to_keep)
+    dplyr::mutate(.xy_provenance = .data[[basisOfRecord]] %in% names_to_keep)
   
-  # data <-
-  #   data %>%
-  #   mutate(.xy_provenance = basisOfRecord %in% names_to_keep)
-  # 
   removed <-
     data %>%
     dplyr::filter(.xy_provenance == FALSE) %>%
-    dplyr::select(basisOfRecord) %>%
+    dplyr::select(.data[[basisOfRecord]]) %>% 
     dplyr::distinct()
-  
-  message(paste("Records of the following specific nature were flagged:", removed))
+
+  message(
+    paste(
+      sum(data$.xy_provenance == FALSE),
+      "records",
+      "(out of ",
+      nrow(data),
+      ")",
+      "of the following specific nature were flagged:",
+      removed
+    )
+  )
   
   return(data %>% pull(.xy_provenance))
 }
