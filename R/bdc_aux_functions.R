@@ -111,8 +111,9 @@ bdc_tests_summary <- function(data) {
     dplyr::summarise_all(., .funs = sum) %>%
     t %>%
     tibble::as_tibble(rownames = "NA") %>%
-    dplyr::mutate(Records_flagged_percentage = round((100 - (V1 / nrow(data) * 100)), 2)) %>%
-    dplyr::rename(Test = `NA`,
+    dplyr::mutate(V1 = nrow(data)-V1) %>% 
+    dplyr::mutate(Perc_records_flagged = round((V1 / nrow(data) * 100), 2)) %>%
+    dplyr::rename(Test_name = `NA`,
            Records_flagged = V1)
   
   return(data)
