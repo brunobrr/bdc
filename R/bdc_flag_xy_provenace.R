@@ -52,12 +52,10 @@ bdc_flag_xy_provenance <- function(data, basisOfRecord = "basisOfRecord",
 
   message(
     paste(
+      "Flagged",
       sum(data$.xy_provenance == FALSE),
       "records",
-      "(out of ",
-      nrow(data),
-      ")",
-      "of the following specific nature were flagged:",
+      "of the following specific nature:\n",
       removed
     )
   )

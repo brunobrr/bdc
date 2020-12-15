@@ -41,9 +41,7 @@ bdc_flag_missing_xy <- function(data, lon, lat) {
   message(paste(
     "Flagged",
     sum(data$.missing_xy == FALSE),
-    "out",
-    nrow(data),
-    "records"
+    "records."
   ))
   
   return(data %>% pull(.missing_xy))

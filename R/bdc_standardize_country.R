@@ -22,8 +22,8 @@ bdc_standardize_country <-
     # Create a country database based on occ database
     cntr_db <-
       data %>%
-      dplyr::distinct_(country, .keep_all = FALSE) %>%
-      dplyr::arrange_(country) %>%
+      dplyr::distinct(country, .keep_all = FALSE) %>%
+      dplyr::arrange(country) %>%
       rename(cntr_original = country)
     
     cntr_db$cntr_original2 <-

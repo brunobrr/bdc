@@ -22,9 +22,7 @@ bdc_flag_missing_names <- function(data, sci_name = "scientificName") {
   message(paste(
     "Flagged",
     sum(.missing_name == FALSE),
-    "out",
-    length(.missing_name),
-    "records"
+    "records."
   ))
   
   return(.missing_name)

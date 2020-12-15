@@ -100,7 +100,7 @@ bdc_flag_xy_out_country <- function(data,
                     ifelse(is.na(.xy_out_country), FALSE, .xy_out_country))
     
     
-  message(paste("Flagged", sum(data_join$.xy_out_country == FALSE), "out", nrow(data_join), "records"))
+  message(paste("Flagged", sum(data_join$.xy_out_country == FALSE), "records."))
 
   return(data_join %>% pull(.xy_out_country))
 

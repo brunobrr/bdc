@@ -38,9 +38,7 @@ bdc_flag_invalid_xy  <- function(data, lon, lat) {
   message(paste(
     "Flagged",
     sum(data_flag$.invalid_xy == FALSE),
-    "out",
-    nrow(data_flag),
-    "records"
+    "records."
   ))
   
   return(data_flag %>% dplyr::pull(.invalid_xy))

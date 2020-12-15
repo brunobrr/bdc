@@ -20,7 +20,7 @@
 #'   bdc_flag_transposed_xy()
 #' }
 
-teste <- function(data, id, sci_name, lon, lat, country) {
+bdc_flag_transposed_xy <- function(data, id, sci_name, lon, lat, country) {
   
   minimum_colnames <- c(id, sci_name, lon, lat, country)
   
@@ -36,10 +36,15 @@ teste <- function(data, id, sci_name, lon, lat, country) {
     )
   }
   
-  # load auxiliar data
-  message('Loading auxiliary data\n')
+  # load auxiliary data
+  message('Loading auxiliary data: country names from wikipedia\n')
+  suppressMessages({
   wiki_cntr <- bdc_get_wiki_country() # get country names from Wikipedia
-  worldmap <- bdc_get_world_map()  # 
+  })
+  
+  message('Loading auxiliary data: world map and country iso\n')
+  worldmap <- bdc_get_world_map()  # get world map and country iso
+
   
   # standardize the name of countries
   message('Standardizing country names\n')
@@ -54,7 +59,7 @@ teste <- function(data, id, sci_name, lon, lat, country) {
   names(cntr) <- country
   data <-
     data %>%
-    dplyr::left_join(standard_country_names, by =  cntr)
+    dplyr::left_join(standard_country_names, by = cntr)
   
   # Correct latitude and longitude transposed
   message("Correcting latitude and longitude transposed\n")
@@ -78,24 +83,31 @@ teste <- function(data, id, sci_name, lon, lat, country) {
     corrected_coordinates %>%
     # remove columns with coordinates transposed
     dplyr::select(-{{lat}}, -{{lon}}) 
+  
   # new columns coordinates with the corrected info
   colnames(rows_to_insert)[
     colnames(rows_to_insert) %in% 
       c('decimalLatitude_modified', 'decimalLongitude_modified')] <- c(lat, lon)
+  
   # flag all of them
   rows_to_insert <- rows_to_insert %>% dplyr::mutate(transposed_xy = FALSE)
-  dim(data)
+  
   data <-
     data %>%
     # remove wrong coordinates
     dplyr::filter(!(!!rlang::sym(id) %in% rows_to_remove)) %>%
-    # flag no issued rows as FALSE
+    # flag no issued rows as TRUE
     dplyr::mutate(transposed_xy = TRUE) %>%
     # add corrected coordinates
-    dplyr::bind_rows(rows_to_insert)
+    dplyr::bind_rows(rows_to_insert) %>% 
+    dplyr::rename(bdc_country_suggested = cntr_suggested,
+                  bdc_country_iso2c = cntr_iso2c,
+                  bdc_transposed_xy = transposed_xy,
+                  bdc_iso2c = iso2c,
+                  bdc_iso3c = iso3c)
   
   # save issued coordinates
-  message("Saving issued coordinates in: Output/Check/01_prefilter_transposed_coordinates.csv\n")
+  message("Saving coorected coordinates in: Output/Check/01_transposed_xy.csv\n")
   
   corrected_coordinates %>%
     dplyr::select(
@@ -106,7 +118,15 @@ teste <- function(data, id, sci_name, lon, lat, country) {
       dplyr::contains("decimal"),
       cntr_suggested
     ) %>%
-    readr::write_csv(here::here("Output", "Check", "01_prefilter_transposed_coordinates.csv"))
+    readr::write_csv(here::here("Output/Check/01_transposed_xy.csv"))
   
+  message(
+    paste(
+      "Corrected",
+      sum(data$bdc_transposed_xy == FALSE),
+      "records."
+    ))
+  
+
   return(data)
 }
