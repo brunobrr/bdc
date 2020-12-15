@@ -6175,6 +6175,7 @@ India	ඉන්දියාව
 India	อินเดีย
 India	ინდოეთი
 India	ህንድ
+India	ᱥᱤᱧᱚᱛ
 India	インド
 India	印度
 India	인도
@@ -6196,8 +6197,8 @@ India	Hendustān
 India	Hindia
 India	Hindio
 India	Hindistan
-India	Hindūstān
 India	Hindustan
+India	Hindūstān
 India	Hndkastan
 India	Hodu
 India	Ìn-tō͘
@@ -6225,6 +6226,7 @@ India	Jagarii
 India	l'Índia
 India	l-Indja
 India	Oron
+India	Siñôt
 India	xingu'e
 India	Yìndù
 Indonesia	Ινδονησία
@@ -6736,6 +6738,7 @@ Japan	Iapan
 Japan	Iaponia
 Japan	Iaponía
 Japan	il-Ġappun
+Japan	ilbon
 Japan	Ilbon
 Japan	Inuujarvik
 Japan	J·apon
@@ -11345,6 +11348,7 @@ Scotland	Шкоцыя
 Scotland	Шотландий
 Scotland	Шотландия
 Scotland	Шотландiя
+Scotland	Շոտլանդիա
 Scotland	סקוטלנד
 Scotland	סקוסיה
 Scotland	أسكتلندا
@@ -11387,6 +11391,8 @@ Scotland	Šatlandyja
 Scotland	Schåtlönj
 Scotland	Schotland
 Scotland	Schottland
+Scotland	Scòçia
+Scotland	Scòssia
 Scotland	Scoţia
 Scotland	Scotlandia
 Scotland	Scòtzia
@@ -11401,8 +11407,8 @@ Scotland	Skócia
 Scotland	Škocyja
 Scotland	Skos
 Scotland	Skosia
-Scotland	Skōtía
 Scotland	Skotía
+Scotland	Skōtía
 Scotland	Skotija
 Scotland	Škotija
 Scotland	Skotiši
@@ -11412,6 +11418,7 @@ Scotland	Skotlanda
 Scotland	Skotlánda
 Scotland	Skotlanthayay
 Scotland	Skotlanti
+Scotland	Skotlund
 Scotland	Škotska
 Scotland	Skotsko
 Scotland	Škótsko
@@ -11421,6 +11428,7 @@ Scotland	Sotimaa
 Scotland	Šotimaa
 Scotland	Šotiska
 Scotland	Şotlandiä
+Scotland	Šotlandia
 Scotland	Šotlandij
 Scotland	Šotlandija
 Scotland	Şotlandiya
