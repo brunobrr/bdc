@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-clean_duplicates <- function(data){
+bdc_clean_duplicates <- function(data){
 data <- data[order(data$taxonomicStatus), ]
 data <- data[!(duplicated(data$input) & data$taxonomicStatus != "accepted"), ] # por um alert no notes que havia synonyms
 valid_duplicates <- data[duplicated(data$input) & data$taxonomicStatus == "accepted", "scientificName"]
