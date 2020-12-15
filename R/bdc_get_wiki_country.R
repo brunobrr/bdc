@@ -20,6 +20,7 @@ bdc_get_wiki_country <- function() {
     # create a directory to salve the file
     save_in_dir <- here::here("data", "countries_names")
     fs::dir_exists(save_in_dir)
+    fs::dir_create(here::here("data", "countries_names"))
     
     # Sourced from wikipedia
     URL <-
@@ -69,8 +70,6 @@ bdc_get_wiki_country <- function() {
       !wiki_cntr$english_name %in% c("Burma", "Lower Austria", "Persia"),
       !wiki_cntr$names_in_different_languages == c("Se")
     )
-    
-    utils::write.table(wiki_cntr, "teste.txt", sep = "/t")
     
     wiki_cntr %>%
       vroom_write(here::here("data", "countries_names",
