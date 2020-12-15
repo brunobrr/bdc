@@ -24,6 +24,7 @@ ipak(
 fs::dir_create(here::here("Output/Check"))
 fs::dir_create(here::here("Output/Intermediate"))
 fs::dir_create(here::here("Output/Report"))
+fs::dir_create(here::here("Output/Figures"))
 
 # Load data ---------------------------------------------------------------
 # Load the merge database
@@ -31,7 +32,6 @@ fs::dir_create(here::here("Output/Report"))
 merged <-
   here::here("data", "temp", "standard_database.qs") %>%
   qs::qread()
-
 
 # CHECK 1 -----------------------------------------------------------------
 # Flag records missing scientific name (i.e empty or NA)
@@ -116,7 +116,9 @@ data_to_check <-
   )
 
 
-#TODO: Save figures
+#TODO: Figures
+# 
+
 
 # REMOVE PROBLEMATIC RECORDS ----------------------------------------------
 # Removing flagged records (potentially problematic ones) and saving a clean database
