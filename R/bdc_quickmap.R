@@ -6,9 +6,11 @@
 #' @param col_to_map character string. Defining the column or color used to map. Can be a color name (e.g "red") the the name of a column of data. Dafault = "blue"
 #' @param size numeric. The size of the points
 
-bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = 0.1) {
-  n_nrow_data <- format(x = nrow(data), big.mark = ",")
+bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
   
+  # n_nrow_data <- format(x = nrow(data), big.mark = ",")
+  # print(paste("Based on", n_nrow_data, "points"))
+  # 
   world_borders <-
     borders(
       database = "world",
@@ -32,16 +34,16 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = 0.1) {
       theme_bw() +
       labs(
         x = "Longitude",
-        y = "Latitude",
-        title = paste("Based on ", n_nrow_data, "points")
+        y = "Latitude"
+        # title = paste("Based on ", n_nrow_data, "points")
       ) +
       geom_point(aes(
         x = .data[[lon]],
         y = .data[[lat]],
-        col = .data[[col_to_map]] # Map the column
+        col = .data[[col_to_map]], # Map the column
       ),
       alpha = 0.5,
-      size = 0.1
+      size = size
       ) +
       our_theme
   } else {
@@ -51,20 +53,21 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = 0.1) {
       world_borders +
       theme_bw() +
       labs(
-        x = "Longitude (decimals)",
-        y = "Latitude (decimals)",
-        title = paste("Based on ", n_nrow_data, "points")
+        x = "Longitude",
+        y = "Latitude"
+        # title = paste("Based on ", n_nrow_data, "points")
       ) +
       geom_point(
         aes(
           x = .data[[lon]],
-          y = .data[[lat]],
-          col = col_to_map # Map the color
+          y = .data[[lat]]
+          # Map the color
         ),
+        col = col_to_map,
         alpha = 0.5,
-        size = 0.1
+        size = size
       ) +
       our_theme
   }
-  
+  return(our_map)
 }

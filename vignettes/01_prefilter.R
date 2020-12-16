@@ -98,9 +98,6 @@ data_pf6 <-
 # Create a report summarizing the results of all tests
 bdc_tests_summary(data = data_pf6)
 
-# View the report
-bdc_tests_summary(data = data_pf6) 
-
 # Save the report
 bdc_tests_summary(data = data_pf6) %>% 
   data.table::fwrite(., here::here("Output/Report/01_Report.csv"))
@@ -115,9 +112,8 @@ data_to_check <-
     lat = "decimalLatitude"
   )
 
-
-#TODO: Figures
-# 
+# Create and save figures
+bdc_create_figures(data = data_pf6, tests = NULL, workflow_step = "prefilter")
 
 
 # REMOVE PROBLEMATIC RECORDS ----------------------------------------------
