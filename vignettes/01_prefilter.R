@@ -1,4 +1,4 @@
-# Load all functions of BDC workflow
+# Load all functions of bdc workflow
 devtools::load_all()
 
 # Install and load packages
@@ -28,20 +28,20 @@ fs::dir_create(here::here("Output/Figures"))
 
 # Load data ---------------------------------------------------------------
 # Load the merge database
-###########  how add locale information?
+########### FIXEME how add locale information?
 merged <-
   here::here("data", "temp", "standard_database.qs") %>%
   qs::qread()
 
 # CHECK 1 -----------------------------------------------------------------
-# Flag records missing scientific name (i.e empty or NA)
+# Flag records missing scientific name (i.e empty or NA records)
 data_pf1 <-
   merged %>%
   dplyr::mutate(.missing_name =
                   bdc_flag_missing_names(.,
                                          sci_name = "scientificName"))
 # CHECK 2 -----------------------------------------------------------------
-# Flag records missing latitude or longitude 
+# Flag records missing latitude or longitude (i.e empty or NA records)
 data_pf2 <-
   data_pf1 %>%
   dplyr::mutate(.missing_xy =
@@ -49,7 +49,7 @@ data_pf2 <-
                                       lon = "decimalLongitude",
                                       lat = "decimalLatitude"))
 # CHECK 3 -----------------------------------------------------------------
-# Flag records with invalid coordinates
+# Flag records with invalid coordinates (lat > 90 or -90; long >180 or -180; coordinates NA)
 data_pf3 <-
   data_pf2 %>%
   dplyr::mutate(.invalid_xy =
@@ -102,7 +102,7 @@ bdc_tests_summary(data = data_pf6)
 bdc_tests_summary(data = data_pf6) %>% 
   data.table::fwrite(., here::here("Output/Report/01_Report.csv"))
 
-# Save records missing or with invalid coordinates but with information on locality 
+# Save records with invalid or missing coordinates but with information on the locality 
 ########### FIXME: remove cells with only special characters (".", ",", " ", etc)
 data_to_check <-
   bdc_xy_from_locality(
@@ -120,5 +120,3 @@ bdc_create_figures(data = data_pf6, tests = NULL, workflow_step = "prefilter")
 # Removing flagged records (potentially problematic ones) and saving a clean database
 bdc_filter_out_flags(data = data_pf6) %>% 
   qs::qsave(., here::here("Output/Intermediate/01_database"))
-  
-

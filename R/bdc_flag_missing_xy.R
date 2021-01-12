@@ -45,6 +45,4 @@ bdc_flag_missing_xy <- function(data, lon, lat) {
   ))
   
   return(data %>% pull(.missing_xy))
-  
-
 }

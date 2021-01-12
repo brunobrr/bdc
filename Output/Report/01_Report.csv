@@ -1,7 +1,7 @@
-Test,Records_flagged,Records_flagged_percentage
-.missing_name,96914,3.09
-.missing_xy,80609,19.39
-.invalid_xy,80331,19.67
-.xy_provenance,99962,0.04
-.xy_out_country,73497,26.5
-.summary,70891,29.11
+Test_name,Records_flagged,Perc_records_flagged
+.missing_name,3086,3.09
+.missing_xy,19391,19.39
+.invalid_xy,278,0.28
+.xy_provenance,38,0.04
+.xy_out_country,26503,26.5
+.summary,29109,29.11

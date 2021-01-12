@@ -18,14 +18,14 @@ bdc_create_figures <- function(data, tests = NULL, workflow_step = "prefiter") {
         ".invalid_xy",
         ".xy_provenance",
         ".xy_out_country",
-        ".summary",
-        "xy_transposed"
+        "bdc_transposed_xy",
+        ".summary"
       )
   }
 
 
   # function to create barplots
-  cread_barplot <-
+  create_barplot <-
     function(data, column_to_map, workflow_step = workflow_step) {
       temp <-
         data %>%
@@ -34,10 +34,10 @@ bdc_create_figures <- function(data, tests = NULL, workflow_step = "prefiter") {
           database_id = gsub("_", "", database_id)
         ) %>%
         dplyr::group_by(database_id, .data[[column_to_map]]) %>%
-        dplyr::summarise(n = n()) %>%
+        dplyr::summarise(n = n(), .groups = "drop") %>%
         dplyr::mutate(freq = n / sum(n)) %>%
         dplyr::filter(., .data[[column_to_map]] == TRUE)
-
+        
       b <-
         ggplot(temp, aes(x = reorder(database_id, -freq), y = freq)) +
         geom_col(colour = "white", fill = "#1380A1") +
@@ -97,31 +97,23 @@ bdc_create_figures <- function(data, tests = NULL, workflow_step = "prefiter") {
     ".xy_out_country", ".summary"
   )
 
-  # Name of column used to create map of correct vx tranposed xy
-  # map_transposed <- c("xy_transposed")
-
-  # Name of columns used to create maps
-  # map <- NULL
-
-
   # Find which names were provided
   w_bar <- intersect(tests, bar)
-  w_tranposed <- intersect(tests, map_transposed)
-  # w_map <- intersect(tests, map)
+  w_tranposed <- "bdc_transposed_xy"
 
-
+    
   # Create bar plots
   if (length(w_bar) == 0) {
     stop("At least one column name must be provided")
   } else {
     for (i in 1:length(w_bar)) {
-      cread_barplot(data = data, column_to_map = w_bar[i], 
+      create_barplot(data = data, column_to_map = w_bar[i], 
                     workflow_step = workflow_step)
     }
   }
 
 
-  # Create maps of tranposed and corrected coordinates
+  # Create maps of transposed and corrected coordinates
   if (length(w_tranposed) == 0) {
     stop("file 'Output/Check/01_transposed_xy.csv' not found")
   } else {
@@ -146,12 +138,13 @@ bdc_create_figures <- function(data, tests = NULL, workflow_step = "prefiter") {
     p <- cowplot::plot_grid(p1, p2, labels = "AUTO")
 
     ggsave(paste("output/", "Figures/", workflow_step,  "_",
-      column_to_map, ".png",
-      sep = ""
-    ),
+                 "transposed_xy", ".png", sep = ""),
     p,
-    dpi = 300, width = 6, height = 3, units = "cm", scale = 4
-    )
+    dpi = 300, width = 6, height = 3, units = "cm", scale = 4)
   }
+    
+ 
+  
+  message("Check figures in Output/Figures")
 }
 
