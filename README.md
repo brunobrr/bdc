@@ -1,7 +1,6 @@
-# risk_flora
+# BDC
 
-## Estrutura do repositório
-
+## Structure
 ```bash
 .
 ├── Config
