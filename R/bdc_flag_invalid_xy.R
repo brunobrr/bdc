@@ -27,9 +27,7 @@ bdc_flag_invalid_xy  <- function(data, lon, lat) {
     dplyr::mutate(
       .invalid_xy = dplyr::case_when(
         lat < -90 | lat > 90 ~ FALSE,
-        is.na(lat) | is.na(lat) ~ FALSE,
         lon < -180 | lon > 180 ~ FALSE,
-        is.na(lon) | is.na(lon)~ FALSE,
         TRUE ~ TRUE
       )
     ) %>%
