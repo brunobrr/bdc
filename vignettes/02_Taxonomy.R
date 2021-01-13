@@ -1,6 +1,6 @@
 # Load all functions of bdc workflow
 devtools::load_all()
-
+ 
 # Install and load packages
 ipak(
   c(
