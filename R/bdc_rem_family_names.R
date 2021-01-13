@@ -25,6 +25,6 @@ bdc_rem_family_names <- function(sp_names) {
   rem_fam <- str_squish(rem_fam)
   sp_names[w_rem] <- rem_fam
   
-  fag_family <- sp_names_raw == sp_names
-  return(data.frame(sp_names, fag_family))
+  flag_family <- sp_names_raw == sp_names
+  return(data.frame(sp_names, flag_family))
 }
