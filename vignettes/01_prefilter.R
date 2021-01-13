@@ -27,16 +27,16 @@ fs::dir_create(here::here("Output/Report"))
 fs::dir_create(here::here("Output/Figures"))
 
 # Load data ---------------------------------------------------------------
-# Load the merge database
+# Load the merged database
 ########### FIXEME how add locale information?
-merged <-
-  here::here("data", "temp", "standard_database.qs") %>%
+merged_database <-
+  here::here("Output", "Intermediate", "00_merged_database.qs") %>%
   qs::qread()
 
 # CHECK 1 -----------------------------------------------------------------
 # Flag records missing scientific name (i.e empty or NA records)
 data_pf1 <-
-  merged %>%
+  merged_database %>%
   dplyr::mutate(.missing_name =
                   bdc_flag_missing_names(.,
                                          sci_name = "scientificName"))
@@ -119,4 +119,4 @@ bdc_create_figures(data = data_pf6, tests = NULL, workflow_step = "prefilter")
 # REMOVE PROBLEMATIC RECORDS ----------------------------------------------
 # Removing flagged records (potentially problematic ones) and saving a clean database
 bdc_filter_out_flags(data = data_pf6) %>% 
-  qs::qsave(., here::here("Output/Intermediate/01_database"))
+  qs::qsave(., here::here("Output", "Intermediate", "01_prefilter_database.qs"))

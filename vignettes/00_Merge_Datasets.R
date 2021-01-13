@@ -3,7 +3,7 @@ devtools::load_all()
 
 if (!require("here")) install.packages("here")
 
-merged_filename <- here::here("Data", "temp", "standard_database.qs")
+merged_filename <- here::here("Output", "Intermediate", "00_merged_database.qs")
 
 if (!file.exists(merged_filename)) {
   

@@ -1,26 +1,34 @@
+# Load all functions of bdc workflow
+devtools::load_all()
 
-source(here::here("R/aux_functions.R"))
-
+# Install and load packages
 ipak(
   c(
     "taxadb",
     "tidyverse",
     "vroom",
     "here",
-    "rgnparser"
+    "rgnparser", 
+    "flora"
   )
 )
 
-# Load the database
-merged_database <- vroom("data/temp/standard_database.xz")
+# FIXME: Check whether all directories are needed
 
-# FIXEME: delete this file 
-# Test sample
-set.seed(1234)
-samp_df <- dplyr::slice_sample(.data = merged_database, n = 300)
+# Create directories for saving the outputs
+fs::dir_create(here::here("Output/Check"))
+fs::dir_create(here::here("Output/Intermediate"))
+fs::dir_create(here::here("Output/Report"))
+fs::dir_create(here::here("Output/Figures"))
+
+# Load data ---------------------------------------------------------------
+# Load the database resulting from the prefilter step
+prefilter_database <-
+  here::here("Output", "Intermediate", "01_database.qs") %>%
+  qs::qread()
 
 sci_names <-
-  samp_df %>%
+  prefilter_database %>%
   dplyr::pull(scientificName)
 
 taxo_authority <- "gbif"
