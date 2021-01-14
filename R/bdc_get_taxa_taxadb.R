@@ -2,6 +2,7 @@
 #' Title: Get taxa information from taxadb R package by fuzzy match.
 #'This function was inspired by get.taxa function in flora R package.
 #' @param sci_name A character vector of species names. The function does not clean species names (eg.: infraspecific, var., inf.), it is expected clean names.
+#' The inclusion of 'var.' increases name distances and it is advised to set smaller suggestion.distance values. 
 #' @param replace.synonyms A logical value (default = TRUE) whether synonyms must be replaced by the valid names found in taxadb database.
 #' @param suggest.names A logical value (default = TRUE) whether species names must be suggested if it is not found in the first search. 
 #' @param suggestion.distance A numeric value (default = 0.9). It is the accepted distance between the searched names and suggested ones. Distances higher than specified here are not suggested and NA is returned.  
@@ -87,23 +88,23 @@ bdc_get_taxa_taxadb <-
         
         if (any(one_accepted & accepted_empty == FALSE)) {
           
-          replace <- synonym_index[one_accepted]
+          #replace <- synonym_index[one_accepted]
           replace_tab <- purrr::map_dfr(accepted_list[one_accepted], function(i)i)[, -1]
           replace_tab <- replace_tab[order(replace_tab$sort), ]
-          found_name[replace, 1:18] <- replace_tab
-          found_name[replace, "notes"] <- paste(found_name$notes[replace], "replaced synonym", sep = "|")
+          found_name[match(replace_tab$taxonID, found_name$acceptedNameUsageID), 1:18] <- replace_tab
+          found_name[match(replace_tab$taxonID, found_name$acceptedNameUsageID), "notes"] <- paste(found_name$notes[match(replace_tab$taxonID, found_name$acceptedNameUsageID)], "replaced synonym", sep = "|")
         }
         
         if(any(accepted_empty == TRUE)){
           
-          found_name[accepted_empty, "notes"] <- paste(found_name[accepted_empty, "notes"], "check no accepted name", sep = "|")
+          found_name[match(names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID), "notes"] <- paste(found_name[match(names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID), "notes"], "check no accepted name", sep = "|")
             
         }
       }
-          
+         
       if (any(nrow.accepted > 1L)) {
             
-        found_name[nrow.accepted > 1L, "notes"] <- paste(found_name[nrow.accepted > 1L, "notes"], "check +1 accepted", sep = "|")
+        found_name[match(names(accepted_list[nrow.accepted > 1]), found_name$acceptedNameUsageID), "notes"] <- paste(found_name[match(names(accepted_list[nrow.accepted > 1]), found_name$acceptedNameUsageID), "notes"], "check +1 accepted", sep = "|")
             
       }
     }
