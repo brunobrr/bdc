@@ -63,114 +63,108 @@ rgnparser::install_gnparser(force = F)
 
 # create a temporary ID for unique names (e.g. a same name will has the same id)
 df0 <-
-    sci_names %>%
-    as_tibble() %>%
-    dplyr::rename(input = value) %>%
-    dplyr::group_by(input) %>%
-    dplyr::mutate(temp_id = cur_group_id()) %>%
-    dplyr::ungroup() 
-  
+  sci_names %>%
+  as_tibble() %>%
+  dplyr::rename(input = value) %>%
+  dplyr::group_by(input) %>%
+  dplyr::mutate(temp_id = cur_group_id()) %>%
+  dplyr::ungroup() 
+
 # select only unique names
 df <- 
-    df0 %>% 
-    distinct(temp_id, .keep_all = T) %>% 
-    dplyr::mutate_all(na_if,"") %>% 
-    dplyr::filter(!is.na(input))
-  
-  
+  df0 %>% 
+  distinct(temp_id, .keep_all = T) %>% 
+  dplyr::mutate_all(na_if,"") %>% 
+  dplyr::filter(!is.na(input))
+
+
 # routines to clean and parse names (see the help of each function starting with "bdc" for more details)
-  
+
 parse_names <- df
-  
+
 # remove family names from scientific names
 rem_family <-
-    parse_names %>% 
-    pull(input) %>%
-    bdc_rem_family_names()
-  
+  parse_names %>% 
+  pull(input) %>%
+  bdc_rem_family_names()
+
 parse_names <- 
-    parse_names %>% 
-    mutate(clean_family_names = rem_family$sp_names) %>% 
-    mutate(flag_family_names = rem_family$flag_family)
-  
+  parse_names %>% 
+  mutate(clean_family_names = rem_family$sp_names) %>% 
+  mutate(flag_family_names = rem_family$flag_family)
+
 # Remove taxonomic uncertainty terms (e.g. sp, afins, cf)
 rem_uncer <- 
-    parse_names %>% 
-    pull(clean_family_names) %>%
-    bdc_rem_taxo_unc()
-  
+  parse_names %>% 
+  pull(clean_family_names) %>%
+  bdc_rem_taxo_unc()
+
 parse_names <- 
-    parse_names %>% 
-    mutate(clean_uncer_terms = rem_uncer)
-  
+  parse_names %>% 
+  mutate(clean_uncer_terms = rem_uncer)
+
 # Flag taxonomic uncertainty terms
 flag_uncer<- 
-    parse_names %>% 
-    pull(clean_family_names) %>%
-    bdc_flag_taxo_unc()
-  
+  parse_names %>% 
+  pull(clean_family_names) %>%
+  bdc_flag_taxo_unc()
+
 parse_names <- 
-    parse_names %>% 
-    mutate(uncer_terms = flag_uncer$term_uncertainty) %>% 
-    mutate(flag_uncer_terms = flag_uncer$taxo_uncertainty)
-  
+  parse_names %>% 
+  mutate(uncer_terms = flag_uncer$term_uncertainty) %>% 
+  mutate(flag_uncer_terms = flag_uncer$taxo_uncertainty)
+
 # Remove duplicated generic names, extra spaces, and capitalize the generic name
 other_issues <-
-    parse_names %>% 
-    pull(clean_uncer_terms) %>% 
-    bdc_rem_other_issues(.)
-  
+  parse_names %>% 
+  pull(clean_uncer_terms) %>% 
+  bdc_rem_other_issues()
+
 parse_names <- 
-    parse_names %>% 
-    mutate(clean_other_issues = other_issues) %>% 
-    rename(name_clean = clean_other_issues)
-  
+  parse_names %>% 
+  mutate(clean_other_issues = other_issues) %>% 
+  rename(input_cleaned = clean_other_issues)
+
 # Parse names using rgnparser 
 gnparser <-
-    parse_names %>%
-    pull(name_clean) %>%
-    rgnparser::gn_parse_tidy() %>%
-    select(verbatim, cardinality, canonicalfull, quality) %>% 
-    rename(input_cleaned = verbatim)
-  
-  
+  parse_names %>%
+  pull(input_cleaned) %>%
+  rgnparser::gn_parse_tidy() %>%
+  select(verbatim, cardinality, canonicalfull, quality) %>% 
+  rename(input_cleaned = verbatim) %>% 
+  rename(input_parsed = canonicalfull)
+
+
+
 # Names parsed
 parse_names <-
-    full_join(parse_names, gnparser, by = "name_clean") %>% 
-    rename(input_parsed = canonicalfull) %>% 
-    distinct(temp_id, .keep_all = T)
-  
-# FIXEME: Delete code below
-# parse_names <- read.csv("parse_names.csv", h=T)
-  # parse_names_sel <- 
-  #   parse_names %>% 
-  #   dplyr::select(input, temp_id, input_cleaned)
-  # 
+  full_join(parse_names, gnparser, by = "input_cleaned") %>% 
+  distinct(temp_id, .keep_all = T)
 
 # FIXME: Check if it is working
 # Save the file
 parse_names %>%
-  dplyr::select(input, temp_id, input_cleaned) %>%
-  dplyr::full_join(., df) %>%
+  dplyr::select(input, temp_id, input_parsed) %>%
+  dplyr::full_join(., df0, by = c("input", "temp_id")) %>%
   data.table::fwrite(here::here("Output", "Check", "02_parsed_names.csv"))
 
 # Standardize taxonomic names ---------------------------------------------
 
 # Search for another possible names (synonyms or accepted ones) of unresolved names using taxadb package (GBIF is the default taxonomic authority)
-  
+
 query_one <- bdc_get_taxa_taxadb(
   sci_name = parse_names$input_cleaned, # change to parse_names$input_parsed)
   replace.synonyms = T,
   suggest.names = T,
   db = "gbif"
-  )
+)
 
 # Unresolved names are those not resolved or with more than one accepted name
 unresolved_names <- 
   query_one %>%
   dplyr::filter(is.na(scientificName) & notes != "check +1 accepted")
 
-  
+
 # Search for another possible names (synonyms or accepted ones) of unresolved names using other taxonomic authority
 names_to_query <- 
   query_one %>%
@@ -186,28 +180,28 @@ if (nrow(names_to_query) != 0){
 }
 
 # Use names retrieved from WFO to carry out a new query for accepted names in taxadb
-    
-  
-  # Unresolved names are those not resolved or with more than one accepted name (or synonyms if replace_synonyms == T)
- 
-  
-  # create  directories to salve files
-  save_in_dir_che <- here::here("output", "Check", "02_taxonomy")
-  save_in_dir_int <- here::here("output", "Intermediate", "02_taxonomy")
-  
-  if (!fs::dir_exists(save_in_dir_che) & !fs::dir_exists(save_in_dir_int)) {
-    fs::dir_create(save_in_dir_che)
-    fs::dir_create(save_in_dir_int)
-  }
-  
-  
-  # save files
-  
-  df_final %>%
-    vroom::vroom_write(paste0(save_in_dir_int, "/02_taxonomy.csv"))
-  
-  unresolved_names %>%
-    vroom::vroom_write(paste0(save_in_dir_che, "/02_unresolved_names.csv"))
-  
-  parse_names %>%
-    vroom::vroom_write(paste0(save_in_dir_che, "/02_names_parsed.csv"))
+
+
+# Unresolved names are those not resolved or with more than one accepted name (or synonyms if replace_synonyms == T)
+
+
+# create  directories to salve files
+save_in_dir_che <- here::here("output", "Check", "02_taxonomy")
+save_in_dir_int <- here::here("output", "Intermediate", "02_taxonomy")
+
+if (!fs::dir_exists(save_in_dir_che) & !fs::dir_exists(save_in_dir_int)) {
+  fs::dir_create(save_in_dir_che)
+  fs::dir_create(save_in_dir_int)
+}
+
+
+# save files
+
+df_final %>%
+  vroom::vroom_write(paste0(save_in_dir_int, "/02_taxonomy.csv"))
+
+unresolved_names %>%
+  vroom::vroom_write(paste0(save_in_dir_che, "/02_unresolved_names.csv"))
+
+parse_names %>%
+  vroom::vroom_write(paste0(save_in_dir_che, "/02_names_parsed.csv"))
