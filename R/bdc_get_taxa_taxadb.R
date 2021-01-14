@@ -21,10 +21,11 @@ bdc_get_taxa_taxadb <-
             suggest.names = TRUE,
             suggestion.distance = 0.9,
             db = NULL) {
-    sci_name <- flora::trim(sci_name)
-    sci_name <- sci_name[nzchar(sci_name)]
-    if (length(sci_name) == 0L) 
-      stop("No valid names provided.")
+    
+    if(any(is.na(sci_name)) | any(sci_name == "")){
+      stop("Sci_names should have taxonomic names, check for NA and empty characters such as ''.")
+    }
+   
     col_names <- c("sort", "taxonID", "scientificName", "taxonRank", "taxonomicStatus", "acceptedNameUsageID", "kingdom", "phylum", "class" , "order",                   
                    "family", "genus", "specificEpithet", "infraspecificEpithet", "parentNameUsageID", "originalNameUsageID", 
                   "scientificNameAuthorship", "vernacularName", "input")
@@ -59,7 +60,7 @@ bdc_get_taxa_taxadb <-
           found_name[suggested_index, colnames(suggest_data)] <- suggest_data 
           found_name[suggested_index, "notes"] <- "was misspelled"
           
-          found_name[suggested_index, "original.search"] <- suggested_search[, "original"]
+          found_name[suggested_index, "original.search"] <- suggested_search[!is.na(suggested_name), "original"]
         
         }
           
