@@ -21,6 +21,10 @@ bdc_get_taxa_taxadb <-
             suggest.names = TRUE,
             suggestion.distance = 0.9,
             db = NULL) {
+    
+    if(any(is.na(sci_name)) | any(sci_name == "")){
+      stop("Sci_names should have taxonomic names, check for NA and empty characters such as ''.")
+    }
    
     col_names <- c("sort", "taxonID", "scientificName", "taxonRank", "taxonomicStatus", "acceptedNameUsageID", "kingdom", "phylum", "class" , "order",                   
                    "family", "genus", "specificEpithet", "infraspecificEpithet", "parentNameUsageID", "originalNameUsageID", 
