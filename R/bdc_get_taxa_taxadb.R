@@ -48,7 +48,7 @@ bdc_get_taxa_taxadb <-
         suggested_name <- suggested_search[, "suggested"]
         distance <- suggested_search[, "distance"]
         suggested <- !is.na(suggested_name)
-        found_name[not_found_index, "distance"] <- round(as.numeric(distance, 2))
+        found_name[not_found_index, "distance"] <- distance
         
         if(any(suggested == TRUE)){
           
@@ -109,6 +109,8 @@ bdc_get_taxa_taxadb <-
             
       }
     }
+  
   found_name[, 1] <- 1:nrow(found_name)
+  found_name <- found_name[, !(colnames(found_name) == "input")]
   found_name
   }
