@@ -84,6 +84,7 @@ bdc_get_taxa_taxadb <-
         accepted_list <- split(accepted, as.factor(accepted$input)) 
         nrow.accepted <- sapply(accepted_list, nrow)
         accepted_empty <- sapply(accepted_list, function(i) all(is.na(i$scientificName)))
+        nrow.accepted[accepted_empty] <- 0L
         one_accepted <- nrow.accepted == 1L
         
         if (any(one_accepted & accepted_empty == FALSE)) {
