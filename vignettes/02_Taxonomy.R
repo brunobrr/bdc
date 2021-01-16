@@ -1,6 +1,6 @@
 # Load all functions of bdc workflow
 devtools::load_all()
- 
+
 # Install and load packages
 ipak(
   c(
@@ -9,6 +9,7 @@ ipak(
     "vroom",
     "here",
     "rgnparser", 
+    "stringr",
     "flora"
   )
 )
@@ -122,42 +123,46 @@ other_issues <-
 
 parse_names <- 
   parse_names %>% 
-  mutate(clean_other_issues = other_issues) %>% 
-  rename(input_cleaned = clean_other_issues)
+  mutate(clean_other_issues = other_issues) 
+# rename(input_cleaned = clean_other_issues)
 
 # Parse names using rgnparser 
 gnparser <-
   parse_names %>%
-  pull(input_cleaned) %>%
+  pull(clean_other_issues) %>%
   rgnparser::gn_parse_tidy() %>%
   select(verbatim, cardinality, canonicalfull, quality) %>% 
-  rename(input_cleaned = verbatim) %>% 
+  rename(clean_other_issues = verbatim) %>% 
   rename(input_parsed = canonicalfull)
-
-
 
 # Names parsed
 parse_names <-
-  full_join(parse_names, gnparser, by = "input_cleaned") %>% 
+  full_join(parse_names, gnparser, by = "clean_other_issues") %>% 
   distinct(temp_id, .keep_all = T)
 
-# FIXME: Check if it is working
 # Save the file
 parse_names %>%
   dplyr::select(input, temp_id, input_parsed) %>%
   dplyr::full_join(., df0, by = c("input", "temp_id")) %>%
   data.table::fwrite(here::here("Output", "Check", "02_parsed_names.csv"))
 
+
 # Standardize taxonomic names ---------------------------------------------
 
-# Search for another possible names (synonyms or accepted ones) of unresolved names using taxadb package (GBIF is the default taxonomic authority)
+# This is made in three steps. Names are queried using a unique taxonomic authority. Then, synonyms or accepted names of Unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertaken a new query using the main taxonomic authority. 
 
+system.time({
 query_one <- bdc_get_taxa_taxadb(
-  sci_name = parse_names$input_cleaned, # change to parse_names$input_parsed)
+  sci_name = a,
   replace.synonyms = T,
   suggest.names = T,
   db = "gbif"
 )
+})
+
+# Search for another possible names (synonyms or accepted ones) of unresolved names using another taxonomic authority (GBIF is the default taxonomic authority)
+
+
 
 # Unresolved names are those not resolved or with more than one accepted name
 unresolved_names <- 
