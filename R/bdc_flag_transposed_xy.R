@@ -100,12 +100,11 @@ bdc_flag_transposed_xy <- function(data, id, sci_name, lon, lat, country) {
     dplyr::mutate(transposed_xy = TRUE) %>%
     # add corrected coordinates
     dplyr::bind_rows(rows_to_insert) %>% 
-    dplyr::rename(bdc_country_suggested = cntr_suggested,
-                  bdc_country_iso2c = cntr_iso2c,
-                  bdc_transposed_xy = transposed_xy,
-                  bdc_iso2c = iso2c,
-                  bdc_iso3c = iso3c)
-  
+    dplyr::rename(country_suggested = cntr_suggested,
+                  country_iso2c = cntr_iso2c,
+                  transposed_xy = transposed_xy) %>% 
+    dplyr::select(-c(iso2c, iso3c))
+
   # save issued coordinates
   message("Saving coorected coordinates in: Output/Check/01_transposed_xy.csv\n")
   
@@ -127,6 +126,5 @@ bdc_flag_transposed_xy <- function(data, id, sci_name, lon, lat, country) {
       "records."
     ))
   
-
   return(data)
 }

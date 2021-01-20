@@ -104,17 +104,18 @@ bdc_summary_col <- function(data) {
 }
 
 bdc_tests_summary <- function(data) {
-  
-  data <- 
-    data %>%
-    dplyr::select(contains(".")) %>%
-    dplyr::summarise_all(., .funs = sum) %>%
-    t %>%
-    tibble::as_tibble(rownames = "NA") %>%
-    dplyr::mutate(V1 = nrow(data)-V1) %>% 
-    dplyr::mutate(Perc_records_flagged = round((V1 / nrow(data) * 100), 2)) %>%
-    dplyr::rename(Test_name = `NA`,
-           Records_flagged = V1)
-  
+  suppressWarnings({
+    data <-
+      data %>%
+      dplyr::select(contains(".")) %>%
+      dplyr::summarise_all(., .funs = sum) %>%
+      t %>%
+      tibble::as_tibble(rownames = "NA") %>%
+      dplyr::mutate(V1 = nrow(data) - V1) %>%
+      dplyr::mutate(Perc_records_flagged = round((V1 / nrow(data) * 100), 2)) %>%
+      dplyr::rename(Test_name = `NA`,
+                    Records_flagged = V1)
+  })
+
   return(data)
 }
