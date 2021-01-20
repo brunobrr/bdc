@@ -14,7 +14,6 @@ ipak(
   )
 )
 
-# FIXME: Check if all directories are needed
 
 # Create directories for saving the outputs
 fs::dir_create(here::here("Output/Check"))
@@ -32,6 +31,13 @@ prefilter_database <-
 sci_names <-
   prefilter_database %>%
   dplyr::pull(scientificName)
+
+# Standardize character encoding
+for (i in 1:ncol(prefilter_database)){
+  if(is.character(prefilter_database[,i])){
+    Encoding(prefilter_database[,i]) <- "UTF-8"
+  }
+}
 
 
 # Download databases ------------------------------------------------------
@@ -62,6 +68,8 @@ rgnparser::install_gnparser(force = F)
 
 # Parse scientific names --------------------------------------------------
 
+# routines to clean and parse names (see the help of each function starting with "bdc" for more details)
+
 # create a temporary ID for unique names (e.g. a same name will has the same id)
 df0 <-
   sci_names %>%
@@ -78,15 +86,17 @@ df <-
   dplyr::mutate_all(na_if,"") %>% 
   dplyr::filter(!is.na(input))
 
+parse_names <- 
+  prefilter_database %>% 
+  distinct(scientificName, .keep_all = T) %>% 
+  dplyr::select(scientificName) %>% 
+  dplyr::mutate_all(na_if,"") %>% 
+  dplyr::filter(!is.na(scientificName)) 
 
-# routines to clean and parse names (see the help of each function starting with "bdc" for more details)
-
-parse_names <- df
-
-# remove family names from scientific names
+# remove family names from scientific names (e.g. Lauraceae Ocotea odorifera to Ocotea odorifera)
 rem_family <-
   parse_names %>% 
-  pull(input) %>%
+  dplyr::pull(scientificName) %>% 
   bdc_rem_family_names()
 
 parse_names <- 
@@ -94,7 +104,17 @@ parse_names <-
   mutate(clean_family_names = rem_family$sp_names) %>% 
   mutate(flag_family_names = rem_family$flag_family)
 
-# Remove taxonomic uncertainty terms (e.g. sp, afins, cf)
+# Flag, identity, and remove taxonomic uncertainty terms (e.g. Myrcia cf. splendens to Myrcia splendens). Check ?bdc_bdc_rem_taxo_unc for a list of uncertainty terms. Infraspecific terms (variety [e.g., var.] or subspecies ([e.g. subsp.]) are not removed or flagged.)
+flag_uncer<- 
+  parse_names %>% 
+  pull(clean_family_names) %>%
+  bdc_flag_taxo_unc()
+
+parse_names <- 
+  parse_names %>% 
+  mutate(flag_uncer_terms = flag_uncer$taxo_uncertainty) %>% 
+  mutate(uncer_terms = flag_uncer$term_uncertainty)
+
 rem_uncer <- 
   parse_names %>% 
   pull(clean_family_names) %>%
@@ -103,17 +123,6 @@ rem_uncer <-
 parse_names <- 
   parse_names %>% 
   mutate(clean_uncer_terms = rem_uncer)
-
-# Flag taxonomic uncertainty terms
-flag_uncer<- 
-  parse_names %>% 
-  pull(clean_family_names) %>%
-  bdc_flag_taxo_unc()
-
-parse_names <- 
-  parse_names %>% 
-  mutate(uncer_terms = flag_uncer$term_uncertainty) %>% 
-  mutate(flag_uncer_terms = flag_uncer$taxo_uncertainty)
 
 # Remove duplicated generic names, extra spaces, and capitalize the generic name
 other_issues <-
@@ -133,63 +142,121 @@ gnparser <-
   rgnparser::gn_parse_tidy() %>%
   select(verbatim, cardinality, canonicalfull, quality) %>% 
   rename(clean_other_issues = verbatim) %>% 
-  rename(input_parsed = canonicalfull)
+  rename(names_parsed = canonicalfull)
 
-# Names parsed
+
+# Add names parsed
 parse_names <-
   full_join(parse_names, gnparser, by = "clean_other_issues") %>% 
-  distinct(temp_id, .keep_all = T)
+  distinct(scientificName, .keep_all = T)
 
-# Save the file
-parse_names %>%
-  dplyr::select(input, temp_id, input_parsed) %>%
-  dplyr::full_join(., df0, by = c("input", "temp_id")) %>%
+# Match unique names parsed with to full database 
+parse_names <- 
+  parse_names %>%
+  dplyr::full_join(prefilter_database, ., by = "scientificName")
+
+# Save database with names parsed
+parse_names %>% 
   data.table::fwrite(here::here("Output", "Check", "02_parsed_names.csv"))
-
 
 # Standardize taxonomic names ---------------------------------------------
 
-# This is made in three steps. Names are queried using a unique taxonomic authority. Then, synonyms or accepted names of Unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertaken a new query using the main taxonomic authority. 
+# This is made in three steps. First, names are queried using a main taxonomic authority. Next, synonyms or accepted names of unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertake a new query using the main taxonomic authority (step one). 
 
+# Note that after parsing scientific names, several names are now duplicated. In order to optimize the taxonomic standardization process, only unique names will be queried. 
+
+unique_sci_names <- 
+  parse_names %>% 
+  distinct(input_parsed, .keep_all = T) %>% # unique scientific names
+  filter(!is.na(input_parsed)) # not include NAs
+
+# APAGAR ESTA LINHA
+unique_sci_names <- unique_sci_names[1:6000,]
+
+# Query one:
 system.time({
-query_one <- bdc_get_taxa_taxadb(
-  sci_name = a,
-  replace.synonyms = T,
-  suggest.names = T,
-  db = "gbif"
-)
-})
-
-# Search for another possible names (synonyms or accepted ones) of unresolved names using another taxonomic authority (GBIF is the default taxonomic authority)
-
-
-
-# Unresolved names are those not resolved or with more than one accepted name
-unresolved_names <- 
-  query_one %>%
-  dplyr::filter(is.na(scientificName) & notes != "check +1 accepted")
-
-
-# Search for another possible names (synonyms or accepted ones) of unresolved names using other taxonomic authority
-names_to_query <- 
-  query_one %>%
-  dplyr::filter(is.na(scientificName) & notes != "check +1 accepted")
-
-if (nrow(names_to_query) != 0){
-  query_two <- bdc_get_taxa_taxadb(
-    sci_name = names_to_query$original.search, # change this
+  query_one <- bdc_get_taxa_taxadb(
+    sci_name = unique_sci_names$input_parsed[1:6000], # vector of names parsed
     replace.synonyms = T,
     suggest.names = T,
-    db = "itis"
+    suggestion.distance = 0.9,
+    db = "gbif"
   )
+})
+
+# Create a vector of unresolved names, which includes names not found (i.e. NAs) and names with more than one accepted name. Note that in this first moment, this vector contains only names with more than one accepted name. Names not found will be added afterward
+unresolved_names <- 
+  query_one %>%
+  dplyr::filter(notes == "check +1 accepted")
+
+# Query two: (only if still remains names not found in query one)
+# Search for other possible names (synonyms or accepted ones) of unresolved names using another taxonomic authority
+names_NA <- 
+  query_one %>%
+  dplyr::filter(is.na(scientificName) & notes != "check +1 accepted")
+
+
+# First, exclude unresolved names from query_one
+query_one <- 
+  query_one %>% 
+  dplyr::filter(!is.na(scientificName) & notes != "check +1 accepted")
+
+
+if (nrow(names_NA) != 0){
+  system.time({
+    query_two <- 
+      bdc_get_taxa_taxadb(
+        sci_name = names_NA$original.search, # vector of names parsed
+        replace.synonyms = T,
+        suggest.names = T,
+        suggestion.distance = 0.9,
+        db = "ncbi" # define the second taxonomic authority
+      )
+  })
 }
 
-# Use names retrieved from WFO to carry out a new query for accepted names in taxadb
-
+# Query three: (only if previously unresolved names were resolved in query two)
+# Use names retrieved from query two to carry out a new query for accepted names using the main taxonomic authority (i.e. equal to query one)
 
 # Unresolved names are those not resolved or with more than one accepted name (or synonyms if replace_synonyms == T)
 
+if (!is.na(query_two$scientificName) %>% any){
+  system.time({
+    query_three <- 
+      bdc_get_taxa_taxadb(
+        sci_name = query_two$scientificName,
+        replace.synonyms = T,
+        suggest.names = T,
+        db = "gbif" # main taxonomic authority
+      )
+  })
+  
+  # CHECK: Change temporary name query by the original name
+  query_three$original.search <- names_NA$original.search
+  
+  # In cases when at least one name was resolved...
+  # Join resolved names to query one 
+  query_one <- 
+    query_three %>% 
+    dplyr::filter(!is.na(scientificName)) %>% 
+    bind_rows(query_one, .)
+  
+  # And join names not found to unresolved names table
+  unresolved_names <- 
+    query_three %>% 
+    dplyr::filter(is.na(scientificName)) %>%
+    bind_rows(unresolved_names, .)
 
+  } else{
+  # In cases when all names remains unresolved...
+  unresolved_names <- bind_rows(unresolved_names, names_NA)
+}
+
+
+
+  
+
+  
 # create  directories to salve files
 save_in_dir_che <- here::here("output", "Check", "02_taxonomy")
 save_in_dir_int <- here::here("output", "Intermediate", "02_taxonomy")
