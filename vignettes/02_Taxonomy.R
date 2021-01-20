@@ -28,17 +28,12 @@ prefilter_database <-
   here::here("Output", "Intermediate", "01_prefilter_database.qs") %>%
   qs::qread()
 
-sci_names <-
-  prefilter_database %>%
-  dplyr::pull(scientificName)
-
 # Standardize character encoding
 for (i in 1:ncol(prefilter_database)){
   if(is.character(prefilter_database[,i])){
     Encoding(prefilter_database[,i]) <- "UTF-8"
   }
 }
-
 
 # Download databases ------------------------------------------------------
 # Taxonomic authority
@@ -70,22 +65,6 @@ rgnparser::install_gnparser(force = F)
 
 # routines to clean and parse names (see the help of each function starting with "bdc" for more details)
 
-# create a temporary ID for unique names (e.g. a same name will has the same id)
-df0 <-
-  sci_names %>%
-  as_tibble() %>%
-  dplyr::rename(input = value) %>%
-  dplyr::group_by(input) %>%
-  dplyr::mutate(temp_id = cur_group_id()) %>%
-  dplyr::ungroup() 
-
-# select only unique names
-df <- 
-  df0 %>% 
-  distinct(temp_id, .keep_all = T) %>% 
-  dplyr::mutate_all(na_if,"") %>% 
-  dplyr::filter(!is.na(input))
-
 parse_names <- 
   prefilter_database %>% 
   distinct(scientificName, .keep_all = T) %>% 
@@ -93,49 +72,18 @@ parse_names <-
   dplyr::mutate_all(na_if,"") %>% 
   dplyr::filter(!is.na(scientificName)) 
 
-# remove family names from scientific names (e.g. Lauraceae Ocotea odorifera to Ocotea odorifera)
-rem_family <-
-  parse_names %>% 
-  dplyr::pull(scientificName) %>% 
-  bdc_rem_family_names()
+# bdc_rem_family_names: Remove family names from scientific names (e.g. Lauraceae Ocotea odorifera to Ocotea odorifera)
+
+# bdc_rem_taxo_unc: Flag, identity, and remove taxonomic uncertainty terms (e.g. Myrcia cf. splendens to Myrcia splendens). Check ?bdc_bdc_rem_taxo_unc for a list of uncertainty terms. Infraspecific terms (variety [e.g., var.] or subspecies ([e.g. subsp.]) are not removed or flagged.)
+
+# bdc_rem_other_issues: Remove duplicated generic names, extra spaces, and capitalize the generic name
 
 parse_names <- 
-  parse_names %>% 
-  mutate(clean_family_names = rem_family$sp_names) %>% 
-  mutate(flag_family_names = rem_family$flag_family)
+  bdc_rem_family_names(data = parse_names, sci_names = "scientificName") %>% 
+  bdc_rem_taxo_unc(data = ., sci_names = "clean_family_names") %>% 
+  bdc_rem_other_issues(data = ., sci_names = "clean_uncer_terms")
 
-# Flag, identity, and remove taxonomic uncertainty terms (e.g. Myrcia cf. splendens to Myrcia splendens). Check ?bdc_bdc_rem_taxo_unc for a list of uncertainty terms. Infraspecific terms (variety [e.g., var.] or subspecies ([e.g. subsp.]) are not removed or flagged.)
-flag_uncer<- 
-  parse_names %>% 
-  pull(clean_family_names) %>%
-  bdc_flag_taxo_unc()
-
-parse_names <- 
-  parse_names %>% 
-  mutate(flag_uncer_terms = flag_uncer$taxo_uncertainty) %>% 
-  mutate(uncer_terms = flag_uncer$term_uncertainty)
-
-rem_uncer <- 
-  parse_names %>% 
-  pull(clean_family_names) %>%
-  bdc_rem_taxo_unc()
-
-parse_names <- 
-  parse_names %>% 
-  mutate(clean_uncer_terms = rem_uncer)
-
-# Remove duplicated generic names, extra spaces, and capitalize the generic name
-other_issues <-
-  parse_names %>% 
-  pull(clean_uncer_terms) %>% 
-  bdc_rem_other_issues()
-
-parse_names <- 
-  parse_names %>% 
-  mutate(clean_other_issues = other_issues) 
-# rename(input_cleaned = clean_other_issues)
-
-# Parse names using rgnparser 
+# Parse names using rgnparser
 gnparser <-
   parse_names %>%
   pull(clean_other_issues) %>%
@@ -143,7 +91,6 @@ gnparser <-
   select(verbatim, cardinality, canonicalfull, quality) %>% 
   rename(clean_other_issues = verbatim) %>% 
   rename(names_parsed = canonicalfull)
-
 
 # Add names parsed
 parse_names <-
