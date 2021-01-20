@@ -28,48 +28,43 @@ fs::dir_create(here::here("Output/Figures"))
 
 # Load data ---------------------------------------------------------------
 # Load the merged database
-########### FIXEME how add locale information?
-merged_database <-
+database <-
   here::here("Output", "Intermediate", "00_merged_database.qs") %>%
   qs::qread()
 
 # CHECK 1 -----------------------------------------------------------------
 # Flag records missing scientific name (i.e empty or NA records)
 data_pf1 <-
-  merged_database %>%
   dplyr::mutate(.missing_name =
-                  bdc_flag_missing_names(.,
+                  bdc_flag_missing_names(data = database,
                                          sci_name = "scientificName"))
 # CHECK 2 -----------------------------------------------------------------
 # Flag records missing latitude or longitude (i.e empty or NA records)
 data_pf2 <-
-  data_pf1 %>%
   dplyr::mutate(.missing_xy =
-                  bdc_flag_missing_xy(.,
+                  bdc_flag_missing_xy(data = data_pf1,
                                       lon = "decimalLongitude",
                                       lat = "decimalLatitude"))
 # CHECK 3 -----------------------------------------------------------------
 # Flag records with invalid coordinates (lat > 90 or -90; long >180 or -180; coordinates NA)
 data_pf3 <-
-  data_pf2 %>%
   dplyr::mutate(.invalid_xy =
-                  bdc_flag_invalid_xy(., 
+                  bdc_flag_invalid_xy(data = data_pf2, 
                                       lon = "decimalLongitude",
                                       lat = "decimalLatitude"))
 
 # CHECK 4 -----------------------------------------------------------------
 # Flag records from doubtful provenance
 data_pf4 <-
-  data_pf3 %>%
   dplyr::mutate(.xy_provenance =
-                  bdc_flag_xy_provenance(.,
+                  bdc_flag_xy_provenance(data = data_pf3,
                                          basisOfRecord = "basisOfRecord"))
 
 # CHECK 5 -----------------------------------------------------------------
 # Correct latitude and longitude transposed
 data_pf5 <-
-  data_pf4 %>% bdc_flag_transposed_xy(
-    data = .,
+  bdc_flag_transposed_xy(
+    data = data_pf4,
     id = "database_id",
     sci_name = "scientificName",
     lon = "decimalLongitude",
@@ -80,9 +75,8 @@ data_pf5 <-
 # CHECK 6 -----------------------------------------------------------------
 # Flag records outside the focal country (e.g. in the ocean or in other countries)
 data_pf6 <-
-  data_pf5 %>%
   dplyr::mutate(.xy_out_country = bdc_flag_xy_out_country(
-    data = .,
+    data = data_pf5,
     country_name = "Brazil",
     lon = "decimalLongitude",
     lat = "decimalLatitude",
@@ -91,9 +85,7 @@ data_pf6 <-
 
 # REPORT ------------------------------------------------------------------
 # Create a summary column. This column is FALSE if any test was flagged as FALSE (i.e. potentially invalid or problematic record)
-data_pf6 <- 
-  data_pf6 %>% 
-  mutate(.summary = bdc_summary_col(.))
+data_pf6 <- mutate(.summary = bdc_summary_col(data = data_pf6))
   
 # Create a report summarizing the results of all tests
 bdc_tests_summary(data = data_pf6)
@@ -103,7 +95,6 @@ bdc_tests_summary(data = data_pf6) %>%
   data.table::fwrite(., here::here("Output/Report/01_Report.csv"))
 
 # Save records with invalid or missing coordinates but with information on the locality 
-########### FIXME: remove cells with only special characters (".", ",", " ", etc)
 data_to_check <-
   bdc_xy_from_locality(
     data = data_pf6,
@@ -115,8 +106,8 @@ data_to_check <-
 # Create and save figures
 bdc_create_figures(data = data_pf6, tests = NULL, workflow_step = "prefilter")
 
-
 # REMOVE PROBLEMATIC RECORDS ----------------------------------------------
-# Removing flagged records (potentially problematic ones) and saving a clean database
-bdc_filter_out_flags(data = data_pf6) %>% 
-  qs::qsave(., here::here("Output", "Intermediate", "01_prefilter_database.qs"))
+# Removing flagged records (potentially problematic ones) and saving a clean database (without columns starting with ".")
+bdc_filter_out_flags(data = data_pf6, rem_summary = TRUE) %>%
+  qs::qsave(.,
+            here::here("Output", "Intermediate", "01_prefilter_database.qs"))

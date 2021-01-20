@@ -103,16 +103,4 @@ bdc_flag_xy_out_country <- function(data,
   message(paste("Flagged", sum(data_join$.xy_out_country == FALSE), "records."))
 
   return(data_join %>% pull(.xy_out_country))
-
-  # test <-
-  #   st_as_sf(
-  #     data_join,
-  #     coords = c("decimalLongitude", "decimalLatitude"),
-  #     crs = st_crs(country_shp)
-  #   )
-  #
-  # plot(country_shp$geometry)
-  # plot(test[".points_in_country"], pch = 19, cex = 0.1, add=T)
-  # plot(country_shp$geometry, add=T)
-  # plot(buf$geometry, add=T, border = "red")
 }
