@@ -7,24 +7,39 @@
 #' @export
 #'
 #' @examples
-bdc_rem_family_names <- function(sp_names) {
-  sp_names_raw <- sp_names
-  df <- data.frame(str_count(sp_names, "\\S+"), sp_names)
+bdc_rem_family_names <- function(data, sci_names) {
+  
+  sci_names_raw <- data[[sci_names]] %>% stringr::str_squish()
+  
+  # Vector of names without family names
+  clean_family_names <-sci_names_raw
+  
+  # Count number of words in order to not remove single family names
+  word_count <- str_count(sci_names_raw, "\\S+")
+  df <- data.frame(word_count, sci_names_raw)
   n_string <- ifelse(df[, 1] < 2, FALSE, TRUE)
   n_string <- ifelse(is.na(n_string), FALSE, n_string)
   
-  w_rem <- which(n_string == TRUE)
+  posi <- which(n_string == TRUE)
   
-  rem_fam <- str_replace_all(
-    sp_names[w_rem],
+  rem_fam <- stringr::str_remove_all(
+    sci_names_raw[posi],
     regex("[a-zA-Z]+aceae|Leguminosae|Compositae",
-          ignore_case = TRUE),
-    replacement = " "
+          ignore_case = TRUE)
   )
   
-  rem_fam <- str_squish(rem_fam)
-  sp_names[w_rem] <- rem_fam
+  clean_family_names[posi] <- rem_fam
+  flag_family_names <- sci_names_raw == clean_family_names
   
-  flag_family <- sp_names_raw == sp_names
-  return(data.frame(sp_names, flag_family))
+  df <- data.frame(clean_family_names, flag_family_names)
+  df <- dplyr::bind_cols(data, df)
+  
+  message(
+    paste(
+      "bdc_rem_family_names:\nRemoved and flagged",
+      sum(!flag_family_names),
+      "records.\nTwo collumns was added to the database.\n"))
+  
+  return(df)
+  
 }

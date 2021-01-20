@@ -7,8 +7,10 @@
 #' @export
 #'
 #' @examples
-bdc_rem_other_issues <- function(sci_names) {
+bdc_rem_other_issues <- function(data, sci_names) {
   
+  sci_names <- data[[sci_names]] %>% stringr::str_squish()
+
   # Remove punctuation characters, digits, and extra spaces
   res <-
     sci_names %>%
@@ -25,6 +27,8 @@ bdc_rem_other_issues <- function(sci_names) {
   res[w1] <- stringr::str_to_lower(res[w1])
   res[w1] <- Hmisc::capitalize(res[w1])
   
+  
+  # Remove duplicated generic name from names with more than three words
   w3 <- which(word_count >= 3)
   
   for (i in w3)
@@ -34,13 +38,25 @@ bdc_rem_other_issues <- function(sci_names) {
       strsplit(res[i], split = " ", fixed = F, perl = T)
     )
     
-    # remove duplicated generic name
+    # Find duplicate generic name
     dup <- tolower(paste(unique(c(u[1], u[2])), sep = " ", collapse = " "))
     remain <- paste(u[3:length(u)], sep = " ", collapse = " ")
     p <- paste(dup, remain)
     res[i] <- p
   }
-  v3 <- gsub("^$", NA, res) # substitute empty records by NA
-  v4 <- Hmisc::capitalize(v3) # Capitalize first letter
-  return(v4)
+  
+  res <- 
+    gsub("^$", NA, res) %>% # substitute empty records by NA
+    Hmisc::capitalize(.) # Capitalize first letter
+
+  df <- 
+    data.frame(res) %>% 
+    rename(clean_other_issues = res) %>% 
+    dplyr::bind_cols(data, .)
+    
+  message(
+    paste(
+      "bdc_rem_other_issues:\nOne collumns was added to the database.\n"))
+  
+  return(df)
 }
