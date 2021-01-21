@@ -378,7 +378,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
     paste(
       "bdc_rem_taxo_unc:\nRemoved and flagged",
       sum(!taxo_uncertainty),
-      "records.\nThree collumns was added to the database.\n"))
+      "records.\nThree collumns were added to the database.\n"))
   
   return(df)
 }

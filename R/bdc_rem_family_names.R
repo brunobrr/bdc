@@ -38,7 +38,7 @@ bdc_rem_family_names <- function(data, sci_names) {
     paste(
       "bdc_rem_family_names:\nRemoved and flagged",
       sum(!flag_family_names),
-      "records.\nTwo collumns was added to the database.\n"))
+      "records.\nTwo collumns were added to the database.\n"))
   
   return(df)
   

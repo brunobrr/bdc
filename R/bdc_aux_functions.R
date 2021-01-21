@@ -70,37 +70,44 @@ bdc_xy_from_locality <-
            locality = "locality",
            lon = "decimalLongitude",
            lat = "decimalLatitude") {
-    data <-
+    df <-
       data %>%
-      dplyr::mutate(.missing_xy =
-                    suppressMessages({
-                      bdc_flag_missing_xy(.,lon = lon, lat = lat)
-                    })) %>% 
-      dplyr::mutate(.invalid_xy =
-                      suppressMessages({
-                      bdc_flag_invalid_xy(., lon, lat)
-                      })) %>%
-      dplyr::filter(locality != "",
-             !is.na(.data[[locality]]),
-             .missing_xy == FALSE,
-             .invalid_xy == FALSE)
+      dplyr::filter(.invalid_xy == FALSE | .missing_xy == FALSE,
+                    .data[[locality]] != "" &
+                      !is.na(.data[[locality]]))
     
-    data %>% 
-      data.table::fwrite(here::here("Output/Check/01_xy_from_locality.csv"))
+    save <- here::here("Output/Check/01_xy_from_locality.csv")
+    df %>%
+      data.table::fwrite(save)
     
-    message(paste(
-      "Database to be checked saved in",
-      "Output/Check/01_xy_from_locality.csv"
-    ))
+    message(
+      paste(
+        "\nbdc_xy_from_locality\nFound",
+        nrow(df),
+        "records missing or with invalid xy but with potentially useful information on locality.\nCheck database in:",
+        save
+      )
+    )
     
-    return(data)
+    return(df)
   }
 
 bdc_summary_col <- function(data) {
-  data %>%
+  df <-
+    data %>%
     dplyr::select(dplyr::contains(".")) %>%
     dplyr::mutate(.summary = rowSums(.) / ncol(.) == TRUE) %>%
-    dplyr::pull(.summary)
+    dplyr::select(.summary)
+  
+  df <- dplyr::bind_cols(data, df)
+  
+  message(
+    paste(
+      "\nbdc_summary_col:\nFlagged",
+      sum(df$.summary == FALSE),
+      "records.\nOne column was added to the database.\n"))
+  
+  return(df)
 }
 
 bdc_tests_summary <- function(data) {

@@ -16,7 +16,7 @@ bdc_flag_xy_out_country <- function(data,
                               lon = "decimalLongitude",
                               lat = "decimalLatitude",
                               dist = 0.5) {
-  data <-
+  df <-
     data %>%
     dplyr::select(.data[[lon]], .data[[lat]]) %>%
     dplyr::mutate(id = 1:nrow(data))
@@ -33,7 +33,7 @@ bdc_flag_xy_out_country <- function(data,
   # Spatial points
   data_sp <-
     CoordinateCleaner::cc_val(
-      x = data,
+      x = df,
       lon = "decimalLongitude",
       lat = "decimalLatitude",
       verbose = F
@@ -95,12 +95,18 @@ bdc_flag_xy_out_country <- function(data,
     dplyr::select(id, .xy_out_country)
 
   data_join <-
-    dplyr::full_join(data, data_to_join, by = "id") %>%
+    dplyr::full_join(df, data_to_join, by = "id") %>%
     dplyr::mutate(.xy_out_country = 
-                    ifelse(is.na(.xy_out_country), FALSE, .xy_out_country))
+                    ifelse(is.na(.xy_out_country), FALSE, .xy_out_country)) %>% 
+    dplyr::select(.xy_out_country)
     
-    
-  message(paste("Flagged", sum(data_join$.xy_out_country == FALSE), "records."))
-
-  return(data_join %>% pull(.xy_out_country))
+  df <- dplyr::bind_cols(data,  data_join)
+  
+  message(
+    paste(
+      "\nbdc_flag_xy_out_country:\nFlagged",
+      sum(df$.xy_out_country == FALSE),
+      "records.\nOne column was added to the database.\n"))
+  
+  return(df)
 }
