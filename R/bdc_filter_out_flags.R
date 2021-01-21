@@ -36,7 +36,7 @@ bdc_filter_out_flags <- function(data, rem_summary = F) {
       dplyr::select(-column_names)
   }
   
-  message("Filtering out columns: ", paste(column_names, collapse = ", "))
+  message("\nbdc_fiter_out_flags:\nThe following columns were removed from the database:\n", paste(column_names, collapse = ","))
 
   return(data)
 

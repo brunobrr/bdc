@@ -49,17 +49,15 @@ bdc_flag_xy_provenance <- function(data, basisOfRecord = "basisOfRecord",
     dplyr::filter(.xy_provenance == FALSE) %>%
     dplyr::select(.data[[basisOfRecord]]) %>% 
     dplyr::distinct()
-
+  
   message(
     paste(
-      "Flagged",
+      "\nbdc_flag_xy_provenance:\nFlagged",
       sum(data$.xy_provenance == FALSE),
-      "records",
       "of the following specific nature:\n",
-      removed
-    )
-  )
-  
-  return(data %>% pull(.xy_provenance))
+      removed, 
+      "\nOne column was added to the database.\n"
+      ))
+  return(data)
 }
 

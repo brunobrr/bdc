@@ -165,7 +165,7 @@ bdc_create_figures <- function(data, tests = NULL, workflow_step = "prefiter") {
     
 
   
-  message("Check figures in Output/Figures")
+  message("Check figures in ", here::here("Output", "Figures"))
   
 }
 

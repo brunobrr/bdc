@@ -1,30 +1,32 @@
 #' @title Flag records missing scientific name
 #'
 #' @description
-#' This function add a new column `.missing_name` in the returned dataset
-#'
-#' @param data a data.frame containing a column of species names: 
+#' This function add a new column `.missing_name` in the returned database
 #' 
+#' @param data data.frame containing a column of species names: 
+#' @param sci_names charactere string containing scientific names
 #'
 #' @export
 #'
 #' @examples
-bdc_flag_missing_names <- function(data, sci_name = "scientificName") {
+bdc_flag_missing_names <- function(data, sci_names = "scientificName") {
   
-  data <-
-    data %>%
-    dplyr::pull(sci_name) %>%
+  sci_names <- data[[sci_names]]
+  
+  sci_names <-
+    sci_names %>% 
     trimws(.) %>% 
     ifelse(. == ""|. == "NA", NA, .)
   
-  .missing_name <- ifelse(is.na(data) == FALSE, TRUE, FALSE)
+  .missing_name <- ifelse(is.na(sci_names) == FALSE, TRUE, FALSE)
   
-  message(paste(
-    "Flagged",
-    sum(.missing_name == FALSE),
-    "records."
-  ))
+  df <- data.frame(data,  .missing_name)
   
-  return(.missing_name)
+  message(
+    paste(
+      "\nbdc_flag_missing_names:\nFlagged",
+      sum(.missing_name == FALSE),
+      "records.\nOne column was added to the database.\n"))
   
+  return(df)
 }

@@ -12,13 +12,9 @@
 #'
 bdc_flag_invalid_xy  <- function(data, lon, lat) {
 
-  data <-
-    data %>%
-    dplyr::mutate(intid = 1:dplyr::n())
-
   data_filtered <-
     data %>%
-    dplyr::select(intid, .data[[lon]], .data[[lat]]) %>%
+    dplyr::select(.data[[lon]], .data[[lat]]) %>%
     dplyr::rename(lon = .data[[lon]], lat = .data[[lat]]) %>%
     dplyr::mutate_all(as.numeric)
 
@@ -31,14 +27,16 @@ bdc_flag_invalid_xy  <- function(data, lon, lat) {
         TRUE ~ TRUE
       )
     ) %>%
-    dplyr::select(intid, .invalid_xy)
+    dplyr::select(.invalid_xy)
 
-  message(paste(
-    "Flagged",
-    sum(data_flag$.invalid_xy == FALSE),
-    "records."
-  ))
+  df <- dplyr::bind_cols(data,  data_flag)
   
-  return(data_flag %>% dplyr::pull(.invalid_xy))
+  message(
+    paste(
+      "\nbdc_flag_invalid_xy:\nFlagged",
+      sum(df$.invalid_xy == FALSE),
+      "records.\nOne column was added to the database.\n"))
+
+  return(df)
 
 }

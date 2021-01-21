@@ -105,9 +105,6 @@ bdc_flag_transposed_xy <- function(data, id, sci_name, lon, lat, country) {
                   transposed_xy = transposed_xy) %>% 
     dplyr::select(-c(iso2c, iso3c))
 
-  # save issued coordinates
-  message("Saving coorected coordinates in: Output/Check/01_transposed_xy.csv\n")
-  
   corrected_coordinates %>%
     dplyr::select(
       {{id}},
@@ -121,10 +118,9 @@ bdc_flag_transposed_xy <- function(data, id, sci_name, lon, lat, country) {
   
   message(
     paste(
-      "Corrected",
-      sum(data$bdc_transposed_xy == FALSE),
-      "records."
-    ))
+      "\nbdc_flag_transposed_xy:\nCorrected",
+      sum(data$transposed_xy == FALSE),
+      "records.\nThree columns were added to the database.\nCheck database containing coordinates corrected in: Output/Check/01_transposed_xy.csv\n"))
   
   return(data)
 }

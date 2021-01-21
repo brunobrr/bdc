@@ -1,10 +1,10 @@
 #' Flag missing coordinates
 #'
 #' @description
-#' This function add a new column `.invalid_xy` in the returned dataset
+#' This function add a new column `.missing_xy` in the returned database
 #'
-#' @param data a data.frame with the default column names: "database_id",
-#'      "scientificName", "decimalLongitude", "decimalLatitude"
+#' @param data a data.frame with the default column names: "data",
+#'      "lon", "lat"
 #'
 #' @importFrom dplyr mutate case_when
 #'
@@ -16,14 +16,16 @@
 #'   bdc_flag_invalid_xy()
 #' }
 bdc_flag_missing_xy <- function(data, lon, lat) {
+  df<- data
+  
   suppressWarnings({
-    data <-
-      data %>%
+    df <-
+      df %>%
       dplyr::mutate_all(as.numeric)
   })
   
-  data <-
-    data %>%
+  df <-
+    df %>%
     dplyr::mutate(
       .missing_xy = dplyr::case_when(
         is.na(!!rlang::sym(lat)) | is.na(!!rlang::sym(lon)) ~ FALSE,
@@ -36,13 +38,16 @@ bdc_flag_missing_xy <- function(data, lon, lat) {
         # opposite cases are flagged as TRUE
         TRUE ~ TRUE
       )
-    )
+    ) %>% 
+    dplyr::select(.missing_xy)
   
-  message(paste(
-    "Flagged",
-    sum(data$.missing_xy == FALSE),
-    "records."
-  ))
+  df <- dplyr::bind_cols(data,  df)
   
-  return(data %>% pull(.missing_xy))
+  message(
+    paste(
+      "\nbdc_flag_missing_xy:\nFlagged",
+      sum(df$.missing_xy == FALSE),
+      "records.\nOne column was added to the database.\n"))
+
+    return(df)
 }
