@@ -42,7 +42,7 @@ bdc_get_taxa_taxadb <-
     
     if(any(not_found == TRUE)){
       if(suggest.names == TRUE){
-    
+        
         not_found_index <- which(not_found == TRUE)
         suggested_search <- bdc_suggest_names_taxadb(sci_name[not_found_index], max.distance = suggestion.distance, provide = db) 
         suggested_name <- suggested_search[, "suggested"]
@@ -54,7 +54,7 @@ bdc_get_taxa_taxadb <-
           
           suggested_index <- not_found_index[suggested]
           suggested_names_filtered <- suggested_name[suggested] # exclude names without suggestion
-          
+          # Make a warning about suggestion of duplicated names (two species may have the same suggested name)
           if(any(duplicated(suggested_names_filtered))){
              duplicated <- duplicated(suggested_names_filtered)
              report <- which(suggested_names_filtered %in% suggested_names_filtered[duplicated])
@@ -62,18 +62,19 @@ bdc_get_taxa_taxadb <-
              warning("There are more than 1 sci_name with the same suggested name, please check if they are not the same species with misspelled names\n",
                      paste0("Check: \n", "Original name -> Suggested name\n", paste(apply(names_to_check, 1, function(i) paste(i, collapse = " -> ")), collapse = "\n")))
              }
-          
+          # Look for data of suggested names
           suggest_data <- suppressWarnings(taxadb::filter_name(suggested_names_filtered, provider = db))
+          # Filter data of suggested names not returned by filter_name (valid duplicated names)
           duplicated_original_names <- suggested_search[suggested_search[, "suggested"] %in% suggested_names_filtered[duplicated], "original"]
           found_name[found_name$original.search %in% duplicated_original_names, colnames( suggest_data)] <- suggest_data[suggest_data$input %in% suggested_names_filtered[duplicated], ]
           found_name[found_name$original.search %in% duplicated_original_names, "notes"] <- paste( found_name[found_name$original.search %in% duplicated_original_names, "notes"][[1]], "other species had the same suggested name.", sep = "|")
-          #incluir nota que mais de um nome voltou sugerido
           suggest_data <- suggest_data[!(suggest_data$input %in% suggested_names_filtered[duplicated]), ]
-         
+          # Filter duplicated names returned by filter_name (excluding synonyms when there are valid names)  
           if(any(duplicated(suggest_data$input))){
           suggest_data <- bdc_clean_duplicates(suggest_data) 
           }
           
+          # Saving suggested data on found_name
           suggested_original_names <- suggested_search[suggested_search[, "suggested"] %in% suggest_data$input, "original"]
           found_name[found_name$input %in% suggested_original_names, colnames(suggest_data)] <- suggest_data
           found_name[, "notes"] <- "was misspelled"
@@ -104,7 +105,6 @@ bdc_get_taxa_taxadb <-
         
         if (any(one_accepted & accepted_empty == FALSE)) {
           
-          #replace <- synonym_index[one_accepted]
           replace_tab <- purrr::map_dfr(accepted_list[one_accepted], function(i)i)[, -1]
           replace_tab <- replace_tab[order(replace_tab$sort), ]
           found_name[match(replace_tab$taxonID, found_name$acceptedNameUsageID), 1:18] <- replace_tab
