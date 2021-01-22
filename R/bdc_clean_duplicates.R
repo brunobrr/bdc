@@ -9,7 +9,7 @@
 #' @examples
 bdc_clean_duplicates <- function(data){
 data <- data[order(data$taxonomicStatus), ]
-data <- data[!(duplicated(data$input) & data$taxonomicStatus != "accepted"), ] # por um alert no notes que havia synonyms
+data <- data[!(duplicated(data$input) & data$taxonomicStatus != "accepted"), ] 
 valid_duplicates <- data[duplicated(data$input) & data$taxonomicStatus == "accepted", "scientificName"]
 data <- data[!duplicated(data$input), ]
 if(length(valid_duplicates) > 0){
