@@ -1,4 +1,3 @@
-
 #' Title: Return the closest name in a vector of names. 
 #' 
 #' This function looks for the closest name in a vector of names and returns the string distances calculated by fuzzy matching.
@@ -15,26 +14,16 @@
 #' 
 
 
-bdc_return_names <- function(sci_name, max.distance, species.first.letter){
-
+bdc_return_names <- function(sci_name, max.distance, species.first.letter) {
   out <- stringdist::stringdist(sci_name, species.first.letter)
   min_dist_name <- species.first.letter[out == sort(out, decreasing = FALSE)[1]][1]
   sorted <- sort(c(nchar(sci_name), nchar(min_dist_name)))
-  max.dist <- 1- (min(out)/sorted[2])
-  
+  max.dist <- 1 - (min(out) / sorted[2])
+
   if (max.dist >= max.distance) {
-    
     return(data.frame(original = sci_name, suggested = min_dist_name, distance = round(max.dist, 2)))
-    
   }
   else {
-    
     return(data.frame(original = sci_name, suggested = NA, distance = round(max.dist, 2)))
-    
   }
 }
-
-
-
-
-
