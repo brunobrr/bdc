@@ -10,7 +10,10 @@ ipak(
     "here",
     "rgnparser", 
     "stringr",
-    "flora"
+    "flora", 
+    "parallel", 
+    "doParallel", 
+    "foreach"
   )
 )
 
@@ -103,8 +106,7 @@ parse_names <-
   dplyr::full_join(prefilter_database, ., by = "scientificName")
 
 # Save database with names parsed
-parse_names %>% 
-  data.table::fwrite(here::here("Output", "Check", "02_parsed_names.csv"))
+parse_names %>% qs::qsave(here::here("Output", "Check", "02_parsed_names.qs"))
 
 # Standardize taxonomic names ---------------------------------------------
 
@@ -112,18 +114,16 @@ parse_names %>%
 
 # Note that after parsing scientific names, several names are now duplicated. In order to optimize the taxonomic standardization process, only unique names will be queried. 
 
+# FIXME: remover subsp. e var.
 unique_sci_names <- 
   parse_names %>% 
-  distinct(input_parsed, .keep_all = T) %>% # unique scientific names
-  filter(!is.na(input_parsed)) # not include NAs
-
-# APAGAR ESTA LINHA
-unique_sci_names <- unique_sci_names[1:6000,]
+  distinct(names_parsed, .keep_all = T) %>% # unique scientific names
+  filter(!is.na(names_parsed)) # not include NAs
 
 # Query one:
 system.time({
   query_one <- bdc_get_taxa_taxadb(
-    sci_name = unique_sci_names$input_parsed[1:6000], # vector of names parsed
+    sci_name = unique_sci_names$names_parsed, # vector of names parsed
     replace.synonyms = T,
     suggest.names = T,
     suggestion.distance = 0.9,

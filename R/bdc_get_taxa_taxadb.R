@@ -33,6 +33,7 @@ bdc_get_taxa_taxadb <-
     
     found_name <-suppressWarnings(taxadb::filter_name(sci_name, provider = db))
     found_name[, c("notes", "original.search", "distance")] <- tibble(notes = character(nrow(found_name)), original.search = character(nrow(found_name)), distance =  numeric(nrow(found_name)))
+    
     if(nrow(found_name) != length(sci_name)){
       found_name <- bdc_clean_duplicates(found_name)
     } 
