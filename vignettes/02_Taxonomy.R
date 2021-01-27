@@ -130,7 +130,11 @@ system.time({
     replace.synonyms = T,
     suggest.names = T,
     suggestion.distance = 0.9,
-    db = "gbif"
+    db = "gbif",
+    rank_name = "Plantae", 
+    rank = "kingdom",
+    parallel = T,
+    ncores = 5
   )
 })
 
