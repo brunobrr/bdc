@@ -12,8 +12,8 @@ data <- data[order(data$taxonomicStatus), ]
 data <- data[!(duplicated(data$input) & data$taxonomicStatus != "accepted"), ] 
 valid_duplicates <- data[duplicated(data$input) & data$taxonomicStatus == "accepted", "scientificName"]
 data <- data[!duplicated(data$input), ]
-if(length(valid_duplicates) > 0){
-  for(i in valid_duplicates$scientificName){
+if(length(valid_duplicates[[1]]) > 0){
+  for(i in unique(valid_duplicates$scientificName)){
     index <- grep(i, data$scientificName)
     data[index, 2:21] <- NA 
     data[index, "notes"] <- "check +1 accepted" 
