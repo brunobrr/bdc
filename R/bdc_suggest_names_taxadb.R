@@ -16,7 +16,7 @@
 #' @examples
 #' bdc_suggest_names_taxadb(c("Cebus apela", "Puma concolar"), provider = "gbif")
 #'
-bdc_suggest_names_taxadb() <-
+bdc_suggest_names_taxadb <-
   function(sci_name,
            max.distance = suggestion.distance,
            provider = db,
@@ -24,7 +24,7 @@ bdc_suggest_names_taxadb() <-
            rank = NULL,
            parallel = TRUE,
            ncores = 2) {
-
+    
     # Get first letter of all scientific names
     first.letter <-
       unique(sapply(sci_name, function(i) {

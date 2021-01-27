@@ -114,6 +114,9 @@ parse_names %>% qs::qsave(here::here("Output", "Check", "02_parsed_names.qs"))
 
 # Note that after parsing scientific names, several names are now duplicated. In order to optimize the taxonomic standardization process, only unique names will be queried. 
 
+# FIXME: REMOVE THIS FILE
+parse_names <- qs::qread("Output/Check/02_parsed_names.qs")
+
 # FIXME: remover subsp. e var.
 unique_sci_names <- 
   parse_names %>% 

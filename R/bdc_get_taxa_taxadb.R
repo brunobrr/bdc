@@ -21,9 +21,12 @@ bdc_get_taxa_taxadb <-
             replace.synonyms = TRUE,
             suggest.names = TRUE,
             suggestion.distance = 0.9,
-            db = NULL) {
+            db = NULL, 
+            rank_name = "Plantae", 
+            parallel = FALSE,
+            ncores = 2) {
     
-    if(any(is.na(sci_name)) | any(sci_name == "")){
+    if (any(is.na(sci_name)) | any(sci_name == "")) {
       stop("Sci_names should have taxonomic names, check for NA and empty characters such as ''.")
     }
    
