@@ -32,7 +32,7 @@ bdc_get_taxa_taxadb <-
     if (any(is.na(sci_name)) | any(sci_name == "")) {
       stop("Sci_names should have taxonomic names, check for NA and empty characters such as ''.")
     }
-   
+    
     col_names <-
       c(
         "sort",
@@ -135,17 +135,17 @@ bdc_get_taxa_taxadb <-
             # Filter data of suggested names not returned by filter_name (valid duplicated names)
             duplicated_original_names <-
               suggested_search[suggested_search[, "suggested"] %in% 
-              suggested_names_filtered[duplicated], "original"]
+                                 suggested_names_filtered[duplicated], "original"]
             
             found_name[found_name$original.search %in% duplicated_original_names, colnames(suggest_data)] <- suggest_data[suggest_data$input %in% suggested_names_filtered[duplicated],]
-           
+            
             found_name[found_name$original.search %in% duplicated_original_names,
                        "notes"] <-
               paste(found_name[found_name$original.search %in% duplicated_original_names, "notes"][[1]], "other species had the same suggested name.", sep = "|")
             
             suggest_data <-
               suggest_data[!(suggest_data$input %in% 
-                            suggested_names_filtered[duplicated]),]
+                               suggested_names_filtered[duplicated]),]
           }
           
           # Filter duplicated names returned by filter_name (excluding synonyms when there are valid names)
@@ -158,55 +158,66 @@ bdc_get_taxa_taxadb <-
           
           # Saving suggested data on found_name
           suggested_original_names <- suggested_search[suggested_search[, "suggested"] %in% suggest_data$input, "original"]
-          found_name[found_name$input %in% suggested_original_names, colnames(suggest_data)] <- suggest_data
           
-          found_name[found_name$input %in% suggested_original_names, "notes"] <- "was misspelled"
+          posi <- found_name$input %in% suggested_original_names
+          found_name[posi, colnames(suggest_data)] <- suggest_data
+          found_name[posi, "notes"] <- "was misspelled"
           
-        
+        } else {
+          found_name[is.na(found_name$scientificName) & !grepl("check \\+1 accepted", found_name$notes), "notes"] <- "not found"
+        } 
       }
-      else{
+      # search accepted names for synonyms
+      synonym_index <- which(found_name$taxonomicStatus !="accepted")
+      nrow.synonym <- length(synonym_index)
       
-      found_name[is.na(found_name$scientificName)& !grepl("check \\+1 accepted", found_name$notes), "notes"] <- "not found"
+      if (nrow.synonym > 0L) {
+        if (replace.synonyms) {
+          accepted <- suppressWarnings(taxadb::filter_id
+                               (found_name$acceptedNameUsageID[synonym_index], db))
+          accepted_list <- split(accepted, as.factor(accepted$input)) 
+          nrow.accepted <- sapply(accepted_list, nrow)
+          accepted_empty <- sapply(accepted_list,
+                                   function(i) all(is.na(i$scientificName)))
+          nrow.accepted[accepted_empty] <- 0L
+          one_accepted <- nrow.accepted == 1L
+          
+          if (any(one_accepted & accepted_empty == FALSE)) {
+            replace_tab <- purrr::map_dfr(accepted_list[one_accepted], 
+                                          function(i)i)[, -1]
+            
+            replace_tab <- replace_tab[order(replace_tab$sort), ]
+            p0 <- match(replace_tab$taxonID, found_name$acceptedNameUsageID)
+            
+            found_name <- 
+              found_name %>%
+              dplyr::slice(p0) %>%
+              dplyr::select(-c("notes", "original.search", "distance"))
+            
+            found_name[p0, "notes"] <- 
+              paste(found_name$notes[p0], "replaced synonym", sep = "|")
+          }
+          
+          if(any(accepted_empty == TRUE)) {
+            p <- match(names(accepted_list[accepted_empty]),
+                       found_name$acceptedNameUsageID)
+            
+            found_name[p, "notes"] <-
+              paste(found_name[p, "notes"][[1]], "check no accepted name", sep = "|")
+          }
+        } # close replace.synonyms
+        
+        if (any(nrow.accepted > 1L)) {
+          p1 <- match(names(accepted_list[nrow.accepted > 1]),
+                      found_name$acceptedNameUsageID)
+          
+          found_name[p1, "notes"] <-
+            paste(found_name[p1, "notes"][[1]], "check +1 accepted", sep = "|")
+        }
+      }
       
-      } 
-    }
-    
-    synonym_index <- which(found_name$taxonomicStatus !="accepted")
-    nrow.synonym <- length(synonym_index)
-    
-    if (nrow.synonym > 0L) {
-      if (replace.synonyms) {
-        accepted <- suppressWarnings(taxadb::filter_id(found_name$acceptedNameUsageID[synonym_index], db))
-        accepted_list <- split(accepted, as.factor(accepted$input)) 
-        nrow.accepted <- sapply(accepted_list, nrow)
-        accepted_empty <- sapply(accepted_list, function(i) all(is.na(i$scientificName)))
-        nrow.accepted[accepted_empty] <- 0L
-        one_accepted <- nrow.accepted == 1L
-        
-        if (any(one_accepted & accepted_empty == FALSE)) {
-          
-          replace_tab <- purrr::map_dfr(accepted_list[one_accepted], function(i)i)[, -1]
-          replace_tab <- replace_tab[order(replace_tab$sort), ]
-          found_name[match(replace_tab$taxonID, found_name$acceptedNameUsageID), 1:18] <- replace_tab
-          found_name[match(replace_tab$taxonID, found_name$acceptedNameUsageID), "notes"] <- paste(found_name$notes[match(replace_tab$taxonID, found_name$acceptedNameUsageID)], "replaced synonym", sep = "|")
-        }
-        
-        if(any(accepted_empty == TRUE)){
-          
-          found_name[match(names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID), "notes"] <- paste(found_name[match(names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID), "notes"][[1]], "check no accepted name", sep = "|")
-            
-        }
-      }
-         
-      if (any(nrow.accepted > 1L)) {
-            
-        found_name[match(names(accepted_list[nrow.accepted > 1]), found_name$acceptedNameUsageID), "notes"] <- paste(found_name[match(names(accepted_list[nrow.accepted > 1]), found_name$acceptedNameUsageID), "notes"], "check +1 accepted", sep = "|")
-            
-      }
-    }
-  
-  found_name[, 1] <- 1:nrow(found_name)
-  found_name <- found_name[, !(colnames(found_name) == "input")]
-  found_name
+      found_name[, 1] <- 1:nrow(found_name)
+      found_name <- found_name[, !(colnames(found_name) == "input")]
+      return(found_name)
     }
   }
