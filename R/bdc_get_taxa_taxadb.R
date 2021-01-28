@@ -193,7 +193,7 @@ bdc_get_taxa_taxadb <-
         
         if(any(accepted_empty == TRUE)){
           
-          found_name[match(names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID), "notes"] <- paste(found_name[match(names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID), "notes"], "check no accepted name", sep = "|")
+          found_name[match(names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID), "notes"] <- paste(found_name[match(names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID), "notes"][[1]], "check no accepted name", sep = "|")
             
         }
       }
