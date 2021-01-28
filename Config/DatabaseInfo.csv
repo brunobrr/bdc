@@ -1,1 +1,3 @@
-"datasetName,File_name_to_load,occurrenceID,scientificName,decimalLatitude,decimalLongitude,basisOfRecord,eventDate,taxonRank,family,country,stateProvince,county,locality,identifiedBy,coordinateUncertaintyInMeters,coordinatePrecision,recordedBy"
+datasetName,File_name_to_load,occurrenceID,scientificName,decimalLatitude,decimalLongitude,basisOfRecord,eventDate,taxonRank,family,country,stateProvince,county,locality,identifiedBy,coordinateUncertaintyInMeters,coordinatePrecision,recordedBy
+GBIF,~/Dropbox/TCC Fil/Analises/Databases/GBIF.csv,key,scientificName,decimalLatitude,decimalLongitude,basisOfRecord,eventDate,species,family,country,stateProvince,NA,verbatimLocality,identifiedBy,coordinateUncertaintyInMeters,NA,recordedBy
+SpeciesLink,~/Dropbox/TCC Fil/Analises/Databases/SpeciesLink_Brasil.csv,catalognumber,scientificname,latitude,longitude,basisofrecord,NA,species,family,country,stateprovince,county,locality,identifiedby,NA,NA,NA
