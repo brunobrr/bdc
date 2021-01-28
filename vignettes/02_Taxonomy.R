@@ -141,7 +141,7 @@ system.time({
 # Create a vector of unresolved names, which includes names not found (i.e. NAs) and names with more than one accepted name. Note that in this first moment, this vector contains only names with more than one accepted name. Names not found will be added afterward
 unresolved_names <- 
   query_one %>%
-  dplyr::filter(notes == "check +1 accepted")
+  dplyr::filter(notes == "was misspelled")
 
 # Query two: (only if still remains names not found in query one)
 # Search for other possible names (synonyms or accepted ones) of unresolved names using another taxonomic authority
