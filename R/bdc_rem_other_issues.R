@@ -8,55 +8,40 @@
 #'
 #' @examples
 bdc_rem_other_issues <- function(data, sci_names) {
-  
   sci_names <- data[[sci_names]] %>% stringr::str_squish()
 
-  # Remove punctuation characters, digits, and extra spaces
+  # Removing punctuation characters, digits, extra spaces, except "-", which separates names with more than one specific epithet. Removing "-" can decrease match distance when searching for suggest names for unresolved names.
+
   res <-
     sci_names %>%
-    stringr::str_replace_all(.,
-                             "[[:punct:][:digit:]]",
-                             " ") %>%
+    stringr::str_replace_all(., "[[:punct:][:digit:]]", " ") %>%
     stringr::str_squish()
-  
+
+  h <- stringr::str_which(sci_names, "-")
+  res[h] <- sci_names[h]
+
   # count the number of words
   word_count <- stringr::str_count(res, "\\w+")
-  
-  # Capitalize the only first letter of the generic names of scientific names composed of two words
-  w1 <- which(word_count == 1 | word_count == 2)
+
+  # Convert to lower case and capitalize the only first letter of the generic names (POLYGONACEAE to Polygonaceae; polygonaceae to Polygonaceae)
+  w1 <- which(word_count == 1)
   res[w1] <- stringr::str_to_lower(res[w1])
   res[w1] <- Hmisc::capitalize(res[w1])
-  
-  
-  # Remove duplicated generic name from names with more than three words
-  w3 <- which(word_count >= 3)
-  
-  for (i in w3)
-  {
-    # split names
-    u <- unlist(
-      strsplit(res[i], split = " ", fixed = F, perl = T)
-    )
-    
-    # Find duplicate generic name
-    dup <- tolower(paste(unique(c(u[1], u[2])), sep = " ", collapse = " "))
-    remain <- paste(u[3:length(u)], sep = " ", collapse = " ")
-    p <- paste(dup, remain)
-    res[i] <- p
-  }
-  
-  res <- 
+
+  res <-
     gsub("^$", NA, res) %>% # substitute empty records by NA
     Hmisc::capitalize(.) # Capitalize first letter
 
-  df <- 
-    data.frame(res) %>% 
-    rename(clean_other_issues = res) %>% 
+  df <-
+    data.frame(res) %>%
+    rename(clean_other_issues = res) %>%
     dplyr::bind_cols(data, .)
-    
+
   message(
     paste(
-      "bdc_rem_other_issues:\nOne collumns was added to the database.\n"))
-  
+      "bdc_rem_other_issues:\nOne collumns was added to the database.\n"
+    )
+  )
+
   return(df)
 }
