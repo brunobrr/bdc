@@ -81,12 +81,15 @@ parse_names <-
 
 # bdc_rem_other_issues: Remove duplicated generic names, extra spaces, and capitalize the generic name
 
-parse_names <- 
+teste <- 
   bdc_rem_family_names(data = parse_names, sci_names = "scientificName") %>% 
   bdc_rem_taxo_unc(data = ., sci_names = "clean_family_names") %>% 
-  bdc_rem_other_issues(data = ., sci_names = "clean_uncer_terms")
+  bdc_rem_other_issues(data = ., sci_names = "clean_infaesp_names")  %>% 
+  bdc_gnparser
 
-# Parse names using rgnparser
+  bdc_rem_infaesp_names(data = ., sci_names = "clean_uncer_terms") %>%
+
+    # Parse names using rgnparser
 gnparser <-
   parse_names %>%
   pull(clean_other_issues) %>%
