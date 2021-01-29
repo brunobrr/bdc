@@ -8,17 +8,8 @@
 #'
 #' @examples
 bdc_rem_other_issues <- function(data, sci_names) {
-  sci_names <- data[[sci_names]] %>% stringr::str_squish()
 
-  # Removing punctuation characters, digits, extra spaces, except "-", which separates names with more than one specific epithet. Removing "-" can decrease match distance when searching for suggest names for unresolved names.
-
-  res <-
-    sci_names %>%
-    stringr::str_replace_all(., "[[:punct:][:digit:]]", " ") %>%
-    stringr::str_squish()
-
-  h <- stringr::str_which(sci_names, "-")
-  res[h] <- sci_names[h]
+  res <- data[[sci_names]] %>% stringr::str_squish()
 
   # count the number of words
   word_count <- stringr::str_count(res, "\\w+")
