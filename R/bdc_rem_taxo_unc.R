@@ -1,7 +1,8 @@
 
-#' Title: Flag terms denoting taxonomic uncertainty (T = no terms found; F = term found)
+#' Flag, identify and remove terms denoting uncertainty or provisional status of a taxonomic identification
 #'
-#' @param spp_names 
+#' @param data 
+#' @param sci_names 
 #'
 #' @return
 #' @export
@@ -61,12 +62,12 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   # species | species (plural)
   sp0 <- stringr::str_detect(
     spp_names,
-    regex("^(sp\\.|sp\\s|\\ssp$|spp\\.|spp\\s|\\sspp$|ssp\\.|ssp\\s|ssp$)",
+    regex("^(sp\\.|sp\\s|\\ssp$|spp\\.|spp\\s|\\sspp$|ssp\\.|ssp\\s|ssp$|sp[[:digit:]]|spp[[:digit:]])",
           ignore_case = TRUE))
   
   sp <- stringr::str_detect(
     spp_names,
-    regex("\\ssp\\.|\\ssp\\s|\\ssp$|\\sspp\\.|\\sspp\\s|\\sspp$|\\sssp\\.|\\sssp\\s|\\sssp$",
+    regex("\\ssp\\.|\\ssp\\s|\\ssp$|\\sspp\\.|\\sspp\\s|\\sspp$|\\sssp\\.|\\sssp\\s|\\sssp$|\\ssp[[:digit:]]|\\sspp[[:digit:]]|\\sssp[[:digit:]]",
           ignore_case = TRUE))
   
   # species incerta
@@ -236,13 +237,13 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   # species | species (plural)
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
-    regex("^(sp\\.|sp\\s|\\ssp$|spp\\.|spp\\s|\\sspp$|ssp\\.|ssp\\s|ssp$)",
+    regex("^(sp\\.|sp\\s|\\ssp$|spp\\.|spp\\s|\\sspp$|ssp\\.|ssp\\s|ssp$|sp[[:digit:]]|spp[[:digit:]])",
           ignore_case = TRUE),
     replacement = " ")
   
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
-    regex("\\ssp\\.|\\ssp\\s|\\ssp$|\\sspp\\.|\\sspp\\s|\\sspp$|\\sssp\\.|\\sssp\\s|\\sssp$",
+    regex("\\ssp\\.|\\ssp\\s|\\ssp$|\\sspp\\.|\\sspp\\s|\\sspp$|\\sssp\\.|\\sssp\\s|\\sssp$|\\ssp[[:digit:]]|\\sspp[[:digit:]]|\\sssp[[:digit:]]",
           ignore_case = TRUE),
     replacement = " ")
   
@@ -338,12 +339,6 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
           ignore_case = TRUE),
     replacement = " ")
   
-  # forma
-  spp_names_clean <- stringr::str_replace_all(
-    spp_names_clean,
-    regex("\\sf\\.|\\sf\\s|\\f$|\\sfo\\.|\\fo\\s",
-          ignore_case = TRUE),
-    replacement = " ")
   
   # Non-available (NA)
   spp_names_clean <- stringr::str_replace_all(

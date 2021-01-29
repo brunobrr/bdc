@@ -28,16 +28,18 @@ bdc_rem_family_names <- function(data, sci_names) {
           ignore_case = TRUE)
   )
   
+  # remove extra spaces
+  rem_fam <- rem_fam %>% stringr::str_squish()
   clean_family_names[posi] <- rem_fam
-  flag_family_names <- sci_names_raw == clean_family_names
+  .family_names <- sci_names_raw == clean_family_names
   
-  df <- data.frame(clean_family_names, flag_family_names)
+  df <- data.frame(.family_names, clean_family_names)
   df <- dplyr::bind_cols(data, df)
   
   message(
     paste(
       "bdc_rem_family_names:\nRemoved and flagged",
-      sum(!flag_family_names),
+      sum(!.family_names),
       "records.\nTwo collumns were added to the database.\n"))
   
   return(df)
