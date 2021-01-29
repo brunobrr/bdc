@@ -84,10 +84,9 @@ parse_names <-
 teste <- 
   bdc_rem_family_names(data = parse_names, sci_names = "scientificName") %>% 
   bdc_rem_taxo_unc(data = ., sci_names = "clean_family_names") %>% 
-  bdc_rem_other_issues(data = ., sci_names = "clean_infaesp_names")  %>% 
-  bdc_gnparser
-
-  bdc_rem_infaesp_names(data = ., sci_names = "clean_uncer_terms") %>%
+  bdc_rem_other_issues(data = ., sci_names = "clean_uncer_terms")  %>% 
+  bdc_gnparser(data = ., sci_names = "clean_other_issues") %>% 
+  bdc_rem_infaesp_names(data = ., sci_names = "names_parsed")
 
     # Parse names using rgnparser
 gnparser <-
