@@ -22,11 +22,13 @@ bdc_rem_family_names <- function(data, sci_names) {
   
   posi <- which(n_string == TRUE)
   
+  # Remove plantae (suffix "aceae") and animalia (suffix "dae") family name
   rem_fam <- stringr::str_remove_all(
     sci_names_raw[posi],
-    regex("[a-zA-Z]+aceae|Leguminosae|Compositae",
+    regex("[a-zA-Z]+aceae|Leguminosae|Compositae|[a-zA-Z]+dae",
           ignore_case = TRUE)
   )
+  
   
   # remove extra spaces
   rem_fam <- rem_fam %>% stringr::str_squish()
