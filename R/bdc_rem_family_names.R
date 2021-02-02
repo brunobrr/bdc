@@ -99,5 +99,5 @@ bdc_rem_family_names <- function(data, sci_names) {
     )
   )
   
-  return(df)
+  return(df_final)
 }

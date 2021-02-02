@@ -1,7 +1,7 @@
-# Load all functions of bdc workflow
+# Load all functions of bdc workflow --------------------------------------
 devtools::load_all()
 
-# Install and load packages
+# Install and load packages required
 ipak(
   c(
     "taxadb",
@@ -26,24 +26,68 @@ fs::dir_create(here::here("Output/Figures"))
 
 
 # Load database -----------------------------------------------------------
-# Load the database resulting from the prefilter step
-prefilter_database <-
+# Load the database resulting from the prefilter step or your own database
+database <-
   here::here("Output", "Intermediate", "01_prefilter_database.qs") %>%
   qs::qread()
 
 # Standardize character encoding
-for (i in 1:ncol(prefilter_database)){
-  if(is.character(prefilter_database[,i])){
-    Encoding(prefilter_database[,i]) <- "UTF-8"
+for (i in 1:ncol(database)){
+  if(is.character(database[,i])){
+    Encoding(database[,i]) <- "UTF-8"
   }
 }
 
-# Download databases ------------------------------------------------------
-# Taxonomic authority
 
-# this is one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user (see Norman et al. 2020 in Methods in Ecology and Evolution). Options currently recognized in taxadb are:
+# Parse scientific names --------------------------------------------------
 
-# Select one taxonomic authority.
+# routines to clean and parse names (see the help of each function starting with "bdc" for more details)
+
+# Summary of each test:
+
+# bdc_rem_family_names: Remove family names from scientific names (e.g. Felidae Panthera onca to Panthera onca; Lauraceae Ocotea odorifera to Ocotea odorifera)
+
+# bdc_rem_taxo_unc: Flag, identity, and remove taxonomic uncertainty terms (e.g. Myrcia cf. splendens to Myrcia splendens). Check ?bdc_bdc_rem_taxo_unc for a list of uncertainty terms and their ortographycal varations. 
+
+# bdc_rem_other_issues: Convert to lower case and capitalize the only first letter of the generic names (POLYGONACEAE to Polygonaceae; polygonaceae to Polygonaceae) and remove extra spaces
+
+# bdc_rem_infaesp_names: Flag, identity, and remove infraspecific terms (subspecies, varietas and forma)
+
+# bdc_gnparser: Extract just binomial scientific names (without year or authors). To do this, a scientific name is breaks down in different components using rgnparser package.
+
+# Select unique scientific names
+uniq_sciNames <- 
+  database %>% 
+  dplyr::distinct(scientificName, .keep_all = T) %>% # unique names
+  dplyr::select(scientificName) %>% # select this column
+  dplyr::mutate_all(na_if,"") %>% # change white to NA
+  dplyr::filter(!is.na(scientificName)) # remove NAs
+
+# Parse names
+parse_names <- 
+  bdc_rem_family_names(data = uniq_sciNames, sci_names = "scientificName") %>% 
+  bdc_rem_taxo_unc(data = ., sci_names = "clean_family_names") %>% 
+  bdc_rem_other_issues(data = ., sci_names = "clean_uncer_terms")  %>% 
+  bdc_rem_infaesp_names(data = ., sci_names = "clean_other_issues") %>% 
+  bdc_gnparser(data = ., sci_names = "clean_infaesp_names")
+
+# Save database with names parsed
+parse_names %>% qs::qsave(here::here("Output", "Check", "02_parsed_names.qs"))
+
+# Merge unique names parsed with to full database (Obs.: we will keep for subsequently analyses only the column "names_parsed, which represents the main result of the parsing names process). You can check the outputs of each step of the process in "Output/Check/02_parsed_names.qs"
+database <- 
+  parse_names %>%
+  dplyr::select(scientificName, names_parsed) %>% 
+  dplyr::full_join(database, ., by = "scientificName")
+
+
+# Standardize taxonomic names ---------------------------------------------
+
+# This is made in three steps. First, names are queried using a main taxonomic authority. Next, synonyms or accepted names of unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertake a new query using the main taxonomic authority (step one). 
+# Note that after parsing scientific names, several names are now duplicated. In order to optimize the taxonomic standardization process, only unique names will be queried. 
+
+# The taxonomic harmonization is based upon a taxonomic authority that users have to choose. The following taxonomic authority databases are available in taxadb package:
+
 # - itis: Integrated Taxonomic Information System
 # - ncbi: National Center for Biotechnology Information
 # - col: Catalogue of Life
@@ -55,63 +99,11 @@ for (i in 1:ncol(prefilter_database)){
 # - ott: OpenTree Taxonomy
 # - iucn: IUCN Red List
 
-taxo_authority <- "gbif"
-taxadb::td_create(taxo_authority, schema = "dwc", overwrite = FALSE)
-
-# rngparser
-
-# one-time setup to download and install rgnparser, which is used to parse scientific name (for more details, see https://github.com/ropensci/rgnparser)
-rgnparser::install_gnparser(force = F)
-
-
-# Parse scientific names --------------------------------------------------
-
-# routines to clean and parse names (see the help of each function starting with "bdc" for more details)
-
-parse_names <- 
-  prefilter_database %>% 
-  distinct(scientificName, .keep_all = T) %>% 
-  dplyr::select(scientificName) %>% 
-  dplyr::mutate_all(na_if,"") %>% 
-  dplyr::filter(!is.na(scientificName)) 
-
-# bdc_rem_family_names: Remove family names from scientific names (e.g. Lauraceae Ocotea odorifera to Ocotea odorifera)
-
-# bdc_rem_taxo_unc: Flag, identity, and remove taxonomic uncertainty terms (e.g. Myrcia cf. splendens to Myrcia splendens). Check ?bdc_bdc_rem_taxo_unc for a list of uncertainty terms. Infraspecific terms (variety [e.g., var.] or subspecies ([e.g. subsp.]) are not removed or flagged.)
-
-# bdc_rem_other_issues: Remove duplicated generic names, extra spaces, and capitalize the generic name
-
-teste2 <- 
-  bdc_rem_family_names(data = parse_names, sci_names = "scientificName") %>% 
-  bdc_rem_taxo_unc(data = ., sci_names = "clean_family_names") %>% 
-  bdc_rem_other_issues(data = ., sci_names = "clean_uncer_terms")  %>% 
-  bdc_rem_infaesp_names(data = ., sci_names = "clean_other_issues") %>% 
-  bdc_gnparser(data = ., sci_names = "clean_infaesp_names")
-
-# Add names parsed
-parse_names <-
-  full_join(parse_names, gnparser, by = "clean_other_issues") %>% 
-  distinct(scientificName, .keep_all = T)
-
-# Match unique names parsed with to full database 
-parse_names <- 
-  parse_names %>%
-  dplyr::full_join(prefilter_database, ., by = "scientificName")
-
-# Save database with names parsed
-parse_names %>% qs::qsave(here::here("Output", "Check", "02_parsed_names.qs"))
-
-# Standardize taxonomic names ---------------------------------------------
-
-# This is made in three steps. First, names are queried using a main taxonomic authority. Next, synonyms or accepted names of unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertake a new query using the main taxonomic authority (step one). 
-
-# Note that after parsing scientific names, several names are now duplicated. In order to optimize the taxonomic standardization process, only unique names will be queried. 
-
 # FIXME: REMOVE THIS FILE
 parse_names <- qs::qread("Output/Check/02_parsed_names.qs")
 
-# FIXME: remover subsp. e var.
-unique_sci_names <- 
+# To optimize the process, only unique scientific names retrieved from the parsing names process will be queried.
+uni_parse_names <- 
   parse_names %>% 
   distinct(names_parsed, .keep_all = T) %>% # unique scientific names
   filter(!is.na(names_parsed)) # not include NAs
