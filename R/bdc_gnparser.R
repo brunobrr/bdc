@@ -13,7 +13,7 @@ bdc_gnparser <- function(data, sci_names) {
   w <- which(colnames(data_temp) == sci_names)
   colnames(data_temp)[w] <- "temp"
   data_temp$id <- 1:nrow(data_temp)
-
+  
   # Parse names using rgnparser
   suppressWarnings({
     gnparser <-
@@ -31,13 +31,13 @@ bdc_gnparser <- function(data, sci_names) {
     full_join(data_temp, gnparser, by = "temp") %>%
     distinct(id, .keep_all = T) %>%
     select(-c(id, temp))
-
+  
   message(
     paste(
-      "\nbdc_gnparser:\n",
+      "bdc_gnparser:\n",
       "Three collumns were added to the database.\n"
     )
   )
-
+  
   return(df)
 }

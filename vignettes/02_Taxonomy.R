@@ -81,21 +81,12 @@ parse_names <-
 
 # bdc_rem_other_issues: Remove duplicated generic names, extra spaces, and capitalize the generic name
 
-teste <- 
+teste2 <- 
   bdc_rem_family_names(data = parse_names, sci_names = "scientificName") %>% 
   bdc_rem_taxo_unc(data = ., sci_names = "clean_family_names") %>% 
   bdc_rem_other_issues(data = ., sci_names = "clean_uncer_terms")  %>% 
-  bdc_gnparser(data = ., sci_names = "clean_other_issues") %>% 
-  bdc_rem_infaesp_names(data = ., sci_names = "names_parsed")
-
-    # Parse names using rgnparser
-gnparser <-
-  parse_names %>%
-  pull(clean_other_issues) %>%
-  rgnparser::gn_parse_tidy() %>%
-  select(verbatim, cardinality, canonicalfull, quality) %>% 
-  rename(clean_other_issues = verbatim) %>% 
-  rename(names_parsed = canonicalfull)
+  bdc_rem_infaesp_names(data = ., sci_names = "clean_other_issues") %>% 
+  bdc_gnparser(data = ., sci_names = "clean_infaesp_names")
 
 # Add names parsed
 parse_names <-
@@ -202,17 +193,17 @@ if (!is.na(query_two$scientificName) %>% any){
     query_three %>% 
     dplyr::filter(is.na(scientificName)) %>%
     bind_rows(unresolved_names, .)
-
-  } else{
+  
+} else{
   # In cases when all names remains unresolved...
   unresolved_names <- bind_rows(unresolved_names, names_NA)
 }
 
 
 
-  
 
-  
+
+
 # create  directories to salve files
 save_in_dir_che <- here::here("output", "Check", "02_taxonomy")
 save_in_dir_int <- here::here("output", "Intermediate", "02_taxonomy")
