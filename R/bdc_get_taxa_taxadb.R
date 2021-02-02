@@ -1,5 +1,5 @@
 
-#' Title: Get taxa information from taxadb R package by fuzzy match.
+#' Get taxa information from taxadb R package by fuzzy match.
 #'This function was inspired by get.taxa function in flora R package.
 #' @param sci_name A character vector of species names. The function does not clean species names (eg.: infraspecific, var., inf.), it is expected clean names.
 #' The inclusion of 'var.' increases name distances and it is advised to set smaller suggestion.distance values. 
@@ -28,6 +28,11 @@ bdc_get_taxa_taxadb <-
             rank = NULL,
             parallel = FALSE,
             ncores = 2) {
+    
+    # this is one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user (see ?taxadb::td_create for details).
+    
+    taxo_authority <- db
+    taxadb::td_create(taxo_authority, schema = "dwc", overwrite = FALSE)
     
     if (any(is.na(sci_name)) | any(sci_name == "")) {
       stop("Sci_names should have taxonomic names, check for NA and empty characters such as ''.")
@@ -174,7 +179,7 @@ bdc_get_taxa_taxadb <-
       if (nrow.synonym > 0L) {
         if (replace.synonyms) {
           accepted <- suppressWarnings(taxadb::filter_id
-                               (found_name$acceptedNameUsageID[synonym_index], db))
+                                       (found_name$acceptedNameUsageID[synonym_index], db))
           accepted_list <- split(accepted, as.factor(accepted$input)) 
           nrow.accepted <- sapply(accepted_list, nrow)
           accepted_empty <- sapply(accepted_list,
