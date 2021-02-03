@@ -64,15 +64,20 @@ bdc_get_taxa_taxadb <-
     found_name <-suppressWarnings(taxadb::filter_name(sci_name, provider = db))
     
     # Add new columns 
-    found_name[, c("notes", "original.search", "distance")] <- tibble(notes = character(nrow(found_name)), original.search = character(nrow(found_name)), distance =  numeric(nrow(found_name)))
+    found_name <- 
+      found_name %>% 
+      as_tibble() %>% 
+      dplyr::mutate(notes = character(nrow(found_name)), 
+                    original.search = character(nrow(found_name)),
+                    distance = numeric(nrow(found_name))) %>% 
+      dplyr::mutate(original.search = input)
+  
     
     # Flag names with more +1 accepted name
     if(nrow(found_name) != length(sci_name)){
-      found_name <- bdc_clean_duplicates(found_name)
+      found_name <- bdc_clean_duplicates(data = found_name)
     } 
-    found_name <- found_name[order(found_name$sort), ]
-    found_name[, "original.search"] <- sci_name
-    
+
     # Unresolved names
     not_found <- is.na(found_name$scientificName) & !grepl("check \\+1 accepted", found_name$notes)
     
@@ -142,11 +147,13 @@ bdc_get_taxa_taxadb <-
               suggested_search[suggested_search[, "suggested"] %in% 
                                  suggested_names_filtered[duplicated], "original"]
             
-            found_name[found_name$original.search %in% duplicated_original_names, colnames(suggest_data)] <- suggest_data[suggest_data$input %in% suggested_names_filtered[duplicated],]
+            p <- found_name$original.search %in% duplicated_original_names
             
-            found_name[found_name$original.search %in% duplicated_original_names,
-                       "notes"] <-
-              paste(found_name[found_name$original.search %in% duplicated_original_names, "notes"][[1]], "other species had the same suggested name.", sep = "|")
+            found_name[p, colnames(suggest_data)] <- suggest_data[suggest_data$input %in% suggested_names_filtered[duplicated],]
+            
+            found_name[p, "notes"] <-
+              paste(found_name[p, "notes"][[1]], 
+                    "other species had the same suggested name.", sep = "|")
             
             suggest_data <-
               suggest_data[!(suggest_data$input %in% 
@@ -178,7 +185,8 @@ bdc_get_taxa_taxadb <-
       
       if (nrow.synonym > 0L) {
         if (replace.synonyms) {
-          accepted <- suppressWarnings(taxadb::filter_id
+          accepted <- 
+            suppressWarnings(taxadb::filter_id
                                        (found_name$acceptedNameUsageID[synonym_index], db))
           accepted_list <- split(accepted, as.factor(accepted$input)) 
           nrow.accepted <- sapply(accepted_list, nrow)

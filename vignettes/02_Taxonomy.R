@@ -55,7 +55,7 @@ for (i in 1:ncol(database)){
 
 # bdc_gnparser: Extract just binomial scientific names (without year or authors). To do this, a scientific name is breaks down in different components using rgnparser package.
 
-# Select unique scientific names
+# Select unique names
 uniq_sciNames <- 
   database %>% 
   dplyr::distinct(scientificName, .keep_all = T) %>% # unique names
@@ -77,13 +77,20 @@ parse_names %>%
   dplyr::full_join(temp, ., by = "scientificName") %>% 
   qs::qsave(here::here("Output", "Check", "02_parsed_names.qs"))
 
-# Merge unique names parsed to full database and save the output of the parsing names process. Note that only the column "names_parsed" will be used in the downstream analyses. The outputs of each step of the parsing names process can be checked in "Output/Check/02_parsed_names.qs"
+# Merge unique names parsed to full database and save the results of the parsing names process. Note that only the column "names_parsed" will be used in the downstream analyses. The results of each step of the parsing names process can be checked in "Output/Check/02_parsed_names.qs"
 database <- 
   parse_names %>%
   dplyr::select(scientificName, names_parsed) %>% 
   dplyr::full_join(database, ., by = "scientificName")
 
-
+# FIXME: delete this file 
+database <- qs::qread("temp_database.qs")
+for (i in 1:ncol(database)){
+  if(is.character(database[,i])){
+    Encoding(database[,i]) <- "UTF-8"
+  }
+}
+  
 # Standardize taxonomic names ---------------------------------------------
 
 # This is made in three steps. First, names are queried using a main taxonomic authority. Next, synonyms or accepted names of unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertake a new query using the main taxonomic authority (step one). 
@@ -103,7 +110,7 @@ database <-
 # - iucn: IUCN Red List
 
 
-# To optimize the process, only unique scientific names retrieved from the parsing names process will be queried.
+# To optimize the process, only unique names retrieved from the parsing names process will be queried.
 uni_parse_names <- 
   database %>% 
   distinct(names_parsed, .keep_all = T) %>% # unique scientific names
