@@ -72,9 +72,12 @@ parse_names <-
   bdc_gnparser(data = ., sci_names = "clean_infaesp_names")
 
 # Save database with names parsed
-parse_names %>% qs::qsave(here::here("Output", "Check", "02_parsed_names.qs"))
+temp <- database %>% dplyr::select(scientificName)
+parse_names %>%
+  dplyr::full_join(temp, ., by = "scientificName") %>% 
+  qs::qsave(here::here("Output", "Check", "02_parsed_names.qs"))
 
-# Merge unique names parsed with to full database (Obs.: we will keep for subsequently analyses only the column "names_parsed, which represents the main result of the parsing names process). You can check the outputs of each step of the process in "Output/Check/02_parsed_names.qs"
+# Merge unique names parsed to full database and save the output of the parsing names process. Note that only the column "names_parsed" will be used in the downstream analyses. The outputs of each step of the parsing names process can be checked in "Output/Check/02_parsed_names.qs"
 database <- 
   parse_names %>%
   dplyr::select(scientificName, names_parsed) %>% 
@@ -99,19 +102,17 @@ database <-
 # - ott: OpenTree Taxonomy
 # - iucn: IUCN Red List
 
-# FIXME: REMOVE THIS FILE
-parse_names <- qs::qread("Output/Check/02_parsed_names.qs")
 
 # To optimize the process, only unique scientific names retrieved from the parsing names process will be queried.
 uni_parse_names <- 
-  parse_names %>% 
+  database %>% 
   distinct(names_parsed, .keep_all = T) %>% # unique scientific names
-  filter(!is.na(names_parsed)) # not include NAs
+  filter(!is.na(names_parsed)) # not include names NAs
 
 # Query one:
 system.time({
   query_one <- bdc_get_taxa_taxadb(
-    sci_name = unique_sci_names$names_parsed, # vector of names parsed
+    sci_name = uni_parse_names$names_parsed, # vector of names parsed
     replace.synonyms = T,
     suggest.names = T,
     suggestion.distance = 0.9,
@@ -123,79 +124,22 @@ system.time({
   )
 })
 
+# FIXME: How merge query_one containing more names than database? (in cases when replace_synomyn = F)
+# Join resolved names to query one 
+teste <- 
+  query_three %>% 
+  dplyr::filter(!is.na(scientificName)) %>% 
+  bind_rows(query_one, .)
+
+
 # Create a vector of unresolved names, which includes names not found (i.e. NAs) and names with more than one accepted name. Note that in this first moment, this vector contains only names with more than one accepted name. Names not found will be added afterward
 unresolved_names <- 
   query_one %>%
-  dplyr::filter(notes == "was misspelled")
-
-# Query two: (only if still remains names not found in query one)
-# Search for other possible names (synonyms or accepted ones) of unresolved names using another taxonomic authority
-names_NA <- 
-  query_one %>%
-  dplyr::filter(is.na(scientificName) & notes != "check +1 accepted")
+  dplyr::filter(is.na(scientificName) | notes %in% c("check +1 accepted", "|check no accepted name"))
 
 
-# First, exclude unresolved names from query_one
-query_one <- 
-  query_one %>% 
-  dplyr::filter(!is.na(scientificName) & notes != "check +1 accepted")
 
-
-if (nrow(names_NA) != 0){
-  system.time({
-    query_two <- 
-      bdc_get_taxa_taxadb(
-        sci_name = names_NA$original.search, # vector of names parsed
-        replace.synonyms = T,
-        suggest.names = T,
-        suggestion.distance = 0.9,
-        db = "ncbi" # define the second taxonomic authority
-      )
-  })
-}
-
-# Query three: (only if previously unresolved names were resolved in query two)
-# Use names retrieved from query two to carry out a new query for accepted names using the main taxonomic authority (i.e. equal to query one)
-
-# Unresolved names are those not resolved or with more than one accepted name (or synonyms if replace_synonyms == T)
-
-if (!is.na(query_two$scientificName) %>% any){
-  system.time({
-    query_three <- 
-      bdc_get_taxa_taxadb(
-        sci_name = query_two$scientificName,
-        replace.synonyms = T,
-        suggest.names = T,
-        db = "gbif" # main taxonomic authority
-      )
-  })
   
-  # CHECK: Change temporary name query by the original name
-  query_three$original.search <- names_NA$original.search
-  
-  # In cases when at least one name was resolved...
-  # Join resolved names to query one 
-  query_one <- 
-    query_three %>% 
-    dplyr::filter(!is.na(scientificName)) %>% 
-    bind_rows(query_one, .)
-  
-  # And join names not found to unresolved names table
-  unresolved_names <- 
-    query_three %>% 
-    dplyr::filter(is.na(scientificName)) %>%
-    bind_rows(unresolved_names, .)
-  
-} else{
-  # In cases when all names remains unresolved...
-  unresolved_names <- bind_rows(unresolved_names, names_NA)
-}
-
-
-
-
-
-
 # create  directories to salve files
 save_in_dir_che <- here::here("output", "Check", "02_taxonomy")
 save_in_dir_int <- here::here("output", "Intermediate", "02_taxonomy")
