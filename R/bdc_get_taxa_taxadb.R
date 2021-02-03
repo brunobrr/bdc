@@ -29,8 +29,7 @@ bdc_get_taxa_taxadb <-
             parallel = FALSE,
             ncores = 2) {
     
-    # this is one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user (see ?taxadb::td_create for details).
-    
+    # This is one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user (see ?taxadb::td_create for details)
     taxo_authority <- db
     taxadb::td_create(taxo_authority, schema = "dwc", overwrite = FALSE)
     
@@ -60,7 +59,8 @@ bdc_get_taxa_taxadb <-
         "vernacularName",
         "input"
       )
-    # Names found by taxadb
+    
+    # Query names in taxadb (only exact match allowed)
     found_name <-suppressWarnings(taxadb::filter_name(sci_name, provider = db))
     
     # Add new columns 
@@ -188,18 +188,15 @@ bdc_get_taxa_taxadb <-
           one_accepted <- nrow.accepted == 1L
           
           if (any(one_accepted & accepted_empty == FALSE)) {
-            replace_tab <- purrr::map_dfr(accepted_list[one_accepted], 
+            replace_tab <- purrr::map_dfr(accepted_list[one_accepted],
                                           function(i)i)[, -1]
             
             replace_tab <- replace_tab[order(replace_tab$sort), ]
             p0 <- match(replace_tab$taxonID, found_name$acceptedNameUsageID)
             
-            found_name <- 
-              found_name %>%
-              dplyr::slice(p0) %>%
-              dplyr::select(-c("notes", "original.search", "distance"))
+            found_name[p0, 1:18] <- replace_tab
             
-            found_name[p0, "notes"] <- 
+            found_name[p0, "notes"] <-
               paste(found_name$notes[p0], "replaced synonym", sep = "|")
           }
           

@@ -16,7 +16,7 @@ if(length(valid_duplicates[[1]]) > 0){
   for(i in unique(valid_duplicates$scientificName)){
     index <- grep(i, data$scientificName)
     data[index, 2:21] <- NA 
-    data[index, "notes"] <- "check +1 accepted" 
+    data[index, "notes"] <- "|check +1 accepted" 
     data$input[index] <- i
   }
 }
