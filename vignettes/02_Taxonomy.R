@@ -90,7 +90,7 @@ for (i in 1:ncol(database)){
     Encoding(database[,i]) <- "UTF-8"
   }
 }
-  
+
 # Standardize taxonomic names ---------------------------------------------
 
 # This is made in three steps. First, names are queried using a main taxonomic authority. Next, synonyms or accepted names of unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertake a new query using the main taxonomic authority (step one). 
@@ -133,31 +133,26 @@ system.time({
 
 # FIXME: How merge query_one containing more names than database? (in cases when replace_synomyn = F)
 # Join resolved names to query one 
-teste <-
+database <-
   dplyr::left_join(database, query_one, by = c("names_parsed" = "original.search"))
 
 
-# Create a vector of unresolved names, which includes names not found (i.e. NAs) and names with more than one accepted name.
+# Table of unresolved names, which includes names not found (i.e. NAs) and names with more than one accepted name.
 unresolved_names <- 
-  query_one %>%
+  database %>%
   dplyr::filter(is.na(scientificName)) %>% 
   filter(str_detect(notes, "|check +1 accepted") | 
-        notes == "|check no accepted name")
+           notes == "|check no accepted name")
 
-# A database of unresolved names. You may take a look at this table.
+# Save the table. You may want to check this table at another time
 unresolved_names %>%
   data.table::fwrite(., here::here("Output", "Check", "02_unresolved_names.csv"))
 
-# save files
-bdc_filter_out_flags(data = data_pf7, rem_summary = TRUE) %>%
-  qs::qsave(., here::here("Output", "Intermediate", "01_prefilter_database.qs"))
+
+# Save database of the standardizing taxonomy step.
+database <- 
+  dplyr::filter(.taxo_uncer == TRUE) %>% 
+  dplyr::filter(!database_id %in% unresolved_names$)
+qs::qsave(., here::here("Output", "Intermediate", "02_prefilter_database.qs"))
 
 
-df_final %>%
-  vroom::vroom_write(paste0(save_in_dir_int, "/02_taxonomy.csv"))
-
-unresolved_names %>%
-  vroom::vroom_write(paste0(save_in_dir_che, "/02_unresolved_names.csv"))
-
-parse_names %>%
-  vroom::vroom_write(paste0(save_in_dir_che, "/02_names_parsed.csv"))
