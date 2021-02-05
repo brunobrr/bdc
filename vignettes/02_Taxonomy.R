@@ -75,7 +75,7 @@ parse_names <-
 temp <- database %>% dplyr::select(scientificName)
 parse_names %>%
   dplyr::full_join(temp, ., by = "scientificName") %>% 
-  qs::qsave(here::here("Output", "Check", "02_parsed_names.qs"))
+  data.table::fwrite(., here::here("Output", "Check", "02_parsed_names.csv"))
 
 # Merge unique names parsed to full database and save the results of the parsing names process. Note that only the column "names_parsed" will be used in the downstream analyses. The results of each step of the parsing names process can be checked in "Output/Check/02_parsed_names.qs"
 database <- 
@@ -123,7 +123,7 @@ system.time({
     replace.synonyms = T,
     suggest.names = T,
     suggestion.distance = 0.9,
-    db = "gbif",
+    db = "col",
     rank_name = "Plantae", 
     rank = "kingdom",
     parallel = T,
@@ -133,31 +133,25 @@ system.time({
 
 # FIXME: How merge query_one containing more names than database? (in cases when replace_synomyn = F)
 # Join resolved names to query one 
-teste <- 
-  query_three %>% 
-  dplyr::filter(!is.na(scientificName)) %>% 
-  bind_rows(query_one, .)
+teste <-
+  dplyr::left_join(database, query_one, by = c("names_parsed" = "original.search"))
 
 
-# Create a vector of unresolved names, which includes names not found (i.e. NAs) and names with more than one accepted name. Note that in this first moment, this vector contains only names with more than one accepted name. Names not found will be added afterward
+# Create a vector of unresolved names, which includes names not found (i.e. NAs) and names with more than one accepted name.
 unresolved_names <- 
   query_one %>%
-  dplyr::filter(is.na(scientificName) | notes %in% c("check +1 accepted", "|check no accepted name"))
+  dplyr::filter(is.na(scientificName)) %>% 
+  filter(str_detect(notes, "|check +1 accepted") | 
+        notes == "|check no accepted name")
 
-
-
-  
-# create  directories to salve files
-save_in_dir_che <- here::here("output", "Check", "02_taxonomy")
-save_in_dir_int <- here::here("output", "Intermediate", "02_taxonomy")
-
-if (!fs::dir_exists(save_in_dir_che) & !fs::dir_exists(save_in_dir_int)) {
-  fs::dir_create(save_in_dir_che)
-  fs::dir_create(save_in_dir_int)
-}
-
+# A database of unresolved names. You may take a look at this table.
+unresolved_names %>%
+  data.table::fwrite(., here::here("Output", "Check", "02_unresolved_names.csv"))
 
 # save files
+bdc_filter_out_flags(data = data_pf7, rem_summary = TRUE) %>%
+  qs::qsave(., here::here("Output", "Intermediate", "01_prefilter_database.qs"))
+
 
 df_final %>%
   vroom::vroom_write(paste0(save_in_dir_int, "/02_taxonomy.csv"))
