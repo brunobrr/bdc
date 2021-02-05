@@ -8,36 +8,10 @@
 #'
 #' @examples
 bdc_clean_duplicates <- function(data) {
-  data <-
-    data %>%
-    dplyr::filter(!(duplicated(input) & taxonomicStatus != "accepted"))
-
-  if (!is.null(rank_name) & !is.null(rank)) {
-    valid_duplicates <-
-      data %>%
-      dplyr::filter(duplicated(input) & taxonomicStatus == "accepted") %>%
-      dplyr::filter(., .data[[rank]] == rank_name) %>%
-      dplyr::mutate(notes = "|check +1 accepted")
-  } else if (is.null(rank_name) & !is.null(rank)) {
-    message("Please, provide both 'rank_name' and 'rank' arguments")
-  } else if (!is.null(rank_name) & is.null(rank)) {
-    message("Please, provide both 'rank_name' and 'rank' arguments")
-  } else {
-    valid_duplicates <-
-      data %>%
-      dplyr::filter(duplicated(input) & taxonomicStatus == "accepted") %>%
-      dplyr::mutate(notes = "|check +1 accepted")
-  }
-
-  data.table::fwrite(valid_duplicates, here::here("Output/Check/02_names_multiple_accepted_names.csv"))
-
-  message("\nCheck names with more than one valid name in 'Output/Check/02_names_multiple_accepted_names.csv'\n")
-
-  valid_duplicates <- valid_duplicates %>% dplyr::select(scientificName)
-
-  data <-
-    data %>%
-    dplyr::filter(!duplicated(input))
+  data <- data[order(data$taxonomicStatus), ]
+  data <- data[!(duplicated(data$input) & data$taxonomicStatus != "accepted"), ] 
+  valid_duplicates <- data[duplicated(data$input) & data$taxonomicStatus == "accepted", "scientificName"]
+  data <- data[!duplicated(data$input), ]
 
   if (length(valid_duplicates[[1]]) > 0) {
     for (i in unique(valid_duplicates$scientificName)) {

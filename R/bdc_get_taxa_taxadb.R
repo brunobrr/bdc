@@ -37,29 +37,6 @@ bdc_get_taxa_taxadb <-
       stop("Sci_names should have taxonomic names, check for NA and empty characters such as ''.")
     }
     
-    col_names <-
-      c(
-        "sort",
-        "taxonID",
-        "scientificName",
-        "taxonRank",
-        "taxonomicStatus",
-        "acceptedNameUsageID",
-        "kingdom",
-        "phylum",
-        "class" ,
-        "order",
-        "family",
-        "genus",
-        "specificEpithet",
-        "infraspecificEpithet",
-        "parentNameUsageID",
-        "originalNameUsageID",
-        "scientificNameAuthorship",
-        "vernacularName",
-        "input"
-      )
-    
     # Query names in taxadb (only exact match allowed)
     found_name <-suppressWarnings(taxadb::filter_name(sci_name, provider = db))
     
@@ -71,13 +48,15 @@ bdc_get_taxa_taxadb <-
                     original.search = character(nrow(found_name)),
                     distance = numeric(nrow(found_name))) %>% 
       dplyr::mutate(original.search = input)
-  
+    
     
     # Flag names with more +1 accepted name
     if(nrow(found_name) != length(sci_name)){
       found_name <- bdc_clean_duplicates(data = found_name)
     } 
-
+    
+    found_name <- found_name[order(found_name$sort), ]
+    
     # Unresolved names
     not_found <- is.na(found_name$scientificName) & !grepl("check \\+1 accepted", found_name$notes)
     
@@ -121,7 +100,7 @@ bdc_get_taxa_taxadb <-
               distance =  numeric(nrow(suggest_data))
             )
           
-          # Make a warning about suggestion of duplicated names (two species may have the same suggested name)
+          # Create a warning on different names with a same suggested name
           if (any(duplicated(suggested_names_filtered))) {
             duplicated <- duplicated(suggested_names_filtered)
             
@@ -187,7 +166,7 @@ bdc_get_taxa_taxadb <-
         if (replace.synonyms) {
           accepted <- 
             suppressWarnings(taxadb::filter_id
-                                       (found_name$acceptedNameUsageID[synonym_index], db))
+                             (found_name$acceptedNameUsageID[synonym_index], db))
           accepted_list <- split(accepted, as.factor(accepted$input)) 
           nrow.accepted <- sapply(accepted_list, nrow)
           accepted_empty <- sapply(accepted_list,
@@ -202,7 +181,7 @@ bdc_get_taxa_taxadb <-
             replace_tab <- replace_tab[order(replace_tab$sort), ]
             p0 <- match(replace_tab$taxonID, found_name$acceptedNameUsageID)
             
-            found_name[p0, 1:18] <- replace_tab
+            found_name[p0, colnames(replace_tab)] <- replace_tab
             
             found_name[p0, "notes"] <-
               paste(found_name$notes[p0], "replaced synonym", sep = "|")
