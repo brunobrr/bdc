@@ -5,7 +5,7 @@
 #'   Please see the `Config/DatabaseInfo.csv` file.
 #'
 #' @importFrom data.table fread
-#' @importFrom dplyr pull filter select select_if mutate n everything
+#' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
 #' @importFrom fs dir_exists dir_create
 #' @importFrom here here
 #' @importFrom purrr set_names
@@ -14,7 +14,9 @@
 #'
 #' @export
 bdc_standardize_datasets <- function(metadata) {
-  
+
+fs::dir_create(here::here("Output", "Intermediate"))
+
 merged_filename <- here::here("Output", "Intermediate", "00_merged_database.qs")
 
 if (!file.exists(merged_filename)) {
@@ -104,6 +106,7 @@ if (!file.exists(merged_filename)) {
           message(paste("Creating", save_in_filename))
           
           standard_dataset %>%
+            dplyr::mutate_if(is.numeric, as.character) %>%
             qs::qsave(save_in_filename)
         },
         error = function(e) {
