@@ -40,7 +40,6 @@ for (i in 1:ncol(database)){
 
 
 # Parse scientific names --------------------------------------------------
-
 # routines to clean and parse names (see the help of each function starting with "bdc" for more details)
 
 # Summary of each test:
@@ -80,19 +79,19 @@ parse_names %>%
 # Merge unique names parsed to full database and save the results of the parsing names process. Note that only the column "names_parsed" will be used in the downstream analyses. The results of each step of the parsing names process can be checked in "Output/Check/02_parsed_names.qs"
 database <- 
   parse_names %>%
-  dplyr::select(scientificName, names_parsed) %>% 
+  dplyr::select(scientificName, names_parsed, .uncer_terms, .infraesp_names) %>% 
   dplyr::full_join(database, ., by = "scientificName")
 
 # FIXME: delete this file 
-database <- qs::qread("temp_database.qs")
+database <- qs::qread("temp_database2.qs")
 for (i in 1:ncol(database)){
   if(is.character(database[,i])){
     Encoding(database[,i]) <- "UTF-8"
   }
 }
 
-# Standardize taxonomic names ---------------------------------------------
 
+# Standardize taxonomic names ---------------------------------------------
 # This is made in three steps. First, names are queried using a main taxonomic authority. Next, synonyms or accepted names of unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertake a new query using the main taxonomic authority (step one). 
 # Note that after parsing scientific names, several names are now duplicated. In order to optimize the taxonomic standardization process, only unique names will be queried. 
 
@@ -120,10 +119,10 @@ uni_parse_names <-
 system.time({
   query_one <- bdc_get_taxa_taxadb(
     sci_name = uni_parse_names$names_parsed, # vector of names parsed
-    replace.synonyms = T,
-    suggest.names = T,
+    replace.synonyms = TRUE,
+    suggest.names = TRUE,
     suggestion.distance = 0.9,
-    db = "col",
+    db = "gbif",
     rank_name = "Plantae", 
     rank = "kingdom",
     parallel = T,
@@ -140,7 +139,7 @@ database <-
 # Table of unresolved names, which includes names not found (i.e. NAs) and names with more than one accepted name.
 unresolved_names <- 
   database %>%
-  dplyr::filter(is.na(scientificName)) %>% 
+  dplyr::filter(is.na("scientificName.y")) %>% 
   filter(str_detect(notes, "|check +1 accepted") | 
            notes == "|check no accepted name")
 
