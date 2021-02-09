@@ -23,7 +23,7 @@ if (!file.exists(merged_filename)) {
   
   metadata <- data.table::fread(here::here("Config/DatabaseInfo.csv"))
   
-  save_in_dir <- here::here("data", "temp")
+  save_in_dir <- here::here("data", "temp_datasets")
   
   if (!fs::dir_exists(save_in_dir)) {
     fs::dir_create(save_in_dir)
@@ -31,17 +31,17 @@ if (!file.exists(merged_filename)) {
   
   input_file <-
     metadata %>%
-    dplyr::pull(File_name_to_load)
+    dplyr::pull(fileName)
   
   for (file_index in seq_along(input_file)) {
     input_filename <-
       metadata %>%
-      dplyr::filter(File_name_to_load == input_file[file_index]) %>%
-      dplyr::pull(File_name_to_load)
+      dplyr::filter(fileName == input_file[file_index]) %>%
+      dplyr::pull(fileName)
     
     dataset_name <-
       metadata %>%
-      dplyr::filter(File_name_to_load == input_file[file_index]) %>%
+      dplyr::filter(fileName == input_file[file_index]) %>%
       dplyr::select(datasetName) %>%
       dplyr::pull()
     
@@ -50,7 +50,7 @@ if (!file.exists(merged_filename)) {
     if (!file.exists(save_in_filename)) {
       base_names <-
         metadata %>%
-        dplyr::filter(File_name_to_load == input_file[file_index]) %>%
+        dplyr::filter(fileName == input_file[file_index]) %>%
         dplyr::select_if(~ !is.na(.))
       
       standard_names <-
@@ -58,7 +58,7 @@ if (!file.exists(merged_filename)) {
         names(.)
       
       required <- c(
-        "datasetName", "File_name_to_load", "scientificName",
+        "datasetName", "fileName", "scientificName",
         "decimalLatitude", "decimalLongitude"
       )
       
@@ -67,7 +67,7 @@ if (!file.exists(merged_filename)) {
       }
       
       basename_names <- base_names %>%
-        dplyr::select(-datasetName, -File_name_to_load)
+        dplyr::select(-datasetName, -fileName)
       
       standard_names <-
         basename_names %>%
@@ -126,7 +126,7 @@ if (!file.exists(merged_filename)) {
 
   # Concatenate all the resulting standardized databases
   merged_database <-
-    here::here("data", "temp") %>%
+    here::here("data", "temp_datasets") %>%
     fs::dir_ls(regexp = "*.qs") %>% 
     plyr::ldply(.data = .,
                 .fun = qread,
