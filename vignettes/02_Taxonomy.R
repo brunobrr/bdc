@@ -40,6 +40,7 @@ for (i in 1:ncol(database)){
 
 
 # Parse scientific names --------------------------------------------------
+
 # routines to clean and parse names (see the help of each function starting with "bdc" for more details)
 
 # Summary of each test:
@@ -92,6 +93,7 @@ for (i in 1:ncol(database)){
 
 
 # Standardize taxonomic names ---------------------------------------------
+
 # This is made in three steps. First, names are queried using a main taxonomic authority. Next, synonyms or accepted names of unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertake a new query using the main taxonomic authority (step one). 
 # Note that after parsing scientific names, several names are now duplicated. In order to optimize the taxonomic standardization process, only unique names will be queried. 
 
