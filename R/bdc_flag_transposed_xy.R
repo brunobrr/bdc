@@ -21,9 +21,8 @@
 #' }
 
 bdc_flag_transposed_xy <- function(data, id, sci_name, lon, lat, country) {
-  
   minimum_colnames <- c(id, sci_name, lon, lat, country)
-  
+
   if (length(minimum_colnames) < 5) {
     stop("Fill all function arguments: data, id, sci_name, lon, lat, and country")
   }
@@ -35,27 +34,33 @@ bdc_flag_transposed_xy <- function(data, id, sci_name, lon, lat, country) {
       call. = FALSE
     )
   }
-  
+
   # load auxiliary data
-  message('Loading auxiliary data: country names from wikipedia\n')
+  message("Loading auxiliary data: country names from wikipedia\n")
   suppressMessages({
-  wiki_cntr <- bdc_get_wiki_country() # get country names from Wikipedia
+    wiki_cntr <-
+      bdc_get_wiki_country() # get country names from Wikipedia
   })
   
-  message('Loading auxiliary data: world map and country iso\n')
-  worldmap <- bdc_get_world_map()  # get world map and country iso
-
+  message("Loading auxiliary data: world map and country iso\n")
+  worldmap <- bdc_get_world_map() # get world map and country iso
   
-  # standardize the name of countries
-  message('Standardizing country names\n')
-  standard_country_names <-
-    bdc_standardize_country(
-      data = data,
-      country = country,
-      country_names_db = wiki_cntr
+  # convert coordinates columns to numeric
+  data <-
+    data %>%
+    dplyr::mutate(
+      decimalLatitude = as.numeric(decimalLatitude),
+      decimalLongitude = as.numeric(decimalLongitude)
     )
   
-  cntr <- 'cntr_original'
+  # standardize the name of countries
+  message("Standardizing country names\n")
+  standard_country_names <-
+    bdc_standardize_country(data = data,
+                            country = country,
+                            country_names_db = wiki_cntr)
+
+  cntr <- "cntr_original"
   names(cntr) <- country
   data <-
     data %>%
@@ -74,53 +79,56 @@ bdc_flag_transposed_xy <- function(data, id, sci_name, lon, lat, country) {
       world_poly = worldmap,
       world_poly_iso = "iso2c"
     )
-  
+
   rows_to_remove <-
     corrected_coordinates %>%
-    dplyr::pull({{id}})
-  
+    dplyr::pull({{ id }})
+
   rows_to_insert <-
     corrected_coordinates %>%
     # remove columns with coordinates transposed
-    dplyr::select(-{{lat}}, -{{lon}}) 
-  
+    dplyr::select(-{{ lat }}, -{{ lon }})
+
   # new columns coordinates with the corrected info
   colnames(rows_to_insert)[
-    colnames(rows_to_insert) %in% 
-      c('decimalLatitude_modified', 'decimalLongitude_modified')] <- c(lat, lon)
-  
+    colnames(rows_to_insert) %in%
+      c("decimalLatitude_modified", "decimalLongitude_modified")
+  ] <- c(lat, lon)
+
   # flag all of them
   rows_to_insert <- rows_to_insert %>% dplyr::mutate(transposed_xy = FALSE)
-  
+
   data <-
     data %>%
-    # remove wrong coordinates
-    dplyr::filter(!(!!rlang::sym(id) %in% rows_to_remove)) %>%
-    # flag no issued rows as TRUE
-    dplyr::mutate(transposed_xy = TRUE) %>%
-    # add corrected coordinates
-    dplyr::bind_rows(rows_to_insert) %>% 
-    dplyr::rename(country_suggested = cntr_suggested,
-                  country_iso2c = cntr_iso2c,
-                  transposed_xy = transposed_xy) %>% 
+    
+    dplyr::filter(!(!!rlang::sym(id) %in% rows_to_remove)) %>% 
+    dplyr::mutate(transposed_xy = TRUE) %>% # flag no issued rows as TRUE
+    dplyr::bind_rows(rows_to_insert) %>% # add corrected coordinates
+    dplyr::rename(
+      country_suggested = cntr_suggested,
+      countryCode = cntr_iso2c,
+      transposed_xy = transposed_xy
+    ) %>%
     dplyr::select(-c(iso2c, iso3c))
 
   corrected_coordinates %>%
     dplyr::select(
-      {{id}},
-      {{sci_name}},
-      {{lon}},
-      {{lat}},
+      {{ id }},
+      {{ sci_name }},
+      {{ lon }},
+      {{ lat }},
       dplyr::contains("decimal"),
       cntr_suggested
     ) %>%
     readr::write_csv(here::here("Output/Check/01_transposed_xy.csv"))
-  
+
   message(
     paste(
       "\nbdc_flag_transposed_xy:\nCorrected",
       sum(data$transposed_xy == FALSE),
-      "records.\nThree columns were added to the database.\nCheck database containing coordinates corrected in: Output/Check/01_transposed_xy.csv\n"))
-  
+      "records.\nThree columns were added to the database.\nCheck database containing coordinates corrected in: Output/Check/01_transposed_xy.csv\n"
+    )
+  )
+
   return(data)
 }

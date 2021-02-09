@@ -84,7 +84,7 @@ data_pf6 <-
     country_name = "Brazil",
     lon = "decimalLongitude",
     lat = "decimalLatitude",
-    dist = 0.5
+    dist = 0.5 # in decimal degrees
   )
 
 # REPORT ------------------------------------------------------------------

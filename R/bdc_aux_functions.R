@@ -82,9 +82,11 @@ bdc_xy_from_locality <-
     
     message(
       paste(
-        "\nbdc_xy_from_locality\nFound",
+        "\nbdc_xy_from_locality",
+        "\nFound",
         nrow(df),
-        "records missing or with invalid xy but with potentially useful information on locality.\nCheck database in:",
+        "records missing or with invalid xy but with potentially useful information on locality.\n",
+        "\nCheck database in:",
         save
       )
     )

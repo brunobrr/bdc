@@ -28,20 +28,14 @@ bdc_correct_coordinates <-
     
     occ_country <- data %>% dplyr::filter(!is.na(data[cntr_iso2]))
     
-    # Filter occurrences database to avoid error in clean_coordiantes errors
+    # Filter occurrences database to avoid error in clean_coordinates errors
     occ_country <-
       occ_country %>%
-      dplyr::filter(!is.na(occ_country[x]) |
-                      !is.na(occ_country[y]))
-    occ_country <-
-      occ_country %>%
-      dplyr::filter(occ_country[x] >= -180,
-                    occ_country[x] <= 180,
-                    occ_country[y] >= -90,
-                    occ_country[y] <= 90)
-    
-    
-    # Detect those record georeferenced outside a country
+      dplyr::filter(.missing_xy == TRUE & .invalid_xy == TRUE) %>% 
+      dplyr::mutate(decimalLatitude = as.numeric(decimalLatitude),
+             decimalLongitude = as.numeric(decimalLongitude))
+ 
+    # Detect records outside a country
     occ_country <- CoordinateCleaner::clean_coordinates(
       x =  occ_country,
       lon = x,
