@@ -11,13 +11,13 @@
 #' @param rank 
 #' @param parallel A logical value indicating whether distance calculation should be done in parallel.
 #' @param ncores Number of cores to run in parallel.
-#' @param export_accepted A logical value (default = TRUE) whether a table is exported containing all species with more than one valid name to be further explored by the user.
-#' @param Output Path to export accepted names table without the last slash (e.g., ./Output/check). The default is the package folder names Output (~/path_to_package/Output/check) project root.
+#' @param export_accepted A logical value (default = FALSE) whether a table is exported containing all species with more than one valid name to be further explored by the user.
+#' @param Output Path to export accepted names table without the last slash (e.g., ./Output/check). The default is the check folder in the project root (~/path_to_package/Output/check) project root.
 #' @details This function matches the sci_names with the column "scientificName" from taxadb database (db argument) and returns the database information of the matched names. Not found names returns NA.
 #' To increase the set of matched names, the function looks for scientific names in the database that resemble the input names by a string distance metric. First, the scientific names from the database are filtered by their taxonomic rank (rank and rank_name arguments) 
 #' to avoid matches unrelated to the target taxonomy and decrease the amount of name to calculate distance. Also, scientific names are filtered by the first letter of input names to save the computational time. String distances are calculated by optimal string alignment (restricted Damerau-Levenshtein distance) that counts 
 #' the number of deletions, insertions, substitutions and transpositions of adjacent characters (See \code{\link[stringdist]{stringdist}}). String distances are scaled to range from 0 to 1. The name with the most similarity and higher than suggestion_distance is returned as suggested name. The first name are returned if multiple names have the same similarity. Similarities lower than suggestion_distance return NA.
-#' The rank argument indicates from which database column the rank_name should be matched. More than 1 sci_name may return the same suggested name, a warning is returned to the user to check for misspeling in the sci_names. When names are synonyms with multiple accepted names, the first accepted name is returned and a flag is included into the column named "note" of the table to enable user's evaluation afterwards. If export_accepted == TRUE a table is exported to the a package folder (~/path_to_package/Output/check) with all accepted names for the species with multiple accepted names.  
+#' The rank argument indicates from which database column the rank_name should be matched. More than 1 sci_name may return the same suggested name, a warning is returned to the user to check for misspeling in the sci_names. When names are synonyms with multiple accepted names, the first accepted name is returned and a flag is included into the column named "note" of the table to enable user's evaluation afterwards. If export_accepted == TRUE a table is exported to the a project root folder (~/path_to_package/Output/check) with all accepted names for the species with multiple accepted names.  
 #' @return This function returns a data.frame with the same number of rows and order than sci_name with the information provided by the database.
 #' @export
 #' @examples
@@ -35,8 +35,8 @@ bdc_get_taxa_taxadb <-
             rank = NULL,
             parallel = FALSE,
             ncores = 2,
-            export_accepted = TRUE,
-            Output = "./Output/Check") {
+            export_accepted = FALSE,
+            Output = NULL) {
     
     # This is one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user (see ?taxadb::td_create for details)
     taxo_authority <- db
@@ -265,8 +265,13 @@ bdc_get_taxa_taxadb <-
       
       # Export a table with all accepted names which link to the same accepted id.
       if(export_accepted == TRUE){
-        output <- paste(Output, "multiple_accepted_name.csv", sep = "/")
-        dplyr::filter(found_name, notes == "|check +1 accepted") %>%
+        browser()
+        if(is.null(Output)){
+            Output<- here::here("Output", "Check")
+            fs::dir_create(Output)
+          }
+          output <- paste(Output, "multiple_accepted_name.csv", sep = "/")
+          dplyr::filter(found_name, notes == "|check +1 accepted") %>%
           dplyr::pull(., scientificName) %>%
           taxadb::filter_name(., provider = db) %>%
           dplyr::pull(., acceptedNameUsageID) %>%
