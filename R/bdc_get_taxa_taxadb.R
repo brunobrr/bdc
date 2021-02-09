@@ -1,6 +1,6 @@
 
 #' Get taxa information from taxadb R package by fuzzy match.
-#'This function was inspired by get.taxa function in flora R package.
+#'This function was inspired by get.taxa function from flora R package.
 #' @param sci_name A character vector of species names. The function does not clean species names (eg.: infraespecific, var., inf.), it is expected clean names.
 #' The inclusion of 'var.' increases name distances and it is advised to set smaller suggestion.distance values. 
 #' @param replace.synonyms A logical value (default = TRUE) whether synonyms must be replaced by the valid names found in taxadb database.
@@ -10,9 +10,11 @@
 #' @param rank_name A taxonomic rank from the column named kingdom in db. This argument decreases the number of scientific names to calculate distances.  
 #' @param parallel A logical value indicating whether distance calculation should be done in parallel.
 #' @param ncores Number of cores to run in parallel.
+#' @param export_accepted A logical value (default = TRUE) whether a table is exported containing all species with more than one valid name to be further explored by the user.
+#' @param Output Path to export accepted names table without the last slash (e.g., ./user). The default is the project root.
+#' @details 
 #' @return This function returns a data.frame with the same number of rows and order than sci_name with the information provided by the database.
 #' @export
-#'
 #' @examples
 #' sci_names <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
 #' "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
@@ -27,7 +29,9 @@ bdc_get_taxa_taxadb <-
             rank_name = NULL, 
             rank = NULL,
             parallel = FALSE,
-            ncores = 2) {
+            ncores = 2,
+            export_accepted = TRUE,
+            Output = ".") {
     
     # This is one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user (see ?taxadb::td_create for details)
     taxo_authority <- db
@@ -55,7 +59,7 @@ bdc_get_taxa_taxadb <-
       dplyr::mutate(original.search = input)
     
     
-    # Flag names with more +1 accepted name
+    # Flag names with more +1 found name
     if (nrow(found_name) != length(sci_name)) {
       found_name <-
         bdc_clean_duplicates(data = found_name,
@@ -172,11 +176,12 @@ bdc_get_taxa_taxadb <-
           found_name[posi_misspelled_names, 1:ncol_tab_taxadb] <-
             suggest_data[, 1:ncol_tab_taxadb]
           
-          # Substitute names suggest by
+          # Indicate the names replaced due to missspelling 
           found_name[posi_misspelled_names, "notes"] <-
             "was misspelled"
           
         } else {
+          # Indicate not found names in the database
           found_name[is.na(found_name$scientificName) & !grepl("check \\+1 accepted", found_name$notes), "notes"] <- "not found"
         } 
       }
@@ -197,6 +202,7 @@ bdc_get_taxa_taxadb <-
           
           accepted <- dplyr::bind_cols(accepted, ori_names)
           
+          # Split names by equal id
           accepted_list <- split(accepted, as.factor(accepted$input)) 
           nrow.accepted <- sapply(accepted_list, nrow)
           accepted_empty <- sapply(accepted_list,
@@ -204,6 +210,7 @@ bdc_get_taxa_taxadb <-
           nrow.accepted[accepted_empty] <- 0L
           one_accepted <- nrow.accepted == 1L
           
+          # Substitute synonyms by the accepted names
           if (any(one_accepted & accepted_empty == FALSE)) {
             replace_tab <- purrr::map_dfr(accepted_list[one_accepted],
                                           function(i)i)[, -1]
@@ -212,13 +219,13 @@ bdc_get_taxa_taxadb <-
             
             p0 <- match(replace_tab$original.search, found_name$original.search)
 
-            # FIXME: confer this
             found_name[p0, colnames(replace_tab)] <- replace_tab
             
             found_name[p0, "notes"] <-
               paste(found_name$notes[p0], "replaced synonym", sep = "|")
           }
           
+          # Indicate synonyms without accepted names
           if(any(accepted_empty == TRUE)) {
             p <- match(names(accepted_list[accepted_empty]),
                        found_name$acceptedNameUsageID)
@@ -228,6 +235,7 @@ bdc_get_taxa_taxadb <-
           }
         } # close replace.synonyms
         
+        # Indicate synonyms with +1 accepted name
         if (any(nrow.accepted > 1L)) {
           p1 <- match(names(accepted_list[nrow.accepted > 1]), found_name$acceptedNameUsageID)
           
@@ -236,6 +244,7 @@ bdc_get_taxa_taxadb <-
         }
       }
       
+      # Formating returned table
       found_name[, 1] <- 1:nrow(found_name)
       found_name <-
         suggested_search %>%
@@ -245,6 +254,17 @@ bdc_get_taxa_taxadb <-
                       original_search = original.search) %>%
         dplyr::select(-input) %>% 
         dplyr::select(sort:original_search, suggested_name, distance)
+      
+      # Export a table with all accepted names which link to the same accepted id.
+      if(export_accepted == TRUE){
+        output <- paste(Output, "accepted_names.csv", sep = "/")
+        dplyr::filter(found_name, notes == "|check +1 accepted") %>%
+          dplyr::pull(., scientificName) %>%
+          taxadb::filter_name(., provider = db) %>%
+          dplyr::pull(., acceptedNameUsageID) %>%
+          taxadb::filter_id(., db) %>% 
+          readr::write_csv(., output)
+      }
         
       return(found_name)
     }
