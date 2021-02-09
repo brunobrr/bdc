@@ -24,7 +24,7 @@ bdc_standardize_country <-
       data %>%
       dplyr::distinct(country, .keep_all = FALSE) %>%
       dplyr::arrange(country) %>%
-      rename(cntr_original = country)
+      dplyr::rename(cntr_original = country)
     
     cntr_db$cntr_original2 <-
       stringr::str_replace_all(cntr_db$cntr_original, "[[:punct:]]", " ") %>%
@@ -37,19 +37,20 @@ bdc_standardize_country <-
     # Assign country names based on different character matching.
     country_names_db <-
       country_names_db %>%
-      mutate(names_2 = names_in_different_languages %>%
-               stringi::stri_trans_general("Latin-ASCII") %>%
-               tolower())
+      dplyr::mutate(names_2 = names_in_different_languages %>%
+                      stringi::stri_trans_general("Latin-ASCII") %>%
+                      tolower())
     
-    cn <- country_names_db %>%
+    cn <- 
+      country_names_db %>%
       dplyr::distinct(english_name) %>%
-      pull(1)
+      dplyr::pull(1)
     
     for (i in 1:length(cn)) {
       country_names_db_name <-
         country_names_db %>%
         dplyr::filter(english_name == cn[i]) %>%
-        pull(names_2)
+        dplyr::pull(names_2)
       
       filt <-
         which(tolower(cntr_db$cntr_original2) %in% tolower(country_names_db_name))
@@ -61,9 +62,7 @@ bdc_standardize_country <-
     }
     
     cntr_db$cntr_suggested[is.na(cntr_db$cntr_suggested)] <-
-      rangeBuilder::standardizeCountry(cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested)],
-                                       fuzzyDist = 1,
-                                       nthreads = 1)
+      rangeBuilder::standardizeCountry(cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested)], fuzzyDist = 1, nthreads = 1)
     
     # Standardization of all names founds in cntr_suggested
     cntr_db$cntr_suggested2 <-
@@ -71,18 +70,18 @@ bdc_standardize_country <-
                                        fuzzyDist = 1,
                                        nthreads = 1)
     cntr_db <-
-      cntr_db %>% 
-      mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
+      cntr_db %>%
+      dplyr::mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA,
+                                             cntr_suggested2))
     
-    # Second standardization of all names cntr_original2 not
+    # Second standardization of all names cntr_original2
     cntr_db$cntr_suggested2[is.na(cntr_db$cntr_suggested)] <-
       rangeBuilder::standardizeCountry(cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested2)],
                                        fuzzyDist = 1,
                                        nthreads = 1)
     cntr_db <-
-      cntr_db %>% mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
-    
-    
+      cntr_db %>% 
+      dplyr::mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
     
     # Country code based on iso2c (it is possible use another code like iso3c, see ?codelist)
     cntr_db$cntr_iso2c <-
