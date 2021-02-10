@@ -16,7 +16,6 @@
 #'   bdc_filter_out_flags()
 #' }
 bdc_filter_out_flags <- function(data, rem_summary = F) {
-
   column_names <-
     data %>%
     dplyr::select(starts_with(".")) %>%
