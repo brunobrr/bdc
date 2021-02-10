@@ -1,4 +1,0 @@
-sort,taxonID,scientificName,taxonRank,taxonomicStatus,acceptedNameUsageID,kingdom,phylum,class,order,family,genus,specificEpithet,infraspecificEpithet,parentNameUsageID,originalNameUsageID,scientificNameAuthorship,vernacularName,input,notes,original.search,distance
-141,GBIF:7302738,Desmodium elegans elegans,form,accepted,GBIF:7302738,Plantae,Tracheophyta,Magnoliopsida,Fabales,Fabaceae,Desmodium,elegans,elegans,2948559,,,,Desmodium elegans elegans,"","",0
-142,GBIF:3241144,Micropholis,genus,accepted,GBIF:3241144,Animalia,Chordata,Amphibia,,Amphibamidae,Micropholis,,,3241143,,"Huxley, 1859",,Micropholis,"","",0
-185,GBIF:9555704,Cosmarium orthostichum orthostichum,form,accepted,GBIF:9555704,Plantae,Charophyta,Zygnematophyceae,Zygnematales,Desmidiaceae,Cosmarium,orthostichum,orthostichum,5274210,,,,Cosmarium orthostichum orthostichum,"","",0

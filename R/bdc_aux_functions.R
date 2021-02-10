@@ -1,11 +1,6 @@
 
-############################################################
-#                                                          #
-#                           ipak                           #
-#                                                          #
-############################################################
-
-# usefull to install and load multiple R packages
+# Ipak --------------------------------------------------------------------
+# Used to install and load multiple R packages
 ipak <- function(pkg) {
   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
   if (length(new.pkg)) {
@@ -14,16 +9,7 @@ ipak <- function(pkg) {
   suppressPackageStartupMessages(sapply(pkg, require, character.only = TRUE))
 }
 
-
-############################################################
-#                                                          #
-#                        PRE-FILTER                        #
-#                                                          #
-############################################################
-
-
 # bdc_get_world_map -------------------------------------------------------
-
 #' Title
 #'
 #' @export
@@ -65,6 +51,8 @@ bdc_get_world_map <- function() {
   
 }
 
+
+# bdc_xy_from_locality ----------------------------------------------------
 bdc_xy_from_locality <-
   function(data,
            locality = "locality",
@@ -94,12 +82,25 @@ bdc_xy_from_locality <-
     return(df)
   }
 
+
+# bdc_summary_col ---------------------------------------------------------
 bdc_summary_col <- function(data) {
-  df <-
-    data %>%
-    dplyr::select(dplyr::contains(".")) %>%
-    dplyr::mutate(.summary = rowSums(.) / ncol(.) == TRUE) %>%
-    dplyr::select(.summary)
+  if (any(names(data) == ".summary")) {
+    message("Column '.summary' already exist. It will be updated\n")
+    
+    df <-
+      data %>%
+      dplyr::select(-.summary) %>% 
+      dplyr::select(contains(".")) %>%
+      dplyr::mutate(.summary = rowSums(.) / ncol(.) == TRUE) %>%
+      dplyr::select(.summary)
+  } else{
+    df <-
+      data %>%
+      dplyr::select(dplyr::contains(".")) %>%
+      dplyr::mutate(.summary = rowSums(.) / ncol(.) == TRUE) %>%
+      dplyr::select(.summary)
+  }
   
   df <- dplyr::bind_cols(data, df)
   
@@ -107,12 +108,27 @@ bdc_summary_col <- function(data) {
     paste(
       "\nbdc_summary_col:\nFlagged",
       sum(df$.summary == FALSE),
-      "records.\nOne column was added to the database.\n"))
+      "records.\nOne column was added to the database.\n"
+    )
+  )
   
   return(df)
 }
 
-bdc_tests_summary <- function(data) {
+
+# bdc_tests_summary -------------------------------------------------------
+bdc_tests_summary <- function(data, workflow_step) {
+  
+  # First, create a table of total number of records per database
+  if (file_exists("data/n_records.csv")){
+    n_records <- 
+      data %>%
+      dplyr::summarise(n = n())
+    data.table::fwrite(n_records, "data/n_records.csv")
+  }
+
+
+  if (workflow_step == "prefilter"){
   suppressWarnings({
     data <-
       data %>%
@@ -122,9 +138,10 @@ bdc_tests_summary <- function(data) {
       tibble::as_tibble(rownames = "NA") %>%
       dplyr::mutate(V1 = nrow(data) - V1) %>%
       dplyr::mutate(Perc_records_flagged = round((V1 / nrow(data) * 100), 2)) %>%
-      dplyr::rename(Test_name = `NA`,
+      dplyr::rename(Name = `NA`,
                     Records_flagged = V1)
   })
-
+  }
   return(data)
 }
+

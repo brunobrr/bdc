@@ -27,7 +27,7 @@ fs::dir_create(here::here("Output/Report"))
 fs::dir_create(here::here("Output/Figures"))
 
 # Load data ---------------------------------------------------------------
-# Load the merged database
+# Load the merged and standardized database
 database <-
   here::here("Output", "Intermediate", "00_merged_database.qs") %>%
   qs::qread()
@@ -77,7 +77,7 @@ data_pf5 <-
   )
 
 # CHECK 6 -----------------------------------------------------------------
-# Flag records outside the focal country (e.g. in the ocean or in other countries)
+# Flag records outside the focal country (e.g. far from a determined distance from the coast or in other countries)
 data_pf6 <-
   bdc_flag_xy_out_country(
     data = data_pf5,
@@ -92,13 +92,13 @@ data_pf6 <-
 data_pf7 <- bdc_summary_col(data = data_pf6)
   
 # Create a report summarizing the results of all tests
-bdc_tests_summary(data = data_pf7)
+bdc_tests_summary(data = data_pf7, workflow_step = "prefilter")
 
 # Save the report
 bdc_tests_summary(data = data_pf7) %>% 
-  data.table::fwrite(., here::here("Output/Report/01_Report.csv"))
+  data.table::fwrite(., here::here("Output/Report/01_Prefilter_Report.csv"))
 
-# Save records with invalid or missing coordinates but with information on the locality 
+# Save records with invalid or missing coordinates but with information potentially valid about the locality from which coordinates information can be extracted
 data_to_check <-
   bdc_xy_from_locality(
     data = data_pf7,
@@ -108,7 +108,7 @@ data_to_check <-
   )
 
 # Create and save figures
-bdc_create_figures(data = data_pf7, tests = NULL, workflow_step = "prefilter")
+bdc_create_figures(data = data_pf7, workflow_step = "prefilter")
 
 # REMOVE PROBLEMATIC RECORDS ----------------------------------------------
 # Removing flagged records (potentially problematic ones) and saving a clean database (without columns starting with ".")
