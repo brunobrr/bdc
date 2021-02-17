@@ -111,6 +111,6 @@ data_to_check <-
 bdc_create_figures(data = data_pf7, workflow_step = "prefilter")
 
 # REMOVE PROBLEMATIC RECORDS ----------------------------------------------
-# Removing flagged records (potentially problematic ones) and saving a clean database (without columns starting with ".")
+# Removing flagged records (potentially problematic ones) and saving a clean database (without tests; i.e. columns starting with ".")
 bdc_filter_out_flags(data = data_pf7, rem_summary = TRUE) %>%
   qs::qsave(., here::here("Output", "Intermediate", "01_prefilter_database.qs"))
