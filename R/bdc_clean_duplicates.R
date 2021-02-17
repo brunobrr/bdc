@@ -27,15 +27,10 @@ bdc_clean_duplicates <-
         data[duplicated(data$input) & data$taxonomicStatus == "accepted", ]
     }
     
-    # data.table::fwrite(valid_duplicates, here::here("Output/Check/02_names_multiple_accepted_names.csv"))
-    # 
-    # message("\nCheck names with more than one valid name in 'Output/Check/02_names_multiple_accepted_names.csv'\n")
-    
     valid_duplicates <- valid_duplicates %>% dplyr::select(scientificName)
-    
     data <- data[!duplicated(data$input), ]
-    
     uni_names <- unique(valid_duplicates$scientificName)
+    
     if (length(uni_names) > 0) {
       for (i in 1:length(uni_names)) {
         index <- which(data$scientificName == uni_names[i])
