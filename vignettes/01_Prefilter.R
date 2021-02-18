@@ -1,7 +1,7 @@
-# Load all functions of bdc workflow
+# LOAD ALL FUNCTION OS BDC WORKFLOW ---------------------------------------
 devtools::load_all()
 
-# Install and load packages
+# INSTALL AND LOAD PACKAGES REQUERIED -------------------------------------
 ipak(
   c(
     "tidyverse",
@@ -20,11 +20,11 @@ ipak(
   )
 )
 
+# CREATE DIRECTORIES ------------------------------------------------------
 # Create directories for saving the results. If not existing, four new folders will be created in the folder 'Output'.
 bdc_create_dir()
 
-# Load data ---------------------------------------------------------------
-# Load the merged and standardized database
+# LOAD THE DATABASE -------------------------------------------------------
 database <-
   here::here("Output", "Intermediate", "00_merged_database.qs") %>%
   qs::qread()
@@ -74,7 +74,7 @@ data_pf5 <-
   )
 
 # CHECK 6 -----------------------------------------------------------------
-# Flag records outside the focal country (e.g. in other countries or far from a informed distance from the coast)
+# Flag records outside one or multiple focal countries (e.g. exclude records in other countries or far from a informed distance from the coast)
 data_pf6 <-
   bdc_flag_xy_out_country(
     data = data_pf5,
@@ -104,10 +104,10 @@ data_to_check <-
     lat = "decimalLatitude"
   )
 
-# Create and save figures
+# FIGURES -----------------------------------------------------------------
 bdc_create_figures(data = data_pf7, workflow_step = "prefilter")
 
-# REMOVE PROBLEMATIC RECORDS ----------------------------------------------
+# CLEAN THE DATABASE ------------------------------------------------------
 # Removing flagged records (potentially problematic ones) and saving a 'clean' database (i.e., without columns of tests, which starts with ".")
 output <-
   data_pf7 %>%

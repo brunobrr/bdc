@@ -1,7 +1,7 @@
-# Load all functions of bdc workflow --------------------------------------
+# LOAD ALL FUNCTION OS BDC WORKFLOW ---------------------------------------
 devtools::load_all()
 
-# Install and load packages required
+# INSTALL AND LOAD PACKAGES REQUERIED -------------------------------------
 ipak(
   c(
     "taxadb",
@@ -17,13 +17,11 @@ ipak(
   )
 )
 
-
-# Create directories ------------------------------------------------------
+# CREATE DIRECTORIES ------------------------------------------------------
 # Create directories for saving the results. If not existing, four new folders will be created in the folder 'Output'
 bdc_create_dir()
 
-
-# Load database -----------------------------------------------------------
+# LOAD THE DATABASE -------------------------------------------------------
 # Load the database resulting from the prefilter step or your own database
 database <-
   here::here("Output", "Intermediate", "01_prefilter_database.qs") %>%
@@ -37,8 +35,7 @@ for (i in 1:ncol(database)){
 }
 
 
-# Parse scientific names --------------------------------------------------
-
+# CLEAN AND PARSE NAMES ---------------------------------------------------
 # Routines to clean and parse names, including tests for:
 # 1 - remove family names from scientific names (e.g. Felidae Panthera onca to Panthera onca; Lauraceae Ocotea odorifera to Ocotea odorifera)
 
@@ -52,11 +49,11 @@ for (i in 1:ncol(database)){
 
 parse_names <- bdc_clean_names(sci_names = database$scientificName)
 
-# Save a database containing names parsed
+# Save the results of the parsing names process
 parse_names %>%
   data.table::fwrite(., here::here("Output", "Check", "02_parsed_names.csv"))
 
-# Merge unique names parsed to full database and save the results of the parsing names process. Note that only the column "names_clean" will be used in the downstream analyses.
+# Join names parsed to full database. Note that only the column "names_clean" will be used in the downstream analyses.
 database <- 
   parse_names %>%
   dplyr::select(scientificName, .uncer_terms, .infraesp_names, names_clean) %>% 
@@ -72,8 +69,7 @@ for (i in 1:ncol(database)){
 }
 
 
-# Standardize taxonomic names ---------------------------------------------
-
+# STANDARDIZE NAMES -------------------------------------------------------
 # This is made in three steps. First, names are queried using a main taxonomic authority. Next, synonyms or accepted names of unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertake a new query using the main taxonomic authority (step one). 
 # Note that after parsing scientific names, several names are now duplicated. In order to optimize the taxonomic standardization process, only unique names will be queried. 
 
@@ -110,8 +106,12 @@ database <-
   dplyr::select(-names_parsed) %>% 
   dplyr::bind_cols(., query_names)
        
+# REPORT ------------------------------------------------------------------
 
-# REMOVE PROBLEMATIC RECORDS ----------------------------------------------
+# FIGURES -----------------------------------------------------------------
+
+
+# CLEAN THE DATABASE ------------------------------------------------------
 # Before saving the database containing verified scientific names, you have to choose to remove or not names:
 
 # - not found (i.e. unresolved names); notes = "not found"

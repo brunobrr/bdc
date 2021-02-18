@@ -12,23 +12,21 @@
 #'
 #' @examples
 bdc_flag_xy_out_country <- function(data,
-                              country_name,
-                              lon = "decimalLongitude",
-                              lat = "decimalLatitude",
-                              dist = 0.5) {
+                                    country_name,
+                                    lon = "decimalLongitude",
+                                    lat = "decimalLatitude",
+                                    dist = 0.5) {
   df <-
     data %>%
     dplyr::select(.data[[lon]], .data[[lat]]) %>%
     dplyr::mutate(id = 1:nrow(data))
-
 
   # get country limits
   country_shp <-
     rnaturalearth::ne_countries(
       country = country_name,
       scale = "large",
-      returnclass = "sf"
-    )
+      returnclass = "sf")
   
   # Spatial points
   data_sp <-
@@ -46,7 +44,9 @@ bdc_flag_xy_out_country <- function(data,
 
 
   # buffer
-  suppressWarnings({  buf <- sf::st_buffer(country_shp, dist = dist) })
+  suppressWarnings({
+    buf <- sf::st_buffer(country_shp, dist = dist)
+  })
 
 
   # Extract points within the buffer
@@ -55,7 +55,7 @@ bdc_flag_xy_out_country <- function(data,
       data_sp %>%
       dplyr::mutate(points_in_buf = st_intersects(data_sp, buf, sparse = F))
   })
-  
+
   # Filter points within the buffer
   data_fil <-
     data_sp %>%
@@ -63,17 +63,17 @@ bdc_flag_xy_out_country <- function(data,
 
   # Points in other countries
   suppressMessages({
-  suppressWarnings({
-  all_countries <-
-    rnaturalearth::ne_countries(returnclass = "sf") %>%
-    dplyr::select(name_long) %>%
-    st_crop(., st_bbox(data_fil)) # Crop according to points bbox
+    suppressWarnings({
+      all_countries <-
+        rnaturalearth::ne_countries(returnclass = "sf") %>%
+        dplyr::select(name_long) %>%
+        st_crop(., st_bbox(data_fil)) # Crop according to points bbox
+    })
   })
-  })
-  
+
   # Extract country names from points
   suppressWarnings({
-  ext_country <- st_intersection(data_sp, all_countries)
+    ext_country <- st_intersection(data_sp, all_countries)
   })
   data_sp$geometry <- NULL
   ext_country$geometry <- NULL
@@ -84,29 +84,35 @@ bdc_flag_xy_out_country <- function(data,
 
   data_to_join <-
     dplyr::full_join(data_sp, names_to_join, by = "id") %>%
-    dplyr::mutate(.xy_out_country =
-                    case_when(
-                      (points_in_buf == TRUE & is.na(name_long)) ~ TRUE,
-                      (points_in_buf == FALSE) ~ FALSE,
-                      (points_in_buf == TRUE &
-                         name_long != country_name) ~ FALSE,
-                      (points_in_buf == TRUE & name_long == country_name) ~ TRUE
-                    )) %>%
+    dplyr::mutate(
+      .xy_out_country =
+        case_when(
+          (points_in_buf == TRUE & is.na(name_long)) ~ TRUE,
+          (points_in_buf == FALSE) ~ FALSE,
+          (points_in_buf == TRUE &
+            name_long != country_name) ~ FALSE,
+          (points_in_buf == TRUE & name_long == country_name) ~ TRUE
+        )
+    ) %>%
     dplyr::select(id, .xy_out_country)
 
   data_join <-
     dplyr::full_join(df, data_to_join, by = "id") %>%
-    dplyr::mutate(.xy_out_country = 
-                    ifelse(is.na(.xy_out_country), FALSE, .xy_out_country)) %>% 
+    dplyr::mutate(
+      .xy_out_country =
+        ifelse(is.na(.xy_out_country), FALSE, .xy_out_country)
+    ) %>%
     dplyr::select(.xy_out_country)
-    
-  df <- dplyr::bind_cols(data,  data_join)
-  
+
+  df <- dplyr::bind_cols(data, data_join)
+
   message(
     paste(
       "\nbdc_flag_xy_out_country:\nFlagged",
       sum(df$.xy_out_country == FALSE),
-      "records.\nOne column was added to the database.\n"))
-  
+      "records.\nOne column was added to the database.\n"
+    )
+  )
+
   return(df)
 }
