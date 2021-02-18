@@ -117,7 +117,7 @@ bdc_get_taxa_taxadb <-
         # Searches valid names for each suggested names
         if (any(suggested == TRUE)) {
 
-          # exclude names without suggestion
+          # Exclude names without suggestion
           suggested_names_filtered <- suggested_name[suggested]
 
           # Look for data of suggested names
@@ -203,21 +203,20 @@ bdc_get_taxa_taxadb <-
           found_name[posi_misspelled_names, 1:ncol_tab_taxadb] <-
             suggest_data[, 1:ncol_tab_taxadb]
 
-          # Indicate the names replaced due to missspelling
+          # Indicate the names replaced due to misspelling
           found_name[posi_misspelled_names, "notes"] <-
             "was misspelled"
+          
         } else {
-          # Flag not found names in the database
-          found_name[is.na(found_name$scientificName) & !grepl("check \\+1 accepted", found_name$notes), "notes"] <- "not found"
-        }
-      } else {
         suggested_search <-
           data.frame(
             original = found_name$original_search,
             suggested = NA,
             distance = NA
           )
+        }
       }
+      
       # search accepted names for synonyms
       synonym_index <- which(found_name$taxonomicStatus != "accepted")
       nrow_synonym <- length(synonym_index)
@@ -231,7 +230,7 @@ bdc_get_taxa_taxadb <-
           ori_names <-
             found_name %>%
             dplyr::select(original_search) %>%
-            slice(synonym_index)
+            dplyr::slice(synonym_index)
 
           accepted <- dplyr::bind_cols(accepted, ori_names)
 
@@ -263,8 +262,7 @@ bdc_get_taxa_taxadb <-
           # Indicate synonyms without accepted names
           if (any(accepted_empty == TRUE)) {
             p <- match(
-              names(accepted_list[accepted_empty]),
-              found_name$acceptedNameUsageID
+              names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID
             )
 
             found_name[p, "notes"] <-
@@ -291,7 +289,8 @@ bdc_get_taxa_taxadb <-
       fs::dir_create(dir)
       
       multi_accName <-
-        dplyr::filter(found_name, notes == "|check +1 accepted") %>%
+        found_name %>% 
+        dplyr::filter(stringr::str_detect(notes, regex("1 accepted"))) %>%
         dplyr::pull(., scientificName) %>%
         taxadb::filter_name(., provider = db) %>%
         dplyr::pull(., acceptedNameUsageID) %>%
@@ -318,11 +317,11 @@ bdc_get_taxa_taxadb <-
       ) %>%
       dplyr::select(-c(input, sort)) %>%
       dplyr::select(taxonID:original_search, suggested_name, distance) %>%
-      dplyr::mutate(distance = ifelse(distance > 0, distance, NA))
+      dplyr::mutate(distance = ifelse(distance > suggestion_distance, 
+                                      distance, NA))
 
-    # join  names queried to the original (complete) of names
-    found_name <- dplyr::left_join(raw_sci_name, found_name, 
-                                   by = "original_search")
+    # join  names queried to the original (complete) list of names
+    found_name <- dplyr::left_join(raw_sci_name, found_name, by = "original_search")
 
     # Formatting table when ...
     if (replace_synonyms == F & suggest_names == F) {
@@ -331,12 +330,14 @@ bdc_get_taxa_taxadb <-
       found_name <-
         found_name %>%
         dplyr::select(-c(suggested_name, distance))
+    } else {
+      found_name[is.na(found_name$scientificName) & !grepl("check \\+1 accepted", found_name$notes), "notes"] <- "not found"
     }
     
     end <- Sys.time()
     total_time <- round(as.numeric (end - start, units = "mins"), 1)
     
-    message(paste("\n", nrow(found_name), "names queried in", total_time, "minutes\n", sep = ""))
+    message(paste("\n", nrow(found_name), "names queried in", total_time, "minutes\n"))
     
     return(found_name)
   }

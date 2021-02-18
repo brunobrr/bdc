@@ -20,11 +20,8 @@ ipak(
   )
 )
 
-# Create directories for saving the outputs
-fs::dir_create(here::here("Output/Check"))
-fs::dir_create(here::here("Output/Intermediate"))
-fs::dir_create(here::here("Output/Report"))
-fs::dir_create(here::here("Output/Figures"))
+# Create directories for saving the results. If not existing, four new folders will be created in the folder 'Output'.
+bdc_create_dir()
 
 # Load data ---------------------------------------------------------------
 # Load the merged and standardized database
@@ -77,7 +74,7 @@ data_pf5 <-
   )
 
 # CHECK 6 -----------------------------------------------------------------
-# Flag records outside the focal country (e.g. far from a determined distance from the coast or in other countries)
+# Flag records outside the focal country (e.g. in other countries or far from a informed distance from the coast)
 data_pf6 <-
   bdc_flag_xy_out_country(
     data = data_pf5,
@@ -95,7 +92,7 @@ data_pf7 <- bdc_summary_col(data = data_pf6)
 bdc_tests_summary(data = data_pf7, workflow_step = "prefilter")
 
 # Save the report
-bdc_tests_summary(data = data_pf7) %>% 
+bdc_tests_summary(data = data_pf7, workflow_step = "prefilter") %>% 
   data.table::fwrite(., here::here("Output/Report/01_Prefilter_Report.csv"))
 
 # Save records with invalid or missing coordinates but with information potentially valid about the locality from which coordinates information can be extracted
@@ -111,6 +108,11 @@ data_to_check <-
 bdc_create_figures(data = data_pf7, workflow_step = "prefilter")
 
 # REMOVE PROBLEMATIC RECORDS ----------------------------------------------
-# Removing flagged records (potentially problematic ones) and saving a clean database (without tests; i.e. columns starting with ".")
-bdc_filter_out_flags(data = data_pf7, rem_summary = TRUE) %>%
+# Removing flagged records (potentially problematic ones) and saving a 'clean' database (i.e., without columns of tests, which starts with ".")
+output <-
+  data_pf7 %>%
+  dplyr::filter(.summary == TRUE) %>%
+  bdc_filter_out_flags(data = ., columns_to_remove = "all")
+
+output %>% 
   qs::qsave(., here::here("Output", "Intermediate", "01_prefilter_database.qs"))

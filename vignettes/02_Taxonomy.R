@@ -18,12 +18,8 @@ ipak(
 )
 
 
-# Create directories for saving the outputs
-fs::dir_create(here::here("Output/Check"))
-fs::dir_create(here::here("Output/Intermediate"))
-fs::dir_create(here::here("Output/Report"))
-fs::dir_create(here::here("Output/Figures"))
-
+# Create directories for saving the results. If not existing, four new folders will be created in the folder 'Output'
+bdc_create_dir()
 
 # Load database -----------------------------------------------------------
 # Load the database resulting from the prefilter step or your own database
@@ -31,7 +27,7 @@ database <-
   here::here("Output", "Intermediate", "01_prefilter_database.qs") %>%
   qs::qread()
 
-# Standardize character encoding
+# Standardize characters encoding
 for (i in 1:ncol(database)){
   if(is.character(database[,i])){
     Encoding(database[,i]) <- "UTF-8"
@@ -60,7 +56,7 @@ uniq_sciNames <-
   database %>% 
   dplyr::distinct(scientificName, .keep_all = T) %>% # unique names
   dplyr::select(scientificName) %>% # select this column
-  dplyr::mutate_all(na_if,"") %>% # change white to NA
+  dplyr::mutate_all(na_if,"") %>% # change empty names to NA
   dplyr::filter(!is.na(scientificName)) # remove NAs
 
 # Parse names
@@ -80,11 +76,11 @@ parse_names %>%
 # Merge unique names parsed to full database and save the results of the parsing names process. Note that only the column "names_parsed" will be used in the downstream analyses. The results of each step of the parsing names process can be checked in "Output/Check/02_parsed_names.qs"
 database <- 
   parse_names %>%
-  dplyr::select(scientificName, names_parsed, .uncer_terms, .infraesp_names) %>% 
+  dplyr::select(scientificName, .uncer_terms, .infraesp_names, names_parsed) %>% 
   dplyr::full_join(database, ., by = "scientificName")
 
 # FIXME: delete this file 
-database <- qs::qread("temp_database2.qs")
+database <- qs::qread("database_exe_.qs")
 for (i in 1:ncol(database)){
   if(is.character(database[,i])){
     Encoding(database[,i]) <- "UTF-8"
@@ -112,38 +108,51 @@ for (i in 1:ncol(database)){
 
 query_names <- bdc_get_taxa_taxadb(
   sci_name = database$names_parsed,
-  replace_synonyms = T,
-  suggest_names = T,
+  replace_synonyms = FALSE,
+  suggest_names = FALSE,
   suggestion_distance = 0.9,
   db = "gbif",
   rank_name = "Plantae",
   rank = "kingdom",
   parallel = TRUE,
   ncores = 2,
-  export_accepted = T
+  export_accepted = FALSE
 )
 
-# Join results of taxonomic queried to database. Note that the column "original_search" containing the original (verbatim) names. Names parsed can be found in the column "scientificName"
+# Join results of taxonomic queried to database. Note that the column "original_search" containing the names parsed and the column 'verbatim_scientificName' the original names.
 database <- 
   database %>% 
-  dplyr::select(-scientificName ) %>% 
-  dplyr::bind_cols(., query_name)
+  dplyr::rename(verbatim_scientificName = scientificName) %>% 
+  dplyr::select(-names_parsed) %>% 
+  dplyr::bind_cols(., query_names)
        
-# Table of unresolved names, which includes names not found (i.e. NAs) and names with more than one accepted name.
-unresolved_names <- 
-  database %>%
-  dplyr::filter(is.na("scientificName")) %>% 
-  filter(str_detect(notes, "|check +1 accepted") | 
-           notes == "|check no accepted name")
+
+# REMOVE PROBLEMATIC RECORDS ----------------------------------------------
+# Before saving the database containing verified scientific names, you have to choose to remove or not names:
+# - not found (i.e. unresolved names); notes = "not found"
+# 1: with more than one accepted name; notes = "|more +1 accepted"
+# 2: with no accepted name found; notes = "|no accepted name"
+# 3: with doubtful taxonomic identification (i.e., names flagged as FALSE in the column '.taxo_uncer')
+
+unresolved_names <-
+  bdc_filter_out_names(
+    data = database,
+    notes = c("not_found", "more_one_accepted", "no_accepted", "taxo_uncer")
+  )
 
 # Save the table. You may want to check this table at another time
 unresolved_names %>%
   data.table::fwrite(., here::here("Output", "Check", "02_unresolved_names.csv"))
 
 
-# After saving the database of containing verified scientific names, you have to choose to remove or not unresolved names and those with doubtful taxonomic identification (i.e., names flagged as FALSE in the column '.taxo_uncer')
-database <- 
-  database %>% 
-  dplyr::filter(.taxo_uncer == TRUE) %>% 
-  dplyr::filter(!database_id %in% unresolved_names$database_id) %>% 
-  qs::qsave(., here::here("Output", "Intermediate", "02_prefilter_database.qs"))
+# Database containing only resolved names. To select these name, used opposite == TRUE
+output <-
+  bdc_filter_out_names(
+    data = database,
+    notes = c("not_found", "more_one_accepted", "no_accepted", "taxo_uncer"), 
+    opposite = TRUE
+  )
+
+# Remove unnecessary columns and save the database
+bdc_filter_out_flags(data = output, columns_to_remove = .uncer_terms) %>% 
+qs::qsave(., here::here("Output", "Intermediate", "02_prefilter_database.qs"))

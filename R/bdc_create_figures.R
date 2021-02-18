@@ -9,8 +9,8 @@
 #' @export Figures in png format
 #'
 #' @examples
-bdc_create_figures <- function(data, workflow_step = "prefiter") {
-  if (workflow_step == "prefiter") {
+bdc_create_figures <- function(data, workflow_step = "prefilter") {
+  if (workflow_step == "prefilter") {
     tests <-
       c(
         ".missing_name",

@@ -1,4 +1,4 @@
-Test_name,Records_flagged,Perc_records_flagged
+Name,Records_flagged,Perc_records_flagged
 .missing_name,3086,3.43
 .missing_xy,19391,21.55
 .invalid_xy,278,0.31
