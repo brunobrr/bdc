@@ -9,11 +9,16 @@ ipak <- function(pkg) {
   suppressPackageStartupMessages(sapply(pkg, require, character.only = TRUE))
 }
 
+
+# bdc_create_dir ----------------------------------------------------------
+bdc_create_dir <- function(){
+  fs::dir_create(here::here("Output/Check"))
+  fs::dir_create(here::here("Output/Intermediate"))
+  fs::dir_create(here::here("Output/Report"))
+  fs::dir_create(here::here("Output/Figures"))
+}
+
 # bdc_get_world_map -------------------------------------------------------
-#' Title
-#'
-#' @export
-#'
 bdc_get_world_map <- function() {
   
   worldmap <- rnaturalearth::ne_countries(scale='large') 
@@ -120,11 +125,11 @@ bdc_summary_col <- function(data) {
 bdc_tests_summary <- function(data, workflow_step) {
   
   # First, create a table of total number of records per database
-  if (file_exists("data/n_records.csv")){
-    n_records <- 
+  if (file_exists("data/n_records.csv")) {
+    n_records <-
       data %>%
       dplyr::summarise(n = n())
-    data.table::fwrite(n_records, "data/n_records.csv")
+      data.table::fwrite(n_records, "data/n_records.csv")
   }
 
 
@@ -145,3 +150,99 @@ bdc_tests_summary <- function(data, workflow_step) {
   return(data)
 }
 
+
+# bdc_filter_out_flags ----------------------------------------------------
+#' Filter out rows based on flags assigned as FALSE
+#'
+#' @description
+#' This functions filter out rows based on any flag column assigned as FALSE
+#'
+#' @param data data.frame with flags created by functions bdc_flag_*
+#' @param logical. Should the column .summary be removed?
+#' @importFrom dplyr select filter_at
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' data %>%
+#'   bdc_flag_transposed_xy() %>%
+#'   bdc_filter_out_flags()
+#' }
+bdc_filter_out_flags <- function(data, columns_to_remove = ".uncer_terms") {
+  
+  if (columns_to_remove %in% "all"){
+    column_names <-
+      data %>%
+      dplyr::select(starts_with(".")) %>%
+      names()
+    
+    data <-
+      data %>%
+      dplyr::select(-all_of(column_names))
+  } else {
+    w <- which(names(data) %in% columns_to_remove)
+    
+    column_names <- names(data)[w]
+    
+    data <-
+      data %>%
+      dplyr::select(-all_of(column_names))
+  }
+
+  message("\nbdc_fiter_out_flags:\nThe following columns were removed from the database:\n", paste(column_names, collapse = ","))
+  
+  return(data)
+  
+}
+
+
+# bdc_filter_out_names ----------------------------------------------------
+bdc_filter_out_names <-
+  function(data,
+           notes = c("not_found", "more_one_accepted", "no_accepted", "taxo_uncer"),
+           opposite = FALSE) {
+    data <-
+      data %>%
+      dplyr::mutate(temp_id = 1:nrow(data))
+    
+    if (any(notes == "not_found")) {
+      nas <-
+        data %>%
+        dplyr::filter(notes == "not found")
+    }
+    
+    if (any(notes == "more_one_accepted")) {
+      more_one_acc <-
+        data %>%
+        dplyr::filter(str_detect(notes, regex("1 accepted")))
+    }
+    
+    if (any(notes == "no_accepted")) {
+      no_acc <-
+        data %>%
+        dplyr::filter(str_detect(notes, regex("check no accepted name")))
+    }
+    
+    if (any(notes == "taxo_uncer")) {
+      uncer <-
+        data %>%
+        dplyr::filter(.uncer_terms == FALSE)
+    }
+    
+    res_temp <-
+      dplyr::bind_rows(nas, more_one_acc, no_acc, uncer) %>% 
+      dplyr::distinct(temp_id, .keep_all = T)
+      
+    if (opposite == FALSE) {
+      res <-
+        res_temp %>%
+        dplyr::select(-temp_id)
+    } else {
+      res <-
+        data %>%
+        dplyr::filter(!temp_id %in% res_temp$temp_id) %>%
+        dplyr::select(-temp_id)
+    }
+    return(res)
+  }
