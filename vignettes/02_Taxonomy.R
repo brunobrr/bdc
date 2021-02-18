@@ -18,8 +18,10 @@ ipak(
 )
 
 
+# Create directories ------------------------------------------------------
 # Create directories for saving the results. If not existing, four new folders will be created in the folder 'Output'
 bdc_create_dir()
+
 
 # Load database -----------------------------------------------------------
 # Load the database resulting from the prefilter step or your own database
@@ -37,47 +39,29 @@ for (i in 1:ncol(database)){
 
 # Parse scientific names --------------------------------------------------
 
-# routines to clean and parse names (see the help of each function starting with "bdc" for more details)
+# Routines to clean and parse names, including tests for:
+# 1 - remove family names from scientific names (e.g. Felidae Panthera onca to Panthera onca; Lauraceae Ocotea odorifera to Ocotea odorifera)
 
-# Summary of each test:
+# 2 - Flag, identify, and remove taxonomic uncertainty terms (e.g. Myrcia cf. splendens to Myrcia splendens). Check ?bdc_clean_names for a list of terms denoting taxonomic uncertainty and their orthographic variations
 
-# bdc_rem_family_names: Remove family names from scientific names (e.g. Felidae Panthera onca to Panthera onca; Lauraceae Ocotea odorifera to Ocotea odorifera)
+# 3 - Convert to lower case and capitalize the only first letter of the generic names (POLYGONACEAE to Polygonaceae; polygonaceae to Polygonaceae) and remove extra spaces
 
-# bdc_rem_taxo_unc: Flag, identify, and remove taxonomic uncertainty terms (e.g. Myrcia cf. splendens to Myrcia splendens). Check ?bdc_bdc_rem_taxo_unc for a list of terms denoting taxonomic uncertainty and their orthographic variations.
+# 4 - Flag, identify, and remove infraespecific terms (subspecies, variety and forma)
 
-# bdc_rem_other_issues: Convert to lower case and capitalize the only first letter of the generic names (POLYGONACEAE to Polygonaceae; polygonaceae to Polygonaceae) and remove extra spaces
+# 5 - Extract just binomial scientific names (without year or authors). To do this, a scientific name is breaks down in different components using rgnparser package
 
-# bdc_rem_infaesp_names: Flag, identify, and remove infraespecific terms (subspecies, variety and forma)
-
-# bdc_gnparser: Extract just binomial scientific names (without year or authors). To do this, a scientific name is breaks down in different components using rgnparser package.
-
-# Select unique names
-uniq_sciNames <- 
-  database %>% 
-  dplyr::distinct(scientificName, .keep_all = T) %>% # unique names
-  dplyr::select(scientificName) %>% # select this column
-  dplyr::mutate_all(na_if,"") %>% # change empty names to NA
-  dplyr::filter(!is.na(scientificName)) # remove NAs
-
-# Parse names
-parse_names <- 
-  bdc_rem_family_names(data = uniq_sciNames, sci_names = "scientificName") %>% 
-  bdc_rem_taxo_unc(data = ., sci_names = "clean_family_names") %>% 
-  bdc_rem_other_issues(data = ., sci_names = "clean_uncer_terms")  %>% 
-  bdc_rem_infaesp_names(data = ., sci_names = "clean_other_issues") %>% 
-  bdc_gnparser(data = ., sci_names = "clean_infaesp_names")
+parse_names <- bdc_clean_names(sci_names = database$scientificName)
 
 # Save a database containing names parsed
-temp <- database %>% dplyr::select(scientificName)
 parse_names %>%
-  dplyr::full_join(temp, ., by = "scientificName") %>% 
   data.table::fwrite(., here::here("Output", "Check", "02_parsed_names.csv"))
 
-# Merge unique names parsed to full database and save the results of the parsing names process. Note that only the column "names_parsed" will be used in the downstream analyses. The results of each step of the parsing names process can be checked in "Output/Check/02_parsed_names.qs"
+# Merge unique names parsed to full database and save the results of the parsing names process. Note that only the column "names_clean" will be used in the downstream analyses.
 database <- 
   parse_names %>%
-  dplyr::select(scientificName, .uncer_terms, .infraesp_names, names_parsed) %>% 
+  dplyr::select(scientificName, .uncer_terms, .infraesp_names, names_clean) %>% 
   dplyr::full_join(database, ., by = "scientificName")
+
 
 # FIXME: delete this file 
 database <- qs::qread("database_exe_.qs")
@@ -129,6 +113,7 @@ database <-
 
 # REMOVE PROBLEMATIC RECORDS ----------------------------------------------
 # Before saving the database containing verified scientific names, you have to choose to remove or not names:
+
 # - not found (i.e. unresolved names); notes = "not found"
 # 1: with more than one accepted name; notes = "|more +1 accepted"
 # 2: with no accepted name found; notes = "|no accepted name"
@@ -143,7 +128,6 @@ unresolved_names <-
 # Save the table. You may want to check this table at another time
 unresolved_names %>%
   data.table::fwrite(., here::here("Output", "Check", "02_unresolved_names.csv"))
-
 
 # Database containing only resolved names. To select these name, used opposite == TRUE
 output <-
