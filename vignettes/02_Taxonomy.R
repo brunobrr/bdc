@@ -34,7 +34,6 @@ for (i in 1:ncol(database)){
   }
 }
 
-
 # CLEAN AND PARSE NAMES ---------------------------------------------------
 # Routines to clean and parse names, including tests for:
 # 1 - remove family names from scientific names (e.g. Felidae Panthera onca to Panthera onca; Lauraceae Ocotea odorifera to Ocotea odorifera)
@@ -51,29 +50,25 @@ parse_names <- bdc_clean_names(sci_names = database$scientificName)
 
 # Save the results of the parsing names process
 parse_names %>%
-  data.table::fwrite(., here::here("Output", "Check", "02_parsed_names.csv"))
+  qs::qsave(., here::here("Output", "Check", "02_parsed_names.qs"))
 
-# Join names parsed to full database. Note that only the column "names_clean" will be used in the downstream analyses.
-database <- 
+# Merge names parsed with the full database. As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of parsing names process in "Output/Check/02_parsed_names.qs"
+parse_names <- 
   parse_names %>%
-  dplyr::select(scientificName, .uncer_terms, .infraesp_names, names_clean) %>% 
-  dplyr::full_join(database, ., by = "scientificName")
+  dplyr::select(.uncer_terms, names_clean)
 
+database <- dplyr::bind_cols(database, parse_names)
 
 # FIXME: delete this file 
-database <- qs::qread("database_exe_.qs")
+database <- qs::qread("exe_database.qs")
 for (i in 1:ncol(database)){
   if(is.character(database[,i])){
     Encoding(database[,i]) <- "UTF-8"
   }
 }
 
-
 # STANDARDIZE NAMES -------------------------------------------------------
-# This is made in three steps. First, names are queried using a main taxonomic authority. Next, synonyms or accepted names of unresolved names are queried using a second taxonomic authority. Finally, scientific names found in step two are used to undertake a new query using the main taxonomic authority (step one). 
-# Note that after parsing scientific names, several names are now duplicated. In order to optimize the taxonomic standardization process, only unique names will be queried. 
-
-# The taxonomic harmonization is based upon a taxonomic authority that users have to choose. The following taxonomic authority databases are available in taxadb package:
+# The taxonomic harmonization is based upon a taxonomic authority that users have to choose. The following taxonomic authority databases available in taxadb package are:
 
 # - itis: Integrated Taxonomic Information System
 # - ncbi: National Center for Biotechnology Information
@@ -87,9 +82,9 @@ for (i in 1:ncol(database)){
 # - iucn: IUCN Red List
 
 query_names <- bdc_get_taxa_taxadb(
-  sci_name = database$names_parsed,
-  replace_synonyms = FALSE,
-  suggest_names = FALSE,
+  sci_name = database$names_clean,
+  replace_synonyms = TRUE,
+  suggest_names = TRUE,
   suggestion_distance = 0.9,
   db = "gbif",
   rank_name = "Plantae",
@@ -99,14 +94,20 @@ query_names <- bdc_get_taxa_taxadb(
   export_accepted = FALSE
 )
 
-# Join results of taxonomic queried to database. Note that the column "original_search" containing the names parsed and the column 'verbatim_scientificName' the original names.
+# Merge results of taxonomy standardization process with the 'database.' To simplicity, let's rename the original name to "verbatim_scientificName". From now on "scientifiName" will refers to the verified names (resulted from standardization process). As the column "original_search" in "query_names" and "names_clean" are equal, only the first will be kept.
 database <- 
   database %>% 
   dplyr::rename(verbatim_scientificName = scientificName) %>% 
-  dplyr::select(-names_parsed) %>% 
+  dplyr::select(-names_clean) %>% 
   dplyr::bind_cols(., query_names)
-       
+
 # REPORT ------------------------------------------------------------------
+# Create a report summarizing the main results of the harmonizing names process
+bdc_create_report(data = database, workflow_step = "taxonomy") %>% View()
+
+# Save the report
+bdc_create_report(data = database, workflow_step = "taxonomy") %>% 
+  data.table::fwrite(., here::here("Output/Report/01_taxonomy_Report.csv"))
 
 # FIGURES -----------------------------------------------------------------
 
@@ -139,4 +140,4 @@ output <-
 
 # Remove unnecessary columns and save the database
 bdc_filter_out_flags(data = output, columns_to_remove = .uncer_terms) %>% 
-qs::qsave(., here::here("Output", "Intermediate", "02_prefilter_database.qs"))
+  qs::qsave(., here::here("Output", "Intermediate", "02_prefilter_database.qs"))
