@@ -92,7 +92,7 @@ data_pf7 <- bdc_summary_col(data = data_pf6)
 bdc_create_report(data = data_pf7, workflow_step = "prefilter") %>% View()
 
 # Save the report
-bdc_tests_summary(data = data_pf7, workflow_step = "prefilter") %>% 
+bdc_create_report(data = data_pf7, workflow_step = "prefilter") %>% 
   data.table::fwrite(., here::here("Output/Report/01_Prefilter_Report.csv"))
 
 # Save records with invalid or missing coordinates but with information potentially valid about the locality from which coordinates information can be extracted

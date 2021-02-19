@@ -10,6 +10,8 @@
 #'
 #' @examples
 bdc_create_figures <- function(data, workflow_step = "prefilter") {
+  
+  # Workflow step
   if (workflow_step == "prefilter") {
     tests <-
       c(
@@ -18,14 +20,27 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
         ".invalid_xy",
         ".xy_provenance",
         ".xy_out_country",
-        "bdc_transposed_xy",
         ".summary"
       )
+    
+    names_tab <- names(data)
+    col_to_tests <- intersect(tests, names_tab)
+    
+    if (file.exists("Output/Check/01_transposed_xy.csv")) {
+      col_to_tests <- c(col_to_tests, "transposed_xy")
+    }
   }
 
-
-  # function to create barplots
-  create_barplot <-
+  if (workflow_step == "taxonomy") {
+    
+    tests <-
+      c(
+        ".uncer_term", "names_not_found"
+      )
+  }
+  
+  # function to create barplots for each dataset separately
+  create_barplot_database <-
     function(data, column_to_map, workflow_step = workflow_step) {
       temp <-
         data %>%
@@ -33,10 +48,11 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
           database_id = gsub("[[:digit:]]+", "", database_id),
           database_id = gsub("_", "", database_id)
         ) %>%
+        dplyr::filter(., .data[[column_to_map]] == TRUE) %>% 
         dplyr::group_by(database_id, .data[[column_to_map]]) %>%
-        dplyr::summarise(n = n()) %>%
-        dplyr::mutate(freq = n / sum(n)) %>%
-        dplyr::filter(., .data[[column_to_map]] == TRUE)
+        dplyr::summarise(n_flagged = n()) %>% 
+        dplyr::full_join(., n_record_database, by = "database_id") %>% 
+        dplyr::mutate(freq = n_flagged  / n_total)
         
       b <-
         ggplot(temp, aes(x = reorder(database_id, -freq), y = freq)) +
@@ -80,33 +96,95 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
       )
     }
 
-  # Names of columns available for creating barplot
+  # function to create barplots considering all datasets together
+  create_barplot_all_tests <-
+    function(data, column_to_map = "summary_all_tests", workflow_step = workflow_step) {
+      temp <- 
+        data %>%
+        dplyr::select(contains(".")) %>%
+        dplyr::summarise_all(., .funs = sum) %>%
+        t %>%
+        tibble::as_tibble(rownames = "NA") %>%
+        dplyr::mutate(V1 = nrow(data) - V1) %>%
+        dplyr::mutate(freq =
+                        round((V1 / nrow(data) * 100), 2)) %>%
+        dplyr::rename(Name = `NA`,
+                      n_flagged = V1)
+      
+      b <-
+        ggplot(temp, aes(x = reorder(Name, -freq), y = freq)) +
+        geom_col(colour = "white", fill = "#1380A1") +
+        coord_flip() +
+        theme_minimal() +
+        theme(
+          axis.title = element_text(size = 16),
+          legend.position = "top",
+          legend.text = element_text(size = 11),
+          panel.grid.major.x = element_line(color = "#cbcbcb"),
+          panel.grid.major.y = element_blank()
+        ) +
+        labs(x = "Tests", y = "% of records flagged") +
+        # scale_y_continuous(labels = scales::percent) +
+        geom_hline(
+          yintercept = 0,
+          size = 1,
+          colour = "#333333"
+        ) +
+        geom_label(
+          aes(
+            x = reorder(Name, -freq),
+            y = freq,
+            label = round(freq, 2) * 100
+          ),
+          hjust = 1,
+          vjust = 0.5,
+          colour = "white",
+          fill = NA,
+          label.size = NA,
+          size = 4
+        )
+      
+      ggsave(
+        paste("output/", "Figures/", workflow_step, "_", column_to_map, "_", 
+              "bar",".png", sep = ""),
+        b,
+        dpi = 300, width = 6, height = 3, units = "cm", scale = 4
+      )
+    }
+  
+  # # Names of columns available for creating barplot
   bar <- c(
     ".missing_name", ".missing_xy", ".invalid_xy", ".xy_provenance",
-    ".xy_out_country", ".summary"
+    ".xy_out_country", ".summary", ".uncer_term", "names_not_found"
   )
 
   # Names of columns available for creating maps
   maps <- c(".xy_out_country")
   
   # Find which names were provided
-  w_bar <- intersect(tests, bar)
+  w_bar <- intersect(col_to_tests, bar)
   w_maps <- intersect(tests, maps)
-  w_tranposed <- intersect(tests, "bdc_transposed_xy")
-    
+  w_tranposed <- intersect(col_to_tests, maps)
+  
   # Create bar plots
   if (length(w_bar) == 0) {
-    stop("At least one column name must be provided")
+    stop("At least one column 'starting with '.' must be provided")
   } else {
     for (i in 1:length(w_bar)) {
-      create_barplot(data = data, column_to_map = w_bar[i], 
-                    workflow_step = workflow_step)
+      create_barplot_database(data = data,
+                              column_to_map = w_bar[i],
+                              workflow_step = workflow_step)
     }
+    
+    create_barplot_all_tests(data = data,
+                             column_to_map = "summary",
+                             workflow_step = workflow_step)
+    
   }
   
   # Create maps of invalid vs valid records
   if (length(w_maps) == 0) {
-    stop("At least one column name must be provided")
+    stop("Column '.xy_out_country' not found")
   } else {
     for (i in 1:length(w_maps)) {
       d <-
@@ -163,8 +241,6 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
     dpi = 300, width = 6, height = 3, units = "cm", scale = 4)
   }
     
-
-  
   message("Check figures in ", here::here("Output", "Figures"))
   
 }

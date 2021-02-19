@@ -53,7 +53,7 @@ bdc_flag_xy_out_country <- function(data,
   suppressMessages({
     data_sp <-
       data_sp %>%
-      dplyr::mutate(points_in_buf = st_intersects(data_sp, buf, sparse = F))
+      dplyr::mutate(points_in_buf = sf::st_intersects(data_sp, buf, sparse = F))
   })
 
   # Filter points within the buffer

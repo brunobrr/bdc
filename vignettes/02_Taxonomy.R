@@ -91,7 +91,7 @@ query_names <- bdc_get_taxa_taxadb(
   rank = "kingdom",
   parallel = TRUE,
   ncores = 2,
-  export_accepted = FALSE
+  export_accepted = TRUE
 )
 
 # Merge results of taxonomy standardization process with the 'database.' To simplicity, let's rename the original name to "verbatim_scientificName". From now on "scientifiName" will refers to the verified names (resulted from standardization process). As the column "original_search" in "query_names" and "names_clean" are equal, only the first will be kept.
@@ -107,15 +107,16 @@ bdc_create_report(data = database, workflow_step = "taxonomy") %>% View()
 
 # Save the report
 bdc_create_report(data = database, workflow_step = "taxonomy") %>% 
-  data.table::fwrite(., here::here("Output/Report/01_taxonomy_Report.csv"))
+  data.table::fwrite(., here::here("Output/Report/02_taxonomy_Report.csv"))
 
 # FIGURES -----------------------------------------------------------------
+bdc_create_figures(data = database, workflow_step = "taxonomy")
 
 
 # CLEAN THE DATABASE ------------------------------------------------------
 # Before saving the database containing verified scientific names, you have to choose to remove or not names:
 
-# - not found (i.e. unresolved names); notes = "not found"
+# 0: not found (i.e. unresolved names); notes = "not found"
 # 1: with more than one accepted name; notes = "|more +1 accepted"
 # 2: with no accepted name found; notes = "|no accepted name"
 # 3: with doubtful taxonomic identification (i.e., names flagged as FALSE in the column '.taxo_uncer')
