@@ -56,7 +56,6 @@ bdc_get_world_map <- function() {
   
 }
 
-
 # bdc_xy_from_locality ----------------------------------------------------
 bdc_xy_from_locality <-
   function(data,
@@ -87,7 +86,6 @@ bdc_xy_from_locality <-
     return(df)
   }
 
-
 # bdc_summary_col ---------------------------------------------------------
 bdc_summary_col <- function(data) {
   if (any(names(data) == ".summary")) {
@@ -95,7 +93,7 @@ bdc_summary_col <- function(data) {
     
     df <-
       data %>%
-      dplyr::select(-.summary) %>% 
+      dplyr::select(-.summary) %>%
       dplyr::select(contains(".")) %>%
       dplyr::mutate(.summary = rowSums(.) / ncol(.) == TRUE) %>%
       dplyr::select(.summary)
@@ -120,36 +118,71 @@ bdc_summary_col <- function(data) {
   return(df)
 }
 
-
-# bdc_tests_summary -------------------------------------------------------
-bdc_tests_summary <- function(data, workflow_step) {
-  
-  # First, create a table of total number of records per database
-  if (file_exists("data/n_records.csv")) {
+# bdc_create_report -------------------------------------------------------
+bdc_create_report <- function(data, workflow_step) {
+  # First, create a table of total number of records
+  if (!file_exists("data/n_records.csv")) {
     n_records <-
       data %>%
       dplyr::summarise(n = n())
-      data.table::fwrite(n_records, "data/n_records.csv")
+    data.table::fwrite(n_records, "data/n_records.csv")
+  } else {
+    n_records <- read_csv("data/n_records.csv") %>% dplyr::pull(n)
   }
 
-
-  if (workflow_step == "prefilter"){
-  suppressWarnings({
-    data <-
+  # Prefilter
+  if (workflow_step == "prefilter") {
+    suppressWarnings({
+      data <-
+        data %>%
+        dplyr::select(contains(".")) %>%
+        dplyr::summarise_all(., .funs = sum) %>%
+        t %>%
+        tibble::as_tibble(rownames = "NA") %>%
+        dplyr::mutate(V1 = nrow(data) - V1) %>%
+        dplyr::mutate(Perc_records_flagged = round((V1 / nrow(data) * 100), 2)) %>%
+        dplyr::rename(Name = `NA`,
+                      Records_flagged = V1)
+    })
+  }
+  
+  # Taxonomy
+  if (workflow_step == "taxonomy") {
+    suppressWarnings({
+    names <-
       data %>%
-      dplyr::select(contains(".")) %>%
-      dplyr::summarise_all(., .funs = sum) %>%
-      t %>%
-      tibble::as_tibble(rownames = "NA") %>%
-      dplyr::mutate(V1 = nrow(data) - V1) %>%
-      dplyr::mutate(Perc_records_flagged = round((V1 / nrow(data) * 100), 2)) %>%
-      dplyr::rename(Name = `NA`,
-                    Records_flagged = V1)
-  })
-  }
-  return(data)
+      group_by(notes) %>%
+      summarise(number_of_records = n()) %>%
+      mutate(perc_number_records = round((number_of_records / n_records) * 100, 2))
+    
+    taxo_unc <-
+      data %>%
+      dplyr::select(.uncer_terms) %>%
+      dplyr::filter(.uncer_terms == FALSE) %>%
+      dplyr::group_by(.uncer_terms) %>%
+      dplyr::summarise(number_of_records = n()) %>%
+      dplyr::mutate(perc_number_records = round((number_of_records / n_records) * 100, 2)) %>%
+      dplyr::rename(notes = .uncer_terms)
+    
+    names <- dplyr::bind_rows(names, taxo_unc)
+    
+    names[1, 1] <- "valid names"
+    names[2, 1] <- "check: more than one accepted name found"
+    names[3, 1] <- "check: no accepted name found"
+    names[4, 1] <- "valid: replaced synonym, "
+    names[5, 1] <- "invalid: not found"
+    names[6, 1] <- "valid: was misspelled"
+    names[7, 1] <- "valid: was misspelled and replaced synonym"
+    names[8, 1] <- "check: doubtful taxonomic identification"
+    names[9, 1] <- ""
+    
+    names[10, 1] <- paste("* calculated in relation to total number of records, i.e.", n_records,"records")
+    
+    names(names)[3] <- "*perc_number_records"
+    })
+  return(names)
 }
-
+}
 
 # bdc_filter_out_flags ----------------------------------------------------
 #' Filter out rows based on flags assigned as FALSE
@@ -196,7 +229,6 @@ bdc_filter_out_flags <- function(data, columns_to_remove = ".uncer_terms") {
   
 }
 
-
 # bdc_filter_out_names ----------------------------------------------------
 bdc_filter_out_names <-
   function(data,
@@ -231,9 +263,9 @@ bdc_filter_out_names <-
     }
     
     res_temp <-
-      dplyr::bind_rows(nas, more_one_acc, no_acc, uncer) %>% 
+      dplyr::bind_rows(nas, more_one_acc, no_acc, uncer) %>%
       dplyr::distinct(temp_id, .keep_all = T)
-      
+    
     if (opposite == FALSE) {
       res <-
         res_temp %>%

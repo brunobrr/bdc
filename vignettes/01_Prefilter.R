@@ -89,7 +89,7 @@ data_pf6 <-
 data_pf7 <- bdc_summary_col(data = data_pf6)
   
 # Create a report summarizing the results of all tests
-bdc_tests_summary(data = data_pf7, workflow_step = "prefilter")
+bdc_create_report(data = data_pf7, workflow_step = "prefilter") %>% View()
 
 # Save the report
 bdc_tests_summary(data = data_pf7, workflow_step = "prefilter") %>% 
