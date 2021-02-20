@@ -4,9 +4,7 @@
 
 ------------------------------------------------------------------------
 
-<img src="images/logo4_branco.png" width="4.8cm"/>
-
-Handle biodiversity data from several heterogeneous sources is not an easy task. This workflow was created to facilitate the process of integrating, standardizing, and cleaning biodiversity data aiming to improve data quality and make it fit for use.
+Handle biodiversity data from several varying sources is not an easy task. This workflow was created to facilitate the process of integrating, standardizing, and cleaning biodiversity data aiming to improve data quality and make it fit for use.
 
 The workflow is composed of five steps:
 
