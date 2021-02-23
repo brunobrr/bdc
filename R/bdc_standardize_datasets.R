@@ -21,8 +21,6 @@ merged_filename <- here::here("Output", "Intermediate", "00_merged_database.qs")
 
 if (!file.exists(merged_filename)) {
   
-  metadata <- data.table::fread(here::here("Config/DatabaseInfo.csv"))
-  
   save_in_dir <- here::here("data", "temp_datasets")
   
   if (!fs::dir_exists(save_in_dir)) {
