@@ -217,7 +217,7 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
   maps <- c(".xy_out_country", ".cap", ".cen", ".inst")
   
   # Names of column available for creating histogram
-  hist <- c("year")
+  hist <- "year"
   
   # Find which names were provided
   w_bar <- intersect(col_to_tests, bar)
@@ -330,7 +330,9 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
     
   if (length(w_hist) == 0 & workflow_step == "time") {
     message("Column 'year' not found")
-  } else {
+  } 
+  
+  if (length(w_hist) != 0) {
   data <- 
     data %>% 
     dplyr::select(year) %>% 
