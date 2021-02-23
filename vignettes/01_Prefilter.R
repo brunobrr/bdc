@@ -112,7 +112,7 @@ bdc_create_figures(data = data_pf7, workflow_step = "prefilter")
 output <-
   data_pf7 %>%
   dplyr::filter(.summary == TRUE) %>%
-  bdc_filter_out_flags(data = ., columns_to_remove = "all")
+  bdc_filter_out_flags(data = ., col_to_remove = "all")
 
 output %>% 
   qs::qsave(., here::here("Output", "Intermediate", "01_prefilter_database.qs"))

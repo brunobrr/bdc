@@ -21,32 +21,41 @@ bdc_round_dec <-
            lon = "decimalLongitude",
            lat = "decimalLatitude",
            ndec = c(0, 1, 2)) {
-    data <-
-      data[, c(lon, lat)] %>%
+    df <-
+      data %>% 
+      dplyr::select({{lon}}, {{lat}}) %>% 
       as.data.frame()
     
-    ndec_lat <- (data[, lat] %>%
+    ndec_lat <- (df[, lat] %>%
                    as.character() %>%
                    stringr::str_split_fixed(., pattern = "[.]", n = 2))[, 2] %>%
       stringr::str_length()
     
-    ndec_lon <- (data[, lon] %>%
+    ndec_lon <- (df[, lon] %>%
                    as.character() %>%
                    stringr::str_split_fixed(., pattern = "[.]", n = 2))[, 2] %>%
       stringr::str_length()
     
-    rm(data)
+    rm(df)
     
     ndec_list <- as.list(ndec)
     names(ndec_list) <- paste0(".", "ndec", ndec)
     
     for (i in 1:length(ndec)) {
-      message("Testing coordinate with ", ndec[i], " decimal")
       ndec_list[[i]] <- !(ndec_lat == ndec[i] & ndec_lon == ndec[i])
-      message("Flagged ", sum(!ndec_list[[i]]), " records")
     }
     ndec_list <- dplyr::bind_cols(ndec_list)
     ndec_list$.ndec_all <- apply(ndec_list, 1, all) # all flagged as low decimal precision
-    return(ndec_list)
+    
+    ndec_list <-
+      ndec_list %>% 
+      dplyr::select(.ndec_all) %>%
+      dplyr::rename(.rou = .ndec_all)
+    
+    message("bdc_round_dec:\nFlagged ", sum(!ndec_list[".rou"]), " records\nOne column was added to the database.\n")
+    
+   res <- dplyr::bind_cols(data,  ndec_list)
+    
+    return(res)
   }
 

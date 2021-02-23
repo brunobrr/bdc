@@ -1,7 +1,7 @@
+# LOAD ALL FUNCTION OS BDC WORKFLOW ---------------------------------------
+devtools::load_all()
 
-# Standardize temporal information  ---------------------------------------
-
-# install and load packages
+# INSTALL AND LOAD PACKAGES REQUERIED -------------------------------------
 ipak(
   c(
     "tidyverse",
@@ -11,11 +11,15 @@ ipak(
   )
 )
 
-# Load all functions of BDC workflow
-devtools::load_all()
+# CREATE DIRECTORIES ------------------------------------------------------
+# Create directories for saving the results. If not existing, four new folders will be created in the folder 'Output'
+bdc_create_dir()
 
-# Create a directory to save output files
-fs::dir_create(here::here("Output/Check"))
+# LOAD THE DATABASE -------------------------------------------------------
+# Load the database resulting from the prefilter step or your own database
+database <-
+  here::here("Output", "Intermediate", "03_space_database.qs") %>%
+  qs::qread()
 
 # FiXEME: Change database
 

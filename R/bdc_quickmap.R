@@ -15,7 +15,7 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
     borders(
       database = "world",
       fill = "white",
-      colour = "grey90",
+      colour = "grey70",
     )
   
   our_theme <-
