@@ -9,9 +9,33 @@
 #' @export Figures in png format
 #'
 #' @examples
-bdc_create_figures <- function(data, workflow_step = "prefilter") {
-  
-  # Workflow step
+bdc_create_figures <- function(data, workflow_step = NULL) {
+  # Total number of records
+  suppressMessages({
+  if (!file_exists("data/n_records.csv")) {
+    n_records <-
+      data %>%
+      dplyr::summarise(n = n())
+    
+    data.table::fwrite(n_records, "data/n_records.csv")
+    
+    # Total number of records per database
+    n_record_database <-
+      data %>%
+      dplyr::mutate(
+        database_id = gsub("[[:digit:]]+", "", database_id),
+        database_id = gsub("_", "", database_id)
+      ) %>%
+      dplyr::group_by(database_id) %>%
+      dplyr::summarise(n_total = n())
+    
+    data.table::fwrite(n_record_database, "data/n_record_database.csv")
+  } else {
+    n_records <- read_csv("data/n_records.csv") %>% dplyr::pull(n)
+    n_record_database <- read_csv("data/n_record_database.csv")
+  }
+  })
+  # prefilter
   if (workflow_step == "prefilter") {
     tests <-
       c(
@@ -20,7 +44,8 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
         ".invalid_xy",
         ".xy_provenance",
         ".xy_out_country",
-        ".summary"
+        ".summary", 
+        "summary_all_tests"
       )
     
     names_tab <- names(data)
@@ -30,13 +55,25 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
       col_to_tests <- c(col_to_tests, "transposed_xy")
     }
   }
-
-  if (workflow_step == "taxonomy") {
-    
+  
+  # space
+  if (workflow_step == "space") {
     tests <-
       c(
-        ".uncer_term", "names_not_found"
+        ".equ",
+        ".zer",
+        ".cap",
+        ".cen",
+        ".otl",
+        ".gbf",
+        ".inst",
+        ".dpl",
+        ".rou",
+        "summary_all_tests"
       )
+    
+    names_tab <- names(data)
+    col_to_tests <- intersect(tests, names_tab)
   }
   
   # function to create barplots for each dataset separately
@@ -48,26 +85,28 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
           database_id = gsub("[[:digit:]]+", "", database_id),
           database_id = gsub("_", "", database_id)
         ) %>%
-        dplyr::filter(., .data[[column_to_map]] == TRUE) %>% 
+        dplyr::filter(., .data[[column_to_map]] == FALSE) %>% 
         dplyr::group_by(database_id, .data[[column_to_map]]) %>%
         dplyr::summarise(n_flagged = n()) %>% 
         dplyr::full_join(., n_record_database, by = "database_id") %>% 
-        dplyr::mutate(freq = n_flagged  / n_total)
+        dplyr::mutate(freq = round(n_flagged  / n_total, 5))
+      
+      temp[is.na(temp)] <- 0
         
       b <-
         ggplot(temp, aes(x = reorder(database_id, -freq), y = freq)) +
-        geom_col(colour = "white", fill = "#1380A1") +
+        geom_col(colour = "white", fill = "royalblue") +
         coord_flip() +
         theme_minimal() +
         theme(
-          axis.title = element_text(size = 16),
-          legend.position = "top",
-          legend.text = element_text(size = 11),
+          axis.title = element_text(size = 18),
+          axis.text = element_text(size = 12),
           panel.grid.major.x = element_line(color = "#cbcbcb"),
-          panel.grid.major.y = element_blank()
+          panel.grid.major.y = element_blank(), 
+          plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm")
         ) +
-        labs(x = "Database", y = "% of valid records ") +
-        scale_y_continuous(labels = scales::percent) +
+        labs(x = "Dataset", y = "% of records flagged") +
+        # scale_y_continuous(labels = scales::percent) +
         geom_hline(
           yintercept = 0,
           size = 1,
@@ -77,7 +116,7 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
           aes(
             x = reorder(database_id, -freq),
             y = freq,
-            label = round(freq, 2) * 100
+            label = n_flagged
           ),
           hjust = 1,
           vjust = 0.5,
@@ -85,14 +124,17 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
           fill = NA,
           label.size = NA,
           # family="Times",
-          size = 4
-        )
+          size = 4, 
+          fontface = "bold"
+        ) +
+        scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+      
 
       ggsave(
         paste("output/", "Figures/", workflow_step, "_", column_to_map, "_", 
-              "bar",".png", sep = ""),
+              "BAR",".png", sep = ""),
         b,
-        dpi = 300, width = 6, height = 3, units = "cm", scale = 4
+        dpi = 300, width = 6, height = 3, units = "cm", scale = 5
       )
     }
 
@@ -107,21 +149,23 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
         tibble::as_tibble(rownames = "NA") %>%
         dplyr::mutate(V1 = nrow(data) - V1) %>%
         dplyr::mutate(freq =
-                        round((V1 / nrow(data) * 100), 2)) %>%
+                        round((V1 / n_records * 100), 2)) %>%
         dplyr::rename(Name = `NA`,
                       n_flagged = V1)
       
+      temp[is.na(temp)] <- 0
+      
       b <-
         ggplot(temp, aes(x = reorder(Name, -freq), y = freq)) +
-        geom_col(colour = "white", fill = "#1380A1") +
+        geom_col(colour = "white", fill = "royalblue") +
         coord_flip() +
         theme_minimal() +
         theme(
-          axis.title = element_text(size = 16),
-          legend.position = "top",
-          legend.text = element_text(size = 11),
+          axis.title = element_text(size = 18),
+          axis.text = element_text(size = 12),
           panel.grid.major.x = element_line(color = "#cbcbcb"),
-          panel.grid.major.y = element_blank()
+          panel.grid.major.y = element_blank(), 
+          plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm")
         ) +
         labs(x = "Tests", y = "% of records flagged") +
         # scale_y_continuous(labels = scales::percent) +
@@ -134,58 +178,80 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
           aes(
             x = reorder(Name, -freq),
             y = freq,
-            label = round(freq, 2) * 100
+            label = n_flagged
           ),
           hjust = 1,
           vjust = 0.5,
           colour = "white",
           fill = NA,
           label.size = NA,
-          size = 4
-        )
+          size = 3, 
+          fontface = "bold"
+        ) +
+        scale_y_continuous(expand = c(0, 0), labels = scales::comma)
       
       ggsave(
         paste("output/", "Figures/", workflow_step, "_", column_to_map, "_", 
-              "bar",".png", sep = ""),
+              "BAR",".png", sep = ""),
         b,
-        dpi = 300, width = 6, height = 3, units = "cm", scale = 4
+        dpi = 300, width = 6, height = 3, units = "cm", scale = 5
       )
     }
   
   # # Names of columns available for creating barplot
   bar <- c(
     ".missing_name", ".missing_xy", ".invalid_xy", ".xy_provenance",
-    ".xy_out_country", ".summary", ".uncer_term", "names_not_found"
+    ".xy_out_country", ".summary", ".uncer_term", "names_not_found", 
+    ".equ", ".zer", ".cap",".cen", ".otl", ".gbf", ".inst", ".dpl",
+    ".rou", "summary_all_tests"
   )
 
   # Names of columns available for creating maps
-  maps <- c(".xy_out_country")
+  maps <- c(".xy_out_country", ".cap",".cen", ".inst")
   
   # Find which names were provided
   w_bar <- intersect(col_to_tests, bar)
   w_maps <- intersect(tests, maps)
-  w_tranposed <- intersect(col_to_tests, maps)
+  w_tranposed <- intersect(col_to_tests, "transposed_xy")
   
   # Create bar plots
   if (length(w_bar) == 0) {
-    stop("At least one column 'starting with '.' must be provided")
-  } else {
+    message("At least one column 'starting with '.' must be provided")
+  }  else {
+     w <- which(colSums(!data[{{ w_bar}} ]) == 0)
+     
+     if (length(w) != 0){
+     message("No records flagged for the following tests:\n", 
+             paste(w_bar[w], collapse = " "))
+     w_bar <- w_bar[-w]
+     }
+     
     for (i in 1:length(w_bar)) {
-      create_barplot_database(data = data,
-                              column_to_map = w_bar[i],
-                              workflow_step = workflow_step)
+      create_barplot_database(
+        data = data,
+        column_to_map = w_bar[i],
+        workflow_step = workflow_step
+      )
     }
     
     create_barplot_all_tests(data = data,
-                             column_to_map = "summary",
+                             column_to_map = "summary_all_tests",
                              workflow_step = workflow_step)
     
   }
   
   # Create maps of invalid vs valid records
   if (length(w_maps) == 0) {
-    stop("Column '.xy_out_country' not found")
+    message("At least one column 'starting with '.' must be provided")
   } else {
+    
+    w <- which(colSums(!data[{{ w_maps}} ]) == 0)
+    if (length(w) != 0){
+    message("No records flagged for the following tests:\n", 
+            paste(w_maps[w], collapse = " "))
+    w_maps <- w_maps[-w]
+    }
+    
     for (i in 1:length(w_maps)) {
       d <-
         CoordinateCleaner::cc_val(
@@ -196,6 +262,11 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
           value = "clean"
         )
       
+      d <-
+        d %>%
+        dplyr::select({{w_maps}}[i], decimalLongitude, decimalLatitude) %>%
+        dplyr::filter(. == FALSE)
+      
       p <- 
         bdc_quickmap(
           data = d,
@@ -205,15 +276,15 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
       
       ggsave(
         paste("output/", "Figures/", workflow_step, "_", w_maps[i], "_",
-              "map", ".png", sep = ""),
+              "MAP", ".png", sep = ""),
         p,
         dpi = 300, width = 6, height = 3, units = "cm", scale = 4)
     }
   }
 
   # Create maps of transposed and corrected coordinates
-  if (length(w_tranposed) == 0) {
-    stop("file 'Output/Check/01_transposed_xy.csv' not found")
+  if (length(w_tranposed) == 0 & workflow_step == "prefilter") {
+    message("file 'Output/Check/01_transposed_xy.csv' not found")
   } else {
     temp <- data.table::fread("Output/Check/01_transposed_xy.csv")
 
@@ -236,7 +307,7 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
     p <- cowplot::plot_grid(p1, p2, labels = "AUTO")
 
     ggsave(paste("output/", "Figures/", workflow_step,  "_",
-                 "transposed_xy", "_", "map", ".png", sep = ""),
+                 "transposed_xy", "_", "MAP", ".png", sep = ""),
     p,
     dpi = 300, width = 6, height = 3, units = "cm", scale = 4)
   }
@@ -244,4 +315,3 @@ bdc_create_figures <- function(data, workflow_step = "prefilter") {
   message("Check figures in ", here::here("Output", "Figures"))
   
 }
-

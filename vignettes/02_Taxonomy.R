@@ -109,22 +109,20 @@ bdc_create_report(data = database, workflow_step = "taxonomy") %>% View()
 bdc_create_report(data = database, workflow_step = "taxonomy") %>% 
   data.table::fwrite(., here::here("Output/Report/02_taxonomy_Report.csv"))
 
-# FIGURES -----------------------------------------------------------------
-bdc_create_figures(data = database, workflow_step = "taxonomy")
-
-
 # CLEAN THE DATABASE ------------------------------------------------------
 # Before saving the database containing verified scientific names, you have to choose to remove or not names:
 
 # 0: not found (i.e. unresolved names); notes = "not found"
 # 1: with more than one accepted name; notes = "|more +1 accepted"
 # 2: with no accepted name found; notes = "|no accepted name"
-# 3: with doubtful taxonomic identification (i.e., names flagged as FALSE in the column '.taxo_uncer')
+# 3: with doubtful taxonomic identification (i.e., names flagged as FALSE in the column '.taxo_uncer'). 
+
+# Names available in notes: "not_found", "more_one_accepted", "no_accepted", "taxo_uncer"
 
 unresolved_names <-
   bdc_filter_out_names(
     data = database,
-    notes = c("not_found", "more_one_accepted", "no_accepted", "taxo_uncer")
+    notes = c("not_found", "no_accepted", "taxo_uncer")
   )
 
 # Save the table. You may want to check this table at another time
@@ -135,10 +133,10 @@ unresolved_names %>%
 output <-
   bdc_filter_out_names(
     data = database,
-    notes = c("not_found", "more_one_accepted", "no_accepted", "taxo_uncer"), 
+    notes = c("not_found", "no_accepted", "taxo_uncer"), 
     opposite = TRUE
   )
 
 # Remove unnecessary columns and save the database
-bdc_filter_out_flags(data = output, columns_to_remove = .uncer_terms) %>% 
-  qs::qsave(., here::here("Output", "Intermediate", "02_prefilter_database.qs"))
+bdc_filter_out_flags(data = output, col_to_remove = ".uncer_terms") %>% 
+  qs::qsave(., here::here("Output", "Intermediate", "02_taxonomy_database.qs"))

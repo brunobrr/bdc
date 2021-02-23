@@ -1,8 +1,7 @@
-# Load all functions
+# LOAD ALL FUNCTION OS BDC WORKFLOW ---------------------------------------
 devtools::load_all()
 
-
-# FIXEME: add other packages needed to run the function
+# INSTALL AND LOAD PACKAGES REQUERIED -------------------------------------
 ipak(
   c(
     "tidyverse",
@@ -19,33 +18,47 @@ ipak(
   )
 )
 
+# CREATE DIRECTORIES ------------------------------------------------------
+# Create directories for saving the results. If not existing, four new folders will be created in the folder 'Output'
+bdc_create_dir()
 
-# Load the database
-data_to_load <- here::here("data", "temp", "standard_database.xz")
-df <- vroom(data_to_load)
+# LOAD THE DATABASE -------------------------------------------------------
+# Load the database resulting from the prefilter step or your own database
+database <-
+  here::here("Output", "Intermediate", "02_taxonomy_database.qs") %>%
+  qs::qread()
 
+# Standardize characters encoding
+for (i in 1:ncol(database)){
+  if(is.character(database[,i])){
+    Encoding(database[,i]) <- "UTF-8"
+  }
+}
 
+# FLAGGING COMMON SPATIAL ERRORS ------------------------------------------
 
-# Flagging common spatial errors using CoordinateCleaner ------------------
+# Flagging potentially erroneous coordinates using test avaiable in the 'CoordinateCleaner' package.
 
-# Use wrapper function "clean_coordinates" for checking several issues present in lat/long coordinates using multiple empirical tests to flag potentially erroneous coordinates. All coordinates must be in WGS84 to use the clean_coordinates function.
+# continent_border <-
+#   rnaturalearth::ne_download(scale = "large",
+#                              type = 'land',
+#                              category = 'physical')
 
-continent_border <-
-  rnaturalearth::ne_download(scale = "large",
-                             type = 'land',
-                             category = 'physical')
+# Just in case the 'prefilter' step were not executed
+database <- cc_val(
+  x =  database,
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
+  value = "clean"
+)
 
-flag_invalid_xy <- cc_val(x =  df,
-                          lon = "decimalLongitude",
-                          lat = "decimalLatitude",
-                          value = "clean")
-space_issues  <-
+flag_issues <-
   clean_coordinates(
-    x =  flag_invalid_xy,
+    x =  database,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
     species = "scientificName",
-    countries = NULL,
+    countries = "country",
     tests = c(
       "capitals",
       "centroids",
@@ -54,8 +67,9 @@ space_issues  <-
       "gbif",
       "institutions",
       "outliers",
-      "seas", # Check whether this is necessary
-      "zeros"
+      # "seas", # Check whether this is necessary
+      # "zeros", 
+      "urban"
     ),
     capitals_rad = 10000,
     centroids_rad = 1000,
@@ -74,87 +88,55 @@ space_issues  <-
     country_refcol = "iso_a3",
     inst_ref = NULL,
     range_ref = NULL,
-    seas_ref = continent_border,
-    seas_scale = 110,
+    # seas_ref = continent_border,
+    # seas_scale = 110,
     urban_ref = NULL,
     value = "spatialvalid"
   )
 
-summary(space_issues)
-space_issues <- as_tibble(space_issues)
+# FiXME: add cc_coun and create bdc_out_range
 
-bdc_quickmap(data = space_issues,
-             long = decimalLongitude, 
-             lat = decimalLatitude)
-
-
-
-# Number of records flagged per issue
-(!(space_issues %>% dplyr::select(.val:.summary))) %>% colSums()
-
-
-
-# FIXEME: STOPPED HEREgt  ########################
-
-#  Flagging low decimal precision -----------------------------------------
-
-round_issue <-
+#  Flagging low decimal precision 
+flag_issues <-
   bdc_round_dec(
-    data = df,
-    lon = 'longitude',
-    lat = 'latitude',
+    data = flag_issues,
+    lon = "decimalLongitude",
+    lat = "decimalLatitude",
     ndec = c(0, 1, 2) #number of decimals to be tested
   )
-colSums(!round_issue)
 
-space_issues <-
-  dplyr::bind_cols(
-    space_issues %>% dplyr::select(-.summary),
-    round_issue,
-    space_issues %>% dplyr::select(.summary)
+# Mapping spatial errors --------------------------------------------------
+# Mapping a column containing to results of a spatial test
+flag_issues %>%
+  dplyr::filter(.cen == FALSE) %>%
+  bdc_quickmap(
+    data = .,
+    lon = "decimalLongitude",
+    lat = "decimalLatitude",
+    col_to_map = ".cen",
+    size = 1
   )
 
-rm(round_issue)
+# REPORT ------------------------------------------------------------------
+# Create a summary column. This column is FALSE if any test was flagged as FALSE (i.e. potentially invalid or problematic record)
+flag_issues <- bdc_summary_col(data = flag_issues)
 
-# update .summary column
-df <- df %>% rowwise() %>% mutate(.summary=all(.ndec_all, .summary))
-df %>% select(starts_with('.'))
+# Create a report summarizing the results of all tests
+bdc_create_report(data = flag_issues, workflow_step = "space") %>% View()
 
+# Save the report
+bdc_create_report(data = flag_issues, workflow_step = "space") %>% 
+  data.table::fwrite(., here::here("Output/Report/03_Space_Report.csv"))
 
+# FIGURES -----------------------------------------------------------------
+bdc_create_figures(data = flag_issues, workflow_step = "space")
 
+# CLEAN THE DATABASE ------------------------------------------------------
+# Removing flagged records (potentially problematic ones) and saving a 'clean' database (i.e., without columns of tests, which starts with ".")
+output <-
+  flag_issues %>%
+  dplyr::filter(.summary == TRUE) %>%
+  bdc_filter_out_flags(data = ., col_to_remove = "all")
 
-
-##%######################################################%##
-#                                                          #
-####                Filter species range                ####
-#                                                          #
-##%######################################################%##
-
-# Check whether the species records occurs in the known species distribution (i.e., Brazilian state). Species distribution information were obtained from Brazilian Flora group (2018)
-
-## Download data from gadm.org 
-bra_states <- raster::getData("GADM", country= "Brazil", level=1)
-
-bra_states@data <- bra_states@data %>% dplyr::select(HASC_1)
-bra_states@data$fill <- 1
-bra_states@data$HASC_1 <- gsub("BR.", "", bra_states@data$HASC_1)
-selec_points <- raster::extract(bra_states, data_03 %>% dplyr::select(longitude, latitude))
-
-occ <- data_03$.occurrence
-fill <- selec_points$fill
-uf <- selec_points$HASC_1
-
-# Function for checking whether the records in inside species range
-range <-NULL
-for (i in 1:length(occ)){
-  range[i] <-  stringr::str_detect(occ[i], stringr::regex(uf[i], ignore_case = TRUE))
-}
-range <- ifelse(is.na(range), FALSE, range)
-
-# Add the column
-data_03$.recordState <- uf
-data_03$.range <- range
-table(data_03$.range)
-
-# Save the table
-fwrite(data_03, "data/clean/04_database_geographic_temporal_checking/data_03_1.csv")
+output %>% 
+  qs::qsave(., here::here("Output", "Intermediate", "03_space_database.qs"))
