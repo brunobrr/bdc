@@ -106,7 +106,7 @@ database <-
 bdc_create_report(data = database, workflow_step = "taxonomy") %>% View()
 
 # Save the report
-bdc_create_report(data = database, workflow_step = "taxonomy") %>% 
+bdc_create_report(data = database, workflow_step = "Taxonomy") %>% 
   data.table::fwrite(., here::here("Output/Report/02_taxonomy_Report.csv"))
 
 # CLEAN THE DATABASE ------------------------------------------------------
