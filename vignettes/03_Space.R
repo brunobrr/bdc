@@ -5,16 +5,14 @@ devtools::load_all()
 ipak(
   c(
     "tidyverse",
-    "vroom",
     "here",
     "dplyr", 
     "rnaturalearth",
     "CoordinateCleaner",
     "stringr",
     "rworldmap", # Check this
-    "geobr", # Check this
-    "raster", # Check this
-    "flora"
+    "flora", 
+    "qs"
   )
 )
 
@@ -53,7 +51,7 @@ database <- cc_val(
 )
 
 flag_issues <-
-  clean_coordinates(
+  CoordinateCleaner::clean_coordinates(
     x =  database,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
@@ -68,7 +66,7 @@ flag_issues <-
       "institutions",
       "outliers",
       # "seas", # Check whether this is necessary
-      # "zeros", 
+      # "zeros",
       "urban"
     ),
     capitals_rad = 10000,
@@ -106,7 +104,7 @@ flag_issues <-
   )
 
 # Mapping spatial errors --------------------------------------------------
-# Mapping a column containing to results of a spatial test
+# Mapping a column containing the results of one spatial test
 flag_issues %>%
   dplyr::filter(.cen == FALSE) %>%
   bdc_quickmap(
