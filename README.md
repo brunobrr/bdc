@@ -14,4 +14,4 @@ The workflow is composed of five steps:
 4.  Space: flagging, identifying, and cleaning potentially wrong geographic coordinates (fifteen tests available)
 5.  Time: standardizing and flagging information about an event
 
-Aim to make easier the interpretation and visualization of results, in each step of the workflow a report and figures are created. Further, standardization databases resulting from each step of the workflow as well as databases containing information that needs (could) to be checked by users are automatically saved.
+Aim to make easier the interpretation and visualization of results, in each step of the workflow a report and figures are created. Further, standardized databases resulting from each step of the workflow as well as databases containing information that needs (could) to be checked by users are automatically saved.
