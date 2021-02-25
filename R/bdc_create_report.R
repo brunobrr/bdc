@@ -244,8 +244,8 @@ bdc_create_report <- function(data, workflow_step) {
                                 "Rounded coordinates",
                                 Description
           ),
-          Description = if_else(Description == ".coun",
-                                "Coordinate-country discordance",
+          Description = if_else(Description == ".urb",
+                                "Records withing urban areas",
                                 Description
           ),
           Description = if_else(Description == ".summary",

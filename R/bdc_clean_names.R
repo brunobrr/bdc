@@ -493,7 +493,7 @@ bdc_clean_names <- function(sci_names){
   }
   
 # Other issues ------------------------------------------------------------
-   # Remove punctuation characters and digits, duplicated genus names, capitalize genus name, and substitute empty cells with NA  
+   # Capitalizes genus name and strings in which all words are capitalized; substitute empty cells with NA  
   bdc_rem_other_issues <- function(data, sci_names) {
     
     res <- data[[sci_names]] %>% stringr::str_squish()
@@ -510,6 +510,14 @@ bdc_clean_names <- function(sci_names){
       gsub("^$", NA, res) %>% # substitute empty records by NA
       Hmisc::capitalize(.) # Capitalize first letter
     
+    for (i in 1:length(res)) {
+      all_capitalize <- !stringr::str_detect(res[i], "[[:lower:]]")
+      
+      if (all_capitalize == TRUE) {
+        res[i] <- stringr::str_to_lower(res[i]) %>% Hmisc::capitalize(.) 
+      }
+    }
+    
     df <-
       data.frame(res) %>%
       rename(clean_other_issues = res) %>%
@@ -523,7 +531,6 @@ bdc_clean_names <- function(sci_names){
     
     return(df)
   }
-  
 # Infraespecific names ----------------------------------------------------
   # Flag, identify and remove infraespecific categories from scientific names  
   bdc_rem_infaesp_names <- function(data, sci_names) {

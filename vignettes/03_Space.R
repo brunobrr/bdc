@@ -56,7 +56,7 @@ flag_issues <-
     lon = "decimalLongitude",
     lat = "decimalLatitude",
     species = "scientificName",
-    countries = "country",
+    countries = ,
     tests = c(
       "capitals",
       "centroids",
@@ -66,7 +66,7 @@ flag_issues <-
       "institutions",
       "outliers",
       # "seas", # Check whether this is necessary
-      # "zeros",
+      "zeros",
       "urban"
     ),
     capitals_rad = 10000,
@@ -96,7 +96,7 @@ flag_issues <-
 
 #  Flagging low decimal precision 
 flag_issues <-
-  bdc_round_dec(
+  bdc_xy_precision(
     data = flag_issues,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
