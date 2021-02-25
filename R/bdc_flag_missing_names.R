@@ -1,10 +1,9 @@
-#' @title Flag records missing scientific name
+#' Flag records missing scientific name
 #'
-#' @description
 #' This function add a new column `.missing_name` in the returned database
 #' 
-#' @param data data.frame containing a column of species names: 
-#' @param sci_names charactere string containing scientific names
+#' @param data data.frame containing a column of species names 
+#' @param sci_names character string containing scientific names
 #'
 #' @export
 #'

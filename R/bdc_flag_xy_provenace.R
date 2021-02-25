@@ -1,5 +1,5 @@
 
-#' Title Flag records from doubtful provenance (e.g., 'fossil', 'HUCP') whose can be unreliable or unsuitable for certain analyses
+#' Flag records from doubtful provenance (e.g., 'fossil', 'HUCP') whose can be unreliable or unsuitable for certain analyses
 #'
 #' @param basisOfRecord character string. The column with basis of records
 #' @param data 
@@ -24,6 +24,7 @@ bdc_flag_xy_provenance <- function(data, basisOfRecord = "basisOfRecord",
         "MachineObservation",
         "MATERIAL_SAMPLE",
         "O",
+        "Occurrence",
         "MaterialSample",
         "OBSERVATION",
         "Preserved Specimen",
@@ -34,6 +35,7 @@ bdc_flag_xy_provenance <- function(data, basisOfRecord = "basisOfRecord",
         "preservedspecimen",
         "S",
         "Specimen",
+        "Taxon",
         "UNKNOWN",
         "",
         NA
