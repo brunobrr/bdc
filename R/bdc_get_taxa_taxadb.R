@@ -1,12 +1,14 @@
-
-#' Get taxa information from taxadb R package by fuzzy match.
-#'This function was inspired by get.taxa function from flora R package.
+#' Matching scientific names against local stored taxonomic authorities databases
+#' 
+#' This function borrows heavily from the great work done by Norman et al. (2020) in their package 'taxadb', which contains functions that allow querying millions of taxonomic names in a fast and consistent way. The bdc_get_taxadb contains additions that allow queries using fuzzy matching and converting synonyms to the current accepted name. The fuzzy match algorithm was inspired by get.taxa function of the 'flora' package.
+#' 
+#' 
 #' @param sci_name A character vector of species names. The function does not clean species names (e.g.: infraespecific, var., inf.), it is expected clean names.
 #' The inclusion of 'var.' increases name distances and it is advised to set smaller suggestion_distance values. 
 #' @param replace_synonyms A logical value (default = TRUE) whether synonyms must be replaced by the valid names found in taxadb database.
 #' @param suggest_names A logical value (default = TRUE) whether species names must be suggested if it is not found in the first search. 
 #' @param suggestion_distance A numeric value (default = 0.9). It is the accepted distance between the searched names and suggested ones. Distances higher than specified here are not suggested and NA is returned.  
-#' @param db A character vector with the name of the database where information should be searched. The available databases are those provided by taxadb package.  
+#' @param db Character string. Contains the name of the taxonomic database where information should be searched. By default, 'gbif' will be installed. Use 'all' to install all available taxonomic database automatically.
 #' @param rank_name A taxonomic rank from the column named kingdom in db. This argument decreases the number of scientific names to calculate distances.  
 #' @param rank 
 #' @param parallel A logical value indicating whether distance calculation should be done in parallel.
@@ -41,7 +43,9 @@ bdc_get_taxa_taxadb <-
     # Measuring execution time
     start <- Sys.time()
     
-    # This is one-time setup used to download, extract and import taxonomic database from the taxonomic authority defined by the user (see ?taxadb::td_create for details)
+    # This is one-time setup used to download, extract and import taxonomic
+    # database from the taxonomic authority defined by the user (see
+    # ?taxadb::td_create for details)
     taxo_authority <- db
     taxadb::td_create(taxo_authority, schema = "dwc", overwrite = FALSE)
 
@@ -63,7 +67,9 @@ bdc_get_taxa_taxadb <-
     # Query names in taxadb (only exact match allowed)
     found_name <- suppressWarnings(taxadb::filter_name(sci_name, provider = db))
 
-    # Save number of columns of the original search. This is important because the number of columns can vary in different databases according to the taxonomic authority chose
+    # Save number of columns of the original search. This is important because
+    # the number of columns can vary in different databases according to the
+    # taxonomic authority chose
     ncol_tab_taxadb <- ncol(found_name)
 
     # Add new columns
@@ -98,7 +104,8 @@ bdc_get_taxa_taxadb <-
       if (suggest_names == TRUE) {
         not_found_index <- which(not_found == TRUE)
 
-        # Searches for approximate best matches for each unresolved names based on a maximum distance
+        # Searches for approximate best matches for each unresolved names based
+        # on a maximum matching distance
         suggested_search <-
           bdc_suggest_names_taxadb(
             found_name$input[not_found_index],
@@ -114,7 +121,7 @@ bdc_get_taxa_taxadb <-
         suggested <- !is.na(suggested_name)
         found_name[not_found_index, "distance"] <- distance
 
-        # Searches valid names for each suggested names
+        # Searches valid names for each suggested names using taxadb
         if (any(suggested == TRUE)) {
 
           # Exclude names without suggestion
@@ -158,7 +165,8 @@ bdc_get_taxa_taxadb <-
               )
             )
 
-            # Filter data of suggested names not returned by filter_name (valid duplicated names)
+            # Filter data of suggested names not returned by filter_name (valid
+            # duplicated names)
             duplicated_original_names <-
               suggested_search[suggested_search[, "suggested"] %in%
                 suggested_names_filtered[duplicated], "original"]
@@ -173,7 +181,7 @@ bdc_get_taxa_taxadb <-
             found_name[p, "notes"] <-
               paste(found_name[p, "notes"][[1]],
                 "other species had the same suggested name",
-                sep = "|"
+                sep = "| "
               )
 
             suggest_data <-
@@ -181,7 +189,8 @@ bdc_get_taxa_taxadb <-
                 suggested_names_filtered[duplicated]), ]
           }
 
-          # Filter duplicated names returned by filter_name (excluding synonyms when there are valid names)
+          # Filter duplicated names returned by filter_name (excluding synonyms
+          # when there are valid names)
           if (any(duplicated(suggest_data$input))) {
             suggest_data <- bdc_clean_duplicates(data = suggest_data)
           }
@@ -192,7 +201,7 @@ bdc_get_taxa_taxadb <-
           suggest_data <-
             suggest_data %>% dplyr::distinct(input, .keep_all = T)
 
-          # Saving suggested data on found_name
+          # Adding suggested data on found_name
           suggested_original_names <-
             suggested_search[suggested_search[, "suggested"] %in%
                                suggest_data$input, "original"]
@@ -203,9 +212,9 @@ bdc_get_taxa_taxadb <-
           found_name[posi_misspelled_names, 1:ncol_tab_taxadb] <-
             suggest_data[, 1:ncol_tab_taxadb]
 
-          # Indicate the names replaced due to misspelling
+          # Indicating misspelled names
           found_name[posi_misspelled_names, "notes"] <-
-            "was misspelled"
+            "was misspelled "
           
         } else {
         suggested_search <-
@@ -216,6 +225,11 @@ bdc_get_taxa_taxadb <-
           )
         }
       }
+      
+      # add taxonomicStatus to the column 'notes'
+      found_name <- 
+        found_name %>% 
+        dplyr::mutate(notes = paste(found_name$taxonomicStatus, notes, sep = " "))
       
       # search accepted names for synonyms
       synonym_index <- which(found_name$taxonomicStatus != "accepted")
@@ -234,8 +248,8 @@ bdc_get_taxa_taxadb <-
 
           accepted <- dplyr::bind_cols(accepted, ori_names)
 
-          # Split names by equal id
-          accepted_list <- split(accepted, as.factor(accepted$input))
+          # Split names by equal original_search
+          accepted_list <- split(accepted, as.factor(accepted$original_search))
           nrow_accepted <- sapply(accepted_list, nrow)
           accepted_empty <- sapply(
             accepted_list,
@@ -256,28 +270,28 @@ bdc_get_taxa_taxadb <-
             found_name[p0, colnames(replace_tab)] <- replace_tab
 
             found_name[p0, "notes"] <-
-              paste(found_name$notes[p0], "replaced synonym", sep = "|")
+              paste(found_name$notes[p0], " replaced synonym ", sep = "| ")
           }
 
           # Indicate synonyms without accepted names
           if (any(accepted_empty == TRUE)) {
             p <- match(
-              names(accepted_list[accepted_empty]), found_name$acceptedNameUsageID
+              names(accepted_list[accepted_empty]), found_name$original_search
             )
 
             found_name[p, "notes"] <-
-              paste(found_name[p, "notes"][[1]], "check no accepted name", sep = "|")
+              paste(found_name[p, "notes"][[1]], "no accepted name ", sep = "| ")
           }
 
           # Indicate synonyms with +1 accepted name
           if (any(nrow_accepted > 1L)) {
             p1 <- match(
               names(accepted_list[nrow_accepted > 1]),
-              found_name$acceptedNameUsageID
+              found_name$original_search
             )
 
             found_name[p1, "notes"] <-
-              paste(found_name[p1, "notes"][[1]], "check +1 accepted", sep = "|")
+              paste(found_name[p1, "notes"][[1]], "multiple accepted ", sep = "| ")
           }
         } # end of replace_synonyms
       } # end of nrow_synonym
@@ -290,7 +304,7 @@ bdc_get_taxa_taxadb <-
       
       multi_accName <-
         found_name %>% 
-        dplyr::filter(stringr::str_detect(notes, regex("1 accepted"))) %>%
+        dplyr::filter(stringr::str_detect(notes, regex("multiple"))) %>%
         dplyr::pull(., scientificName) %>%
         taxadb::filter_name(., provider = db) %>%
         dplyr::pull(., acceptedNameUsageID) %>%

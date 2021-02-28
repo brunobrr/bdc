@@ -91,7 +91,7 @@ query_names <- bdc_get_taxa_taxadb(
   rank = "kingdom",
   parallel = TRUE,
   ncores = 2,
-  export_accepted = TRUE
+  export_accepted = FALSE
 )
 
 # Merge results of taxonomy standardization process with the 'database.' To simplicity, let's rename the original name to "verbatim_scientificName". From now on "scientifiName" will refers to the verified names (resulted from standardization process). As the column "original_search" in "query_names" and "names_clean" are equal, only the first will be kept.

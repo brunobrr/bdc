@@ -1,8 +1,8 @@
-#' Title: Suggest valid names based on taxadb R package.
+#' Finding the potential match candidate for misspelled names
 #'
-#' This function is a modification of suggest_name function (flora package) accessing taxadb database for fuzzy matching.
+#' This algorithm searches for a potential match candidate within an orthographic distance of each misspelled names. Only names within an orthographic distance specifyed in 'max_distance' will be returned. This function was built based on the 'suggest.name' function of the flora package.
 #'
-#' @param sci_name character, containing scientific to be searched in taxadb database. The function does not clean names (eg.: infraspecific names), so this procedure should be done previously.
+#' @param sci_name character, containing scientific to be searched in a taxonomic database available in the 'taxadb' package.
 #' @param max_distance numeric,  a value between 0 and 1 specifying the minimum distance between the scientific names and names suggested by a fuzzy matching. Values close to 1 indicate that only a few differences between scientific names and name suggested are allowed. Default is 0.9.
 #' @param provider A database where the valid and suggest names should be searched. The options are those provided by taxadb package.
 #' @param rank_name a character string of taxonomic scientific name (e.g. "Plantae"). Default is NULL
@@ -49,7 +49,7 @@ bdc_suggest_names_taxadb <-
     } else {
       species_first_letter <-
         taxadb::taxa_tbl(provider) %>%
-        pull(scientificName) %>%
+        dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
     }
 
