@@ -198,7 +198,7 @@ bdc_get_taxa_taxadb <-
 
           # Indicating misspelled names
           found_name[posi_misspelled_names, "notes"] <-
-            "| was misspelled "
+            "| wasMisspelled "
           
         } else {
         suggested_search <-
@@ -250,7 +250,7 @@ bdc_get_taxa_taxadb <-
             found_name[p0, colnames(replace_tab)] <- replace_tab
 
             found_name[p0, "notes"] <-
-              paste(found_name$notes[p0], "replacedSynonym", sep = "| ")
+              paste(found_name$notes[p0], "replaceSynonym", sep = "| ")
           }
 
           # Flags synonyms without accepted names
@@ -315,15 +315,18 @@ bdc_get_taxa_taxadb <-
                     everything()) %>%
       dplyr::mutate(distance = ifelse(distance > suggestion_distance,
                                       distance, NA)) %>%
-      dplyr::mutate(notes = ifelse(is.na(scientificName),
-                                   'notFound', notes))
+      dplyr::mutate(notes = ifelse(
+        is.na(scientificName) & notes != "multipleAccepted",
+        'notFound',
+        notes
+      ))
     
     # Adds 'taxonomicStatus' to the column 'notes'
-    found_name <-
+    teste <-
       found_name %>%
       dplyr::mutate(notes =
                       ifelse(
-                        notes != "notFound",
+                        notes != "notFound" & notes != "multipleAccepted",
                         paste(found_name$taxonomicStatus, notes, sep = " "),
                         notes
                       ))
