@@ -112,6 +112,8 @@ bdc_create_report <- function(data, workflow_step) {
             round((number_of_records / n_records) * 100, 2)
         )
       
+      names$notes <- stringr::str_squish(names$notes)
+      
       if (".uncer_terms" %in% names(data)) {
         taxo_unc <-
           data %>%
@@ -135,32 +137,78 @@ bdc_create_report <- function(data, workflow_step) {
         dplyr::mutate(Description = notes) %>%
         dplyr::mutate(
           Description = if_else(
-            Description == "was misspelled|replaced synonym",
-            "valid: was misspelled and replaced synonym",
-            Description
-          ),
-          Description = if_else(
             Description == "taxo_uncer",
             "check: doubtful taxonomic identification",
             Description
           ),
-          Description = if_else(Description == "was misspelled",
-                                "valid: was misspelled", Description
+          Description = if_else(
+            is.na(Description),
+            "invalid: invalid name input (i.e., NA or empty)",
+            Description
           ),
-          Description = if_else(Description == "not found",
-                                "invalid: not found", Description
-          ),
-          Description = if_else(Description == "|replaced synonym",
-                                "valid: replaced synonym", Description
+          Description = if_else(Description == "accepted",
+                                "valid: name accepted", Description
           ),
           Description = if_else(
-            Description == "|check +1 accepted",
-            "check: more than one accepted name found",
+            Description == "accepted | replacedSynonym",
+            "valid: synonym replaced by an accepted name",
             Description
           ),
           Description = if_else(
-            Description == "|check no accepted name",
-            "check: no accepted name found",
+            Description == "accepted | wasMisspelled",
+            "valid: accepted name that was misspelled",
+            Description
+          ),
+          Description = if_else(
+            Description == "accepted | wasMisspelled | replacedSynonym",
+            "valid: accepted names that were assigned as misspelled synonym ",
+            Description
+          ),
+          Description = if_else(
+            Description == "heterotypic synonym",
+            "check: ambiguous synonyms linked to multiple accepted names",
+            Description
+          ),
+          Description = if_else(
+            Description == "homotypic synonym",
+            "check: ambiguous synonyms linked to multiple accepted names",
+            Description
+          ),
+          Description = if_else(
+            Description == "proparte synonym",
+            "check: ambiguous synonyms linked to multiple accepted names",
+            Description
+          ),
+          Description = if_else(
+            Description == "homotypic synonym | wasMisspelled",
+            "check: ambiguous synonyms that was misspelled",
+            Description
+          ),
+          Description = if_else(
+            Description == "heterotypic synonym | wasMisspelled",
+            "check: ambiguous synonyms that was misspelled",
+            Description
+          ),
+          Description = if_else(
+            Description == "proparte synonym | wasMisspelled",
+            "check: ambiguous synonyms that was misspelled",
+            Description
+          ),
+          Description = if_else(Description == "notFound",
+                                "invalid: not found", Description
+          ),
+          Description = if_else(Description == "multipleAceppted",
+                                "invalid: multiple accepted names found",
+                                Description
+          ),
+          Description = if_else(
+            Description == "synonym | noAcceptedName",
+            "invalid: synonyms with no accepted names",
+            Description
+          ),
+          Description = if_else(
+            Description == "accepted | replacedSynonym",
+            "invalid: synonyms with no accepted names",
             Description
           )
         )
