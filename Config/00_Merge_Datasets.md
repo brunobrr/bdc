@@ -1,22 +1,24 @@
 ---
 
-# 00: Merge Datasets
+# 00: Merge Datasets - Integration and harmonization of heterogenous datasets
 
 ---
 
-The first step of the bdc workflow is to format each heterogeneous datasets (**input files**) in a standardized one using common standards and protocols. To do so, users must adjust a **configuration table** to indicate which field of each original dataset (i.e. header of columns) corresponds to each field of the configuration table. In doing so, names in the original database are translated to a predifined subset of terms regarding taxonomic names, places, and events. The terms the simplest method and structure of the Darwin Core standards, an internationally recognized and ratified data exchange format for sharing biodiversity data and metadata (see a quick reference guide [here](https://dwc.tdwg.org/terms/)). The standardization process follows current best methods for integrating biodiversity data in a common format (e.g. the GBIF Integrated Publishing Toolkit; Robertson et al. 2014; Seebens et al. 2020).
+The first step of the bdc workflow is to format each heterogeneous datasets (**input files**) in a standardized one using common standards and protocols. To do so, users must fill-out a **configuration table** to indicate which field of each original dataset (i.e. header of columns) matches to standardized terms of the configuration table. In doing so, names in the original database are translated to a predifined subset of terms regarding taxonomic names, places, and events. These terms represents the simplest method and structure for sharing biodiversity data and metadata across a wide variety of biodiversity applications (see Simple Darwin Core standards [here](https://dwc.tdwg.org/terms/)). The standardization process follows current best methods for integrating biodiversity data in a common format (e.g. the GBIF Integrated Publishing Toolkit; Robertson et al. 2014; Seebens et al. 2020). Once standardized, datasets are then integrated and combined in a formmated structure.
 
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="25"/> **Important**:
 
--   the input files must be located in the folder ***Input_files***as **.csv** files
+-   the input files must be located in the folder ***Input_files*** in comma-seperated format (**.csv**)
 -   The configuration table ***DatabaseInfo.csv*** is located in the **Config** folder
+-   When filling out the configuration table the **exact** name of a column of original datasets should be provided
+-   Names of original datasets with no correspond standardized term must be fill out nas **NA** (not available)
 
-Below we can find a list of fields and their description. Each field is categorized according to its importance to run the workflow. For example, the fields assigned as required contain the basic information to execute the workflow and have to be provided by users (more details below). **The workflow is adjustable**, and users can insert other fields in the Configuration table according to their needs.
+Below we can find a list of fields and their description. Each field is categorized according to its importance to run the workflow. For example, the fields assigned as required contain the basic information to execute the workflow and have to be provided by users (more details below). **The workflow is adjustable**, and users can insert other fields in the Configuration table according to their needs. In such cases, we strongly recommend that terms added follow a Darwin Core Standard.
 
 Below are listed the specifications of each field of the configuration database,
 
 -   **Field**: Name of the fields in *DatabaseInfo.csv* to be filled in.
--   **Category**: Classification of each field in *DatabaseInfo.csv*. If *required*, the field is obligatory information required to run the workflow; if *recommended*, the field is not mandatory to run the workflow but it contains important details on species records; if *additional*, the field contains information that can be provided by users. As a general guidance, be careful to include all *required* fields and suply as many *reccomended* field as possible. Fields not supplied must be filled with **NA** (not available).
+-   **Category**: Classification of each field in *DatabaseInfo.csv*. If *required*, the field is obligatory information required to run the workflow; if *recommended*, the field is not mandatory to run the workflow but it contains important details on species records; if *additional*, the field contains information that can be provided by users. As a general guidance, be careful to include all *required* fields and suply as many *reccomended* field as possible.
 -   **Description**: Description about the content of the specified field in the original database.
 -   **Type**: Type of content data on the specified field in the original database.
 -   **Example**: An example of a single content on the specified field in the original database.
