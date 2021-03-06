@@ -1,12 +1,19 @@
-#' Title: Return the closest name in a vector of names. 
-#' 
-#' This function looks for the closest name in a vector of names and returns the string distances calculated by fuzzy matching.
+#' Internal function. Returns the closest matching names for misspelled names
 #'
-#' @param sci_name A character vector with a single name.
-#' @param max_distance A numeric value specifying the minimum distance between the sci_name and the names in species_first_letter. 
-#' @param species_first_letter A character vector whose distances will be calculated from sci_name.
+#' This function searches for candidates names for misspelled names within a
+#' specified matching distances. Candidates names are extracted for a supplied
+#' taxonomic database from 'taxadb' package informed in the function
+#' 'bdc_query_names'.
 #'
-#' @return This function returns a data.frame whose first column is the closest name and the second column is the distance between the sci_name and the closest name.   
+#' @param sci_name character string. Containing unique scientific names without
+#' year and authorship information. Default = "sci_name".
+#' @param max_distance numeric. The maximum matching distance between supplied
+#' and candidates names. . It ranges from 0 to 1, being 1 an indicative of a
+#' perfect match. Default = "0.75".
+#' @param species_first_letter character string. Contains candidates names  be
+#' calculated from sci_name. Default = "species_first_letter".
+#' @return A data.frame whose first column is the closest matching name for a misspelled name and the second one a matching distance.
+#' @noRd
 #' @export
 #'
 #' @examples

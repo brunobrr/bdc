@@ -1,5 +1,5 @@
-
-#' Title: Extract_cntr_names is a function used to extracting country names in different names from wikipedia in different languages
+#' Internal function. Extracts countries names in different languages from
+#' wikipedia
 #'
 #' @param x 
 #'

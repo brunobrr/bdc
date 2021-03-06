@@ -1,5 +1,8 @@
-#' Title
+#' Creates directories for saving ouptups of the bdc workflow
 #'
+#' Creates directories for saving the outputs of bdc workflow, which including 
+#' databases, figures, reports, and databases which need to be checked.
+#' 
 #' @return
 #' @export
 #'

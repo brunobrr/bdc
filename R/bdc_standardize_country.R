@@ -1,10 +1,9 @@
-
-#' Title: standard_country is a function to correct, standardize, and assign a ISO code to country names.
+#' Internal function. Corrects, standardizes, and assigns a ISO code to country names.
 #'
-#' @param data A data.frame with a column of country names. 
-#' @param country Column name with the country names. 
-#' @param country_names_db A database to match country names and return the suggested one.
-#'
+#' @param data data.frame. Containing a column with country names. 
+#' @param country character string. A column name with country names. 
+#' @param country_names_db character string. A data base with candidates countries names which the supplied name with be matched.
+#' @noRd
 #' @return Return a data.frame with original country names, suggested names and ISO code to country names. 
 #' @export
 #'
@@ -81,7 +80,9 @@ bdc_standardize_country <-
                                        nthreads = 1)
     cntr_db <-
       cntr_db %>% 
-      dplyr::mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2))
+      dplyr::mutate(cntr_suggested2 = ifelse(cntr_suggested2 == "", NA, cntr_suggested2)) %>% 
+      dplyr::mutate(cntr_suggested = as.character(cntr_suggested ), 
+                    cntr_suggested2 = as.character(cntr_suggested2))
     
     # Country code based on iso2c (it is possible use another code like iso3c, see ?codelist)
     cntr_db$cntr_iso2c <-

@@ -1,13 +1,14 @@
-#' Filter out rows based on flags assigned as FALSE
+#' Removes columns with the results of data quality tests
 #'
-#' @description
-#' This functions filter out rows based on any flag column assigned as FALSE
+#' This functions is used to filter out column containing the results of data
+#' quality tests (i.e., column starting with '.') or other columns specified.
 #'
-#' @param data data.frame with flags created by functions bdc_flag_*
-#' @param logical. Should the column .summary be removed?
-#' @importFrom dplyr select filter_at
-#'
-#' @export
+#' @param data data.frame. Containing columns to be removed
+#' @param col_to_remove logical. Which columns should be removed? Default =
+#' "all", which means that all columns containing the results of data quality tests
+#' are removed.
+#' @details
+#' @export A data.frame without columns specified in 'col_to_remove'.
 #'
 #' @examples
 #' \dontrun{

@@ -1,14 +1,10 @@
-#' Countries names in different language
+#' Internal function. Downloads countries names in different language from
+#' wikipedia
 #' 
-#' @importFrom dplyr as_tibble filter pull bind_rows arrange
-#' @importFrom fs file_exists dir_exists
-#' @importFrom here here
-#' @importFrom plyr ldply
-#' @importFrom rvest html_nodes html_table
-#' @importFrom utils write.table
-#' @importFrom vroom vroom
-#' @importFrom xml2 read_html
+#' A csv file is exported to 'data/countries_names'
 #' 
+#' @noRd
+#' @keywords internal
 #' @export
 bdc_get_wiki_country <- function() {
   

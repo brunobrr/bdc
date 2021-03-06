@@ -1,21 +1,27 @@
-#' Title Identify records in a country or at a determined distance from the country (e.g., in the ocean)
+#' Identify records in a country or at a determined distance from the country
+#' (e.g., in the ocean)
 #'
 #' @param data data.frame. Containing longitude and latitude
 #' @param country_name character string. Name of the country to considered. 
 #' @param lon character string. The column with the longitude coordinates. Default = “decimallatitude”.
 #' @param lat character string. The column with the latitude coordinates. Default = “decimallatitude”.
 #' @param dist numeric. The distance in degrees used to created a buffer around the country. 
-#' @details Records within a buffer around a country but not in other countries (e.g., records in the ocean) are flagged as TRUE (test passed). This avoids to flag as FALSE records close to country limits. For example, records of coast or marshland species.
+#' @details Records within a buffer around a country but not in other countries
+#' (e.g., records in the ocean) are flagged as TRUE (test passed). This avoids
+#' to flag as FALSE records close to country limits. For example, records of
+#' coast or marshland species.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-bdc_flag_xy_out_country <- function(data,
-                                    country_name,
-                                    lon = "decimalLongitude",
-                                    lat = "decimalLatitude",
-                                    dist = 0.5) {
+bdc_country_xy_mismatch <-
+  function(data,
+           country_name,
+           lon = "decimalLongitude",
+           lat = "decimalLatitude",
+           dist = 0.5) {
+    
   df <-
     data %>%
     dplyr::select(.data[[lon]], .data[[lat]]) %>%
@@ -108,7 +114,7 @@ bdc_flag_xy_out_country <- function(data,
 
   message(
     paste(
-      "\nbdc_flag_xy_out_country:\nFlagged",
+      "\nbdc_country_xy_mismatch:\nFlagged",
       sum(df$.xy_out_country == FALSE),
       "records.\nOne column was added to the database.\n"
     )

@@ -1,10 +1,14 @@
-#' Create figures reporting the results of the bdc workflow
+#' Creates figures reporting the results of the bdc workflow
 #' 
+#' Creates figures (i.e., barplots and maps) reporting the results of data
+#' quality tests implemented in the bdc workflow.
 #' 
-#' @param data data.frame Containing the results of each test
-#' @param tests character string. Containing the names of each test (columns in data starting with ".")
-#' @param workflow_step character string. Name to be add as a prefix to names of figures ("prefilter", "taxonomy", "space", "time")
-#'
+#' @param data data.frame Containing the results of each test.
+#' @param workflow_step character string. Name of the workflow step. Options available are ("prefilter", "space", and "time")
+#' @details This function creates figures based on the results of data quality
+#' tests implemented. A pre-defined list of test names is used for creating
+#' figures depending on the name of the workflow step informed. Figures are
+#' saving in "Output/Figures".
 #' @return
 #' @export Figures in png format
 #'

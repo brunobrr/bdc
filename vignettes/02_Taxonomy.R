@@ -81,7 +81,7 @@ for (i in 1:ncol(database)){
 # - ott: OpenTree Taxonomy
 # - iucn: IUCN Red List
 
-query_names<- bdc_get_taxa_taxadb(
+query_names<- bdc_query_names_taxadb(
   sci_name = database$names_clean,
   replace_synonyms = TRUE,
   suggest_names = TRUE,
