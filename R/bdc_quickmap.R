@@ -1,10 +1,17 @@
-#' Title: Create a map of points using ggplot2
+#' Create a map of points using ggplot2
 #'
-#' @param data data.frame containing longitude and latitude
+#' Creates a map of points using ggplot2 useful for inspecting the results of
+#' tests implemented in the workflow. 
+#' 
+#' @param data data.frame. Containing longitude and latitude
 #' @param lon character string. The column with the longitude coordinates
 #' @param lat character string. The column with the latitude coordinates
-#' @param col_to_map character string. Defining the column or color used to map. Can be a color name (e.g "red") the the name of a column of data. Dafault = "blue"
+#' @param col_to_map character string. Defining the column or color used to map.
+#' Can be a color name (e.g "red") the the name of a column of data. Default =
+#' "blue"
 #' @param size numeric. The size of the points
+#' @details Only records with valid coordinates can be plotted. Records missing or with invalid coordinates are removed prior creating the map.
+#' @example 
 
 bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
   
@@ -26,7 +33,7 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
       legend.position = "none"
     )
   
-  if (col_to_map %in% names(data)) {
+  if (!is.null(col_to_map)) {
     our_map <-
       data %>%
       ggplot() +
@@ -63,7 +70,7 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
           y = .data[[lat]]
           # Map the color
         ),
-        col = col_to_map,
+        col = "blue",
         alpha = 0.5,
         size = size
       ) +

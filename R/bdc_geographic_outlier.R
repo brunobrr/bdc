@@ -1,30 +1,23 @@
-#' Flag geographic outliers by comparing the status where record is against 
+#' Identify plant species records outside known geographic distribution
+#' 
+#' Flags geographic outliers by comparing the status where record is against 
 #' species range (i.e., Brazilian states) obtained from the Flora do Brazil 
 #' 2020.
 #'
-#' @param x Data.frame containg geographic coordinates and species names.
-#' @param species Character string. The column with the species name
-#' @param longitude Numeric. The column with longitude in decimal degrees. 
-#' Default = "decimalLongitude"
-#' @param latitude Numeric. The column with the latitude in decimal degrees. 
-#' Default = "decimalLatitude".
+#' @param data data.frame. A data frame containing geographic coordinates and species names.
+#' @param species character string. The column with scientific names.
+#' @param longitude character string. The column with longitude in decimal degrees. Default = "decimalLongitude"
+#' @param latitude character string. The column with the latitude in decimal degrees. Default = "decimalLatitude".
 #' 
 #' @details Check if coordinates are valid before run this test. 
-#' Species ccurrence records in Goias and range in DF are assinged as TRUE. 
-#' Similarly, species occurence in DF and range is GO are considered TRUE.
-#'
-#' @importFrom dplyr select mutate rename full_join distinct if_else
-#' @importFrom flora get.taxa
-#' @importFrom geobr read_state
-#' @importFrom sf st_as_sf st_crs st_intersection
-#' @importFrom stringr str_detect
-#'
+#' Species occurrence records in Goias and range in DF are assigned as TRUE. 
+#' Similarly, species occurrence in DF and range is GO are considered TRUE.
 #' @return flag of records are outliers (FALSE) or not (TRUE)
 #' 
 #' @export
-#'
+#' @example
 bdc_geographic_outlier <-
-  function(x,
+  function(data,
            species = "scientificName",
            longitude = "decimalLongitude",
            latitude = "decimalLatitude") {
@@ -35,14 +28,14 @@ bdc_geographic_outlier <-
       geobr::read_state(year = 2018, simplified = T) %>%
       dplyr::select(abbrev_state)
 
-    x <-
-      x %>%
+    data <-
+      data %>%
       dplyr::mutate(id = 1:nrow(.))
 
     # convert to spatial
     df_spatial <-
       sf::st_as_sf(
-        x = x,
+        data = data,
         coords = c("longitude", "latitude"),
         crs = sf::st_crs(bra_states)
       ) %>%
@@ -74,7 +67,7 @@ bdc_geographic_outlier <-
 
     df <-
       df_spatial %>%
-      dplyr::full_join(x, ., by = "species")
+      dplyr::full_join(data, ., by = "species")
 
 
     # Check whether the records are whithin species range

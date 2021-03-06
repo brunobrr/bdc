@@ -1,9 +1,14 @@
-#' Title
+#' Internal function. Gets a world map with country and code names
 #'
-#' @return
+#' Shapefile containing world country polygons obtained from the package
+#' 'rnaturalearth'.
+#' 
+#' @noRd
+#' @keywords internal
 #' @export
-#'
+#' 
 #' @examples
+#' worldmap <- bdc_get_world_map()
 bdc_get_world_map <- function() {
   worldmap <- rnaturalearth::ne_countries(scale = "large")
 

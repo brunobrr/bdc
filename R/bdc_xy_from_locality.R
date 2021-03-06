@@ -1,9 +1,16 @@
-#' Title
+#' Identify records missing coordinates but with information on locality
 #'
-#' @param data 
-#' @param locality 
-#' @param lon 
-#' @param lat 
+#' Identify records whose coordinates can potentially be extracted from
+#' information on locality 
+#' 
+#' @param data data.frame. Containing geographical coordinates and the column
+#' "locality'.
+#' @param locality chracter string. The column with information on where records
+#' was collected.
+#' @param lat character string. The column with latitude Default =
+#' "decimalLatitude".
+#' @param lon character string. The column with longitude. Default =
+#' "decimalLongitude".
 #'
 #' @return
 #' @export

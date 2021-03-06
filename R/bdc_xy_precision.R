@@ -1,13 +1,21 @@
-#' Flag imprecise geographic coordinates
+#' Flags imprecise geographic coordinates
 #'
-#' This function is used to flag records with a coordinate precision below a specified number of decimal places. Coordinates with one, two, or three decimal places have precision of~11.1 km, ~1.1 km, and ~111 m at the equator, respectively.
-#' 
-#' @param data: data.frame. A data.frame with coordinates data.
-#' @param lon: character. Column names with longitude values.
-#' @param lat: character. Column names with latitude values.
-#' @param ndec: numeric. A vector with number of decimal to be tested. Default ndec=c(0,1,2). 
+#' This function is used to flag records with a coordinate precision below a
+#' specified number of decimal places. Coordinates with one, two, or three
+#' decimal places have precision of~11.1 km, ~1.1 km, and ~111 m at the equator,
+#' respectively.
 #'
-#' @return The function returns a data.frame with logical values indicating whether values are rounded by the specified decimal number (ndec). In other word, potentially imprecise coordinates
+#' @param data: data.frame. A data.frame containing geographic coordinates.
+#' @param lon: character string. The column with longitude. Default =
+#' "decimalLongitude".
+#' @param lat: character string. The column with latitude Default =
+#' "decimalLatitude".
+#' @param ndec: numeric. Containing the numbers of decimals place to be tested.
+#' Default = c(0,1,2).
+#'
+#' @return A data.frame with logical values indicating whether values are
+#' rounded by the specified decimal number (ndec). In other word, potentially
+#' imprecise coordinates.
 #' 
 #' @export
 #'

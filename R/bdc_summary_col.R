@@ -1,8 +1,14 @@
-#' Title
+#' Creates or updates the column summarizing the results of data quality tests
 #'
-#' @param data 
-#'
-#' @return
+#' Creates or updates a column summarizing the results of data quality tests
+#' (i.e., columns starting with "."). Records that have failed in at least one
+#' data quality test are considered invalid (i.e., flagged as "FALSE") in the
+#' ".summary" column.
+#' @param data data.frame. Containing the results of data quality tests (i.e.,
+#' columns starting with ".").
+#' @details If existing, the column ".summary" will be removed and then updated
+#' considering all test names available in the supplied database. 
+#' @return A clean database without records flagged as "FALSE".
 #' @export
 #'
 #' @examples

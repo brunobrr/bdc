@@ -1,14 +1,23 @@
-#' Title: correct_coordinates is a function that will detect those occurrences georreferenced outside their country different coordinate transformation
+#' Internal function.Detects and corrects transposed geographic coordinates
+#' 
+#' This functions detects mismatches between country names informed coordinates.
+#' Once detects, transposed coordinates are corrected by the used of different
+#' coordinates transformations by using the 'bdc_coord_trans' function.
 #'
-#' @param data 
-#' @param x 
-#' @param y 
-#' @param sp 
-#' @param id 
-#' @param cntr_iso2 
-#' @param world_poly 
-#' @param world_poly_iso 
+#' @param data.frame. Containing an unique identifier for each records,
+#' geographical coordinates, and country names.
+#' @param x character string. The column with longitude. Default = "decimalLongitude".
+#' @param y character string. The column with latitude Default = "decimalLatitude".
+#' @param sp character string. The column with species scientific name.
+#' Default = "scientificName".
+#' @param id id character string.The column with an unique record identifier. 
+#' Default = "id".
+#' @param cntr_iso2 character string. The column with the country code assignment of
+#' each record. Default = "country_code".
+#' @param world_poly polygon. Borders of the world.
+#' @param world_poly_iso charterer sting. Iso2 code column of country polygon database
 #'
+#' @noRd
 #' @return
 #' @export
 #'
@@ -31,7 +40,7 @@ bdc_correct_coordinates <-
     # Filter occurrences database to avoid error in clean_coordinates errors
     occ_country <-
       occ_country %>%
-      dplyr::filter(.missing_xy == TRUE & .invalid_xy == TRUE) %>% 
+      CoordinateCleaner::cc_val(., lon = x, lat = y) %>% 
       dplyr::mutate(decimalLatitude = as.numeric(decimalLatitude),
              decimalLongitude = as.numeric(decimalLongitude))
  

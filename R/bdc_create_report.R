@@ -1,7 +1,8 @@
-#' Title
+#' Creates reports on results of data quality tests
 #'
-#' @param data a data frame
-#' @param workflow_step character string containing one of the following options("prefiter", "taxonomy", "space" or "time")
+#' @param data data frame. Containing the results of data quality tests.
+#' @param workflow_step character string containing one of the following
+#' options("prefiter", "taxonomy", "space" or "time")
 #'
 #' @return
 #' @export

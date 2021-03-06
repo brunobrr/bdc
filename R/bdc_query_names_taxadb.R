@@ -26,9 +26,9 @@
 #' @examples
 #' sci_name <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
 #' "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
-#' test <- bdc_get_taxa_taxadb(sci_names, suggestion_distance = 0.9, db = "gbif")
+#' test <- bdc_query_names_taxadb(sci_names, suggestion_distance = 0.9, db = "gbif")
 
-bdc_get_taxa_taxadb <-
+bdc_query_names_taxadb <-
   function(sci_name,
            replace_synonyms = TRUE,
            suggest_names = TRUE,

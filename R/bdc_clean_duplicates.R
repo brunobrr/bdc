@@ -1,4 +1,4 @@
-#' Filter duplicated names with multiple accepted names
+#' Internal function. Filters duplicated names with multiple accepted names
 #'
 #' This function is used to flag and remove names with multiple accepted name (i.e., column 'taxonomicStatus').
 #' 
@@ -8,6 +8,7 @@
 #' @param rank character string. Taxonomic rank name (e.g. "Plantae", "Animalia", "Aves", "Carnivora". Default is NULL.
 #' @details For some taxonomic databases available in 'taxadb' package, columns ragarding taxonomic ranks (e.g., kingdom, phyllum ) are empty (or containg only few information). In such cases, the full database wil be used in the analyses. 
 #' @return A data.frame without duplicated accepted names and flags "|check +1 accepted" in the column 'notes'. 
+#' @noRd
 #' @export
 #'
 #' @examples

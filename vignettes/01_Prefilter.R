@@ -37,34 +37,35 @@ for (i in 1:ncol(database)){
 }
 
 # CHECK 1 -----------------------------------------------------------------
-# Flag records missing scientific name (i.e empty or NA records)
-data_pf1 <- 
-  bdc_flag_missing_names(data = database,
-                         sci_name = "scientificName")
+# Identify records missing scientific name (i.e empty or NA records)
+data_pf1 <-
+  bdc_missing_names(data = database,
+                    sci_name = "scientificName")
 
 # CHECK 2 -----------------------------------------------------------------
-# Flag records missing latitude or longitude (i.e empty or NA records)
+# Identify records missing latitude or longitude (i.e empty or NA records)
 data_pf2 <-
-  bdc_flag_missing_xy(data = data_pf1,
-                      lon = "decimalLongitude",
-                      lat = "decimalLatitude")
+  bdc_missing_xy(data = data_pf1,
+                 lat = "decimalLatitude",
+                 lon = "decimalLongitude")
 # CHECK 3 -----------------------------------------------------------------
-# Flag records with invalid coordinates (lat > 90 or -90; long >180 or -180; coordinates NA)
+# Identify records with invalid coordinates (lat > 90 or -90; long >180 or -180; coordinates NA)
 data_pf3 <-
-  bdc_flag_invalid_xy(data = data_pf2,
-                      lon = "decimalLongitude",
-                      lat = "decimalLatitude")
+  bdc_invalid_xy(data = data_pf2,
+                 lon = "decimalLongitude",
+                 lat = "decimalLatitude")
 
 # CHECK 4 -----------------------------------------------------------------
 # Flag records from doubtful provenance
 data_pf4 <-
-  bdc_flag_xy_provenance(data = data_pf3,
-                         basisOfRecord = "basisOfRecord")
+  bdc_invalid_basis_of_records(data = data_pf3,
+                               basisOfRecord = "basisOfRecord",
+                               names_to_keep = "all")
 
 # CHECK 5 -----------------------------------------------------------------
 # Correct latitude and longitude transposed
 data_pf5 <-
-  bdc_flag_transposed_xy(
+  bdc_transposed_xy(
     data = data_pf4,
     id = "database_id",
     sci_name = "scientificName",
@@ -76,7 +77,7 @@ data_pf5 <-
 # CHECK 6 -----------------------------------------------------------------
 # Flag records outside one or multiple focal countries (e.g. exclude records in other countries or far from a informed distance from the coast)
 data_pf6 <-
-  bdc_flag_xy_out_country(
+  bdc_country_xy_mismatch(
     data = data_pf5,
     country_name = "Brazil",
     lon = "decimalLongitude",

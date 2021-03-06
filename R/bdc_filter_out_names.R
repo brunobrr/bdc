@@ -1,8 +1,14 @@
-#' Title
+#' Removes records with taxonomic issues
 #'
-#' @param data 
-#' @param notes 
-#' @param opposite 
+#' This function filters out records whose scientific names contain a issue,
+#' including names not found ('notFound'), with multiple (multipleAccepted) or
+#' none (noAcceptedName) accepted name found.
+#' 
+#' @param data data.frame. Containing the column 'notes'.
+#' @param notes character string. A column containing notes on taxonomic
+#' standardization process. Default = "notes".
+#' @param opposite logical. Should records with not taxonomic issue be returned.
+#' Default = FALSE.
 #'
 #' @return
 #' @export

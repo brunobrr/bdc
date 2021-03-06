@@ -1,4 +1,4 @@
-#' Finding a potential matching candidate for misspelled names
+#' Internal function. Finds a potential matching candidate for misspelled names
 #'
 #' This algorithm searches for a potential match candidate within an orthographic distance of each misspelled names. Only names within an orthographic distance specifyed in 'max_distance' will be returned. This function was built based on the 'suggest.name' function of the flora package.
 #'
@@ -9,8 +9,9 @@
 #' @param rank character string. Taxonomic rank name (e.g. "Plantae", "Animalia", "Aves", "Carnivora". Default is NULL.
 #' @param parallel logical, whether running in parallel. By default, it is TRUE
 #' @param ncores numeric. Number of cores to be used for parallel processing. Default = 2.
-#' @details For some taxonomic databases available in 'taxadb' package, columns ragarding taxonomic ranks (e.g., kingdom, phyllum ) are empty (or containg only few information). In such cases, the full database wil be used in the analyses. 
+#' @details For some taxonomic databases available in 'taxadb' package, columns ragarding taxonomic ranks (e.g., kingdom, phyllum ) are empty (or containg only few information). In such cases, the full database is be used in the analyses. 
 #' @return This function returns a data.frame whose first column is the suggested name and the second column is the distance between the sci_name and the suggested name. It is worth to note that if there are two names with equal distances, only the first one is returned.
+#' @noRd
 #' @export
 #'
 #' @examples
