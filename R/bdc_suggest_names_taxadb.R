@@ -1,22 +1,27 @@
 #' Internal function. Finds a potential matching candidate for misspelled names
 #'
-#' This algorithm searches for a potential match candidate within an orthographic distance of each misspelled names. Only names within an orthographic distance specifyed in 'max_distance' will be returned. This function was built based on the 'suggest.name' function of the flora package.
+#' This algorithm searches for a potential match candidate within an orthographic distance of each misspelled names. Only names within an orthographic distance specified in 'max_distance' will be returned. This function was built based on the 'suggest.name' function of the flora package.
 #'
-#' @param sci_name character string. Scientific matched against names from a taxonomic database available in the 'taxadb' package.
+#' @param sci_name character string. Scientific name to match a taxonomic database available in the 'taxadb' package.
 #' @param max_distance numeric. Value between 0 and 1 specifying the maximum distance between the scientific names and names suggested by a fuzzy matching. Values close to 1 indicate that only a few differences between scientific names and name suggested are allowed. Default = 0.9.
-#' @param provider character string. A database where the valid and suggest names should be searched. The options are those provided by the 'taxadb' package.
-#' @param rank_name character string. A taxonomic rank used to be used to filter data. Options available are: "kingdom", "phylum", "class", "order", "family", and "genus". Default = NULL.
+#' @param provider character string. A database where the valid will be searched. The options are those provided by the 'taxadb' package.
+#' @param rank_name character string. A taxonomic rank to filter the database. Options available are: "kingdom", "phylum", "class", "order", "family", and "genus". Default = NULL.
 #' @param rank character string. Taxonomic rank name (e.g. "Plantae", "Animalia", "Aves", "Carnivora". Default is NULL.
-#' @param parallel logical, whether running in parallel. By default, it is TRUE
-#' @param ncores numeric. Number of cores to be used for parallel processing. Default = 2.
-#' @details For some taxonomic databases available in 'taxadb' package, columns ragarding taxonomic ranks (e.g., kingdom, phyllum ) are empty (or containg only few information). In such cases, the full database is be used in the analyses. 
-#' @return This function returns a data.frame whose first column is the suggested name and the second column is the distance between the sci_name and the suggested name. It is worth to note that if there are two names with equal distances, only the first one is returned.
+#' @param parallel logical. If TRUE (Default) to run in parallel. 
+#' @param ncores numeric. Number of cores to run in parallel. Default = 2.
+#' @details 
+#' This function looks for scientific names in the taxonomic database. First, it filters names by taxonomic rank ('rank_name' and 'rank'), then returns all names with the same first letters than original names ('sci_name'). Then, the function calculates string distances among original names and the candidate names. String distance is calculated by optimal string alignment (restricted Damerau-Levenshtein distance) that counts the number of deletions, insertions, substitutions, and transpositions of adjacent characters. It ranges from 0 to 1, being 1 an indicative of a perfect match. 
+#' If a candidate name is found and the string distance is equal or higher than the distance informed in ‘max_distance’, a suggested name is returned. Otherwise, names are be returned as NA. To reduce the number of both false positives and negatives, the ‘suggest_distance’ is 0.9, by default, which means that only few differences between strings are allowed. If there are multiple candidate names with the same string distance, the first name is returned.
+#' 
+#' @return This function returns a data.frame whose first column is the original name, the second column is the suggested name and the third column is the distance between the sci_name and the suggested name. It is worth to note that if there are two names with equal distances, only the first one is returned.
 #' @noRd
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' x <- ("Cebus apela", "Puma concolar")
 #' bdc_suggest_names_taxadb(x, provider = "gbif")
+#' }
 bdc_suggest_names_taxadb <-
   function(sci_name,
            max_distance = suggestion_distance,

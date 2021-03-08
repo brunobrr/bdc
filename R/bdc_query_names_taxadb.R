@@ -9,25 +9,85 @@
 #' @param suggest_names A logical value (default = TRUE) whether species names must be suggested if it is not found in the first search. 
 #' @param suggestion_distance A numeric value (default = 0.9). It is the accepted distance between the searched names and suggested ones. Distances higher than specified here are not suggested and NA is returned.  
 #' @param db Character string. Contains the name of the taxonomic database where information should be searched. By default, 'gbif' will be installed. Use 'all' to install all available taxonomic database automatically.
-#' @param rank_name A taxonomic rank from the column named kingdom in db. This argument decreases the number of scientific names to calculate distances.  
-#' @param rank 
+#' @param rank_name character string. A taxonomic rank used to be used to filter data. Options available are: "kingdom", "phylum", "class", "order", "family", and "genus".
+#' @param rank character string. Taxonomic rank name (e.g. "Plantae", "Animalia", "Aves", "Carnivora". Default is NULL.
 #' @param parallel A logical value indicating whether distance calculation should be done in parallel.
 #' @param ncores Number of cores to run in parallel.
 #' @param export_accepted A logical value (default = FALSE) whether a table is exported containing all species with more than one valid name to be further explored by the user.
 #' @param Output Path to export accepted names table without the last slash (e.g., ./Output/check). The default is a package folder (~/path_to_package/Output/check).
-#' @details This function matches the sci_names with the column "scientificName" from taxadb database (db argument) and returns the database information of the matched names. Not found names returns NA.
-#' To increase the set of matched names, the function looks for scientific names in the database that resemble the input names by a string distance metric. First, the scientific names from the database are filtered by their taxonomic rank (rank and rank_name arguments) 
-#' to avoid matches unrelated to the target taxonomy and decrease the amount of name to calculate distance. Also, scientific names are filtered by the first letter of input names to save the computational time. String distances are calculated by optimal string alignment (restricted Damerau-Levenshtein distance) that counts 
-#' the number of deletions, insertions, substitutions and transpositions of adjacent characters (See \code{\link[stringdist]{stringdist}}). String distances are scaled to range from 0 to 1. The name with the most similarity and higher than suggestion_distance is returned as suggested name. The first name are returned if multiple names have the same similarity. Similarities lower than suggestion_distance return NA.
-#' The rank argument indicates from which database column the rank_name should be matched. More than one sci_name may return the same suggested name, a warning is returned to the user to check for misspeling in the sci_names. When names are synonyms with multiple accepted names, the first accepted name is returned and a flag is included into the column named "note" of the table to enable user's evaluation afterwards. If export_accepted == TRUE a table is exported to the Output path (Default is ~/path_to_package/Output/check) with all accepted names for the species with multiple accepted names.  
-#' For some taxonomic databases available in 'taxadb' package, columns ragarding taxonomic ranks (e.g., kingdom, phyllum ) are empty (or containg only few information). In such cases, the full database wil be used in the analyses.
+#' @details  
+
+#'## Taxadb databases
+#'
+#'The taxonomic harmonization is based upon a taxonomic authority database. The following taxonomic databases are available in taxadb package are:
+#'  
+#'* **itis**: Integrated Taxonomic Information System
+#'* **ncbi**: National Center for Biotechnology Information
+#'* **col**: Catalogue of Life
+#'* **tpl**: The Plant List
+#'* **gbif**: Global Biodiversity Information Facility
+#'* **fb**: FishBase
+#'* **slb**: SeaLifeBase
+#'* **wd**: Wikidata
+#'* **ott**: OpenTree Taxonomy
+#'* **iucn**: International Union for Conservation of Nature’s (IUCN) Red List
+#'
+#'The bdc_query_names_taxadb processes as this:
+#'  
+#'  * Creates a local taxonomic database. This is one-time setup used to download, extract, and import one or all (n=10) taxonomic databases specified in the argument ‘db’. The downloading process may take some minutes depending on the velocity of internet connection and the database size. By default, the ‘gbif’ database following a Darwin Core schema is installed. (see ?taxadb::td_create for details).
+#'* Matching names can be a time-consuming process. Thus, only unique scientific names are queried. Raw scientific names are stores in a separate vector, which allows retrieving matched names in the same order as the input names.
+#'
+#'## Names matching
+#'
+#'The remaining process can be divided into two distinct phases according to the match type to be performed:
+#'  
+#'  **First: exact matching**
+#'  
+#'  * First, the algorithm attempts to match the exact scientific name supplied (the function filter_name from taxadb package is used to querying names). When an exact match cannot be found, names are returned as Not Applicable (NA).
+#'* Multiple names can be linked to a unique input name. In such cases, the bdc_clean_duplicates function is used to flag and remove names with multiple accepted names (column ‘acceptedNameUsageID) and synonyms (i.e., column 'taxonomicStatus'). The function proceeds as follow:
+#'  * Filter out the database according to a specified taxonomic rank. If supplied, the arguments ‘rank_name’ and ‘rank’ are used to reduce the number of duplicated accepted names, which is useful to remove any ambiguity in the matching. For example, the genus “Casearia” is present in both the kingdoms Animalia and Plantae. When handling names of Plantae, would be helpful to get rid of records of the Animalia to avoid assigned to “Casearia” the note “| more 1 accepted name”.
+#'* When multiple accepted names are linked to a same name, a match cannot be performed, and names is returned as NA. This a precautionary measure to avoid wrong name matching.
+#'* When there are one accepted names and synonyms linked to a unique name, only the first are kept.
+#'* If ‘export_accepted’ = TRUE a database containing a list of all duplicated accepted names is exported.
+#'The ‘bdc_clean_duplicates’ is useful to ensure that names retrieved are in the same order and have the same length of input names.
+#'
+#'**Second: fuzzy matching**
+#'  
+#'  * Fuzzy matching will be applied when ‘suggest_names’ is TRUE and only for unresolved names in phase one. In such cases, the algorithm processes name matching queries to find a potential matching candidate from a specified taxonomic database. Fuzzy matching identifies suggesting names for the queried names thought a measure of string similarity (i.e., distance). String distance is calculated by optimal string alignment (restricted Damerau-Levenshtein distance) that counts the number of deletions, insertions, substitutions, and transpositions of adjacent characters. It ranges from 0 to 1, being 1 an indicative of a perfect match. If a candidate name is found and the distance is equal or higher than the distance informed in ‘suggest_distance’, a suggest name is returned. Otherwise, names are be returned as NA. To reduce the number of both false positives and negatives, the ‘suggest_distance’ is 0.9, by default, which means that only few differences between strings are allowed. When there are multiple candidate names with a same matching distance, the first name in the vector is returned. To increase the probability of finding potential match candidate and to save computational time, two steps are taken before conducting fuzzy matching, including:
+#'  * If supplied, the arguments ‘rank_name’ and ‘rank’ are used to filter the taxonomic database. This removes ambiguity in matching by avoiding matching names from unrelated taxonomic ranks (e.g., match a plant species against a taxonomic database containing animal names) and decreases the number of names in taxonomic database used to calculate the matching distance.
+#'* The taxonomic database is filtered according to a set of firsts letters of all input names. This process reduces the number of names in taxonomic database that each supplied name should be compared.
+#'When a same suggested name is returned for different input names, a warning is returned asking users to check whether the suggested name is valid. 
+#'Searching for accepted names for synonyms
+#'When names are synonyms, an accepted name ID is used to replace synonyms by accepted names. Ambiguous synonyms, in other words, names that have been published more than once describing different species and thus have more than one accepted name (heterotypic, homotypic, pro-parte synonyms and doubtful names) cannot be match. These names are returned as NA and a flag indicating the status of a name is added in column ‘notes’. 
+#'
+#'## Associated flags
+#'
+#'The column notes contain assertions on the name standardization process. The notes can be divided in “issues” – possibly errors or names that needed to be checked –, and notes (“messages”) about the standardization process. Names flagged as taxonomic issue are not matched and returned as NA.
+#'
+#'Taxonomic issues are grouped into the following categories: 
+#'  
+#'* **“notFound”**:  name provided does not match any of the names presented in the taxonomic reference used. This can occur when i) names are misspelled names and the matching distance is higher than the one specified in the argument ‘suggest_distance’, or ii) names are not present in the taxonomic reference used to querying names.
+#'* **“multipleAccepted”**: more than one accepted name was found to the name provided.
+#'* “noAcceptedName”: no accepted name found to the name provided.
+#'* **“heterotypic synonym”**, “homotypic synonym”, “pro-parte synonym”: ambiguous synonyms that have more than one accepted name.
+#'
+#'Similarly, taxonomic notes are grouped into the following categories:
+#' 
+#'* **“accepted”**: valid accepted name.                                                                                            
+#'* **“replaceSynonym”**: the input name is a synonym was replaced by an accepted name.
+#'* **“wasMisspelled”**: the input name was misspelled. 
+#'* **“wasMisspelled | replaceSynonym”**: the input name was a misspelled synonym and was replace by an accepted name.
+#'* **"synonym"**: the input name was a synonym.
+#' 
 #' @return This function returns a data.frame with the same number of rows and order than sci_name with the information provided by the database.
 #' @export
 #' @examples
+#' \dontrun{
 #' sci_name <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
 #' "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
 #' test <- bdc_query_names_taxadb(sci_names, suggestion_distance = 0.9, db = "gbif")
-
+#' }
+#' 
 bdc_query_names_taxadb <-
   function(sci_name,
            replace_synonyms = TRUE,

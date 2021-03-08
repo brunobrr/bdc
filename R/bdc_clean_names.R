@@ -1,9 +1,8 @@
 #' Clean scientific names
 #'
-#' @param data data dataframe containing the collumn of names to be parsed
-#' @param sci_names character. Vector of scientific names
-#'
-#' @return
+#' @param sci_names character. Vector of scientific names or a data frame containing the column of names to be parsed.
+#' @details The function identifies, flags and removes suffix, infraspecific, uncertain and provisional names. 
+#' @return It returns a data frame with clean and unique scientific names.
 #' @export
 #'
 #' @examples

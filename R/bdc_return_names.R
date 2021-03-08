@@ -17,8 +17,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' bdc_return_names("Cebus apela", max_distance = 0.75, species_first_letter = c("Cebus apella", "Puma concolar"))
-#' 
+#' }
 
 
 bdc_return_names <- function(sci_name, max_distance, species_first_letter) {

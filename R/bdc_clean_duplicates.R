@@ -1,17 +1,17 @@
-#' Internal function. Filters duplicated names with multiple accepted names
+#' Internal function. Filters duplicated names from database query
 #'
-#' This function is used to flag and remove names with multiple accepted name (i.e., column 'taxonomicStatus').
+#' This function is used to flag and remove names with multiple name from database query (i.e., column 'taxonomicStatus').
 #' 
 #' @param data data.frame. Database exported from bdc_get_taxa_taxadb function.
-#' @param rank_name character string. A taxonomic rank used to be used to filter data. Options available are: "kingdom", "phylum", "class", "order", "family", and "genus".
-#' @param rank_name character string. A taxonomic rank used to be used to filter data. Options available are: "kingdom", "phylum", "class", "order", "family", and "genus". Default = NULL.
+#' @param rank_name character string. A taxonomic rank to filter the database. Options available are: "kingdom", "phylum", "class", "order", "family", and "genus".
 #' @param rank character string. Taxonomic rank name (e.g. "Plantae", "Animalia", "Aves", "Carnivora". Default is NULL.
-#' @details For some taxonomic databases available in 'taxadb' package, columns ragarding taxonomic ranks (e.g., kingdom, phyllum ) are empty (or containg only few information). In such cases, the full database wil be used in the analyses. 
-#' @return A data.frame without duplicated accepted names and flags "|check +1 accepted" in the column 'notes'. 
+#' @details If database query returns more than one name, this function filters only the accepted ones, or an unique synonym. If there are more than one accepted name, it returns NA and adds flag in column notes.
+#' @return A data frame without duplicated names and flags "|check +1 accepted" in the column 'notes'. 
 #' @noRd
 #' @export
 #'
 #' @examples
+#' 
 bdc_clean_duplicates <-
   function(data,
            rank = NULL,

@@ -4,16 +4,16 @@
 #' including names not found ('notFound'), with multiple (multipleAccepted) or
 #' none (noAcceptedName) accepted name found.
 #' 
-#' @param data data.frame. Containing the column 'notes'.
-#' @param notes character string. A column containing notes on taxonomic
-#' standardization process. Default = "notes".
+#' @param data data frame containing a column 'notes'.
+#' @param notes character string. A column containing notes on taxonomic standardization process. Default = "notes".
 #' @param opposite logical. Should records with not taxonomic issue be returned.
 #' Default = FALSE.
-#'
-#' @return
+#' @details The function filters out records whose notes column flags taxonomic issues such as 'noFound', 'multipleAccepted' and 'noAcceptedName'.
+#' @return A data frame without records with taxonomic issues. If opposite is TRUE, only records with taxonomic issues are returned. 
 #' @export
 #'
 #' @examples
+#' 
 bdc_filter_out_names <-
   function(data,
            notes = c(
