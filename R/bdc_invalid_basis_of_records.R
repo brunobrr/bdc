@@ -2,9 +2,9 @@
 #' 'MachineObservation') whose can be unreliable or unsuitable for certain
 #' analyses
 #'
-#'Identify records with informed basis of records (i.e., the records type, for
-#'example, a specimen, a human observation, or a fossil specimen) impossible to
-#'interpret or that do not comply with Darwin Core recommended vocabulary.
+#' Identify records with informed basis of records (i.e., the records type, for
+#' example, a specimen, a human observation, or a fossil specimen) impossible to
+#' interpret or that do not comply with Darwin Core recommended vocabulary.
 #'
 #' @param data data.frame. Containing information on basis of records.
 #' @param basisOfRecord character string. The column with information on basis
@@ -14,7 +14,8 @@
 #' standard Darwin Core classes (and their spelling variations, see details).
 #' By default, records missing (i.e., NA) or with "unknown" information on
 #' basis of records are kept.
-#' @details Users ,are encourage to select the set of basis of records classes
+#' 
+#' @details Users are encourage to select the set of basis of records classes
 #' to keep. Default = c("Event","HUMAN_OBSERVATION", "HumanObservation",
 #' "LIVING_SPECIMEN", "LivingSpecimen", "MACHINE_OBSERVATION",
 #' "MachineObservation", "MATERIAL_SAMPLE", "O", "Occurrence",
@@ -22,16 +23,19 @@
 #' "PRESERVED_SPECIMEN", "preservedspecimen Specimen", "Preservedspecimen",
 #' "PreservedSpecimen", "preservedspecimen", "S", "Specimen", "Taxon",
 #' "UNKNOWN", "", NA)
+#' 
+#' @importFrom dplyr mutate filter select distinct
+#' 
 #' @return A data.frame contain the column '.xy_provenance'. Records that have
 #' failed in the test are flagged as "FALSE".
+#' 
+#' @export
 #'
 #' @examples
-#' 
-#' x <- data.frame(recod_types = c("FOSSIL_SPECIMEN", "UNKNOWN", "RON", NA,
-#' "Specimen", "PRESERVED_SPECIMEN"))
-#' 
-#' bdc_invalid_basis_of_records(data = x, basisOfRecord = "recod_types",
-#' names_to_keep = "all")
+#' \dontrun{
+#' x <- data.frame(recod_types = c("FOSSIL_SPECIMEN", "UNKNOWN", "RON", NA, "Specimen", "PRESERVED_SPECIMEN"))
+#' bdc_invalid_basis_of_records(data = x, basisOfRecord = "recod_types", names_to_keep = "all")
+#' }
 bdc_invalid_basis_of_records <-
   function(data,
            basisOfRecord = "basisOfRecord",
