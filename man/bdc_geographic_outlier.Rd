@@ -2,38 +2,34 @@
 % Please edit documentation in R/bdc_geographic_outlier.R
 \name{bdc_geographic_outlier}
 \alias{bdc_geographic_outlier}
-\title{Flag geographic outliers by comparing the status where record is against
-species range (i.e., Brazilian states) obtained from the Flora do Brazil
-2020.}
+\title{Identify plant species records outside known geographic distribution}
 \usage{
 bdc_geographic_outlier(
-  x,
+  data,
   species = "scientificName",
   longitude = "decimalLongitude",
   latitude = "decimalLatitude"
 )
 }
 \arguments{
-\item{x}{Data.frame containg geographic coordinates and species names.}
+\item{data}{data.frame. A data frame containing geographic coordinates and species names.}
 
-\item{species}{Character string. The column with the species name}
+\item{species}{character string. The column with scientific names.}
 
-\item{longitude}{Numeric. The column with longitude in decimal degrees.
-Default = "decimalLongitude"}
+\item{longitude}{character string. The column with longitude in decimal degrees. Default = "decimalLongitude"}
 
-\item{latitude}{Numeric. The column with the latitude in decimal degrees.
-Default = "decimalLatitude".}
+\item{latitude}{character string. The column with the latitude in decimal degrees. Default = "decimalLatitude".}
 }
 \value{
 flag of records are outliers (FALSE) or not (TRUE)
 }
 \description{
-Flag geographic outliers by comparing the status where record is against
+Flags geographic outliers by comparing the status where record is against
 species range (i.e., Brazilian states) obtained from the Flora do Brazil
 2020.
 }
 \details{
 Check if coordinates are valid before run this test.
-Species ccurrence records in Goias and range in DF are assinged as TRUE.
-Similarly, species occurence in DF and range is GO are considered TRUE.
+Species occurrence records in Goias and range in DF are assigned as TRUE.
+Similarly, species occurrence in DF and range is GO are considered TRUE.
 }

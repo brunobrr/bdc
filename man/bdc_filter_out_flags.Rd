@@ -2,15 +2,20 @@
 % Please edit documentation in R/bdc_filter_out_flags.R
 \name{bdc_filter_out_flags}
 \alias{bdc_filter_out_flags}
-\title{Filter out rows based on flags assigned as FALSE}
+\title{Removes columns with the results of data quality tests}
 \usage{
-bdc_filter_out_flags(data)
+bdc_filter_out_flags(data, col_to_remove = "all")
 }
 \arguments{
-\item{data}{a data.frame with flags created by functions bdc_flag_*}
+\item{data}{data.frame. Containing columns to be removed}
+
+\item{col_to_remove}{logical. Which columns should be removed? Default =
+"all", which means that all columns containing the results of data quality tests
+are removed.}
 }
 \description{
-This functions filter out rows based on any flag column assigned as FALSE
+This functions is used to filter out column containing the results of data
+quality tests (i.e., column starting with '.') or other columns specified.
 }
 \examples{
 \dontrun{

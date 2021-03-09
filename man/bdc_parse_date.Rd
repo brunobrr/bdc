@@ -4,15 +4,21 @@
 \alias{bdc_parse_date}
 \title{Extract and flag year from date}
 \usage{
-bdc_parse_date(x, column_to_test, year_threshold = NULL)
+bdc_parse_date(data, col_to_test, year_threshold = NULL)
 }
 \arguments{
-\item{x:}{data.frame. Containing column of event date.}
+\item{x:}{A data frame containing column of event date.}
 
-\item{column_to_test:}{Numeric or date. The column with event date information.}
+\item{col_to_test:}{Numeric or date. The column with event date information.}
 
-\item{year_threshold:}{Numeric. Four digit year used as a threshold to flag od records. Default = NULL.}
+\item{year_threshold:}{Numeric. A years threshold (four digit year) to flag records due to their age. Default = NULL.}
+}
+\value{
+A data frame with the original data (x), a flagged column (.year) and a column with the extracted four digit years (year). Records with .year = FALSE means dates older than year threshold or 1500.
 }
 \description{
 Extract and flag year from date
+}
+\details{
+The function filters the column containing event dates and extract the dates with four digits. If the event dates are older than 1500, or the threshold year, they are flagged FALSE.
 }

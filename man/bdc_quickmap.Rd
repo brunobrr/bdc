@@ -2,20 +2,27 @@
 % Please edit documentation in R/bdc_quickmap.R
 \name{bdc_quickmap}
 \alias{bdc_quickmap}
-\title{Title: Create a map of points using ggplot2}
+\title{Create a map of points using ggplot2}
 \usage{
-bdc_quickmap(data, lon, lat, column_to_map)
+bdc_quickmap(data, lon, lat, col_to_map = NULL, size = size)
 }
 \arguments{
-\item{data}{}
+\item{data}{data.frame. Containing longitude and latitude}
 
-\item{lon}{}
+\item{lon}{character string. The column with the longitude coordinates}
 
-\item{lat}{}
-}
-\value{
+\item{lat}{character string. The column with the latitude coordinates}
 
+\item{col_to_map}{character string. Defining the column or color used to map.
+Can be a color name (e.g "red") the the name of a column of data. Default =
+"blue"}
+
+\item{size}{numeric. The size of the points}
 }
 \description{
-Title: Create a map of points using ggplot2
+Creates a map of points using ggplot2 useful for inspecting the results of
+tests implemented in the workflow.
+}
+\details{
+Only records with valid coordinates can be plotted. Records missing or with invalid coordinates are removed prior creating the map.
 }

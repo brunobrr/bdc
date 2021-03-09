@@ -2,15 +2,51 @@
 % Please edit documentation in R/bdc_standardize_datasets.R
 \name{bdc_standardize_datasets}
 \alias{bdc_standardize_datasets}
-\title{Standardize datasets columns based on metadata file}
+\title{Standardize datasets columns based on metadata}
 \usage{
 bdc_standardize_datasets(metadata)
 }
 \arguments{
-\item{metadata}{a table containing information about which columns of the
-original dataset need to be renamed following Darwin Core terminology.
-Please see the \code{Config/DatabaseInfo.csv} file.}
+\item{metadata}{A data frame with metadata containing information about the
+name, path, and columns of the original data set that need to be
+renamed. See @details.}
 }
 \description{
-Standardize datasets columns based on metadata file
+This function's main goal is to merge and standardize different
+datasets into a new dataset with column names following the Darwin
+Core terminology. All the process is based on a metadata file
+provided by the user.
+}
+\details{
+\code{bdc_standardize_datasets()} facilitate the standardization of
+datasets with different column names converting them into a new
+dataset following the Darwin Core terminology. All the
+standardization process rely on a metadata file containing the
+name, path, and columns that need to be renamed. The metadata file
+can be constructed using built-in functions (e.g., \code{data.frame()})
+or storing the information in a CSV file and importing it into
+R. Regardless of the method chosen, the data frame with metadata
+needs to contain the following column names (this is a list of
+required column names; for compreensive list of column names
+following Darwin Core terminology, see LINK):
+\itemize{
+\item \code{datasetName}: A short name identifying the dataset (e.g., GBIF)
+\item \code{fileName}: The relative path containg the name of the input
+dataset (e.g., Input_files/GBIF.csv)
+\item \code{scientificName}: Name of the column in the original database
+presenting the scientific name of the taxon with or without
+authorship information, depending on the format of the source
+dataset (e.g., Myrcia acuminata)
+\item \code{decimalLatitude}: Name of the column in the original database
+presenting the geographic latitude in decimal degrees (e.g.,
+-6.370833)
+\item \code{decimalLongitude}: Name of the column in the original database
+presenting the geographic longitude in decimal degrees (e.g.,
+-3.25500)
+}
+}
+\examples{
+\dontrun{
+ # TODO: include system file example after move Config/DatabaseInfo.csv to inst/extdata.
+}
 }

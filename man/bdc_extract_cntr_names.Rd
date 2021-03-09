@@ -2,7 +2,8 @@
 % Please edit documentation in R/bdc_extract_cntr_names.R
 \name{bdc_extract_cntr_names}
 \alias{bdc_extract_cntr_names}
-\title{Title: Extract_cntr_names is a function used to extracting country names in different names from wikipedia in different languages}
+\title{Internal function. Extracts countries names in different languages from
+wikipedia}
 \usage{
 bdc_extract_cntr_names(x)
 }
@@ -13,5 +14,6 @@ bdc_extract_cntr_names(x)
 
 }
 \description{
-Title: Extract_cntr_names is a function used to extracting country names in different names from wikipedia in different languages
+Internal function. Extracts countries names in different languages from
+wikipedia
 }
