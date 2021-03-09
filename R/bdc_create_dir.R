@@ -1,12 +1,29 @@
 #' Creates directories for saving ouptups of the bdc workflow
 #'
-#' Creates directories for saving the outputs of bdc workflow, which including 
+#' Creates directories for saving the outputs of bdc workflow, which including
 #' databases, figures, reports, and databases which need to be checked.
-#' 
-#' @return
+#'
+#' @importFrom fs dir_create
+#' @importFrom here here
+#'
+#' @return None
+#'
 #' @export
 #'
+#' @details:
+#' Check below the folder structure created by `bdc_create_dir()`.
+#' ```
+#' .
+#' └── Output
+#'     ├── Check
+#'     ├── Figures
+#'     ├── Intermediate
+#'     └── Report
+#' ```
 #' @examples
+#' \dontrun{
+#' bdc_create_dir()
+#' }
 bdc_create_dir <- function(){
   fs::dir_create(here::here("Output/Check"))
   fs::dir_create(here::here("Output/Intermediate"))
