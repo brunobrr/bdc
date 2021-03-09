@@ -1,23 +1,27 @@
 #' Identify records with invalid geographic coordinates
 #'
-#' Flags records with out-of-range coordinates (-90 to 90 for latitude -180
-#' #' to 180 for longitude)
+#' Flags records with out-of-range coordinates (-90 to 90 for latitude -180 to 180 for longitude).
 #'
 #' @param data data.frame. Containing geographical coordinates.
 #' @param lat character string. The column with latitude Default =
 #' "decimalLatitude".
 #' @param lon character string. The column with longitude. Default =
 #' "decimalLongitude".
+#' 
 #' @return A data.frame contain the column '.invalid_xy'. Records that have
 #' failed in the test are flagged as "FALSE".
+#' 
+#' @importFrom dplyr select rename mutate_all mutate case_when bind_cols
+#' 
+#' @export
 #'   
 #' @examples
+#' \dontrun{
 #' decimalLatitude <- c(-185.111, -43.34, "", -21.8069444)
 #' decimalLongitude <- c(-45.4, -39.6, -20.5243, -440.9055555)
 #' x <- data.frame(decimalLatitude, decimalLongitude)
-#' 
-#' bdc_invalid_xy(data = x, lat = "decimalLatitude", lon =
-#' "decimalLongitude")
+#' bdc_invalid_xy(data = x, lat = "decimalLatitude", lon = "decimalLongitude")
+#' }
 bdc_invalid_xy  <- 
   function(data, lat = "decimalLatitude", lon = "decimalLongitude") {
 

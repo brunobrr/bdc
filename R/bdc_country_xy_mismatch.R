@@ -1,20 +1,42 @@
 #' Identify records in a country or at a determined distance from the country
 #' (e.g., in the ocean)
 #'
+#' This function identify/flag geographic coordinates using a buffer for the
+#' country choosed by the user. See @details.
+#'
 #' @param data data.frame. Containing longitude and latitude
 #' @param country_name character string. Name of the country to considered. 
 #' @param lon character string. The column with the longitude coordinates. Default = “decimallatitude”.
 #' @param lat character string. The column with the latitude coordinates. Default = “decimallatitude”.
 #' @param dist numeric. The distance in degrees used to created a buffer around the country. 
+#' 
 #' @details Records within a buffer around a country but not in other countries
 #' (e.g., records in the ocean) are flagged as TRUE (test passed). This avoids
 #' to flag as FALSE records close to country limits. For example, records of
 #' coast or marshland species.
 #'
-#' @return
+#' @return a data.frame with flagged records in column `.xy_out_country`
+#' 
+#' @importFrom CoordinateCleaner cc_val
+#' @importFrom dplyr select mutate filter full_join bind_cols
+#' @importFrom rnaturalearth ne_countries
+#' @importFrom sf st_as_sf st_set_crs st_buffer st_intersects
+#' 
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' decimalLatitude <- c(19.9358, -13.016667, NA, "")
+#' decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
+#' x <- data.frame(decimalLatitude, decimalLongitude)
+#' bdc_country_xy_mismatch(
+#'   data = x,
+#'   country_name = "Brazil",
+#'   lon = "decimalLongitude",
+#'   lat = "decimalLatitude",
+#'   dist = 0.5 # in decimal degrees
+#' )
+#' }
 bdc_country_xy_mismatch <-
   function(data,
            country_name,
@@ -46,7 +68,7 @@ bdc_country_xy_mismatch <-
       coords = c("decimalLongitude", "decimalLatitude"),
       remove = F
     ) %>%
-    sf::st_set_crs(., st_crs(country_shp))
+    sf::st_set_crs(., sf::st_crs(country_shp))
 
 
   # buffer
@@ -79,7 +101,7 @@ bdc_country_xy_mismatch <-
 
   # Extract country names from points
   suppressWarnings({
-    ext_country <- st_intersection(data_sp, all_countries)
+    ext_country <- sf::st_intersection(data_sp, all_countries)
   })
   data_sp$geometry <- NULL
   ext_country$geometry <- NULL
@@ -92,7 +114,7 @@ bdc_country_xy_mismatch <-
     dplyr::full_join(data_sp, names_to_join, by = "id") %>%
     dplyr::mutate(
       .xy_out_country =
-        case_when(
+        dplyr::case_when(
           (points_in_buf == TRUE & is.na(name_long)) ~ TRUE,
           (points_in_buf == FALSE) ~ FALSE,
           (points_in_buf == TRUE &
