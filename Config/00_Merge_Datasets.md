@@ -7,7 +7,7 @@
 The first step of the bdc workflow handles the harmonization of heterogeneous datasets in a consistent and compatible format in a simple and efficient way. To do so, users must fill-out a **configuration table** to indicate which field names of each original dataset (i.e. header of columns) matches a list of standardized Darwin Core terms (Wieczorek et al. 2012). These terms represents the simplest method and structure for sharing biodiversity data and metadata across a wide variety of biodiversity applications (see Simple Darwin Core standards [here](https://dwc.tdwg.org/terms/)). The standardization process follows current best methods for integrating biodiversity data in a common format (e.g. the GBIF Integrated Publishing Toolkit; Robertson et al. 2014; Seebens et al. 2020). Once standardized, datasets are then integrated and combined in a formmated database.
 
 
-<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="25"/> **###Important**:
+<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="25"/> ### **Important**:
 
 -   Original datasets to be formatted must be located in the folder ***Input_files*** in comma-seperated format (**.csv**)
 -   Note that the configuration table ***DatabaseInfo.csv*** is located in the **Config** folder
@@ -45,7 +45,7 @@ Below are listed the specifications of each field of the configuration table:
 | coordinate_precision             | Additional  | Name of the column in the original database presenting the decimal representation of the precision of the coordinates given in the decimalLatitude and decimalLongitude                                            | Numeric       | 0.0001                                                       |
 | recorded_by                      | Additional  | Name of the column in the original database presenting the list (concatenated and separated) of names of people, groups, or organizations responsible for recording the original Occurrence                        | Character     | Cervi, A.C                                                   |
 
-###**References**  
+### **References**  
 Robertson T, Döring M, Guralnick R, Bloom D, Wieczorek J, Braak K, Otegui J, Russell L, Desmet P. 2014. The GBIF integrated publishing toolkit: Facilitating the efficient publishing of biodiversity data on the internet. PLoS ONE 9.
 
 Seebens H, Clarke DA, Groom Q, Wilson JRU, García-Berthou E, Kühn I, Roigé M, Pagad S, Essl F, Vicente J, et al. 2020. A workflow for standardising and integrating alien species distribution data. NeoBiota 59: 39–59.
