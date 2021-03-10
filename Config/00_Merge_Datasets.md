@@ -7,16 +7,16 @@
 The first step of the bdc workflow handles the harmonization of heterogeneous datasets in a consistent and compatible format in a simple and efficient way. To do so, users must fill-out a **configuration table** to indicate which field names of each original dataset (i.e. header of columns) matches a list of standardized Darwin Core terms (Wieczorek et al. 2012). These terms represents the simplest method and structure for sharing biodiversity data and metadata across a wide variety of biodiversity applications (see Simple Darwin Core standards [here](https://dwc.tdwg.org/terms/)). The standardization process follows current best methods for integrating biodiversity data in a common format (e.g. the GBIF Integrated Publishing Toolkit; Robertson et al. 2014; Seebens et al. 2020). Once standardized, datasets are then integrated and combined in a formmated database.
 
 
-<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="25"/> **Important**:
+<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="25"/> **###Important**:
 
 -   Original datasets to be formatted must be located in the folder ***Input_files*** in comma-seperated format (**.csv**)
 -   Note that the configuration table ***DatabaseInfo.csv*** is located in the **Config** folder
 -   When filling out the configuration table, please provide the **exact** name of a column of original dataset to be standardized
 -   Names of original datasets with no correspond standardized term in ***DatabaseInfo.csv*** must be fill out nas **NA** (not available)
 
-Below we can find a list of fields and their description. Each field is categorized according to its importance to run the workflow. For example, the fields assigned as required contain the minimum information necessary to run the workflow (more details below). **The workflow is adjustable**, and users can insert other fields in the ***DatabaseInfo.csv*** according to their needs. In such cases, we strongly recommend that terms added follow the Darwin Core standards.
+Below we can find a list of fields and their description. Each field is categorized according to its importance to run the workflow. For example, the fields assigned as required contain the minimum information necessary to run the workflow (more details below). **The workflow is adjustable**, and users can insert other fields in the configuration table according to their needs. In such cases, we strongly recommend that terms added follow the Darwin Core standards.
 
-Below are listed the specifications of each field of the ***DatabaseInfo.csv***:
+Below are listed the specifications of each field of the configuration table:  
 
 -   **Field**: Name of the fields in *DatabaseInfo.csv* to be filled in.
 -   **Category**: Classification of each field in *DatabaseInfo.csv*. If *required*, the field is the minimum required information to run the workflow; if *recommended*, the field is not mandatory to run the workflow but it contains important details on species records; if *additional*, the field contains information that can be provided by users. As a general guidance, be careful to include all *required* fields and suply as many *reccomended* and *additional* fields as possible.
@@ -45,7 +45,7 @@ Below are listed the specifications of each field of the ***DatabaseInfo.csv***:
 | coordinate_precision             | Additional  | Name of the column in the original database presenting the decimal representation of the precision of the coordinates given in the decimalLatitude and decimalLongitude                                            | Numeric       | 0.0001                                                       |
 | recorded_by                      | Additional  | Name of the column in the original database presenting the list (concatenated and separated) of names of people, groups, or organizations responsible for recording the original Occurrence                        | Character     | Cervi, A.C                                                   |
 
-**References**
+###**References**  
 Robertson T, Döring M, Guralnick R, Bloom D, Wieczorek J, Braak K, Otegui J, Russell L, Desmet P. 2014. The GBIF integrated publishing toolkit: Facilitating the efficient publishing of biodiversity data on the internet. PLoS ONE 9.
 
 Seebens H, Clarke DA, Groom Q, Wilson JRU, García-Berthou E, Kühn I, Roigé M, Pagad S, Essl F, Vicente J, et al. 2020. A workflow for standardising and integrating alien species distribution data. NeoBiota 59: 39–59.
