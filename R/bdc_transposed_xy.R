@@ -4,17 +4,16 @@
 #' transposed and standardizes country names.
 #'
 #' @param data data.frame. Containing an unique identifier for each records,
-#' geographical coordinates, and country names.
-#' @param id character string. The column with an unique record identifier.
+#' geographical coordinates, and country names. Coordinates must be expressed in decimal degree and in WGS84. 
+#' @param id character string. The column name with an unique record identifier.
 #' Default = "database_id".
-#' @param sci_names character string. The column with species scientific name.
+#' @param sci_names character string. The column name with species scientific name.
 #' Default = "scientificName".
-#' @param lat character string. The column with latitude Default =
-#' "decimalLatitude".
-#' @param lon character string. The column with longitude. Default =
-#' "decimalLongitude".
-#' @param  country character string. The column with the country assignment of
+#' @param lat character string. The column name with latitude. Coordinates must be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
+#' @param lon character string. The column with longitude. Coordinates must be expressed in decimal degree and in WGS84. Default = "decimalLongitude".
+#' @param  country character string. The column name with the country assignment of
 #' each record. Default = "country".
+#' @param country_from_xy logical. if this argument is set to TRURE the function will try to assign the country name for those records that do not have that information. Default = TRUE.
 #' @details This test identifies transposed coordinates resulted from mismatches
 #' between the country informed to a record and coordinates. Transposed
 #' coordinates often fall outside of the indicated country (i.e., in other
@@ -37,7 +36,14 @@
 #'   country_suggested (standardized country names), and iii) country_code
 #'   (standardized iso3 country code).
 #'
+#' @importFrom CoordinateCleaner cc_val cc_sea
+#' @importFrom dplyr filter left_join contains pull rename
+#' @importFrom readr write_csv
+#' @importFrom rnaturalearth ne_countries
+#' @importFrom sf st_as_sf st_set_crs st_crs st_intersection 
+#'
 #' @examples
+#' \dontrun{
 #' id <- c(1,2,3,4)
 #' scientificName <- c("Rhinella major", "Scinax ruber", 
 #'                     "Siparuna guianensis", "Psychotria vellosiana")
@@ -54,8 +60,11 @@
 #'   sci_names = "scientificName",
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude",
-#'   country = "country"
+#'   country = "country",
+#'   country_from_xy = TRUE
 #' )
+#' }
+#' 
 bdc_transposed_xy <-
   function(data,
            id,
@@ -96,43 +105,46 @@ bdc_transposed_xy <-
       data %>%
       dplyr::filter(is.na(country) | country == "")
     
-    # converts coordinates columns to spatial points
-    suppressWarnings({
-    data_sp <-
-      CoordinateCleaner::cc_val(
-        x = data_no_country,
-        lon = lon,
-        lat = lat,
-        verbose = F
-      ) %>%
-      CoordinateCleaner::cc_sea(
-        x = .,
-        lon = lon,
-        lat = lat,
-        verbose = F,
-        speedup = TRUE,
-        ref = worldmap
-      ) %>%
-      sf::st_as_sf(.,
-                   coords = c("decimalLongitude", "decimalLatitude"),
-                   remove = F) %>%
-      sf::st_set_crs(., st_crs(worldmap))
-    })
+    if(nrow(data_no_country)>0){
+      # converts coordinates columns to spatial points
+      suppressWarnings({
+        data_sp <-
+          CoordinateCleaner::cc_val(
+            x = data_no_country,
+            lon = lon,
+            lat = lat,
+            verbose = FALSE
+          ) %>%
+          CoordinateCleaner::cc_sea(
+            x = .,
+            lon = lon,
+            lat = lat,
+            verbose = FALSE,
+            speedup = TRUE,
+            ref = worldmap
+          ) %>%
+          sf::st_as_sf(.,
+                       coords = c("decimalLongitude", "decimalLatitude"),
+                       remove = FALSE) %>%
+          sf::st_set_crs(., sf::st_crs(worldmap))
+      })
+      
+      worldmap <- sf::st_as_sf(worldmap) %>% dplyr::select(name_long)
+      
+      # Extract country names from coordinates
+      suppressMessages({
+        ext_country <- 
+          data_sp %>% 
+          dplyr::select(id, geometry) %>% 
+          sf::st_intersection(., worldmap)
+      })
+      
+      ext_country$geometry <- NULL
+      w <- which(data$database_id %in% ext_country$database_id)
+      
+      data[w, "country"] <- ext_country$name_long
+    }
     
-    worldmap <- sf::st_as_sf(worldmap) %>% dplyr::select(name_long)
-    
-    # Extract country names from coordinates
-    suppressMessages({
-      ext_country <- 
-        data_sp %>% 
-        dplyr::select(database_id, geometry) %>% 
-        st_intersection(., worldmap)
-    })
-    
-    ext_country$geometry <- NULL
-    w <- which(data$database_id %in% ext_country$database_id)
-    
-    data[w, "country"] <- ext_country$name_long
   }
   
   # load auxiliary data
@@ -186,7 +198,7 @@ bdc_transposed_xy <-
     readr::write_csv(here::here("Output/Check/01_transposed_xy.csv"))
   
   # finding the position of records with lon/lat modified
-  w <- which(data[, {{id}} ] %in% (corrected_coordinates %>% pull({{id}})))
+  w <- which(data[, {{id}} ] %in% (corrected_coordinates %>% dplyr::pull({{id}})))
   
   data[w, "decimalLatitude"] <- corrected_coordinates[, "decimalLatitude_modified"]
   data[w, "decimalLongitude"] <- corrected_coordinates[, "decimalLongitude_modified"]
