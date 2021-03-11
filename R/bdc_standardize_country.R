@@ -7,12 +7,6 @@
 #' @return Return a data.frame with original country names, suggested names and ISO code to country names. 
 #' @export
 #'
-#' @examples
-#' \dontrun{
-#' data %>%
-#'   bdc_flag_transposed_xy() %>%
-#'   bdc_filter_out_flags()
-#' }
 bdc_standardize_country <-
   function(data,
            country,
@@ -27,11 +21,11 @@ bdc_standardize_country <-
     
     cntr_db$cntr_original2 <-
       stringr::str_replace_all(cntr_db$cntr_original, "[[:punct:]]", " ") %>%
-      str_trim() %>%
+      stringr::str_trim() %>%
       stringi::stri_trans_general("Latin-ASCII") %>%
       tolower()
     
-    cntr_db <- cntr_db %>% mutate(cntr_suggested = NA)
+    cntr_db <- cntr_db %>% dplyr::mutate(cntr_suggested = NA)
     
     # Assign country names based on different character matching.
     country_names_db <-
