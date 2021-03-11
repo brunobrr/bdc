@@ -1,6 +1,6 @@
 ---
 
-# 00: Merge Datasets - Integration and harmonization of heterogenous datasets
+# 00: Merge Datasets - Harmonization and Integration of heterogenous datasets
 
 ---
 
