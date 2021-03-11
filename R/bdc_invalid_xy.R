@@ -2,10 +2,10 @@
 #'
 #' Flags records with out-of-range coordinates (-90 to 90 for latitude -180 to 180 for longitude).
 #'
-#' @param data data.frame. Containing geographical coordinates.
-#' @param lat character string. The column with latitude Default =
+#' @param data data.frame. Containing geographical coordinates. Coordinates must be expressed in decimal degree and in WGS84. 
+#' @param lat character string. The column name with latitude data. Default =
 #' "decimalLatitude".
-#' @param lon character string. The column with longitude. Default =
+#' @param lon character string. The column name with longitude data. Default =
 #' "decimalLongitude".
 #' 
 #' @return A data.frame contain the column '.invalid_xy'. Records that have

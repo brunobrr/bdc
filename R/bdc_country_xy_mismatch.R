@@ -2,13 +2,13 @@
 #' (e.g., in the ocean)
 #'
 #' This function identify/flag geographic coordinates using a buffer for the
-#' country choosed by the user. See @details.
+#' country chosen by the user. See @details.
 #'
-#' @param data data.frame. Containing longitude and latitude
+#' @param data data.frame. Containing longitude and latitude. Coordinates must be expressed in decimal degree and in WGS84. 
 #' @param country_name character string. Name of the country to considered. 
-#' @param lon character string. The column with the longitude coordinates. Default = “decimallatitude”.
-#' @param lat character string. The column with the latitude coordinates. Default = “decimallatitude”.
-#' @param dist numeric. The distance in degrees used to created a buffer around the country. 
+#' @param lon character string. The column name with the longitude coordinates. Default = “decimallatitude”.
+#' @param lat character string. The column name with the latitude coordinates. Default = “decimallatitude”.
+#' @param dist numeric. The distance in decimal degrees used to created a buffer around the country. 
 #' 
 #' @details Records within a buffer around a country but not in other countries
 #' (e.g., records in the ocean) are flagged as TRUE (test passed). This avoids
@@ -20,7 +20,7 @@
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom dplyr select mutate filter full_join bind_cols
 #' @importFrom rnaturalearth ne_countries
-#' @importFrom sf st_as_sf st_set_crs st_buffer st_intersects
+#' @importFrom sf st_as_sf st_set_crs st_bbox st_buffer st_crop st_intersects
 #' 
 #' @export
 #'
@@ -95,7 +95,7 @@ bdc_country_xy_mismatch <-
       all_countries <-
         rnaturalearth::ne_countries(returnclass = "sf") %>%
         dplyr::select(name_long) %>%
-        st_crop(., st_bbox(data_fil)) # Crop according to points bbox
+        sf::st_crop(., sf::st_bbox(data_fil)) # Crop according to points bbox
     })
   })
 
