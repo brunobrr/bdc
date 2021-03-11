@@ -8,7 +8,7 @@
 #' "all", which means that all columns containing the results of data quality tests
 #' are removed.
 #' @details
-#' @export A data.frame without columns specified in 'col_to_remove'.
+#' @return A data.frame without columns specified in 'col_to_remove'.
 #'
 #' @examples
 #' \dontrun{
