@@ -66,21 +66,21 @@ bdc_correct_coordinates <-
     # Separate those records outside their countries
     occ_country <- 
       occ_country %>%
-      as_tibble() %>%
+      dplyr::as_tibble() %>%
       dplyr::filter(!.summary,!is.na(occ_country[cntr_iso2]))
     
     message(occ_country %>% nrow, " ocurrences will be tested") #now this database have all those records with potential error that will try to correct
     
     # Split database
     occ_country <-
-      occ_country %>% dplyr::group_by_(cntr_iso2) %>% group_split()
+      occ_country %>% dplyr::group_by_(cntr_iso2) %>% dplyr::group_split()
     
     
     # bdc_coord_trans() function will try different coordinate transformations to correct georeferenced occurrences
     coord_test <- list()
     
     for (i in 1:length(occ_country)) {
-      message('Processing occurrence from: ',
+      message('Processing occurrences from: ',
               occ_country[[i]][cntr_iso2] %>% unique,
               paste0(" (", nrow(occ_country[[i]]), ")"))
       try(coord_test[[i]] <-
@@ -135,17 +135,17 @@ bdc_correct_coordinates <-
     # Elimination of those records with more than two possible correction
     coord_test <-
       dplyr::bind_rows(coord_test) %>% 
-      as_tibble() # binding dataframes allocated in the list in a single one
+      dplyr::as_tibble() # binding dataframes allocated in the list in a single one
     
     coord_test <-
       coord_test %>%
       dplyr::distinct_(., id, .keep_all = T) %>%
-      as_tibble %>%
+      dplyr::as_tibble() %>%
       dplyr::relocate(id, x, y)
     
     # Merge coord_test with other columns of occurrence database
     coord_test <-
-      left_join(coord_test,
+      dplyr::left_join(coord_test,
                 data %>% dplyr::select(-c(x, y, cntr_iso2)),
                 by = id)
     
