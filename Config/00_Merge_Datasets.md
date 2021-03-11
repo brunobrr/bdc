@@ -4,7 +4,7 @@
 
 ---
 
-The first step of the bdc workflow handles the harmonization of heterogeneous datasets in a consistent and compatible format in a simple and efficient way. How is this accomplished? Basically, by replacyng in orignal datasets by standardized terms. To do so, users must fill-out a **configuration table** to indicate which field names (i.e., column heards) of each original dataset matches a list of standardized Darwin Core terms (Wieczorek et al. 2012). Once standardized, datasets are then integrated and combined in a formmated database.
+The first step of the bdc workflow handles the harmonization of heterogeneous datasets in a consistent and compatible format in a simple and efficient way. How is this accomplished? Basically, by replacyng in orignal datasets by standardized terms. To do so, users must fill-out a **configuration table** to indicate which field names (i.e., column heards) of each original dataset matches a list of standardized Darwin Core terms (Wieczorek et al. 2012). Once standardized, datasets are then integrated in a formmatted database.
 
 The Darwin Core terms represents the simplest method and structure for sharing biodiversity data and metadata across a wide variety of biodiversity applications (see Simple Darwin Core standards [here](https://dwc.tdwg.org/terms/)). The standardization process follows current best methods for integrating biodiversity data in a common format (e.g. the GBIF Integrated Publishing Toolkit; Robertson et al. 2014; Seebens et al. 2020). 
 
