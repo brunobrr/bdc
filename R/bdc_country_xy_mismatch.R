@@ -1,4 +1,4 @@
-#' Identify records in a country or at a determined distance from the country
+#' Identify records outside a country or at a determined distance from the country
 #' (e.g., in the ocean)
 #'
 #' This function identify/flag geographic coordinates using a buffer for the
