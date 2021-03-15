@@ -21,7 +21,8 @@ ipak(
 )
 
 # CREATE DIRECTORIES ------------------------------------------------------
-# Create directories for saving the results. If not existing, four new folders will be created in the folder 'Output'.
+# Create directories for saving the results. If not existing, four new folders
+# will be created in the folder 'Output'.
 bdc_create_dir()
 
 # LOAD THE DATABASE -------------------------------------------------------
@@ -50,7 +51,8 @@ data_pf2 <- bdc_missing_coordinates(
   lon = "decimalLongitude")
 
 # CHECK 3 -----------------------------------------------------------------
-# Identify records with invalid coordinates (lat > 90 or -90; long >180 or -180; coordinates NA)
+# Identify records with invalid coordinates (lat > 90 or -90; long >180 or -180;
+# coordinates NA)
 data_pf3 <- bdc_invalid_coordinates(
   data = data_pf2,
   lat = "decimalLatitude",
@@ -91,7 +93,8 @@ data_pf7 <-
   )
 
 # CHECK 8 -----------------------------------------------------------------
-# Flag records outside one or multiple focal countries (e.g. exclude records in other countries or far from a informed distance from the coast)
+# Flag records outside one or multiple focal countries (e.g. exclude records in
+# other countries or far from a informed distance from the coast)
 data_pf8 <-
   bdc_coordinates_out_country(
     data = data_pf7,
@@ -102,7 +105,8 @@ data_pf8 <-
   )
 
 # REPORT ------------------------------------------------------------------
-# Create a summary column. This column is FALSE if any test was flagged as FALSE (i.e. potentially invalid or problematic record)
+# Create a summary column. This column is FALSE if any test was flagged as FALSE
+# (i.e. potentially invalid or problematic record)
 data_pf9 <- bdc_summary_col(data = data_pf8)
 
 # Create a report summarizing the results of all tests
@@ -112,7 +116,9 @@ bdc_create_report(data = data_pf9, workflow_step = "prefilter") %>% View()
 bdc_create_report(data = data_pf9, workflow_step = "prefilter") %>% 
   data.table::fwrite(., here::here("Output/Report/01_Prefilter_Report.csv"))
 
-# Save records with invalid or missing coordinates but with information potentially valid about the locality from which coordinates information can be extracted
+# Save records with invalid or missing coordinates but with information
+# potentially valid about the locality from which coordinates information can be
+# extracted
 data_to_check <-
   bdc_coordinates_from_locality(
     data = data_pf9,
@@ -125,7 +131,8 @@ data_to_check <-
 bdc_create_figures(data = data_pf9, workflow_step = "prefilter")
 
 # CLEAN THE DATABASE ------------------------------------------------------
-# Removing flagged records (potentially problematic ones) and saving a 'clean' database (i.e., without columns of tests, which starts with ".")
+# Removing flagged records (potentially problematic ones) and saving a 'clean'
+# database (i.e., without columns of tests, which starts with ".")
 output <-
   data_pf9 %>%
   dplyr::filter(.summary == TRUE) %>%
