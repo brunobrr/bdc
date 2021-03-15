@@ -10,6 +10,8 @@
 #' @examples
 #' worldmap <- bdc_get_world_map()
 bdc_get_world_map <- function() {
+  suppressWarnings({
+    
   worldmap <- rnaturalearth::ne_countries(scale = "large")
 
   # Add some iso code to some countries polygons
@@ -44,6 +46,7 @@ bdc_get_world_map <- function() {
   worldmap@data <-
     worldmap@data %>%
     dplyr::select(iso2c, iso3c)
-
+  
+  })
   return(worldmap)
 }

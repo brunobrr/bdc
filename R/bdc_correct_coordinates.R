@@ -48,16 +48,14 @@ bdc_correct_coordinates <-
       lon = x,
       lat = y,
       species = sp,
-      countries = cntr_iso2,
-      # iso2 code column of our database
+      countries = cntr_iso2, # iso2 code column name
+      # testing records in the sea and outside georeferenced countries
       tests = c("seas", "countries"),
-      #Will be tested records located in the see and outside georeferenced countries
-      country_ref = world_poly,
-      #Here we are using a high resolution countries border database
-      country_refcol = world_poly_iso,
-      #iso2 code column of country polygon database
+      # high-quality countries border database
+      country_ref = world_poly, 
+      # iso2 code column of country polygon database
+      country_refcol = world_poly_iso, 
       seas_ref = world_poly,
-      #Here we are using a high resolution countries border database
       value = "spatialvalid"
     )
     
@@ -69,14 +67,17 @@ bdc_correct_coordinates <-
       dplyr::as_tibble() %>%
       dplyr::filter(!.summary,!is.na(occ_country[cntr_iso2]))
     
-    message(occ_country %>% nrow, " ocurrences will be tested") #now this database have all those records with potential error that will try to correct
+    #now this database have all those records with potential error that be
+    #corrected
+    message(occ_country %>% nrow, " ocurrences will be tested") 
     
     # Split database
     occ_country <-
       occ_country %>% dplyr::group_by_(cntr_iso2) %>% dplyr::group_split()
     
     
-    # bdc_coord_trans() function will try different coordinate transformations to correct georeferenced occurrences
+    # bdc_coord_trans() function will try different coordinate transformations
+    # to correct georeferenced occurrences
     coord_test <- list()
     
     for (i in 1:length(occ_country)) {
@@ -95,12 +96,12 @@ bdc_correct_coordinates <-
             ))
     }
     
-    filt <- sapply(coord_test, function(x)
-      nrow(x) > 0)
-    coord_test <-
-      coord_test[filt] # elimination from the list those countries without correction
+    # elimination from the list those countries without correction
+    filt <- sapply(coord_test, function(x) nrow(x) > 0)
+    coord_test <- coord_test[filt] 
     
-    # Elimination of those records near to country border (to avoid flip coordinates or sign that fall too close to country border)
+    # Elimination of those records near to country border (to avoid flip
+    # coordinates or sign that fall too close to country border)
     
     for (i in 1:length(coord_test)) {
       n <- 
@@ -109,13 +110,14 @@ bdc_correct_coordinates <-
         unique %>% 
         pull
       
+      # Here filter polygon based on your country iso2c code
       my_country <-
-        world_poly[which(world_poly@data[, world_poly_iso] == n),] #Here filter polygon based on your country iso2c code
-      my_country2 <-
-        raster::buffer(my_country, width = 0.5) #0.5 degree ~50km near to equator
+        world_poly[which(world_poly@data[, world_poly_iso] == n),] 
       
-      coord_sp <- sp::SpatialPoints(coord_test[[i]] %>%
-                                      dplyr::select_(x, y))
+      #0.5 degree ~50km near to equator
+      my_country2 <- raster::buffer(my_country, width = 0.5) 
+      
+      coord_sp <- sp::SpatialPoints(coord_test[[i]] %>% dplyr::select_(x, y))
       
       coord_sp@proj4string <- my_country2@proj4string
       over_occ <- sp::over(coord_sp, my_country2)

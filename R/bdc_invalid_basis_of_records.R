@@ -7,8 +7,8 @@
 #' interpret or that do not comply with Darwin Core recommended vocabulary.
 #'
 #' @param data data.frame. Containing information on basis of records.
-#' @param basisOfRecord character string. The column with information on basis
-#' of records. Default = "basisOfRecord".
+#' @param basisOfRecord character string. The column name with information on
+#' basis of records. Default = "basisOfRecord".
 #' @param names_to_keep character string. Elements of the column BasisOfRecords
 #' to keep. Default is 'all', which considers a selected list of recommended
 #' standard Darwin Core classes (and their spelling variations, see details).
@@ -25,9 +25,9 @@
 #' "UNKNOWN", "", NA)
 #' 
 #' @importFrom dplyr mutate filter select distinct
-#' 
-#' @return A data.frame contain the column '.xy_provenance'. Records that have
-#' failed in the test are flagged as "FALSE".
+#'
+#' @return A data.frame contain the column '.invalid_basis_of_records'. Records
+#' that have failed in the test are flagged as "FALSE".
 #' 
 #' @export
 #'
@@ -73,18 +73,19 @@ bdc_invalid_basis_of_records <-
     
     data <-
       data %>%
-      dplyr::mutate(.xy_provenance = .data[[basisOfRecord]] %in% names_to_keep)
+      dplyr::mutate(.invalid_basis_of_records = .data[[basisOfRecord]] %in%
+                    names_to_keep)
     
     removed <-
       data %>%
-      dplyr::filter(.xy_provenance == FALSE) %>%
+      dplyr::filter(.invalid_basis_of_records == FALSE) %>%
       dplyr::select(.data[[basisOfRecord]]) %>%
       dplyr::distinct()
     
     message(
       paste(
         "\nbdc_invalid_basis_of_records:\nFlagged",
-        sum(data$.xy_provenance == FALSE),
+        sum(data$.invalid_basis_of_records == FALSE),
         "of the following specific nature:\n",
         removed,
         "\nOne column was added to the database.\n"
