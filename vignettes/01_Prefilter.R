@@ -38,47 +38,63 @@ for (i in 1:ncol(database)){
 
 # CHECK 1 -----------------------------------------------------------------
 # Identify records missing scientific name (i.e empty or NA records)
-data_pf1 <-
-  bdc_missing_names(data = database,
-                    sci_name = "scientificName")
+data_pf1 <- bdc_missing_names(
+  data = database,
+  sci_name = "scientificName")
 
 # CHECK 2 -----------------------------------------------------------------
 # Identify records missing latitude or longitude (i.e empty or NA records)
-data_pf2 <-
-  bdc_missing_xy(data = data_pf1,
-                 lat = "decimalLatitude",
-                 lon = "decimalLongitude")
+data_pf2 <- bdc_missing_coordinates(
+  data = data_pf1,
+  lat = "decimalLatitude",
+  lon = "decimalLongitude")
+
 # CHECK 3 -----------------------------------------------------------------
 # Identify records with invalid coordinates (lat > 90 or -90; long >180 or -180; coordinates NA)
-data_pf3 <-
-  bdc_invalid_xy(data = data_pf2,
-                 lon = "decimalLongitude",
-                 lat = "decimalLatitude")
+data_pf3 <- bdc_invalid_coordinates(
+  data = data_pf2,
+  lat = "decimalLatitude",
+  lon = "decimalLongitude")
 
 # CHECK 4 -----------------------------------------------------------------
-# Flag records from doubtful provenance
-data_pf4 <-
-  bdc_invalid_basis_of_records(data = data_pf3,
-                               basisOfRecord = "basisOfRecord",
-                               names_to_keep = "all")
+# Identify records from doubtful provenance
+data_pf4 <- bdc_invalid_basis_of_records(
+  data = data_pf3,
+  basisOfRecord = "basisOfRecord",
+  names_to_keep = "all")
 
 # CHECK 5 -----------------------------------------------------------------
+# Gets country names from coordinates for records missing country names
+data_pf5 <- bdc_countryName_from_coordinates(
+  data = data_pf4,
+  lat = "decimalLatitude",
+  lon = "decimalLongitude",
+  country = "country")
+
+# CHECK 6 -----------------------------------------------------------------
+# Standardizes country names and gets country code information
+data_pf6 <- bdc_standardize_countryNames(
+  data = data_pf5,
+  country = "country"
+)
+
+# CHECK 7 -----------------------------------------------------------------
 # Correct latitude and longitude transposed
-data_pf5 <-
-  bdc_transposed_xy(
-    data = data_pf4,
+data_pf7 <-
+  bdc_transposed_coordinates(
+    data = data_pf6, 
     id = "database_id",
-    sci_name = "scientificName",
+    sci_names = "scientificName",
     lon = "decimalLongitude",
     lat = "decimalLatitude",
     country = "country"
   )
 
-# CHECK 6 -----------------------------------------------------------------
+# CHECK 8 -----------------------------------------------------------------
 # Flag records outside one or multiple focal countries (e.g. exclude records in other countries or far from a informed distance from the coast)
-data_pf6 <-
-  bdc_country_xy_mismatch(
-    data = data_pf5,
+data_pf8 <-
+  bdc_coordinates_out_country(
+    data = data_pf7,
     country_name = "Brazil",
     lon = "decimalLongitude",
     lat = "decimalLatitude",
@@ -87,31 +103,31 @@ data_pf6 <-
 
 # REPORT ------------------------------------------------------------------
 # Create a summary column. This column is FALSE if any test was flagged as FALSE (i.e. potentially invalid or problematic record)
-data_pf7 <- bdc_summary_col(data = data_pf6)
-  
+data_pf8 <- bdc_summary_col(data = data_pf7)
+
 # Create a report summarizing the results of all tests
-bdc_create_report(data = data_pf7, workflow_step = "prefilter") %>% View()
+bdc_create_report(data = data_pf8, workflow_step = "prefilter") %>% View()
 
 # Save the report
-bdc_create_report(data = data_pf7, workflow_step = "prefilter") %>% 
+bdc_create_report(data = data_pf8, workflow_step = "prefilter") %>% 
   data.table::fwrite(., here::here("Output/Report/01_Prefilter_Report.csv"))
 
 # Save records with invalid or missing coordinates but with information potentially valid about the locality from which coordinates information can be extracted
 data_to_check <-
-  bdc_xy_from_locality(
-    data = data_pf7,
+  bdc_coordinates_from_locality(
+    data = data_pf8,
     locality = "locality",
     lon = "decimalLongitude",
     lat = "decimalLatitude"
   )
 
 # FIGURES -----------------------------------------------------------------
-bdc_create_figures(data = data_pf7, workflow_step = "prefilter")
+bdc_create_figures(data = data_pf8, workflow_step = "prefilter")
 
 # CLEAN THE DATABASE ------------------------------------------------------
 # Removing flagged records (potentially problematic ones) and saving a 'clean' database (i.e., without columns of tests, which starts with ".")
 output <-
-  data_pf7 %>%
+  data_pf8 %>%
   dplyr::filter(.summary == TRUE) %>%
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 
