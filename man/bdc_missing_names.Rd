@@ -9,8 +9,8 @@ bdc_missing_names(data, sci_names = "scientificName")
 \arguments{
 \item{data}{data.frame. Containing species scientific names.}
 
-\item{sci_names}{character string. The column with species scientific name.
-Default = "scientificName".}
+\item{sci_names}{character string. The column name with species scientific
+name. Default = "scientificName".}
 }
 \value{
 A data.frame contain the column '.missing_name'. Records that have

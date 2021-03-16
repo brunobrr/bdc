@@ -4,17 +4,42 @@
 \alias{bdc_create_report}
 \title{Creates reports on results of data quality tests}
 \usage{
-bdc_create_report(data, workflow_step)
+bdc_create_report(data, databa_id = "databas_id", workflow_step)
 }
 \arguments{
-\item{data}{data frame. Containing the results of data quality tests.}
+\item{data}{data.frame. Containing a unique identifier for each records and
+the results of data quality tests.}
 
 \item{workflow_step}{character string containing one of the following
-options("prefiter", "taxonomy", "space" or "time")}
+options("prefiter", "taxonomy", "space" or "time").}
+
+\item{id}{character string. The column name with a unique record identifier.
+Default = "database_id".}
 }
 \value{
-
+A data.frame containing a report summarizing the results of data
+quality assessment.
 }
 \description{
 Creates reports on results of data quality tests
+}
+\examples{
+\dontrun{
+database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
+.missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+.missing_coordinates <- c(TRUE, FALSE, FALSE, TRUE, FALSE)
+.invalid_basis_of_records <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
+.summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
+
+x <- data.frame(database_id,
+                .missing_names,
+                .missing_coordinates,
+                .invalid_basis_of_records,
+                .summary)
+
+bdc_create_report(
+data = x, 
+database_id = "database_id",
+workflow_step = "prefilter")
+}
 }

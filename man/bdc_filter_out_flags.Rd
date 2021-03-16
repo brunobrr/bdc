@@ -13,6 +13,9 @@ bdc_filter_out_flags(data, col_to_remove = "all")
 "all", which means that all columns containing the results of data quality tests
 are removed.}
 }
+\value{
+A data.frame without columns specified in 'col_to_remove'.
+}
 \description{
 This functions is used to filter out column containing the results of data
 quality tests (i.e., column starting with '.') or other columns specified.

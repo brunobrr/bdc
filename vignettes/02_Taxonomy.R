@@ -103,11 +103,7 @@ database <-
 
 # REPORT ------------------------------------------------------------------
 # Create a report summarizing the main results of the harmonizing names process
-bdc_create_report(data = database, workflow_step = "taxonomy") %>% View()
-
-# Save the report
-bdc_create_report(data = database, workflow_step = "Taxonomy") %>% 
-  data.table::fwrite(., here::here("Output/Report/02_taxonomy_Report.csv"))
+report <- bdc_create_report(data = database, workflow_step = "taxonomy") 
 
 # CLEAN THE DATABASE ------------------------------------------------------
 # Before saving the database containing verified scientific names, you have to choose to remove or not names:

@@ -22,7 +22,7 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
     borders(
       database = "world",
       fill = "white",
-      colour = "grey70",
+      colour = "grey60",
     )
   
   our_theme <-
@@ -33,7 +33,7 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
       legend.position = "none"
     )
   
-  if (!is.null(col_to_map)) {
+  if (is.null(col_to_map)) {
     our_map <-
       data %>%
       ggplot() +
@@ -49,11 +49,12 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
         y = .data[[lat]],
         col = .data[[col_to_map]], # Map the column
       ),
-      alpha = 0.5,
+      alpha = 1,
       size = size
       ) +
-      our_theme
-  } else {
+      our_theme +
+      coord_quickmap()
+    } else {
     our_map <-
       data %>%
       ggplot() +
@@ -68,13 +69,13 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
         aes(
           x = .data[[lon]],
           y = .data[[lat]]
-          # Map the color
         ),
-        col = "blue",
-        alpha = 0.5,
+        col = {{col_to_map}}, # Map the color
+        alpha = 1,
         size = size
       ) +
-      our_theme
-  }
+      our_theme +
+      coord_quickmap()
+    }
   return(our_map)
 }

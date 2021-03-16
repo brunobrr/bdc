@@ -2,9 +2,7 @@
 % Please edit documentation in R/bdc_invalid_basis_of_records.R
 \name{bdc_invalid_basis_of_records}
 \alias{bdc_invalid_basis_of_records}
-\title{Identify records from doubtful provenance (e.g., 'fossil',
-'MachineObservation') whose can be unreliable or unsuitable for certain
-analyses}
+\title{Identify records from doubtful source (e.g., 'fossil', MachineObservation')}
 \usage{
 bdc_invalid_basis_of_records(
   data,
@@ -15,8 +13,8 @@ bdc_invalid_basis_of_records(
 \arguments{
 \item{data}{data.frame. Containing information on basis of records.}
 
-\item{basisOfRecord}{character string. The column with information on basis
-of records. Default = "basisOfRecord".}
+\item{basisOfRecord}{character string. The column name with information on
+basis of records. Default = "basisOfRecord".}
 
 \item{names_to_keep}{character string. Elements of the column BasisOfRecords
 to keep. Default is 'all', which considers a selected list of recommended
@@ -25,13 +23,14 @@ By default, records missing (i.e., NA) or with "unknown" information on
 basis of records are kept.}
 }
 \value{
-A data.frame contain the column '.xy_provenance'. Records that have
-failed in the test are flagged as "FALSE".
+A data.frame contain the column '.invalid_basis_of_records'. Records
+that have failed in the test are flagged as "FALSE".
 }
 \description{
 Identify records with informed basis of records (i.e., the records type, for
-example, a specimen, a human observation, or a fossil specimen) impossible to
-interpret or that do not comply with Darwin Core recommended vocabulary.
+example, a specimen, a human observation, or a fossil specimen) no
+interpretable, that do not comply with Darwin Core recommended vocabulary, or
+unrealible or unsuitable for certain analyses.
 }
 \details{
 Users are encourage to select the set of basis of records classes
