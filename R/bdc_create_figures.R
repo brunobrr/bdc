@@ -3,24 +3,67 @@
 #' Creates figures (i.e., barplots and maps) reporting the results of data
 #' quality tests implemented in the bdc workflow.
 #' 
-#' @param data data.frame Containing the results of each test.
-#' @param workflow_step character string. Name of the workflow step. Options available are ("prefilter", "space", and "time")
+#' @param data data.frame. Containing the results of data quality tests and a .
+#' @param workflow_step character string. Name of the workflow step. Options available are "prefilter", "space", and "time".
 #' @details This function creates figures based on the results of data quality
 #' tests implemented. A pre-defined list of test names is used for creating
 #' figures depending on the name of the workflow step informed. Figures are
 #' saving in "Output/Figures".
-#' @return
-#' @export Figures in png format
+#' 
+#' @return Figures in a png format.
+#'
+#' @importFrom bdc n contains
+#' @importFrom CoordinateCleaner cc_val
+#' @importFrom cowplot plot_grid
+#' @importFrom data.table fwrite fread
+#' @importFrom dplyr summarise mutate group_by pull intersect filter full_join
+#' select summarise_all rename
+#' @importFrom fs file_exists
+#' @importFrom ggplot2 theme_minimal theme element_text element_line
+#' element_blank unit ggplot aes geom_col coord_flip labs geom_hline
+#' geom_label scale_y_continuous ggsave geom_histogram
+#' @importFrom here here
+#' @importFrom readr read_csv
+#' @importFrom scales comma
+#' @importFrom stats reorder
+#' @importFrom tibble as_tibble
+
+#' @export
 #'
 #' @examples
-bdc_create_figures <- function(data, workflow_step = NULL) {
+#' \dontrun{
+#' database_id <- c("GBIF_01", "GBIF_02", "GBIF_03", "FISH_04", "FISH_05")
+#' lat <- c(-19.93580, -13.01667, -22.34161,  -6.75000, -15.15806)
+#' lon <- c(-40.60030, -39.60000, -49.61017, -35.63330, -39.52861)
+#' .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+#' .missing_coordinates <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
+#' .invalid_basis_of_records <- c(TRUE, FALSE, TRUE, FALSE, TRUE)
+#' .summary <- c(TRUE, FALSE, TRUE, FALSE, FALSE)
+#' 
+#' x <- data.frame(
+#'   database_id,
+#'   lat,
+#'   lon,
+#'   .missing_names,
+#'   .missing_coordinates,
+#'   .invalid_basis_of_records,
+#'   .summary
+#' )
+#' 
+#' bdc_create_figures(data = x, database_id = "database_id", 
+#' workflow_step = "prefilter")
+#' }
+bdc_create_figures <- 
+  function(data, 
+           database_id = "database_id",
+           workflow_step = NULL) {
   
   # Total number of records
   suppressMessages({
-    if (!file_exists("data/n_records.csv")) {
+    if (!fs::file_exists("data/n_records.csv")) {
       n_records <-
         data %>%
-        dplyr::summarise(n = n())
+        dplyr::summarise(n = dplyr::n())
       
       data.table::fwrite(n_records, "data/n_records.csv")
       
@@ -32,23 +75,26 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
           database_id = gsub("_", "", database_id)
         ) %>%
         dplyr::group_by(database_id) %>%
-        dplyr::summarise(n_total = n())
+        dplyr::summarise(n_total = dplyr::n())
       
       data.table::fwrite(n_record_database, "data/n_record_database.csv")
     } else {
-      n_records <- read_csv("data/n_records.csv") %>% dplyr::pull(n)
-      n_record_database <- read_csv("data/n_record_database.csv")
+      n_records <-
+      readr::read_csv("data/n_records.csv") %>% 
+        dplyr::pull(n)
+      
+      n_record_database <- readr::read_csv("data/n_record_database.csv")
     }
   })
   
   our_theme <-
-    theme_minimal() +
-    theme(
-      axis.title = element_text(size = 18),
-      axis.text = element_text(size = 12),
-      panel.grid.major.x = element_line(color = "#cbcbcb"),
-      panel.grid.major.y = element_blank(),
-      plot.margin=unit(c(0.5,0.5,0.5,0.5),"cm")
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      axis.title = ggplot2::element_text(size = 18),
+      axis.text = ggplot2::element_text(size = 12),
+      panel.grid.major.x = ggplot2::element_line(color = "#cbcbcb"),
+      panel.grid.major.y = ggplot2::element_blank(),
+      plot.margin=ggplot2::unit(c(0.5,0.5,0.5,0.5),"cm")
     )
   
   # prefilter
@@ -56,19 +102,19 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
     tests <-
       c(
         ".missing_name",
-        ".missing_xy",
-        ".invalid_xy",
-        ".xy_provenance",
-        ".xy_out_country",
+        ".missing_coordinates",
+        ".invalid_coordinates",
+        ".invalid_basis_of_records",
+        ".coordinates_out_country",
         ".summary",
         "summary_all_tests"
       )
     
     names_tab <- names(data)
-    col_to_tests <- intersect(tests, names_tab)
+    col_to_tests <- dplyr::intersect(tests, names_tab)
     
-    if (file.exists("Output/Check/01_transposed_xy.csv")) {
-      col_to_tests <- c(col_to_tests, "transposed_xy")
+    if (file.exists("Output/Check/01_transposed_coordinates.csv")) {
+      col_to_tests <- c(col_to_tests, "transposed_coordinates")
     }
   }
   
@@ -89,13 +135,13 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
       )
     
     names_tab <- names(data)
-    col_to_tests <- intersect(tests, names_tab)
+    col_to_tests <- dplyr::intersect(tests, names_tab)
   }
   
   # time
   if (workflow_step == "time"){
     names_tab <- names(data)
-    col_to_tests <- intersect("year", names_tab)
+    col_to_tests <- dplyr::intersect("year", names_tab)
   }
   
   # function to create barplots for each dataset separately
@@ -109,25 +155,25 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
         ) %>%
         dplyr::filter(., .data[[column_to_map]] == FALSE) %>%
         dplyr::group_by(database_id, .data[[column_to_map]]) %>%
-        dplyr::summarise(n_flagged = n()) %>%
+        dplyr::summarise(n_flagged = dplyr::n()) %>%
         dplyr::full_join(., n_record_database, by = "database_id") %>%
         dplyr::mutate(freq = round(n_flagged  / n_total, 5))
       
       temp[is.na(temp)] <- 0
       
       b <-
-        ggplot(temp, aes(x = reorder(database_id,-freq), y = freq)) +
-        geom_col(colour = "white", fill = "royalblue") +
-        coord_flip() +
+        ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(database_id,-freq), y = freq)) +
+        ggplot2::geom_col(colour = "white", fill = "royalblue") +
+        ggplot2::coord_flip() +
         our_theme +
-        labs(x = "Dataset", y = "% of records flagged") +
+        ggplot2::labs(x = "Dataset", y = "% of records flagged") +
         # scale_y_continuous(labels = scales::percent) +
-        geom_hline(yintercept = 0,
+        ggplot2::geom_hline(yintercept = 0,
                    size = 1,
                    colour = "#333333") +
-        geom_label(
-          aes(
-            x = reorder(database_id,-freq),
+        ggplot2::geom_label(
+          ggplot2::aes(
+            x = stats::reorder(database_id,-freq),
             y = freq,
             label = n_flagged
           ),
@@ -140,10 +186,10 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
           size = 4,
           fontface = "bold"
         ) +
-        scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+        ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
       
-      ggsave(paste("Output/", "Figures/", workflow_step, "_", column_to_map,
-                   "_", "BAR", ".png", sep = ""),
+      ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
+                            column_to_map, "_", "BAR", ".png", sep = ""),
              b,
              dpi = 300,
              width = 6,
@@ -160,7 +206,7 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
              workflow_step = workflow_step) {
       temp <-
         data %>%
-        dplyr::select(contains(".")) %>%
+        dplyr::select(bdc::contains(".")) %>%
         dplyr::summarise_all(., .funs = sum) %>%
         t %>%
         tibble::as_tibble(rownames = "NA") %>%
@@ -173,18 +219,18 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
       temp[is.na(temp)] <- 0
       
       b <-
-        ggplot(temp, aes(x = reorder(Name,-freq), y = freq)) +
-        geom_col(colour = "white", fill = "royalblue") +
-        coord_flip() +
+        ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(Name,-freq), y = freq)) +
+        ggplot2::geom_col(colour = "white", fill = "royalblue") +
+        ggplot2::coord_flip() +
         our_theme +
-        labs(x = "Tests", y = "% of records flagged") +
+        ggplot2::labs(x = "Tests", y = "% of records flagged") +
         # scale_y_continuous(labels = scales::percent) +
-        geom_hline(yintercept = 0,
+        ggplot2::geom_hline(yintercept = 0,
                    size = 1,
                    colour = "#333333") +
-        geom_label(
-          aes(
-            x = reorder(Name,-freq),
+        ggplot2::geom_label(
+          ggplot2::aes(
+            x = stats::reorder(Name,-freq),
             y = freq,
             label = n_flagged
           ),
@@ -196,9 +242,9 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
           size = 3,
           fontface = "bold"
         ) +
-        scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+        ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
       
-      ggsave(paste("Output/", "Figures/", workflow_step, "_", column_to_map,
+      ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_", column_to_map,
                    "_", "BAR", ".png", sep = ""),
              b,
              dpi = 300,
@@ -211,23 +257,37 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
   
   # Names of columns available for creating barplot
   bar <- c(
-    ".missing_name", ".missing_xy", ".invalid_xy", ".xy_provenance",
-    ".xy_out_country", ".summary", ".uncer_term", "names_not_found",
-    ".equ", ".zer", ".cap",".cen", ".otl", ".gbf", ".inst", ".dpl",
-    ".rou", "summary_all_tests"
+    ".missing_name",
+    ".missing_coordinates",
+    ".invalid_coordinates",
+    ".invalid_basis_of_records",
+    ".coordinates_out_country",
+    ".summary",
+    ".uncer_term",
+    "names_not_found",
+    ".equ",
+    ".zer",
+    ".cap",
+    ".cen",
+    ".otl",
+    ".gbf",
+    ".inst",
+    ".dpl",
+    ".rou",
+    "summary_all_tests"
   )
   
   # Names of columns available for creating maps
-  maps <- c(".xy_out_country", ".cap", ".cen", ".inst")
+  maps <- c(".coordinates_out_country", ".cap", ".cen", ".inst")
   
   # Names of column available for creating histogram
   hist <- c("year")
   
   # Find which names were provided
-  w_bar <- intersect(col_to_tests, bar)
-  w_maps <- intersect(col_to_tests, maps)
-  w_tranposed <- intersect(col_to_tests, "transposed_xy")
-  w_hist <- intersect(col_to_tests, hist)
+  w_bar <- dplyr::intersect(col_to_tests, bar)
+  w_maps <- dplyr::intersect(col_to_tests, maps)
+  w_tranposed <- dplyr::intersect(col_to_tests, "transposed_coordinates")
+  w_hist <- dplyr::intersect(col_to_tests, hist)
   
   # Create bar plots
   if (length(w_bar) == 0 & workflow_step %in% c('prefilter', 'space')) {
@@ -259,7 +319,7 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
   
   # Create maps of invalid vs valid records
   if (length(w_maps) == 0 & workflow_step %in% c('prefilter', 'space')) {
-    message("At least one column 'starting with '.' must be provided")
+    message("At least one of the following columns must be provided for creating maps\n", paste0(maps, sep = " "))
   }
   
   if (length(w_maps) != 0) {
@@ -293,7 +353,7 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
           lat = "decimalLatitude",
           col_to_map = w_maps[i], size = 0.8)
       
-      ggsave(
+      ggplot2::ggsave(
         paste("Output/", "Figures/", workflow_step, "_", w_maps[i], "_",
               "MAP", ".png", sep = ""),
         p,
@@ -303,18 +363,19 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
   
   # Create maps of transposed and corrected coordinates
   if (length(w_tranposed) == 0 & workflow_step == "prefilter") {
-    message("file 'Output/Check/01_transposed_xy.csv' not found")
+    message("file 'Output/Check/01_transposed_coordinates.csv' not found")
   }
   
   if (length(w_tranposed) != 0) {
-    temp <- data.table::fread("Output/Check/01_transposed_xy.csv")
+    temp <- data.table::fread("Output/Check/01_transposed_coordinates.csv")
     
     p1 <-
       bdc_quickmap(
         data = temp,
         lon = "decimalLongitude",
         lat = "decimalLatitude",
-        col_to_map = "red", size = 1
+        col_to_map = "#EC364F", 
+        size = 1
       )
     
     p2 <-
@@ -322,13 +383,13 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
         data = temp,
         lon = "decimalLongitude_modified",
         lat = "decimalLatitude_modified",
-        col_to_map = "blue", size = 1
+        col_to_map = "royalblue", 
+        size = 1
       )
+    p <- cowplot::plot_grid(p1, p2, labels = "AUTO", scale = 1)
     
-    p <- cowplot::plot_grid(p1, p2, labels = "AUTO")
-    
-    ggsave(paste("Output/", "Figures/", workflow_step,  "_",
-                 "transposed_xy", "_", "MAP", ".png", sep = ""),
+    ggplot2::ggsave(paste("Output/", "Figures/", workflow_step,  "_",
+                 "transposed_coordinates", "_", "MAP", ".png", sep = ""),
            p,
            dpi = 300, width = 6, height = 3, units = "cm", scale = 4)
   }
@@ -344,17 +405,18 @@ bdc_create_figures <- function(data, workflow_step = NULL) {
       dplyr::filter(!is.na(year))
     
     p <- data %>%
-      ggplot(aes(x=year)) +
-      geom_histogram(colour = "white", fill = "royalblue", position = 'identity') +
+      ggplot2::ggplot(ggplot2::aes(x=year)) +
+      ggplot2::geom_histogram(colour = "white",
+                              fill = "royalblue", position = 'identity') +
       our_theme +
-      labs(x = "Year", y = "Number of records") +
-      geom_hline(
+      ggplot2::labs(x = "Year", y = "Number of records") +
+      ggplot2::geom_hline(
         yintercept = 0,
         size = 1,
         colour = "#333333"
       )
     
-    ggsave(
+    ggplot2::ggsave(
       paste("Output/", "Figures/", workflow_step, "_", "year", "_",
             "BAR",".png", sep = ""),
       p,

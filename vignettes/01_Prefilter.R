@@ -104,33 +104,36 @@ data_pf8 <-
     dist = 0.1 # in decimal degrees
   )
 
+# CHECK 9 -----------------------------------------------------------------
+# Save records with invalid or missing coordinates but with information
+# potentially valid about the locality from which coordinates information can be
+# extracted
+data_to_check <-
+  bdc_coordinates_from_locality(
+    data = data_pf8,
+    locality = "locality",
+    lon = "decimalLongitude",
+    lat = "decimalLatitude"
+  )
+
 # REPORT ------------------------------------------------------------------
 # Create a summary column. This column is FALSE if any test was flagged as FALSE
 # (i.e. potentially invalid or problematic record)
 data_pf9 <- bdc_summary_col(data = data_pf8)
 
 # Create a report summarizing the results of all tests
-bdc_create_report(data = data_pf9, workflow_step = "prefilter") %>% View()
-
-# Save the report
-bdc_create_report(data = data_pf9, workflow_step = "prefilter") %>% 
-  data.table::fwrite(., here::here("Output/Report/01_Prefilter_Report.csv"))
-
-# Save records with invalid or missing coordinates but with information
-# potentially valid about the locality from which coordinates information can be
-# extracted
-data_to_check <-
-  bdc_coordinates_from_locality(
-    data = data_pf9,
-    locality = "locality",
-    lon = "decimalLongitude",
-    lat = "decimalLatitude"
-  )
+report <-
+  bdc_create_report(data = data_pf9,
+                    databa_id = "databas_id",
+                    workflow_step = "prefilter")
+report
 
 # FIGURES -----------------------------------------------------------------
-bdc_create_figures(data = data_pf9, workflow_step = "prefilter")
+bdc_create_figures(data = data_pf9,
+                   databa_id = "databas_id",
+                   workflow_step = "prefilter")
 
-# CLEAN THE DATABASE ------------------------------------------------------
+# FILTER THE DATABASE ------------------------------------------------------
 # Removing flagged records (potentially problematic ones) and saving a 'clean'
 # database (i.e., without columns of tests, which starts with ".")
 output <-

@@ -1,10 +1,9 @@
-#' Identify records from doubtful provenance (e.g., 'fossil',
-#' 'MachineObservation') whose can be unreliable or unsuitable for certain
-#' analyses
+#' Identify records from doubtful source (e.g., 'fossil', MachineObservation') 
 #'
 #' Identify records with informed basis of records (i.e., the records type, for
-#' example, a specimen, a human observation, or a fossil specimen) impossible to
-#' interpret or that do not comply with Darwin Core recommended vocabulary.
+#' example, a specimen, a human observation, or a fossil specimen) no
+#' interpretable, that do not comply with Darwin Core recommended vocabulary, or
+#' unrealible or unsuitable for certain analyses.
 #'
 #' @param data data.frame. Containing information on basis of records.
 #' @param basisOfRecord character string. The column name with information on
@@ -24,11 +23,10 @@
 #' "PreservedSpecimen", "preservedspecimen", "S", "Specimen", "Taxon",
 #' "UNKNOWN", "", NA)
 #' 
-#' @importFrom dplyr mutate filter select distinct
-#'
 #' @return A data.frame contain the column '.invalid_basis_of_records'. Records
 #' that have failed in the test are flagged as "FALSE".
-#' 
+#' @importFrom dplyr mutate filter select distinct
+#'
 #' @export
 #'
 #' @examples

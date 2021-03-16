@@ -2,9 +2,7 @@
 % Please edit documentation in R/bdc_invalid_basis_of_records.R
 \name{bdc_invalid_basis_of_records}
 \alias{bdc_invalid_basis_of_records}
-\title{Identify records from doubtful provenance (e.g., 'fossil',
-'MachineObservation') whose can be unreliable or unsuitable for certain
-analyses}
+\title{Identify records from doubtful source (e.g., 'fossil', MachineObservation')}
 \usage{
 bdc_invalid_basis_of_records(
   data,
@@ -30,8 +28,9 @@ that have failed in the test are flagged as "FALSE".
 }
 \description{
 Identify records with informed basis of records (i.e., the records type, for
-example, a specimen, a human observation, or a fossil specimen) impossible to
-interpret or that do not comply with Darwin Core recommended vocabulary.
+example, a specimen, a human observation, or a fossil specimen) no
+interpretable, that do not comply with Darwin Core recommended vocabulary, or
+unrealible or unsuitable for certain analyses.
 }
 \details{
 Users are encourage to select the set of basis of records classes

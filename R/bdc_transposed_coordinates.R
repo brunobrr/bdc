@@ -26,16 +26,16 @@
 #' database containing verbatim and corrected coordinates is created in
 #' "Output/Check/01_transposed_coordinates.csv".
 #' 
-#' @return A data.frame containing three columns i) 'transposed_coordinates' (logical,
-#'   records that have failed in the test are flagged as "FALSE", ii)
-#'   country_suggested (standardized country names), and iii) country_code
-#'   (standardized iso3 country code).
+#' @return A data.frame containing the column 'transposed_coordinates'. Records
+#' that have failed in the test are flagged as "FALSE".
 #'
 #' @importFrom CoordinateCleaner cc_val cc_sea
 #' @importFrom dplyr filter left_join contains pull rename
 #' @importFrom readr write_csv
 #' @importFrom rnaturalearth ne_countries
 #'
+#' @export
+#' 
 #' @examples
 #' \dontrun{
 #' id <- c(1,2,3,4)

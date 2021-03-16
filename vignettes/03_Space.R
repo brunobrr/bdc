@@ -120,11 +120,7 @@ flag_issues %>%
 flag_issues <- bdc_summary_col(data = flag_issues)
 
 # Create a report summarizing the results of all tests
-bdc_create_report(data = flag_issues, workflow_step = "space") %>% View()
-
-# Save the report
-bdc_create_report(data = flag_issues, workflow_step = "space") %>% 
-  data.table::fwrite(., here::here("Output/Report/03_Space_Report.csv"))
+report <- bdc_create_report(data = flag_issues, workflow_step = "space")
 
 # FIGURES -----------------------------------------------------------------
 bdc_create_figures(data = flag_issues, workflow_step = "space")

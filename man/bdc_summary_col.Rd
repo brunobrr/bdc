@@ -11,15 +11,24 @@ bdc_summary_col(data)
 columns starting with ".").}
 }
 \value{
-A clean database without records flagged as "FALSE".
+A data.frame containing a new or an updated column ".summary".
 }
 \description{
-Creates or updates a column summarizing the results of data quality tests
-(i.e., columns starting with "."). Records that have failed in at least one
-data quality test are considered invalid (i.e., flagged as "FALSE") in the
-".summary" column.
+Creates or updates the column ".summary" summarizing the results of data
+quality tests (i.e., columns starting with "."). Records that have failed in
+at least one data quality test are considered invalid (i.e., flagged as
+"FALSE") in the ".summary" column.
 }
 \details{
 If existing, the column ".summary" will be removed and then updated
 considering all test names available in the supplied database.
+}
+\examples{
+\dontrun{
+.missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+.missing_coordinates <- c(TRUE, FALSE, FALSE, TRUE, FALSE)
+x <- data.frame(.missing_names, .missing_coordinates)
+
+bdc_summary_col(data = x)
+}
 }

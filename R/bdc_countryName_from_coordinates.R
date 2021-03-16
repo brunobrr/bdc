@@ -25,7 +25,9 @@
 #' @importFrom readr write_csv
 #' @importFrom rnaturalearth ne_countries
 #' @importFrom sf st_as_sf st_set_crs st_crs st_intersection 
-#'
+#' 
+#' @export
+#' 
 #' @examples
 #' \dontrun{
 #' decimalLatitude <- c(-63.43333, -67.91667, -41.90000, -46.69778)

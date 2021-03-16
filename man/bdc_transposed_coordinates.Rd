@@ -34,10 +34,8 @@ expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
 assignment of each record. Default = "country".}
 }
 \value{
-A data.frame containing three columns i) 'transposed_coordinates' (logical,
-records that have failed in the test are flagged as "FALSE", ii)
-country_suggested (standardized country names), and iii) country_code
-(standardized iso3 country code).
+A data.frame containing the column 'transposed_coordinates'. Records
+that have failed in the test are flagged as "FALSE".
 }
 \description{
 Flags and corrects records when latitude and longitude appear to be

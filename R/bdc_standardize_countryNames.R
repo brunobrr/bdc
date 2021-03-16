@@ -17,6 +17,8 @@
 #' @importFrom dplyr left_join rename
 #' @importFrom rnaturalearth ne_countries
 #'
+#' @export
+#' 
 #' @examples
 #' \dontrun{
 #' country <- c("BOLIVIA", "bolivia", "Brasil", "Brazil", "BREZIL")

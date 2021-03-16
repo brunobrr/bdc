@@ -4,15 +4,15 @@
 \alias{bdc_create_figures}
 \title{Creates figures reporting the results of the bdc workflow}
 \usage{
-bdc_create_figures(data, workflow_step = NULL)
+bdc_create_figures(data, database_id = "database_id", workflow_step = NULL)
 }
 \arguments{
-\item{data}{data.frame Containing the results of each test.}
+\item{data}{data.frame. Containing the results of data quality tests and a .}
 
-\item{workflow_step}{character string. Name of the workflow step. Options available are ("prefilter", "space", and "time")}
+\item{workflow_step}{character string. Name of the workflow step. Options available are "prefilter", "space", and "time".}
 }
 \value{
-
+Figures in a png format.
 }
 \description{
 Creates figures (i.e., barplots and maps) reporting the results of data
@@ -23,4 +23,28 @@ This function creates figures based on the results of data quality
 tests implemented. A pre-defined list of test names is used for creating
 figures depending on the name of the workflow step informed. Figures are
 saving in "Output/Figures".
+}
+\examples{
+\dontrun{
+database_id <- c("GBIF_01", "GBIF_02", "GBIF_03", "FISH_04", "FISH_05")
+lat <- c(-19.93580, -13.01667, -22.34161,  -6.75000, -15.15806)
+lon <- c(-40.60030, -39.60000, -49.61017, -35.63330, -39.52861)
+.missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+.missing_coordinates <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
+.invalid_basis_of_records <- c(TRUE, FALSE, TRUE, FALSE, TRUE)
+.summary <- c(TRUE, FALSE, TRUE, FALSE, FALSE)
+
+x <- data.frame(
+  database_id,
+  lat,
+  lon,
+  .missing_names,
+  .missing_coordinates,
+  .invalid_basis_of_records,
+  .summary
+)
+
+bdc_create_figures(data = x, database_id = "database_id", 
+workflow_step = "prefilter")
+}
 }

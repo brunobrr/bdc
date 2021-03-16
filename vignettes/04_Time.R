@@ -53,11 +53,7 @@ parse_date <- bdc_summary_col(data = parse_date)
 
 
 # Create a report summarizing the results of all tests
-bdc_create_report(data = parse_date, workflow_step = "temporal") %>% View()
-
-# Save the report
-bdc_create_report(data = parse_date, workflow_step = "temporal") %>% 
-  data.table::fwrite(., here::here("Output/Report/04_Temporal_Report.csv"))
+report <- bdc_create_report(data = parse_date, workflow_step = "temporal")
 
 # FIGURES -----------------------------------------------------------------
 bdc_create_figures(data = parse_date, workflow_step = "time")
