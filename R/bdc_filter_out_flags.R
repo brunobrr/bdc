@@ -1,46 +1,59 @@
 #' Removes columns with the results of data quality tests
 #'
-#' This functions is used to filter out column containing the results of data
-#' quality tests (i.e., column starting with '.') or other columns specified.
+#' This function is used to filter out columns containing the results of data
+#' quality tests (i.e., columns starting with '.') or other columns specified.
 #'
-#' @param data data.frame. Containing columns to be removed
+#' @param data data.frame. Containing columns to be removed.
 #' @param col_to_remove logical. Which columns should be removed? Default =
-#' "all", which means that all columns containing the results of data quality tests
-#' are removed.
-#' @details
+#' "all", which means that all columns containing the results of data quality
+#' tests are removed.
+#' 
 #' @return A data.frame without columns specified in 'col_to_remove'.
-#'
+#' @importFrom dplyr select
+#' @export
+#' 
 #' @examples
 #' \dontrun{
-#' data %>%
-#'   bdc_flag_transposed_xy() %>%
-#'   bdc_filter_out_flags()
+#' database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
+#' .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+#' .summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
+#' 
+#' x <- data.frame(database_id,
+#'                 .missing_names,
+#'                 .missing_coordinates,
+#'                 .invalid_basis_of_records,
+#'                 .summary)
+#' 
+#' bdc_filter_out_flags(
+#' data = x, 
+#' col_to_remove = "all")
 #' }
-bdc_filter_out_flags <- function(data, col_to_remove = "all") {
+bdc_filter_out_flags <- 
+  function(data,
+           col_to_remove = "all") {
   if (col_to_remove %in% "all") {
     column_names <-
       data %>%
       dplyr::select(starts_with(".")) %>%
       names()
-    
+
     data <-
       data %>%
       dplyr::select(-all_of(column_names))
   } else {
     w <- which(names(data) %in% col_to_remove)
-    
+
     column_names <- names(data)[w]
-    
+
     data <-
       data %>%
       dplyr::select(-all_of(column_names))
   }
-  
+
   message(
     "\nbdc_fiter_out_flags:\nThe following columns were removed from the database:\n",
     paste(column_names, collapse = ", ")
   )
-  
+
   return(data)
-  
 }

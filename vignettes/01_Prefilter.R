@@ -135,7 +135,7 @@ bdc_create_figures(data = data_pf9,
 
 # FILTER THE DATABASE ------------------------------------------------------
 # Removing flagged records (potentially problematic ones) and saving a 'clean'
-# database (i.e., without columns of tests, which starts with ".")
+# database (i.e., without test columns starting with ".")
 output <-
   data_pf9 %>%
   dplyr::filter(.summary == TRUE) %>%
