@@ -63,11 +63,12 @@ bdc_transposed_coordinates <-
            sci_names = "scientificName",
            lat = "decimalLatitude",
            lon = "decimalLongitude",
-           country = "country") {
+           country = "country",
+           countryCode = "countryCode") {
     
-  minimum_colnames <- c(id, sci_names, lat, lon, country)
+  minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
 
-  if (length(minimum_colnames) < 5) {
+  if (length(minimum_colnames) < 6) {
     stop("Fill all function arguments: id, sci_names, lon, lat, and 
          country")
   }
@@ -80,7 +81,18 @@ bdc_transposed_coordinates <-
       call. = FALSE
     )
   }
-
+ 
+  # Standardizing columns names
+  data <- 
+    data %>% 
+    rename(database_id = {{ id }},
+           decimalLatitude = {{lat}},
+           decimalLongitude = {{lon}}, 
+           scientificName = {{ sci_names }},
+           country = {{ country }}, 
+           countryCode = {{ countryCode }}
+           )
+  
   # converts coordinates columns to numeric
   data <-
     data %>%
@@ -96,31 +108,26 @@ bdc_transposed_coordinates <-
   corrected_coordinates <-
     bdc_correct_coordinates(
       data = data,
-      x = lon,
-      y = lat,
-      sp = sci_names,
-      id = id,
+      x = "decimalLongitude",
+      y = "decimalLatitude",
+      sp = "scientificName",
+      id = "database_id",
       cntr_iso2 = "countryCode",
       world_poly = worldmap,
       world_poly_iso = "iso2c"
     )
 
   # Exports a table with verbatim and transposed xy
-  corrected_coordinates <- 
-  corrected_coordinates %>%
-    dplyr::select(
-      {{ id }},
-      {{ sci_names }},
-      dplyr::contains("decimal"),
-      country_suggested
-    ) 
+  corrected_coordinates <-
+    corrected_coordinates %>%
+    dplyr::select(database_id, scientificName, dplyr::contains("decimal")) 
   
   corrected_coordinates %>%
     readr::write_csv(here::here("Output/Check/01_transposed_coordinates.csv"))
   
   # finding the position of records with lon/lat modified
   w <-
-    which(data[, {{id}} ] %in% (corrected_coordinates %>% dplyr::pull({{id}})))
+    which(data[, "database_id"] %in% (corrected_coordinates %>% dplyr::pull(database_id)))
   
   data[w, "decimalLatitude"] <- 
     corrected_coordinates[, "decimalLatitude_modified"]
