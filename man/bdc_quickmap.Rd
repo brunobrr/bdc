@@ -26,3 +26,7 @@ tests implemented in the workflow.
 \details{
 Only records with valid coordinates can be plotted. Records missing or with invalid coordinates are removed prior creating the map.
 }
+\examples{
+\dontrun{
+}
+}

@@ -2,19 +2,40 @@
 % Please edit documentation in R/bdc_clean_names.R
 \name{bdc_clean_names}
 \alias{bdc_clean_names}
-\title{Clean scientific names}
+\title{Cleaning and splitting scientific names into their semantic elements}
 \usage{
 bdc_clean_names(sci_names)
 }
 \arguments{
-\item{sci_names}{character. Vector of scientific names or a data frame containing the column of names to be parsed.}
+\item{sci_names}{character string. Containing scientific names.
+#'}
 }
 \value{
-It returns a data frame with clean and unique scientific names.
+A data.frame containing original and cleaned/parsed names as well
+columns indicating the quality of the parse names process (see 'details').
+Also, a data.frame containing flags of each name-checking routine is saved
+in "Output/Check/02_parse_names.csv".
 }
 \description{
-Clean scientific names
+This functions is composed of a series of name-checking routines for cleaning
+and parsing scientific names, including 1) family names of animals or plants
+pre-pended to species names, 2) qualifiers denoting doubtful taxonomic
+identification (e.g., confer, species, affinis, and among others), and 3)
+infraspecific terms (e.g., variety \link{var.}, subspecies \link{subsp}, forma \link{f.},
+and their spelling variations). It also includes tools for: 4) 4) standardize
+names, i.e., capitalize only the first letter of the generic name and remove
+extra whitespaces), and 5) parse names, i.e., separate author from taxon
+name.
 }
-\details{
-The function identifies, flags and removes suffix, infraspecific, uncertain and provisional names.
+\examples{
+\dontrun{
+scientificName = c(
+"Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
+"Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
+"Gymnanthes edwalliana (Pax & K.Hoffm.) Laurênio-Melo & M.F.Sales",
+"LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby")
+
+x <- data.frame(scientificName)
+bdc_clean_names(data = x, scientificName)
+}
 }

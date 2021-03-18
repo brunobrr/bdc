@@ -1,11 +1,11 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^Config$
 ^tags$
-^Output$
-^Input_files$
 ^R/__dev__.R$
 ^R/_git_script.R$
 ^R/_country_names_database.R$
 ^R/_prepare_and_sample_datasets.R$
-
+Makefile
+.github
+.travis.yml
+_config.yml

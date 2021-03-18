@@ -7,23 +7,33 @@
 bdc_filter_out_flags(data, col_to_remove = "all")
 }
 \arguments{
-\item{data}{data.frame. Containing columns to be removed}
+\item{data}{data.frame. Containing columns to be removed.}
 
 \item{col_to_remove}{logical. Which columns should be removed? Default =
-"all", which means that all columns containing the results of data quality tests
-are removed.}
+"all", which means that all columns containing the results of data quality
+tests are removed.}
 }
 \value{
 A data.frame without columns specified in 'col_to_remove'.
 }
 \description{
-This functions is used to filter out column containing the results of data
-quality tests (i.e., column starting with '.') or other columns specified.
+This function is used to filter out columns containing the results of data
+quality tests (i.e., columns starting with '.') or other columns specified.
 }
 \examples{
 \dontrun{
-data \%>\%
-  bdc_flag_transposed_xy() \%>\%
-  bdc_filter_out_flags()
+database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
+.missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+.summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
+
+x <- data.frame(database_id,
+                .missing_names,
+                .missing_coordinates,
+                .invalid_basis_of_records,
+                .summary)
+
+bdc_filter_out_flags(
+data = x, 
+col_to_remove = "all")
 }
 }

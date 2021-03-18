@@ -35,7 +35,9 @@ decimal places have precision of~11.1 km, ~1.1 km, and ~111 m at the equator,
 respectively.
 }
 \examples{
-"data <- data.frame(lon = c(-55.389, -13.897, 30.678, 90.675) , lat = c(-21.345, 23.567, 16.798, -10.468))"
-"bdc_round_dec(data = data, lon = "lon", lat = "lat", ndec = c(0, 2))"
-
+\dontrun{
+data <- data.frame(lon = c(-55.389, -13.897, 30.678, 90.675) , lat =
+c(-21.345, 23.567, 16.798, -10.468)) bdc_round_dec(data = data, lon = "lon",
+lat = "lat", ndec = c(0, 2))
+}
 }
