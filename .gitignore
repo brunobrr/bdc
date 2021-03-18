@@ -11,3 +11,5 @@ renv.lock
 renv/.gitignore
 renv/activate.R
 renv/settings.dcf
+
+README.html
