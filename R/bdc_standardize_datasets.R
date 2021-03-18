@@ -53,7 +53,8 @@
 #'
 #' @examples
 #' \dontrun{
-#'  # TODO: include system file example after move Config/DatabaseInfo.csv to inst/extdata.
+#'  metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
+#   # TODO: finish example
 #' }
 bdc_standardize_datasets <- function(metadata) {
 
