@@ -1,0 +1,19 @@
+destination: docs
+url: https://brunobrr.github.io/bdc
+
+template:
+  params:
+    bootswatch: cosmo
+
+# configuracao geral da barra de navegacao
+navbar:
+  left:
+    - icon: fa-home
+      href: index.html
+    - icon: fas fa-book
+      text: "Articles"
+      menu:
+      -  text: "Merge dataset"
+         href: articles/merge-datasets.html
+      -  text: "Prefilter"
+         href: articles/prefilter.html

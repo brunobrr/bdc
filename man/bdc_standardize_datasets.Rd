@@ -47,6 +47,6 @@ presenting the geographic longitude in decimal degrees (e.g.,
 }
 \examples{
 \dontrun{
- # TODO: include system file example after move Config/DatabaseInfo.csv to inst/extdata.
+ metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
 }
 }
