@@ -18,7 +18,7 @@ ipak(
 )
 
 # Define the path containing the configuration database
-metadata <- data.table::fread(here::here("Config/DatabaseInfo.csv"))
+metadata <- data.table::fread(here::here("inst/extdata/Config/DatabaseInfo.csv"))
 
 # Standardize and merge datasets  
 bdc_standardize_datasets(metadata = metadata)

@@ -31,6 +31,7 @@ database <-
   qs::qread()
 
 # Standardize character encoding
+
 for (i in 1:ncol(database)){
   if(is.character(database[,i])){
     Encoding(database[,i]) <- "UTF-8"

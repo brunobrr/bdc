@@ -129,7 +129,7 @@ bdc_standardize_datasets <- function(metadata) {
             unlist()
 
           imported_raw_dataset <-
-            here::here(input_file[file_index]) %>%
+           input_file[file_index] %>%
             vroom::vroom(guess_max = 10^6, col_types = vroom::cols(.default = "c"), n_max = 1)
 
           skip_to_next <- FALSE
@@ -146,7 +146,7 @@ bdc_standardize_datasets <- function(metadata) {
             } else {
 
               standard_dataset <-
-                here::here(input_file[file_index]) %>%
+                input_file[file_index] %>%
                 data.table::fread() %>%
                 dplyr::select(all_of(vector_for_recode)) %>%
                 purrr::set_names(names(vector_for_recode)) %>%
