@@ -1,15 +1,24 @@
 Package: bdc
-Title: What the Package Does (One Line, Title Case)
+Title: Biodiversity data cleaning
 Version: 0.0.0.9000
-Authors@R:
-    person(given = "BDC",
-           family = "Team",
-           role = c("aut", "cre"),
-           email = "kguidonimartins@gmail.com",
-           comment = c(ORCID = ""))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+Authors@R: c(
+    person("Bruno", "Ribeiro", email = "ribeiro.brr@gmail.com",
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0002-7755-6715")),
+    person("Geiziane", "Tessarolo", email = "geites@gmail.com",
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1361-0062")),
+    person("Santiago", "Velazco", email = "sjevelazco@gmail.com",
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0002-7527-0967")),
+    person("Lucas", "Jardim", email = "lucas.ljardim9@gmail.com",
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0003-2602-5575")),
+    person("Karlo", "Guidoni-Martins", email = "kguidonimartins@gmail.com",
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8458-8467")),
+    person("Rafael", "Loyola", email = "rdiasloyola@gmail.com",
+    role = c("ctb"), comment = c(ORCID = "0000-0001-5323-2735")),
+    person("Steven", "Bachman", email = "S.Bachman@kew.org ",
+    role = c("ctb"), comment = c(ORCID = "0000-0003-1085-6075"))
+    )
+Description: Easily clean up biodiversity data.
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1

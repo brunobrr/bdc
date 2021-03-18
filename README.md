@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# misc
+# bdc
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -9,7 +9,7 @@
 ## Installation
 
 You can install the released version of misc from
-[github](https://github.com/kguidonimartins/misc) with:
+[github](https://github.com/brunobrr/bdc) with:
 
 ``` r
 if (!require("remotes")) install.packages("remotes")
