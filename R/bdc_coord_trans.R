@@ -2,7 +2,7 @@
 #' transposed geographic coordinates
 #'
 #' @param data data.frame. Containing an unique identifier for each records,
-#' geographical coordinates, and country names. Coordinates must be expressed in decimal degree and in WGS84. 
+#' geographical coordinates, and country names. Coordinates must be expressed in decimal degree and in WGS84.
 #' @param x character string. The column name with longitude data. Default = "decimalLongitude".
 #' @param y character string. The column name with latitude data. Default = "decimalLatitude".
 #' @param sp character string. The column name with species scientific name.
@@ -15,10 +15,11 @@
 #' @param world_poly_iso charterer sting. Iso2 code column of country polygon database
 #'
 #' @noRd
-#' @return
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' }
 bdc_coord_trans <-
   function(data,
            x,
@@ -28,7 +29,7 @@ bdc_coord_trans <-
            worldmap,
            worldmap_cntr_code
   ) {
-    
+
     data <- data %>% dplyr::select(x, y, country_code, id)
     d1 <- data.frame(x = data[, x], y = -data[, y])
     d2 <- data.frame(x = -data[, x], y = data[, y])
@@ -37,16 +38,16 @@ bdc_coord_trans <-
     d5 <- data.frame(x = data[, y], y = -data[, x])
     d6 <- data.frame(x = -data[, y], y = data[, x])
     d7 <- data.frame(x = -data[, y], y = -data[, x])
-    
+
     d.list <- list(d1, d2, d3, d4, d5, d6, d7)
     rm(list = paste0("d", 1:7))
     d.list <- lapply(d.list, function(x) {
       colnames(x) <- c("x", "y")
       return(x)
     })
-    
+
     over_list <- list()
-    
+
     for (d in 1:length(d.list)) {
       caluse <- sp::SpatialPoints(d.list[[d]])
       caluse@proj4string <- worldmap@proj4string
@@ -63,11 +64,11 @@ bdc_coord_trans <-
       }
       rm(list = c("caluse", "overresult", "filt"))
     }
-    
+
     rm(d.list)
-    
+
     over_list <- over_list[!sapply(over_list <- over_list, is.null)]
     over_list <- dplyr::bind_rows(over_list)
-    
+
     return(over_list)
   }

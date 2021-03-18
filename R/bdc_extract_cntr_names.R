@@ -1,12 +1,13 @@
 #' Internal function. Extracts countries names in different languages from
 #' wikipedia
 #'
-#' @param x 
+#' @param x
 #'
-#' @return
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' }
 bdc_extract_cntr_names <- function(x) {
   if (stringr::str_detect(x, "Note")) {
     x <- stringr::str_split(x, "Note")[[1]][1]
@@ -31,9 +32,9 @@ bdc_extract_cntr_names <- function(x) {
     unlist() %>%
     stringr::str_trim() %>%
     stringr::str_subset(., pattern = "", negate = FALSE)
-  
+
   x2 <- x[!str_detect(x, "/|-")]
-  
+
   x3.1 <- x[str_detect(x, "/")] %>%
     stringr::str_split(., pattern = "/") %>%
     unlist() %>%
@@ -42,7 +43,7 @@ bdc_extract_cntr_names <- function(x) {
     stringr::str_split(., pattern = " -", n = 2) %>%
     unlist() %>%
     stringr::str_trim()
-  
+
   x <- c(x2, x3.1, x3.2) %>%
     sort() %>%
     stringr::str_split(., pattern = "/") %>%
@@ -69,7 +70,7 @@ bdc_extract_cntr_names <- function(x) {
     stringr::str_subset(., pattern = "", negate = FALSE) %>%
     sort() %>%
     unique()
-  
+
   x <- x[!(str_length(x) == 1 & grepl(".", x))]
   if (any(x == "Afghanistan")) {
     x <- x[-1]
@@ -77,7 +78,7 @@ bdc_extract_cntr_names <- function(x) {
   x <- x %>%
     data.frame() %>%
     as_tibble()
-  
+
   return(x) # Country name in different language
 }
 

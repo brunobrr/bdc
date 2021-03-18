@@ -10,10 +10,11 @@ bdc_extract_cntr_names(x)
 \arguments{
 \item{x}{}
 }
-\value{
-
-}
 \description{
 Internal function. Extracts countries names in different languages from
 wikipedia
+}
+\examples{
+\dontrun{
+}
 }

@@ -1,7 +1,7 @@
 Package: bdc
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R:
     person(given = "BDC",
            family = "Team",
            role = c("aut", "cre"),
@@ -34,13 +34,19 @@ Imports:
     xml2,
     CoordinateCleaner,
     Hmisc,
-    WorldFlora,
     countrycode,
     rangeBuilder,
     raster,
     rnaturalearth,
     stringdist,
     stringi,
-    taxadb
-Suggests: 
+    taxadb,
+    cowplot,
+    ggplot2,
+    kableExtra,
+    knitr,
+    scales,
+    tibble,
+    rgnparser
+Suggests:
     testthat,

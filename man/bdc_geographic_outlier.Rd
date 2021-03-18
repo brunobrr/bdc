@@ -33,3 +33,7 @@ Check if coordinates are valid before run this test.
 Species occurrence records in Goias and range in DF are assigned as TRUE.
 Similarly, species occurrence in DF and range is GO are considered TRUE.
 }
+\examples{
+\dontrun{
+}
+}

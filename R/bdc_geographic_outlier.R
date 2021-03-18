@@ -1,21 +1,23 @@
 #' Identify plant species records outside known geographic distribution
-#' 
-#' Flags geographic outliers by comparing the status where record is against 
-#' species range (i.e., Brazilian states) obtained from the Flora do Brazil 
+#'
+#' Flags geographic outliers by comparing the status where record is against
+#' species range (i.e., Brazilian states) obtained from the Flora do Brazil
 #' 2020.
 #'
 #' @param data data.frame. A data frame containing geographic coordinates and species names.
 #' @param species character string. The column with scientific names.
 #' @param longitude character string. The column with longitude in decimal degrees. Default = "decimalLongitude"
 #' @param latitude character string. The column with the latitude in decimal degrees. Default = "decimalLatitude".
-#' 
-#' @details Check if coordinates are valid before run this test. 
-#' Species occurrence records in Goias and range in DF are assigned as TRUE. 
+#'
+#' @details Check if coordinates are valid before run this test.
+#' Species occurrence records in Goias and range in DF are assigned as TRUE.
 #' Similarly, species occurrence in DF and range is GO are considered TRUE.
 #' @return flag of records are outliers (FALSE) or not (TRUE)
-#' 
+#'
 #' @export
-#' @example
+#' @examples
+#' \dontrun{
+#' }
 bdc_geographic_outlier <-
   function(data,
            species = "scientificName",
@@ -98,5 +100,5 @@ bdc_geographic_outlier <-
       dplyr::mutate(.geographic_outlier = dplyr::if_else(is.na(.geographic_outlier), TRUE, .geographic_outlier))
 
     return(df)
-    
+
   }

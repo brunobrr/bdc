@@ -2,32 +2,42 @@
 % Please edit documentation in R/bdc_coordinates_from_locality.R
 \name{bdc_coordinates_from_locality}
 \alias{bdc_coordinates_from_locality}
-\title{Identify records missing coordinates but with information on locality}
+\title{Identify records missing or with invalid coordinates but with information on
+locality}
 \usage{
 bdc_coordinates_from_locality(
   data,
-  locality = "locality",
+  lat = "decimalLatitude",
   lon = "decimalLongitude",
-  lat = "decimalLatitude"
+  locality = "locality"
 )
 }
 \arguments{
 \item{data}{data.frame. Containing geographical coordinates and the column
 "locality'.}
 
-\item{locality}{character string. The column with information on where records
-was collected. Default = "locality".}
+\item{lat}{character string. The column name with latitude. Coordinates must
+be expressed in decimal degree and in WGS84. Default = "decimalLatitude".}
 
-\item{lon}{character string. The column name with longitude. Default =
-"decimalLongitude".}
-
-\item{lat}{character string. The column name with latitude Default =
-"decimalLatitude".}
+\item{lon}{character string. The column with longitude. Coordinates must be
+expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
 }
 \value{
-A data.frame containing records missing coordinates but with potentially useful locality information is saved in Output/Check/01_coordinates_from_locality.csv
+A data.frame containing records missing or with invalid coordinates
+but with potentially useful locality information is saved in
+Output/Check/01_coordinates_from_locality.csv.
 }
 \description{
 Identify records whose coordinates can potentially be extracted from
 information on locality.
+}
+\examples{
+\dontrun{
+lat <- c(NA, NA, "")
+lon <- c("", NA, NA)
+locality <- data.frame(.missing_names, .missing_coordinates)
+
+x <- data.frame(lat, long, locality)
+bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon")
+}
 }

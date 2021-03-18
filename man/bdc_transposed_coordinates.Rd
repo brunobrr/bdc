@@ -10,7 +10,8 @@ bdc_transposed_coordinates(
   sci_names = "scientificName",
   lat = "decimalLatitude",
   lon = "decimalLongitude",
-  country = "country"
+  country = "country",
+  countryCode = "countryCode"
 )
 }
 \arguments{

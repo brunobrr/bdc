@@ -9,6 +9,8 @@ bdc_create_figures(data, database_id = "database_id", workflow_step = NULL)
 \arguments{
 \item{data}{data.frame. Containing the results of data quality tests and a .}
 
+\item{database_id}{character string. TODO}
+
 \item{workflow_step}{character string. Name of the workflow step. Options available are "prefilter", "space", and "time".}
 }
 \value{
@@ -44,7 +46,7 @@ x <- data.frame(
   .summary
 )
 
-bdc_create_figures(data = x, database_id = "database_id", 
+bdc_create_figures(data = x, database_id = "database_id",
 workflow_step = "prefilter")
 }
 }
