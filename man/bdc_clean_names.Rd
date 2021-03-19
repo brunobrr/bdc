@@ -2,37 +2,49 @@
 % Please edit documentation in R/bdc_clean_names.R
 \name{bdc_clean_names}
 \alias{bdc_clean_names}
-\title{Cleaning and splitting scientific names into their semantic elements}
+\title{Clean and parse scientific names}
 \usage{
 bdc_clean_names(sci_names)
 }
 \arguments{
-\item{sci_names}{character string. Containing scientific names.
-#'}
+\item{sci_names}{character string. Containing scientific names.}
 }
 \value{
-A data.frame containing original and cleaned/parsed names as well
-columns indicating the quality of the parse names process (see 'details').
-Also, a data.frame containing flags of each name-checking routine is saved
-in "Output/Check/02_parse_names.csv".
+A five-column data.frame including 'scientificName' (original names
+supplied), '.uncer_terms' (indicates the presence of taxonomic uncertainty
+terms), '.infraesp_names' (indicates the presence of infraspecific terms),
+'name_clean' (scientific names resulting from the cleaning and parsing
+processes), and 'quality (an index indicating the quality of parsing
+process. It ranges from 0 to 4, being 1 no problem detected, 4 serious
+problems detected; a value of 0 indicates no interpretable name that was
+not parsed). Also, data.frame containing all tests of the cleaning names
+process and the results of the parsing names process is saved in
+"Output/Check/02_parse_names.csv".
 }
 \description{
 This functions is composed of a series of name-checking routines for cleaning
-and parsing scientific names, including 1) family names of animals or plants
-pre-pended to species names, 2) qualifiers denoting doubtful taxonomic
-identification (e.g., confer, species, affinis, and among others), and 3)
-infraspecific terms (e.g., variety \link{var.}, subspecies \link{subsp}, forma \link{f.},
-and their spelling variations). It also includes tools for: 4) 4) standardize
-names, i.e., capitalize only the first letter of the generic name and remove
-extra whitespaces), and 5) parse names, i.e., separate author from taxon
-name.
+and parsing scientific names, including remove1) family names of animals or
+plants pre-pended to species names, 2) qualifiers denoting uncertainty or
+provisional status of taxonomic identification (e.g., confer, species,
+affinis, and among others), and 3) infraspecific terms (e.g., variety \link{var.},
+subspecies \link{subsp}, forma \link{f.}, and their spelling variations). It also
+includes tools for: 4) standardize names, i.e., capitalize only the first
+letter of the generic name and remove extra whitespaces), and 5) parse names,
+i.e., separate author from taxon name.
+}
+\details{
+Terms denoting uncertainty or provisional status of taxonomic
+identification as well as infraspecific terms were obtained from Sigoviniet
+al. (2016; doi: 10.1111/2041-210X.12594). More details about the names
+parse process can be found in
+\href{https://github.com/gnames/gnparser}{gnparser}.
 }
 \examples{
 \dontrun{
 scientificName = c(
 "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
 "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
-"Gymnanthes edwalliana (Pax & K.Hoffm.) Laurênio-Melo & M.F.Sales",
+"Gymnanthes edwalliana (Pax & K.Hoffm.) LaurÃªnio-Melo & M.F.Sales",
 "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby")
 
 x <- data.frame(scientificName)

@@ -21,7 +21,7 @@ Can be a color name (e.g "red") the the name of a column of data. Default =
 }
 \description{
 Creates a map of points using ggplot2 useful for inspecting the results of
-tests implemented in the workflow.
+tests implemented in the bdc workflow.
 }
 \details{
 Only records with valid coordinates can be plotted. Records missing or with invalid coordinates are removed prior creating the map.

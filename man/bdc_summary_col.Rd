@@ -2,7 +2,7 @@
 % Please edit documentation in R/bdc_summary_col.R
 \name{bdc_summary_col}
 \alias{bdc_summary_col}
-\title{Creates or updates the column summarizing the results of data quality tests}
+\title{Create or update the column summarizing the results of data quality tests}
 \usage{
 bdc_summary_col(data)
 }
@@ -14,10 +14,10 @@ columns starting with ".").}
 A data.frame containing a new or an updated column ".summary".
 }
 \description{
-Creates or updates the column ".summary" summarizing the results of data
-quality tests (i.e., columns starting with "."). Records that have failed in
-at least one data quality test are considered invalid (i.e., flagged as
-"FALSE") in the ".summary" column.
+This function creates or updates the column ".summary" summarizing the
+results of data quality tests (i.e., columns starting with "."). Records that
+have failed in at least one data quality test are considered invalid (i.e.,
+flagged as "FALSE") in the ".summary" column.
 }
 \details{
 If existing, the column ".summary" will be removed and then updated

@@ -24,8 +24,8 @@ A data.frame contain the column '.invalid_coordinates'. Records that
 have failed in the test are flagged as "FALSE".
 }
 \description{
-Flags records with out-of-range coordinates (-90 to 90 for latitude -180 to
-180 for longitude).
+This function  records with out-of-range coordinates (-90 to 90 for latitude
+-180 to  180 for longitude).
 }
 \examples{
 \dontrun{

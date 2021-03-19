@@ -27,8 +27,8 @@ A data.frame contain the column '.invalid_basis_of_records'. Records
 that have failed in the test are flagged as "FALSE".
 }
 \description{
-Identify records with informed basis of records (i.e., the records type, for
-example, a specimen, a human observation, or a fossil specimen) no
+This function flags records with informed basis of records (i.e., the records
+type, for example, a specimen, a human observation, or a fossil specimen) no
 interpretable, that do not comply with Darwin Core recommended vocabulary, or
 unrealible or unsuitable for certain analyses.
 }

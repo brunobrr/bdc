@@ -2,7 +2,7 @@
 % Please edit documentation in R/bdc_countryName_from_coordinates.R
 \name{bdc_countryName_from_coordinates}
 \alias{bdc_countryName_from_coordinates}
-\title{Gets country names from coordinates}
+\title{Get country names from coordinates}
 \usage{
 bdc_countryName_from_coordinates(
   data,

@@ -28,8 +28,8 @@ but with potentially useful locality information is saved in
 Output/Check/01_coordinates_from_locality.csv.
 }
 \description{
-Identify records whose coordinates can potentially be extracted from
-information on locality.
+This function Identifies records whose coordinates can potentially be
+extracted from information on locality.
 }
 \examples{
 \dontrun{

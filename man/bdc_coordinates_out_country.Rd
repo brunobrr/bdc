@@ -5,8 +5,8 @@
 \title{Identify records outside a reference country
 This function flags geographic coordinates outside the reference country
 (i.e., records in other countries or in the ocean at a specified distance
-from the coastline of the reference country). This avoids flagging as invalid
-records in mangroves, marshes, estuaries, etc.}
+from the coastline of the reference country, which avoids flagging as invalid
+records in mangroves, marshes, estuaries, etc).}
 \usage{
 bdc_coordinates_out_country(
   data,
@@ -39,8 +39,8 @@ have failed in the test are flagged as "FALSE".
 Identify records outside a reference country
 This function flags geographic coordinates outside the reference country
 (i.e., records in other countries or in the ocean at a specified distance
-from the coastline of the reference country). This avoids flagging as invalid
-records in mangroves, marshes, estuaries, etc.
+from the coastline of the reference country, which avoids flagging as invalid
+records in mangroves, marshes, estuaries, etc).
 }
 \details{
 The distance informed in the argument 'dist' is used to create a

@@ -2,7 +2,7 @@
 % Please edit documentation in R/bdc_filter_out_flags.R
 \name{bdc_filter_out_flags}
 \alias{bdc_filter_out_flags}
-\title{Removes columns with the results of data quality tests}
+\title{Remove columns with the results of data quality tests}
 \usage{
 bdc_filter_out_flags(data, col_to_remove = "all")
 }
@@ -17,7 +17,7 @@ tests are removed.}
 A data.frame without columns specified in 'col_to_remove'.
 }
 \description{
-This function is used to filter out columns containing the results of data
+This function filters out columns containing the results of data
 quality tests (i.e., columns starting with '.') or other columns specified.
 }
 \examples{

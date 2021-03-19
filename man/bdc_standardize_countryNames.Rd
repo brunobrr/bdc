@@ -17,7 +17,8 @@ A data.frame containing two columns: country_suggested (standardized
 country names) and country_code (standardized iso2 country code).
 }
 \description{
-Standardizes country names and gets country code information.
+This function standardizes country names and adds a new column to the
+database containing country code information.
 }
 \details{
 Country names are standardized using an exact matching against a

@@ -2,7 +2,7 @@
 % Please edit documentation in R/bdc_create_dir.R
 \name{bdc_create_dir}
 \alias{bdc_create_dir}
-\title{Creates directories for saving ouptups of the bdc workflow}
+\title{Creates directories for saving the outputs of the bdc workflow}
 \usage{
 bdc_create_dir()
 }

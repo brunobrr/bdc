@@ -39,8 +39,8 @@ A data.frame containing the column 'transposed_coordinates'. Records
 that have failed in the test are flagged as "FALSE".
 }
 \description{
-Flags and corrects records when latitude and longitude appear to be
-transposed.
+This function flags and corrects records when latitude and longitude appear
+to be transposed.
 }
 \details{
 This test identifies transposed coordinates resulted from mismatches

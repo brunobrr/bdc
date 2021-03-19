@@ -24,7 +24,7 @@ A data.frame contain the column '.missing_coordinates'. Records that
 have failed in the test are flagged as "FALSE".
 }
 \description{
-Flags records missing latitude or longitude coordinates.
+This function flags records missing latitude or longitude coordinates.
 }
 \details{
 This test identifies records missing geographic coordinates (i.e.,
