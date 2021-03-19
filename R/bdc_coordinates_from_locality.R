@@ -1,8 +1,8 @@
 #' Identify records missing or with invalid coordinates but with information on
 #' locality
 #'
-#' Identify records whose coordinates can potentially be extracted from
-#' information on locality.
+#' This function Identifies records whose coordinates can potentially be
+#' extracted from information on locality.
 #' 
 #' @param data data.frame. Containing geographical coordinates and the column
 #' "locality'.
@@ -36,20 +36,23 @@ bdc_coordinates_from_locality <-
            lon = "decimalLongitude",
            locality = "locality") {
     suppressMessages({
-    df <-
+    col_names <- c(".missing_coordinates", ".invalid_coordinates")
+    if (!all(col_names %in% names(data))){
+    data <-
       bdc_missing_coordinates(data = data, 
                               lat = {{ lat }}, 
                               lon = {{ lon}})
 
-    df <-
+    data <-
       bdc_invalid_coordinates(data = df, 
                               lat = {{ lat }}, 
                               lon = {{ lon }})
+    }
 
     })
     
     df <-
-      df %>%
+      data %>%
       dplyr::filter(
         .invalid_coordinates == FALSE | .missing_coordinates == FALSE,
         {{ locality }} != "" & !is.na( {{ locality }} )
@@ -67,8 +70,7 @@ bdc_coordinates_from_locality <-
         "\nbdc_coordinates_from_locality",
         "\nFound",
         nrow(df),
-        "records missing or with invalid coordinates but with potentially useful 
-        information on locality.\n",
+        "records missing or with invalid coordinates but with potentially useful information on locality.\n",
         "\nCheck database in:",
         save
       )

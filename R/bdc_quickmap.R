@@ -1,7 +1,7 @@
 #' Create a map of points using ggplot2
 #'
 #' Creates a map of points using ggplot2 useful for inspecting the results of
-#' tests implemented in the workflow.
+#' tests implemented in the bdc workflow.
 #'
 #' @param data data.frame. Containing longitude and latitude
 #' @param lon character string. The column with the longitude coordinates
@@ -34,7 +34,7 @@ bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
       legend.position = "none"
     )
 
-  if (is.null(col_to_map)) {
+  if (all(col_to_map %in% names(data))) {
     our_map <-
       data %>%
       ggplot() +

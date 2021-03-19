@@ -1,7 +1,7 @@
 #' Identify transposed geographic coordinates
 #'
-#' Flags and corrects records when latitude and longitude appear to be 
-#' transposed.
+#' This function flags and corrects records when latitude and longitude appear
+#' to be transposed.
 #'
 #' @param data data.frame. Containing a unique identifier for each records,
 #' geographical coordinates, and country names. Coordinates must be expressed in

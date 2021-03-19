@@ -1,9 +1,9 @@
-#' Creates or updates the column summarizing the results of data quality tests
+#' Create or update the column summarizing the results of data quality tests
 #'
-#' Creates or updates the column ".summary" summarizing the results of data
-#' quality tests (i.e., columns starting with "."). Records that have failed in
-#' at least one data quality test are considered invalid (i.e., flagged as
-#' "FALSE") in the ".summary" column.
+#' This function creates or updates the column ".summary" summarizing the
+#' results of data quality tests (i.e., columns starting with "."). Records that
+#' have failed in at least one data quality test are considered invalid (i.e.,
+#' flagged as "FALSE") in the ".summary" column.
 #' 
 #' @param data data.frame. Containing the results of data quality tests (i.e.,
 #' columns starting with ".").

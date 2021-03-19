@@ -125,13 +125,13 @@ data_pf9 <- bdc_summary_col(data = data_pf8)
 # Create a report summarizing the results of all tests
 report <-
   bdc_create_report(data = data_pf9,
-                    databa_id = "databas_id",
+                    database_id = "database_id",
                     workflow_step = "prefilter")
 report
 
 # FIGURES -----------------------------------------------------------------
 bdc_create_figures(data = data_pf9,
-                   databa_id = "databas_id",
+                   database_id = "database_id",
                    workflow_step = "prefilter")
 
 # FILTER THE DATABASE ------------------------------------------------------

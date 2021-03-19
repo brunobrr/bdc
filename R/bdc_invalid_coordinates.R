@@ -1,7 +1,7 @@
 #' Identify records with invalid geographic coordinates
 #'
-#' Flags records with out-of-range coordinates (-90 to 90 for latitude -180 to
-#'  180 for longitude).
+#' This function  records with out-of-range coordinates (-90 to 90 for latitude
+#' -180 to  180 for longitude).
 #'
 #' @param data data.frame. Containing geographical coordinates. Coordinates must be expressed in decimal degree and in WGS84. 
 #' @param lat character string. The column name with latitude. Coordinates must 
