@@ -1,14 +1,14 @@
-#' Internal function. Gets a world map with country and code names
+#' Internal function. Get a world map with country names and iso code
 #'
-#' Shapefile containing world country polygons obtained from the package
-#' 'rnaturalearth'.
+#' This is a helper function used to obtain names, iso code, and the limits 
+#' (polygon) of world countries. Data from the package 'rnaturalearth'.
 #' 
 #' @noRd
-#' @keywords internal
-#' @export
 #' 
 #' @examples
+#' \dontrun{
 #' worldmap <- bdc_get_world_map()
+#' }
 bdc_get_world_map <- function() {
   suppressWarnings({
     
@@ -38,10 +38,8 @@ bdc_get_world_map <- function() {
   filt <- !is.na(iso$iso_a3) & is.na(iso$iso3c)
   iso$iso3c[filt] <- iso$iso_a3[filt]
 
-  worldmap@data <-
-    iso
-  is.na(iso) %>%
-    colSums() # number of polygons without isocode
+  worldmap@data <- iso
+  is.na(iso) %>% colSums() # number of polygons without isocode
 
   worldmap@data <-
     worldmap@data %>%

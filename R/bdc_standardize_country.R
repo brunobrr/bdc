@@ -2,11 +2,15 @@
 #'
 #' @param data data.frame. Containing a column with country names. 
 #' @param country character string. A column name with country names. 
-#' @param country_names_db character string. A data base with candidates countries names which the supplied name with be matched.
+#' @param country_names_db character string. A data base with candidates
+#' countries names which the supplied name with be matched.
 #' @noRd
-#' @return Return a data.frame with original country names, suggested names and ISO code to country names. 
-#' @export
-#'
+#' @return Return a data.frame with original country names, suggested names and
+#' ISO code to country names. 
+#' 
+#' #' @examples
+#' \dontrun{
+#' }
 bdc_standardize_country <-
   function(data,
            country,

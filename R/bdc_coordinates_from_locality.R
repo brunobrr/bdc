@@ -3,14 +3,17 @@
 #'
 #' This function Identifies records whose coordinates can potentially be
 #' extracted from information on locality.
-#' 
+#'
 #' @param data data.frame. Containing geographical coordinates and the column
 #' "locality'.
-#' @param lat character string. The column name with latitude. Coordinates must 
+#' @param lat character string. The column name with latitude. Coordinates must
 #' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
 #' @param lon character string. The column with longitude. Coordinates must be
 #' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
-#' 
+#' @param locality character string. The column name with information on
+#' locality. Default = "locality".
+#' @details According to DarwinCore terminology, locality refers to "the
+#' specific description of the place" where a organism were recorded.
 #' @return A data.frame containing records missing or with invalid coordinates
 #' but with potentially useful locality information is saved in
 #' Output/Check/01_coordinates_from_locality.csv.

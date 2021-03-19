@@ -4,7 +4,7 @@
 \alias{bdc_create_report}
 \title{Creates reports on results of data quality tests}
 \usage{
-bdc_create_report(data, databa_id = "databas_id", workflow_step)
+bdc_create_report(data, database_id = "database_id", workflow_step)
 }
 \arguments{
 \item{data}{data.frame. Containing a unique identifier for each records and

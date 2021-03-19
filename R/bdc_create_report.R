@@ -39,7 +39,7 @@
 #' }
 bdc_create_report <- 
   function(data, 
-           databa_id = "databas_id",
+           database_id = "database_id",
            workflow_step) {
   suppressMessages({
     

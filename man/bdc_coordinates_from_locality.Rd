@@ -21,6 +21,9 @@ be expressed in decimal degree and in WGS84. Default = "decimalLatitude".}
 
 \item{lon}{character string. The column with longitude. Coordinates must be
 expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
+
+\item{locality}{character string. The column name with information on
+locality. Default = "locality".}
 }
 \value{
 A data.frame containing records missing or with invalid coordinates
@@ -30,6 +33,10 @@ Output/Check/01_coordinates_from_locality.csv.
 \description{
 This function Identifies records whose coordinates can potentially be
 extracted from information on locality.
+}
+\details{
+According to DarwinCore terminology, locality refers to "the
+specific description of the place" where a organism were recorded.
 }
 \examples{
 \dontrun{

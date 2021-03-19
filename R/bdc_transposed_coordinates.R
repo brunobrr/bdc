@@ -16,6 +16,8 @@
 #' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
 #' @param  country character string. The column name with the country 
 #' assignment of each record. Default = "country".
+#' @param countryCode character string. The column name with an ISO-2 country
+#' code.
 #
 #' @details This test identifies transposed coordinates resulted from mismatches
 #' between the country informed to a record and coordinates. Transposed

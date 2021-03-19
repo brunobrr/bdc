@@ -1,12 +1,23 @@
-#' Internal function. Filters duplicated names from database query
-#'
-#' This function is used to flag and remove names with multiple name from database query (i.e., column 'taxonomicStatus').
+#' Internal function. Remove and flag duplicated names 
+#' 
+# This function is used to removes and flags with more than one accepted name,
+# which are flagged as "multipleAcceptedNames" in column 'notes'. Information on
+# higher taxa (e.g., kingdom or phylum) can be used to disambiguates names
+# linked to multiple accepted names.
 #'
 #' @param data data.frame. Database exported from bdc_get_taxa_taxadb function.
-#' @param rank_name character string. A taxonomic rank to filter the database. Options available are: "kingdom", "phylum", "class", "order", "family", and "genus".
-#' @param rank character string. Taxonomic rank name (e.g. "Plantae", "Animalia", "Aves", "Carnivora". Default is NULL.
-#' @details If database query returns more than one name, this function filters only the accepted ones, or an unique synonym. If there are more than one accepted name, it returns NA and adds flag in column notes.
-#' @return A data frame without duplicated names and flags "|check +1 accepted" in the column 'notes'.
+#' @param rank_name character string. A taxonomic rank to filter the database.
+#' Options available are: "kingdom", "phylum", "class", "order", "family", and
+#' "genus".
+#' @param rank character string. Taxonomic rank name (e.g. "Plantae",
+#' "Animalia", "Aves", "Carnivora". Default is NULL.
+#' 
+#' @details Records flagged are "multipleAcceptedNames" are returned as NA.
+#' 
+#' @return A data frame without duplicated names.
+#' 
+#' @importFrom dplyr filter select
+#' 
 #' @noRd
 #' @export
 #'
@@ -17,7 +28,8 @@ bdc_clean_duplicates <-
   function(data,
            rank = NULL,
            rank_name = NULL) {
-    # Filter all names except those flag as "accepted" (e.g.,  heterotypic, homotypic, pro-parte synonyms, and doubtful )
+    # Filter all names except those flag as "accepted" (e.g.,  heterotypic,
+    # homotypic, pro-parte synonyms, and doubtful)
     data <- data[order(data$taxonomicStatus), ]
     data <- data[!(duplicated(data$input) & data$taxonomicStatus != "accepted"), ]
 

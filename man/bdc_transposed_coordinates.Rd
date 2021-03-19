@@ -33,6 +33,9 @@ expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
 
 \item{country}{character string. The column name with the country
 assignment of each record. Default = "country".}
+
+\item{countryCode}{character string. The column name with an ISO-2 country
+code.}
 }
 \value{
 A data.frame containing the column 'transposed_coordinates'. Records

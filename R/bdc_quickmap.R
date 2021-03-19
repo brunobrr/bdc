@@ -9,12 +9,28 @@
 #' @param col_to_map character string. Defining the column or color used to map.
 #' Can be a color name (e.g "red") the the name of a column of data. Default =
 #' "blue"
-#' @param size numeric. The size of the points
-#' @details Only records with valid coordinates can be plotted. Records missing or with invalid coordinates are removed prior creating the map.
+#' @param size numeric. The size of the points.
+#' 
+#' @details Only records with valid coordinates can be plotted. Records missing
+#' or with invalid coordinates are removed prior creating the map.
+#' 
+#' @export
+#' 
 #' @examples
 #' \dontrun{
+#' decimalLatitude <- c(19.9358, -13.016667, -19.935800)
+#' decimalLongitude <- c(-40.6003, -39.6, -40.60030)
+#' .coordinates_out_country <- c(FALSE, TRUE, TRUE)
+#' x <- data.frame(decimalLatitude, decimalLongitude, .coordinates_out_country)
+#' 
+#' bdc_quickmap(
+#'   data = x,
+#'   lat = "decimalLatitude",
+#'   lon = "decimalLongitude",
+#'   col_to_map = ".coordinates_out_country",
+#'   size = 1)
 #' }
-bdc_quickmap <- function(data, lon, lat, col_to_map = NULL, size = size) {
+bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
 
   # n_nrow_data <- format(x = nrow(data), big.mark = ",")
   # print(paste("Based on", n_nrow_data, "points"))
