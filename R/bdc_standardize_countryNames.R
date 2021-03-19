@@ -1,6 +1,7 @@
 #' Standardizes country names and gets ISO code
 #'
-#' Standardizes country names and gets country code information.
+#' This function standardizes country names and adds a new column to the
+#' database containing country code information.
 #'
 #' @param data data.frame. Containing country names
 #' @param  country character string. The column name with the country assignment

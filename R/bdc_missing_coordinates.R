@@ -1,6 +1,6 @@
 #' Identify records missing geographic coordinates
 #'
-#' Flags records missing latitude or longitude coordinates.
+#' This function flags records missing latitude or longitude coordinates.
 #'
 #' @param data data.frame. Containing geographical coordinates.
 #' @param lat character string. The column name with latitude. Coordinates must 

@@ -1,4 +1,4 @@
-#' Gets country names from coordinates
+#' Get country names from coordinates
 #'
 #' Country names derived from valid geographic coordinates are added to records
 #' missing country names.

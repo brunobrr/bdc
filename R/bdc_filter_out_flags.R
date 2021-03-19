@@ -1,6 +1,6 @@
-#' Removes columns with the results of data quality tests
+#' Remove columns with the results of data quality tests
 #'
-#' This function is used to filter out columns containing the results of data
+#' This function filters out columns containing the results of data
 #' quality tests (i.e., columns starting with '.') or other columns specified.
 #'
 #' @param data data.frame. Containing columns to be removed.

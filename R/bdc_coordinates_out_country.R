@@ -2,8 +2,8 @@
 
 #' This function flags geographic coordinates outside the reference country
 #' (i.e., records in other countries or in the ocean at a specified distance
-#' from the coastline of the reference country). This avoids flagging as invalid
-#' records in mangroves, marshes, estuaries, etc.
+#' from the coastline of the reference country, which avoids flagging as invalid
+#' records in mangroves, marshes, estuaries, etc).
 #'
 #' @param data data.frame. Containing longitude and latitude. Coordinates must
 #' be expressed in decimal degree and in WGS84.
