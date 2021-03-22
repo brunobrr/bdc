@@ -49,8 +49,7 @@ for (i in 1:ncol(database)){
 parse_names <- bdc_clean_names(sci_names = database$scientificName)
 
 # Save the results of the parsing names process
-parse_names %>%
-  qs::qsave(., here::here("Output", "Check", "02_parsed_names.qs"))
+parse_names <-  qs::qread(here::here("Output", "Check", "02_parsed_names.qs"))
 
 # Merge names parsed with the full database. As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of parsing names process in "Output/Check/02_parsed_names.qs"
 parse_names <- 

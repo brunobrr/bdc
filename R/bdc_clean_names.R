@@ -1,14 +1,14 @@
 #' Clean and parse scientific names
 #'
-#' This function is composed of a series of name-checking routines for cleaning
-#' and parsing scientific names, including the removal of 1) family names of
-#' animals or plants pre-pended to species names, 2) qualifiers denoting
-#' uncertainty or provisional status of taxonomic identification (e.g., confer,
-#' species, affinis, and among others), and 3) infraspecific terms (e.g.,
-#' variety [var.], subspecies [subsp], forma [f.], and their spelling
-#' variations). It also includes tools for 4) standardize names, i.e.,
-#' capitalize only the first letter of the generic name and remove extra
-#' whitespaces), and 5) parse names, i.e., separate author from taxon name.
+#' This functions is composed of a series of name-checking routines for cleaning
+#' and parsing scientific names, including remove1) family names of animals or
+#' plants pre-pended to species names, 2) qualifiers denoting uncertainty or
+#' provisional status of taxonomic identification (e.g., confer, species,
+#' affinis, and among others), and 3) infraspecific terms (e.g., variety [var.],
+#' subspecies [subsp], forma [f.], and their spelling variations). It also
+#' includes tools for: 4) standardize names, i.e., capitalize only the first
+#' letter of the generic name and remove extra whitespaces), and 5) parse names,
+#' i.e., separate author from taxon name.
 #'
 #' @param sci_names character string. Containing scientific names.
 #' 
@@ -150,6 +150,7 @@ bdc_clean_names <- function(sci_names) {
     }
     
     .family_names <- sci_names_raw == clean_family_names
+    .family_names <- ifelse(is.na(.family_names), TRUE, .family_names)
     
     df_final <- data.frame(.family_names, clean_family_names)
     df_final <- dplyr::bind_cols(data, df_final)
@@ -371,6 +372,8 @@ bdc_clean_names <- function(sci_names) {
     }
     
     taxo_uncertainty <- ifelse(taxo_uncertainty == TRUE, FALSE, TRUE)
+    taxo_uncertainty <- ifelse(is.na(taxo_uncertainty), TRUE, taxo_uncertainty)
+    
     tab_res <- as.data.frame(cbind(taxo_uncertainty, term_uncertainty))
     w <- which(is.na(spp_names))
     tab_res[w, "taxo_uncertainty"] <- NA
@@ -671,6 +674,7 @@ bdc_clean_names <- function(sci_names) {
     
     clean_other_issues <- res
     .other_issues <- sci_names_raw == clean_other_issues
+    .other_issues <- ifelse(is.na(.other_issues), TRUE, .other_issues)
     df <- data.frame(data, .other_issues, clean_other_issues)
     
     message(
@@ -744,6 +748,8 @@ bdc_clean_names <- function(sci_names) {
     }
     
     .infraesp_names <- ifelse(.infraesp_names == TRUE, FALSE, TRUE)
+    .infraesp_names <- ifelse(is.na(.infraesp_names), TRUE, .infraesp_names)
+    
     tab_res <- as.data.frame(cbind(.infraesp_names, infraesp_term))
     w <- which(is.na(sci_names))
     tab_res[w, ".infraesp_names"] <- NA
@@ -866,12 +872,16 @@ bdc_clean_names <- function(sci_names) {
     bdc_rem_infaesp_names(data = ., sci_names = "clean_other_issues") %>%
     bdc_gnparser(data = ., sci_names = "clean_infaesp_names")
   
+  # Join results to data
+  df_join <- dplyr::full_join(names_raw, parse_names, by = "scientificName")
+  
   # Save the results of the parsing names process
-  parse_names %>%
+  df_join %>%
     qs::qsave(., here::here("Output", "Check", "02_parsed_names.qs"))
   
-  parse_names <-
-    parse_names %>%
+  # Save a "clean" database
+  df_join <-
+    df_join %>%
     dplyr::select(
       scientificName,
       .uncer_terms,
@@ -879,9 +889,6 @@ bdc_clean_names <- function(sci_names) {
       names_clean,
       quality
     )
-  
-  # Join results to data
-  df_join <- dplyr::full_join(names_raw, parse_names, by = "scientificName")
   
   return(df_join)
 }
