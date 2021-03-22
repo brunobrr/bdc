@@ -32,9 +32,9 @@ database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
 .summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
 
 x <- data.frame(database_id,
-                .missing_names,
-                .missing_coordinates,
-                .invalid_basis_of_records,
+                .scientificName_empty,
+                .coordinates_empty,
+                .basisOfRrecords_notStandard,
                 .summary)
 
 bdc_create_report(

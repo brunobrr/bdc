@@ -31,8 +31,8 @@ saving in "Output/Figures".
 database_id <- c("GBIF_01", "GBIF_02", "GBIF_03", "FISH_04", "FISH_05")
 lat <- c(-19.93580, -13.01667, -22.34161,  -6.75000, -15.15806)
 lon <- c(-40.60030, -39.60000, -49.61017, -35.63330, -39.52861)
-.missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
-.missing_coordinates <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
+.scientificName_emptys <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+.coordinates_empty <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
 .invalid_basis_of_records <- c(TRUE, FALSE, TRUE, FALSE, TRUE)
 .summary <- c(TRUE, FALSE, TRUE, FALSE, FALSE)
 
@@ -40,8 +40,8 @@ x <- data.frame(
   database_id,
   lat,
   lon,
-  .missing_names,
-  .missing_coordinates,
+  .scientificName_emptys,
+  .coordinates_empty,
   .invalid_basis_of_records,
   .summary
 )

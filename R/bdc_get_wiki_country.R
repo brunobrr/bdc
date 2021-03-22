@@ -15,9 +15,10 @@
 #' 
 #' @return A data.frame with country names in different languages. This database
 #' is also saved in 'data/countries_names.csv'.
+#' 
 #' @noRd
 #' 
-#' #' @examples
+#' @examples
 #' \dontrun{
 #' country_names <- bdc_get_wiki_country()
 #' }
