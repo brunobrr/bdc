@@ -1,10 +1,9 @@
 #' Internal function. Download countries names in different language from
 #' wikipedia
-#' 
+#'
 #' This is a helper function for downloading country names in different
 #' languages from Wikipedia. A CSV file is exported to 'data/countries_names'.
-#' 
-#' @importFrom base colnames
+#'
 #' @importFrom dplyr as_tibble filter pull bind_rows arrange
 #' @importFrom fs file_exists dir_create
 #' @importFrom here here
@@ -12,12 +11,12 @@
 #' @importFrom rvest html_nodes html_table
 #' @importFrom vroom vroom
 #' @importFrom xml2 read_html
-#' 
+#'
 #' @return A data.frame with country names in different languages. This database
 #' is also saved in 'data/countries_names.csv'.
-#' 
+#'
 #' @noRd
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' country_names <- bdc_get_wiki_country()
