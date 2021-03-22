@@ -17,7 +17,7 @@
 #' by default 1600, a lower limit for collecting dates of biological specimens.
 #' Records with empty or NA 'eventDate' are not tested and returned as NA.
 #' 
-#' #' @return A data.frame contain the column ".year_outOfRange". Compliant
+#' @return A data.frame contain the column ".year_outOfRange". Compliant
 #' (TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".
 #' 
 #' @importFrom dplyr if_else
