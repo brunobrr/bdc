@@ -10,3 +10,9 @@ Makefile
 .travis.yml
 _config.yml
 ^LICENSE\.md$
+README.Rmd
+README.html
+_pkgdown.yml
+docs
+Output
+
