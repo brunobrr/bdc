@@ -22,15 +22,15 @@ process and the results of the parsing names process is saved in
 "Output/Check/02_parse_names.csv".
 }
 \description{
-This functions is composed of a series of name-checking routines for cleaning
-and parsing scientific names, including remove1) family names of animals or
-plants pre-pended to species names, 2) qualifiers denoting uncertainty or
-provisional status of taxonomic identification (e.g., confer, species,
-affinis, and among others), and 3) infraspecific terms (e.g., variety \link{var.},
-subspecies \link{subsp}, forma \link{f.}, and their spelling variations). It also
-includes tools for: 4) standardize names, i.e., capitalize only the first
-letter of the generic name and remove extra whitespaces), and 5) parse names,
-i.e., separate author from taxon name.
+This function is composed of a series of name-checking routines for cleaning
+and parsing scientific names, including the removal of 1) family names of
+animals or plants pre-pended to species names, 2) qualifiers denoting
+uncertainty or provisional status of taxonomic identification (e.g., confer,
+species, affinis, and among others), and 3) infraspecific terms (e.g.,
+variety \link{var.}, subspecies \link{subsp}, forma \link{f.}, and their spelling
+variations). It also includes tools for 4) standardize names, i.e.,
+capitalize only the first letter of the generic name and remove extra
+whitespaces), and 5) parse names, i.e., separate author from taxon name.
 }
 \details{
 Terms denoting uncertainty or provisional status of taxonomic

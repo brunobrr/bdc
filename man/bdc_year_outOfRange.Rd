@@ -14,6 +14,10 @@ bdc_year_outOfRange(data, eventDate, year_threshold = NULL)
 \item{year_threshold}{numeric. A four-digit year threshold used to flag old
 (potentially invalid) records. Default = NULL.}
 }
+\value{
+A data.frame contain the column ".year_outOfRange". Compliant
+(TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".
+}
 \description{
 This function identifies records out-of-range (e.g., in the future) or old records collected before a year informed in 'year_threshold'.
 }
@@ -27,9 +31,6 @@ imprecise, records. For example, records collected before GPS advent
 (1980). If 'year_threshold' is not provided, the lower limit to the year is
 by default 1600, a lower limit for collecting dates of biological specimens.
 Records with empty or NA 'eventDate' are not tested and returned as NA.
-
-#' @return A data.frame contain the column ".year_outOfRange". Compliant
-(TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".
 }
 \examples{
 \dontrun{
