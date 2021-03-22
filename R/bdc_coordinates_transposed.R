@@ -26,10 +26,12 @@
 #' performed to correct country/coordinates mismatch. Importantly, verbatim
 #' coordinates are replaced by the corrected ones in the returned database. A
 #' database containing verbatim and corrected coordinates is created in
-#' "Output/Check/01_transposed_coordinates.csv".
+#' "Output/Check/01_coordinates_transposed.csv".
 #' 
-#' @return A data.frame containing the column 'transposed_coordinates'. Records
-#' that have failed in the test are flagged as "FALSE".
+#' @return A data.frame containing the column "coordinates_transposed"
+#' indicating if verbatim coordinates were not transposed (TRUE). Otherwise
+#' records are flagged as (FALSE) and, in this case, verbatim coordinates are
+#' replaced by corrected coordinates.
 #'
 #' @importFrom CoordinateCleaner cc_val cc_sea
 #' @importFrom dplyr filter left_join contains pull rename
@@ -50,7 +52,7 @@
 #' x <- data.frame(id, scientificName, decimalLatitude,
 #'                 decimalLongitude, country)
 #' 
-#' bdc_transposed_coordinates(
+#' bdc_coordinates_transposed(
 #'   data = x,
 #'   id = "id",
 #'   sci_names = "scientificName",
@@ -59,7 +61,7 @@
 #'   country = "country")
 #' }
 #' 
-bdc_transposed_coordinates <-
+bdc_coordinates_transposed <-
   function(data,
            id = "database_id",
            sci_names = "scientificName",
@@ -125,7 +127,7 @@ bdc_transposed_coordinates <-
     dplyr::select(database_id, scientificName, dplyr::contains("decimal")) 
   
   corrected_coordinates %>%
-    readr::write_csv(here::here("Output/Check/01_transposed_coordinates.csv"))
+    readr::write_csv(here::here("Output/Check/01_coordinates_tranposed.csv"))
   
   # finding the position of records with lon/lat modified
   w <-
@@ -138,14 +140,14 @@ bdc_transposed_coordinates <-
     corrected_coordinates[, "decimalLongitude_modified"]
   
   # Flags transposed coordinates
-  data$transposed_coordinates <- TRUE
-  data[w, "transposed_coordinates"] <- FALSE
+  data$coordinates_transposed <- TRUE
+  data[w, "coordinates_transposed"] <- FALSE
 
   message(
     paste(
-      "\nbdc_transposed_coordinates:\nCorrected",
-      sum(data$transposed_coordinates == FALSE),
-      "records.\nOne columns were added to the database.\nCheck database containing coordinates corrected in:\nOutput/Check/01_transposed_coordinates.csv\n"
+      "\nbdc_coordinates_transposed:\nCorrected",
+      sum(data$coordinates_transposed == FALSE),
+      "records.\nOne columns were added to the database.\nCheck database containing coordinates corrected in:\nOutput/Check/01_coordinates_transposed.csv\n"
     )
   )
 

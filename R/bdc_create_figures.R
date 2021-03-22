@@ -36,8 +36,8 @@
 #' database_id <- c("GBIF_01", "GBIF_02", "GBIF_03", "FISH_04", "FISH_05")
 #' lat <- c(-19.93580, -13.01667, -22.34161,  -6.75000, -15.15806)
 #' lon <- c(-40.60030, -39.60000, -49.61017, -35.63330, -39.52861)
-#' .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
-#' .missing_coordinates <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
+#' .scientificName_emptys <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+#' .coordinates_empty <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
 #' .invalid_basis_of_records <- c(TRUE, FALSE, TRUE, FALSE, TRUE)
 #' .summary <- c(TRUE, FALSE, TRUE, FALSE, FALSE)
 #'
@@ -45,8 +45,8 @@
 #'   database_id,
 #'   lat,
 #'   lon,
-#'   .missing_names,
-#'   .missing_coordinates,
+#'   .scientificName_emptys,
+#'   .coordinates_empty,
 #'   .invalid_basis_of_records,
 #'   .summary
 #' )
@@ -102,11 +102,11 @@ bdc_create_figures <-
   if (workflow_step == "prefilter") {
     tests <-
       c(
-        ".missing_name",
-        ".missing_coordinates",
-        ".invalid_coordinates",
+        ".scientificName_empty",
+        ".coordinates_empty",
+        ".coordinates_outOfRange",
         ".invalid_basis_of_records",
-        ".coordinates_out_country",
+        ".coordinates_country_inconsistent",
         ".summary",
         "summary_all_tests"
       )
@@ -114,8 +114,8 @@ bdc_create_figures <-
     names_tab <- names(data)
     col_to_tests <- dplyr::intersect(tests, names_tab)
 
-    if (file.exists("Output/Check/01_transposed_coordinates.csv")) {
-      col_to_tests <- c(col_to_tests, "transposed_coordinates")
+    if (file.exists("Output/Check/01_coordinates_transposed.csv")) {
+      col_to_tests <- c(col_to_tests, "coordinates_transposed")
     }
   }
 
@@ -258,11 +258,11 @@ bdc_create_figures <-
 
   # Names of columns available for creating barplot
   bar <- c(
-    ".missing_name",
-    ".missing_coordinates",
-    ".invalid_coordinates",
+    ".scientificName_empty",
+    ".coordinates_empty",
+    ".coordinates_outOfRange",
     ".invalid_basis_of_records",
-    ".coordinates_out_country",
+    ".coordinates_country_inconsistent",
     ".summary",
     ".uncer_term",
     "names_not_found",
@@ -279,7 +279,7 @@ bdc_create_figures <-
   )
 
   # Names of columns available for creating maps
-  maps <- c(".coordinates_out_country", ".cap", ".cen", ".inst")
+  maps <- c(".coordinates_country_inconsistent", ".cap", ".cen", ".inst")
 
   # Names of column available for creating histogram
   hist <- c("year")
@@ -287,7 +287,7 @@ bdc_create_figures <-
   # Find which names were provided
   w_bar <- dplyr::intersect(col_to_tests, bar)
   w_maps <- dplyr::intersect(col_to_tests, maps)
-  w_tranposed <- dplyr::intersect(col_to_tests, "transposed_coordinates")
+  w_tranposed <- dplyr::intersect(col_to_tests, "coordinates_transposed")
   w_hist <- dplyr::intersect(col_to_tests, hist)
 
   # Create bar plots
@@ -364,11 +364,11 @@ bdc_create_figures <-
 
   # Create maps of transposed and corrected coordinates
   if (length(w_tranposed) == 0 & workflow_step == "prefilter") {
-    message("file 'Output/Check/01_transposed_coordinates.csv' not found")
+    message("file 'Output/Check/01_coordinates_transposed.csv' not found")
   }
 
   if (length(w_tranposed) != 0) {
-    temp <- data.table::fread("Output/Check/01_transposed_coordinates.csv")
+    temp <- data.table::fread("Output/Check/01_coordinates_transposed.csv")
 
     p1 <-
       bdc_quickmap(
@@ -390,7 +390,7 @@ bdc_create_figures <-
     p <- cowplot::plot_grid(p1, p2, labels = "AUTO", scale = 1)
 
     ggplot2::ggsave(paste("Output/", "Figures/", workflow_step,  "_",
-                 "transposed_coordinates", "_", "MAP", ".png", sep = ""),
+                 "coordinates_transposed", "_", "MAP", ".png", sep = ""),
            p,
            dpi = 300, width = 6, height = 3, units = "cm", scale = 4)
   }

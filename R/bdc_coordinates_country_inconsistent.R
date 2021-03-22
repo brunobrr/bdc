@@ -1,9 +1,9 @@
-#' Identify records outside a reference country
+#' Identify records within a reference country
 
-#' This function flags geographic coordinates outside the reference country
-#' (i.e., records in other countries or in the ocean at a specified distance
-#' from the coastline of the reference country, which avoids flagging as invalid
-#' records in mangroves, marshes, estuaries, etc).
+#' This function flags geographic coordinates within a reference country. A spatial buffer can be added to the reference country for ensuring that records in mangroves, marshes, estuaries as well as records with low coordinates precision are flagged as invalid. 
+#' 
+#'  Records in other countries or in the ocean at a specified distance
+#' from the coastline of the reference country, which
 #'
 #' @param data data.frame. Containing longitude and latitude. Coordinates must
 #' be expressed in decimal degree and in WGS84.
@@ -22,8 +22,9 @@
 #' records within the buffer but in other countries are flagged as invalid
 #' (FALSE).
 #' 
-#' @return A data.frame contain the column '.invalid_coordinates'. Records that
-#' have failed in the test are flagged as "FALSE". 
+#' @return A data.frame contain the column '.coordinates_country_inconsistent'.
+#' Compliant (TRUE) if coordinates fall within the boundaries plus a specified distance (if 'dist' is supplied) of 'country_name'; otherwise "FALSE".
+#' 
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom dplyr select mutate filter full_join bind_cols
 #' @importFrom rnaturalearth ne_countries
@@ -37,7 +38,7 @@
 #' decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
 #' x <- data.frame(decimalLatitude, decimalLongitude)
 #' 
-#' bdc_coordinates_out_country(
+#' bdc_coordinates_country_inconsistent(
 #'   data = x,
 #'   country_name = "Brazil",
 #'   lon = "decimalLongitude",
@@ -45,7 +46,7 @@
 #'   dist = 0.1 # in decimal degrees
 #' )
 #' }
-bdc_coordinates_out_country <-
+bdc_coordinates_country_inconsistent <-
   function(data,
            country_name,
            lat = "decimalLatitude",
@@ -121,7 +122,7 @@ bdc_coordinates_out_country <-
   data_to_join <-
     dplyr::full_join(data_sp, names_to_join, by = "id") %>%
     dplyr::mutate(
-      .coordinates_out_country =
+      .coordinates_country_inconsistent =
         dplyr::case_when(
           (points_in_buf == TRUE & is.na(name_long)) ~ TRUE,
           (points_in_buf == FALSE) ~ FALSE,
@@ -130,22 +131,22 @@ bdc_coordinates_out_country <-
           (points_in_buf == TRUE & name_long == country_name) ~ TRUE
         )
     ) %>%
-    dplyr::select(id, .coordinates_out_country)
+    dplyr::select(id, .coordinates_country_inconsistent)
 
   data_join <-
     dplyr::full_join(df, data_to_join, by = "id") %>%
     dplyr::mutate(
-      .coordinates_out_country =
-        ifelse(is.na(.coordinates_out_country),
-               FALSE, .coordinates_out_country)) %>%
-    dplyr::select(.coordinates_out_country)
+      .coordinates_country_inconsistent =
+        ifelse(is.na(.coordinates_country_inconsistent),
+               FALSE, .coordinates_country_inconsistent)) %>%
+    dplyr::select(.coordinates_country_inconsistent)
 
   df <- dplyr::bind_cols(data, data_join)
 
   message(
     paste(
-      "\nbdc_coordinates_out_country:\nFlagged",
-      sum(df$.coordinates_out_country == FALSE),
+      "\nbdc_coordinates_country_inconsistent:\nFlagged",
+      sum(df$.coordinates_country_inconsistent == FALSE),
       "records.\nOne column was added to the database.\n"
     )
   )

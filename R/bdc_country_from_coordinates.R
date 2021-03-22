@@ -36,14 +36,14 @@
 #' 
 #' x <- data.frame(decimalLatitude, decimalLongitude, country)
 #' 
-#' bdc_countryName_from_coordinates(
+#' bdc_country_from_coordinates(
 #'   data = x,
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude",
 #'   country = "country")
 #' }
 #' 
-bdc_countryName_from_coordinates <-
+bdc_country_from_coordinates <-
   function(data,
            lat = "decimalLatitude",
            lon = "decimalLongitude",
@@ -128,7 +128,7 @@ bdc_countryName_from_coordinates <-
     
     message(
       paste(
-        "\nbdc_countryName_from_coordinates:\nCountry names were added to",
+        "\nbdc_country_from_coordinates:\nCountry names were added to",
         length(w),
         "records.\n"
       )

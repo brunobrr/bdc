@@ -3,7 +3,7 @@
 #' This function flags records with informed basis of records (i.e., the records
 #' type, for example, a specimen, a human observation, or a fossil specimen) no
 #' interpretable, that do not comply with Darwin Core recommended vocabulary, or
-#' unrealible or unsuitable for certain analyses.
+#' unreliable or unsuitable for certain analyses.
 #'
 #' @param data data.frame. Containing information on basis of records.
 #' @param basisOfRecord character string. The column name with information on
@@ -23,18 +23,19 @@
 #' "PreservedSpecimen", "preservedspecimen", "S", "Specimen", "Taxon",
 #' "UNKNOWN", "", NA)
 #' 
-#' @return A data.frame contain the column '.invalid_basis_of_records'. Records
-#' that have failed in the test are flagged as "FALSE".
+#' @return A data.frame contain the column ".basisOfRrecords_notStandard"
+#' .Compliant (TRUE) if 'basisOfRecord' is standard; otherwise "FALSE".
+#' 
 #' @importFrom dplyr mutate filter select distinct
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' x <- data.frame(recod_types = c("FOSSIL_SPECIMEN", "UNKNOWN", "RON", NA, "Specimen", "PRESERVED_SPECIMEN"))
-#' bdc_invalid_basis_of_records(data = x, basisOfRecord = "recod_types", names_to_keep = "all")
+#' x <- data.frame(basisOfRecord = c("FOSSIL_SPECIMEN", "UNKNOWN", "RON", NA, "Specimen", "PRESERVED_SPECIMEN"))
+#' bdc_basisOfRrecords_notStandard(data = x, basisOfRecord = "basisOfRecord", names_to_keep = "all")
 #' }
-bdc_invalid_basis_of_records <-
+bdc_basisOfRrecords_notStandard <-
   function(data,
            basisOfRecord = "basisOfRecord",
            names_to_keep = "all") {
@@ -71,19 +72,19 @@ bdc_invalid_basis_of_records <-
     
     data <-
       data %>%
-      dplyr::mutate(.invalid_basis_of_records = .data[[basisOfRecord]] %in%
+      dplyr::mutate(.basisOfRrecords_notStandard = .data[[basisOfRecord]] %in%
                     names_to_keep)
     
     removed <-
       data %>%
-      dplyr::filter(.invalid_basis_of_records == FALSE) %>%
+      dplyr::filter(.basisOfRrecords_notStandard == FALSE) %>%
       dplyr::select(.data[[basisOfRecord]]) %>%
       dplyr::distinct()
     
     message(
       paste(
-        "\nbdc_invalid_basis_of_records:\nFlagged",
-        sum(data$.invalid_basis_of_records == FALSE),
+        "\nbdc_basisOfRrecords_notStandard:\nFlagged",
+        sum(data$.basisOfRrecords_notStandard == FALSE),
         "of the following specific nature:\n",
         removed,
         "\nOne column was added to the database.\n"
