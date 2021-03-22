@@ -28,38 +28,34 @@ for (i in 1:ncol(database)){
   }
 }
 
-# PARSING DATE ------------------------------------------------------------
-parse_date <-
-  bdc_parse_date(data = database,
-                 col_to_test = "verbatimEventDate",
-                 year_threshold = 1500)
+# CHECK 1 -----------------------------------------------------------------
+# Records with empty event date information.
+data_t1 <- bdc_eventDate_empty(data = database, eventDate = "verbatimEventDate")
 
+# CHECK 2 -----------------------------------------------------------------
+data_t2 <-
+  bdc_year_outOfRange(data = data_t1,
+                      eventDate = "verbatimEventDate",
+                      year_threshold = 1980)
 
-# Mapping spatial errors --------------------------------------------------
-# Mapping a column containing the results of the temporal test
-parse_date %>%
-  dplyr::filter(.year == FALSE) %>%
-  bdc_quickmap(
-    data = .,
-    lon = "decimalLongitude",
-    lat = "decimalLatitude",
-    col_to_map = ".year",
-    size = 0.5
-  )
+# CHECK 3 -----------------------------------------------------------------
+data_t3 <- bdc_year_from_eventDate(data = data_t2, eventDate = "verbatimEventDate")
 
 # REPORT ------------------------------------------------------------------
 # Create a summary column. This column is FALSE if any test was flagged as FALSE (i.e. potentially invalid or problematic record)
-parse_date <- bdc_summary_col(data = parse_date)
+parse_date <- bdc_summary_col(data = data_t3)
 
-
+# FIXME: standardize: temporal or time
+# FIXME: add functions names to create bar ou maps
 # Create a report summarizing the results of all tests
 report <- bdc_create_report(data = parse_date, workflow_step = "temporal")
 
 # FIGURES -----------------------------------------------------------------
 bdc_create_figures(data = parse_date, workflow_step = "time")
 
-# CLEAN THE DATABASE ------------------------------------------------------
-# Removing flagged records (potentially problematic ones) and saving a 'clean' database (i.e., without columns of tests, which starts with ".")
+# FILTER THE DATABASE ------------------------------------------------------
+# Removing flagged records (potentially problematic ones) and saving a 'clean'
+# database (i.e., without test columns starting with ".")
 output <-
   parse_date %>%
   dplyr::filter(.summary == TRUE) %>%
@@ -67,4 +63,3 @@ output <-
 
 output %>% 
   qs::qsave(., here::here("Output", "Intermediate", "04_time_database.qs"))
-

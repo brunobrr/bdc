@@ -39,17 +39,17 @@ bdc_coordinates_from_locality <-
            lon = "decimalLongitude",
            locality = "locality") {
     suppressMessages({
-    col_names <- c(".missing_coordinates", ".invalid_coordinates")
+    col_names <- c(".coordinates_empty", ".coordinates_outOfRange")
     if (!all(col_names %in% names(data))){
     data <-
-      bdc_missing_coordinates(data = data, 
-                              lat = {{ lat }}, 
-                              lon = {{ lon}})
+      bdc_coordinates_empty(data = data, 
+                            lat = {{ lat }}, 
+                            lon = {{ lon}})
 
     data <-
-      bdc_invalid_coordinates(data = df, 
-                              lat = {{ lat }}, 
-                              lon = {{ lon }})
+      bdc_coordinates_outOfRange(data = df, 
+                                lat = {{ lat }}, 
+                                lon = {{ lon }})
     }
 
     })
@@ -57,13 +57,13 @@ bdc_coordinates_from_locality <-
     df <-
       data %>%
       dplyr::filter(
-        .invalid_coordinates == FALSE | .missing_coordinates == FALSE,
+        .coordinates_empty == FALSE | .coordinates_outOfRange == FALSE,
         {{ locality }} != "" & !is.na( {{ locality }} )
       )
     
     df <-
       df %>%
-      dplyr::select(-c(.missing_coordinates , .invalid_coordinates))
+      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
     
     save <- here::here("Output/Check/01_coordinates_from_locality.csv")
     df %>% data.table::fwrite(save)

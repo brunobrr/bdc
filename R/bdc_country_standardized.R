@@ -1,7 +1,7 @@
-#' Standardizes country names and gets ISO code
+#' Standardizes country names and gets country code
 #'
 #' This function standardizes country names and adds a new column to the
-#' database containing country code information.
+#' database containing two-letter country codes (ISO 3166-1 alpha-2).
 #'
 #' @param data data.frame. Containing country names
 #' @param  country character string. The column name with the country assignment
@@ -13,7 +13,8 @@
 #' candidates for each misspelled countries names.
 #' 
 #' @return A data.frame containing two columns: country_suggested (standardized
-#'   country names) and country_code (standardized iso2 country code).
+#' country names) and country_code (two-letter country codes; more details in
+#' \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2}{Wikipedia}).
 #'
 #' @importFrom dplyr left_join rename
 #' @importFrom rnaturalearth ne_countries
@@ -25,12 +26,12 @@
 #' country <- c("BOLIVIA", "bolivia", "Brasil", "Brazil", "BREZIL")
 #' x <- data.frame(country)
 #' 
-#' bdc_standardize_countryNames(
+#' bdc_country_standardized(
 #'   data = x,
 #'   country = "country")
 #' }
 #' 
-bdc_standardize_countryNames <-
+bdc_country_standardized <-
   function(data,
            country = "country") {
     
@@ -67,7 +68,7 @@ bdc_standardize_countryNames <-
      
     message(
       paste(
-        "\nbdc_standardize_countryNames:\nThe country names of",
+        "\nbdc_country_standardized:\nThe country names of",
         length(w),
         "records were standardized.\nTwo columns were added to the database.\n"
       )

@@ -27,9 +27,9 @@
 #' .summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
 #' 
 #' x <- data.frame(database_id,
-#'                 .missing_names,
-#'                 .missing_coordinates,
-#'                 .invalid_basis_of_records,
+#'                 .scientificName_empty,
+#'                 .coordinates_empty,
+#'                 .basisOfRrecords_notStandard,
 #'                 .summary)
 #' 
 #' bdc_create_report(
@@ -115,28 +115,28 @@ bdc_create_report <-
         dplyr::mutate(Description = Test_name) %>%
         dplyr::mutate(
           Description = if_else(
-            Description == ".missing_name",
-            "Records missing scientific name",
+            Description == ".scientificName_empty",
+            "Records with empty scientific name",
             Description
           ),
           Description = dplyr::if_else(
-            Description == ".missing_coordinates",
-            "Records missing coordinates",
+            Description == ".coordinates_empty",
+            "Records with empty coordinates",
             Description
           ),
           Description = dplyr::if_else(
-            Description == ".invalid_coordinates",
-            "Records with invalid coordiantes",
+            Description == ".coordinates_outOfRange",
+            "Records coordiantes out-of-range",
             Description
           ),
           Description = dplyr::if_else(
-            Description == ".invalid_basis_of_records",
+            Description == ".basisOfRrecords_notStandard",
             "Records from doubtful source",
             Description
           ),
           Description = dplyr::if_else(
-            Description == ".coordinates_out_country",
-            "Records outside one or multiple focal countries",
+            Description == ".coordinates_country_inconsistent",
+            "Records outside one or multiple reference countries",
             Description
           ),
           Description = dplyr::if_else(

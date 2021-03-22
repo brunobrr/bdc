@@ -1,4 +1,4 @@
-#' Identify records missing geographic coordinates
+#' Identify records with empty geographic coordinates
 #'
 #' This function flags records missing latitude or longitude coordinates.
 #'
@@ -11,8 +11,8 @@
 #' @details This test identifies records missing geographic coordinates (i.e.,
 #' empty or not applicable [NA] longitude or latitude)
 #'
-#' @return A data.frame contain the column '.missing_coordinates'. Records that
-#' have failed in the test are flagged as "FALSE".
+#' @return A data.frame contain the column ".coordinates_empty". Compliant
+#' (TRUE) if 'lat' and 'lon' are not empty; otherwise "FALSE".
 #'
 #' @importFrom dplyr mutate_all mutate case_when select bind_cols
 #' @importFrom rlang sym
@@ -25,12 +25,12 @@
 #' decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
 #' x <- data.frame(decimalLatitude, decimalLongitude)
 #' 
-#' bdc_missing_coordinates(
+#' bdc_coordinates_empty(
 #' data = x, 
 #' lat = "decimalLatitude", 
 #' lon = "decimalLongitude")
 #' }
-bdc_missing_coordinates <-
+bdc_coordinates_empty <-
   function(data,
            lat = "decimalLatitude",
            lon = "decimalLongitude") {
@@ -45,7 +45,7 @@ bdc_missing_coordinates <-
     df <-
       df %>%
       dplyr::mutate(
-        .missing_coordinates = dplyr::case_when(
+        .coordinates_empty = dplyr::case_when(
           is.na(!!rlang::sym(lat)) | is.na(!!rlang::sym(lon)) ~ FALSE,
           # flag empty coordinates
           nzchar(!!rlang::sym(lat)) == FALSE |
@@ -57,14 +57,14 @@ bdc_missing_coordinates <-
           TRUE ~ TRUE
         )
       ) %>%
-      dplyr::select(.missing_coordinates)
+      dplyr::select(.coordinates_empty)
     
     df <- dplyr::bind_cols(data, df)
     
     message(
       paste(
-        "\nbdc_missing_coordinates:\nFlagged",
-        sum(df$.missing_coordinates == FALSE),
+        "\nbdc_coordinates_empty:\nFlagged",
+        sum(df$.coordinates_empty == FALSE),
         "records.\nOne column was added to the database.\n"
       )
     )
