@@ -1,0 +1,32 @@
+---
+title: "Prefilter"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Prefilter}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+devtools::load_all()
+```
+
+First, install `bdc` from github.
+
+```{r include = FALSE}
+if (!require("bdc")) remotes::install_github("brunobrr/bdc")
+```
+
+Now, create the folders:
+
+```{r}
+# bdc::bdc_create_dir()
+```
+
+Read the metadata:
+
+```{r}
+# metadata <- read_csv()
+# bdc::bdc_standardize_datasets(metadata)
+```

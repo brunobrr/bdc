@@ -45,11 +45,10 @@ for (i in 1:ncol(database)){
 # 4 - Flag, identify, and remove infraespecific terms (subspecies, variety and forma)
 
 # 5 - Extract just binomial scientific names (without year or authors). To do this, a scientific name is breaks down in different components using rgnparser package
+parse_names <-  qs::qread(here::here("Output", "Check", "02_parsed_names.qs"))
 
 parse_names <- bdc_clean_names(sci_names = database$scientificName)
 
-# Save the results of the parsing names process
-parse_names <-  qs::qread(here::here("Output", "Check", "02_parsed_names.qs"))
 
 # Merge names parsed with the full database. As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of parsing names process in "Output/Check/02_parsed_names.qs"
 parse_names <- 
@@ -59,7 +58,6 @@ parse_names <-
 database <- dplyr::bind_cols(database, parse_names)
 
 # FIXME: delete this file 
-database <- qs::qread("exe_database.qs")
 for (i in 1:ncol(database)){
   if(is.character(database[,i])){
     Encoding(database[,i]) <- "UTF-8"
@@ -80,7 +78,7 @@ for (i in 1:ncol(database)){
 # - ott: OpenTree Taxonomy
 # - iucn: IUCN Red List
 
-query_names<- bdc_query_names_taxadb(
+query_names <- bdc_query_names_taxadb(
   sci_name = database$names_clean,
   replace_synonyms = TRUE,
   suggest_names = TRUE,
@@ -102,23 +100,18 @@ database <-
 
 # REPORT ------------------------------------------------------------------
 # Create a report summarizing the main results of the harmonizing names process
-report <- bdc_create_report(data = database, workflow_step = "taxonomy") 
-
+report <-
+  bdc_create_report(data = database,
+                    database_id = "database_id",
+                    workflow_step = "taxonomy")
+report
 # CLEAN THE DATABASE ------------------------------------------------------
-# Before saving the database containing verified scientific names, you have to choose to remove or not names:
-
-# 0: not found (i.e. unresolved names); notes = "not found"
-# 1: with more than one accepted name; notes = "|more +1 accepted"
-# 2: with no accepted name found; notes = "|no accepted name"
-# 3: with doubtful taxonomic identification (i.e., names flagged as FALSE in the column '.taxo_uncer'). 
-
-# Names available in notes: "not_found", "more_one_accepted", "no_accepted", "taxo_uncer"
+# As a general guidance, we did not recommend the removal of records after the prefilter step. However, it also possible filter out records with taxonomic status different of "accepted". Moreover, you can listed all taxonomic status you would like to keep. For this, all taxonomic status have to be listed in the argument 'taxonomic_notes'. 
 
 unresolved_names <-
-  bdc_filter_out_names(
-    data = database,
-    notes = c("not_found", "no_accepted", "taxo_uncer")
-  )
+  bdc_filter_out_names(data = database,
+                       taxonomic_notes = "accepted",
+                       opposite = TRUE)
 
 # Save the table. You may want to check this table at another time
 unresolved_names %>%
@@ -128,8 +121,8 @@ unresolved_names %>%
 output <-
   bdc_filter_out_names(
     data = database,
-    notes = c("not_found", "no_accepted", "taxo_uncer"), 
-    opposite = TRUE
+    taxonomic_notes = "accepted", 
+    opposite = FALSE
   )
 
 # Remove unnecessary columns and save the database

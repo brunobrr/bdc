@@ -1,65 +1,64 @@
-#' Removes records with taxonomic issues
+#' Filter out records according to their taxonomic status
 #'
-#' This function filters out records whose scientific names contain a issue,
-#' including names not found ('notFound'), with multiple (multipleAccepted) or
-#' none (noAcceptedName) accepted name found.
+#' This function is useful for selecting records according to their taxonomic
+#' status.  By default, only records with accepted scientific names are
+#' returned.
+#'
+#' @param data data.frame. Containing a column with information on the taxonomic
+#' status of scientific names.
+#' @param taxonomic_notes character string. The column name containing notes on
+#' the taxonomic status of a name. Default = "notes".
+#' @param opposite logical. Should taxonomic notes different from those listed
+#' in 'taxonomic_notes' be returned? Default = FALSE
+#'
+#' @details By default, only records with accepted scientific names are kept in
+#' the database. Such records are listed in the column 'taxonomic_notes' as
+#' "accepted", "accepted | replaceSynonym",  "accepted | wasMisspelled" or
+#' "accepted | wasMisspelled | replaceSynonym". It is also possible to
+#' customize the list of taxonomic notes to be kept in the argument
+#' 'taxonomic_notes'. See 'notes' in the data.frame resulted from the function
+#' \code{\link{bdc_create_report}}. If 'opposite' is TRUE, records with notes
+#' different from names listed in 'taxonomic_notes' are returned.
+
+#' @return A data.frame filtered out according to names listed in
+#' 'taxonomic_notes'.
 #' 
-#' @param data data frame containing a column 'notes'.
-#' @param notes character string. A column containing notes on taxonomic standardization process. Default = "notes".
-#' @param opposite logical. Should records with not taxonomic issue be returned.
-#' Default = FALSE.
-#' @details The function filters out records whose notes column flags taxonomic issues such as 'noFound', 'multipleAccepted' and 'noAcceptedName'.
-#' @return A data frame without records with taxonomic issues. If opposite is TRUE, only records with taxonomic issues are returned. 
+#' @importFrom dplyr filter select
+#' @importFrom stringr str_detect
+#' 
 #' @export
 #'
 #' @examples
 #' 
 bdc_filter_out_names <-
   function(data,
-           notes = c(
-             "not_found", "more_one_accepted",
-             "no_accepted", "taxo_uncer"
-           ),
+           taxonomic_notes = "accepted", 
            opposite = FALSE) {
-    data <-
-      data %>%
-      dplyr::mutate(temp_id = 1:nrow(data))
-
-    posi <- NULL
-
-    if (any(notes == "not_found")) {
-      x <- which(data$notes == "not found")
-      posi <- c(posi, x)
+    data$id <- 1:nrow(data)
+    
+    if (!"notes" %in% names(data)) {
+      message("column 'notes' not found")
     }
 
-    if (any(notes == "more_one_accepted")) {
-      x <-
-        stringr::str_which(data$notes, regex("1 accepted"))
-      posi <- c(posi, x)
+    unique_notes <- unique(data$notes)
+    if (!taxonomic_notes %in% unique_notes) {
+      message("Names provided are not present in column 'notes'")
     }
 
-    if (any(notes == "no_accepted")) {
-      x <-
-        stringr::str_which(data$notes, regex("check no accepted name"))
-      posi <- c(posi, x)
-    }
-
-    if (any(notes == "taxo_uncer")) {
-      x <- which(data$.uncer_terms == FALSE)
-      posi <- c(posi, x)
-    }
-
-    res_temp <- data[posi, ] %>% dplyr::distinct(temp_id, .keep_all = T)
-
-    if (opposite == FALSE) {
-      res <-
-        res_temp %>%
-        dplyr::select(-temp_id)
-    } else {
-      res <-
+    if (all(taxonomic_notes == "accepted")) {
+      df <-
         data %>%
-        dplyr::filter(!temp_id %in% res_temp$temp_id) %>%
-        dplyr::select(-temp_id)
+        dplyr::filter(stringr::str_detect(notes, "accepted"))
+    } else {
+      df <- data %>% dplyr::filter(notes %in% taxonomic_notes)
     }
-    return(res)
+    
+    if (opposite == TRUE) {
+      df <-
+        data %>%
+        dplyr::filter(!id %in% df$id)
+    }
+      
+    df <- df %>% dplyr::select(-id)
+    return(df)
   }
