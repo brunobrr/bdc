@@ -30,34 +30,41 @@ for (i in 1:ncol(database)){
 
 # CHECK 1 -----------------------------------------------------------------
 # Records with empty event date information.
-data_t1 <- bdc_eventDate_empty(data = database, eventDate = "verbatimEventDate")
-
-# CHECK 2 -----------------------------------------------------------------
-data_t2 <-
-  bdc_year_outOfRange(data = data_t1,
-                      eventDate = "verbatimEventDate",
-                      year_threshold = 1980)
+check_t1 <- bdc_eventDate_empty(data = database, eventDate = "verbatimEventDate")
 
 # CHECK 3 -----------------------------------------------------------------
-data_t3 <- bdc_year_from_eventDate(data = data_t2, eventDate = "verbatimEventDate")
+check_t2 <- bdc_year_from_eventDate(data = check_t1, eventDate = "verbatimEventDate")
+
+# CHECK 2 -----------------------------------------------------------------
+check_t3 <-
+  bdc_year_outOfRange(data = check_t2,
+                      eventDate = "year",
+                      year_threshold = 1900)
 
 # REPORT ------------------------------------------------------------------
 # Create a summary column. This column is FALSE if any test was flagged as FALSE (i.e. potentially invalid or problematic record)
-parse_date <- bdc_summary_col(data = data_t3)
+check_t4 <- bdc_summary_col(data = check_t3)
 
 # FIXME: standardize: temporal or time
 # FIXME: add functions names to create bar ou maps
-# Create a report summarizing the results of all tests
-report <- bdc_create_report(data = parse_date, workflow_step = "temporal")
+
+# Creating a report summarizing the results of all tests
+report <-
+  bdc_create_report(data = check_t4,
+                    database_id = "database_id",
+                    workflow_step = "time")
+report
 
 # FIGURES -----------------------------------------------------------------
-bdc_create_figures(data = parse_date, workflow_step = "time")
+bdc_create_figures(data = check_t4,
+                   database_id = "database_id",
+                   workflow_step = "time")
 
 # FILTER THE DATABASE ------------------------------------------------------
 # Removing flagged records (potentially problematic ones) and saving a 'clean'
 # database (i.e., without test columns starting with ".")
 output <-
-  parse_date %>%
+  check_t4 %>%
   dplyr::filter(.summary == TRUE) %>%
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 

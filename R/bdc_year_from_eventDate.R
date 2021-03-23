@@ -1,15 +1,16 @@
 #' Extract year from eventDate
 #'
-#' This function extracts four-digit year from unambiguously interpretable value
-#' in the column "eventDate".
+#' This function extracts four-digit year from unambiguously interpretable
+#' collecting dates.
 #'
 #' @param data A data frame containing column with event date information.
 #' @param eventDate Numeric or date. The column with event date information.
 #'
 #' @return A data.frame containing the column "year". Year information is
-#' returned only "eventDate" can be unambiguously interpretable. Year in the
-#' future (e.g., 2050) are returned as NA as well as years before 1600, which is
-#' the lower limit for collecting dates of biological specimens.
+#' returned only if "eventDate" can be unambiguously interpretable from
+#' "eventDate". Year in the future (e.g., 2050) are returned as NA as well as
+#' years before 1600, which is the lower limit for collecting dates of
+#' biological specimens.
 #' 
 #' @importFrom dplyr if_else
 #' @importFrom lubridate year
@@ -29,24 +30,19 @@ bdc_year_from_eventDate <-
   function(data,
            eventDate = "eventDate") {
     col <- data[[eventDate]]
-
-    .year <-
-      dplyr::if_else(
-        col %in% 1600:lubridate::year(Sys.Date()),
-        TRUE,
-        FALSE
-      )
-
+    
     year <-
       stringr::str_extract(col, "[[:digit:]]{4}") %>%
       as.numeric()
-
+    
     res <- cbind(data, year)
-    return(res)
-
+    
     message(
       paste(
-        "\nbdc_year_from_eventDate:\nOne column was added to the database.\n"
+        "\nbdc_year_from_eventDate:\nFour-digit year were extracted from",
+        sum(!is.na(year)), 
+        "records.\n"
       )
     )
+    return(res)
   }

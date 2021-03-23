@@ -5,7 +5,7 @@
 #' @param data A data frame containing column with event date information.
 #' @param eventDate numeric or date. The column with event date information.
 #' @param year_threshold numeric. A four-digit year threshold used to flag old
-#' (potentially invalid) records. Default = NULL.
+#' (potentially invalid) records. Default = 1900
 #' 
 #' @details Following the "VALIDATION:YEAR_OUTOFRANGE"
 #' \href{https://github.com/tdwg/bdq/projects/2}{Biodiversity data quality
@@ -32,18 +32,15 @@
 #' "", "2013", "0001-01-00")
 #' x <- data.frame(collection_date)
 #' 
-#' bdc_coordinates_empty(data = x, eventDate = "collection_date")
+#' bdc_year_outOfRange(data = x, eventDate = "collection_date")
 #' }
 bdc_year_outOfRange <-
   function(data,
            eventDate,
-           year_threshold = NULL) {
+           year_threshold = 1900) {
+    
     col <- data[[eventDate]]
     nDigits <- function(x) nchar(trunc(abs(x)))
-
-    col <-
-      stringr::str_extract(col, "[[:digit:]]{4}") %>%
-      as.numeric()
 
     if (is.null(year_threshold)) {
       .year <-
@@ -56,18 +53,20 @@ bdc_year_outOfRange <-
       if (!is.numeric(year_threshold)) {
         stop("'year_threshold' is not numeric")
       }
+      
       if (nDigits(year_threshold) != 4) {
         stop("'year_threshold' does not have four digits")
       }
 
+      w <- which(is.na(col))
+      
       .year <-
-        dplyr::if_else(
-          col %in% 1600:lubridate::year(Sys.Date()),
+        ifelse(
+          col %in% 1600:lubridate::year(Sys.Date()) & col > year_threshold,
           TRUE,
           FALSE
         )
-
-      .year <- .year & col > year_threshold
+      .year[w] <- TRUE
     }
 
     res <- cbind(data, .year)
