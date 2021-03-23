@@ -10,8 +10,6 @@ ipak(
     "rnaturalearth",
     "CoordinateCleaner",
     "stringr",
-    "rworldmap", # Check this
-    "flora", 
     "qs"
   )
 )
@@ -34,23 +32,9 @@ for (i in 1:ncol(database)){
 }
 
 # FLAGGING COMMON SPATIAL ERRORS ------------------------------------------
-
 # Flagging potentially erroneous coordinates using test avaiable in the 'CoordinateCleaner' package.
 
-# continent_border <-
-#   rnaturalearth::ne_download(scale = "large",
-#                              type = 'land',
-#                              category = 'physical')
-
-# Just in case the 'prefilter' step were not executed
-database <- cc_val(
-  x =  database,
-  lon = "decimalLongitude",
-  lat = "decimalLatitude",
-  value = "clean"
-)
-
-flag_issues <-
+check_space01 <-
   CoordinateCleaner::clean_coordinates(
     x =  database,
     lon = "decimalLongitude",
@@ -58,32 +42,31 @@ flag_issues <-
     species = "scientificName",
     countries = ,
     tests = c(
-      "capitals",
-      "centroids",
-      "duplicates",
-      "equal",
-      "gbif",
-      "institutions",
-      "outliers",
-      # "seas", # Check whether this is necessary
-      "zeros",
-      "urban"
+      "capitals",     # remove country and province centroids within 2km
+      "centroids",    # remove capitals centroids within 2km
+      "duplicates",   # remove duplicated records
+      "equal",        # remove equal coordinates
+      "gbif",         # remove in GBIF headsquare
+      "institutions", # remove zoo and herbaria within 2km 
+      "outliers",     # remove outliers
+    # "seas",         # remove from ocean 
+      "zeros",        # remove coordinates 0,0
+      "urban"         # remove urban areas
     ),
-    capitals_rad = 10000,
-    centroids_rad = 1000,
+    capitals_rad = 2000, 
+    centroids_rad = 2000, 
     centroids_detail = "both",
-    inst_rad = 100,
+    inst_rad = 100, # remove zoo and herbaria within 2km 
     outliers_method = "quantile",
     outliers_mtp = 5,
     outliers_td = 1000,
-    outliers_size = 7,
-    #acho que esse aqui podemos aumentar visando que existem muitas esp?ceis pouco amostradas
+    outliers_size = 10,
     range_rad = 0,
     zeros_rad = 0.5,
     capitals_ref = NULL,
     centroids_ref = NULL,
     country_ref = NULL,
-    country_refcol = "iso_a3",
+    country_refcol = "countryCode",
     inst_ref = NULL,
     range_ref = NULL,
     # seas_ref = continent_border,
@@ -92,12 +75,10 @@ flag_issues <-
     value = "spatialvalid"
   )
 
-# FiXME: add cc_coun and create bdc_out_range
-
-#  Flagging low decimal precision 
-flag_issues <-
-  bdc_xy_precision(
-    data = flag_issues,
+#  Remove low decimal precision 
+check_space02 <-
+  bdc_coordinates_precision(
+    data = check_space01,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
     ndec = c(0, 1, 2) #number of decimals to be tested
@@ -105,7 +86,7 @@ flag_issues <-
 
 # Mapping spatial errors --------------------------------------------------
 # Mapping a column containing the results of one spatial test
-flag_issues %>%
+check_space02 %>%
   dplyr::filter(.cen == FALSE) %>%
   bdc_quickmap(
     data = .,
@@ -116,17 +97,26 @@ flag_issues %>%
   )
 
 # REPORT ------------------------------------------------------------------
-# Create a summary column. This column is FALSE if any test was flagged as FALSE (i.e. potentially invalid or problematic record)
-flag_issues <- bdc_summary_col(data = flag_issues)
+# Creating a summary column. This column is "FALSE" if any data quality test was
+# flagged as FALSE
+# (i.e. potentially invalid or problematic record)
+check_space03 <- bdc_summary_col(data = check_space02)
 
-# Create a report summarizing the results of all tests
-report <- bdc_create_report(data = flag_issues, workflow_step = "space")
+# Creating a report summarizing the results of all tests
+report <-
+  bdc_create_report(data = check_space03,
+                    database_id = "database_id",
+                    workflow_step = "prefilter")
+report
 
 # FIGURES -----------------------------------------------------------------
-bdc_create_figures(data = flag_issues, workflow_step = "space")
+bdc_create_figures(data = check_space03,
+                   database_id = "database_id",
+                   workflow_step = "space")
 
-# CLEAN THE DATABASE ------------------------------------------------------
-# Removing flagged records (potentially problematic ones) and saving a 'clean' database (i.e., without columns of tests, which starts with ".")
+# FILTER THE DATABASE ------------------------------------------------------
+# Removing flagged records (potentially problematic ones) and saving a 'clean'
+# database (i.e., without test columns starting with ".")
 output <-
   flag_issues %>%
   dplyr::filter(.summary == TRUE) %>%

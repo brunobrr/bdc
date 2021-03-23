@@ -141,8 +141,16 @@ bdc_create_figures <-
 
     # time
     if (workflow_step == "time") {
+      tests <-
+        c(
+          "year",
+          ".year",
+          ".summary",
+          "summary_all_tests"
+        )
+      
       names_tab <- names(data)
-      col_to_tests <- dplyr::intersect("year", names_tab)
+      col_to_tests <- dplyr::intersect(tests, names_tab)
     }
 
     # function to create barplots for each dataset separately
@@ -158,7 +166,7 @@ bdc_create_figures <-
           dplyr::group_by(database_id, .data[[column_to_map]]) %>%
           dplyr::summarise(n_flagged = dplyr::n()) %>%
           dplyr::full_join(., n_record_database, by = "database_id") %>%
-          dplyr::mutate(freq = round(n_flagged / n_total, 5))
+          dplyr::mutate(freq = round(n_flagged / n_total, 5) * 100)
 
         temp[is.na(temp)] <- 0
 

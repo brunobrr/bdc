@@ -384,9 +384,18 @@ bdc_create_report <-
         dplyr::mutate(Description = Test_name) %>%
         dplyr::mutate(
           Description = dplyr::if_else(
-            Description == ".year",
-            "Records missing, with invalid or old date information",
+            Description == "eventDate_empty",
+            "Records with empty eventDate",
             Description
+          ),
+          Description = dplyr::if_else(
+            Description == ".year",
+            "Records with year out-of-range (i.e., year in the future or collected before a threshold defined by the user).",
+            Description
+          ),
+          Description = dplyr::if_else(
+            Description == ".summary",
+            "Summary of all tests", Description
           )
         )
 

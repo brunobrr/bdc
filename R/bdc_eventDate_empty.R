@@ -36,8 +36,6 @@ bdc_eventDate_empty <-
 
     df <- data.frame(data, .eventDate_empty)
 
-    return(df)
-
     message(
       paste(
         "\nbdc_eventDate_empty:\nFlagged",
@@ -45,4 +43,6 @@ bdc_eventDate_empty <-
         "records.\nOne column was added to the database.\n"
       )
     )
+    
+    return(df)
   }
