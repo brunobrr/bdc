@@ -187,7 +187,7 @@ bdc_standardize_datasets <- function(metadata) {
       here::here("data", "temp_datasets") %>%
       fs::dir_ls(regexp = "*.qs") %>%
       plyr::ldply(.data = .,
-        .fun = qread,
+        .fun = qs::qread,
         .progress = plyr::progress_text(char = "."),
         .id = NULL)
 
