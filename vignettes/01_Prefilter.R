@@ -40,52 +40,52 @@ for (i in 1:ncol(database)){
 
 # CHECK 1 -----------------------------------------------------------------
 # Records empty scientific name
-data_pf1 <- bdc_scientificName_empty(
+check_pf1 <- bdc_scientificName_empty(
   data = database,
   sci_name = "scientificName")
 
 # CHECK 2 -----------------------------------------------------------------
 # Records empty latitude or longitude
-data_pf2 <- bdc_coordinates_empty(
-  data = data_pf1,
+check_pf2 <- bdc_coordinates_empty(
+  data = check_pf1,
   lat = "decimalLatitude",
   lon = "decimalLongitude")
 
 # CHECK 3 -----------------------------------------------------------------
 # Records with out-of-range coordinates (longitude between -180 and
 # 180; latitude between -90 and 90)
-data_pf3 <- bdc_coordinates_outOfRange(
-  data = data_pf2,
+check_pf3 <- bdc_coordinates_outOfRange(
+  data = check_pf2,
   lat = "decimalLatitude",
   lon = "decimalLongitude")
 
 # CHECK 4 -----------------------------------------------------------------
 # Records from doubtful provenance
-data_pf4 <- bdc_basisOfRrecords_notStandard(
-  data = data_pf3,
+check_pf4 <- bdc_basisOfRrecords_notStandard(
+  data = check_pf3,
   basisOfRecord = "basisOfRecord",
   names_to_keep = "all")
 
 # CHECK 5 -----------------------------------------------------------------
 # Getting country names from coordinates for records missing country names
-data_pf5 <- bdc_country_from_coordinates(
-  data = data_pf4,
+check_pf5 <- bdc_country_from_coordinates(
+  data = check_pf4,
   lat = "decimalLatitude",
   lon = "decimalLongitude",
   country = "country")
 
 # CHECK 6 -----------------------------------------------------------------
 # Standardizing country names and getting country code information
-data_pf6 <- bdc_country_standardized(
-  data = data_pf5,
+check_pf6 <- bdc_country_standardized(
+  data = check_pf5,
   country = "country"
 )
 
 # CHECK 7 -----------------------------------------------------------------
 # Correcting latitude and longitude transposed
-data_pf7 <-
+check_pf7 <-
   bdc_coordinates_transposed(
-    data = data_pf6, 
+    data = check_pf6, 
     id = "database_id",
     sci_names = "scientificName",
     lon = "decimalLongitude",
@@ -96,9 +96,9 @@ data_pf7 <-
 # CHECK 8 -----------------------------------------------------------------
 # Records outside one or multiple reference countries (e.g. exclude records in
 # other countries or far from a informed distance from the coast)
-data_pf8 <-
+check_pf8 <-
   bdc_coordinates_country_inconsistent(
-    data = data_pf7,
+    data = check_pf7,
     country_name = "Brazil",
     lon = "decimalLongitude",
     lat = "decimalLatitude",
@@ -108,9 +108,9 @@ data_pf8 <-
 # CHECK 9 -----------------------------------------------------------------
 # Save records with empty or out-of-range coordinates but with
 # potentially valid information about the collecting locality.
-data_to_check <-
+check_to_check <-
   bdc_coordinates_from_locality(
-    data = data_pf8,
+    data = check_pf8,
     locality = "locality",
     lon = "decimalLongitude",
     lat = "decimalLatitude"
@@ -120,17 +120,17 @@ data_to_check <-
 # Creating a summary column. This column is "FALSE" if any data quality test was
 # flagged as FALSE
 # (i.e. potentially invalid or problematic record)
-data_pf9 <- bdc_summary_col(data = data_pf8)
+check_pf9 <- bdc_summary_col(data = check_pf8)
 
 # Creating a report summarizing the results of all tests
 report <-
-  bdc_create_report(data = data_pf9,
+  bdc_create_report(data = check_pf9,
                     database_id = "database_id",
                     workflow_step = "prefilter")
 report
 
 # FIGURES -----------------------------------------------------------------
-bdc_create_figures(data = data_pf9,
+bdc_create_figures(data = check_pf9,
                    database_id = "database_id",
                    workflow_step = "prefilter")
 
@@ -138,7 +138,7 @@ bdc_create_figures(data = data_pf9,
 # Removing flagged records (potentially problematic ones) and saving a 'clean'
 # database (i.e., without test columns starting with ".")
 output <-
-  data_pf9 %>%
+  check_pf9 %>%
   dplyr::filter(.summary == TRUE) %>%
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 

@@ -59,372 +59,398 @@ bdc_create_figures <-
            database_id = "database_id",
            workflow_step = NULL) {
 
-  # Total number of records
-  suppressMessages({
-    if (!fs::file_exists("data/n_records.csv")) {
-      n_records <-
-        data %>%
-        dplyr::summarise(n = dplyr::n())
+    # Total number of records
+    suppressMessages({
+      if (!fs::file_exists("data/n_records.csv")) {
+        n_records <-
+          data %>%
+          dplyr::summarise(n = dplyr::n())
 
-      data.table::fwrite(n_records, "data/n_records.csv")
+        data.table::fwrite(n_records, "data/n_records.csv")
 
-      # Total number of records per database
-      n_record_database <-
-        data %>%
-        dplyr::mutate(
-          database_id = gsub("[[:digit:]]+", "", database_id),
-          database_id = gsub("_", "", database_id)
-        ) %>%
-        dplyr::group_by(database_id) %>%
-        dplyr::summarise(n_total = dplyr::n())
+        # Total number of records per database
+        n_record_database <-
+          data %>%
+          dplyr::mutate(
+            database_id = gsub("[[:digit:]]+", "", database_id),
+            database_id = gsub("_", "", database_id)
+          ) %>%
+          dplyr::group_by(database_id) %>%
+          dplyr::summarise(n_total = dplyr::n())
 
-      data.table::fwrite(n_record_database, "data/n_record_database.csv")
-    } else {
-      n_records <-
-      readr::read_csv("data/n_records.csv") %>%
-        dplyr::pull(n)
+        data.table::fwrite(n_record_database, "data/n_record_database.csv")
+      } else {
+        n_records <-
+          readr::read_csv("data/n_records.csv") %>%
+          dplyr::pull(n)
 
-      n_record_database <- readr::read_csv("data/n_record_database.csv")
+        n_record_database <- readr::read_csv("data/n_record_database.csv")
+      }
+    })
+
+    our_theme <-
+      ggplot2::theme_minimal() +
+      ggplot2::theme(
+        axis.title = ggplot2::element_text(size = 18),
+        axis.text = ggplot2::element_text(size = 12),
+        panel.grid.major.x = ggplot2::element_line(color = "#cbcbcb"),
+        panel.grid.major.y = ggplot2::element_blank(),
+        plot.margin = ggplot2::unit(c(0.5, 0.5, 0.5, 0.5), "cm")
+      )
+
+    # prefilter
+    if (workflow_step == "prefilter") {
+      tests <-
+        c(
+          ".scientificName_empty",
+          ".coordinates_empty",
+          ".coordinates_outOfRange",
+          ".invalid_basis_of_records",
+          ".coordinates_country_inconsistent",
+          ".summary",
+          "summary_all_tests"
+        )
+
+      names_tab <- names(data)
+      col_to_tests <- dplyr::intersect(tests, names_tab)
+
+      if (file.exists("Output/Check/01_coordinates_transposed.csv")) {
+        col_to_tests <- c(col_to_tests, "coordinates_transposed")
+      }
     }
-  })
 
-  our_theme <-
-    ggplot2::theme_minimal() +
-    ggplot2::theme(
-      axis.title = ggplot2::element_text(size = 18),
-      axis.text = ggplot2::element_text(size = 12),
-      panel.grid.major.x = ggplot2::element_line(color = "#cbcbcb"),
-      panel.grid.major.y = ggplot2::element_blank(),
-      plot.margin=ggplot2::unit(c(0.5,0.5,0.5,0.5),"cm")
+    # space
+    if (workflow_step == "space") {
+      tests <-
+        c(
+          ".equ",
+          ".zer",
+          ".cap",
+          ".cen",
+          ".otl",
+          ".gbf",
+          ".inst",
+          ".dpl",
+          ".rou",
+          "summary_all_tests"
+        )
+
+      names_tab <- names(data)
+      col_to_tests <- dplyr::intersect(tests, names_tab)
+    }
+
+    # time
+    if (workflow_step == "time") {
+      names_tab <- names(data)
+      col_to_tests <- dplyr::intersect("year", names_tab)
+    }
+
+    # function to create barplots for each dataset separately
+    create_barplot_database <-
+      function(data, column_to_map, workflow_step = workflow_step) {
+        temp <-
+          data %>%
+          dplyr::mutate(
+            database_id = gsub("[[:digit:]]+", "", database_id),
+            database_id = gsub("_", "", database_id)
+          ) %>%
+          dplyr::filter(., .data[[column_to_map]] == FALSE) %>%
+          dplyr::group_by(database_id, .data[[column_to_map]]) %>%
+          dplyr::summarise(n_flagged = dplyr::n()) %>%
+          dplyr::full_join(., n_record_database, by = "database_id") %>%
+          dplyr::mutate(freq = round(n_flagged / n_total, 5))
+
+        temp[is.na(temp)] <- 0
+
+        b <-
+          ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(database_id, -freq), y = freq)) +
+          ggplot2::geom_col(colour = "white", fill = "royalblue") +
+          ggplot2::coord_flip() +
+          our_theme +
+          ggplot2::labs(x = "Dataset", y = "% of records flagged") +
+          # scale_y_continuous(labels = scales::percent) +
+          ggplot2::geom_hline(
+            yintercept = 0,
+            size = 1,
+            colour = "#333333"
+          ) +
+          ggplot2::geom_label(
+            ggplot2::aes(
+              x = stats::reorder(database_id, -freq),
+              y = freq,
+              label = n_flagged
+            ),
+            hjust = 1,
+            vjust = 0.5,
+            colour = "white",
+            fill = NA,
+            label.size = NA,
+            # family="Times",
+            size = 4,
+            fontface = "bold"
+          ) +
+          ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+
+        ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
+          column_to_map, "_", "BAR", ".png",
+          sep = ""
+        ),
+        b,
+        dpi = 300,
+        width = 6,
+        height = 3,
+        units = "cm",
+        scale = 5
+        )
+      }
+
+    # function to create barplots considering all datasets together
+    create_barplot_all_tests <-
+      function(data,
+               column_to_map = "summary_all_tests",
+               workflow_step = workflow_step) {
+        temp <-
+          data %>%
+          dplyr::select(dplyr::contains(".")) %>%
+          dplyr::summarise_all(., .funs = sum) %>%
+          t() %>%
+          tibble::as_tibble(rownames = "NA") %>%
+          dplyr::mutate(V1 = nrow(data) - V1) %>%
+          dplyr::mutate(
+            freq =
+              round((V1 / n_records * 100), 2)
+          ) %>%
+          dplyr::rename(
+            Name = `NA`,
+            n_flagged = V1
+          )
+
+        temp[is.na(temp)] <- 0
+
+        b <-
+          ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(Name, -freq), y = freq)) +
+          ggplot2::geom_col(colour = "white", fill = "royalblue") +
+          ggplot2::coord_flip() +
+          our_theme +
+          ggplot2::labs(x = "Tests", y = "% of records flagged") +
+          # scale_y_continuous(labels = scales::percent) +
+          ggplot2::geom_hline(
+            yintercept = 0,
+            size = 1,
+            colour = "#333333"
+          ) +
+          ggplot2::geom_label(
+            ggplot2::aes(
+              x = stats::reorder(Name, -freq),
+              y = freq,
+              label = n_flagged
+            ),
+            hjust = 1,
+            vjust = 0.5,
+            colour = "white",
+            fill = NA,
+            label.size = NA,
+            size = 3,
+            fontface = "bold"
+          ) +
+          ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+
+        ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
+                              column_to_map,
+          "_", "BAR", ".png", sep = ""),
+        b,
+        dpi = 300,
+        width = 6,
+        height = 3,
+        units = "cm",
+        scale = 5
+        )
+      }
+
+    # Names of columns available for creating barplot
+    bar <- c(
+      ".scientificName_empty",
+      ".coordinates_empty",
+      ".coordinates_outOfRange",
+      ".invalid_basis_of_records",
+      ".coordinates_country_inconsistent",
+      ".summary",
+      ".uncer_term",
+      "names_not_found",
+      ".equ",
+      ".zer",
+      ".cap",
+      ".cen",
+      ".otl",
+      ".gbf",
+      ".inst",
+      ".dpl",
+      ".rou",
+      "summary_all_tests"
     )
 
-  # prefilter
-  if (workflow_step == "prefilter") {
-    tests <-
-      c(
-        ".scientificName_empty",
-        ".coordinates_empty",
-        ".coordinates_outOfRange",
-        ".invalid_basis_of_records",
-        ".coordinates_country_inconsistent",
-        ".summary",
-        "summary_all_tests"
-      )
+    # Names of columns available for creating maps
+    maps <- c(".coordinates_country_inconsistent", ".cap", ".cen", ".inst")
 
-    names_tab <- names(data)
-    col_to_tests <- dplyr::intersect(tests, names_tab)
+    # Names of column available for creating histogram
+    hist <- c("year")
 
-    if (file.exists("Output/Check/01_coordinates_transposed.csv")) {
-      col_to_tests <- c(col_to_tests, "coordinates_transposed")
-    }
-  }
+    # Find which names were provided
+    w_bar <- dplyr::intersect(col_to_tests, bar)
+    w_maps <- dplyr::intersect(col_to_tests, maps)
+    w_tranposed <- dplyr::intersect(col_to_tests, "coordinates_transposed")
+    w_hist <- dplyr::intersect(col_to_tests, hist)
 
-  # space
-  if (workflow_step == "space") {
-    tests <-
-      c(
-        ".equ",
-        ".zer",
-        ".cap",
-        ".cen",
-        ".otl",
-        ".gbf",
-        ".inst",
-        ".dpl",
-        ".rou",
-        "summary_all_tests"
-      )
-
-    names_tab <- names(data)
-    col_to_tests <- dplyr::intersect(tests, names_tab)
-  }
-
-  # time
-  if (workflow_step == "time"){
-    names_tab <- names(data)
-    col_to_tests <- dplyr::intersect("year", names_tab)
-  }
-
-  # function to create barplots for each dataset separately
-  create_barplot_database <-
-    function(data, column_to_map, workflow_step = workflow_step) {
-      temp <-
-        data %>%
-        dplyr::mutate(
-          database_id = gsub("[[:digit:]]+", "", database_id),
-          database_id = gsub("_", "", database_id)
-        ) %>%
-        dplyr::filter(., .data[[column_to_map]] == FALSE) %>%
-        dplyr::group_by(database_id, .data[[column_to_map]]) %>%
-        dplyr::summarise(n_flagged = dplyr::n()) %>%
-        dplyr::full_join(., n_record_database, by = "database_id") %>%
-        dplyr::mutate(freq = round(n_flagged  / n_total, 5))
-
-      temp[is.na(temp)] <- 0
-
-      b <-
-        ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(database_id,-freq), y = freq)) +
-        ggplot2::geom_col(colour = "white", fill = "royalblue") +
-        ggplot2::coord_flip() +
-        our_theme +
-        ggplot2::labs(x = "Dataset", y = "% of records flagged") +
-        # scale_y_continuous(labels = scales::percent) +
-        ggplot2::geom_hline(yintercept = 0,
-                   size = 1,
-                   colour = "#333333") +
-        ggplot2::geom_label(
-          ggplot2::aes(
-            x = stats::reorder(database_id,-freq),
-            y = freq,
-            label = n_flagged
-          ),
-          hjust = 1,
-          vjust = 0.5,
-          colour = "white",
-          fill = NA,
-          label.size = NA,
-          # family="Times",
-          size = 4,
-          fontface = "bold"
-        ) +
-        ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
-
-      ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
-                            column_to_map, "_", "BAR", ".png", sep = ""),
-             b,
-             dpi = 300,
-             width = 6,
-             height = 3,
-             units = "cm",
-             scale = 5
-      )
+    # Create bar plots
+    if (length(w_bar) == 0 & workflow_step %in% c("prefilter", "space")) {
+      message("At least one column 'starting with '.' must be provided")
     }
 
-  # function to create barplots considering all datasets together
-  create_barplot_all_tests <-
-    function(data,
-             column_to_map = "summary_all_tests",
-             workflow_step = workflow_step) {
-      temp <-
-        data %>%
-        dplyr::select(dplyr::contains(".")) %>%
-        dplyr::summarise_all(., .funs = sum) %>%
-        t %>%
-        tibble::as_tibble(rownames = "NA") %>%
-        dplyr::mutate(V1 = nrow(data) - V1) %>%
-        dplyr::mutate(freq =
-                        round((V1 / n_records * 100), 2)) %>%
-        dplyr::rename(Name = `NA`,
-                      n_flagged = V1)
+    if (length(w_bar) != 0) {
+      w <- which(colSums(!data[{{ w_bar }}]) == 0)
 
-      temp[is.na(temp)] <- 0
+      if (length(w) != 0) {
+        message(
+          "No records flagged for the following tests:\n",
+          paste(w_bar[w], collapse = " ")
+        )
+        w_bar <- w_bar[-w]
+      }
 
-      b <-
-        ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(Name,-freq), y = freq)) +
-        ggplot2::geom_col(colour = "white", fill = "royalblue") +
-        ggplot2::coord_flip() +
-        our_theme +
-        ggplot2::labs(x = "Tests", y = "% of records flagged") +
-        # scale_y_continuous(labels = scales::percent) +
-        ggplot2::geom_hline(yintercept = 0,
-                   size = 1,
-                   colour = "#333333") +
-        ggplot2::geom_label(
-          ggplot2::aes(
-            x = stats::reorder(Name,-freq),
-            y = freq,
-            label = n_flagged
-          ),
-          hjust = 1,
-          vjust = 0.5,
-          colour = "white",
-          fill = NA,
-          label.size = NA,
-          size = 3,
-          fontface = "bold"
-        ) +
-        ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+      for (i in 1:length(w_bar)) {
+        create_barplot_database(
+          data = data,
+          column_to_map = w_bar[i],
+          workflow_step = workflow_step
+        )
+      }
 
-      ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_", column_to_map,
-                   "_", "BAR", ".png", sep = ""),
-             b,
-             dpi = 300,
-             width = 6,
-             height = 3,
-             units = "cm",
-             scale = 5
-      )
-    }
-
-  # Names of columns available for creating barplot
-  bar <- c(
-    ".scientificName_empty",
-    ".coordinates_empty",
-    ".coordinates_outOfRange",
-    ".invalid_basis_of_records",
-    ".coordinates_country_inconsistent",
-    ".summary",
-    ".uncer_term",
-    "names_not_found",
-    ".equ",
-    ".zer",
-    ".cap",
-    ".cen",
-    ".otl",
-    ".gbf",
-    ".inst",
-    ".dpl",
-    ".rou",
-    "summary_all_tests"
-  )
-
-  # Names of columns available for creating maps
-  maps <- c(".coordinates_country_inconsistent", ".cap", ".cen", ".inst")
-
-  # Names of column available for creating histogram
-  hist <- c("year")
-
-  # Find which names were provided
-  w_bar <- dplyr::intersect(col_to_tests, bar)
-  w_maps <- dplyr::intersect(col_to_tests, maps)
-  w_tranposed <- dplyr::intersect(col_to_tests, "coordinates_transposed")
-  w_hist <- dplyr::intersect(col_to_tests, hist)
-
-  # Create bar plots
-  if (length(w_bar) == 0 & workflow_step %in% c('prefilter', 'space')) {
-    message("At least one column 'starting with '.' must be provided")
-  }
-
-  if (length(w_bar) != 0){
-    w <- which(colSums(!data[{{ w_bar}} ]) == 0)
-
-    if (length(w) != 0){
-      message("No records flagged for the following tests:\n",
-              paste(w_bar[w], collapse = " "))
-      w_bar <- w_bar[-w]
-    }
-
-    for (i in 1:length(w_bar)) {
-      create_barplot_database(
+      create_barplot_all_tests(
         data = data,
-        column_to_map = w_bar[i],
+        column_to_map = "summary_all_tests",
         workflow_step = workflow_step
       )
     }
 
-    create_barplot_all_tests(data = data,
-                             column_to_map = "summary_all_tests",
-                             workflow_step = workflow_step)
-
-  }
-
-  # Create maps of invalid vs valid records
-  if (length(w_maps) == 0 & workflow_step %in% c('prefilter', 'space')) {
-    message("At least one of the following columns must be provided for creating maps\n", paste0(maps, sep = " "))
-  }
-
-  if (length(w_maps) != 0) {
-    w <- which(colSums(!data[{{ w_maps}} ]) == 0)
-
-    if (length(w) != 0){
-      message("No records flagged for the following tests:\n",
-              paste(w_maps[w], collapse = " "))
-      w_maps <- w_maps[-w]
+    # Create maps of invalid vs valid records
+    if (length(w_maps) == 0 & workflow_step %in% c("prefilter", "space")) {
+      message("At least one of the following columns must be provided for creating maps\n", paste0(maps, sep = " "))
     }
 
-    for (i in 1:length(w_maps)) {
-      d <-
-        CoordinateCleaner::cc_val(
-          data,
+    if (length(w_maps) != 0) {
+      w <- which(colSums(!data[{{ w_maps }}]) == 0)
+
+      if (length(w) != 0) {
+        message(
+          "No records flagged for the following tests:\n",
+          paste(w_maps[w], collapse = " ")
+        )
+        w_maps <- w_maps[-w]
+      }
+
+      for (i in 1:length(w_maps)) {
+        d <-
+          CoordinateCleaner::cc_val(
+            data,
+            lon = "decimalLongitude",
+            lat = "decimalLatitude",
+            verbose = F,
+            value = "clean"
+          )
+
+        d <-
+          d %>%
+          dplyr::select({{ w_maps }}[i], decimalLongitude, decimalLatitude) %>%
+          dplyr::filter(. == FALSE)
+
+        p <-
+          bdc_quickmap(
+            data = d,
+            lon = "decimalLongitude",
+            lat = "decimalLatitude",
+            col_to_map = w_maps[i], size = 0.8
+          )
+
+        ggplot2::ggsave(
+          paste("Output/", "Figures/", workflow_step, "_", w_maps[i], "_",
+            "MAP", ".png",
+            sep = ""
+          ),
+          p,
+          dpi = 300, width = 6, height = 3, units = "cm", scale = 4
+        )
+      }
+    }
+
+    # Create maps of transposed and corrected coordinates
+    if (length(w_tranposed) == 0 & workflow_step == "prefilter") {
+      message("file 'Output/Check/01_coordinates_transposed.csv' not found")
+    }
+
+    if (length(w_tranposed) != 0) {
+      temp <- data.table::fread("Output/Check/01_coordinates_transposed.csv")
+
+      p1 <-
+        bdc_quickmap(
+          data = temp,
           lon = "decimalLongitude",
           lat = "decimalLatitude",
-          verbose = F,
-          value = "clean"
+          col_to_map = "#EC364F",
+          size = 1
         )
 
-      d <-
-        d %>%
-        dplyr::select({{w_maps}}[i], decimalLongitude, decimalLatitude) %>%
-        dplyr::filter(. == FALSE)
-
-      p <-
+      p2 <-
         bdc_quickmap(
-          data = d,
-          lon = "decimalLongitude",
-          lat = "decimalLatitude",
-          col_to_map = w_maps[i], size = 0.8)
+          data = temp,
+          lon = "decimalLongitude_modified",
+          lat = "decimalLatitude_modified",
+          col_to_map = "royalblue",
+          size = 1
+        )
+      p <- cowplot::plot_grid(p1, p2, labels = "AUTO", scale = 1)
+
+      ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
+        "coordinates_transposed", "_", "MAP", ".png",
+        sep = ""
+      ),
+      p,
+      dpi = 300, width = 6, height = 3, units = "cm", scale = 4
+      )
+    }
+
+    if (length(w_hist) == 0 & workflow_step == "time") {
+      message("Column 'year' not found")
+    }
+
+    if (length(w_hist) != 0) {
+      data <-
+        data %>%
+        dplyr::select(year) %>%
+        dplyr::filter(!is.na(year))
+
+      p <- data %>%
+        ggplot2::ggplot(ggplot2::aes(x = year)) +
+        ggplot2::geom_histogram(
+          colour = "white",
+          fill = "royalblue", position = "identity"
+        ) +
+        our_theme +
+        ggplot2::labs(x = "Year", y = "Number of records") +
+        ggplot2::geom_hline(
+          yintercept = 0,
+          size = 1,
+          colour = "#333333"
+        )
 
       ggplot2::ggsave(
-        paste("Output/", "Figures/", workflow_step, "_", w_maps[i], "_",
-              "MAP", ".png", sep = ""),
+        paste("Output/", "Figures/", workflow_step, "_", "year", "_",
+          "BAR", ".png",
+          sep = ""
+        ),
         p,
-        dpi = 300, width = 6, height = 3, units = "cm", scale = 4)
+        dpi = 300, width = 6, height = 3, units = "cm", scale = 5
+      )
     }
+
+    message("Check figures in ", here::here("Output", "Figures"))
   }
-
-  # Create maps of transposed and corrected coordinates
-  if (length(w_tranposed) == 0 & workflow_step == "prefilter") {
-    message("file 'Output/Check/01_coordinates_transposed.csv' not found")
-  }
-
-  if (length(w_tranposed) != 0) {
-    temp <- data.table::fread("Output/Check/01_coordinates_transposed.csv")
-
-    p1 <-
-      bdc_quickmap(
-        data = temp,
-        lon = "decimalLongitude",
-        lat = "decimalLatitude",
-        col_to_map = "#EC364F",
-        size = 1
-      )
-
-    p2 <-
-      bdc_quickmap(
-        data = temp,
-        lon = "decimalLongitude_modified",
-        lat = "decimalLatitude_modified",
-        col_to_map = "royalblue",
-        size = 1
-      )
-    p <- cowplot::plot_grid(p1, p2, labels = "AUTO", scale = 1)
-
-    ggplot2::ggsave(paste("Output/", "Figures/", workflow_step,  "_",
-                 "coordinates_transposed", "_", "MAP", ".png", sep = ""),
-           p,
-           dpi = 300, width = 6, height = 3, units = "cm", scale = 4)
-  }
-
-  if (length(w_hist) == 0 & workflow_step == "time") {
-    message("Column 'year' not found")
-  }
-
-  if (length(w_hist) != 0) {
-    data <-
-      data %>%
-      dplyr::select(year) %>%
-      dplyr::filter(!is.na(year))
-
-    p <- data %>%
-      ggplot2::ggplot(ggplot2::aes(x=year)) +
-      ggplot2::geom_histogram(colour = "white",
-                              fill = "royalblue", position = 'identity') +
-      our_theme +
-      ggplot2::labs(x = "Year", y = "Number of records") +
-      ggplot2::geom_hline(
-        yintercept = 0,
-        size = 1,
-        colour = "#333333"
-      )
-
-    ggplot2::ggsave(
-      paste("Output/", "Figures/", workflow_step, "_", "year", "_",
-            "BAR",".png", sep = ""),
-      p,
-      dpi = 300, width = 6, height = 3, units = "cm", scale = 5
-    )
-  }
-
-  message("Check figures in ", here::here("Output", "Figures"))
-
-}

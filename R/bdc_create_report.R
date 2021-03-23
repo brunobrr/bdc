@@ -1,4 +1,4 @@
-#' Creates reports on results of data quality tests
+#' Create reports summarizing the results of data quality tests
 #'
 #' @param data data.frame. Containing a unique identifier for each records and
 #' the results of data quality tests.
@@ -67,7 +67,7 @@ bdc_create_report <-
       n_record_database <- read_csv("data/n_record_database.csv")
     }
 
-    # A function to format the report
+    # Function used to formatting report
     format_df <- function(x) {
       x <-
         x %>%
@@ -148,7 +148,7 @@ bdc_create_report <-
       res <- format_df(pf)
       data <- res[[2]]
       data.table::fwrite(res[[1]], 
-                         here::here("Output/Report/01_Prefilter_Report.csv"))
+                         here::here("Output/Report/01_Report_Prefilter.csv"))
   }
     # Taxonomy
     if (workflow_step == "taxonomy") {
@@ -179,6 +179,7 @@ bdc_create_report <-
       }
 
       names <- dplyr::bind_rows(names, taxo_unc)
+      names$notes <- stringr::str_squish(names$notes)
 
       names <-
         names %>%
@@ -192,7 +193,7 @@ bdc_create_report <-
           ),
           Description = dplyr::if_else(
             is.na(Description),
-            "invalid: invalid name input (i.e., NA or empty)",
+            "invalid: no interpretable name",
             Description
           ),
           Description = dplyr::if_else(
@@ -200,7 +201,7 @@ bdc_create_report <-
             "valid: name accepted", Description
           ),
           Description = dplyr::if_else(
-            Description == "accepted | replacedSynonym",
+            Description == "accepted | replaceSynonym",
             "valid: synonym replaced by an accepted name",
             Description
           ),
@@ -210,57 +211,57 @@ bdc_create_report <-
             Description
           ),
           Description = dplyr::if_else(
-            Description == "accepted | wasMisspelled | replacedSynonym",
-            "valid: accepted names that were assigned as misspelled synonym ",
+            Description == "accepted | wasMisspelled | replaceSynonym",
+            "valid: accepted name assigned as misspelled synonym",
             Description
           ),
           Description = dplyr::if_else(
             Description == "heterotypic synonym",
-            "check: ambiguous synonyms linked to multiple accepted names",
+            "check: ambiguous synonym linked to multiple accepted names",
             Description
           ),
           Description = dplyr::if_else(
             Description == "homotypic synonym",
-            "check: ambiguous synonyms linked to multiple accepted names",
+            "check: ambiguous synonym linked to multiple accepted names",
             Description
           ),
           Description = dplyr::if_else(
             Description == "proparte synonym",
-            "check: ambiguous synonyms linked to multiple accepted names",
+            "check: ambiguous synonym linked to multiple accepted names",
             Description
           ),
           Description = dplyr::if_else(
             Description == "homotypic synonym | wasMisspelled",
-            "check: ambiguous synonyms that was misspelled",
+            "check: ambiguous synonym that was misspelled",
             Description
           ),
           Description = dplyr::if_else(
             Description == "heterotypic synonym | wasMisspelled",
-            "check: ambiguous synonyms that was misspelled",
+            "check: ambiguous synonym that was misspelled",
             Description
           ),
           Description = dplyr::if_else(
             Description == "proparte synonym | wasMisspelled",
-            "check: ambiguous synonyms that was misspelled",
+            "check: ambiguous synonym that was misspelled",
             Description
           ),
           Description = dplyr::if_else(
             Description == "notFound",
-            "invalid: not found", Description
+            "invalid: name not found in the taxonomic database or no interpretable name", Description
           ),
           Description = dplyr::if_else(
-            Description == "multipleAceppted",
-            "invalid: multiple accepted names found",
+            Description == "multipleAccepted",
+            "invalid: name linked to multiple accepted names",
             Description
           ),
           Description = dplyr::if_else(
             Description == "synonym | noAcceptedName",
-            "invalid: synonyms with no accepted names",
+            "check: synonym with no accepted names",
             Description
           ),
           Description = dplyr::if_else(
             Description == "accepted | replacedSynonym",
-            "invalid: synonyms with no accepted names",
+            "check: synonym with no accepted names",
             Description
           )
         )
@@ -268,7 +269,7 @@ bdc_create_report <-
       res <- format_df(names)
       data <- res[[2]]
       data.table::fwrite(res[[1]], 
-                         here::here("Output/Report/02_taxonomy_Report.csv"))
+                         here::here("Output/Report/02_Report_taxonomy.csv"))
     }
 
     # Space
@@ -357,11 +358,11 @@ bdc_create_report <-
       res <- format_df(space)
       data <- res[[2]]
       data.table::fwrite(res[[1]], 
-                         here::here("Output/Report/03_spatial_Report.csv"))
+                         here::here("Output/Report/03_Report_space.csv"))
       
     }
 
-    if (workflow_step == "temporal") {
+    if (workflow_step == "time") {
       date <-
         data %>%
         dplyr::select(dplyr::contains(".")) %>%
@@ -393,7 +394,7 @@ bdc_create_report <-
       res <- format_df(date)
       data <- res[[2]]
       data.table::fwrite(res[[1]], 
-                         here::here("Output/Report/04_temporal_Report.csv"))
+                         here::here("Output/Report/04_Report_time.csv"))
     }
   })
   

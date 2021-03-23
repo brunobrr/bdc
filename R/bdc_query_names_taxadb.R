@@ -124,14 +124,14 @@ bdc_query_names_taxadb <-
       raw_sci_name %>%
       dplyr::distinct(original_search) %>% # unique taxa names
       dplyr::mutate(original_search = ifelse(original_search == "",
-                                            NA, original_search)) %>%
-      dplyr::filter(!is.na(original_search)) %>% # not include names NAs
+                                             NA, original_search)) %>%
+      dplyr::filter(!is.na(original_search)) %>%
       dplyr::pull(original_search)
 
-    # Query names in 'taxadb' (only exact match allowed)
+    # Querying names using 'taxadb' (only exact match allowed)
     found_name <- suppressWarnings(taxadb::filter_name(sci_name, provider = db))
 
-    # Create a vector containing the number of columns of the taxonomic
+    # Creates a vector containing the number of columns of the taxonomic
     # database. This is important because the number of columns can vary in
     # different databases according to the taxonomic authority selected
     ncol_tab_taxadb <- ncol(found_name)
@@ -386,7 +386,7 @@ bdc_query_names_taxadb <-
       ))
     
     # Adds 'taxonomicStatus' to the column 'notes'
-    teste <-
+    found_name <-
       found_name %>%
       dplyr::mutate(notes =
                       ifelse(
@@ -403,6 +403,9 @@ bdc_query_names_taxadb <-
     
     found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
     
+    # Trimming extra-spaces from the column "notes
+    found_name$notes <- stringr::str_squish(found_name$notes)
+    
     # joining  names queried to the original (complete) list of names
     found_name <-
       dplyr::left_join(raw_sci_name, found_name, by = "original_search")
@@ -410,7 +413,13 @@ bdc_query_names_taxadb <-
     end <- Sys.time()
     total_time <- round(as.numeric (end - start, units = "mins"), 1)
     
-    message(paste("\n", nrow(found_name), "names queried in", total_time, "minutes\n"))
+    message(paste(
+      "\n",
+      nrow(found_name),
+      "names queried in",
+      total_time,
+      "minutes\n"
+    ))
     
     return(found_name)
     }

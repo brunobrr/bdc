@@ -1,9 +1,9 @@
 #' Internal function. Remove and flag duplicated names 
 #' 
-# This function is used to removes and flags with more than one accepted name,
-# which are flagged as "multipleAcceptedNames" in column 'notes'. Information on
-# higher taxa (e.g., kingdom or phylum) can be used to disambiguates names
-# linked to multiple accepted names.
+#' This function is used to removes and flags with more than one accepted name,
+#' which are flagged as "multipleAcceptedNames" in column 'notes'. Information on
+#' higher taxa (e.g., kingdom or phylum) can be used to disambiguates names
+#' linked to multiple accepted names.
 #'
 #' @param data data.frame. Database exported from bdc_get_taxa_taxadb function.
 #' @param rank_name character string. A taxonomic rank to filter the database.
@@ -19,7 +19,6 @@
 #' @importFrom dplyr filter select
 #' 
 #' @noRd
-#' @export
 #'
 #' @examples
 #' \dontrun{
