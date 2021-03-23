@@ -4,7 +4,7 @@
 \alias{bdc_year_outOfRange}
 \title{Identify records with year out-of-range}
 \usage{
-bdc_year_outOfRange(data, eventDate, year_threshold = NULL)
+bdc_year_outOfRange(data, eventDate, year_threshold = 1900)
 }
 \arguments{
 \item{data}{A data frame containing column with event date information.}
@@ -12,7 +12,7 @@ bdc_year_outOfRange(data, eventDate, year_threshold = NULL)
 \item{eventDate}{numeric or date. The column with event date information.}
 
 \item{year_threshold}{numeric. A four-digit year threshold used to flag old
-(potentially invalid) records. Default = NULL.}
+(potentially invalid) records. Default = 1900}
 }
 \value{
 A data.frame contain the column ".year_outOfRange". Compliant
@@ -38,6 +38,6 @@ collection_date <- c(NA, "31/12/2015", "2013-06-13T00:00:00Z", "2013-06-20",
 "", "2013", "0001-01-00")
 x <- data.frame(collection_date)
 
-bdc_coordinates_empty(data = x, eventDate = "collection_date")
+bdc_year_outOfRange(data = x, eventDate = "collection_date")
 }
 }

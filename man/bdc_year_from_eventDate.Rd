@@ -13,13 +13,14 @@ bdc_year_from_eventDate(data, eventDate = "eventDate")
 }
 \value{
 A data.frame containing the column "year". Year information is
-returned only "eventDate" can be unambiguously interpretable. Year in the
-future (e.g., 2050) are returned as NA as well as years before 1600, which is
-the lower limit for collecting dates of biological specimens.
+returned only if "eventDate" can be unambiguously interpretable from
+"eventDate". Year in the future (e.g., 2050) are returned as NA as well as
+years before 1600, which is the lower limit for collecting dates of
+biological specimens.
 }
 \description{
-This function extracts four-digit year from unambiguously interpretable value
-in the column "eventDate".
+This function extracts four-digit year from unambiguously interpretable
+collecting dates.
 }
 \examples{
 \dontrun{

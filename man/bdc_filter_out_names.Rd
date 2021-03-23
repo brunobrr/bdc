@@ -2,32 +2,38 @@
 % Please edit documentation in R/bdc_filter_out_names.R
 \name{bdc_filter_out_names}
 \alias{bdc_filter_out_names}
-\title{Removes records with taxonomic issues}
+\title{Filter out records according to their taxonomic status}
 \usage{
-bdc_filter_out_names(
-  data,
-  notes = c("not_found", "more_one_accepted", "no_accepted", "taxo_uncer"),
-  opposite = FALSE
-)
+bdc_filter_out_names(data, taxonomic_notes = "accepted", opposite = FALSE)
 }
 \arguments{
-\item{data}{data frame containing a column 'notes'.}
+\item{data}{data.frame. Containing a column with information on the taxonomic
+status of scientific names.}
 
-\item{notes}{character string. A column containing notes on taxonomic standardization process. Default = "notes".}
+\item{taxonomic_notes}{character string. The column name containing notes on
+the taxonomic status of a name. Default = "notes".}
 
-\item{opposite}{logical. Should records with not taxonomic issue be returned.
-Default = FALSE.}
+\item{opposite}{logical. Should taxonomic notes different from those listed
+in 'taxonomic_notes' be returned? Default = FALSE}
 }
 \value{
-A data frame without records with taxonomic issues. If opposite is TRUE, only records with taxonomic issues are returned.
+A data.frame filtered out according to names listed in
+'taxonomic_notes'.
 }
 \description{
-This function filters out records whose scientific names contain a issue,
-including names not found ('notFound'), with multiple (multipleAccepted) or
-none (noAcceptedName) accepted name found.
+This function is useful for selecting records according to their taxonomic
+status.  By default, only records with accepted scientific names are
+returned.
 }
 \details{
-The function filters out records whose notes column flags taxonomic issues such as 'noFound', 'multipleAccepted' and 'noAcceptedName'.
+By default, only records with accepted scientific names are kept in
+the database. Such records are listed in the column 'taxonomic_notes' as
+"accepted", "accepted | replaceSynonym",  "accepted | wasMisspelled" or
+"accepted | wasMisspelled | replaceSynonym". It is also possible to
+customize the list of taxonomic notes to be kept in the argument
+'taxonomic_notes'. See 'notes' in the data.frame resulted from the function
+\code{\link{bdc_create_report}}. If 'opposite' is TRUE, records with notes
+different from names listed in 'taxonomic_notes' are returned.
 }
 \examples{
 
