@@ -18,31 +18,27 @@ Core terminology. All the process is based on a metadata file
 provided by the user.
 }
 \details{
-\code{bdc_standardize_datasets()} facilitate the standardization of
-datasets with different column names converting them into a new
-dataset following the Darwin Core terminology. All the
-standardization process rely on a metadata file containing the
-name, path, and columns that need to be renamed. The metadata file
-can be constructed using built-in functions (e.g., \code{data.frame()})
-or storing the information in a CSV file and importing it into
-R. Regardless of the method chosen, the data frame with metadata
-needs to contain the following column names (this is a list of
-required column names; for compreensive list of column names
-following Darwin Core terminology, see LINK):
+\code{bdc_standardize_datasets()} facilitate the standardization of datasets with
+different column names converting them into a new dataset following the
+Darwin Core terminology. All the standardization process rely on a metadata
+file containing the name, path, and columns that need to be renamed. The
+metadata file can be constructed using built-in functions (e.g.,
+\code{data.frame()}) or storing the information in a CSV file and importing it
+into R. Regardless of the method chosen, the data frame with metadata needs
+to contain the following column names (this is a list of required column
+names; for compreensive list of column names following Darwin Core
+terminology, see LINK):
 \itemize{
 \item \code{datasetName}: A short name identifying the dataset (e.g., GBIF)
-\item \code{fileName}: The relative path containg the name of the input
-dataset (e.g., Input_files/GBIF.csv)
-\item \code{scientificName}: Name of the column in the original database
-presenting the scientific name of the taxon with or without
-authorship information, depending on the format of the source
-dataset (e.g., Myrcia acuminata)
-\item \code{decimalLatitude}: Name of the column in the original database
-presenting the geographic latitude in decimal degrees (e.g.,
--6.370833)
-\item \code{decimalLongitude}: Name of the column in the original database
-presenting the geographic longitude in decimal degrees (e.g.,
--3.25500)
+\item \code{fileName}: The relative path containg the name of the input dataset (e.g.,
+Input_files/GBIF.csv)
+\item \code{scientificName}: Name of the column in the original database presenting
+the scientific name of the taxon with or without authorship information,
+depending on the format of the source dataset (e.g., Myrcia acuminata)
+\item \code{decimalLatitude}: Name of the column in the original database presenting
+the geographic latitude in decimal degrees (e.g., -6.370833)
+\item \code{decimalLongitude}: Name of the column in the original database presenting
+the geographic longitude in decimal degrees (e.g., -3.25500)
 }
 }
 \examples{
