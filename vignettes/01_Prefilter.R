@@ -31,7 +31,6 @@ database <-
   qs::qread()
 
 # Standardize character encoding
-
 for (i in 1:ncol(database)){
   if(is.character(database[,i])){
     Encoding(database[,i]) <- "UTF-8"
@@ -102,13 +101,13 @@ check_pf8 <-
     country_name = "Brazil",
     lon = "decimalLongitude",
     lat = "decimalLatitude",
-    dist = 0.1 # in decimal degrees
+    dist = 0.1 # in decimal degrees (~11 km at the equator)
   )
 
 # CHECK 9 -----------------------------------------------------------------
 # Save records with empty or out-of-range coordinates but with
 # potentially valid information about the collecting locality.
-check_to_check <-
+check_pf9 <-
   bdc_coordinates_from_locality(
     data = check_pf8,
     locality = "locality",
@@ -120,17 +119,17 @@ check_to_check <-
 # Creating a summary column. This column is "FALSE" if any data quality test was
 # flagged as FALSE
 # (i.e. potentially invalid or problematic record)
-check_pf9 <- bdc_summary_col(data = check_pf8)
+check_pf10 <- bdc_summary_col(data = check_pf9)
 
 # Creating a report summarizing the results of all tests
 report <-
-  bdc_create_report(data = check_pf9,
+  bdc_create_report(data = check_pf10,
                     database_id = "database_id",
                     workflow_step = "prefilter")
 report
 
 # FIGURES -----------------------------------------------------------------
-bdc_create_figures(data = check_pf9,
+bdc_create_figures(data = check_pf10,
                    database_id = "database_id",
                    workflow_step = "prefilter")
 
@@ -138,7 +137,7 @@ bdc_create_figures(data = check_pf9,
 # Removing flagged records (potentially problematic ones) and saving a 'clean'
 # database (i.e., without test columns starting with ".")
 output <-
-  check_pf9 %>%
+  check_pf10 %>%
   dplyr::filter(.summary == TRUE) %>%
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 

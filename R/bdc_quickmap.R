@@ -32,9 +32,6 @@
 #' }
 bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
 
-  # n_nrow_data <- format(x = nrow(data), big.mark = ",")
-  # print(paste("Based on", n_nrow_data, "points"))
-  #
   world_borders <-
     borders(
       database = "world",

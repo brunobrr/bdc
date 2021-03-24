@@ -346,7 +346,7 @@ bdc_create_report <-
           ),
           Description = dplyr::if_else(
             Description == ".urb",
-            "Records withing urban areas",
+            "Records within urban areas",
             Description
           ),
           Description = dplyr::if_else(

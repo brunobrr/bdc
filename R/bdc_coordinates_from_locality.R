@@ -47,7 +47,7 @@ bdc_coordinates_from_locality <-
                             lon = {{ lon}})
 
     data <-
-      bdc_coordinates_outOfRange(data = df, 
+      bdc_coordinates_outOfRange(data = data, 
                                 lat = {{ lat }}, 
                                 lon = {{ lon }})
     }
