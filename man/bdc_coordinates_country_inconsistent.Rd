@@ -3,7 +3,10 @@
 \name{bdc_coordinates_country_inconsistent}
 \alias{bdc_coordinates_country_inconsistent}
 \title{Identify records within a reference country
-This function flags geographic coordinates within a reference country. A spatial buffer can be added to the reference country for ensuring that records in mangroves, marshes, estuaries as well as records with low coordinates precision are flagged as invalid.}
+This function flags geographic coordinates within a reference country. A
+spatial buffer can be added to the reference country for ensuring that
+records in mangroves, marshes, estuaries as well as records with low
+coordinates precision are flagged as invalid.}
 \usage{
 bdc_coordinates_country_inconsistent(
   data,
