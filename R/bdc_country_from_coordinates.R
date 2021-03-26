@@ -72,11 +72,10 @@ bdc_country_from_coordinates <-
     data <-
       data %>%
       dplyr::mutate(
-        decimalLatitude = as.numeric(decimalLatitude),
-        decimalLongitude = as.numeric(decimalLongitude)
+        decimalLatitude = as.numeric(.data[[lat]]),
+        decimalLongitude = as.numeric(.data[[lon]])
       )
-
-
+    
     worldmap <- rnaturalearth::ne_countries(scale = "large")
 
     data_no_country <-

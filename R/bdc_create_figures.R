@@ -13,7 +13,7 @@
 #'
 #' @return Figures in a png format.
 #'
-#' @importFrom dplyr n contains
+#' @importFrom dplyr n stars_with mutate_if
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom cowplot plot_grid
 #' @importFrom data.table fwrite fread
@@ -182,21 +182,21 @@ bdc_create_figures <-
             size = 1,
             colour = "#333333"
           ) +
-          ggplot2::geom_label(
-            ggplot2::aes(
-              x = stats::reorder(database_id, -freq),
-              y = freq,
-              label = n_flagged
-            ),
-            hjust = 1,
-            vjust = 0.5,
-            colour = "white",
-            fill = NA,
-            label.size = NA,
-            # family="Times",
-            size = 4,
-            fontface = "bold"
-          ) +
+          # ggplot2::geom_label(
+          #   ggplot2::aes(
+          #     x = stats::reorder(database_id, -freq),
+          #     y = freq,
+          #     label = n_flagged
+          #   ),
+          #   hjust = 1,
+          #   vjust = 0.5,
+          #   colour = "white",
+          #   fill = NA,
+          #   label.size = NA,
+          #   # family="Times",
+          #   size = 4,
+          #   fontface = "bold"
+          # ) +
           ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
 
         ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
@@ -219,7 +219,8 @@ bdc_create_figures <-
                workflow_step = workflow_step) {
         temp <-
           data %>%
-          dplyr::select(dplyr::contains(".")) %>%
+          dplyr::select(dplyr::starts_with(".")) %>%
+          mutate_if(is.character, ~as.logical(as.character(.))) %>% 
           dplyr::summarise_all(., .funs = sum) %>%
           t() %>%
           tibble::as_tibble(rownames = "NA") %>%
@@ -247,20 +248,20 @@ bdc_create_figures <-
             size = 1,
             colour = "#333333"
           ) +
-          ggplot2::geom_label(
-            ggplot2::aes(
-              x = stats::reorder(Name, -freq),
-              y = freq,
-              label = n_flagged
-            ),
-            hjust = 1,
-            vjust = 0.5,
-            colour = "white",
-            fill = NA,
-            label.size = NA,
-            size = 3,
-            fontface = "bold"
-          ) +
+          # ggplot2::geom_label(
+          #   ggplot2::aes(
+          #     x = stats::reorder(Name, -freq),
+          #     y = freq,
+          #     label = n_flagged
+          #   ),
+          #   hjust = 1,
+          #   vjust = 0.5,
+          #   colour = "white",
+          #   fill = NA,
+          #   label.size = NA,
+          #   size = 3,
+          #   fontface = "bold"
+          # ) +
           ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
 
         ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
