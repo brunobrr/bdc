@@ -42,7 +42,7 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
     )
 
   our_theme <-
-    theme_void() +
+    ggplot2::theme_void() +
     ggplot2::theme(
       panel.border = element_blank(),
       panel.grid.major = element_blank(),

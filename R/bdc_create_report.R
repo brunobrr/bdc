@@ -393,7 +393,7 @@ bdc_create_report <-
             Description
           ),
           Description = dplyr::if_else(
-            Description == ".year",
+            Description == ".year_outOfRange",
             "Records with year out-of-range (i.e., year in the future or collected before a threshold defined by the user).",
             Description
           ),

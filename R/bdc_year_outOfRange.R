@@ -43,7 +43,7 @@ bdc_year_outOfRange <-
     nDigits <- function(x) nchar(trunc(abs(x)))
 
     if (is.null(year_threshold)) {
-      .year <-
+      .year_outOfRange <-
         dplyr::if_else(
           col %in% 1600:lubridate::year(Sys.Date()),
           TRUE,
@@ -60,21 +60,21 @@ bdc_year_outOfRange <-
 
       w <- which(is.na(col))
       
-      .year <-
+      .year_outOfRange <-
         ifelse(
           col %in% 1600:lubridate::year(Sys.Date()) & col > year_threshold,
           TRUE,
           FALSE
         )
-      .year[w] <- TRUE
+      .year_outOfRange[w] <- TRUE
     }
 
-    res <- cbind(data, .year)
+    res <- cbind(data, .year_outOfRange)
 
     message(
       paste(
         "\nbdc_year_outOfRange:\nFlagged",
-        sum(.year == FALSE),
+        sum(.year_outOfRange == FALSE),
         "records.\nOne column was added to the database.\n"
       )
     )
