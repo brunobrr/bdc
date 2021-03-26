@@ -2,31 +2,36 @@
 % Please edit documentation in R/bdc_geographic_outlier.R
 \name{bdc_geographic_outlier}
 \alias{bdc_geographic_outlier}
-\title{Identify plant species records outside known geographic distribution}
+\title{Identify plant species records outside their known geographic distribution}
 \usage{
 bdc_geographic_outlier(
   data,
-  species = "scientificName",
-  longitude = "decimalLongitude",
-  latitude = "decimalLatitude"
+  sci_names = "scientificName",
+  lat = "decimalLatitude",
+  lon = "decimalLongitude"
 )
 }
 \arguments{
-\item{data}{data.frame. A data frame containing geographic coordinates and species names.}
+\item{data}{data.frame. A data frame containing geographic coordinates and
+scientific names.}
 
-\item{species}{character string. The column with scientific names.}
+\item{sci_names}{character string. The column name with species scientific
+name. Default = "scientificName".}
 
-\item{longitude}{character string. The column with longitude in decimal degrees. Default = "decimalLongitude"}
+\item{lat}{character string. The column name with latitude. Coordinates must
+be expressed in decimal degree and in WGS84. Default = "decimalLatitude".}
 
-\item{latitude}{character string. The column with the latitude in decimal degrees. Default = "decimalLatitude".}
+\item{lon}{character string. The column with longitude. Coordinates must be
+expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
 }
 \value{
-flag of records are outliers (FALSE) or not (TRUE)
+A data.frame contain the column ".otl". Compliant
+(TRUE) if 'lat' and 'lon' are not empty; otherwise "FALSE".
 }
 \description{
-Flags geographic outliers by comparing the status where record is against
-species range (i.e., Brazilian states) obtained from the Flora do Brazil
-2020.
+This function flags records outside their known geographical distribution
+(i.e., Brazilian states). Geographical distribution information is obtained
+from Flora do Brasil 2020.
 }
 \details{
 Check if coordinates are valid before run this test.

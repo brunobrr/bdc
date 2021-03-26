@@ -45,24 +45,31 @@ bdc_geographic_outlier <-
       )
 
     # convert to spatial
-    df_spatial <-
-      sf::st_as_sf(
-        data = data,
-        coords = c("decimalLongitude", "decimalLatitude"),
-        crs = sf::st_crs(bra_states)
-      ) %>%
-      dplyr::select(id, sci_names)
+    suppressWarnings({
+      data_sp <-
+        CoordinateCleaner::cc_val(
+          x = data,
+          lon = lon,
+          lat = lat,
+          verbose = FALSE
+        ) %>%
+        sf::st_as_sf(.,
+                     coords = c("decimalLongitude", "decimalLatitude"),
+                     remove = FALSE
+        ) %>%
+        sf::st_set_crs(., sf::st_crs(bra_states))
+    })
 
 
     # check the overlap between occurence records to Brazilian states
-    df_spatial <-
-      sf::st_intersection(df_spatial, bra_states) %>%
+    data_sp <-
+      sf::st_intersection(data_sp, bra_states) %>%
       dplyr::rename(record_occurence = abbrev_state)
 
     # get sci_names range from Flora do Brasil 2020
     occ_states <-
       flora::get.taxa(
-        taxa = df_spatial %>% pull(sci_names),
+        taxa = data_sp %>% pull(sci_names),
         states = T
       ) %>%
       dplyr::select(original.search, occurrence) %>%
@@ -72,7 +79,8 @@ bdc_geographic_outlier <-
       )
 
     df_spatial <-
-      dplyr::full_join(df_spatial, occ_states, by = c("species" = "scientificName")) %>%
+      dplyr::full_join(data_sp, occ_states, 
+                       by = c("species" = "scientificName")) %>%
       dplyr::distinct(id, .keep_all = TRUE)
 
     df_spatial$geometry <- NULL
