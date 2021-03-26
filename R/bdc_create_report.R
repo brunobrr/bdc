@@ -98,7 +98,7 @@ bdc_create_report <-
       pf <-
         data %>%
         dplyr::select(starts_with(".")) %>%
-        mutate_if(is.character, ~as.logical(as.character(.))) %>% 
+        dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>% 
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
         tibble::as_tibble(rownames = "NA") %>%
@@ -279,7 +279,7 @@ bdc_create_report <-
       space <-
         data %>%
         dplyr::select(starts_with(".")) %>%
-        mutate_if(is.character, ~as.logical(as.character(.))) %>% 
+        dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>% 
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
         tibble::as_tibble(rownames = "NA") %>%
@@ -369,7 +369,7 @@ bdc_create_report <-
       date <-
         data %>%
         dplyr::select(starts_with(".")) %>%
-        mutate_if(is.character, ~as.logical(as.character(.))) %>% 
+        dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>% 
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
         tibble::as_tibble(rownames = "NA") %>%

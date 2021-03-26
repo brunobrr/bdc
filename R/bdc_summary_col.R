@@ -32,8 +32,8 @@ bdc_summary_col <- function(data) {
       dplyr::select(-.summary)
     
     df <- 
-      data %>%
-      dplyr::select(dplyr::contains(".")) %>%
+      dplyr::select(starts_with(".")) %>%
+      dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>%
       dplyr::mutate(.summary = rowSums(.) / ncol(.) == TRUE) %>%
       dplyr::select(.summary)
     
@@ -42,8 +42,8 @@ bdc_summary_col <- function(data) {
       dplyr::select(dplyr::everything(), .summary)
   } else{
     df <-
-      data %>%
-      dplyr::select(dplyr::contains(".")) %>%
+      dplyr::select(starts_with(".")) %>%
+      dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>%
       dplyr::mutate(.summary = rowSums(.) / ncol(.) == TRUE) %>%
       dplyr::select(.summary)
     
