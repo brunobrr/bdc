@@ -10,8 +10,8 @@
 #' @return A data.frame containing a report summarizing the results of data
 #'   quality assessment.
 #' 
-#' @importFrom dplyr summarise n select group_by filter mutate starts_with
-#' mutate_is everything summarise_all pull rename if_else add_row bind_rows
+#' @importFrom dplyr summarise n select group_by filter mutate mutate_if
+#' everything summarise_all pull rename if_else add_row bind_rows
 #' @importFrom data.table fwrite
 #' @importFrom tibble as_tibble
 #' @importFrom knitr kable

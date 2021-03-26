@@ -13,12 +13,11 @@
 #'
 #' @return Figures in a png format.
 #'
-#' @importFrom dplyr n stars_with mutate_if
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom cowplot plot_grid
 #' @importFrom data.table fwrite fread
 #' @importFrom dplyr summarise mutate group_by pull intersect filter full_join
-#' select summarise_all rename
+#' select summarise_all rename n mutate_if
 #' @importFrom fs file_exists
 #' @importFrom ggplot2 theme_minimal theme element_text element_line
 #' element_blank unit ggplot aes geom_col coord_flip labs geom_hline

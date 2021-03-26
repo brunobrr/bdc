@@ -21,7 +21,7 @@
 #' information.
 #' 
 #' @importFrom CoordinateCleaner cc_val cc_sea
-#' @importFrom dplyr filter left_join contains pull rename
+#' @importFrom dplyr filter left_join pull rename
 #' @importFrom readr write_csv
 #' @importFrom rnaturalearth ne_countries
 #' @importFrom sf st_as_sf st_set_crs st_crs st_intersection 
