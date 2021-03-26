@@ -10,8 +10,8 @@
 #' @return A data.frame containing a report summarizing the results of data
 #'   quality assessment.
 #' 
-#' @importFrom dplyr summarise n select group_by filter mutate contains
-#' everything summarise_all pull rename if_else add_row bind_rows
+#' @importFrom dplyr summarise n select group_by filter mutate starts_with
+#' mutate_is everything summarise_all pull rename if_else add_row bind_rows
 #' @importFrom data.table fwrite
 #' @importFrom tibble as_tibble
 #' @importFrom knitr kable
@@ -94,9 +94,11 @@ bdc_create_report <-
     
     # Prefilter
     if (workflow_step == "prefilter") {
+      
       pf <-
         data %>%
-        dplyr::select(dplyr::contains(".")) %>%
+        dplyr::select(dplyr::starts_with(".")) %>%
+        mutate_if(is.character, ~as.logical(as.character(.))) %>% 
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
         tibble::as_tibble(rownames = "NA") %>%
@@ -276,7 +278,8 @@ bdc_create_report <-
     if (workflow_step == "space") {
       space <-
         data %>%
-        dplyr::select(dplyr::contains(".")) %>%
+        dplyr::select(dplyr::starts_with(".")) %>%
+        mutate_if(is.character, ~as.logical(as.character(.))) %>% 
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
         tibble::as_tibble(rownames = "NA") %>%
@@ -365,7 +368,8 @@ bdc_create_report <-
     if (workflow_step == "time") {
       date <-
         data %>%
-        dplyr::select(dplyr::contains(".")) %>%
+        dplyr::select(dplyr::starts_with(".")) %>%
+        mutate_if(is.character, ~as.logical(as.character(.))) %>% 
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
         tibble::as_tibble(rownames = "NA") %>%
@@ -384,7 +388,7 @@ bdc_create_report <-
         dplyr::mutate(Description = Test_name) %>%
         dplyr::mutate(
           Description = dplyr::if_else(
-            Description == "eventDate_empty",
+            Description == ".eventDate_empty",
             "Records with empty eventDate",
             Description
           ),

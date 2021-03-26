@@ -1,15 +1,15 @@
 Description,Test_name,Records_flagged,perc_number_records(*)
+.uncer_terms,.uncer_terms,75690,0.24
 Coordinates valid,.val,0,0
 Identical coordinates,.equ,0,0
-Plain zeros,.zer,2,0
-Records around country capital centroid,.cap,210,0.23
-Records around country or province centroids,.cen,124,0.14
-Records withing urban areas,.urb,2932,3.26
-Geographical outliers,.otl,486,0.54
+Plain zeros,.zer,3251,0.01
+Records around country capital centroid,.cap,40361,0.13
+Records around country or province centroids,.cen,68427,0.22
+Records within urban areas,.urb,751904,2.43
 Records around the GBIF headquarters,.gbf,0,0
-Records around biodiversity institutions,.inst,92,0.1
-Duplicated coordinates per species,.dpl,3050,3.39
-Rounded coordinates,.rou,2164,2.4
-Summary of all tests,.summary,8114,9.02
+Records around biodiversity institutions,.inst,18656,0.06
+Duplicated coordinates per species,.dpl,8178264,26.39
+Rounded coordinates,.rou,213307,0.69
+Summary of all tests,.summary,8499729,27.43
 "","","",""
-"(*) calculated in relation to total number of records, i.e. 90000 records","","",""
+"(*) calculated in relation to total number of records, i.e. 30987703 records","","",""

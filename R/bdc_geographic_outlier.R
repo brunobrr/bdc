@@ -1,18 +1,24 @@
-#' Identify plant species records outside known geographic distribution
+#' Identify plant species records outside their known geographic distribution
 #'
-#' Flags geographic outliers by comparing the status where record is against
-#' species range (i.e., Brazilian states) obtained from the Flora do Brazil
-#' 2020.
+#' This function flags records outside their known geographical distribution
+#' (i.e., Brazilian states). Geographical distribution information is obtained
+#' from Flora do Brasil 2020.
 #'
-#' @param data data.frame. A data frame containing geographic coordinates and species names.
-#' @param species character string. The column with scientific names.
-#' @param longitude character string. The column with longitude in decimal degrees. Default = "decimalLongitude"
-#' @param latitude character string. The column with the latitude in decimal degrees. Default = "decimalLatitude".
+#' @param data data.frame. A data frame containing geographic coordinates and
+#' scientific names.
+#' @param sci_names character string. The column name with species scientific
+#' name. Default = "scientificName".
+#' @param lat character string. The column name with latitude. Coordinates must 
+#' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
+#' @param lon character string. The column with longitude. Coordinates must be
+#' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
 #'
 #' @details Check if coordinates are valid before run this test.
 #' Species occurrence records in Goias and range in DF are assigned as TRUE.
 #' Similarly, species occurrence in DF and range is GO are considered TRUE.
-#' @return flag of records are outliers (FALSE) or not (TRUE)
+#' 
+#' @return A data.frame contain the column ".otl". Compliant
+#' (TRUE) if 'lat' and 'lon' are not empty; otherwise "FALSE".
 #'
 #' @export
 #' @examples
@@ -20,9 +26,9 @@
 #' }
 bdc_geographic_outlier <-
   function(data,
-           species = "scientificName",
-           longitude = "decimalLongitude",
-           latitude = "decimalLatitude") {
+           sci_names = "scientificName",
+           lat = "decimalLatitude",
+           lon = "decimalLongitude") {
 
 
     # brazilian states
@@ -32,16 +38,20 @@ bdc_geographic_outlier <-
 
     data <-
       data %>%
-      dplyr::mutate(id = 1:nrow(.))
+      dplyr::mutate(id = 1:nrow(.)) %>% 
+      dplyr::mutate(
+        decimalLatitude = as.numeric(.data[[lat]]),
+        decimalLongitude = as.numeric(.data[[lon]])
+      )
 
     # convert to spatial
     df_spatial <-
       sf::st_as_sf(
         data = data,
-        coords = c("longitude", "latitude"),
+        coords = c("decimalLongitude", "decimalLatitude"),
         crs = sf::st_crs(bra_states)
       ) %>%
-      dplyr::select(id, species)
+      dplyr::select(id, sci_names)
 
 
     # check the overlap between occurence records to Brazilian states
@@ -49,10 +59,10 @@ bdc_geographic_outlier <-
       sf::st_intersection(df_spatial, bra_states) %>%
       dplyr::rename(record_occurence = abbrev_state)
 
-    # get species range from Flora do Brasil 2020
+    # get sci_names range from Flora do Brasil 2020
     occ_states <-
       flora::get.taxa(
-        taxa = df_spatial %>% pull(species),
+        taxa = df_spatial %>% pull(sci_names),
         states = T
       ) %>%
       dplyr::select(original.search, occurrence) %>%

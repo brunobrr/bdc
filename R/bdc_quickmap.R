@@ -33,26 +33,27 @@
 bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
 
   world_borders <-
-    borders(
+    ggplot2::borders(
       database = "world",
-      fill = "white",
-      colour = "grey60",
+      fill = "gray75",
+      colour = "gray88",
     )
 
   our_theme <-
+    theme_void() +
     ggplot2::theme(
       panel.border = element_blank(),
-      panel.grid.major = element_line(colour = "grey80"),
+      panel.grid.major = element_blank(),
       panel.grid.minor = element_blank(),
       legend.position = "none"
-    )
+    ) 
 
   if (all(col_to_map %in% names(data))) {
     our_map <-
       data %>%
       ggplot() +
       world_borders +
-      theme_bw() +
+      # theme_bw() +
       labs(
         x = "Longitude",
         y = "Latitude"
@@ -67,13 +68,14 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
       size = size
       ) +
       our_theme +
-      coord_quickmap()
+      coord_quickmap()+
+      scale_color_manual(values = c("red", "blue"))
     } else {
     our_map <-
       data %>%
       ggplot() +
       world_borders +
-      theme_bw() +
+      # theme_bw() +
       labs(
         x = "Longitude",
         y = "Latitude"
