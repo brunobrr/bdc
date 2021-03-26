@@ -97,7 +97,7 @@ bdc_create_report <-
       
       pf <-
         data %>%
-        dplyr::select(dplyr::starts_with(".")) %>%
+        dplyr::select(starts_with(".")) %>%
         mutate_if(is.character, ~as.logical(as.character(.))) %>% 
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
@@ -278,7 +278,7 @@ bdc_create_report <-
     if (workflow_step == "space") {
       space <-
         data %>%
-        dplyr::select(dplyr::starts_with(".")) %>%
+        dplyr::select(starts_with(".")) %>%
         mutate_if(is.character, ~as.logical(as.character(.))) %>% 
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
@@ -368,7 +368,7 @@ bdc_create_report <-
     if (workflow_step == "time") {
       date <-
         data %>%
-        dplyr::select(dplyr::starts_with(".")) %>%
+        dplyr::select(starts_with(".")) %>%
         mutate_if(is.character, ~as.logical(as.character(.))) %>% 
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%

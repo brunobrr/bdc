@@ -218,7 +218,7 @@ bdc_create_figures <-
                workflow_step = workflow_step) {
         temp <-
           data %>%
-          dplyr::select(dplyr::starts_with(".")) %>%
+          dplyr::select(starts_with(".")) %>%
           mutate_if(is.character, ~as.logical(as.character(.))) %>% 
           dplyr::summarise_all(., .funs = sum) %>%
           t() %>%

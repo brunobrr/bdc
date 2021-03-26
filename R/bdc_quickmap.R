@@ -14,6 +14,8 @@
 #' @details Only records with valid coordinates can be plotted. Records missing
 #' or with invalid coordinates are removed prior creating the map.
 #' 
+#' @importFrom ggplot2 borders theme
+#' 
 #' @export
 #' 
 #' @examples
