@@ -14,7 +14,8 @@
 #' @details Only records with valid coordinates can be plotted. Records missing
 #' or with invalid coordinates are removed prior creating the map.
 #' 
-#' @importFrom ggplot2 borders theme
+#' @importFrom ggplot2 borders theme_void theme element_blank ggplot labs
+#' geom_point aes coord_quickmap scale_color_manual
 #' 
 #' @export
 #' 
@@ -44,24 +45,24 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
   our_theme <-
     ggplot2::theme_void() +
     ggplot2::theme(
-      panel.border = element_blank(),
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank(),
+      panel.border = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
       legend.position = "none"
     ) 
 
   if (all(col_to_map %in% names(data))) {
     our_map <-
       data %>%
-      ggplot() +
+      ggplot2::ggplot() +
       world_borders +
       # theme_bw() +
-      labs(
+      ggplot2::labs(
         x = "Longitude",
         y = "Latitude"
         # title = paste("Based on ", n_nrow_data, "points")
       ) +
-      geom_point(aes(
+      ggplot2::geom_point(ggplot2::aes(
         x = .data[[lon]],
         y = .data[[lat]],
         col = .data[[col_to_map]], # Map the column
@@ -70,21 +71,21 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
       size = size
       ) +
       our_theme +
-      coord_quickmap()+
-      scale_color_manual(values = c("red", "blue"))
+      ggplot2::coord_quickmap()+
+      ggplot2::scale_color_manual(values = c("red", "blue"))
     } else {
     our_map <-
       data %>%
-      ggplot() +
+      ggplot2::ggplot() +
       world_borders +
       # theme_bw() +
-      labs(
+      ggplot2::labs(
         x = "Longitude",
         y = "Latitude"
         # title = paste("Based on ", n_nrow_data, "points")
       ) +
-      geom_point(
-        aes(
+      ggplot2::geom_point(
+        ggplot2::aes(
           x = .data[[lon]],
           y = .data[[lat]]
         ),
@@ -93,7 +94,7 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
         size = size
       ) +
       our_theme +
-      coord_quickmap()
+      ggplot2::coord_quickmap()
     }
   return(our_map)
 }

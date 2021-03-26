@@ -13,7 +13,7 @@ if (FALSE) {
   #          workflow será baseada no objeto `func`          #
   #                                                          #
   ############################################################
-  func <- "bdc_eventDate_empty"
+  func <- "bdc_quickmap"
   func_file <- paste0("R/", func, ".R")
   
   # cria arquivo de teste para a função
