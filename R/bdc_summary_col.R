@@ -2,7 +2,7 @@
 #'
 #' This function creates or updates the column ".summary" summarizing the
 #' results of data quality tests (i.e., columns starting with "."). Records that
-#' have failed in at least one data quality test are considered invalid (i.e.,
+#' have failed in at least one test are flagged for further inspection (i.e.,
 #' flagged as "FALSE") in the ".summary" column.
 #' 
 #' @param data data.frame. Containing the results of data quality tests (i.e.,
@@ -12,7 +12,7 @@
 #' 
 #' @return A data.frame containing a new or an updated column ".summary".
 #' 
-#' @importFrom dplyr select mutate contains everything bind_cols
+#' @importFrom dplyr select mutate contains everything bind_cols mutate_if
 #' @export
 #'
 #' @examples

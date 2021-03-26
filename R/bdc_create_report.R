@@ -1,4 +1,4 @@
-#' Create reports summarizing the results of data quality tests
+#' Create a report summarizing the results of data quality tests
 #'
 #' @param data data.frame. Containing a unique identifier for each records and
 #' the results of data quality tests.

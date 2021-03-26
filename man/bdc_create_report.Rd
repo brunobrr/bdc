@@ -2,7 +2,7 @@
 % Please edit documentation in R/bdc_create_report.R
 \name{bdc_create_report}
 \alias{bdc_create_report}
-\title{Create reports summarizing the results of data quality tests}
+\title{Create a report summarizing the results of data quality tests}
 \usage{
 bdc_create_report(data, database_id = "database_id", workflow_step)
 }
@@ -21,7 +21,7 @@ A data.frame containing a report summarizing the results of data
 quality assessment.
 }
 \description{
-Create reports summarizing the results of data quality tests
+Create a report summarizing the results of data quality tests
 }
 \examples{
 \dontrun{

@@ -16,7 +16,7 @@ A data.frame containing a new or an updated column ".summary".
 \description{
 This function creates or updates the column ".summary" summarizing the
 results of data quality tests (i.e., columns starting with "."). Records that
-have failed in at least one data quality test are considered invalid (i.e.,
+have failed in at least one test are flagged for further inspection (i.e.,
 flagged as "FALSE") in the ".summary" column.
 }
 \details{
