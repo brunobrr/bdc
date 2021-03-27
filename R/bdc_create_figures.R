@@ -145,7 +145,7 @@ bdc_create_figures <-
       tests <-
         c(
           "year",
-          ".year",
+          ".year_outOfRange",
           ".summary",
           "summary_all_tests"
         )
