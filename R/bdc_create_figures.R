@@ -4,10 +4,11 @@
 #' quality tests implemented in the bdc workflow.
 #'
 #' @param data data.frame. Containing the results of data quality tests and a .
-#' @param workflow_step character string. Name of the workflow step. Options available are "prefilter", "space", and "time".
+#' @param workflow_step character string. Name of the workflow step. Options
+#' available are "prefilter", "space", and "time".
 #' @param id character string. The column name with a unique record identifier.
 #' Default = "database_id".
-#' 
+#'
 #' @details This function creates figures based on the results of data quality
 #' tests implemented. A pre-defined list of test names is used for creating
 #' figures depending on the name of the workflow step informed. Figures are
