@@ -49,7 +49,7 @@ bdc_create_report <-
         data %>%
         dplyr::summarise(n = dplyr::n())
 
-      data.table::fwrite(n_records, "data/n_records.csv")
+      data.table::fwrite(n_records, here::here("data/n_records.csv"))
 
       # Total number of records per database
       n_record_database <-
@@ -61,10 +61,11 @@ bdc_create_report <-
         dplyr::group_by(database_id) %>%
         dplyr::summarise(n_total = dplyr::n())
 
-      data.table::fwrite(n_record_database, "data/n_record_database.csv")
-    } else {
-      n_records <- read_csv("data/n_records.csv") %>% dplyr::pull(n)
-      n_record_database <- read_csv("data/n_record_database.csv")
+      data.table::fwrite(n_record_database, 
+                         here::here("data/n_record_database.csv"))
+      } else {
+      n_records <- readr::read_csv("data/n_records.csv") %>% dplyr::pull(n)
+      n_record_database <- readr::read_csv("data/n_record_database.csv")
     }
 
     # Function used to formatting report

@@ -68,7 +68,7 @@ bdc_create_figures <-
           data %>%
           dplyr::summarise(n = dplyr::n())
 
-        data.table::fwrite(n_records, "data/n_records.csv")
+        data.table::fwrite(n_records, here::here("data/n_records.csv"))
 
         # Total number of records per database
         n_record_database <-
@@ -81,12 +81,14 @@ bdc_create_figures <-
           dplyr::summarise(n_total = dplyr::n())
 
         data.table::fwrite(n_record_database, "data/n_record_database.csv")
+  
       } else {
         n_records <-
-          readr::read_csv("data/n_records.csv") %>%
+          readr::read_csv(here:here("data/n_records.csv")) %>%
           dplyr::pull(n)
 
-        n_record_database <- readr::read_csv("data/n_record_database.csv")
+        n_record_database <- 
+          readr::read_csv(here::here("data/n_record_database.csv"))
       }
     })
 
@@ -121,7 +123,7 @@ bdc_create_figures <-
       }
     }
 
-    # space
+        # space
     if (workflow_step == "space") {
       tests <-
         c(
@@ -295,13 +297,14 @@ bdc_create_figures <-
       ".otl",
       ".gbf",
       ".inst",
+      ".urb",
       ".dpl",
       ".rou",
       "summary_all_tests"
     )
 
     # Names of columns available for creating maps
-    maps <- c(".coordinates_country_inconsistent", ".cap", ".cen", ".inst")
+    maps <- c(".coordinates_country_inconsistent", ".equ", ".zer", ".cap", ".cen", ".otl", ".inst", ".urb", ".dpl", ".rou")
 
     # Names of column available for creating histogram
     hist <- c("year")
@@ -407,7 +410,7 @@ bdc_create_figures <-
           lon = "decimalLongitude",
           lat = "decimalLatitude",
           col_to_map = "#EC364F",
-          size = 1
+          size = 0.7
         )
 
       p2 <-
@@ -416,7 +419,7 @@ bdc_create_figures <-
           lon = "decimalLongitude_modified",
           lat = "decimalLatitude_modified",
           col_to_map = "royalblue",
-          size = 1
+          size = 0.7
         )
       p <- cowplot::plot_grid(p1, p2, labels = "AUTO", scale = 1)
 
