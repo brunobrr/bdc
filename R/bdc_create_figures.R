@@ -19,14 +19,16 @@
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom cowplot plot_grid
 #' @importFrom data.table fwrite fread
-#' @importFrom dplyr summarise mutate group_by pull intersect filter full_join
-#' select summarise_all rename n mutate_if
+#' @importFrom dplyr summarise n mutate group_by pull intersect filter full_join
+#' select mutate_if summarise_all rename
 #' @importFrom fs file_exists
 #' @importFrom ggplot2 theme_minimal theme element_text element_line
 #' element_blank unit ggplot aes geom_col coord_flip labs geom_hline
-#' geom_label scale_y_continuous ggsave geom_histogram
+#' scale_y_continuous ggsave geom_polygon geom_hex coord_equal theme_void
+#' scale_fill_viridis_c geom_histogram
 #' @importFrom here here
 #' @importFrom readr read_csv
+#' @importFrom rworldmap getMap
 #' @importFrom scales comma
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
@@ -84,7 +86,7 @@ bdc_create_figures <-
   
       } else {
         n_records <-
-          readr::read_csv(here:here("data/n_records.csv")) %>%
+          readr::read_csv(here::here("data/n_records.csv")) %>%
           dplyr::pull(n)
 
         n_record_database <- 
@@ -136,6 +138,7 @@ bdc_create_figures <-
           ".inst",
           ".dpl",
           ".rou",
+          ".urb",
           "summary_all_tests"
         )
 
@@ -304,7 +307,19 @@ bdc_create_figures <-
     )
 
     # Names of columns available for creating maps
-    maps <- c(".coordinates_country_inconsistent", ".equ", ".zer", ".cap", ".cen", ".otl", ".inst", ".urb", ".dpl", ".rou")
+    maps <-
+      c(
+        ".coordinates_country_inconsistent",
+        ".equ",
+        ".zer",
+        ".cap",
+        ".cen",
+        ".otl",
+        ".inst",
+        ".urb",
+        ".dpl",
+        ".rou"
+      )
 
     # Names of column available for creating histogram
     hist <- c("year")
@@ -377,13 +392,28 @@ bdc_create_figures <-
           dplyr::select({{ w_maps }}[i], decimalLongitude, decimalLatitude) %>%
           dplyr::filter(. == FALSE)
 
+        m <- rworldmap::getMap() # rworldmap
+        
         p <-
-          bdc_quickmap(
+          ggplot2::ggplot() +
+          ggplot2::geom_polygon(data = m,
+                                ggplot2::aes(x = long, y = lat, group = group),
+                                fill = "gray70") +
+          ggplot2::geom_hex(
             data = d,
-            lon = "decimalLongitude",
-            lat = "decimalLatitude",
-            col_to_map = w_maps[i], size = 0.8
-          )
+            ggplot2::aes(x = decimalLongitude, y = decimalLatitude),
+            pch = 19,
+            colour = "blue",
+            size = 0.1,
+            bins = 150
+          ) +
+          ggplot2::coord_equal() +
+          ggplot2::theme_void() +
+          ggplot2::labs(fill = "# of Records") +
+          ggplot2::scale_fill_viridis_c() +
+          our_theme +
+          ggplot2::theme(legend.position = "left")
+        
 
         ggplot2::ggsave(
           paste("Output/", "Figures/", workflow_step, "_", w_maps[i], "_",
