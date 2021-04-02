@@ -3,10 +3,7 @@
 #' This function flags geographic coordinates within a reference country. A
 #' spatial buffer can be added to the reference country for ensuring that
 #' records in mangroves, marshes, estuaries as well as records with low
-#' coordinates precision are flagged as invalid.
-#' 
-#'  Records in other countries or in the ocean at a specified distance
-#' from the coastline of the reference country, which
+#' coordinates precision are not flagged as invalid.
 #'
 #' @param data data.frame. Containing longitude and latitude. Coordinates must
 #' be expressed in decimal degree and in WGS84.
@@ -26,7 +23,8 @@
 #' (FALSE).
 #' 
 #' @return A data.frame contain the column '.coordinates_country_inconsistent'.
-#' Compliant (TRUE) if coordinates fall within the boundaries plus a specified distance (if 'dist' is supplied) of 'country_name'; otherwise "FALSE".
+#' Compliant (TRUE) if coordinates fall within the boundaries plus a specified 
+#' distance (if 'dist' is supplied) of 'country_name'; otherwise "FALSE".
 #' 
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom dplyr select mutate filter full_join bind_cols
