@@ -1,6 +1,7 @@
 #' Identify records with year out-of-range
 #' 
-#' This function identifies records out-of-range (e.g., in the future) or old records collected before a year informed in 'year_threshold'.
+#' This function identifies records out-of-range collecting year (e.g., in the future) 
+#' or old records collected before a year informed in 'year_threshold'.
 #' 
 #' @param data A data frame containing column with event date information.
 #' @param eventDate numeric or date. The column with event date information.
