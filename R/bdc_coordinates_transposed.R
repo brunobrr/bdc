@@ -14,10 +14,14 @@
 #' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
 #' @param lon character string. The column with longitude. Coordinates must be
 #' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
-#' @param  country character string. The column name with the country 
+#' @param country character string. The column name with the country 
 #' assignment of each record. Default = "country".
 #' @param countryCode character string. The column name with an ISO-2 country
 #' code.
+#' @param border_buffer numeric >= 0. A distance in decimal degrees used to 
+#' created a buffer around the country. Records within a given country and at 
+#' a specified distance from the border will be not be corrected. 
+#' Default = 0.2 (~20 km at the equator). 
 #
 #' @details This test identifies transposed coordinates resulted from mismatches
 #' between the country informed to a record and coordinates. Transposed
@@ -45,12 +49,15 @@
 #' id <- c(1,2,3,4)
 #' scientificName <- c("Rhinella major", "Scinax ruber", 
 #'                     "Siparuna guianensis", "Psychotria vellosiana")
-#' decimalLatitude <- c(-63.43333, -67.91667, -41.90000, -46.69778)
-#' decimalLongitude <- c(-17.90000, -14.43333, -13.25000, -13.82444)
+#' decimalLatitude <- c(63.43333, -14.43333, -41.90000, -46.69778)
+#' decimalLongitude <- c(-17.90000, -67.91667, -13.25000, -13.82444)
 #' country <- c("BOLIVIA", "bolivia", "Brasil", "Brazil")
 #' 
 #' x <- data.frame(id, scientificName, decimalLatitude,
 #'                 decimalLongitude, country)
+#' 
+#' # Get country code
+#' x <- bdc_country_standardized(data = x, country = 'country')
 #' 
 #' bdc_coordinates_transposed(
 #'   data = x,
@@ -58,7 +65,9 @@
 #'   sci_names = "scientificName",
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude",
-#'   country = "country")
+#'   country = "country", 
+#'   countryCode = "countryCode", 
+#'   border_buffer = 0.3) # in decimal degrees
 #' }
 #' 
 bdc_coordinates_transposed <-
@@ -68,7 +77,9 @@ bdc_coordinates_transposed <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            country = "country",
-           countryCode = "countryCode") {
+           countryCode = "countryCode", 
+           border_buffer = 0.5
+           ) {
     
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
 
@@ -140,13 +151,13 @@ bdc_coordinates_transposed <-
     corrected_coordinates[, "decimalLongitude_modified"]
   
   # Flags transposed coordinates
-  data$coordinates_transposed <- TRUE
-  data[w, "coordinates_transposed"] <- FALSE
+  data$.coordinates_transposed <- TRUE
+  data[w, ".coordinates_transposed"] <- FALSE
 
   message(
     paste(
       "\nbdc_coordinates_transposed:\nCorrected",
-      sum(data$coordinates_transposed == FALSE),
+      sum(data$.coordinates_transposed == FALSE),
       "records.\nOne columns were added to the database.\nCheck database containing coordinates corrected in:\nOutput/Check/01_coordinates_transposed.csv\n"
     )
   )

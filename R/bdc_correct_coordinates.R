@@ -14,6 +14,7 @@
 #' @param cntr_iso2 character string. The column name with the country code assignment of each record. Default = "country_code".
 #' @param world_poly polygon. Borders of the world.
 #' @param world_poly_iso charterer sting. Iso2 code column of country polygon database
+#' @param border_buffer numeric >= 0. A distance in decimal degrees used to created a buffer around the country. Records within a given country and at a specified distance from the border will be not be corrected. Default = 0.2 (~20 km at the equator). 
 #'
 #' @noRd
 #' @return
@@ -30,7 +31,8 @@ bdc_correct_coordinates <-
            id,
            cntr_iso2,
            world_poly,
-           world_poly_iso) {
+           world_poly_iso,
+           border_buffer = 0.2) {
 
     x_mod <- paste0(x, "_modified")
     y_mod <- paste0(y, "_modified")
@@ -45,20 +47,23 @@ bdc_correct_coordinates <-
              decimalLongitude = as.numeric(decimalLongitude))
 
     # Detect records outside a country
-    occ_country <- CoordinateCleaner::clean_coordinates(
-      x =  occ_country,
-      lon = x,
-      lat = y,
-      species = sp,
-      countries = cntr_iso2, # iso2 code column name
-      # testing records in the sea and outside georeferenced countries
-      tests = c("seas", "countries"),
-      # high-quality countries border database
-      country_ref = world_poly,
-      # iso2 code column of country polygon database
-      country_refcol = world_poly_iso,
-      seas_ref = world_poly,
-      value = "spatialvalid"
+    suppressWarnings(
+      occ_country <- CoordinateCleaner::clean_coordinates(
+        x =  occ_country,
+        lon = x,
+        lat = y,
+        species = sp,
+        countries = cntr_iso2,
+        # iso2 code column name
+        # testing records in the sea and outside georeferenced countries
+        tests = c("seas", "countries"),
+        # high-quality countries border database
+        country_ref = world_poly,
+        # iso2 code column of country polygon database
+        country_refcol = world_poly_iso,
+        seas_ref = world_poly,
+        value = "spatialvalid"
+      )
     )
 
     summary(occ_country)
@@ -117,7 +122,7 @@ bdc_correct_coordinates <-
         world_poly[which(world_poly@data[, world_poly_iso] == n),]
 
       #0.5 degree ~50km near to equator
-      my_country2 <- raster::buffer(my_country, width = 0.5)
+      my_country2 <- raster::buffer(my_country, width = border_buffer)
 
       coord_sp <- sp::SpatialPoints(coord_test[[i]] %>% dplyr::select_(x, y))
 
@@ -143,14 +148,13 @@ bdc_correct_coordinates <-
 
     coord_test <-
       coord_test %>%
-      dplyr::distinct_(., id, .keep_all = T) %>%
-      dplyr::as_tibble() %>%
+      dplyr::distinct_(., id, .keep_all = TRUE) %>%
       dplyr::relocate(id, x, y)
 
     # Merge coord_test with other columns of occurrence database
     coord_test <-
       dplyr::left_join(coord_test,
-                data %>% dplyr::select(-c(x, y, cntr_iso2)),
+                data %>% dplyr::select(-c({{x}}, {{y}}, {{cntr_iso2}})),
                 by = id)
 
     return(coord_test)
