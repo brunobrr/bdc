@@ -56,6 +56,7 @@ Imports:
     knitr,
     scales,
     tibble,
-    rgnparser
+    rgnparser,
+    rworldmap
 Suggests:
     testthat,
