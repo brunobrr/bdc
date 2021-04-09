@@ -8,25 +8,43 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = FALSE)
 devtools::load_all()
 ```
 
 First, install `bdc` from github.
 
 ```{r}
-metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
+
+if (!require("remotes")) install.packages("remotes")
+if (!require("bdc")) remotes::install_github("brunobrr/bdc")
+if (!require("tidyverse")) install.packages("tidyverse")
+```
+
+Read metadata:
+
+```{r}
+
+metadata <-
+  system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc") %>%
+  read_csv(metadata)
+
+metadata
+
 ```
 
 Now, create the folders:
 
 ```{r}
-# bdc::bdc_create_dir()
+
+bdc::bdc_create_dir()
+
 ```
 
-Read the metadata:
+Merge datasets:
 
 ```{r}
-# metadata <- read_csv()
-# bdc::bdc_standardize_datasets(metadata)
+
+bdc::bdc_standardize_datasets(metadata)
+
 ```
