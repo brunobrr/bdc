@@ -10,6 +10,8 @@ navbar:
   left:
     - icon: fa-home
       href: index.html
+    - text: "Functions"
+      href: reference/index.html
     - icon: fas fa-book
       text: "Articles"
       menu:
