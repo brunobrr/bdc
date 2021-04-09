@@ -15,7 +15,7 @@ devtools::load_all()
 First, install `bdc` from github.
 
 ```{r}
-if (!require("bdc")) remotes::install_github("brunobrr/bdc")
+metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
 ```
 
 Now, create the folders:
