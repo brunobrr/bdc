@@ -151,13 +151,13 @@ bdc_coordinates_transposed <-
     corrected_coordinates[, "decimalLongitude_modified"]
   
   # Flags transposed coordinates
-  data$.coordinates_transposed <- TRUE
-  data[w, ".coordinates_transposed"] <- FALSE
+  data$coordinates_transposed <- TRUE
+  data[w, "coordinates_transposed"] <- FALSE
 
   message(
     paste(
       "\nbdc_coordinates_transposed:\nCorrected",
-      sum(data$.coordinates_transposed == FALSE),
+      sum(data$coordinates_transposed == FALSE),
       "records.\nOne columns were added to the database.\nCheck database containing coordinates corrected in:\nOutput/Check/01_coordinates_transposed.csv\n"
     )
   )
