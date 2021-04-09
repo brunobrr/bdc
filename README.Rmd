@@ -13,12 +13,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-# **BDC** 
-<img src="https://github.com/brunobrr/bdc/tree/master/man/figures/logo.png" width="150"
 
-
-<!-- <img src="https://github.com/brunobrr/bdc/tree/master/man/figures/logo.png" align="right" width="70" /> -->
-
+# BDC <img src="https://github.com/brunobrr/bdc/blob/master/man/figures/logo.png"/>
 
 ## A comprehensive and straightforward workflow for standardizing, integrating, and cleaning biodiversity data
 
@@ -56,5 +52,3 @@ See BDC package website (<https://brunobrr.github.io/bdc/>) for detailed explana
 ### Getting help
 
 If you encounter a clear bug, please file an issue [here](https://github.com/brunobrr/bdc/issues). For questions or suggestion, please send us a email (ribeiro.brr\@gmail.com).
-
-  
