@@ -1,7 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# **BDC** <img src="https://github.com/brunobrr/bdc/tree/master/man/figures/logo.png" align="right" width="150" />
+# **BDC**
+
+\<img
+src=“<https://github.com/brunobrr/bdc/tree/master/man/figures/logo.png>”
+width=“150”
+
+<!-- <img src="https://github.com/brunobrr/bdc/tree/master/man/figures/logo.png" align="right" width="70" /> -->
 
 ## A comprehensive and straightforward workflow for standardizing, integrating, and cleaning biodiversity data
 
