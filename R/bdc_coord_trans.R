@@ -62,7 +62,7 @@ bdc_coord_trans <-
       } else {
         over_list[[d]] <- NULL
       }
-      rm(list = c("caluse", "overresult", "filt"))
+      rm(list = c("overresult", "filt"))
     }
 
     rm(d.list)
