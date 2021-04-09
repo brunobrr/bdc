@@ -19,7 +19,8 @@ A data.frame contain the column ".year_outOfRange". Compliant
 (TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".
 }
 \description{
-This function identifies records out-of-range (e.g., in the future) or old records collected before a year informed in 'year_threshold'.
+This function identifies records out-of-range collecting year (e.g., in the future)
+or old records collected before a year informed in 'year_threshold'.
 }
 \details{
 Following the "VALIDATION:YEAR_OUTOFRANGE"

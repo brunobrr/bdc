@@ -24,7 +24,7 @@ A data.frame contain the column ".coordinates_outOfRange". Compliant
 (TRUE) if 'lat' and 'lon' are not out-of-range; otherwise "FALSE".
 }
 \description{
-This function identifies records with out-of-range coordinates (between -90 and 90 for latitude; between -180 and 180 for longitude).
+This function identifies records with out-of-range coordinates (not between -90 and 90 for latitude; between -180 and 180 for longitude).
 }
 \examples{
 \dontrun{

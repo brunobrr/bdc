@@ -6,7 +6,7 @@
 This function flags geographic coordinates within a reference country. A
 spatial buffer can be added to the reference country for ensuring that
 records in mangroves, marshes, estuaries as well as records with low
-coordinates precision are flagged as invalid.}
+coordinates precision are not flagged as invalid.}
 \usage{
 bdc_coordinates_country_inconsistent(
   data,
@@ -33,11 +33,15 @@ around the country. Default = 0.1 (~11 km at the equator)}
 }
 \value{
 A data.frame contain the column '.coordinates_country_inconsistent'.
-Compliant (TRUE) if coordinates fall within the boundaries plus a specified distance (if 'dist' is supplied) of 'country_name'; otherwise "FALSE".
+Compliant (TRUE) if coordinates fall within the boundaries plus a specified
+distance (if 'dist' is supplied) of 'country_name'; otherwise "FALSE".
 }
 \description{
-Records in other countries or in the ocean at a specified distance
-from the coastline of the reference country, which
+Identify records within a reference country
+This function flags geographic coordinates within a reference country. A
+spatial buffer can be added to the reference country for ensuring that
+records in mangroves, marshes, estuaries as well as records with low
+coordinates precision are not flagged as invalid.
 }
 \details{
 The distance informed in the argument 'dist' is used to create a
