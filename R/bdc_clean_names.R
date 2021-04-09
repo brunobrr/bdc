@@ -1,14 +1,14 @@
 #' Clean and parse scientific names
 #'
 #' This functions is composed of a series of name-checking routines for cleaning
-#' and parsing scientific names, including remove1) family names of animals or
-#' plants pre-pended to species names, 2) qualifiers denoting uncertainty or
+#' and parsing scientific names. This tools is used to remove 1) family names of animals or
+#' plants pre-pended to species names, 2) qualifiers denoting uncertain or
 #' provisional status of taxonomic identification (e.g., confer, species,
-#' affinis, and among others), and 3) infraspecific terms (e.g., variety [var.],
+#' affinis), and 3) infraspecific terms (e.g., variety [var.],
 #' subspecies [subsp], forma [f.], and their spelling variations). It also
-#' includes tools for: 4) standardize names, i.e., capitalize only the first
-#' letter of the generic name and remove extra whitespaces), and 5) parse names,
-#' i.e., separate author from taxon name.
+#' includes applications to: 4) standardize names, i.e., capitalize only the first letter of
+#' the genus name and remove extra whitespaces), and 5) parse names, i.e.,
+#' separate author, date, annotations from taxon name.
 #'
 #' @param sci_names character string. Containing scientific names.
 #' 
