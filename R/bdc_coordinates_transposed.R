@@ -78,7 +78,7 @@ bdc_coordinates_transposed <-
            lon = "decimalLongitude",
            country = "country",
            countryCode = "countryCode", 
-           border_buffer = 0.5
+           border_buffer = 0.2
            ) {
     
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
