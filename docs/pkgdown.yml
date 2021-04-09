@@ -1,10 +1,13 @@
-pandoc: 2.11.4
+pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  merge-datasets: merge-datasets.html
+  integrate_datasets: integrate_datasets.html
   prefilter: prefilter.html
-last_built: 2021-03-18T13:24Z
+  space: space.html
+  taxonomy: taxonomy.html
+  time: time.html
+last_built: 2021-04-09T11:48Z
 urls:
   reference: https://brunobrr.github.io/bdc/reference
   article: https://brunobrr.github.io/bdc/articles

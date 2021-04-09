@@ -6,8 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Creates reports on results of data quality tests — bdc_create_report • bdc</title>
+<title>Create a report summarizing the results of data quality tests — bdc_create_report • bdc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -39,8 +46,9 @@
 
 
 
-<meta property="og:title" content="Creates reports on results of data quality tests — bdc_create_report" />
-<meta property="og:description" content="Creates reports on results of data quality tests" />
+<meta property="og:title" content="Create a report summarizing the results of data quality tests — bdc_create_report" />
+<meta property="og:description" content="Create a report summarizing the results of data quality tests" />
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
 
@@ -80,13 +88,13 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa fas fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -117,16 +125,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Creates reports on results of data quality tests</h1>
+    <h1>Create a report summarizing the results of data quality tests</h1>
     
     <div class="hidden name"><code>bdc_create_report.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates reports on results of data quality tests</p>
+    <p>Create a report summarizing the results of data quality tests</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bdc_create_report</span><span class='op'>(</span><span class='va'>data</span>, databa_id <span class='op'>=</span> <span class='st'>"databas_id"</span>, <span class='va'>workflow_step</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bdc_create_report</span><span class='op'>(</span><span class='va'>data</span>, database_id <span class='op'>=</span> <span class='st'>"database_id"</span>, <span class='va'>workflow_step</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,9 +170,9 @@ quality assessment.</p>
 <span class='va'>.summary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>database_id</span>,
-                <span class='va'>.missing_names</span>,
-                <span class='va'>.missing_coordinates</span>,
-                <span class='va'>.invalid_basis_of_records</span>,
+                <span class='va'>.scientificName_empty</span>,
+                <span class='va'>.coordinates_empty</span>,
+                <span class='va'>.basisOfRrecords_notStandard</span>,
                 <span class='va'>.summary</span><span class='op'>)</span>
 
 <span class='fu'>bdc_create_report</span><span class='op'>(</span>

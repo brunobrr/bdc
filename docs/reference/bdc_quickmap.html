@@ -8,6 +8,13 @@
 
 <title>Create a map of points using ggplot2 — bdc_quickmap • bdc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -41,7 +48,8 @@
 
 <meta property="og:title" content="Create a map of points using ggplot2 — bdc_quickmap" />
 <meta property="og:description" content="Creates a map of points using ggplot2 useful for inspecting the results of
-tests implemented in the workflow." />
+tests implemented in the bdc workflow." />
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
 
@@ -81,13 +89,13 @@ tests implemented in the workflow." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa fas fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -125,10 +133,10 @@ tests implemented in the workflow." />
 
     <div class="ref-description">
     <p>Creates a map of points using ggplot2 useful for inspecting the results of
-tests implemented in the workflow.</p>
+tests implemented in the bdc workflow.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bdc_quickmap</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>lon</span>, <span class='va'>lat</span>, col_to_map <span class='op'>=</span> <span class='cn'>NULL</span>, size <span class='op'>=</span> <span class='va'>size</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bdc_quickmap</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>lat</span>, <span class='va'>lon</span>, col_to_map <span class='op'>=</span> <span class='cn'>NULL</span>, size <span class='op'>=</span> <span class='va'>size</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,12 +146,12 @@ tests implemented in the workflow.</p>
       <td><p>data.frame. Containing longitude and latitude</p></td>
     </tr>
     <tr>
-      <th>lon</th>
-      <td><p>character string. The column with the longitude coordinates</p></td>
-    </tr>
-    <tr>
       <th>lat</th>
       <td><p>character string. The column with the latitude coordinates</p></td>
+    </tr>
+    <tr>
+      <th>lon</th>
+      <td><p>character string. The column with the longitude coordinates</p></td>
     </tr>
     <tr>
       <th>col_to_map</th>
@@ -153,16 +161,28 @@ Can be a color name (e.g "red") the the name of a column of data. Default =
     </tr>
     <tr>
       <th>size</th>
-      <td><p>numeric. The size of the points</p></td>
+      <td><p>numeric. The size of the points.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Only records with valid coordinates can be plotted. Records missing or with invalid coordinates are removed prior creating the map.</p>
+    <p>Only records with valid coordinates can be plotted. Records missing
+or with invalid coordinates are removed prior creating the map.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>decimalLatitude</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>19.9358</span>, <span class='op'>-</span><span class='fl'>13.016667</span>, <span class='op'>-</span><span class='fl'>19.935800</span><span class='op'>)</span>
+<span class='va'>decimalLongitude</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>40.6003</span>, <span class='op'>-</span><span class='fl'>39.6</span>, <span class='op'>-</span><span class='fl'>40.60030</span><span class='op'>)</span>
+<span class='va'>.coordinates_out_country</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>decimalLatitude</span>, <span class='va'>decimalLongitude</span>, <span class='va'>.coordinates_out_country</span><span class='op'>)</span>
+
+<span class='fu'>bdc_quickmap</span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>x</span>,
+  lat <span class='op'>=</span> <span class='st'>"decimalLatitude"</span>,
+  lon <span class='op'>=</span> <span class='st'>"decimalLongitude"</span>,
+  col_to_map <span class='op'>=</span> <span class='st'>".coordinates_out_country"</span>,
+  size <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

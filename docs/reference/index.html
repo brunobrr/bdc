@@ -8,6 +8,13 @@
 
 <title>Function reference • bdc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -40,6 +47,7 @@
 
 
 <meta property="og:title" content="Function reference" />
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
 
@@ -79,13 +87,13 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa fas fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -142,9 +150,31 @@
       <tr>
         
         <td>
+          <p><code><a href="bdc_basisOfRrecords_notStandard.html">bdc_basisOfRrecords_notStandard()</a></code> </p>
+        </td>
+        <td><p>Identify records from doubtful source (e.g., 'fossil', MachineObservation')</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="bdc_clean_names.html">bdc_clean_names()</a></code> </p>
         </td>
-        <td><p>Cleaning and splitting scientific names into their semantic elements</p></td>
+        <td><p>Clean and parse scientific names</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bdc_coordinates_country_inconsistent.html">bdc_coordinates_country_inconsistent()</a></code> </p>
+        </td>
+        <td><p>Identify records within a reference country
+This function flags geographic coordinates within a reference country. A
+spatial buffer can be added to the reference country for ensuring that
+records in mangroves, marshes, estuaries as well as records with low
+coordinates precision are not flagged as invalid.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bdc_coordinates_empty.html">bdc_coordinates_empty()</a></code> </p>
+        </td>
+        <td><p>Identify records with empty geographic coordinates</p></td>
       </tr><tr>
         
         <td>
@@ -155,25 +185,39 @@ locality</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bdc_coordinates_out_country.html">bdc_coordinates_out_country()</a></code> </p>
+          <p><code><a href="bdc_coordinates_outOfRange.html">bdc_coordinates_outOfRange()</a></code> </p>
         </td>
-        <td><p>Identify records outside a reference country
-This function flags geographic coordinates outside the reference country
-(i.e., records in other countries or in the ocean at a specified distance
-from the coastline of the reference country). This avoids flagging as invalid
-records in mangroves, marshes, estuaries, etc.</p></td>
+        <td><p>Identify records with out-of-range geographic coordinates</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bdc_countryName_from_coordinates.html">bdc_countryName_from_coordinates()</a></code> </p>
+          <p><code><a href="bdc_coordinates_precision.html">bdc_coordinates_precision()</a></code> </p>
         </td>
-        <td><p>Gets country names from coordinates</p></td>
+        <td><p>Flag low-precise geographic coordinates</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bdc_coordinates_transposed.html">bdc_coordinates_transposed()</a></code> </p>
+        </td>
+        <td><p>Identify transposed geographic coordinates</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bdc_country_from_coordinates.html">bdc_country_from_coordinates()</a></code> </p>
+        </td>
+        <td><p>Get country names from coordinates</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bdc_country_standardized.html">bdc_country_standardized()</a></code> </p>
+        </td>
+        <td><p>Standardizes country names and gets country code</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="bdc_create_dir.html">bdc_create_dir()</a></code> </p>
         </td>
-        <td><p>Creates directories for saving ouptups of the bdc workflow</p></td>
+        <td><p>Creates directories for saving the outputs of the bdc workflow</p></td>
       </tr><tr>
         
         <td>
@@ -185,7 +229,13 @@ records in mangroves, marshes, estuaries, etc.</p></td>
         <td>
           <p><code><a href="bdc_create_report.html">bdc_create_report()</a></code> </p>
         </td>
-        <td><p>Creates reports on results of data quality tests</p></td>
+        <td><p>Create a report summarizing the results of data quality tests</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bdc_eventDate_empty.html">bdc_eventDate_empty()</a></code> </p>
+        </td>
+        <td><p>Identify records with empty event date</p></td>
       </tr><tr>
         
         <td>
@@ -198,43 +248,19 @@ wikipedia</p></td>
         <td>
           <p><code><a href="bdc_filter_out_flags.html">bdc_filter_out_flags()</a></code> </p>
         </td>
-        <td><p>Removes columns with the results of data quality tests</p></td>
+        <td><p>Remove columns with the results of data quality tests</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="bdc_filter_out_names.html">bdc_filter_out_names()</a></code> </p>
         </td>
-        <td><p>Removes records with taxonomic issues</p></td>
+        <td><p>Filter out records according to their taxonomic status</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="bdc_geographic_outlier.html">bdc_geographic_outlier()</a></code> </p>
         </td>
-        <td><p>Identify plant species records outside known geographic distribution</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bdc_invalid_basis_of_records.html">bdc_invalid_basis_of_records()</a></code> </p>
-        </td>
-        <td><p>Identify records from doubtful source (e.g., 'fossil', MachineObservation')</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bdc_invalid_coordinates.html">bdc_invalid_coordinates()</a></code> </p>
-        </td>
-        <td><p>Identify records with invalid geographic coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bdc_missing_coordinates.html">bdc_missing_coordinates()</a></code> </p>
-        </td>
-        <td><p>Identify records missing geographic coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bdc_missing_names.html">bdc_missing_names()</a></code> </p>
-        </td>
-        <td><p>Identify records missing scientific name</p></td>
+        <td><p>Identify plant species records outside their known geographic distribution</p></td>
       </tr><tr>
         
         <td>
@@ -256,9 +282,9 @@ wikipedia</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bdc_standardize_countryNames.html">bdc_standardize_countryNames()</a></code> </p>
+          <p><code><a href="bdc_scientificName_empty.html">bdc_scientificName_empty()</a></code> </p>
         </td>
-        <td><p>Standardizes country names and gets ISO code</p></td>
+        <td><p>Identify records with empty scientific names</p></td>
       </tr><tr>
         
         <td>
@@ -270,19 +296,19 @@ wikipedia</p></td>
         <td>
           <p><code><a href="bdc_summary_col.html">bdc_summary_col()</a></code> </p>
         </td>
-        <td><p>Creates or updates the column summarizing the results of data quality tests</p></td>
+        <td><p>Create or update the column summarizing the results of data quality tests</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bdc_transposed_coordinates.html">bdc_transposed_coordinates()</a></code> </p>
+          <p><code><a href="bdc_year_from_eventDate.html">bdc_year_from_eventDate()</a></code> </p>
         </td>
-        <td><p>Identify transposed geographic coordinates</p></td>
+        <td><p>Extract year from eventDate</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="bdc_xy_precision.html">bdc_xy_precision()</a></code> </p>
+          <p><code><a href="bdc_year_outOfRange.html">bdc_year_outOfRange()</a></code> </p>
         </td>
-        <td><p>Flags imprecise geographic coordinates</p></td>
+        <td><p>Identify records with year out-of-range</p></td>
       </tr>
     </tbody>
     </table>

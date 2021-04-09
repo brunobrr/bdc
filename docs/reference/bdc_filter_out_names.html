@@ -6,8 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Removes records with taxonomic issues — bdc_filter_out_names • bdc</title>
+<title>Filter out records according to their taxonomic status — bdc_filter_out_names • bdc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -39,10 +46,11 @@
 
 
 
-<meta property="og:title" content="Removes records with taxonomic issues — bdc_filter_out_names" />
-<meta property="og:description" content="This function filters out records whose scientific names contain a issue,
-including names not found ('notFound'), with multiple (multipleAccepted) or
-none (noAcceptedName) accepted name found." />
+<meta property="og:title" content="Filter out records according to their taxonomic status — bdc_filter_out_names" />
+<meta property="og:description" content="This function is useful for selecting records according to their taxonomic
+status.  By default, only records with accepted scientific names are
+returned." />
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
 
@@ -82,13 +90,13 @@ none (noAcceptedName) accepted name found." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa fas fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -119,47 +127,53 @@ none (noAcceptedName) accepted name found." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Removes records with taxonomic issues</h1>
+    <h1>Filter out records according to their taxonomic status</h1>
     
     <div class="hidden name"><code>bdc_filter_out_names.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function filters out records whose scientific names contain a issue,
-including names not found ('notFound'), with multiple (multipleAccepted) or
-none (noAcceptedName) accepted name found.</p>
+    <p>This function is useful for selecting records according to their taxonomic
+status.  By default, only records with accepted scientific names are
+returned.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bdc_filter_out_names</span><span class='op'>(</span>
-  <span class='va'>data</span>,
-  notes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"not_found"</span>, <span class='st'>"more_one_accepted"</span>, <span class='st'>"no_accepted"</span>, <span class='st'>"taxo_uncer"</span><span class='op'>)</span>,
-  opposite <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bdc_filter_out_names</span><span class='op'>(</span><span class='va'>data</span>, taxonomic_notes <span class='op'>=</span> <span class='st'>"accepted"</span>, opposite <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>data frame containing a column 'notes'.</p></td>
+      <td><p>data.frame. Containing a column with information on the taxonomic
+status of scientific names.</p></td>
     </tr>
     <tr>
-      <th>notes</th>
-      <td><p>character string. A column containing notes on taxonomic standardization process. Default = "notes".</p></td>
+      <th>taxonomic_notes</th>
+      <td><p>character string. The column name containing notes on
+the taxonomic status of a name. Default = "notes".</p></td>
     </tr>
     <tr>
       <th>opposite</th>
-      <td><p>logical. Should records with not taxonomic issue be returned.
-Default = FALSE.</p></td>
+      <td><p>logical. Should taxonomic notes different from those listed
+in 'taxonomic_notes' be returned? Default = FALSE</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame without records with taxonomic issues. If opposite is TRUE, only records with taxonomic issues are returned.</p>
+    <p>A data.frame filtered out according to names listed in
+'taxonomic_notes'.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function filters out records whose notes column flags taxonomic issues such as 'noFound', 'multipleAccepted' and 'noAcceptedName'.</p>
+    <p>By default, only records with accepted scientific names are kept in
+the database. Such records are listed in the column 'taxonomic_notes' as
+"accepted", "accepted | replaceSynonym",  "accepted | wasMisspelled" or
+"accepted | wasMisspelled | replaceSynonym". It is also possible to
+customize the list of taxonomic notes to be kept in the argument
+'taxonomic_notes'. See 'notes' in the data.frame resulted from the function
+<code><a href='bdc_create_report.html'>bdc_create_report</a></code>. If 'opposite' is TRUE, records with notes
+different from names listed in 'taxonomic_notes' are returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

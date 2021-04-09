@@ -6,8 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cleaning and splitting scientific names into their semantic elements — bdc_clean_names • bdc</title>
+<title>Clean and parse scientific names — bdc_clean_names • bdc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -39,16 +46,17 @@
 
 
 
-<meta property="og:title" content="Cleaning and splitting scientific names into their semantic elements — bdc_clean_names" />
+<meta property="og:title" content="Clean and parse scientific names — bdc_clean_names" />
 <meta property="og:description" content="This functions is composed of a series of name-checking routines for cleaning
-and parsing scientific names, including 1) family names of animals or plants
-pre-pended to species names, 2) qualifiers denoting doubtful taxonomic
-identification (e.g., confer, species, affinis, and among others), and 3)
-infraspecific terms (e.g., variety var., subspecies subsp, forma f.,
-and their spelling variations). It also includes tools for: 4) 4) standardize
-names, i.e., capitalize only the first letter of the generic name and remove
-extra whitespaces), and 5) parse names, i.e., separate author from taxon
-name." />
+and parsing scientific names. This tools is used to remove 1) family names of animals or
+plants pre-pended to species names, 2) qualifiers denoting uncertain or
+provisional status of taxonomic identification (e.g., confer, species,
+affinis), and 3) infraspecific terms (e.g., variety var.,
+subspecies subsp, forma f., and their spelling variations). It also
+includes applications to: 4) standardize names, i.e., capitalize only the first letter of
+the genus name and remove extra whitespaces), and 5) parse names, i.e.,
+separate author, date, annotations from taxon name." />
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
 
@@ -88,13 +96,13 @@ name." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa fas fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -125,21 +133,21 @@ name." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cleaning and splitting scientific names into their semantic elements</h1>
+    <h1>Clean and parse scientific names</h1>
     
     <div class="hidden name"><code>bdc_clean_names.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This functions is composed of a series of name-checking routines for cleaning
-and parsing scientific names, including 1) family names of animals or plants
-pre-pended to species names, 2) qualifiers denoting doubtful taxonomic
-identification (e.g., confer, species, affinis, and among others), and 3)
-infraspecific terms (e.g., variety var., subspecies subsp, forma f.,
-and their spelling variations). It also includes tools for: 4) 4) standardize
-names, i.e., capitalize only the first letter of the generic name and remove
-extra whitespaces), and 5) parse names, i.e., separate author from taxon
-name.</p>
+and parsing scientific names. This tools is used to remove 1) family names of animals or
+plants pre-pended to species names, 2) qualifiers denoting uncertain or
+provisional status of taxonomic identification (e.g., confer, species,
+affinis), and 3) infraspecific terms (e.g., variety var.,
+subspecies subsp, forma f., and their spelling variations). It also
+includes applications to: 4) standardize names, i.e., capitalize only the first letter of
+the genus name and remove extra whitespaces), and 5) parse names, i.e.,
+separate author, date, annotations from taxon name.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bdc_clean_names</span><span class='op'>(</span><span class='va'>sci_names</span><span class='op'>)</span></pre>
@@ -149,24 +157,36 @@ name.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>sci_names</th>
-      <td><p>character string. Containing scientific names.
-#'</p></td>
+      <td><p>character string. Containing scientific names.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame containing original and cleaned/parsed names as well
-columns indicating the quality of the parse names process (see 'details').
-Also, a data.frame containing flags of each name-checking routine is saved
-in "Output/Check/02_parse_names.csv".</p>
+    <p>A five-column data.frame including 'scientificName' (original names
+supplied), '.uncer_terms' (indicates the presence of taxonomic uncertainty
+terms), '.infraesp_names' (indicates the presence of infraspecific terms),
+'name_clean' (scientific names resulting from the cleaning and parsing
+processes), and 'quality (an index indicating the quality of parsing
+process. It ranges from 0 to 4, being 1 no problem detected, 4 serious
+problems detected; a value of 0 indicates no interpretable name that was
+not parsed). Also, data.frame containing all tests of the cleaning names
+process and the results of the parsing names process is saved in
+"Output/Check/02_parse_names.csv".</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Terms denoting uncertainty or provisional status of taxonomic
+identification as well as infraspecific terms were obtained from Sigoviniet
+al. (2016; doi: 10.1111/2041-210X.12594). More details about the names
+parse process can be found in
+<a href='https://github.com/gnames/gnparser'>gnparser</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='va'>scientificName</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
 <span class='st'>"Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann"</span>,
 <span class='st'>"Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby"</span>,
-<span class='st'>"Gymnanthes edwalliana (Pax &amp; K.Hoffm.) Laurênio-Melo &amp; M.F.Sales"</span>,
+<span class='st'>"Gymnanthes edwalliana (Pax &amp; K.Hoffm.) LaurÃªnio-Melo &amp; M.F.Sales"</span>,
 <span class='st'>"LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin &amp; Barneby"</span><span class='op'>)</span>
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>scientificName</span><span class='op'>)</span>

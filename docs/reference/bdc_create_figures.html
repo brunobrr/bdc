@@ -8,6 +8,13 @@
 
 <title>Creates figures reporting the results of the bdc workflow — bdc_create_figures • bdc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -42,6 +49,7 @@
 <meta property="og:title" content="Creates figures reporting the results of the bdc workflow — bdc_create_figures" />
 <meta property="og:description" content="Creates figures (i.e., barplots and maps) reporting the results of data
 quality tests implemented in the bdc workflow." />
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
 
@@ -81,13 +89,13 @@ quality tests implemented in the bdc workflow." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa fas fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -138,12 +146,14 @@ quality tests implemented in the bdc workflow.</p>
       <td><p>data.frame. Containing the results of data quality tests and a .</p></td>
     </tr>
     <tr>
-      <th>database_id</th>
-      <td><p>character string. TODO</p></td>
+      <th>workflow_step</th>
+      <td><p>character string. Name of the workflow step. Options
+available are "prefilter", "space", and "time".</p></td>
     </tr>
     <tr>
-      <th>workflow_step</th>
-      <td><p>character string. Name of the workflow step. Options available are "prefilter", "space", and "time".</p></td>
+      <th>id</th>
+      <td><p>character string. The column name with a unique record identifier.
+Default = "database_id".</p></td>
     </tr>
     </table>
 
@@ -162,8 +172,8 @@ saving in "Output/Figures".</p>
 <span class='va'>database_id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"GBIF_01"</span>, <span class='st'>"GBIF_02"</span>, <span class='st'>"GBIF_03"</span>, <span class='st'>"FISH_04"</span>, <span class='st'>"FISH_05"</span><span class='op'>)</span>
 <span class='va'>lat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>19.93580</span>, <span class='op'>-</span><span class='fl'>13.01667</span>, <span class='op'>-</span><span class='fl'>22.34161</span>,  <span class='op'>-</span><span class='fl'>6.75000</span>, <span class='op'>-</span><span class='fl'>15.15806</span><span class='op'>)</span>
 <span class='va'>lon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>40.60030</span>, <span class='op'>-</span><span class='fl'>39.60000</span>, <span class='op'>-</span><span class='fl'>49.61017</span>, <span class='op'>-</span><span class='fl'>35.63330</span>, <span class='op'>-</span><span class='fl'>39.52861</span><span class='op'>)</span>
-<span class='va'>.missing_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>.missing_coordinates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>.scientificName_emptys</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>.coordinates_empty</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>.invalid_basis_of_records</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>.summary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
 
@@ -171,8 +181,8 @@ saving in "Output/Figures".</p>
   <span class='va'>database_id</span>,
   <span class='va'>lat</span>,
   <span class='va'>lon</span>,
-  <span class='va'>.missing_names</span>,
-  <span class='va'>.missing_coordinates</span>,
+  <span class='va'>.scientificName_emptys</span>,
+  <span class='va'>.coordinates_empty</span>,
   <span class='va'>.invalid_basis_of_records</span>,
   <span class='va'>.summary</span>
 <span class='op'>)</span>

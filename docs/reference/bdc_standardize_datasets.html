@@ -8,6 +8,13 @@
 
 <title>Standardize datasets columns based on metadata — bdc_standardize_datasets • bdc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -44,6 +51,7 @@
 datasets into a new dataset with column names following the Darwin
 Core terminology. All the process is based on a metadata file
 provided by the user." />
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
 
@@ -83,13 +91,13 @@ provided by the user." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa fas fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -147,30 +155,26 @@ renamed. See @details.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>bdc_standardize_datasets()</code> facilitate the standardization of
-datasets with different column names converting them into a new
-dataset following the Darwin Core terminology. All the
-standardization process rely on a metadata file containing the
-name, path, and columns that need to be renamed. The metadata file
-can be constructed using built-in functions (e.g., <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame()</a></code>)
-or storing the information in a CSV file and importing it into
-R. Regardless of the method chosen, the data frame with metadata
-needs to contain the following column names (this is a list of
-required column names; for compreensive list of column names
-following Darwin Core terminology, see LINK):</p><ul>
+    <p><code>bdc_standardize_datasets()</code> facilitate the standardization of datasets with
+different column names converting them into a new dataset following the
+Darwin Core terminology. All the standardization process rely on a metadata
+file containing the name, path, and columns that need to be renamed. The
+metadata file can be constructed using built-in functions (e.g.,
+<code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame()</a></code>) or storing the information in a CSV file and importing it
+into R. Regardless of the method chosen, the data frame with metadata needs
+to contain the following column names (this is a list of required column
+names; for compreensive list of column names following Darwin Core
+terminology, see LINK):</p><ul>
 <li><p><code>datasetName</code>: A short name identifying the dataset (e.g., GBIF)</p></li>
-<li><p><code>fileName</code>: The relative path containg the name of the input
-dataset (e.g., Input_files/GBIF.csv)</p></li>
-<li><p><code>scientificName</code>: Name of the column in the original database
-presenting the scientific name of the taxon with or without
-authorship information, depending on the format of the source
-dataset (e.g., Myrcia acuminata)</p></li>
-<li><p><code>decimalLatitude</code>: Name of the column in the original database
-presenting the geographic latitude in decimal degrees (e.g.,
--6.370833)</p></li>
-<li><p><code>decimalLongitude</code>: Name of the column in the original database
-presenting the geographic longitude in decimal degrees (e.g.,
--3.25500)</p></li>
+<li><p><code>fileName</code>: The relative path containg the name of the input dataset (e.g.,
+Input_files/GBIF.csv)</p></li>
+<li><p><code>scientificName</code>: Name of the column in the original database presenting
+the scientific name of the taxon with or without authorship information,
+depending on the format of the source dataset (e.g., Myrcia acuminata)</p></li>
+<li><p><code>decimalLatitude</code>: Name of the column in the original database presenting
+the geographic latitude in decimal degrees (e.g., -6.370833)</p></li>
+<li><p><code>decimalLongitude</code>: Name of the column in the original database presenting
+the geographic longitude in decimal degrees (e.g., -3.25500)</p></li>
 </ul>
 
 

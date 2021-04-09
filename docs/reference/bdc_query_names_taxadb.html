@@ -8,6 +8,13 @@
 
 <title>Matching scientific names against local stored taxonomic authority database — bdc_query_names_taxadb • bdc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -41,6 +48,7 @@
 
 <meta property="og:title" content="Matching scientific names against local stored taxonomic authority database — bdc_query_names_taxadb" />
 <meta property="og:description" content="This function borrows heavily from the great work done by Norman et al. (2020) in their package 'taxadb', which contains functions that allow querying millions of taxonomic names in a fast and consistent way. The bdc_get_taxadb contains additions that allow queries using fuzzy matching and converting synonyms to the current accepted name. The fuzzy match algorithm was inspired by get.taxa function of the 'flora' package." />
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
 
@@ -80,13 +88,13 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa fas fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -212,7 +220,7 @@ The inclusion of 'var.' increases name distances and it is advised to set smalle
 </ul>
 
 <p>The bdc_query_names_taxadb processes as this:</p><ul>
-<li><p>Creates a local taxonomic database. This is one-time setup used to download, extract, and import one or all (n=10) taxonomic databases specified in the argument ‘db’. The downloading process may take some minutes depending on the velocity of internet connection and the database size. By default, the ‘gbif’ database following a Darwin Core schema is installed. (see ?taxadb::td_create for details).</p></li>
+<li><p>Creates a local taxonomic database. This is one-time setup used to download, extract, and import one or all (n=10) taxonomic databases specified in the argument "db". The downloading process may take some minutes depending on the velocity of internet connection and the database size. By default, the "gbif" database following a Darwin Core schema is installed. (see ?taxadb::td_create for details).</p></li>
 <li><p>Matching names can be a time-consuming process. Thus, only unique scientific names are queried. Raw scientific names are stores in a separate vector, which allows retrieving matched names in the same order as the input names.</p></li>
 </ul>
 
@@ -223,21 +231,21 @@ The inclusion of 'var.' increases name distances and it is advised to set smalle
 <p>The remaining process can be divided into two distinct phases according to the match type to be performed:</p>
 <p><strong>First: exact matching</strong></p><ul>
 <li><p>First, the algorithm attempts to match the exact scientific name supplied (the function filter_name from taxadb package is used to querying names). When an exact match cannot be found, names are returned as Not Applicable (NA).</p></li>
-<li><p>Multiple names can be linked to a unique input name. In such cases, the bdc_clean_duplicates function is used to flag and remove names with multiple accepted names (column ‘acceptedNameUsageID) and synonyms (i.e., column 'taxonomicStatus'). The function proceeds as follow:</p></li>
-<li><p>Filter out the database according to a specified taxonomic rank. If supplied, the arguments ‘rank_name’ and ‘rank’ are used to reduce the number of duplicated accepted names, which is useful to remove any ambiguity in the matching. For example, the genus “Casearia” is present in both the kingdoms Animalia and Plantae. When handling names of Plantae, would be helpful to get rid of records of the Animalia to avoid assigned to “Casearia” the note “| more 1 accepted name”.</p></li>
+<li><p>Multiple names can be linked to a unique input name. In such cases, the bdc_clean_duplicates function is used to flag and remove names with multiple accepted names (column "acceptedNameUsageID") and synonyms (i.e., column "taxonomicStatus"). The function proceeds as follow:</p></li>
+<li><p>Filter out the database according to a specified taxonomic rank. If supplied, the arguments "rank_name" and "rank" are used to reduce the number of duplicated accepted names, which is useful to remove any ambiguity in the matching. For example, the genus "Casearia" is present in both the kingdoms Animalia and Plantae. When handling names of Plantae, would be helpful to get rid of records of the Animalia to avoid assigned to “Casearia” the note "| more 1 accepted name".</p></li>
 <li><p>When multiple accepted names are linked to a same name, a match cannot be performed, and names is returned as NA. This a precautionary measure to avoid wrong name matching.</p></li>
 <li><p>When there are one accepted names and synonyms linked to a unique name, only the first are kept.</p></li>
-<li><p>If ‘export_accepted’ = TRUE a database containing a list of all duplicated accepted names is exported.
-The ‘bdc_clean_duplicates’ is useful to ensure that names retrieved are in the same order and have the same length of input names.</p></li>
+<li><p>If "export_accepted" = TRUE a database containing a list of all duplicated accepted names is exported.
+The "bdc_clean_duplicates" is useful to ensure that names retrieved are in the same order and have the same length of input names.</p></li>
 </ul>
 
 <p><strong>Second: fuzzy matching</strong></p><ul>
-<li><p>Fuzzy matching will be applied when ‘suggest_names’ is TRUE and only for unresolved names in phase one. In such cases, the algorithm processes name matching queries to find a potential matching candidate from a specified taxonomic database. Fuzzy matching identifies suggesting names for the queried names thought a measure of string similarity (i.e., distance). String distance is calculated by optimal string alignment (restricted Damerau-Levenshtein distance) that counts the number of deletions, insertions, substitutions, and transpositions of adjacent characters. It ranges from 0 to 1, being 1 an indicative of a perfect match. If a candidate name is found and the distance is equal or higher than the distance informed in ‘suggest_distance’, a suggest name is returned. Otherwise, names are be returned as NA. To reduce the number of both false positives and negatives, the ‘suggest_distance’ is 0.9, by default, which means that only few differences between strings are allowed. When there are multiple candidate names with a same matching distance, the first name in the vector is returned. To increase the probability of finding potential match candidate and to save computational time, two steps are taken before conducting fuzzy matching, including:</p></li>
-<li><p>If supplied, the arguments ‘rank_name’ and ‘rank’ are used to filter the taxonomic database. This removes ambiguity in matching by avoiding matching names from unrelated taxonomic ranks (e.g., match a plant species against a taxonomic database containing animal names) and decreases the number of names in taxonomic database used to calculate the matching distance.</p></li>
+<li><p>Fuzzy matching will be applied when "suggest_names" is TRUE and only for unresolved names in phase one. In such cases, the algorithm processes name matching queries to find a potential matching candidate from a specified taxonomic database. Fuzzy matching identifies suggesting names for the queried names thought a measure of string similarity (i.e., distance). String distance is calculated by optimal string alignment (restricted Damerau-Levenshtein distance) that counts the number of deletions, insertions, substitutions, and transpositions of adjacent characters. It ranges from 0 to 1, being 1 an indicative of a perfect match. If a candidate name is found and the distance is equal or higher than the distance informed in "suggest_distance", a suggest name is returned. Otherwise, names are be returned as NA. To reduce the number of both false positives and negatives, the "suggest_distance" is 0.9, by default, which means that only few differences between strings are allowed. When there are multiple candidate names with a same matching distance, the first name in the vector is returned. To increase the probability of finding potential match candidate and to save computational time, two steps are taken before conducting fuzzy matching, including:</p></li>
+<li><p>If supplied, the arguments "rank_name" and "rank" are used to filter the taxonomic database. This removes ambiguity in matching by avoiding matching names from unrelated taxonomic ranks (e.g., match a plant species against a taxonomic database containing animal names) and decreases the number of names in taxonomic database used to calculate the matching distance.</p></li>
 <li><p>The taxonomic database is filtered according to a set of firsts letters of all input names. This process reduces the number of names in taxonomic database that each supplied name should be compared.
 When a same suggested name is returned for different input names, a warning is returned asking users to check whether the suggested name is valid.
 Searching for accepted names for synonyms
-When names are synonyms, an accepted name ID is used to replace synonyms by accepted names. Ambiguous synonyms, in other words, names that have been published more than once describing different species and thus have more than one accepted name (heterotypic, homotypic, pro-parte synonyms and doubtful names) cannot be match. These names are returned as NA and a flag indicating the status of a name is added in column ‘notes’.</p></li>
+When names are synonyms, an accepted name ID is used to replace synonyms by accepted names. Ambiguous synonyms, in other words, names that have been published more than once describing different species and thus have more than one accepted name (heterotypic, homotypic, pro-parte synonyms and doubtful names) cannot be match. These names are returned as NA and a flag indicating the status of a name is added in column "notes".</p></li>
 </ul>
 
 
@@ -246,17 +254,17 @@ When names are synonyms, an accepted name ID is used to replace synonyms by acce
 
 <p>The column notes contain assertions on the name standardization process. The notes can be divided in “issues” – possibly errors or names that needed to be checked –, and notes (“messages”) about the standardization process. Names flagged as taxonomic issue are not matched and returned as NA.</p>
 <p>Taxonomic issues are grouped into the following categories:</p><ul>
-<li><p><strong>“notFound”</strong>:  name provided does not match any of the names presented in the taxonomic reference used. This can occur when i) names are misspelled names and the matching distance is higher than the one specified in the argument ‘suggest_distance’, or ii) names are not present in the taxonomic reference used to querying names.</p></li>
-<li><p><strong>“multipleAccepted”</strong>: more than one accepted name was found to the name provided.</p></li>
+<li><p><strong>"notFound"</strong>:  name provided does not match any of the names presented in the taxonomic reference used. This can occur when i) names are misspelled names and the matching distance is higher than the one specified in the argument "suggest_distance", or ii) names are not present in the taxonomic reference used to querying names.</p></li>
+<li><p><strong>"multipleAccepted"</strong>: more than one accepted name was found to the name provided.</p></li>
 <li><p>“noAcceptedName”: no accepted name found to the name provided.</p></li>
-<li><p><strong>“heterotypic synonym”</strong>, “homotypic synonym”, “pro-parte synonym”: ambiguous synonyms that have more than one accepted name.</p></li>
+<li><p><strong>"heterotypic synonym"</strong>, “homotypic synonym”, “pro-parte synonym”: ambiguous synonyms that have more than one accepted name.</p></li>
 </ul>
 
 <p>Similarly, taxonomic notes are grouped into the following categories:</p><ul>
-<li><p><strong>“accepted”</strong>: valid accepted name.</p></li>
-<li><p><strong>“replaceSynonym”</strong>: the input name is a synonym was replaced by an accepted name.</p></li>
-<li><p><strong>“wasMisspelled”</strong>: the input name was misspelled.</p></li>
-<li><p><strong>“wasMisspelled | replaceSynonym”</strong>: the input name was a misspelled synonym and was replace by an accepted name.</p></li>
+<li><p><strong>"accepted"</strong>: valid accepted name.</p></li>
+<li><p><strong>"replaceSynonym"</strong>: the input name is a synonym was replaced by an accepted name.</p></li>
+<li><p><strong>"wasMisspelled"</strong>: the input name was misspelled.</p></li>
+<li><p><strong>"wasMisspelled | replaceSynonym"</strong>: the input name was a misspelled synonym and was replace by an accepted name.</p></li>
 <li><p><strong>"synonym"</strong>: the input name was a synonym.</p></li>
 </ul>
 
@@ -264,11 +272,15 @@ When names are synonyms, an accepted name ID is used to replace synonyms by acce
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>sci_name</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Polystachya estrellensis"</span> , <span class='st'>"Tachigali rubiginosa"</span>, <span class='st'>"Oxalis rhombeo ovata"</span>, <span class='st'>"Axonopus canescens"</span>,
-<span class='st'>"Prosopis"</span>, <span class='st'>"Guapira opposita"</span>, <span class='st'>"Clidemia naevula"</span>, <span class='st'>"Poincianella pyramidalis"</span>, <span class='st'>"Hymenophyllum polyanthos"</span><span class='op'>)</span>
-<span class='va'>test</span> <span class='op'>&lt;-</span> <span class='fu'>bdc_query_names_taxadb</span><span class='op'>(</span><span class='va'>sci_names</span>, suggestion_distance <span class='op'>=</span> <span class='fl'>0.9</span>, db <span class='op'>=</span> <span class='st'>"gbif"</span><span class='op'>)</span>
-<span class='op'>}</span>
+<span class='va'>sci_name</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Polystachya estrellensis"</span> , <span class='st'>"Tachigali rubiginosa"</span>, <span class='st'>"Oxalis
+rhombeo ovata"</span>, <span class='st'>"Axonopus canescens"</span>, <span class='st'>"Prosopis"</span>, <span class='st'>"Guapira opposita"</span>,
+<span class='st'>"Clidemia naevula"</span>, <span class='st'>"Poincianella pyramidalis"</span>, <span class='st'>"Hymenophyllum polyanthos"</span><span class='op'>)</span>
 
+<span class='va'>test</span> <span class='op'>&lt;-</span> <span class='fu'>bdc_query_names_taxadb</span><span class='op'>(</span>
+<span class='va'>sci_names</span>, 
+suggestion_distance <span class='op'>=</span> <span class='fl'>0.9</span>, 
+db <span class='op'>=</span> <span class='st'>"gbif"</span><span class='op'>)</span> 
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

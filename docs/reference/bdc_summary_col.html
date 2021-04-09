@@ -6,8 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Creates or updates the column summarizing the results of data quality tests — bdc_summary_col • bdc</title>
+<title>Create or update the column summarizing the results of data quality tests — bdc_summary_col • bdc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -39,11 +46,12 @@
 
 
 
-<meta property="og:title" content="Creates or updates the column summarizing the results of data quality tests — bdc_summary_col" />
-<meta property="og:description" content="Creates or updates the column &quot;.summary&quot; summarizing the results of data
-quality tests (i.e., columns starting with &quot;.&quot;). Records that have failed in
-at least one data quality test are considered invalid (i.e., flagged as
-&quot;FALSE&quot;) in the &quot;.summary&quot; column." />
+<meta property="og:title" content="Create or update the column summarizing the results of data quality tests — bdc_summary_col" />
+<meta property="og:description" content="This function creates or updates the column &quot;.summary&quot; summarizing the
+results of data quality tests (i.e., columns starting with &quot;.&quot;). Records that
+have failed in at least one test are flagged for further inspection (i.e.,
+flagged as &quot;FALSE&quot;) in the &quot;.summary&quot; column." />
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
 
@@ -83,13 +91,13 @@ at least one data quality test are considered invalid (i.e., flagged as
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa fas fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -120,16 +128,16 @@ at least one data quality test are considered invalid (i.e., flagged as
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Creates or updates the column summarizing the results of data quality tests</h1>
+    <h1>Create or update the column summarizing the results of data quality tests</h1>
     
     <div class="hidden name"><code>bdc_summary_col.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates or updates the column ".summary" summarizing the results of data
-quality tests (i.e., columns starting with "."). Records that have failed in
-at least one data quality test are considered invalid (i.e., flagged as
-"FALSE") in the ".summary" column.</p>
+    <p>This function creates or updates the column ".summary" summarizing the
+results of data quality tests (i.e., columns starting with "."). Records that
+have failed in at least one test are flagged for further inspection (i.e.,
+flagged as "FALSE") in the ".summary" column.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bdc_summary_col</span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span></pre>

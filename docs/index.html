@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Biodiversity data cleaning • bdc</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -13,6 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Biodiversity data cleaning">
 <meta property="og:description" content="Easily clean up biodiversity data.">
+<meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -73,35 +80,45 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="bdc" class="section level1">
+<div id="bdc-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#bdc" class="anchor"></a>bdc</h1></div>
+<a href="#bdc-" class="anchor"></a>BDC <img src="https://github.com/brunobrr/bdc/blob/master/man/figures/logo.png">
+</h1></div>
+<div id="a-comprehensive-and-straightforward-workflow-for-standardizing-integrating-and-cleaning-biodiversity-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#a-comprehensive-and-straightforward-workflow-for-standardizing-integrating-and-cleaning-biodiversity-data" class="anchor"></a>A comprehensive and straightforward workflow for standardizing, integrating, and cleaning biodiversity data</h2>
 <!-- badges: start -->
 <!-- badges: end -->
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of misc from <a href="https://github.com/brunobrr/bdc">github</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span>
-<span class="co">#&gt; Warning in fun(libname, pkgname): rgeos: versions of GEOS runtime 3.8.1-CAPI-1.13.3</span>
-<span class="co">#&gt; and GEOS at installation 3.8.0-CAPI-1.13.1differ</span></code></pre></div>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
+<div id="why-bdc" class="section level3">
+<h3 class="hasAnchor">
+<a href="#why-bdc" class="anchor"></a>Why BDC?</h3>
+<p>Handle biodiversity data from several different sources is not an easy task. This workflow was created to facilitate i) standardization and integration of heterogeneous datasets; and ii) to flag, document, clean, and correct biodiversity data.</p>
+<p>The workflow is composed of five main steps:</p>
+<p>1) <strong>Standardization</strong> and <strong>integration</strong> of different datasets;<br>
+2) <strong>Pre-filter</strong>: flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names);<br>
+3) <strong>Taxonomy</strong>: cleaning, parsing, and standardization of scientific names against multiple taxonomic references. The workflow corrects spelling errors and converts nomenclatural synonyms to currently accepted names;<br>
+4) <strong>Space</strong>: flagging of erroneous, suspicious, and low-precision geographic coordinates;<br>
+5) <strong>Time</strong>: flagging and, whenever possible, correction of inconsistent collection date.</p>
+<p>Aim to facilitate the interpretation and visualization of results, in each step of the workflow a report and figures are created. Further, standardized databases resulting from each step of the workflow as well as databases containing information needing further inspection are automatically saved.</p>
 </div>
-<div id="introducing-bdc" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introducing-bdc" class="anchor"></a>Introducing BDC</h2>
-<p><strong>BDC - a comprehensive and straightforward workflow for integrating, standardizing, and cleaning biodiversity data</strong></p>
-<p>Handle biodiversity data from several varying sources is not an easy task. This workflow was created to facilitate the process of integrating, standardizing, and cleaning biodiversity data aiming to improve its and make it fit for use.</p>
-<p>The workflow is composed of five steps:</p>
-<ol>
-<li>Merge datasets: Standardization and integration of datasets from several heterogeneous sources</li>
-<li>Prefilter: flagging, identifying, and cleaning data missing or with invalid information</li>
-<li>Taxonomy: cleaning and standardizing scientific names (ten taxonomic authorities available and fuzzy match option allowed)</li>
-<li>Space: flagging, identifying, and cleaning potentially wrong geographic coordinates (fifteen tests available)</li>
-<li>Time: standardizing and flagging information about an event</li>
-</ol>
-<p>Aim to make easier the interpretation and visualization of results, in each step of the workflow a report and figures are created. Further, standardized databases resulting from each step of the workflow as well as databases containing information that needs (could) to be checked by users are automatically saved.</p>
+<div id="package-website" class="section level3">
+<h3 class="hasAnchor">
+<a href="#package-website" class="anchor"></a>Package website</h3>
+<p>See BDC package website (<a href="https://brunobrr.github.io/bdc/" class="uri">https://brunobrr.github.io/bdc/</a>) for detailed explanation on each step of the workflow.</p>
+</div>
+<div id="getting-help" class="section level3">
+<h3 class="hasAnchor">
+<a href="#getting-help" class="anchor"></a>Getting help</h3>
+<p>If you encounter a clear bug, please file an issue <a href="https://github.com/brunobrr/bdc/issues">here</a>. For questions or suggestion, please send us a email (<a href="mailto:ribeiro.brr@gmail.com" class="email">ribeiro.brr@gmail.com</a>).</p>
+</div>
 </div>
 </div>
   </div>
