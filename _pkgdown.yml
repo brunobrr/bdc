@@ -17,3 +17,9 @@ navbar:
          href: articles/merge-datasets.html
       -  text: "Prefilter"
          href: articles/prefilter.html
+      -  text: "Taxonomy"
+         href: articles/taxonomy.html
+      -  text: "Space"
+         href: articles/space.html
+      -  text: "Time"
+         href: articles/time.html
