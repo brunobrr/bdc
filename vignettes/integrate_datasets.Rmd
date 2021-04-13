@@ -1,5 +1,6 @@
 ---
-title: "Merge datasets"
+title: "Standardization and integration of different datasets"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Merge datasets}
@@ -7,76 +8,94 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = FALSE)
 devtools::load_all()
 ```
 
-First, install `bdc` from github.
 
-```{r}
+### Introduction
+
+The first step of the BDC workflow handles the harmonization of heterogeneous datasets in a consistent and compatible format in a simple and efficient way. How is this accomplished? Basically, by replacing in original datasets by standardized terms. To do so, users must fill-out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**. 
+
+Once standardized, datasets are then integrated into a formatted database having a minimum set of terms required for sharing biodiversity data and metadata across a wide variety of biodiversity applications ([Simple Darwin Core standards](https://dwc.tdwg.org/terms/)).
+
+<br/>
+
+<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
+
+- Original datasets to be formatted in comma-seperated format (**.csv**)
+- When filling out the configuration table, please provide the **exact** name of a column of original dataset
+- Names of original datasets without a correspond DarwinCore term standardized term in ***DatabaseInfo.csv*** must be fill out **NA** (not available)
+- The workflow is adjustable to insert other fields in the configuration table according to their needs. In such cases, we strongly recommend the added terms follow the Darwin Core standards.  
+
+
+### Installation
+
+You can install the released version of 'BDC' from [github](https://github.com/brunobrr/bdc) with:
+
+```{r, message=FALSE, warning=FALSE}
+if (!require("remotes")) install.packages("remotes")
 if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
-Now, create the folders:
 
+Creating folders to save the results
 ```{r}
-# bdc::bdc_create_dir()
+bdc::bdc_create_dir()
 ```
 
-Read the metadata:
+
+### Read databasets
+
+Read the metadata file:
 
 ```{r}
-# metadata <- read_csv()
-# bdc::bdc_standardize_datasets(metadata)
+metadata <-
+  system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc") %>%
+  read_csv(metadata)
+
+metadata
 ```
 
-The first step of the bdc workflow handles the harmonization of heterogeneous datasets in a consistent and compatible format in a simple and efficient way. How is this accomplished? Basically, by replacyng in orignal datasets by standardized terms. To do so, users must fill-out a **configuration table** to indicate which field names (i.e., column heards) of each original dataset matches a list of standardized Darwin Core terms (Wieczorek et al. 2012). Once standardized, datasets are then integrated in a formmatted database.
-
-The Darwin Core terms represents the simplest method and structure for sharing biodiversity data and metadata across a wide variety of biodiversity applications (see Simple Darwin Core standards [here](https://dwc.tdwg.org/terms/)). The standardization process follows current best methods for integrating biodiversity data in a common format (e.g. Robertson et al. 2014; Seebens et al. 2020).
-
-<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="25"/> **Important**:
-
--   Original datasets to be formatted must be located in the folder ***Input_files*** in comma-seperated format (**.csv**)
--   Note that the configuration table ***DatabaseInfo.csv*** is located in the **Config** folder
--   When filling out the configuration table, please provide the **exact** name of a column of original dataset to be standardized
--   Names of original datasets with no correspond standardized term in ***DatabaseInfo.csv*** must be fill out nas **NA** (not available)
-
-Below we can find a list of fields and their description. Each field is categorized according to its importance to run the workflow. For example, the fields assigned as required contain the minimum information necessary to run the workflow (more details below). **The workflow is adjustable**, and users can insert other fields in the configuration table according to their needs. In such cases, we strongly recommend that terms added follow the Darwin Core standards.
+The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the workflow: i) *required*, i.e., the minimum information necessary to run the workflow, ii) *recommended*, i.e., not mandatory but having important details on species records, and iii) *additional*, i.e., information potentially useful for detailed data analyses 
 
 Below are listed the specifications of each field of the configuration table:
 
--   **Field**: Name of the fields in *DatabaseInfo.csv* to be filled in.
--   **Category**: Classification of each field in *DatabaseInfo.csv*. If *required*, the field is the minimum required information to run the workflow; if *recommended*, the field is not mandatory to run the workflow but it contains important details on species records; if *additional*, the field contains information that can be provided by users. As a general guidance, be careful to include all *required* fields and suply as many *reccomended* and *additional* fields as possible.
--   **Description**: Description about the content of the specified field in the original database.
--   **Type**: Type of content data on the specified field in the original database.
--   **Example**: An example of a single content on the specified field in the original database.
+- **Field**: Name of the fields in *DatabaseInfo.csv* to be filled in.  
+- **Category**: Classification of each field in *DatabaseInfo.csv*. *required*, i.e., the minimum information necessary to run the workflow, ii) *recommended*, i.e., not mandatory but having important details on species records, and iii) *additional*, i.e., information potentially useful for detailed data analyses. As a general guidance, be careful to include all *required* fields and supply as many recommended and additional fields as possible.
+- **Description**: Description about the content of the specified field in the original database.  
+- **Type**: Type of content data on the specified field in the original database.  
+- **Example**: An example of a single content on the specified field in the original database.  
+
 
 ------------------------------------------------------------------------
 
-| Field                            | Category    | Description of DarwinCore terms (if existing)                                                                                                                                                                      | Type          | Example                                                      |
-|----------------------------------|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|--------------------------------------------------------------|
-| datasetName                      | Required    | A short name identifying the dataset                                                                                                                                                                               | Character     | GBIF                                                         |
-| fileName                         | Required    | The path containg the name of the input dataset located in the Input_file folder                                                                                                                                   | Character     | Input_files/GBIF.csv                                         |
-| scientificName                   | Required    | Name of the column in the original database presenting the scientific name of the taxon with or without authorship information, depending on the format of the source dataset                                      | Character     | Myrcia acuminata                                             |
-| decimalLatitude                  | Required    | Name of the column in the original database presenting the geographic latitude in decimal degrees                                                                                                                  | Numeric       | -6.370833                                                    |
-| decimalLongitude                 | Required    | Name of the column in the original database presenting the geographic longitude in decimal degrees                                                                                                                 | Numeric       | -3.25500                                                     |
-| occurrenceID                     | Recommended | Name of the column presenting the unique identifiers in the original databases. If absent, NA.                                                                                                                     | Numeric       | 1087566037                                                   |
-| basisOfRecord                    | Recommended | Name of the column in the original database presenting the specific nature of the data record                                                                                                                      | Character     | PreservedSpecimen; HumanObservation                          |
-| verbatimEventDate                | Recommended | The verbatim original date-time during which an Event occurred. Information only on year of collection can be provided. Recommended best practice is to use an encoding scheme, such as ISO ISO 8601-1:201         | date; numeric | 2018-08-29T15:19 (3:19pm local time on 29 August 2018); 1970 |
-| country                          | Recommended | The name of the country or major administrative unit in which the Location occurs.                                                                                                                                 | Character     | Brazil                                                       |
-| state_province                   | Recommended | Name of the column in the original database presenting the name of the next smaller administrative region than country (state, province, canton,department, region, etc.) in which the Location occurs             | Character     | Rio de Janeiro                                               |
-| county                           | Recommended | Name of the column in the original database presenting the full, unabbreviated name of the next smaller administrative region than stateProvince (county, shire, department, etc.) in which the Location occurs    | Character     | Goiânia                                                      |
-| locality                         | Recommended | Name of the column in the original database presenting the specific description of the place where taxon was sampled                                                                                               | Character     | Serra dos Pirineus                                           |
-| identified_by                    | Additional  | Name of the column in the original database presenting the list (concatenated and separated) of names of people, groups, or organizations who assigned the taxon to the subject                                    | Character     | M. Sobral                                                    |
-| coordinate_uncertainty_in_meters | Additional  | Name of the column in the original database presenting the horizontal distance (in meters) from the given decimalLatitude and decimalLongitude describing the smallest circle containing the whole of the Location | Numeric       | 10                                                           |
-| coordinate_precision             | Additional  | Name of the column in the original database presenting the decimal representation of the precision of the coordinates given in the decimalLatitude and decimalLongitude                                            | Numeric       | 0.0001                                                       |
-| recorded_by                      | Additional  | Name of the column in the original database presenting the list (concatenated and separated) of names of people, groups, or organizations responsible for recording the original Occurrence                        | Character     | Cervi, A.C                                                   |
-
-### **References**
-
-Robertson T, Döring M, Guralnick R, Bloom D, Wieczorek J, Braak K, Otegui J, Russell L, Desmet P. 2014. The GBIF integrated publishing toolkit: Facilitating the efficient publishing of biodiversity data on the internet. PLoS ONE 9.
-
-Seebens H, Clarke DA, Groom Q, Wilson JRU, García-Berthou E, Kühn I, Roigé M, Pagad S, Essl F, Vicente J, et al. 2020. A workflow for standardising and integrating alien species distribution data. NeoBiota 59: 39–59.
-
-Wieczorek J, Bloom D, Guralnick R, Blum S, Döring M, Giovanni R, et al. (2012) Darwin Core: An Evolving Community-Developed Biodiversity Data Standard. PLoS ONE 7(1):
+| Field                         | Category | Description of DarwinCore terms (if existing)                                                                                                                                                            | Type      | Example of data                                              |
+|-------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|--------------------------------------------------------------|
+| datasetName                   | RQ       | A short name identifying the dataset                                                                                                                                                                     | Character | GBIF                                                         |
+| fileName                      | RQ       | The path containing the dataset informed in “databaseName”                                                                                                                                               | Character | C:/Users/Geizi/Projects/Flora/Input_files/GBIF.csv           |
+| scientificName                | RQ       | Name of the column containing scientific names with or without authorship information                                                                                                                    | Character | Myrcia acuminata                                             |
+| decimalLatitude               | RQ       | Name of the column containing information on geographic latitude in decimal degrees                                                                                                                      | Numeric   | -6.370833                                                    |
+| decimalLongitude              | RQ       | Name of the column containing information on geographic longitude in decimal degrees                                                                                                                     | Numeric   | -3.255                                                       |
+| occurrenceID                  | RE       | Name of the column presenting the unique identifiers in the original databases. If absent, NA                                                                                                            | Numeric   | 1087566037                                                   |
+| basisOfRecord                 | RE       | Name of the column in the original database containing the specific nature of the data record                                                                                                            | Character | PreservedSpecimenHumanObservation                            |
+| verbatimEventDate             | RE       | The name of the column containing information on verbatim date-time. Information only on collecting year can be provided. Recommended best practice is to use an encoding scheme, such as ISO 8601-1:201 | date;     | 2018-08-29T15:19 (3:19pm local time on 29 August 2018); 1970 |
+|                               |          |                                                                                                                                                                                                          | numeric   |                                                              |
+| country                       | RE       | The name of the column containing information on the country or major administrative unit in which the data was recorded                                                                                 | Character | Brazil                                                       |
+| stateProvince                 | RE       | Name of the column presenting the name of the next smaller administrative region than country (state, province) where taxa were sampled or observed                                                      | Character | Rio de Janeiro                                               |
+| county                        | RE       | Name of the column containing the full, unabbreviated name of the next smaller administrative region than “stateProvince” (county, shire, department, etc.) where taxon was sampled or observed          | Character | Goiânia                                                      |
+| locality                      | RE       | Name of the column presenting the specific description of the place where taxon was sampled or observed                                                                                                  | Character | Serra dos Pirineus                                           |
+| identifiedBy                  | AD       | Name of the column presenting the list (concatenated and separated) of names of people, groups, or organizations who assigned the taxa to the subject                                                    | Character | M. Sobral                                                    |
+| coordinateUncertaintyInMeters | AD       | Name of the presenting the horizontal distance (in meters) from the given “decimalLatitude” and “decimalLongitude”                                                                                       | Numeric   | 10                                                           |
+| coordinatePrecision           | AD       | Name of the containing the decimal representation of the precision of the coordinates given in the decimalLatitude and decimalLongitude                                                                  | Numeric   | 0.0001                                                       |
+| recordedBy                    | AD       | Name of the column presenting the list (concatenated and separated) of names of people, groups, or organizations responsible for recording the original Occurrence                                       | Character | Cervi, A.C                                                   |

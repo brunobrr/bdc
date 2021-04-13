@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prefilter • bdc</title>
+<title>Space • bdc</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Prefilter">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Space">
 <meta property="og:description" content="bdc">
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -63,7 +63,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/merge-datasets.html">Merge dataset</a>
+      <a href="../articles/integrate_datasets.html">Merge dataset</a>
     </li>
     <li>
       <a href="../articles/prefilter.html">Prefilter</a>
@@ -90,11 +90,12 @@
 
       
 
-      </header><script src="space_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="space_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Prefilter</h1>
+      <h1 data-toc-skip>Space</h1>
             
+            <h4 class="date">2021-04-13</h4>
       
       
       <div class="hidden name"><code>space.Rmd</code></div>
@@ -103,14 +104,160 @@
 
     
     
-<p>First, install <code>bdc</code> from github.</p>
-<p>Now, create the folders:</p>
+<div id="introduction" class="section level3">
+<h3 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h3>
+<p>We used the R package <em>CoordinateCleaner</em> to flag potentially erroneous, suspect, or imprecise geographical coordinates based on geographic gazetteers and metadata. It includes a series of <em>validation</em> tests for identifying records assigned to country capital, provinces and country centroids, coordinates in urban areas, around biodiversity institutions or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).</p>
+<p>Note that we do not use the “seas” test to remove records in the ocean because such records we previously removed in the pre-filter step of the workflow (see <em>bdc_coordinates_country_inconsistent</em>).</p>
+<p><br></p>
+<p><img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"><strong>Important</strong>:</p>
+<p>The results of <em>validation</em> test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.</p>
+</div>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
+<p>You can install the released version of ‘BDC’ from <a href="https://github.com/brunobrr/bdc">github</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># bdc::bdc_create_dir()</span></code></pre></div>
-<p>Read the metadata:</p>
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
+<p>Creating folders to save the results</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># metadata &lt;- read_csv()</span>
-<span class="co"># bdc::bdc_standardize_datasets(metadata)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">bdc</span><span class="fu">::</span><span class="fu"><a href="../reference/bdc_create_dir.html">bdc_create_dir</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="read-the-database" class="section level3">
+<h3 class="hasAnchor">
+<a href="#read-the-database" class="anchor"></a>Read the database</h3>
+<p>Read the database created in the step *taxonomy** of the BDC workflow. It is also possible to read any datasets containing the <em>required</em> fields to run the workflow (see the vignette “Standardization and integration of different datasets”).</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">database</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,
+              <span class="st">"Output"</span>,
+              <span class="st">"Intermediate/02_taxonomy_database.qs"</span>, package <span class="op">=</span> <span class="st">"bdc"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span></code></pre></div>
+<p>Standardization of character encoding</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">Encoding</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UTF-8"</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+</div>
+<div id="flag-common-spatial-issues" class="section level3">
+<h3 class="hasAnchor">
+<a href="#flag-common-spatial-issues" class="anchor"></a>Flag common spatial issues</h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_space</span> <span class="op">&lt;-</span>
+  <span class="fu">CoordinateCleaner</span><span class="fu">::</span><span class="fu"><a href="https://ropensci.github.io/CoordinateCleaner/reference/clean_coordinates.html">clean_coordinates</a></span><span class="op">(</span>
+    x <span class="op">=</span>  <span class="va">database</span>,
+    lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
+    lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
+    species <span class="op">=</span> <span class="st">"scientificName"</span>,
+    countries <span class="op">=</span> ,
+    tests <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+      <span class="st">"capitals"</span>,     <span class="co"># remove country and province centroids within 2km</span>
+      <span class="st">"centroids"</span>,    <span class="co"># remove capitals centroids within 2km</span>
+      <span class="st">"duplicates"</span>,   <span class="co"># remove duplicated records</span>
+      <span class="st">"equal"</span>,        <span class="co"># remove equal coordinates</span>
+      <span class="st">"gbif"</span>,         <span class="co"># remove in GBIF headsquare</span>
+      <span class="st">"institutions"</span>, <span class="co"># remove zoo and herbaria within 2km </span>
+      <span class="st">"outliers"</span>,     <span class="co"># remove outliers</span>
+      <span class="st">"zeros"</span>,        <span class="co"># remove coordinates 0,0</span>
+      <span class="st">"urban"</span>         <span class="co"># remove urban areas</span>
+    <span class="op">)</span>,
+    capitals_rad <span class="op">=</span> <span class="fl">2000</span>, 
+    centroids_rad <span class="op">=</span> <span class="fl">2000</span>, 
+    centroids_detail <span class="op">=</span> <span class="st">"both"</span>,
+    inst_rad <span class="op">=</span> <span class="fl">100</span>, <span class="co"># remove zoo and herbaria within 2km </span>
+    outliers_method <span class="op">=</span> <span class="st">"quantile"</span>,
+    outliers_mtp <span class="op">=</span> <span class="fl">5</span>,
+    outliers_td <span class="op">=</span> <span class="fl">1000</span>,
+    outliers_size <span class="op">=</span> <span class="fl">10</span>,
+    range_rad <span class="op">=</span> <span class="fl">0</span>,
+    zeros_rad <span class="op">=</span> <span class="fl">0.5</span>,
+    capitals_ref <span class="op">=</span> <span class="cn">NULL</span>,
+    centroids_ref <span class="op">=</span> <span class="cn">NULL</span>,
+    country_ref <span class="op">=</span> <span class="cn">NULL</span>,
+    country_refcol <span class="op">=</span> <span class="st">"countryCode"</span>,
+    inst_ref <span class="op">=</span> <span class="cn">NULL</span>,
+    range_ref <span class="op">=</span> <span class="cn">NULL</span>,
+    <span class="co"># seas_ref = continent_border,</span>
+    <span class="co"># seas_scale = 110,</span>
+    urban_ref <span class="op">=</span> <span class="cn">NULL</span>,
+    value <span class="op">=</span> <span class="st">"spatialvalid"</span>
+  <span class="op">)</span></code></pre></div>
+<div id="flag-coordinates-low-decimal-precision" class="section level4">
+<h4 class="hasAnchor">
+<a href="#flag-coordinates-low-decimal-precision" class="anchor"></a>Flag coordinates low decimal precision</h4>
+<p>Identification of records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_space</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_coordinates_precision.html">bdc_coordinates_precision</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">check_space01</span>,
+    lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
+    lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
+    ndec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="co"># number of decimals to be tested</span>
+  <span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div id="mapping-spatial-errors" class="section level3">
+<h3 class="hasAnchor">
+<a href="#mapping-spatial-errors" class="anchor"></a>Mapping spatial errors</h3>
+<p>It is possible to map a column containing the results of one spatial test. For example, let’s map records in country or provinces centroids.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_space</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.cen</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/bdc_quickmap.html">bdc_quickmap</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">.</span>,
+    lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
+    lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
+    col_to_map <span class="op">=</span> <span class="st">".cen"</span>,
+    size <span class="op">=</span> <span class="fl">1</span>
+  <span class="op">)</span></code></pre></div>
+</div>
+<div id="report" class="section level3">
+<h3 class="hasAnchor">
+<a href="#report" class="anchor"></a>Report</h3>
+<p>Creating a column named “.summary” summarizing the results of all “validation” tests. This column is “FALSE” if any test was flagged as “FALSE” (i.e. potentially invalid or suspect record).</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_summary_col.html">bdc_summary_col</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_space</span><span class="op">)</span></code></pre></div>
+<p>Creating a report summarizing the results of all tests.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_create_report.html">bdc_create_report</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_space</span>,
+                    database_id <span class="op">=</span> <span class="st">"database_id"</span>,
+                    workflow_step <span class="op">=</span> <span class="st">"space"</span><span class="op">)</span>
+
+<span class="va">report</span></code></pre></div>
+</div>
+<div id="figures" class="section level3">
+<h3 class="hasAnchor">
+<a href="#figures" class="anchor"></a>Figures</h3>
+<p>Creating figures (bar plots and maps) to facilitate the interpretation of the results of data quality tests.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/bdc_create_figures.html">bdc_create_figures</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_space</span>,
+                   database_id <span class="op">=</span> <span class="st">"database_id"</span>,
+                   workflow_step <span class="op">=</span> <span class="st">"space"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="filter-the-database" class="section level3">
+<h3 class="hasAnchor">
+<a href="#filter-the-database" class="anchor"></a>Filter the database</h3>
+<p>It is possible to removed flagged records (potentially problematic ones) to get a ‘clean’ database (i.e., without test columns starting with “.”). However, to ensure that all records be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># output &lt;-</span>
+<span class="co">#   check_space %&gt;%</span>
+<span class="co">#   dplyr::filter(.summary == TRUE) %&gt;%</span>
+<span class="co">#   bdc_filter_out_flags(data = ., col_to_remove = "all")</span></code></pre></div>
+</div>
+<div id="save-the-database" class="section level3">
+<h3 class="hasAnchor">
+<a href="#save-the-database" class="anchor"></a>Save the database</h3>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_space</span> <span class="op">%&gt;%</span> 
+  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>, 
+            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"01_prefilter_database.qs"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

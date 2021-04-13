@@ -63,7 +63,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/merge-datasets.html">Merge dataset</a>
+      <a href="articles/integrate_datasets.html">Merge dataset</a>
     </li>
     <li>
       <a href="articles/prefilter.html">Prefilter</a>
@@ -94,29 +94,44 @@
   <div class="contents col-md-9">
 <div id="bdc-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#bdc-" class="anchor"></a>BDC <a href="https://github.com/brunobrr/bdc"><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" height="200"></a>
+<a href="#bdc-" class="anchor"></a>BDC <a href="https://github.com/brunobrr/bdc"><img src="https://github.com/brunobrr/bdc/blob/master/man/figures/logo.png" align="right" height="139"></a>
 </h1></div>
 <div id="a-comprehensive-and-straightforward-workflow-for-standardizing-integrating-and-cleaning-biodiversity-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-comprehensive-and-straightforward-workflow-for-standardizing-integrating-and-cleaning-biodiversity-data" class="anchor"></a>A comprehensive and straightforward workflow for standardizing, integrating, and cleaning biodiversity data</h2>
 <!-- badges: start -->
 
+<div id="overview" class="section level3">
+<h3 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h3>
+<p>Handle biodiversity data from several different sources is not an easy task. This workflow was created to facilitate i) standardization and integration of heterogeneous datasets; and ii) to flag, document, clean, and correct biodiversity data.</p>
+<p>The workflow is composed of five core steps:</p>
+<ol>
+<li>
+<strong>Standardization</strong> and <strong>integration</strong> of different datasets;<br>
+</li>
+<li>
+<strong>Pre-filter</strong>: flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names);<br>
+</li>
+<li>
+<strong>Taxonomy</strong>: cleaning, parsing, and standardization of scientific names against multiple taxonomic references. The workflow corrects spelling errors and converts nomenclatural synonyms to currently accepted names;<br>
+</li>
+<li>
+<strong>Space</strong>: flagging of erroneous, suspicious, and low-precision geographic coordinates;<br>
+</li>
+<li>
+<strong>Time</strong>: flagging and, whenever possible, correction of inconsistent collection date.</li>
+</ol>
+<p>Aim to facilitate the interpretation and visualization of results, in each step of the workflow a report and figures are created. Further, standardized databases resulting from each step of the workflow as well as databases containing information needing further inspection are automatically saved.</p>
+</div>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version of misc from <a href="https://github.com/brunobrr/bdc">github</a> with:</p>
+<p>You can install the released version of “BDC” from <a href="https://github.com/brunobrr/bdc">github</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
 <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
-<div id="why-bdc" class="section level3">
-<h3 class="hasAnchor">
-<a href="#why-bdc" class="anchor"></a>Why BDC?</h3>
-<p>Handle biodiversity data from several different sources is not an easy task. This workflow was created to facilitate i) standardization and integration of heterogeneous datasets; and ii) to flag, document, clean, and correct biodiversity data.</p>
-<p>The workflow is composed of five main steps:</p>
-<p>1) <strong>Standardization</strong> and <strong>integration</strong> of different datasets; 2) <strong>Pre-filter</strong>: flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names); 3) <strong>Taxonomy</strong>: cleaning, parsing, and standardization of scientific names against multiple taxonomic references. The workflow corrects spelling errors and converts nomenclatural synonyms to currently accepted names; 4) <strong>Space</strong>: flagging of erroneous, suspicious, and low-precision geographic coordinates; 5) <strong>Time</strong>: flagging and, whenever possible, correction of inconsistent collection date.</p>
-<p>Aim to facilitate the interpretation and visualization of results, in each step of the workflow a report and figures are created. Further, standardized databases resulting from each step of the workflow as well as databases containing information needing further inspection are automatically saved.</p>
-</div>
 <div id="package-website" class="section level3">
 <h3 class="hasAnchor">
 <a href="#package-website" class="anchor"></a>Package website</h3>

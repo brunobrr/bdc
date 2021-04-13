@@ -63,7 +63,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/merge-datasets.html">Merge dataset</a>
+      <a href="../articles/integrate_datasets.html">Merge dataset</a>
     </li>
     <li>
       <a href="../articles/prefilter.html">Prefilter</a>
@@ -90,11 +90,12 @@
 
       
 
-      </header><script src="prefilter_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="prefilter_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Prefilter</h1>
             
+            <h4 class="date">2021-04-13</h4>
       
       
       <div class="hidden name"><code>prefilter.Rmd</code></div>
@@ -103,24 +104,188 @@
 
     
     
-<p>First, install <code>bdc</code> from github.</p>
+<div id="introduction" class="section level3">
+<h3 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h3>
+<p>Large and heterogeneous datasets may contain thousands of records missing spatial or taxonomic information (partially or entirely) as well as several records outside a region of interest. Such lower quality data are not fit for use in many research applications without prior amendments. The ‘Pre-filter’ step contains a series of of tests to detect and, whenever, possible, correct errorouns records.</p>
+<p><br></p>
+<p><img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"><strong>Important</strong>:</p>
+<p>The results of <em>validation</em> test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.</p>
+</div>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
+<p>You can install the released version of ‘BDC’ from <a href="https://github.com/brunobrr/bdc">github</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="http://tidyverse.tidyverse.org">"tidyverse"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></code></pre></div>
-<p>Read metadata:</p>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
+<p>Creating folders to save the results</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">metadata</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Config/DatabaseInfo.csv"</span>, package <span class="op">=</span> <span class="st">"bdc"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">read_csv</span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span>
-
-<span class="va">metadata</span></code></pre></div>
-<p>Now, create the folders:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">bdc</span><span class="fu">::</span><span class="fu"><a href="../reference/bdc_create_dir.html">bdc_create_dir</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>Merge datasets:</p>
+</div>
+<div id="read-the-database" class="section level3">
+<h3 class="hasAnchor">
+<a href="#read-the-database" class="anchor"></a>Read the database</h3>
+<p>Read the merged database created in the step <strong>Standardization and integration of different datasets</strong> of the BDC workflow. It is also possible to read any datasets containing the <em>required</em> fields to run the workflow.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">database</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,
+              <span class="st">"Output"</span>,
+              <span class="st">"Intermediate/00_merged_database.qs"</span>, package <span class="op">=</span> <span class="st">"bdc"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span></code></pre></div>
+<p>Standardization of character encoding</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">bdc</span><span class="fu">::</span><span class="fu"><a href="../reference/bdc_standardize_datasets.html">bdc_standardize_datasets</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">Encoding</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UTF-8"</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+</div>
+<div id="records-missing-species-names" class="section level3">
+<h3 class="hasAnchor">
+<a href="#records-missing-species-names" class="anchor"></a>1 - Records missing species names</h3>
+<p><em>Validation</em>. This test flags records missing species names</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_scientificName_empty.html">bdc_scientificName_empty</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">database</span>,
+  sci_name <span class="op">=</span> <span class="st">"scientificName"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="records-lacking-information-on-geographic-coordinates" class="section level3">
+<h3 class="hasAnchor">
+<a href="#records-lacking-information-on-geographic-coordinates" class="anchor"></a>2 - Records lacking information on geographic coordinates</h3>
+<p><em>Validation</em>. This test flags records missing partial or complete information on geographic coordinates.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_coordinates_empty.html">bdc_coordinates_empty</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">check_pf1</span>,
+  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
+  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="records-with-out-of-range-coordinates" class="section level3">
+<h3 class="hasAnchor">
+<a href="#records-with-out-of-range-coordinates" class="anchor"></a>3 - Records with out-of-range coordinates</h3>
+<p><em>Validation</em>. This test flags records with out-of-range coordinates, that is latitude &gt; 90 or -90; longitude &gt;180 or -180.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_coordinates_outOfRange.html">bdc_coordinates_outOfRange</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">check_pf2</span>,
+  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
+  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="records-from-distrustful-sources" class="section level3">
+<h3 class="hasAnchor">
+<a href="#records-from-distrustful-sources" class="anchor"></a>4 - Records from distrustful sources</h3>
+<p><em>Validation</em>. This test flags records from doubtful source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_basisOfRrecords_notStandard.html">bdc_basisOfRrecords_notStandard</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">check_pf3</span>,
+  basisOfRecord <span class="op">=</span> <span class="st">"basisOfRecord"</span>,
+  names_to_keep <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="getting-country-names-from-valid-coordinates" class="section level3">
+<h3 class="hasAnchor">
+<a href="#getting-country-names-from-valid-coordinates" class="anchor"></a>5 - Getting country names from valid coordinates</h3>
+<p><em>ENRICHMENT</em>. Deriving country names for records missing country names.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_country_from_coordinates.html">bdc_country_from_coordinates</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">check_pf4</span>,
+  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
+  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
+  country <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="standardizing-country-names-and-getting-country-code-information" class="section level3">
+<h3 class="hasAnchor">
+<a href="#standardizing-country-names-and-getting-country-code-information" class="anchor"></a>6 - Standardizing country names and getting country code information</h3>
+<p><em>ENRICHMENT</em>. Country names are standardized against a list of country names in several languages retrieved from Wikipedia.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_country_standardized.html">bdc_country_standardized</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">check_pf5</span>,
+  country <span class="op">=</span> <span class="st">"country"</span>
+<span class="op">)</span></code></pre></div>
+</div>
+<div id="correcting-latitude-and-longitude-transposed" class="section level3">
+<h3 class="hasAnchor">
+<a href="#correcting-latitude-and-longitude-transposed" class="anchor"></a>7 - Correcting latitude and longitude transposed</h3>
+<p><em>AMENDMENT</em>. The mismatch between informed country and coordinates can be the result of negative or transposed coordinates. Once detected a mismatch, different coordinate transformations are made to correct the country and coordinates mismatch. Verbatim coordinates are then replaced by the rectified ones in the returned database (a database containing verbatim and corrected coordinates is also created in the “Output” folder).</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_coordinates_transposed.html">bdc_coordinates_transposed</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">check_pf6</span>, 
+    id <span class="op">=</span> <span class="st">"database_id"</span>,
+    sci_names <span class="op">=</span> <span class="st">"scientificName"</span>,
+    lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
+    lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
+    country <span class="op">=</span> <span class="st">"country"</span>
+  <span class="op">)</span></code></pre></div>
+</div>
+<div id="records-outside-a-region-of-interest" class="section level3">
+<h3 class="hasAnchor">
+<a href="#records-outside-a-region-of-interest" class="anchor"></a>8 - Records outside a region of interest</h3>
+<p><em>Validation</em>. Records outside one or multiple reference countries; i.e., records in other countries or at an informed distance from the coast (e.g., in the ocean). This last step avoids flagging as invalid records close to country limits (e.g., records of coast or marshland species).</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_coordinates_country_inconsistent.html">bdc_coordinates_country_inconsistent</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">check_pf7</span>,
+    country_name <span class="op">=</span> <span class="st">"Brazil"</span>,
+    lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
+    lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
+    dist <span class="op">=</span> <span class="fl">0.1</span> <span class="co"># in decimal degrees (~11 km at the equator)</span>
+  <span class="op">)</span></code></pre></div>
+</div>
+<div id="save-records-not-geo-referenced-but-with-locality-information" class="section level3">
+<h3 class="hasAnchor">
+<a href="#save-records-not-geo-referenced-but-with-locality-information" class="anchor"></a>9 - Save records not geo-referenced but with locality information</h3>
+<p><em>ENRICHMENT</em>. Coordinates can be derived from a detailed description of the locality associated with records in a process called retrospective geo-referencing.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/bdc_coordinates_from_locality.html">bdc_coordinates_from_locality</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">check_pf8</span>,
+  locality <span class="op">=</span> <span class="st">"locality"</span>,
+  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
+  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>
+<span class="op">)</span></code></pre></div>
+</div>
+<div id="report" class="section level3">
+<h3 class="hasAnchor">
+<a href="#report" class="anchor"></a>Report</h3>
+<p>Creating a column named “.summary” summarizing the results of all “validation” tests. This column is “FALSE” if any test was flagged as “FALSE” (i.e. potentially invalid or suspect record).</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_summary_col.html">bdc_summary_col</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_pf</span><span class="op">)</span></code></pre></div>
+<p>Creating a report summarizing the results of all tests.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_create_report.html">bdc_create_report</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_pf</span>,
+                    database_id <span class="op">=</span> <span class="st">"database_id"</span>,
+                    workflow_step <span class="op">=</span> <span class="st">"prefilter"</span><span class="op">)</span>
+
+<span class="va">report</span></code></pre></div>
+</div>
+<div id="figures" class="section level3">
+<h3 class="hasAnchor">
+<a href="#figures" class="anchor"></a>Figures</h3>
+<p>Creating figures (bar plots and maps) to facilitate the interpretation of the results of data quality tests.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/bdc_create_figures.html">bdc_create_figures</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_pf</span>,
+                   database_id <span class="op">=</span> <span class="st">"database_id"</span>,
+                   workflow_step <span class="op">=</span> <span class="st">"prefilter"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="filter-the-database" class="section level3">
+<h3 class="hasAnchor">
+<a href="#filter-the-database" class="anchor"></a>Filter the database</h3>
+<p>It is possible to removed flagged records (potentially problematic ones) to get a ‘clean’ database (i.e., without test columns starting with “.”). However, to ensure that all records be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># output &lt;-</span>
+<span class="co">#   check_pf %&gt;%</span>
+<span class="co">#   dplyr::filter(.summary == TRUE) %&gt;%</span>
+<span class="co">#   bdc_filter_out_flags(data = ., col_to_remove = "all")</span></code></pre></div>
+</div>
+<div id="save-the-database" class="section level3">
+<h3 class="hasAnchor">
+<a href="#save-the-database" class="anchor"></a>Save the database</h3>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">%&gt;%</span> 
+  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>, 
+            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"01_prefilter_database.qs"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

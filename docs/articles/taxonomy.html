@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prefilter • bdc</title>
+<title>Taxonomy • bdc</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Prefilter">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Taxonomy">
 <meta property="og:description" content="bdc">
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -63,7 +63,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/merge-datasets.html">Merge dataset</a>
+      <a href="../articles/integrate_datasets.html">Merge dataset</a>
     </li>
     <li>
       <a href="../articles/prefilter.html">Prefilter</a>
@@ -90,11 +90,12 @@
 
       
 
-      </header><script src="taxonomy_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="taxonomy_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Prefilter</h1>
+      <h1 data-toc-skip>Taxonomy</h1>
             
+            <h4 class="date">2021-04-13</h4>
       
       
       <div class="hidden name"><code>taxonomy.Rmd</code></div>
@@ -103,14 +104,182 @@
 
     
     
-<p>First, install <code>bdc</code> from github.</p>
-<p>Now, create the folders:</p>
+<div id="introduction" class="section level3">
+<h3 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h3>
+<p>The combination of large datasets from several sources requires careful standardization of hundreds of taxon names. The taxonomic standardization process borrows heavily from Norman et al. (2020; <em>taxadb</em> package), which contains functions that allow querying millions of taxonomic names in a fast, automatable, and consistent way using high-quality locally stored taxonomic databases.</p>
+<p>The workflow tools used to standardize names (<em>bdc_clean_name</em> and <em>bdc_query_names_taxadb</em>) contains additions to the <em>taxadb</em> package, including tools for: - 1. Clean and parse scientific names; - 2. Resolve misspelled names or variant spellings using a fuzzy matching application; - 3. Convert nomenclatural synonyms to current accepted name; - 4. Flag ambiguous results.</p>
+<p>The taxonomic standardization is based on one taxonomic database chosen by the user. <em>taxadb</em> makes available the following taxonomic sources:</p>
+<table class="table">
+<thead><tr class="header">
+<th>Abbreviation</th>
+<th>Taxonomic database</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>col</td>
+<td>Catalogue of Life</td>
+</tr>
+<tr class="even">
+<td>fb</td>
+<td>FishBase</td>
+</tr>
+<tr class="odd">
+<td>itis</td>
+<td>Integrated Taxonomic Information System</td>
+</tr>
+<tr class="even">
+<td>iucn</td>
+<td>International Union for Conservation of Nature’s Red List</td>
+</tr>
+<tr class="odd">
+<td>gbif</td>
+<td>Global Biodiversity Information Facility</td>
+</tr>
+<tr class="even">
+<td>ncbi</td>
+<td>National Center for Biotechnology Information</td>
+</tr>
+<tr class="odd">
+<td>ott</td>
+<td>OpenTree Taxonomy</td>
+</tr>
+<tr class="even">
+<td>tpl</td>
+<td>The Plant List</td>
+</tr>
+<tr class="odd">
+<td>slb</td>
+<td>SeaLifeBase</td>
+</tr>
+<tr class="even">
+<td>wd</td>
+<td>Wikidata</td>
+</tr>
+</tbody>
+</table>
+<p>Details on taxonomic references and schema used in taxadb can be found in <a href="docs.ropensci.org/taxadb/articles/data-sources.html">Norman et al. (2020)</a>.</p>
+</div>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
+<p>You can install the released version of ‘BDC’ from <a href="https://github.com/brunobrr/bdc">github</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># bdc::bdc_create_dir()</span></code></pre></div>
-<p>Read the metadata:</p>
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
+<p>Creating folders to save the results</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># metadata &lt;- read_csv()</span>
-<span class="co"># bdc::bdc_standardize_datasets(metadata)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">bdc</span><span class="fu">::</span><span class="fu"><a href="../reference/bdc_create_dir.html">bdc_create_dir</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="read-the-database" class="section level3">
+<h3 class="hasAnchor">
+<a href="#read-the-database" class="anchor"></a>Read the database</h3>
+<p>Read the database created in the step <strong>Pre-filter</strong> of the BDC workflow. It is also possible to read any datasets containing the <em>required</em> fields to run the workflow (see the vignette “Standardization and integration of different datasets”).</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">database</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,
+              <span class="st">"Output"</span>,
+              <span class="st">"Intermediate/01_prefilter_database.qs"</span>, package <span class="op">=</span> <span class="st">"bdc"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span></code></pre></div>
+<p>Standardization of character encoding</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">Encoding</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UTF-8"</span>
+  <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+</div>
+<div id="clean-and-parse-species-names" class="section level3">
+<h3 class="hasAnchor">
+<a href="#clean-and-parse-species-names" class="anchor"></a>Clean and parse species names</h3>
+<p>Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the <em>bdc_clean_name.</em> containing functionalities to optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to remove:</p>
+<ol style="list-style-type: decimal">
+<li>Family names pre-pended to species names;<br>
+</li>
+<li>Qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);<br>
+</li>
+<li>Infraspecific terms (e.g., variety [var.], subspecies [subsp], forma [f.], and their spelling variations);<br>
+</li>
+<li>Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);<br>
+</li>
+<li>Parse names, i.e., separate author, date, annotations from taxon name.</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">parse_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_clean_names.html">bdc_clean_names</a></span><span class="op">(</span>sci_names <span class="op">=</span> <span class="va">database</span><span class="op">$</span><span class="va">scientificName</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="names-harmonization" class="section level3">
+<h3 class="hasAnchor">
+<a href="#names-harmonization" class="anchor"></a>Names harmonization</h3>
+<p>The taxonomic harmonization is based upon <strong>one</strong> of those taxonomic authorities previously mentioned.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">query_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_query_names_taxadb.html">bdc_query_names_taxadb</a></span><span class="op">(</span>
+  sci_name <span class="op">=</span> <span class="va">database</span><span class="op">$</span><span class="va">names_clean</span>,
+  replace_synonyms <span class="op">=</span> <span class="cn">TRUE</span>,
+  suggest_names <span class="op">=</span> <span class="cn">TRUE</span>,
+  suggestion_distance <span class="op">=</span> <span class="fl">0.9</span>,
+  db <span class="op">=</span> <span class="st">"gbif"</span>,
+  rank_name <span class="op">=</span> <span class="st">"Plantae"</span>,
+  rank <span class="op">=</span> <span class="st">"kingdom"</span>,
+  parallel <span class="op">=</span> <span class="cn">TRUE</span>,
+  ncores <span class="op">=</span> <span class="fl">2</span>,
+  export_accepted <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span></code></pre></div>
+<p>Merge results of the taxonomy harmonization process with the original database. Before, let’s rename the column containing the original scientific names to “verbatim_scientificName”. From now on “scientifiName” correspond to the verified names (resulted from the name harmonization process). As the column “original_search” in “query_names” and “names_clean” are equal, only the first will be kept.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">database</span> <span class="op">&lt;-</span>
+  <span class="va">database</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>verbatim_scientificName <span class="op">=</span> <span class="va">scientificName</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">names_clean</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">query_names</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="report" class="section level3">
+<h3 class="hasAnchor">
+<a href="#report" class="anchor"></a>Report</h3>
+<p>The report is based on the column “notes” containing the results of the name standardization process.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_create_report.html">bdc_create_report</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_pf</span>,
+                    database_id <span class="op">=</span> <span class="st">"database_id"</span>,
+                    workflow_step <span class="op">=</span> <span class="st">"taxonomy"</span><span class="op">)</span>
+
+<span class="va">report</span></code></pre></div>
+</div>
+<div id="unresolved-names" class="section level3">
+<h3 class="hasAnchor">
+<a href="#unresolved-names" class="anchor"></a>Unresolved names</h3>
+<p>It also possible filter out records with taxonomic status different of “accepted”. Such records can be potentially resolved manually.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">unresolved_names</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_filter_out_names.html">bdc_filter_out_names</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">database</span>,
+                       taxonomic_notes <span class="op">=</span> <span class="st">"accepted"</span>,
+                       opposite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>Save the table containing unresolved names</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">unresolved_names</span> <span class="op">%&gt;%</span>
+ <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fwrite.html">fwrite</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Check"</span>, <span class="st">"02_unresolved_names.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="filter-the-database" class="section level3">
+<h3 class="hasAnchor">
+<a href="#filter-the-database" class="anchor"></a>Filter the database</h3>
+<p>It is possible to remove records with unresolved or invalid names to get a ‘clean’ database . However, to ensure that all records be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># output &lt;-</span>
+<span class="co">#   bdc_filter_out_names(</span>
+<span class="co">#     data = database,</span>
+<span class="co">#     taxonomic_notes = "accepted",</span>
+<span class="co">#     opposite = FALSE</span>
+<span class="co">#   )</span></code></pre></div>
+</div>
+<div id="save-the-database" class="section level3">
+<h3 class="hasAnchor">
+<a href="#save-the-database" class="anchor"></a>Save the database</h3>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">database</span> <span class="op">%&gt;%</span> 
+  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>, 
+            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"01_prefilter_database.qs"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

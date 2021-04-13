@@ -16,7 +16,7 @@ navbar:
       text: "Articles"
       menu:
       -  text: "Merge dataset"
-         href: articles/merge-datasets.html
+         href: articles/integrate_datasets.html
       -  text: "Prefilter"
          href: articles/prefilter.html
       -  text: "Taxonomy"
@@ -25,3 +25,5 @@ navbar:
          href: articles/space.html
       -  text: "Time"
          href: articles/time.html
+  components:
+    home: ~
