@@ -9,11 +9,12 @@ bdc_create_figures(data, database_id = "database_id", workflow_step = NULL)
 \arguments{
 \item{data}{data.frame. Containing the results of data quality tests and a .}
 
+\item{database_id}{character string. The column name with a unique record
+identifier.
+Default = "database_id".}
+
 \item{workflow_step}{character string. Name of the workflow step. Options
 available are "prefilter", "space", and "time".}
-
-\item{id}{character string. The column name with a unique record identifier.
-Default = "database_id".}
 }
 \value{
 Figures in a png format.

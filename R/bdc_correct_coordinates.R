@@ -1,24 +1,39 @@
 #' Internal function.Detects and corrects transposed geographic coordinates
-#'
+#' 
 #' This functions detects mismatches between country names informed coordinates.
 #' Once detects, transposed coordinates are corrected by the used of different
 #' coordinates transformations by using the 'bdc_coord_trans' function.
-#'
+#' 
 #' @param data data.frame. Containing an unique identifier for each records,
-#' geographical coordinates, and country names. Coordinates must be expressed in decimal degree and in WGS84.
-#' @param x character string. The column name with longitude. Default = "decimalLongitude".
-#' @param y character string. The column name with latitude Default = "decimalLatitude".
+#' geographical coordinates, and country names. Coordinates must be expressed in
+#' decimal degree and in WGS84.
+#' @param x character string. The column name with longitude. Default =
+#' "decimalLongitude".
+#' @param y character string. The column name with latitude Default =
+#' "decimalLatitude".
 #' @param sp character string. The column name with species scientific name.
 #' Default = "scientificName".
-#' @param id id character string. The column name with an unique record identifier. #' Default = "id".
-#' @param cntr_iso2 character string. The column name with the country code assignment of each record. Default = "country_code".
+#' @param id id character string. The column name with an unique record
+#' identifier. #' Default = "id".
+#' @param cntr_iso2 character string. The column name with the country code
+#' assignment of each record. Default = "country_code".
 #' @param world_poly polygon. Borders of the world.
-#' @param world_poly_iso charterer sting. Iso2 code column of country polygon database
-#' @param border_buffer numeric >= 0. A distance in decimal degrees used to created a buffer around the country. Records within a given country and at a specified distance from the border will be not be corrected. Default = 0.2 (~20 km at the equator). 
+#' @param world_poly_iso charterer sting. Iso2 code column of country polygon
+#' database
+#' @param border_buffer numeric. A distance in decimal degrees used to created a
+#' buffer around the country. Records within a given country and at a specified
+#' distance from its coast will be not be corrected. Default = 0.2 (~20 km at
+#' the equator).
 #'
-#' @noRd
 #' @return
-#' @export
+#'
+#' @importFrom CoordinateCleaner cc_val clean_coordinates
+#' @importFrom dplyr filter mutate as_tibble group_by_ group_split select_
+#' bind_rows distinct_ relocate left_join select
+#' @importFrom raster buffer
+#' @importFrom sp SpatialPoints over
+#' 
+#' @noRd
 #'
 #' @examples
 #' \dontrun{
@@ -92,7 +107,7 @@ bdc_correct_coordinates <-
               occ_country[[i]][cntr_iso2] %>% unique,
               paste0(" (", nrow(occ_country[[i]]), ")"))
       try(coord_test[[i]] <-
-            bdc_coord_trans(
+            bdc::bdc_coord_trans(
               data = occ_country[[i]],
               x = x,
               y = y,
@@ -115,7 +130,7 @@ bdc_correct_coordinates <-
         coord_test[[i]] %>%
         dplyr::select_(cntr_iso2) %>%
         unique %>%
-        pull
+        dplyr::pull
 
       # Here filter polygon based on your country iso2c code
       my_country <-
