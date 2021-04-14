@@ -24,6 +24,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports:
     here,
+    doParallel,
     dplyr,
     purrr,
     readr,
@@ -59,4 +60,4 @@ Imports:
     rgnparser,
     rworldmap
 Suggests:
-    testthat,
+    testthat

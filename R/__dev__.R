@@ -13,7 +13,7 @@ if (FALSE) {
   #          workflow será baseada no objeto `func`          #
   #                                                          #
   ############################################################
-  func <- "bdc_correct_coordinates"
+  func <- "bdc_query_names_taxadb"
   func_file <- paste0("R/", func, ".R")
   
   # cria arquivo de teste para a função
