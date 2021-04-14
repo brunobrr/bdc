@@ -41,7 +41,6 @@
 #' and string distance between original and suggested (candidates) names.
 #' 
 #' @importFrom base toupper
-#' @importFrom doParallel registerDoParallel
 #' @importFrom dplyr filter pull
 #' @importFrom parallel makeCluster stopCluster
 #' @importFrom taxadb taxa_tbl
