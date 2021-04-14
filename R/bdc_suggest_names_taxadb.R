@@ -40,7 +40,6 @@
 #' @return A three-column data.frame containing original name, names suggested,
 #' and string distance between original and suggested (candidates) names.
 #' 
-#' @importFrom base toupper
 #' @importFrom dplyr filter pull
 #' @importFrom parallel makeCluster stopCluster
 #' @importFrom taxadb taxa_tbl
@@ -76,7 +75,7 @@ bdc_suggest_names_taxadb <-
       USE.NAMES = FALSE
       ))
     
-    first_letter <- base::toupper(first_letter)
+    first_letter <- toupper(first_letter)
     
     # Should taxonomic database be filter according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
