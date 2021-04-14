@@ -1,10 +1,8 @@
 #' Internal function. Extracts countries names in different languages from
 #' wikipedia
 #'
-#' @param x
-#'
-#' @export
-#'
+#' @noRd
+#' 
 #' @examples
 #' \dontrun{
 #' }

@@ -6,7 +6,8 @@
 #' @param data data.frame. Containing the results of data quality tests and a .
 #' @param workflow_step character string. Name of the workflow step. Options
 #' available are "prefilter", "space", and "time".
-#' @param id character string. The column name with a unique record identifier.
+#' @param database_id character string. The column name with a unique record
+#' identifier.
 #' Default = "database_id".
 #'
 #' @details This function creates figures based on the results of data quality

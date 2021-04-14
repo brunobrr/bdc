@@ -16,7 +16,7 @@
 #' @param rank_name character string. A taxonomic rank to filter the database.
 #' Options available are: "kingdom", "phylum", "class", "order", "family", and
 #' "genus". Default = NULL.
-#' @param rank character string. Taxonomic rank name (e.g. "Plantae", "Animalia", "Aves", "Carnivora". Default is NULL.
+#' @param rank character string. Taxonomic rank name (e.g. "Plantae", "Animalia", "Aves", "Carnivora". Default = NULL.
 #' @param parallel logical. If TRUE (Default) to run in parallel. 
 #' @param ncores numeric. Number of cores to run in parallel. Default = 2.
 #' 
@@ -39,6 +39,13 @@
 #' 
 #' @return A three-column data.frame containing original name, names suggested,
 #' and string distance between original and suggested (candidates) names.
+#' 
+#' @importFrom base toupper
+#' @importFrom doParallel registerDoParallel
+#' @importFrom dplyr filter pull
+#' @importFrom parallel makeCluster stopCluster
+#' @importFrom taxadb taxa_tbl
+#' 
 #' @noRd
 #'
 #' @examples
@@ -99,7 +106,7 @@ bdc_suggest_names_taxadb <-
       sug_dat <-
         foreach(i = sci_name,
                 .combine = rbind, .export = "bdc_return_names") %dopar% {
-                  bdc_return_names(i, max_distance, species_first_letter)
+                  bdc::bdc_return_names(i, max_distance, species_first_letter)
                 } # end foreach
       parallel::stopCluster(cl) # stop cluster
     } else {
@@ -112,7 +119,7 @@ bdc_suggest_names_taxadb <-
       
       for (i in seq_along(sci_name)) {
         sug_dat[i, ] <-
-          bdc_return_names(sci_name[i], max_distance, species_first_letter)
+          bdc::bdc_return_names(sci_name[i], max_distance, species_first_letter)
       }
     }
     return(sug_dat)

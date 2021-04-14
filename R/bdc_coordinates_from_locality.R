@@ -12,8 +12,10 @@
 #' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
 #' @param locality character string. The column name with information on
 #' locality. Default = "locality".
+#' 
 #' @details According to DarwinCore terminology, locality refers to "the
 #' specific description of the place" where a organism were recorded.
+#' 
 #' @return A data.frame containing records missing or with invalid coordinates
 #' but with potentially useful locality information is saved in
 #' Output/Check/01_coordinates_from_locality.csv.
