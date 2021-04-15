@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# BDC <a href='https://github.com/brunobrr/bdc'><img src='https://github.com/brunobrr/bdc/blob/master/man/figures/logo.png' align="right" height="139" /></a>
+# BDC - Biodiversity data cleaning <a href='https://github.com/brunobrr/bdc'><img src='https://github.com/brunobrr/bdc/blob/master/man/figures/logo.png' align="right" height="139" /></a>
 
 ## A comprehensive and straightforward workflow for standardizing, integrating, and cleaning biodiversity data
 
@@ -15,7 +15,7 @@
 Handle biodiversity data from several different sources is not an easy
 task. This workflow was created to facilitate i) standardization and
 integration of heterogeneous datasets; and ii) to flag, document, clean,
-and correct biodiversity data.
+and correct errors or suspect records of biodiversity data.
 
 The workflow is composed of five core steps:
 
@@ -32,13 +32,12 @@ The workflow is composed of five core steps:
 5.  **Time**: flagging and, whenever possible, correction of
     inconsistent collection date.
 
-Aim to facilitate the interpretation and visualization of results, in
-each step of the workflow a report and figures are created. Further,
-standardized databases resulting from each step of the workflow as well
-as databases containing information needing further inspection are
-automatically saved.
+Aim to facilitate the interpretation and visualization of results,
+reports and figures are created in each step of the workflow. Further,
+standardized databases resulting from each step as well as data needing
+further inspection are automatically saved in the “Output” folder.
 
-## Installation
+### Installation
 
 You can install the released version of “BDC” from
 [github](https://github.com/brunobrr/bdc) with:

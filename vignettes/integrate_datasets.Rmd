@@ -18,25 +18,25 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = T)
 devtools::load_all()
 ```
 
 
 ### Introduction
 
-The first step of the BDC workflow handles the harmonization of heterogeneous datasets in a consistent and compatible format in a simple and efficient way. How is this accomplished? Basically, by replacing in original datasets by standardized terms. To do so, users must fill-out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**. 
+The first step of the BDC workflow handles the harmonization of heterogeneous datasets in a standard format in a simple and efficient way. How is this accomplished? Basically, by replacing in the headers of original datasets by standardized terms. To do so, users must fill-out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms** (see table below). 
 
-Once standardized, datasets are then integrated into a formatted database having a minimum set of terms required for sharing biodiversity data and metadata across a wide variety of biodiversity applications ([Simple Darwin Core standards](https://dwc.tdwg.org/terms/)).
+Once standardized, datasets are then integrated into a standardized database having a minimum set of terms required for sharing biodiversity data and metadata across a wide variety of biodiversity applications ([Simple Darwin Core standards](https://dwc.tdwg.org/terms/)).
 
 <br/>
 
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
-- Original datasets to be formatted in comma-seperated format (**.csv**)
-- When filling out the configuration table, please provide the **exact** name of a column of original dataset
-- Names of original datasets without a correspond DarwinCore term standardized term in ***DatabaseInfo.csv*** must be fill out **NA** (not available)
-- The workflow is adjustable to insert other fields in the configuration table according to their needs. In such cases, we strongly recommend the added terms follow the Darwin Core standards.  
+- Original datasets must be formatted in comma-separated format (**.csv**);  
+- When filling out the configuration table, please provide the **exact** name of a column of original dataset and the the **full path** of each original dataset;
+- Names of original datasets without a correspond DarwinCore term must be fill out **NA** (not available);
+- The workflow is adjustable so users can insert other fields in the configuration table according to their needs. In such cases, we strongly recommend the added terms follow the Darwin Core standards.  
 
 
 ### Installation
@@ -61,10 +61,18 @@ Read the metadata file:
 
 ```{r}
 metadata <-
-  system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc") %>%
-  read_csv(metadata)
+  DatabaseInfo <-
+  read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo.csv"))
+```
 
-metadata
+```{r echo = FALSE}
+DT::datatable(head(metadata), editable = 'cell')
+```
+
+
+### Standardization and integration of datasets
+```{r}
+
 ```
 
 The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the workflow: i) *required*, i.e., the minimum information necessary to run the workflow, ii) *recommended*, i.e., not mandatory but having important details on species records, and iii) *additional*, i.e., information potentially useful for detailed data analyses 
