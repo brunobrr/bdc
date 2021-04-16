@@ -1,6 +1,6 @@
 Package: bdc
 Title: Biodiversity data cleaning
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: c(
     person("Bruno", "Ribeiro", email = "ribeiro.brr@gmail.com",
     role = c("aut", "cre"), comment = c(ORCID = "0000-0002-7755-6715")),
@@ -22,6 +22,7 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr
 Imports:
     here,
     dplyr,
@@ -29,6 +30,8 @@ Imports:
     readr,
     fs,
     rlang,
+    doParallel,
+    foreach,
     sf,
     data.table,
     flora,
@@ -45,6 +48,7 @@ Imports:
     Hmisc,
     countrycode,
     rangeBuilder,
+    tidyselect,
     raster,
     rnaturalearth,
     stringdist,
@@ -57,6 +61,7 @@ Imports:
     scales,
     tibble,
     rgnparser,
-    rworldmap
+    rworldmap,
+    magrittr
 Suggests:
     testthat,

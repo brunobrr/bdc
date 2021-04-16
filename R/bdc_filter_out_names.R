@@ -22,20 +22,18 @@
 
 #' @return A data.frame filtered out according to names listed in
 #' 'taxonomic_notes'.
-#' 
+#'
 #' @importFrom dplyr filter select
 #' @importFrom stringr str_detect
-#' 
+#'
 #' @export
 #'
-#' @examples
-#' 
 bdc_filter_out_names <-
   function(data,
-           taxonomic_notes = "accepted", 
+           taxonomic_notes = "accepted",
            opposite = FALSE) {
     data$id <- 1:nrow(data)
-    
+
     if (!"notes" %in% names(data)) {
       message("column 'notes' not found")
     }
@@ -52,13 +50,13 @@ bdc_filter_out_names <-
     } else {
       df <- data %>% dplyr::filter(notes %in% taxonomic_notes)
     }
-    
+
     if (opposite == TRUE) {
       df <-
         data %>%
         dplyr::filter(!id %in% df$id)
     }
-      
+
     df <- df %>% dplyr::select(-id)
     return(df)
   }

@@ -1,8 +1,8 @@
 ---
-title: "Prefilter"
+title: "Time"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Prefilter}
+  %\VignetteIndexEntry{Time}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,15 +12,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  echo = TRUE,
+  warning = FALSE,
+  eval = FALSE
 )
 ```
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = FALSE)
-devtools::load_all()
-```
-
 
 ### Introduction
 
@@ -30,7 +27,7 @@ This step of the BDC workflow extracts the collection year whenever possible fro
 
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
-The results of *validation* test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records. 
+The results of *validation* test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.
 
 ### Installation
 
@@ -133,14 +130,14 @@ bdc_create_figures(data = check_time,
 Save the original database containing the results of each data quality tests appended in separate columns.
 
 ```{r}
-check_time %>% 
-  qs::qsave(., 
+check_time %>%
+  qs::qsave(.,
             here::here("Output", "Intermediate", "04_time_raw_database.qs"))
 ```
 
 
 ### Filter the database
-Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all steps of the BDC workflow to get a "clean", "fitness-for-use" database. 
+Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all steps of the BDC workflow to get a "clean", "fitness-for-use" database.
 
 ```{r}
 output <-
@@ -152,8 +149,8 @@ output <-
 
 ### Save a "fitness-for-use" database
 ```{r}
-check_pf %>% 
-  qs::qsave(., 
+check_pf %>%
+  qs::qsave(.,
             here::here("Output", "Intermediate", "04_time_clean_database.qs"))
 ```
 

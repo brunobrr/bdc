@@ -2,22 +2,23 @@
 #'
 #' @param data data.frame. Containing a unique identifier for each records and
 #' the results of data quality tests.
-#' @param id character string. The column name with a unique record identifier.
+#' @param database_id character string. The column name with a unique record identifier.
 #' Default = "database_id".
 #' @param workflow_step character string containing one of the following
 #' options("prefiter", "taxonomy", "space" or "time").
 #'
 #' @return A data.frame containing a report summarizing the results of data
 #'   quality assessment.
-#' 
+#'
 #' @importFrom dplyr summarise n select group_by filter mutate mutate_if
 #' everything summarise_all pull rename if_else add_row bind_rows
 #' @importFrom data.table fwrite
 #' @importFrom tibble as_tibble
 #' @importFrom knitr kable
+#' @importFrom tidyselect starts_with
 #' @importFrom kableExtra kable_styling
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
@@ -25,24 +26,24 @@
 #' .missing_coordinates <- c(TRUE, FALSE, FALSE, TRUE, FALSE)
 #' .invalid_basis_of_records <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
 #' .summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
-#' 
+#'
 #' x <- data.frame(database_id,
 #'                 .scientificName_empty,
 #'                 .coordinates_empty,
 #'                 .basisOfRrecords_notStandard,
 #'                 .summary)
-#' 
+#'
 #' bdc_create_report(
-#' data = x, 
+#' data = x,
 #' database_id = "database_id",
 #' workflow_step = "prefilter")
 #' }
-bdc_create_report <- 
-  function(data, 
+bdc_create_report <-
+  function(data,
            database_id = "database_id",
            workflow_step) {
   suppressMessages({
-    
+
     # Total number of records
     if (!file_exists("data/n_records.csv")) {
       n_records <-
@@ -61,7 +62,7 @@ bdc_create_report <-
         dplyr::group_by(database_id) %>%
         dplyr::summarise(n_total = dplyr::n())
 
-      data.table::fwrite(n_record_database, 
+      data.table::fwrite(n_record_database,
                          here::here("data/n_record_database.csv"))
       } else {
       n_records <- readr::read_csv("data/n_records.csv") %>% dplyr::pull(n)
@@ -74,17 +75,17 @@ bdc_create_report <-
         x %>%
         dplyr::add_row() %>%
         as.data.frame()
-      
+
       x <- x %>% dplyr::select(Description, dplyr::everything())
-      
+
       x[1 + nrow(x), 1] <-
         paste("(*) calculated in relation to total number of records, i.e.",
               n_records,
               "records")
-      
+
       names(x)[4] <- "perc_number_records(*)"
       x <- x %>% replace(is.na(.), "")
-      
+
       data <-
         x %>%
         knitr::kable(.) %>%
@@ -92,14 +93,14 @@ bdc_create_report <-
                                                         "condensed"))
       return(list(x, data))
     }
-    
+
     # Prefilter
     if (workflow_step == "prefilter") {
-      
+
       pf <-
         data %>%
-        dplyr::select(starts_with(".")) %>%
-        dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>% 
+        dplyr::select(tidyselect::starts_with(".")) %>%
+        dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>%
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
         tibble::as_tibble(rownames = "NA") %>%
@@ -147,10 +148,10 @@ bdc_create_report <-
             "Summary of all tests", Description
           )
         )
-         
+
       res <- format_df(pf)
       data <- res[[2]]
-      data.table::fwrite(res[[1]], 
+      data.table::fwrite(res[[1]],
                          here::here("Output/Report/01_Report_Prefilter.csv"))
   }
     # Taxonomy
@@ -271,7 +272,7 @@ bdc_create_report <-
 
       res <- format_df(names)
       data <- res[[2]]
-      data.table::fwrite(res[[1]], 
+      data.table::fwrite(res[[1]],
                          here::here("Output/Report/02_Report_taxonomy.csv"))
     }
 
@@ -279,8 +280,8 @@ bdc_create_report <-
     if (workflow_step == "space") {
       space <-
         data %>%
-        dplyr::select(starts_with(".")) %>%
-        dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>% 
+        dplyr::select(tidyselect::starts_with(".")) %>%
+        dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>%
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
         tibble::as_tibble(rownames = "NA") %>%
@@ -358,19 +359,19 @@ bdc_create_report <-
             "Summary of all tests", Description
           )
         )
-      
+
       res <- format_df(space)
       data <- res[[2]]
-      data.table::fwrite(res[[1]], 
+      data.table::fwrite(res[[1]],
                          here::here("Output/Report/03_Report_space.csv"))
-      
+
     }
 
     if (workflow_step == "time") {
       date <-
         data %>%
-        dplyr::select(starts_with(".")) %>%
-        dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>% 
+        dplyr::select(tidyselect::starts_with(".")) %>%
+        dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>%
         dplyr::summarise_all(., .funs = sum) %>%
         t() %>%
         tibble::as_tibble(rownames = "NA") %>%
@@ -404,18 +405,18 @@ bdc_create_report <-
           )
         )
 
-      
+
       res <- format_df(date)
       data <- res[[2]]
-      data.table::fwrite(res[[1]], 
+      data.table::fwrite(res[[1]],
                          here::here("Output/Report/04_Report_time.csv"))
     }
   })
-  
+
   message(
     paste(
       "\nbdc_create_report:\nCheck the report summarizing the results of the",
-      workflow_step, 
+      workflow_step,
       "in:\nOutput/Report\n"
     )
   )

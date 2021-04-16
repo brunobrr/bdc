@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/integrate_datasets.html">Merge dataset</a>
+      <a href="../articles/integrate_datasets.html">Standardization and integration of different datasets</a>
     </li>
     <li>
       <a href="../articles/prefilter.html">Prefilter</a>
@@ -90,12 +90,12 @@
 
       
 
-      </header><script src="taxonomy_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="taxonomy_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Taxonomy</h1>
             
-            <h4 class="date">2021-04-14</h4>
+            <h4 class="date">2021-04-16</h4>
       
       
       <div class="hidden name"><code>taxonomy.Rmd</code></div>
@@ -196,14 +196,10 @@
 <a href="#clean-and-parse-species-names" class="anchor"></a>Clean and parse species names</h3>
 <p>Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the <em>bdc_clean_name.</em> containing functionalities to optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to remove:</p>
 <ol style="list-style-type: decimal">
-<li>Family names pre-pended to species names;<br>
-</li>
-<li>Qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);<br>
-</li>
-<li>Infraspecific terms (e.g., variety [var.], subspecies [subsp], forma [f.], and their spelling variations);<br>
-</li>
-<li>Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);<br>
-</li>
+<li>Family names pre-pended to species names;</li>
+<li>Qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);</li>
+<li>Infraspecific terms (e.g., variety [var.], subspecies [subsp], forma [f.], and their spelling variations);</li>
+<li>Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);</li>
 <li>Parse names, i.e., separate author, date, annotations from taxon name.</li>
 </ol>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -258,7 +254,7 @@
 <p>Save the table containing unresolved names</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unresolved_names</span> <span class="op">%&gt;%</span>
- <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fwrite.html">fwrite</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Check"</span>, <span class="st">"02_unresolved_names.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+ <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fwrite.html">fwrite</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Check"</span>, <span class="st">"02_unresolved_names.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="filter-the-database" class="section level3">
 <h3 class="hasAnchor">
@@ -276,8 +272,8 @@
 <h3 class="hasAnchor">
 <a href="#save-the-database" class="anchor"></a>Save the database</h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">database</span> <span class="op">%&gt;%</span> 
-  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>, 
+<code class="sourceCode R"><span class="va">database</span> <span class="op">%&gt;%</span>
+  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>,
             <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"01_prefilter_database.qs"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
   </div>

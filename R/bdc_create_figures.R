@@ -33,7 +33,7 @@
 #' @importFrom scales comma
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
-
+#' @importFrom tidyselect starts_with
 #' @export
 #'
 #' @examples
@@ -63,16 +63,16 @@ bdc_create_figures <-
   function(data,
            database_id = "database_id",
            workflow_step = NULL) {
-    
+
     # Total number of records
     suppressMessages({
       if (!fs::file_exists("data/n_records.csv")) {
         n_records <-
           data %>%
           dplyr::summarise(n = dplyr::n())
-        
+
         data.table::fwrite(n_records, here::here("data/n_records.csv"))
-        
+
         # Total number of records per database
         n_record_database <-
           data %>%
@@ -82,19 +82,19 @@ bdc_create_figures <-
           ) %>%
           dplyr::group_by(database_id) %>%
           dplyr::summarise(n_total = dplyr::n())
-        
+
         data.table::fwrite(n_record_database, "data/n_record_database.csv")
-        
+
       } else {
         n_records <-
           readr::read_csv(here::here("data/n_records.csv")) %>%
           dplyr::pull(n)
-        
-        n_record_database <- 
+
+        n_record_database <-
           readr::read_csv(here::here("data/n_record_database.csv"))
       }
-    
-    
+
+
     our_theme <-
       ggplot2::theme_minimal() +
       ggplot2::theme(
@@ -117,15 +117,15 @@ bdc_create_figures <-
           ".summary",
           "summary_all_tests"
         )
-      
+
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
-      
+
       if (file.exists("Output/Check/01_coordinates_transposed.csv")) {
         col_to_tests <- c(col_to_tests, "coordinates_transposed")
       }
     }
-    
+
     # space
     if (workflow_step == "space") {
       tests <-
@@ -142,11 +142,11 @@ bdc_create_figures <-
           ".urb",
           "summary_all_tests"
         )
-      
+
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
     }
-    
+
     # time
     if (workflow_step == "time") {
       tests <-
@@ -156,11 +156,11 @@ bdc_create_figures <-
           ".summary",
           "summary_all_tests"
         )
-      
+
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
     }
-    
+
     # function to create barplots for each dataset separately
     create_barplot_database <-
       function(data, column_to_map, workflow_step = workflow_step) {
@@ -175,9 +175,9 @@ bdc_create_figures <-
           dplyr::summarise(n_flagged = dplyr::n()) %>%
           dplyr::full_join(., n_record_database, by = "database_id") %>%
           dplyr::mutate(freq = round(n_flagged / n_total, 5) * 100)
-        
+
         temp[is.na(temp)] <- 0
-        
+
         b <-
           ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(database_id, -freq), y = freq)) +
           ggplot2::geom_col(colour = "white", fill = "royalblue") +
@@ -206,7 +206,7 @@ bdc_create_figures <-
         #   fontface = "bold"
         # ) +
         ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
-        
+
         ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
                               column_to_map, "_", "BAR", ".png",
                               sep = ""
@@ -219,7 +219,7 @@ bdc_create_figures <-
         scale = 5
         )
       }
-    
+
     # function to create barplots considering all datasets together
     create_barplot_all_tests <-
       function(data,
@@ -227,8 +227,8 @@ bdc_create_figures <-
                workflow_step = workflow_step) {
         temp <-
           data %>%
-          dplyr::select(starts_with(".")) %>%
-          dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>% 
+          dplyr::select(tidyselect::starts_with(".")) %>%
+          dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>%
           dplyr::summarise_all(., .funs = sum) %>%
           t() %>%
           tibble::as_tibble(rownames = "NA") %>%
@@ -241,9 +241,9 @@ bdc_create_figures <-
             Name = `NA`,
             n_flagged = V1
           )
-        
+
         temp[is.na(temp)] <- 0
-        
+
         b <-
           ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(Name, -freq), y = freq)) +
           ggplot2::geom_col(colour = "white", fill = "royalblue") +
@@ -271,7 +271,7 @@ bdc_create_figures <-
         #   fontface = "bold"
         # ) +
         ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
-        
+
         ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
                               column_to_map,
                               "_", "BAR", ".png", sep = ""),
@@ -283,7 +283,7 @@ bdc_create_figures <-
                         scale = 5
         )
       }
-    
+
     # Names of columns available for creating barplot
     bar <- c(
       ".scientificName_empty",
@@ -306,7 +306,7 @@ bdc_create_figures <-
       ".rou",
       "summary_all_tests"
     )
-    
+
     # Names of columns available for creating maps
     maps <-
       c(
@@ -320,24 +320,24 @@ bdc_create_figures <-
         ".dpl",
         ".rou"
       )
-    
+
     # Names of column available for creating histogram
     hist <- c("year")
-    
+
     # Find which names were provided
     w_bar <- dplyr::intersect(col_to_tests, bar)
     w_maps <- dplyr::intersect(col_to_tests, maps)
     w_tranposed <- dplyr::intersect(col_to_tests, "coordinates_transposed")
     w_hist <- dplyr::intersect(col_to_tests, hist)
-    
+
     # Create bar plots
     if (length(w_bar) == 0 & workflow_step %in% c("prefilter", "space")) {
       message("At least one column 'starting with '.' must be provided")
     }
-    
+
     if (length(w_bar) != 0) {
       w <- which(colSums(!data[{{ w_bar }}]) == 0)
-      
+
       if (length(w) != 0) {
         message(
           "No records flagged for the following tests:\n",
@@ -345,7 +345,7 @@ bdc_create_figures <-
         )
         w_bar <- w_bar[-w]
       }
-      
+
       for (i in 1:length(w_bar)) {
         create_barplot_database(
           data = data,
@@ -353,22 +353,22 @@ bdc_create_figures <-
           workflow_step = workflow_step
         )
       }
-      
+
       create_barplot_all_tests(
         data = data,
         column_to_map = "summary_all_tests",
         workflow_step = workflow_step
       )
     }
-    
+
     # Create maps of invalid vs valid records
     if (length(w_maps) == 0 & workflow_step %in% c("prefilter", "space")) {
       message("At least one of the following columns must be provided for creating maps\n", paste0(maps, sep = " "))
     }
-    
+
     if (length(w_maps) != 0) {
       w <- which(colSums(!data[{{ w_maps }}]) == 0)
-      
+
       if (length(w) != 0) {
         message(
           "No records flagged for the following tests:\n",
@@ -376,7 +376,7 @@ bdc_create_figures <-
         )
         w_maps <- w_maps[-w]
       }
-      
+
       # Worldmap
       m <- rworldmap::getMap() # rworldmap
 
@@ -387,8 +387,8 @@ bdc_create_figures <-
           panel.border = ggplot2::element_blank(),
           panel.grid.major = ggplot2::element_blank(),
           panel.grid.minor = ggplot2::element_blank(),
-        ) 
-      
+        )
+
       for (i in 1:length(w_maps)) {
         d <-
           CoordinateCleaner::cc_val(
@@ -398,12 +398,12 @@ bdc_create_figures <-
             verbose = F,
             value = "clean"
           )
-        
+
         d <-
           d %>%
           dplyr::select({{ w_maps }}[i], decimalLongitude, decimalLatitude) %>%
           dplyr::filter(. == FALSE)
-        
+
         p <-
           ggplot2::ggplot() +
           ggplot2::geom_polygon(data = m,
@@ -420,8 +420,8 @@ bdc_create_figures <-
           ggplot2::scale_fill_viridis_c() +
           our_theme2
           # ggplot2::theme(legend.position = "left")
-        
-        
+
+
         ggplot2::ggsave(
           paste("Output/", "Figures/", workflow_step, "_", w_maps[i], "_",
                 "MAP", ".png",
@@ -432,15 +432,15 @@ bdc_create_figures <-
         )
       }
     }
-    
+
     # Create maps of transposed and corrected coordinates
     if (length(w_tranposed) == 0 & workflow_step == "prefilter") {
       message("file 'Output/Check/01_coordinates_transposed.csv' not found")
     }
-    
+
     if (length(w_tranposed) != 0) {
       temp <- data.table::fread("Output/Check/01_coordinates_transposed.csv")
-      
+
       p1 <-
         bdc_quickmap(
           data = temp,
@@ -449,7 +449,7 @@ bdc_create_figures <-
           col_to_map = "#EC364F",
           size = 0.7
         )
-      
+
       p2 <-
         bdc_quickmap(
           data = temp,
@@ -459,7 +459,7 @@ bdc_create_figures <-
           size = 0.7
         )
       p <- cowplot::plot_grid(p1, p2, labels = "AUTO", scale = 1)
-      
+
       ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
                             "coordinates_transposed", "_", "MAP", ".png",
                             sep = ""
@@ -468,19 +468,19 @@ bdc_create_figures <-
       dpi = 300, width = 6, height = 3, units = "cm", scale = 4
       )
     }
-    
+
     if (length(w_hist) == 0 & workflow_step == "time") {
       message("Column 'year' not found")
     }
-    
+
     if (length(w_hist) != 0) {
       data <-
         data %>%
         dplyr::filter(.summary == TRUE)
-      
+
       min_year <- min(data$year, na.rm = T)
       max_year <- max(data$year, na.rm = T)
-      
+
       p <- data %>%
         ggplot2::ggplot(ggplot2::aes(x = year)) +
         ggplot2::geom_histogram(
@@ -505,8 +505,8 @@ bdc_create_figures <-
         dpi = 300, width = 6, height = 3, units = "cm", scale = 5
       )
     }
-    
+
   }) # suppresswarning
-    
+
     message("Check figures in ", here::here("Output", "Figures"))
   }

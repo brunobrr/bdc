@@ -15,7 +15,7 @@ navbar:
     - icon: fas fa-book
       text: "Articles"
       menu:
-      -  text: "Merge dataset"
+      -  text: "Standardization and integration of different datasets"
          href: articles/integrate_datasets.html
       -  text: "Prefilter"
          href: articles/prefilter.html

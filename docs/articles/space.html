@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/integrate_datasets.html">Merge dataset</a>
+      <a href="../articles/integrate_datasets.html">Standardization and integration of different datasets</a>
     </li>
     <li>
       <a href="../articles/prefilter.html">Prefilter</a>
@@ -90,12 +90,12 @@
 
       
 
-      </header><script src="space_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="space_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Space</h1>
             
-            <h4 class="date">2021-04-14</h4>
+            <h4 class="date">2021-04-16</h4>
       
       
       <div class="hidden name"><code>space.Rmd</code></div>
@@ -161,15 +161,15 @@
       <span class="st">"duplicates"</span>,   <span class="co"># remove duplicated records</span>
       <span class="st">"equal"</span>,        <span class="co"># remove equal coordinates</span>
       <span class="st">"gbif"</span>,         <span class="co"># remove in GBIF headsquare</span>
-      <span class="st">"institutions"</span>, <span class="co"># remove zoo and herbaria within 2km </span>
+      <span class="st">"institutions"</span>, <span class="co"># remove zoo and herbaria within 2km</span>
       <span class="st">"outliers"</span>,     <span class="co"># remove outliers</span>
       <span class="st">"zeros"</span>,        <span class="co"># remove coordinates 0,0</span>
       <span class="st">"urban"</span>         <span class="co"># remove urban areas</span>
     <span class="op">)</span>,
-    capitals_rad <span class="op">=</span> <span class="fl">2000</span>, 
-    centroids_rad <span class="op">=</span> <span class="fl">2000</span>, 
+    capitals_rad <span class="op">=</span> <span class="fl">2000</span>,
+    centroids_rad <span class="op">=</span> <span class="fl">2000</span>,
     centroids_detail <span class="op">=</span> <span class="st">"both"</span>,
-    inst_rad <span class="op">=</span> <span class="fl">100</span>, <span class="co"># remove zoo and herbaria within 2km </span>
+    inst_rad <span class="op">=</span> <span class="fl">100</span>, <span class="co"># remove zoo and herbaria within 2km</span>
     outliers_method <span class="op">=</span> <span class="st">"quantile"</span>,
     outliers_mtp <span class="op">=</span> <span class="fl">5</span>,
     outliers_td <span class="op">=</span> <span class="fl">1000</span>,
@@ -254,8 +254,8 @@
 <h3 class="hasAnchor">
 <a href="#save-the-database" class="anchor"></a>Save the database</h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">check_space</span> <span class="op">%&gt;%</span> 
-  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>, 
+<code class="sourceCode R"><span class="va">check_space</span> <span class="op">%&gt;%</span>
+  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>,
             <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"01_prefilter_database.qs"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
   </div>

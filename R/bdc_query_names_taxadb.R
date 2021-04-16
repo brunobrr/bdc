@@ -1,13 +1,13 @@
 #' Matching scientific names against local stored taxonomic authority database
-#' 
+#'
 #' This function borrows heavily from the great work done by Norman et al.
 #' (2020) in their package 'taxadb', which contains functions that allow
 #' querying millions of taxonomic names in a fast and consistent way. The
 #' bdc_get_taxadb contains additions that allow queries using fuzzy matching and
 #' converting synonyms to the current accepted name. The fuzzy match algorithm
 #' was inspired by get.taxa function of the 'flora' package.
-#' 
-#' 
+#'
+#'
 #' @param sci_name A character vector of species names. The function does not
 #' clean species names (e.g.: infraespecific, var., inf.), it is expected
 #' clean names. The inclusion of 'var.' increases name distances and it is
@@ -33,15 +33,10 @@
 #' @param export_accepted A logical value (default = FALSE) whether a table is
 #' exported containing all species with more than one valid name to be further
 #' explored by the user.
-#' @param Output Path to export accepted names table without the last slash
-#' (e.g., ./Output/check). The default is a package folder
-#' (~/path_to_package/Output/check).
-#' 
-#' @details
 #'
 #' @return This function returns a data.frame with the same number of rows and
 #' order than sci_name with the information provided by the database.
-#' 
+#'
 #' @importFrom fs dir_create
 #' @importFrom here here
 #' @importFrom purrr map_dfr
@@ -49,7 +44,7 @@
 #' @importFrom taxadb td_create filter_name filter_id
 #' @importFrom tibble as_tibble
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' sci_name <- c(
@@ -62,7 +57,7 @@
 #'   "Clidemia naevula",
 #'   "Poincianella pyramidalis",
 #'   "Hymenophyllum polyanthos")
-#' 
+#'
 #' names_harmonization <-
 #'   bdc_query_names_taxadb(
 #'   sci_names,
@@ -85,10 +80,10 @@ bdc_query_names_taxadb <-
            parallel = FALSE,
            ncores = 2,
            export_accepted = FALSE) {
-    
+
     # Measuring execution time
     start <- Sys.time()
-    
+
     # This is one-time setup used to download, extract and import taxonomic
     # database from the taxonomic authority defined by the user (see
     # ?taxadb::td_create for details)
@@ -132,13 +127,13 @@ bdc_query_names_taxadb <-
     # Flags names with names with multiple accepted names
     if (nrow(found_name) != length(sci_name)) {
       found_name <-
-        bdc::bdc_clean_duplicates(
+        bdc_clean_duplicates(
           data = found_name,
           rank = rank,
           rank_name = rank_name
         )
     }
-    
+
     # Reordering the database
     found_name <- found_name[order(found_name$sort), ]
 
@@ -154,7 +149,7 @@ bdc_query_names_taxadb <-
         # Searches for approximate best matches for each unresolved names based
         # on a maximum matching distance
         suggested_search <-
-          bdc::bdc_suggest_names_taxadb(
+          bdc_suggest_names_taxadb(
             sci_name = found_name$input[not_found_index],
             max_distance = suggestion_distance,
             provider = db,
@@ -194,17 +189,17 @@ bdc_query_names_taxadb <-
           # suggested name
           if (any(duplicated(suggested_names_filtered))) {
             duplicated <- duplicated(suggested_names_filtered)
-            
+
             report <-
               which(suggested_names_filtered %in%
                       suggested_names_filtered[duplicated])
-            
+
             names_to_check <-
               suggested_search[suggested_search[, "suggested"] %in%
                                  suggested_names_filtered[report], 1:2]
             message(
               "There are more than one sci_name with the same suggested name.
-               Please check if they are not the same species with 
+               Please check if they are not the same species with
               misspelled names:\n",
               paste0(
                 "\n",
@@ -218,19 +213,19 @@ bdc_query_names_taxadb <-
           # Filter duplicated names returned by filter_name (excluding synonyms
           # when there are valid names)
           if (any(duplicated(suggest_data$input))) {
-            suggest_data <- bdc::bdc_clean_duplicates(data = suggest_data)
+            suggest_data <- bdc_clean_duplicates(data = suggest_data)
           }
 
           # Reordering the database
           suggest_data <- suggest_data[order(suggest_data$sort), ]
-          
+
           # Adds original_search to suggest_data
           w <- which(!is.na(suggested_search$suggested))
-          
-          suggest_data <- 
-            suggest_data %>% 
+
+          suggest_data <-
+            suggest_data %>%
             dplyr::mutate(original_search = suggested_search$original[w])
-          
+
           # FIXME: is it necessary? Removes duplicated names from input
           suggest_data <-
             suggest_data %>% dplyr::distinct(input, .keep_all = T)
@@ -245,7 +240,7 @@ bdc_query_names_taxadb <-
           # Indicating misspelled names
           found_name[posi_misspelled_names, "notes"] <-
             "| wasMisspelled "
-          
+
         } else {
         suggested_search <-
           data.frame(
@@ -327,9 +322,9 @@ bdc_query_names_taxadb <-
     if (export_accepted == TRUE) {
       dir <- here::here("Output", "Check")
       fs::dir_create(dir)
-      
+
       multi_accName <-
-        found_name %>% 
+        found_name %>%
         dplyr::filter(stringr::str_detect(notes, regex("multiple"))) %>%
         dplyr::pull(., scientificName) %>%
         taxadb::filter_name(., provider = db) %>%
@@ -339,12 +334,12 @@ bdc_query_names_taxadb <-
           .,
           here::here("Output/Check/02_names_multiple_accepted_names.csv")
         )
-      
+
       message(
         "\nCheck names with more than one valid name in 'Output/Check/02_names_multiple_accepted_names.csv'\n"
       )
     }
-    
+
     # Formatting the resulted table
     found_name <-
       suggested_search %>%
@@ -366,7 +361,7 @@ bdc_query_names_taxadb <-
         'notFound',
         notes
       ))
-    
+
     # Adds 'taxonomicStatus' to the column 'notes'
     found_name <-
       found_name %>%
@@ -376,25 +371,25 @@ bdc_query_names_taxadb <-
                         paste(found_name$taxonomicStatus, notes, sep = " "),
                         notes
                       ))
-    
+
     # Returning as NA names whose 'taxonomicStatus' are different of "accepted"
     # and "synonym"
     w <-
       which(found_name$taxonomicStatus != "accepted" &
               found_name$taxonomicStatus != "synonym")
-    
+
     found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
-    
+
     # Trimming extra-spaces from the column "notes
     found_name$notes <- stringr::str_squish(found_name$notes)
-    
+
     # joining  names queried to the original (complete) list of names
     found_name <-
       dplyr::left_join(raw_sci_name, found_name, by = "original_search")
-    
+
     end <- Sys.time()
     total_time <- round(as.numeric (end - start, units = "mins"), 1)
-    
+
     message(paste(
       "\n",
       nrow(found_name),
@@ -402,7 +397,7 @@ bdc_query_names_taxadb <-
       total_time,
       "minutes\n"
     ))
-    
+
     return(found_name)
     }
-  
+

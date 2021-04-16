@@ -24,12 +24,12 @@
 bdc_get_wiki_country <- function() {
 
   # Test if file was downloaded
-  file <- here::here("data", "countries_names", "wiki_country_names.txt")
+  file <- here::here("inst", "extdata", "countries_names", "wiki_country_names.txt")
 
   if (!fs::file_exists(file)) {
 
     # create a directory to salve the file
-    save_in_dir <- here::here("data", "countries_names")
+    save_in_dir <- here::here("inst", "extdata", "countries_names")
     fs::dir_create(save_in_dir)
 
 
@@ -85,15 +85,15 @@ bdc_get_wiki_country <- function() {
     )
 
     wiki_cntr %>%
-      vroom_write(here::here(
-        "data", "countries_names",
+      vroom::vroom_write(here::here(
+        "inst", "extdata", "countries_names",
         "wiki_country_names.txt"
       ))
 
     return(wiki_cntr)
   } else {
     wiki_cntr <-
-      here::here("data", "countries_names", "wiki_country_names.txt") %>%
+      here::here("inst", "extdata", "countries_names", "wiki_country_names.txt") %>%
       vroom::vroom()
 
     return(wiki_cntr)

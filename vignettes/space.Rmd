@@ -3,7 +3,7 @@ title: "Space"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Prefilter}
+  %\VignetteIndexEntry{Space}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,25 +13,23 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  echo = TRUE,
+  warning = FALSE,
+  eval = FALSE
 )
-```
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = FALSE)
-devtools::load_all()
 ```
 
 ### Introduction
 We used the R package *CoordinateCleaner* to flag potentially erroneous, suspect, or imprecise geographical coordinates based on geographic gazetteers and metadata. It includes a series of *validation* tests for identifying records assigned to country capital, provinces and country centroids, coordinates in urban areas, around biodiversity institutions or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
 
-Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter step of the workflow (see *bdc_coordinates_country_inconsistent*). 
+Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter step of the workflow (see *bdc_coordinates_country_inconsistent*).
 
 <br/>
 
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
-The results of *validation* test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records. 
+The results of *validation* test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.
 
 
 ### Installation
@@ -88,15 +86,15 @@ check_space <-
       "duplicates",   # remove duplicated records
       "equal",        # remove equal coordinates
       "gbif",         # remove in GBIF headsquare
-      "institutions", # remove zoo and herbaria within 2km 
+      "institutions", # remove zoo and herbaria within 2km
       "outliers",     # remove outliers
       "zeros",        # remove coordinates 0,0
       "urban"         # remove urban areas
     ),
-    capitals_rad = 2000, 
-    centroids_rad = 2000, 
+    capitals_rad = 2000,
+    centroids_rad = 2000,
     centroids_detail = "both",
-    inst_rad = 100, # remove zoo and herbaria within 2km 
+    inst_rad = 100, # remove zoo and herbaria within 2km
     outliers_method = "quantile",
     outliers_mtp = 5,
     outliers_td = 1000,
@@ -116,7 +114,7 @@ check_space <-
   )
 ```
 
-#### Flag coordinates low decimal precision 
+#### Flag coordinates low decimal precision
 Identification of records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
 
 ```{r}
@@ -189,8 +187,8 @@ It is possible to removed flagged records (potentially problematic ones) to get 
 ### Save the database
 
 ```{r}
-check_space %>% 
-  qs::qsave(., 
+check_space %>%
+  qs::qsave(.,
             here::here("Output", "Intermediate", "01_prefilter_database.qs"))
 ```
 

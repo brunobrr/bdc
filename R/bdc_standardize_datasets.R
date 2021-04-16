@@ -10,7 +10,7 @@
 #'   renamed. See @details.
 #'
 #' @importFrom data.table fread
-#' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
+#' @importFrom dplyr pull filter select select_if mutate n everything mutate_if all_of
 #' @importFrom fs dir_exists dir_create
 #' @importFrom here here
 #' @importFrom purrr set_names
@@ -144,7 +144,7 @@ bdc_standardize_datasets <- function(metadata) {
               standard_dataset <-
                 input_file[file_index] %>%
                 data.table::fread() %>%
-                dplyr::select(all_of(vector_for_recode)) %>%
+                dplyr::select(dplyr::all_of(vector_for_recode)) %>%
                 purrr::set_names(names(vector_for_recode)) %>%
                 dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
                 dplyr::select(database_id, dplyr::everything())
