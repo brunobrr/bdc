@@ -51,8 +51,8 @@
 and parsing scientific names. This tools is used to remove 1) family names of animals or
 plants pre-pended to species names, 2) qualifiers denoting uncertain or
 provisional status of taxonomic identification (e.g., confer, species,
-affinis), and 3) infraspecific terms (e.g., variety var.,
-subspecies subsp, forma f., and their spelling variations). It also
+affinis), and 3) infraspecific terms, for example: variety (var.),
+subspecies (subsp), forma (f.), and their spelling variations. It also
 includes applications to: 4) standardize names, i.e., capitalize only the first letter of
 the genus name and remove extra whitespaces), and 5) parse names, i.e.,
 separate author, date, annotations from taxon name." />
@@ -88,7 +88,7 @@ separate author, date, annotations from taxon name." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@ separate author, date, annotations from taxon name." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/integrate_datasets.html">Merge dataset</a>
+      <a href="../articles/integrate_datasets.html">Standardization and integration of different datasets</a>
     </li>
     <li>
       <a href="../articles/prefilter.html">Prefilter</a>
@@ -155,8 +155,8 @@ separate author, date, annotations from taxon name." />
 and parsing scientific names. This tools is used to remove 1) family names of animals or
 plants pre-pended to species names, 2) qualifiers denoting uncertain or
 provisional status of taxonomic identification (e.g., confer, species,
-affinis), and 3) infraspecific terms (e.g., variety var.,
-subspecies subsp, forma f., and their spelling variations). It also
+affinis), and 3) infraspecific terms, for example: variety (var.),
+subspecies (subsp), forma (f.), and their spelling variations. It also
 includes applications to: 4) standardize names, i.e., capitalize only the first letter of
 the genus name and remove extra whitespaces), and 5) parse names, i.e.,
 separate author, date, annotations from taxon name.</p>
@@ -198,7 +198,7 @@ parse process can be found in
 <span class='va'>scientificName</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
 <span class='st'>"Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann"</span>,
 <span class='st'>"Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby"</span>,
-<span class='st'>"Gymnanthes edwalliana (Pax &amp; K.Hoffm.) LaurÃªnio-Melo &amp; M.F.Sales"</span>,
+<span class='st'>"Gymnanthes edwalliana (Pax &amp; K.Hoffm.) Laurênio-Melo &amp; M.F.Sales"</span>,
 <span class='st'>"LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin &amp; Barneby"</span><span class='op'>)</span>
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>scientificName</span><span class='op'>)</span>

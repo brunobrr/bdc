@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/integrate_datasets.html">Merge dataset</a>
+      <a href="../articles/integrate_datasets.html">Standardization and integration of different datasets</a>
     </li>
     <li>
       <a href="../articles/prefilter.html">Prefilter</a>
@@ -157,14 +157,14 @@
 the results of data quality tests.</p></td>
     </tr>
     <tr>
+      <th>database_id</th>
+      <td><p>character string. The column name with a unique record identifier.
+Default = "database_id".</p></td>
+    </tr>
+    <tr>
       <th>workflow_step</th>
       <td><p>character string containing one of the following
 options("prefiter", "taxonomy", "space" or "time").</p></td>
-    </tr>
-    <tr>
-      <th>id</th>
-      <td><p>character string. The column name with a unique record identifier.
-Default = "database_id".</p></td>
     </tr>
     </table>
 
@@ -188,7 +188,7 @@ quality assessment.</p>
                 <span class='va'>.summary</span><span class='op'>)</span>
 
 <span class='fu'>bdc_create_report</span><span class='op'>(</span>
-data <span class='op'>=</span> <span class='va'>x</span>, 
+data <span class='op'>=</span> <span class='va'>x</span>,
 database_id <span class='op'>=</span> <span class='st'>"database_id"</span>,
 workflow_step <span class='op'>=</span> <span class='st'>"prefilter"</span><span class='op'>)</span>
 <span class='op'>}</span>

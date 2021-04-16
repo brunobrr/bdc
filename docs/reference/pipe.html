@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Identify records with out-of-range geographic coordinates — bdc_coordinates_outOfRange • bdc</title>
+<title>Pipe operator — %&gt;% • bdc</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Identify records with out-of-range geographic coordinates — bdc_coordinates_outOfRange" />
-<meta property="og:description" content="This function identifies records with out-of-range coordinates (not between -90 and 90 for latitude; between -180 and 180 for longitude)." />
+<meta property="og:title" content="Pipe operator — %&gt;%" />
+<meta property="og:description" content="See magrittr::%&amp;gt;% for details." />
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
@@ -137,57 +137,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Identify records with out-of-range geographic coordinates</h1>
+    <h1>Pipe operator</h1>
     
-    <div class="hidden name"><code>bdc_coordinates_outOfRange.Rd</code></div>
+    <div class="hidden name"><code>pipe.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function identifies records with out-of-range coordinates (not between -90 and 90 for latitude; between -180 and 180 for longitude).</p>
+    <p>See <code>magrittr::%&gt;%</code> for details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bdc_coordinates_outOfRange</span><span class='op'>(</span>
-  <span class='va'>data</span>,
-  lat <span class='op'>=</span> <span class='st'>"decimalLatitude"</span>,
-  lon <span class='op'>=</span> <span class='st'>"decimalLongitude"</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>lhs</span> <span class='op'>%&gt;%</span> <span class='va'>rhs</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>data.frame. Containing geographical coordinates. Coordinates must be expressed in decimal degree and in WGS84.</p></td>
+      <th>lhs</th>
+      <td><p>A value or the magrittr placeholder.</p></td>
     </tr>
     <tr>
-      <th>lat</th>
-      <td><p>character string. The column name with latitude. Coordinates must
-be expressed in decimal degree and in WGS84. Default = "decimalLatitude".</p></td>
-    </tr>
-    <tr>
-      <th>lon</th>
-      <td><p>character string. The column with longitude. Coordinates must be
-expressed in decimal degree and in WGS84. Default = "decimalLongitude".</p></td>
+      <th>rhs</th>
+      <td><p>A function call using the magrittr semantics.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame contain the column ".coordinates_outOfRange". Compliant
-(TRUE) if 'lat' and 'lon' are not out-of-range; otherwise "FALSE".</p>
+    <p>The result of calling <code>rhs(lhs)</code>.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>decimalLatitude</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>185.111</span>, <span class='op'>-</span><span class='fl'>43.34</span>, <span class='st'>""</span>, <span class='op'>-</span><span class='fl'>21.8069444</span><span class='op'>)</span>
-<span class='va'>decimalLongitude</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>45.4</span>, <span class='op'>-</span><span class='fl'>39.6</span>, <span class='op'>-</span><span class='fl'>20.5243</span>, <span class='op'>-</span><span class='fl'>440.9055555</span><span class='op'>)</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>decimalLatitude</span>, <span class='va'>decimalLongitude</span><span class='op'>)</span>
-
-<span class='fu'>bdc_coordinates_outOfRange</span><span class='op'>(</span>
-data <span class='op'>=</span> <span class='va'>x</span>, 
-lat <span class='op'>=</span> <span class='st'>"decimalLatitude"</span>, 
-lon <span class='op'>=</span> <span class='st'>"decimalLongitude"</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
