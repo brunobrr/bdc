@@ -3,7 +3,7 @@ title: "Taxonomy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Prefilter}
+  %\VignetteIndexEntry{Taxonomy}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -32,7 +32,7 @@ The workflow tools used to standardize names (*bdc_clean_name* and *bdc_query_na
 - 3. Convert nomenclatural synonyms to current accepted name;
 - 4. Flag ambiguous results.
 
-The taxonomic standardization is based on one taxonomic database chosen by the user. *taxadb* makes available the following taxonomic sources: 
+The taxonomic standardization is based on one taxonomic database chosen by the user. *taxadb* makes available the following taxonomic sources:
 
 | Abbreviation | Taxonomic database                                        |
 |--------------|-----------------------------------------------------------|
@@ -91,13 +91,13 @@ for (i in 1:ncol(database)){
 
 
 ### Clean and parse species names
-Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the *bdc_clean_name.* containing functionalities to optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to remove:  
+Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the *bdc_clean_name.* containing functionalities to optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to remove:
 
-1. Family names pre-pended to species names;  
-2. Qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);  
-3. Infraspecific terms (e.g., variety [var.], subspecies [subsp], forma [f.], and their spelling variations);  
-4. Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);  
-5. Parse names, i.e., separate author, date, annotations from taxon name.  
+1. Family names pre-pended to species names;
+2. Qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);
+3. Infraspecific terms (e.g., variety [var.], subspecies [subsp], forma [f.], and their spelling variations);
+4. Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);
+5. Parse names, i.e., separate author, date, annotations from taxon name.
 
 ```{r}
 parse_names <- bdc_clean_names(sci_names = database$scientificName)
@@ -179,8 +179,8 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 ### Save the database
 
 ```{r}
-database %>% 
-  qs::qsave(., 
+database %>%
+  qs::qsave(.,
             here::here("Output", "Intermediate", "01_prefilter_database.qs"))
 ```
 
