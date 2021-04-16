@@ -44,7 +44,7 @@ parse process can be found in
 scientificName = c(
 "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
 "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
-"Gymnanthes edwalliana (Pax & K.Hoffm.) LaurÃªnio-Melo & M.F.Sales",
+"Gymnanthes edwalliana (Pax & K.Hoffm.) Laurênio-Melo & M.F.Sales",
 "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby")
 
 x <- data.frame(scientificName)
