@@ -7,39 +7,40 @@
 #' @param col_to_remove logical. Which columns should be removed? Default =
 #' "all", which means that all columns containing the results of data quality
 #' tests are removed.
-#' 
+#'
 #' @return A data.frame without columns specified in 'col_to_remove'.
-#' @importFrom dplyr select
+#' @importFrom dplyr select all_of
+#' @importFrom tidyselect starts_with
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
 #' .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
 #' .summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
-#' 
+#'
 #' x <- data.frame(database_id,
 #'                 .missing_names,
 #'                 .missing_coordinates,
 #'                 .invalid_basis_of_records,
 #'                 .summary)
-#' 
+#'
 #' bdc_filter_out_flags(
-#' data = x, 
+#' data = x,
 #' col_to_remove = "all")
 #' }
-bdc_filter_out_flags <- 
+bdc_filter_out_flags <-
   function(data,
            col_to_remove = "all") {
   if (col_to_remove %in% "all") {
     column_names <-
       data %>%
-      dplyr::select(starts_with(".")) %>%
+      dplyr::select(tidyselect::starts_with(".")) %>%
       names()
 
     data <-
       data %>%
-      dplyr::select(-all_of(column_names))
+      dplyr::select(-dplyr::all_of(column_names))
   } else {
     w <- which(names(data) %in% col_to_remove)
 
@@ -47,7 +48,7 @@ bdc_filter_out_flags <-
 
     data <-
       data %>%
-      dplyr::select(-all_of(column_names))
+      dplyr::select(-dplyr::all_of(column_names))
   }
 
   message(

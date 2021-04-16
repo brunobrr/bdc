@@ -1,17 +1,17 @@
 #' Internal function. Get a world map with country names and iso code
 #'
-#' This is a helper function used to obtain names, iso code, and the limits 
+#' This is a helper function used to obtain names, iso code, and the limits
 #' (polygon) of world countries. Data from the package 'rnaturalearth'.
-#' 
+#'
 #' @noRd
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' worldmap <- bdc_get_world_map()
 #' }
 bdc_get_world_map <- function() {
   suppressWarnings({
-    
+
   worldmap <- rnaturalearth::ne_countries(scale = "large")
 
   # Add some iso code to some countries polygons
@@ -27,7 +27,7 @@ bdc_get_world_map <- function() {
 
   iso <- data.frame(
     worldmap@data %>%
-      dplyr::select(name_en, starts_with("iso")),
+      dplyr::select(name_en, tidyselect::starts_with("iso")),
     iso2c,
     iso3c
   )
@@ -44,7 +44,7 @@ bdc_get_world_map <- function() {
   worldmap@data <-
     worldmap@data %>%
     dplyr::select(iso2c, iso3c)
-  
+
   })
   return(worldmap)
 }

@@ -85,7 +85,7 @@ bdc_get_wiki_country <- function() {
     )
 
     wiki_cntr %>%
-      vroom_write(here::here(
+      vroom::vroom_write(here::here(
         "inst", "extdata", "countries_names",
         "wiki_country_names.txt"
       ))

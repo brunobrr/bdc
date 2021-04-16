@@ -1,4 +1,4 @@
-#' Identify records from doubtful source (e.g., 'fossil', MachineObservation') 
+#' Identify records from doubtful source (e.g., 'fossil', MachineObservation')
 #'
 #' This function flags records with informed basis of records (i.e., the records
 #' type, for example, a specimen, a human observation, or a fossil specimen) no
@@ -13,7 +13,7 @@
 #' standard Darwin Core classes (and their spelling variations, see details).
 #' By default, records missing (i.e., NA) or with "unknown" information on
 #' basis of records are kept.
-#' 
+#'
 #' @details Users are encourage to select the set of basis of records classes
 #' to keep. Default = c("Event","HUMAN_OBSERVATION", "HumanObservation",
 #' "LIVING_SPECIMEN", "LivingSpecimen", "MACHINE_OBSERVATION",
@@ -22,24 +22,24 @@
 #' "PRESERVED_SPECIMEN", "preservedspecimen Specimen", "Preservedspecimen",
 #' "PreservedSpecimen", "preservedspecimen", "S", "Specimen", "Taxon",
 #' "UNKNOWN", "", NA)
-#' 
+#'
 #' @return A data.frame contain the column ".basisOfRrecords_notStandard"
 #' .Compliant (TRUE) if 'basisOfRecord' is standard; otherwise "FALSE".
-#' 
+#'
 #' @importFrom dplyr mutate filter select distinct
 #'
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' x <- data.frame(basisOfRecord = c("FOSSIL_SPECIMEN", "UNKNOWN", "RON", NA, "Specimen", "PRESERVED_SPECIMEN"))
-#' bdc_basisOfRrecords_notStandard(data = x, basisOfRecord = "basisOfRecord", names_to_keep = "all")
-#' }
+#' \dontrun{ x <- data.frame(basisOfRecord = c("FOSSIL_SPECIMEN", "UNKNOWN",
+#' "RON", NA, "Specimen", "PRESERVED_SPECIMEN"))
+#' bdc_basisOfRrecords_notStandard(data = x, basisOfRecord = "basisOfRecord",
+#' names_to_keep = "all") }
 bdc_basisOfRrecords_notStandard <-
   function(data,
            basisOfRecord = "basisOfRecord",
            names_to_keep = "all") {
-    
+
     if (names_to_keep == "all") {
       names_to_keep <-
         c(
@@ -69,18 +69,18 @@ bdc_basisOfRrecords_notStandard <-
           NA
         )
     }
-    
+
     data <-
       data %>%
       dplyr::mutate(.basisOfRrecords_notStandard = .data[[basisOfRecord]] %in%
                     names_to_keep)
-    
+
     removed <-
       data %>%
       dplyr::filter(.basisOfRrecords_notStandard == FALSE) %>%
       dplyr::select(.data[[basisOfRecord]]) %>%
       dplyr::distinct()
-    
+
     message(
       paste(
         "\nbdc_basisOfRrecords_notStandard:\nFlagged",

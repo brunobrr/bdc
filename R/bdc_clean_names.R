@@ -4,20 +4,20 @@
 #' and parsing scientific names. This tools is used to remove 1) family names of animals or
 #' plants pre-pended to species names, 2) qualifiers denoting uncertain or
 #' provisional status of taxonomic identification (e.g., confer, species,
-#' affinis), and 3) infraspecific terms (e.g., variety [var.],
-#' subspecies [subsp], forma [f.], and their spelling variations). It also
+#' affinis), and 3) infraspecific terms, for example: variety (var.),
+#' subspecies (subsp), forma (f.), and their spelling variations. It also
 #' includes applications to: 4) standardize names, i.e., capitalize only the first letter of
 #' the genus name and remove extra whitespaces), and 5) parse names, i.e.,
 #' separate author, date, annotations from taxon name.
 #'
 #' @param sci_names character string. Containing scientific names.
-#' 
+#'
 #' @details Terms denoting uncertainty or provisional status of taxonomic
 #' identification as well as infraspecific terms were obtained from Sigoviniet
 #' al. (2016; doi: 10.1111/2041-210X.12594). More details about the names
 #' parse process can be found in
 #' \href{https://github.com/gnames/gnparser}{gnparser}.
-#' 
+#'
 #' @return A five-column data.frame including 'scientificName' (original names
 #' supplied), '.uncer_terms' (indicates the presence of taxonomic uncertainty
 #' terms), '.infraesp_names' (indicates the presence of infraspecific terms),
@@ -52,13 +52,13 @@
 #' bdc_clean_names(data = x, scientificName)
 #' }
 bdc_clean_names <- function(sci_names) {
-  
+
   # names raw
   names_raw <-
     sci_names %>%
     tibble::as_tibble() %>%
     dplyr::rename(scientificName = value)
-  
+
   # Only unique taxa names will be queried (empty or NA names are excluded)
   names <-
     names_raw %>%
@@ -66,11 +66,11 @@ bdc_clean_names <- function(sci_names) {
     dplyr::select(scientificName) %>% # select this column
     dplyr::mutate_all(dplyr::na_if, "") %>% # change empty names to NA
     dplyr::filter(!is.na(scientificName)) # remove NAs
-  
-  
+
+
   # Family names ------------------------------------------------------------
   bdc_rem_family_names <- function(data, sci_names) {
-    
+
     # Get animalia family names from gbif via taxadb package
     animalia_families <-
       taxadb::taxa_tbl("gbif") %>%
@@ -78,22 +78,22 @@ bdc_clean_names <- function(sci_names) {
       dplyr::select(family) %>%
       dplyr::distinct() %>%
       dplyr::pull(family)
-    
+
     # Raw scientific names
     sci_names_raw <- data[[sci_names]] %>% stringr::str_squish()
-    
+
     # Vector to save scientific names without family names
     clean_family_names <- sci_names_raw
-    
+
     # Count number of words to avoid removing names composed of a single family
     # name
     word_count <- stringr::str_count(sci_names_raw, "\\S+")
     df <- data.frame(word_count, sci_names_raw)
     n_string <- ifelse(df[, 1] < 2, TRUE, FALSE)
     n_string <- ifelse(is.na(n_string), TRUE, n_string)
-    
+
     posi <- which(n_string == FALSE)
-    
+
     # Plantae: remove suffix "aceae"
     rem_fam <- stringr::str_remove_all(
       sci_names_raw[posi],
@@ -102,22 +102,22 @@ bdc_clean_names <- function(sci_names) {
       )
     ) %>%
       stringr::str_squish()
-    
+
     clean_family_names[posi] <- rem_fam
     .family_names <- sci_names_raw == clean_family_names
-    
-    
+
+
     # Animalia: detect suffix "dae"
     detect_fam_animalia <- stringr::str_detect(
       sci_names_raw[posi],
       stringr::regex("[a-zA-Z]+dae", ignore_case = TRUE),
       negate = T
     )
-    
+
     df <-
       data.frame(posi, detect_fam_animalia, sci_names_raw[posi]) %>%
       dplyr::filter(detect_fam_animalia == FALSE)
-    
+
     # Compare with a list of known taxonomic family to avoid erroneously
     # flagging generic names (e.g. "Solanum lacerdae")
     check <- df$posi
@@ -130,14 +130,14 @@ bdc_clean_names <- function(sci_names) {
       test <- ifelse(length(test) == 0, TRUE, FALSE)
       is_valid <- c(is_valid, test)
     }
-    
+
     df <- cbind(df, is_valid)
-    
+
     # Remove suffix "dae"
     if (any(df$is_valid == F)) {
       posi_temp <- which(is_valid == FALSE)
       posi_valid <- check[posi_temp]
-      
+
       rem_fam_animalia <- stringr::str_remove_all(
         sci_names_raw[posi_valid],
         stringr::regex("[a-zA-Z]+dae",
@@ -145,16 +145,16 @@ bdc_clean_names <- function(sci_names) {
         )
       ) %>%
         stringr::str_squish()
-      
+
       clean_family_names[posi_valid] <- rem_fam_animalia
     }
-    
+
     .family_names <- sci_names_raw == clean_family_names
     .family_names <- ifelse(is.na(.family_names), TRUE, .family_names)
-    
+
     df_final <- data.frame(.family_names, clean_family_names)
     df_final <- dplyr::bind_cols(data, df_final)
-    
+
     message(
       paste(
         "\n>> Family names prepended to scientific names were flagged and removed from",
@@ -162,18 +162,18 @@ bdc_clean_names <- function(sci_names) {
         "records."
       )
     )
-    
+
     return(df_final)
   }
-  
+
   # Uncertainty terms -------------------------------------------------------
   # Flag, identify and remove terms denoting uncertainty or provisional status
   # of a taxonomic identification
   bdc_rem_taxo_unc <- function(data, sci_names) {
     spp_names <- data[[sci_names]] %>% stringr::str_squish()
-    
+
     ### Flag and identify uncertainty terms
-    
+
     # confer
     cf0 <- stringr::str_detect(
       spp_names,
@@ -181,14 +181,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     ) # at the beginning
-    
+
     cf <- stringr::str_detect(
       spp_names,
       stringr::regex("\\scf\\.|\\scf\\s|\\scf$",
                      ignore_case = TRUE
       )
     ) # anywhere
-    
+
     # affinis
     aff0 <- stringr::str_detect(
       spp_names,
@@ -196,14 +196,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     )
-    
+
     aff <- stringr::str_detect(
       spp_names,
       stringr::regex("\\saff\\.|\\saff\\s|\\saff$",
                      ignore_case = TRUE
       )
     )
-    
+
     # complex
     complex0 <- stringr::str_detect(
       spp_names,
@@ -211,14 +211,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     )
-    
+
     complex <- stringr::str_detect(
       spp_names,
       stringr::regex("\\scomplex\\s|\\scomplexo|\\scomplex$",
                      ignore_case = TRUE
       )
     )
-    
+
     # genus novum | genus species
     gen0 <- stringr::str_detect(
       spp_names,
@@ -226,14 +226,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     )
-    
+
     gen <- stringr::str_detect(
       spp_names,
       stringr::regex("\\sgen\\.|\\sgen\\s|\\sgen$",
                      ignore_case = TRUE
       )
     )
-    
+
     # species | species (plural)
     sp0 <- stringr::str_detect(
       spp_names,
@@ -241,14 +241,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     )
-    
+
     sp <- stringr::str_detect(
       spp_names,
       stringr::regex("\\ssp\\.|\\ssp\\s|\\ssp$|\\sspp\\.|\\sspp\\s|\\sspp$|\\sssp\\.|\\sssp\\s|\\sssp$|\\ssp[[:digit:]]|\\sspp[[:digit:]]|\\sssp[[:digit:]]",
                      ignore_case = TRUE
       )
     )
-    
+
     # species incerta
     sp_inc0 <- stringr::str_detect(
       spp_names,
@@ -256,14 +256,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     )
-    
+
     sp_inc <- stringr::str_detect(
       spp_names,
       stringr::regex("\\sinc\\.|\\sinc\\s|\\sinc$|\\s\\?\\s|\\?",
                      ignore_case = TRUE
       )
     )
-    
+
     # species inquirenda
     sp_inq0 <- stringr::str_detect(
       spp_names,
@@ -271,14 +271,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     )
-    
+
     sp_inq <- stringr::str_detect(
       spp_names,
       stringr::regex("\\sinq\\.|\\sinq\\s|\\sinq$",
                      ignore_case = TRUE
       )
     )
-    
+
     # species indeterminabilis
     sp_indet0 <- stringr::str_detect(
       spp_names,
@@ -287,7 +287,7 @@ bdc_clean_names <- function(sci_names) {
         ignore_case = TRUE
       )
     )
-    
+
     sp_indet <- stringr::str_detect(
       spp_names,
       stringr::regex(
@@ -295,7 +295,7 @@ bdc_clean_names <- function(sci_names) {
         ignore_case = TRUE
       )
     )
-    
+
     # species nova
     sp_nova0 <- stringr::str_detect(
       spp_names,
@@ -303,14 +303,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     )
-    
+
     sp_nova <- stringr::str_detect(
       spp_names,
       stringr::regex("\\snov\\.|\\snov\\s|\\snov$",
                      ignore_case = TRUE
       )
     )
-    
+
     # species proxima
     sp_proxima0 <- stringr::str_detect(
       spp_names,
@@ -318,14 +318,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     )
-    
+
     sp_proxima <- stringr::str_detect(
       spp_names,
       stringr::regex("\\sprox\\.|\\sprox\\s|\\sprox$|\\snr\\.|\\snr\\s|\\snr$",
                      ignore_case = TRUE
       )
     )
-    
+
     # stetit
     stet0 <- stringr::str_detect(
       spp_names,
@@ -333,14 +333,14 @@ bdc_clean_names <- function(sci_names) {
                      ignore_case = TRUE
       )
     )
-    
+
     stet <- stringr::str_detect(
       spp_names,
       stringr::regex("\\sstet\\.|\\sstet\\s|\\sstet$",
                      ignore_case = TRUE
       )
     )
-    
+
     terms <-
       c(
         "cf0", "cf", "aff0", "aff", "complex0", "complex", "gen0", "gen",
@@ -348,7 +348,7 @@ bdc_clean_names <- function(sci_names) {
         "sp_inq", "sp_indet0", "sp_indet", "sp_nova0", "sp_nova",
         "sp_proxima0", "sp_proxima", "stet0", "stet"
       )
-    
+
     terms_names <-
       c(
         "confer", "confer", "affinis", "affinis", "complex", "complex",
@@ -359,31 +359,31 @@ bdc_clean_names <- function(sci_names) {
         "species nova", "species nova", "species proxima", "species proxima",
         "stetit", "stetit"
       )
-    
-    
+
+
     term_uncertainty <- rep(NA, length(spp_names))
     taxo_uncertainty <- rep(FALSE, length(spp_names))
-    
+
     for (i in 1:length(terms)) {
       t <- get(terms[i])
       posi <- which(t == TRUE)
       term_uncertainty[posi] <- terms_names[i]
       taxo_uncertainty[posi] <- TRUE
     }
-    
+
     taxo_uncertainty <- ifelse(taxo_uncertainty == TRUE, FALSE, TRUE)
     taxo_uncertainty <- ifelse(is.na(taxo_uncertainty), TRUE, taxo_uncertainty)
-    
+
     tab_res <- as.data.frame(cbind(taxo_uncertainty, term_uncertainty))
     w <- which(is.na(spp_names))
     tab_res[w, "taxo_uncertainty"] <- NA
-    
+
     colnames(tab_res) <- c(".uncer_terms", "uncer_terms")
     df <- dplyr::bind_cols(data, tab_res)
-    
-    
+
+
     ### Remove uncertainty terms
-    
+
     # confer
     spp_names_clean <-
       stringr::str_replace_all(
@@ -393,7 +393,7 @@ bdc_clean_names <- function(sci_names) {
         ),
         replacement = " "
       ) # at the beginning
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\scf\\.|\\scf\\s|\\scf$",
@@ -401,7 +401,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     ) # anywhere
-    
+
     # affinis
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -410,7 +410,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\saff\\.|\\saff\\s|\\saff$",
@@ -418,7 +418,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # complex
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -427,7 +427,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\scomplex\\s|\\scomplexo|\\scomplex$",
@@ -435,7 +435,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # genus novum | genus species
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -444,7 +444,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\sgen\\.|\\sgen\\s|\\sgen$",
@@ -452,7 +452,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # species | species (plural)
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -461,7 +461,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\ssp\\.|\\ssp\\s|\\ssp$|\\sspp\\.|\\sspp\\s|\\sspp$|\\sssp\\.|\\sssp\\s|\\sssp$|\\ssp[[:digit:]]|\\sspp[[:digit:]]|\\sssp[[:digit:]]",
@@ -469,7 +469,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # species incerta
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -478,7 +478,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\sinc\\.|\\sinc\\s|\\sinc$|\\s\\?\\s|\\?",
@@ -486,7 +486,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # species inquirenda
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -495,7 +495,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\sinq\\.|\\sinq\\s|\\sinq$",
@@ -503,7 +503,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # species indeterminabilis
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -513,7 +513,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\sindet\\.|\\sindet\\s|\\sindet$|\\sind\\.|\\sind\\s|\\sind$|\\sindt\\.|\\sindt\\s|\\sindt$",
@@ -521,7 +521,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # species nova
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -530,7 +530,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\snov\\.|\\snov\\s|\\snov$",
@@ -538,7 +538,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # species proxima
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -547,7 +547,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\sprox\\.|\\sprox\\s|\\sprox$|\\snr\\.|\\snr\\s|\\snr$",
@@ -555,7 +555,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # stetit
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -564,7 +564,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\sstet\\.|\\sstet\\s|\\sstet$",
@@ -572,7 +572,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # hybrids
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -581,7 +581,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\sx\\s|\\sx$",
@@ -589,8 +589,8 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
-    
+
+
     # Non-available (NA)
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -599,7 +599,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # sem
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
@@ -608,7 +608,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean <- stringr::str_replace_all(
       spp_names_clean,
       stringr::regex("\\ssem\\.|\\ssem\\s|\\ssem$",
@@ -616,16 +616,16 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # Remove extra spaces
     spp_names_clean <-
       stringr::str_squish(spp_names_clean) %>%
       tibble::as_tibble() %>%
       dplyr::rename(clean_uncer_terms = value)
-    
+
     # Add column to the database
     df <- dplyr::bind_cols(df, spp_names_clean)
-    
+
     message(
       paste(
         ">> Terms denoting taxonomic uncertainty were flagged and removed from",
@@ -633,50 +633,50 @@ bdc_clean_names <- function(sci_names) {
         "records."
       )
     )
-    
+
     return(df)
   }
-  
+
   # Other issues ------------------------------------------------------------
   # Capitalizes genus name and strings in which all words are capitalized;
   # substitute empty cells with NA
   bdc_rem_other_issues <- function(data, sci_names) {
-    
+
     # Raw scientific names
     sci_names_raw <- data[[sci_names]] %>% stringr::str_squish()
-    
+
     res <- data[[sci_names]] %>% stringr::str_squish()
-    
+
     # count the number of words
     word_count <- stringr::str_count(res, "\\w+")
-    
+
     # Convert to lower case and capitalize the only first letter of the generic
     # names (POLYGONACEAE to Polygonaceae; polygonaceae to Polygonaceae)
     w1 <- which(word_count == 1)
     res[w1] <- stringr::str_to_lower(res[w1])
     res[w1] <- Hmisc::capitalize(res[w1])
-    
+
     res <-
       gsub("^$", NA, res) %>% # substitute empty records by NA
       Hmisc::capitalize(.) # Capitalize first letter
-    
+
     all_capitalize <- NULL
     for (i in 1:length(res)) {
       all_capitalize[i] <- !stringr::str_detect(res[i], "[[:lower:]]")
     }
-    
+
     cap_words <- which(all_capitalize == TRUE)
     for (i in 1:length(cap_words)) {
       res[i] <-
         stringr::str_to_lower(res[i]) %>%
         Hmisc::capitalize(.)
     }
-    
+
     clean_other_issues <- res
     .other_issues <- sci_names_raw == clean_other_issues
     .other_issues <- ifelse(is.na(.other_issues), TRUE, .other_issues)
     df <- data.frame(data, .other_issues, clean_other_issues)
-    
+
     message(
       paste0(
         ">> Other issues, capitalizing the first letter of the generic name, replacing empty names by NA, and removing extra spaces, were flagged and corrected or removed from ",
@@ -684,24 +684,24 @@ bdc_clean_names <- function(sci_names) {
         " records."
       )
     )
-    
+
     return(df)
   }
-  
+
   # Infraespecific names ----------------------------------------------------
   # Flag, identify and remove infraespecific categories from scientific names
   bdc_rem_infaesp_names <- function(data, sci_names) {
-    
+
     # Note that:
     # \\s = space
     # \\. = end point
     # | = or
     # $ = search at the end of a string
-    
+
     ### Flag infraespecific terms (variety, subspecies, forma)
-    
+
     sci_names <- data[[sci_names]] %>% stringr::str_squish()
-    
+
     # subspecies
     subsp0 <- stringr::str_detect(
       sci_names,
@@ -710,7 +710,7 @@ bdc_clean_names <- function(sci_names) {
         ignore_case = TRUE
       )
     )
-    
+
     subsp <- stringr::str_detect(
       sci_names,
       stringr::regex(
@@ -718,13 +718,13 @@ bdc_clean_names <- function(sci_names) {
         ignore_case = TRUE
       )
     )
-    
+
     # forma
     forma <- stringr::str_detect(
       sci_names, "\\sf\\.\\s|\\sf\\s|\\sfo\\.\\s|\\sfo\\s"
     ) &
       !stringr::str_detect(sci_names, "\\sf.\\s&|\\sf.\\sex")
-    
+
     # varietas (variety)
     var <- stringr::str_detect(
       sci_names,
@@ -733,34 +733,34 @@ bdc_clean_names <- function(sci_names) {
         ignore_case = TRUE
       )
     )
-    
+
     terms <- c("subsp0", "subsp", "forma", "var")
     terms_names <- c("subspecies", "subspecies", "forma", "varietas")
-    
+
     infraesp_term <- rep(NA, length(sci_names))
     .infraesp_names <- rep(FALSE, length(sci_names))
-    
+
     for (i in 1:length(terms)) {
       t <- get(terms[i])
       posi <- which(t == TRUE)
       infraesp_term[posi] <- terms_names[i]
       .infraesp_names[posi] <- TRUE
     }
-    
+
     .infraesp_names <- ifelse(.infraesp_names == TRUE, FALSE, TRUE)
     .infraesp_names <- ifelse(is.na(.infraesp_names), TRUE, .infraesp_names)
-    
+
     tab_res <- as.data.frame(cbind(.infraesp_names, infraesp_term))
     w <- which(is.na(sci_names))
     tab_res[w, ".infraesp_names"] <- NA
-    
+
     # df <- dplyr::bind_cols(data, tab_res)
-    
-    
+
+
     ### Remove infraespecif names
     spp_names_clean <- sci_names
     posi <- which(.infraesp_names == FALSE)
-    
+
     # subspecies
     rem_infra <- stringr::str_replace_all(
       spp_names_clean[posi],
@@ -770,7 +770,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     rem_infra <- stringr::str_replace_all(
       rem_infra,
       stringr::regex(
@@ -779,8 +779,8 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
-    
+
+
     # forma
     rem_infra <- stringr::str_replace_all(
       rem_infra,
@@ -789,7 +789,7 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     # varietas (variety)
     rem_infra <- stringr::str_replace_all(
       rem_infra,
@@ -799,18 +799,18 @@ bdc_clean_names <- function(sci_names) {
       ),
       replacement = " "
     )
-    
+
     spp_names_clean[posi] <- rem_infra
-    
+
     # Remove extra spaces
     clean_infaesp_names <-
       stringr::str_squish(spp_names_clean) %>%
       tibble::as_tibble() %>%
       dplyr::rename(clean_infaesp_names = value)
-    
+
     # Add column to the database
     df <- dplyr::bind_cols(data, tab_res, clean_infaesp_names)
-    
+
     message(
       paste(
         ">> Infraspecific terms were flagged and removed from",
@@ -820,22 +820,22 @@ bdc_clean_names <- function(sci_names) {
     )
     return(df)
   }
-  
+
   # Gnparser ----------------------------------------------------------------
   # Parse scientific names using rgnparser package. For more details,
   # see https://ropensci.org/technotes/2020/08/25/scientific-name-parsing/
   bdc_gnparser <- function(data, sci_names) {
-    
+
     # one-time setup to download and install rgnparser, which is used to parse
     # scientific name (for more details, see
     # https://github.com/ropensci/rgnparser)
     rgnparser::install_gnparser(force = F)
-    
+
     data_temp <- data
     w <- which(colnames(data_temp) == sci_names)
     colnames(data_temp)[w] <- "temp"
     data_temp$id <- 1:nrow(data_temp)
-    
+
     # Parse names using rgnparser
     suppressWarnings({
       gnparser <-
@@ -848,22 +848,22 @@ bdc_clean_names <- function(sci_names) {
           temp = verbatim
         )
     })
-    
+
     # Add names parsed to the full database
     df <-
       dplyr::full_join(data_temp, gnparser, by = "temp") %>%
       dplyr::distinct(id, .keep_all = T) %>%
       dplyr::select(-c(id, temp))
-    
+
     message(
       paste(
         ">> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.\n"
       )
     )
-    
+
     return(df)
   }
-  
+
   # Parse names
   parse_names <-
     bdc_rem_family_names(data = names, sci_names = "scientificName") %>%
@@ -871,14 +871,14 @@ bdc_clean_names <- function(sci_names) {
     bdc_rem_other_issues(data = ., sci_names = "clean_uncer_terms") %>%
     bdc_rem_infaesp_names(data = ., sci_names = "clean_other_issues") %>%
     bdc_gnparser(data = ., sci_names = "clean_infaesp_names")
-  
+
   # Join results to data
   df_join <- dplyr::full_join(names_raw, parse_names, by = "scientificName")
-  
+
   # Save the results of the parsing names process
   df_join %>%
     qs::qsave(., here::here("Output", "Check", "02_parsed_names.qs"))
-  
+
   # Save a "clean" database
   df_join <-
     df_join %>%
@@ -889,6 +889,6 @@ bdc_clean_names <- function(sci_names) {
       names_clean,
       quality
     )
-  
+
   return(df_join)
 }

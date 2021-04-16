@@ -44,6 +44,7 @@
 #' @importFrom parallel makeCluster stopCluster
 #' @importFrom taxadb taxa_tbl
 #' @importFrom doParallel registerDoParallel
+#' @importFrom foreach %dopar%
 #'
 #' @noRd
 #'
@@ -105,7 +106,7 @@ bdc_suggest_names_taxadb <-
       sug_dat <-
         foreach(i = sci_name,
                 .combine = rbind, .export = "bdc_return_names") %dopar% {
-                  bdc::bdc_return_names(i, max_distance, species_first_letter)
+                  bdc_return_names(i, max_distance, species_first_letter)
                 } # end foreach
       parallel::stopCluster(cl) # stop cluster
     } else {
@@ -118,7 +119,7 @@ bdc_suggest_names_taxadb <-
 
       for (i in seq_along(sci_name)) {
         sug_dat[i, ] <-
-          bdc::bdc_return_names(sci_name[i], max_distance, species_first_letter)
+          bdc_return_names(sci_name[i], max_distance, species_first_letter)
       }
     }
     return(sug_dat)

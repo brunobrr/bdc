@@ -1,9 +1,9 @@
 #' Internal function.Detects and corrects transposed geographic coordinates
-#' 
+#'
 #' This functions detects mismatches between country names informed coordinates.
 #' Once detects, transposed coordinates are corrected by the used of different
 #' coordinates transformations by using the 'bdc_coord_trans' function.
-#' 
+#'
 #' @param data data.frame. Containing an unique identifier for each records,
 #' geographical coordinates, and country names. Coordinates must be expressed in
 #' decimal degree and in WGS84.
@@ -32,7 +32,7 @@
 #' bind_rows distinct_ relocate left_join select
 #' @importFrom raster buffer
 #' @importFrom sp SpatialPoints over
-#' 
+#'
 #' @noRd
 #'
 #' @examples
@@ -107,7 +107,7 @@ bdc_correct_coordinates <-
               occ_country[[i]][cntr_iso2] %>% unique,
               paste0(" (", nrow(occ_country[[i]]), ")"))
       try(coord_test[[i]] <-
-            bdc::bdc_coord_trans(
+            bdc_coord_trans(
               data = occ_country[[i]],
               x = x,
               y = y,

@@ -8,7 +8,7 @@
 #' scientific names.
 #' @param sci_names character string. The column name with species scientific
 #' name. Default = "scientificName".
-#' @param lat character string. The column name with latitude. Coordinates must 
+#' @param lat character string. The column name with latitude. Coordinates must
 #' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
 #' @param lon character string. The column with longitude. Coordinates must be
 #' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
@@ -16,14 +16,11 @@
 #' @details Check if coordinates are valid before run this test.
 #' Species occurrence records in Goias and range in DF are assigned as TRUE.
 #' Similarly, species occurrence in DF and range is GO are considered TRUE.
-#' 
+#'
 #' @return A data.frame contain the column ".otl". Compliant
 #' (TRUE) if 'lat' and 'lon' are not empty; otherwise "FALSE".
 #'
 #' @export
-#' @examples
-#' \dontrun{
-#' }
 bdc_geographic_outlier <-
   function(data,
            sci_names = "scientificName",
@@ -38,7 +35,7 @@ bdc_geographic_outlier <-
 
     data <-
       data %>%
-      dplyr::mutate(id = 1:nrow(.)) %>% 
+      dplyr::mutate(id = 1:nrow(.)) %>%
       dplyr::mutate(
         decimalLatitude = as.numeric(.data[[lat]]),
         decimalLongitude = as.numeric(.data[[lon]])
@@ -79,7 +76,7 @@ bdc_geographic_outlier <-
       )
 
     df_spatial <-
-      dplyr::full_join(data_sp, occ_states, 
+      dplyr::full_join(data_sp, occ_states,
                        by = c("species" = "scientificName")) %>%
       dplyr::distinct(id, .keep_all = TRUE)
 
