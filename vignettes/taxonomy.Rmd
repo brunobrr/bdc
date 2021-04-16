@@ -13,15 +13,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  echo = TRUE,
+  warning = FALSE,
+  eval = FALSE
 )
 ```
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = FALSE)
-devtools::load_all()
-```
-
 
 ### Introduction
 The combination of large datasets from several sources requires careful standardization of hundreds of taxon names. The taxonomic standardization process borrows heavily from Norman et al. (2020; *taxadb* package), which contains functions that allow querying millions of taxonomic names in a fast, automatable, and consistent way using high-quality locally stored taxonomic databases.

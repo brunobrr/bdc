@@ -13,15 +13,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  echo = TRUE,
+  warning = FALSE,
+  eval = FALSE
 )
 ```
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = FALSE)
-devtools::load_all()
-```
-
 
 ### Introduction
 
@@ -31,7 +28,7 @@ Large and heterogeneous datasets may contain thousands of records missing spatia
 
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
-The results of *validation* test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records. 
+The results of *validation* test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.
 
 ### Installation
 
@@ -72,7 +69,7 @@ for (i in 1:ncol(database)){
 
 
 ### 1 - Records missing species names
-*Validation*. This test flags records missing species names 
+*Validation*. This test flags records missing species names
 ```{r}
 check_pf <- bdc_scientificName_empty(
   data = database,
@@ -91,7 +88,7 @@ check_pf <- bdc_coordinates_empty(
 ```
 
 
-### 3 - Records with out-of-range coordinates 
+### 3 - Records with out-of-range coordinates
 *Validation*. This test flags records with out-of-range coordinates, that is latitude > 90 or -90; longitude >180 or -180.
 
 ```{r}
@@ -102,7 +99,7 @@ check_pf <- bdc_coordinates_outOfRange(
 ```
 
 
-### 4 - Records from distrustful sources 
+### 4 - Records from distrustful sources
 *Validation*. This test flags records from doubtful source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.
 
 ```{r}
@@ -142,7 +139,7 @@ check_pf <- bdc_country_standardized(
 ```{r}
 check_pf <-
   bdc_coordinates_transposed(
-    data = check_pf6, 
+    data = check_pf6,
     id = "database_id",
     sci_names = "scientificName",
     lon = "decimalLongitude",
@@ -224,7 +221,7 @@ It is possible to removed flagged records (potentially problematic ones) to get 
 ### Save the database
 
 ```{r}
-check_pf %>% 
-  qs::qsave(., 
+check_pf %>%
+  qs::qsave(.,
             here::here("Output", "Intermediate", "01_prefilter_database.qs"))
 ```

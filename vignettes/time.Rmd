@@ -12,15 +12,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  echo = TRUE,
+  warning = FALSE,
+  eval = FALSE
 )
 ```
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = FALSE)
-devtools::load_all()
-```
-
 
 ### Introduction
 
