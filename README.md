@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# BDC - Biodiversity data cleaning <a href='https://github.com/brunobrr/bdc'><img src='https://github.com/brunobrr/bdc/blob/master/man/figures/logo.png' align="right" height="139" /></a>
+# BDC <a href='https://github.com/brunobrr/bdc'><img src='https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png' align="right" height="200" /></a>
 
 ## A comprehensive and straightforward workflow for standardizing, integrating, and cleaning biodiversity data
 
@@ -13,22 +13,22 @@
 ### Overview
 
 Handle biodiversity data from several different sources is not an easy
-task. This workflow was created to facilitate i) standardization and
-integration of heterogeneous datasets; and ii) to flag, document, clean,
-and correct errors or suspect records of biodiversity data.
+task. This workflow was created to facilitate i) the standardization and
+integration of heterogeneous datasets; and ii) flag, document, clean,
+and correct errors in biodiversity datasets.
 
 The workflow is composed of five core steps:
 
-1.  **Standardization** and **integration** of different datasets;  
+1.  **Standardization** and **integration** of different datasets;
 2.  **Pre-filter**: flagging and removal of invalid or non-interpretable
     information, followed by data amendments (e.g., correct transposed
-    coordinates and standardize country names);  
+    coordinates and standardize country names);
 3.  **Taxonomy**: cleaning, parsing, and standardization of scientific
     names against multiple taxonomic references. The workflow corrects
     spelling errors and converts nomenclatural synonyms to currently
-    accepted names;  
+    accepted names;
 4.  **Space**: flagging of erroneous, suspicious, and low-precision
-    geographic coordinates;  
+    geographic coordinates;
 5.  **Time**: flagging and, whenever possible, correction of
     inconsistent collection date.
 
