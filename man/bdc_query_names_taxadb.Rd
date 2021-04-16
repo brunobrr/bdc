@@ -52,10 +52,6 @@ should be done in parallel.}
 \item{export_accepted}{A logical value (default = FALSE) whether a table is
 exported containing all species with more than one valid name to be further
 explored by the user.}
-
-\item{Output}{Path to export accepted names table without the last slash
-(e.g., ./Output/check). The default is a package folder
-(~/path_to_package/Output/check).}
 }
 \value{
 This function returns a data.frame with the same number of rows and
@@ -68,9 +64,6 @@ querying millions of taxonomic names in a fast and consistent way. The
 bdc_get_taxadb contains additions that allow queries using fuzzy matching and
 converting synonyms to the current accepted name. The fuzzy match algorithm
 was inspired by get.taxa function of the 'flora' package.
-}
-\details{
-
 }
 \examples{
 \dontrun{

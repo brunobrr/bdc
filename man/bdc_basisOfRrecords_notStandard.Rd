@@ -43,8 +43,8 @@ to keep. Default = c("Event","HUMAN_OBSERVATION", "HumanObservation",
 "UNKNOWN", "", NA)
 }
 \examples{
-\dontrun{
-x <- data.frame(basisOfRecord = c("FOSSIL_SPECIMEN", "UNKNOWN", "RON", NA, "Specimen", "PRESERVED_SPECIMEN"))
-bdc_basisOfRrecords_notStandard(data = x, basisOfRecord = "basisOfRecord", names_to_keep = "all")
-}
+\dontrun{ x <- data.frame(basisOfRecord = c("FOSSIL_SPECIMEN", "UNKNOWN",
+"RON", NA, "Specimen", "PRESERVED_SPECIMEN"))
+bdc_basisOfRrecords_notStandard(data = x, basisOfRecord = "basisOfRecord",
+names_to_keep = "all") }
 }

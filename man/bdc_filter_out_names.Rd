@@ -35,6 +35,3 @@ customize the list of taxonomic notes to be kept in the argument
 \code{\link{bdc_create_report}}. If 'opposite' is TRUE, records with notes
 different from names listed in 'taxonomic_notes' are returned.
 }
-\examples{
-
-}

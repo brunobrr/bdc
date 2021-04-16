@@ -33,7 +33,7 @@ x <- data.frame(database_id,
                 .summary)
 
 bdc_filter_out_flags(
-data = x, 
+data = x,
 col_to_remove = "all")
 }
 }

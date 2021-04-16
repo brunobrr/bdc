@@ -10,11 +10,11 @@ bdc_create_report(data, database_id = "database_id", workflow_step)
 \item{data}{data.frame. Containing a unique identifier for each records and
 the results of data quality tests.}
 
+\item{database_id}{character string. The column name with a unique record identifier.
+Default = "database_id".}
+
 \item{workflow_step}{character string containing one of the following
 options("prefiter", "taxonomy", "space" or "time").}
-
-\item{id}{character string. The column name with a unique record identifier.
-Default = "database_id".}
 }
 \value{
 A data.frame containing a report summarizing the results of data
@@ -38,7 +38,7 @@ x <- data.frame(database_id,
                 .summary)
 
 bdc_create_report(
-data = x, 
+data = x,
 database_id = "database_id",
 workflow_step = "prefilter")
 }

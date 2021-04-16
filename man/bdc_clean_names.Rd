@@ -26,8 +26,8 @@ This functions is composed of a series of name-checking routines for cleaning
 and parsing scientific names. This tools is used to remove 1) family names of animals or
 plants pre-pended to species names, 2) qualifiers denoting uncertain or
 provisional status of taxonomic identification (e.g., confer, species,
-affinis), and 3) infraspecific terms (e.g., variety \link{var.},
-subspecies \link{subsp}, forma \link{f.}, and their spelling variations). It also
+affinis), and 3) infraspecific terms, for example: variety (var.),
+subspecies (subsp), forma (f.), and their spelling variations. It also
 includes applications to: 4) standardize names, i.e., capitalize only the first letter of
 the genus name and remove extra whitespaces), and 5) parse names, i.e.,
 separate author, date, annotations from taxon name.
