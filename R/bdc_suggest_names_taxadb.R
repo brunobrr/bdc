@@ -17,9 +17,9 @@
 #' Options available are: "kingdom", "phylum", "class", "order", "family", and
 #' "genus". Default = NULL.
 #' @param rank character string. Taxonomic rank name (e.g. "Plantae", "Animalia", "Aves", "Carnivora". Default = NULL.
-#' @param parallel logical. If TRUE (Default) to run in parallel. 
+#' @param parallel logical. If TRUE (Default) to run in parallel.
 #' @param ncores numeric. Number of cores to run in parallel. Default = 2.
-#' 
+#'
 #' @details This function looks for scientific names in a reference taxonomic
 #' database ('db'). Higher taxonomic rank information and the first letter of
 #' names supplied are used to filter the reference database.  Then, it is
@@ -36,26 +36,27 @@
 #' allowed. When multiple candidate names have an identical matching distance
 #' for the original name, the name with the lowest alphabetical sort order is
 #' presented as the best match.
-#' 
+#'
 #' @return A three-column data.frame containing original name, names suggested,
 #' and string distance between original and suggested (candidates) names.
-#' 
+#'
 #' @importFrom dplyr filter pull
 #' @importFrom parallel makeCluster stopCluster
 #' @importFrom taxadb taxa_tbl
-#' 
+#' @importFrom doParallel registerDoParallel
+#'
 #' @noRd
 #'
 #' @examples
 #' \dontrun{
 #' x <- ("Cebus apela", "Puma concolar")
 #' bdc_suggest_names_taxadb(
-#' x, 
+#' x,
 #' max_distance = 0.75,
 #' provider = "gbif",
-#' rank_name = "Plantae", 
-#' rank = "kingdom", 
-#' parallel = TRUE, 
+#' rank_name = "Plantae",
+#' rank = "kingdom",
+#' parallel = TRUE,
 #' ncores = 2)
 #' }
 bdc_suggest_names_taxadb <-
@@ -66,7 +67,7 @@ bdc_suggest_names_taxadb <-
            rank = NULL,
            parallel = TRUE,
            ncores = 2) {
-    
+
     # Get first letter of all scientific names
     first_letter <-
       unique(sapply(sci_name, function(i) {
@@ -74,9 +75,9 @@ bdc_suggest_names_taxadb <-
       },
       USE.NAMES = FALSE
       ))
-    
+
     first_letter <- toupper(first_letter)
-    
+
     # Should taxonomic database be filter according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
       species_first_letter <-
@@ -94,13 +95,13 @@ bdc_suggest_names_taxadb <-
         dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
     }
-    
+
     # Should parallel processing be used?
     if (parallel == TRUE) {
       # setup parallel backend to use many processors
       cl <- parallel::makeCluster(ncores) # not to overload your computer
       doParallel::registerDoParallel(cl)
-      
+
       sug_dat <-
         foreach(i = sci_name,
                 .combine = rbind, .export = "bdc_return_names") %dopar% {
@@ -114,7 +115,7 @@ bdc_suggest_names_taxadb <-
           suggested = character(length(sci_name)),
           distance = numeric(length(sci_name))
         )
-      
+
       for (i in seq_along(sci_name)) {
         sug_dat[i, ] <-
           bdc::bdc_return_names(sci_name[i], max_distance, species_first_letter)
