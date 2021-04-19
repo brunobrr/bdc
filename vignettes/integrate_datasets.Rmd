@@ -127,7 +127,7 @@ DT::datatable(
   head(dataabse), class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
   options = list(
     dom = 'Bfrtip',
-    scrollX = T,
+    scrollX = TRUE,
     fixedColumns = list(leftColumns = 2)
 )
 )
