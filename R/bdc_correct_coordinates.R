@@ -128,9 +128,9 @@ bdc_correct_coordinates <-
     for (i in 1:length(coord_test)) {
       n <-
         coord_test[[i]] %>%
-        dplyr::select_(cntr_iso2) %>%
+        dplyr::select(cntr_iso2) %>%
         unique %>%
-        dplyr::pull
+        dplyr::pull()
 
       # Here filter polygon based on your country iso2c code
       my_country <-
