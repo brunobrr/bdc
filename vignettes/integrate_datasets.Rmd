@@ -16,13 +16,13 @@ knitr::opts_chunk$set(
   out.width = "100%",
   echo = TRUE,
   warning = FALSE,
-  eval = FALSE
+  eval = T
 )
 ```
 
 ## Introduction
 
-The first step of the BDC workflow handles the harmonization of heterogeneous datasets in a standard format in a simple and efficient way. How is this accomplished? Basically, by replacing in the headers of original datasets by standardized terms. To do so, users must fill-out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**.
+The first step of the BDC workflow handles the harmonization of heterogeneous datasets in a standard format in a simple and efficient way. How is this accomplished? Basically, by replacing in the headers of original datasets by standardized terms. To do so, you have to fill-out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**.
 
 Once standardized, datasets are then integrated into a standardized database having a minimum set of terms required for sharing biodiversity data and metadata across a wide variety of biodiversity applications ([Simple Darwin Core standards](https://dwc.tdwg.org/terms/)).
 
@@ -32,8 +32,8 @@ Once standardized, datasets are then integrated into a standardized database hav
 
 - Original datasets must be formatted in comma-separated format (**.csv**);
 - When filling out the configuration table, please provide the **exact** name of a column of original dataset and the the **full path** of each original dataset;
-- Names of original datasets without a correspond DarwinCore term must be fill out **NA** (not available);
-- The workflow is adjustable so users can insert other fields in the configuration table according to their needs. In such cases, we strongly recommend the added terms follow the Darwin Core standards.
+- Names of original datasets without a correspond DarwinCore term must be fill out as **NA** (not available);
+- The workflow is adjustable so you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
 
 
 ## Installation
@@ -46,7 +46,7 @@ if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
 
-Creating folders to save the results
+First, let's Create folders to save the results.
 ```{r}
 bdc::bdc_create_dir()
 ```
@@ -70,6 +70,7 @@ DT::datatable(
     #dom = 't',
     dom = 'Bfrtip',
     scrollX = TRUE,
+    pageLength = 5,
     buttons = c('copy', 'csv', 'print'),
     fixedColumns = list(leftColumns = 2),
     editable = 'cell'
@@ -78,57 +79,60 @@ DT::datatable(
 ```
 
 
-The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the workflow: i) *required*, i.e., the minimum information necessary to run the workflow, ii) *recommended*, i.e., not mandatory but having important details on species records, and iii) *additional*, i.e., information potentially useful for detailed data analyses
+The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the workflow: i) *required*, i.e., the minimum information necessary to run the workflow, ii) *recommended*, i.e., not mandatory but having important details on species records, and iii) *additional*, i.e., information potentially useful for detailed data analyses.
 
 Below are listed the specifications of each field of the configuration table:
 
 - **Field**: Name of the fields in *DatabaseInfo.csv* to be filled in.
-- **Category**: Classification of each field in *DatabaseInfo.csv*. *required*, i.e., the minimum information necessary to run the workflow, ii) *recommended*, i.e., not mandatory but having important details on species records, and iii) *additional*, i.e., information potentially useful for detailed data analyses. As a general guidance, be careful to include all *required* fields and supply as many recommended and additional fields as possible.
+- **Category**: Classification of each field in *DatabaseInfo.csv*. *required (RQ)*, i.e., the minimum information necessary to run the workflow, ii) *recommended (RE)*, i.e., not mandatory but having important details on species records, and iii) *additional (AD)*, i.e., information potentially useful for detailed data analyses. As a general guidance, be careful to include all *required* fields and supply as many recommended and additional fields as possible.
 - **Description**: Description about the content of the specified field in the original database.
 - **Type**: Type of content data on the specified field in the original database.
 - **Example**: An example of a single content on the specified field in the original database.
 
-| Field                         | Category | Description of DarwinCore terms (if existing)                                                                                                                                                            | Type          | Example of data                                              |
-|-------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|--------------------------------------------------------------|
-| datasetName                   | RQ       | A short name identifying the dataset                                                                                                                                                                     | Character     | GBIF                                                         |
-| fileName                      | RQ       | The path containing the dataset informed in “databaseName”                                                                                                                                               | Character     | C:/Users/Geizi/Projects/Flora/Input_files/GBIF.csv           |
-| scientificName                | RQ       | Name of the column containing scientific names with or without authorship information                                                                                                                    | Character     | Myrcia acuminata                                             |
-| decimalLatitude               | RQ       | Name of the column containing information on geographic latitude in decimal degrees                                                                                                                      | Numeric       | -6.370833                                                    |
-| decimalLongitude              | RQ       | Name of the column containing information on geographic longitude in decimal degrees                                                                                                                     | Numeric       | -3.255                                                       |
-| occurrenceID                  | RE       | Name of the column presenting the unique identifiers in the original databases. If absent, NA                                                                                                            | Numeric       | 1087566037                                                   |
-| basisOfRecord                 | RE       | Name of the column in the original database containing the specific nature of the data record                                                                                                            | Character     | PreservedSpecimenHumanObservation                            |
-| verbatimEventDate             | RE       | The name of the column containing information on verbatim date-time. Information only on collecting year can be provided. Recommended best practice is to use an encoding scheme, such as ISO 8601-1:201 | date; numeric | 2018-08-29T15:19 (3:19pm local time on 29 August 2018); 1970 |
-| country                       | RE       | The name of the column containing information on the country or major administrative unit in which the data was recorded                                                                                 | Character     | Brazil                                                       |
-| stateProvince                 | RE       | Name of the column presenting the name of the next smaller administrative region than country (state, province) where taxa were sampled or observed                                                      | Character     | Rio de Janeiro                                               |
-| county                        | RE       | Name of the column containing the full, unabbreviated name of the next smaller administrative region than “stateProvince” (county, shire, department, etc.) where taxon was sampled or observed          | Character     | Goiânia                                                      |
-| locality                      | RE       | Name of the column presenting the specific description of the place where taxon was sampled or observed                                                                                                  | Character     | Serra dos Pirineus                                           |
-| identifiedBy                  | AD       | Name of the column presenting the list (concatenated and separated) of names of people, groups, or organizations who assigned the taxa to the subject                                                    | Character     | M. Sobral                                                    |
-| coordinateUncertaintyInMeters | AD       | Name of the presenting the horizontal distance (in meters) from the given “decimalLatitude” and “decimalLongitude”                                                                                       | Numeric       | 10                                                           |
-| coordinatePrecision           | AD       | Name of the containing the decimal representation of the precision of the coordinates given in the decimalLatitude and decimalLongitude                                                                  | Numeric       | 0.0001                                                       |
-| recordedBy                    | AD       | Name of the column presenting the list (concatenated and separated) of names of people, groups, or organizations responsible for recording the original Occurrence                                       | Character     | Cervi, A.C                                                   |
+```{r echo=F, message=FALSE, warning=FALSE}
+config_description <-
+  readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo_description.csv"))
+
+DT::datatable(
+  config_description, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
+  options = list(
+    #dom = 't',
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    pageLength = 5,
+    buttons = c('copy', 'csv', 'print'),
+    fixedColumns = list(leftColumns = 2),
+    editable = 'cell'
+  )
+)
+```
+
 
 ## Standardization and integration of datasets
 
-Note that the standardized database integrating all dataset are saved in the "Output/Intermediate" folder as "00_merged_database.qs". The database is saved with a "qs" extentintion, a format usefull for quickly saving and reading large databases. This files can be read using the function "qread" from the "qs" package (see below)
+Note that the standardized database integrating all dataset are saved in the "Output/Intermediate" folder as *"00_merged_database.qs"*. The database is saved with a "qs" extension, a format useful for quickly saving and reading large databases. This files can be read using the function "qread" from the "qs" package (see below).
 
-```{r}
+```{r message=F, warning=F}
 bdc_standardize_datasets(metadata = metadata)
 ```
 
-```{r}
+```{r message=F, warning=F}
 database <-
   here::here("Output", "Intermediate", "00_merged_database.qs") %>%
   qs::qread()
 ```
 
+
 An example of a standardized database containing the required field to run the BDC workflow.
-```{r message=FALSE, warning=FALSE, echo =F}
+
+```{r echo=F, message=FALSE, warning=FALSE}
 DT::datatable(
-  head(dataabse), class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
+  database, class = 'stripe', extensions = 'FixedColumns',
   options = list(
-    dom = 'Bfrtip',
+    pageLength = 3,
+    dom = 'ft',
     scrollX = TRUE,
     fixedColumns = list(leftColumns = 2)
-)
+  )
 )
 ```

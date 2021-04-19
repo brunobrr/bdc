@@ -6,6 +6,7 @@ data/WFO_Backbone
 R/backup
 Output
 data
+vignettes/bdc
 
 .Rprofile
 renv.lock
