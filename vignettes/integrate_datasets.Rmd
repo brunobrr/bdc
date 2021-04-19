@@ -132,5 +132,3 @@ DT::datatable(
 )
 )
 ```
-
-teste
