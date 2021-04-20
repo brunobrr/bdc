@@ -46,7 +46,7 @@ bdc::bdc_create_dir()
 
 
 ## Read the database
-Read the merged database created in the step **Standardization and integration of different datasets** of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow.
+Read the merged database created in the step **Standardization and integration of different datasets** of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html")
 
 ```{r}
 database <-
@@ -237,15 +237,15 @@ bdc_create_figures(data = check_pf,
 ```
 
 ```{r echo=F, out.width="100%", out.height= "100%", fig.cap="Transposed coordinates"}
-knitr::include_graphics("inst/extdata/example_figures/prefilter_coordinates_transposed_MAP.png")
+knitr::include_graphics("vignettes/inst/extdata/example_figures/prefilter_coordinates_transposed_MAP.png")
 ```
 
 ```{r echo=F, out.width="80%", out.height= "80%", fig.cap = "Coordinates and contry inconsistent"}
-knitr::include_graphics("inst/extdata/example_figures/prefilter_.coordinates_country_inconsistent_MAP.png")
+knitr::include_graphics("vignettes/inst/extdata/example_figures/prefilter_.coordinates_country_inconsistent_MAP.png")
 ```
 
 ```{r echo=F, out.width="80%", out.height= "80%", fig.cap = "Summary of all tests"}
-knitr::include_graphics("inst/extdata/example_figures/prefilter_summary_all_tests_BAR.png")
+knitr::include_graphics("vignettes/inst/extdata/example_figures/prefilter_summary_all_tests_BAR.png")
 ```
 
 <br/>

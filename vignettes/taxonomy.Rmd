@@ -16,12 +16,13 @@ knitr::opts_chunk$set(
   out.width = "100%",
   echo = TRUE,
   warning = FALSE,
-  eval = FALSE
+  eval = T
 )
 ```
 
-### Introduction
-The combination of large datasets from several sources requires careful standardization of hundreds of taxon names. The taxonomic standardization process borrows heavily from Norman et al. (2020; *taxadb* package), which contains functions that allow querying millions of taxonomic names in a fast, automatable, and consistent way using high-quality locally stored taxonomic databases.
+## Introduction
+
+The combination of large datasets from several sources requires careful standardization taxon names. Non-standardized incorrect, ambiguous, or synonymous taxonomic names can lead to unreliable results and conclusions. The BDC workflow includes tools to help standardize major taxonomic groups’ names by comparing scientific names against one out of 10 taxonomic references. The taxonomic standardization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow querying millions of taxonomic names in a fast, automatable, and consistent way using high-quality locally stored taxonomic databases. 
 
 The workflow tools used to standardize names (*bdc_clean_name* and *bdc_query_names_taxadb*) contains additions to the *taxadb* package, including tools for:
 - 1. Clean and parse scientific names;
@@ -45,10 +46,7 @@ The taxonomic standardization is based on one taxonomic database chosen by the u
 | wd           | Wikidata                                                  |
 
 
-Details on taxonomic references and schema used in taxadb can be found in [Norman et al. (2020)](docs.ropensci.org/taxadb/articles/data-sources.html).
-
-
-### Installation
+## Installation
 
 You can install the released version of 'BDC' from [github](https://github.com/brunobrr/bdc) with:
 
@@ -63,19 +61,13 @@ bdc::bdc_create_dir()
 ```
 
 
-### Read the database
-Read the database created in the step **Pre-filter** of the BDC workflow. It is also possible to read any datasets containing the *required* fields to run the workflow (see the vignette "Standardization and integration of different datasets").
+## Read the database
+Read the database created in the step **Pre-filter** of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html").
 
 ```{r}
 database <-
-  system.file("extdata",
-              "Output",
-              "Intermediate/01_prefilter_database.qs", package = "bdc") %>%
-  readr::read_csv(database)
-
-head(database)
+  qs::qread("Output/Intermediate/01_prefilter_database.qs")
 ```
-
 
 Standardization of character encoding
 ```{r}
@@ -86,8 +78,23 @@ for (i in 1:ncol(database)){
 }
 ```
 
+<br/>
 
-### Clean and parse species names
+```{r echo=F, message=FALSE, warning=FALSE}
+DT::datatable(
+  database, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
+<br/>
+
+## Clean and parse species names
 Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the *bdc_clean_name.* containing functionalities to optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to remove:
 
 1. Family names pre-pended to species names;
@@ -101,7 +108,7 @@ parse_names <- bdc_clean_names(sci_names = database$scientificName)
 ```
 
 
-### Names harmonization
+## Names harmonization
 The taxonomic harmonization is based upon **one** of those taxonomic authorities previously mentioned.
 
 ```{r}
@@ -131,7 +138,7 @@ database <-
 ```
 
 
-### Report
+## Report
 The report is based on the column "notes" containing the results of the name standardization process.
 
 ```{r}
@@ -144,7 +151,7 @@ report
 ```
 
 
-### Unresolved names
+## Unresolved names
 It also possible filter out records with taxonomic status different of "accepted". Such records can be potentially resolved manually.
 
 ```{r}
@@ -161,7 +168,7 @@ unresolved_names %>%
 ```
 
 
-### Filter the database
+## Filter the database
 It is possible to remove records with unresolved or invalid names to get a 'clean' database . However, to ensure that all records be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.
 ```{r}
 # output <-
@@ -173,12 +180,10 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 ```
 
 
-### Save the database
+## Save the database
 
 ```{r}
 database %>%
   qs::qsave(.,
             here::here("Output", "Intermediate", "01_prefilter_database.qs"))
 ```
-
-

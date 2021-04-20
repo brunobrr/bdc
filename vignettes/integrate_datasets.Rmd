@@ -61,6 +61,8 @@ metadata <-
   readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo.csv"))
 ```
 
+<br/>
+
 ```{r echo = FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 if (!require("DT")) install.packages('DT')
 
@@ -78,6 +80,7 @@ DT::datatable(
 )
 ```
 
+<br/>
 
 The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the workflow: i) *required*, i.e., the minimum information necessary to run the workflow, ii) *recommended*, i.e., not mandatory but having important details on species records, and iii) *additional*, i.e., information potentially useful for detailed data analyses.
 
@@ -88,6 +91,8 @@ Below are listed the specifications of each field of the configuration table:
 - **Description**: Description about the content of the specified field in the original database.
 - **Type**: Type of content data on the specified field in the original database.
 - **Example**: An example of a single content on the specified field in the original database.
+
+<br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 config_description <-
@@ -124,6 +129,8 @@ database <-
 
 
 An example of a standardized database containing the required field to run the BDC workflow.
+
+<br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 DT::datatable(
