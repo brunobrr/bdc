@@ -46,13 +46,13 @@ if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
 
-First, let's Create folders to save the results.
+First, let's create folders to save the results.
 ```{r}
 bdc::bdc_create_dir()
 ```
 
 
-### Read databasets
+## Read databasets
 
 Read an example of the *configuration table*:
 
@@ -127,10 +127,10 @@ An example of a standardized database containing the required field to run the B
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 DT::datatable(
-  database, class = 'stripe', extensions = 'FixedColumns',
+  head(database), class = 'stripe', extensions = 'FixedColumns',
   options = list(
     pageLength = 3,
-    dom = 'ft',
+    dom = 'Bfrtip',
     scrollX = TRUE,
     fixedColumns = list(leftColumns = 2)
   )

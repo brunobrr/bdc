@@ -41,7 +41,7 @@ code.}
 \item{border_buffer}{numeric >= 0. A distance in decimal degrees used to
 created a buffer around the country. Records within a given country and at
 a specified distance from the border will be not be corrected.
-Default = 0.2 (~20 km at the equator).}
+Default = 0.2 (~22 km at the equator).}
 }
 \value{
 A data.frame containing the column "coordinates_transposed"
@@ -86,7 +86,7 @@ bdc_coordinates_transposed(
   lon = "decimalLongitude",
   country = "country", 
   countryCode = "countryCode", 
-  border_buffer = 0.3) # in decimal degrees
+  border_buffer = 0.2) # in decimal degrees
 }
 
 }
