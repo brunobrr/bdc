@@ -157,7 +157,8 @@ bdc_create_report <-
       data <- res[[2]]
       data.table::fwrite(res[[1]],
                          here::here("Output/Report/01_Report_Prefilter.csv"))
-  }
+    }
+    
     # Taxonomy
     if (workflow_step == "taxonomy") {
       names <-
@@ -183,7 +184,7 @@ bdc_create_report <-
               round((number_of_records / n_records) * 100, 2)
           ) %>%
           dplyr::rename(notes = .uncer_terms) %>%
-          dplyr::mutate(notes = if_else(notes == "FALSE", "taxo_uncer", notes))
+          dplyr::mutate(notes = ifelse(notes == "FALSE", "taxo_uncer", notes))
       }
 
       names <- dplyr::bind_rows(names, taxo_unc)
@@ -191,7 +192,8 @@ bdc_create_report <-
 
       names <-
         names %>%
-        dplyr::mutate(notes = if_else(notes == "", "valid names", notes)) %>%
+        dplyr::mutate(notes = dplyr::if_else(notes == "", 
+                                             "valid names", notes)) %>%
         dplyr::mutate(Description = notes) %>%
         dplyr::mutate(
           Description = dplyr::if_else(
