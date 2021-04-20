@@ -16,14 +16,14 @@ navbar:
       text: "Articles"
       menu:
       -  text: "Standardization and integration of different datasets"
-         href: articles/integrate_datasets.html
+         href: articles/00_integrate_datasets.html
       -  text: "Prefilter"
-         href: articles/prefilter.html
+         href: articles/01_prefilter.html
       -  text: "Taxonomy"
-         href: articles/taxonomy.html
+         href: articles/02_taxonomy.html
       -  text: "Space"
-         href: articles/space.html
+         href: articles/03_space.html
       -  text: "Time"
-         href: articles/time.html
+         href: articles/04_time.html
   components:
     home: ~

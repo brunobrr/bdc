@@ -1,0 +1,265 @@
+---
+title: "Space"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Space}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  echo = TRUE,
+  warning = FALSE,
+  eval = T
+)
+```
+
+## Introduction
+
+We used the R package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to country capital, provinces and country centroids, coordinates in urban areas, around biodiversity institutions or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
+
+Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter step of the workflow (more details [here](https://brunobrr.github.io/bdc/articles/prefilter.html)).
+
+<br/>
+
+<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
+
+The results of each test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and **the latter potentially problematic or suspect records**.
+
+## Installation
+
+You can install the released version of 'BDC' from [github](https://github.com/brunobrr/bdc) with:
+
+```{r, message=FALSE, warning=FALSE}
+if (!require("remotes")) install.packages("remotes")
+if (!require("bdc")) remotes::install_github("brunobrr/bdc")
+```
+
+Creating folders to save the results
+```{r}
+bdc::bdc_create_dir()
+```
+
+
+## Read the database
+
+Read the database created in the step **taxonomy** of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html")
+
+```{r}
+database <-
+  qs::qread("Output/Intermediate/02_taxonomy_database.qs")
+```
+
+Standardization of character encoding
+```{r}
+for (i in 1:ncol(database)){
+  if(is.character(database[,i])){
+    Encoding(database[,i]) <- "UTF-8"
+  }
+}
+```
+
+<br/>
+
+```{r echo=F, message=FALSE, warning=FALSE}
+DT::datatable(
+  database, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
+<br/>
+
+## Flag common spatial issues
+
+```{r}
+check_space <-
+  CoordinateCleaner::clean_coordinates(
+    x =  database,
+    lon = "decimalLongitude",
+    lat = "decimalLatitude",
+    species = "scientificName",
+    countries = ,
+    tests = c(
+      "capitals",     # records within 2km around country and province centroids
+      "centroids",    # records within 1km of capitals centroids
+      "duplicates",   # duplicated records
+      "equal",        # records with equal coordinates
+      "gbif",         # records within 1 degree (~111km) of GBIF headsquare
+      "institutions", # records within 100m of zoo and herbaria
+      "outliers",     # outliers
+      "zeros",        # records with coordinates 0,0
+      "urban"         # records within urban areas
+    ),
+    capitals_rad = 2000,
+    centroids_rad = 1000,
+    centroids_detail = "both", # test both country and province centroids
+    inst_rad = 100, # remove zoo and herbaria within 100m
+    outliers_method = "quantile",
+    outliers_mtp = 5,
+    outliers_td = 1000,
+    outliers_size = 10,
+    range_rad = 0,
+    zeros_rad = 0.5,
+    capitals_ref = NULL,
+    centroids_ref = NULL,
+    country_ref = NULL,
+    country_refcol = "countryCode",
+    inst_ref = NULL,
+    range_ref = NULL,
+    # seas_ref = continent_border,
+    # seas_scale = 110,
+    urban_ref = NULL,
+    value = "spatialvalid" # result of tests are appended in separate columns
+  )
+```
+
+
+### Flag coordinates with low decimal precision
+
+Identification of records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
+
+```{r}
+check_space <-
+  bdc_coordinates_precision(
+    data = check_space,
+    lon = "decimalLongitude",
+    lat = "decimalLatitude",
+    ndec = c(0, 1) # number of decimals to be tested
+  )
+```
+
+
+## Mapping spatial errors
+
+It is possible to map a column containing the results of one spatial test. For example, let's map records in country or provinces centroids.
+
+```{r fig.height=4, fig.width=6}
+check_space %>%
+  dplyr::filter(.cen == FALSE) %>%
+  bdc_quickmap(
+    data = .,
+    lon = "decimalLongitude",
+    lat = "decimalLatitude",
+    col_to_map = ".cen",
+    size = 0.7
+  )
+```
+
+
+## Report
+
+Creating a column named ".summary" summarizing the results of all tests. This column is "FALSE" if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
+
+```{r}
+check_space <- bdc_summary_col(data = check_space)
+```
+
+<br/>
+
+```{r echo=F, message=FALSE, warning=FALSE}
+DT::datatable(
+  check_space, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
+<br/>
+
+Creating a report summarizing the results of all tests.
+
+```{r}
+report <-
+  bdc_create_report(data = check_space,
+                    database_id = "database_id",
+                    workflow_step = "space")
+
+report
+```
+
+<br/>
+
+## Figures
+
+Creating figures (bar plots and maps) to facilitate the interpretation of the results of data quality tests.
+
+```{r}
+bdc_create_figures(data = check_space,
+                   database_id = "database_id",
+                   workflow_step = "space")
+```
+
+<br/>
+
+```{r echo=F, out.width="100%", out.height= "100%", fig.cap="Rounded (potentially imprecse) coordinates"}
+knitr::include_graphics(
+  here::here(
+    "inst",
+    "extdata",
+    "example_figures",
+    "space_.rou_BAR.png"
+  )
+)
+```
+
+```{r echo=F, out.width="80%", out.height= "80%", fig.cap = "Records within biodiversity institutions"}
+knitr::include_graphics(
+  here::here(
+    "inst",
+    "extdata",
+    "example_figures",
+    "space_.inst_MAP.png"
+  )
+)
+```
+
+```{r echo=F, out.width="80%", out.height= "80%", fig.cap = "Summary of all tests"}
+knitr::include_graphics(
+  here::here(
+    "inst",
+    "extdata",
+    "example_figures",
+    "space_summary_all_tests_BAR.png"
+  )
+)
+```
+
+<br/>
+
+
+## Filter the database
+
+It is possible to removed flagged records (potentially problematic ones) to get a 'clean' database (i.e., without test columns starting with "."). However, to ensure that all records be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.
+
+```{r}
+# output <-
+#   check_space %>%
+#   dplyr::filter(.summary == TRUE) %>%
+#   bdc_filter_out_flags(data = ., col_to_remove = "all")
+```
+
+
+### Save the database
+
+```{r}
+check_space %>%
+  qs::qsave(.,
+            here::here("Output", "Intermediate", "01_prefilter_database.qs"))
+```
+
