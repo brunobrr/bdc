@@ -95,7 +95,7 @@ DT::datatable(
 <br/>
 
 ## Clean and parse species names
-Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the *bdc_clean_name.* containing functionalities to optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to remove:
+Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the *bdc_clean_name* containing functionalities to optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to remove:
 
 1. Family names pre-pended to species names;
 2. Qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);
@@ -103,15 +103,62 @@ Scientific names improperly formatted usually cannot be matched with a valid nam
 4. Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);
 5. Parse names, i.e., separate author, date, annotations from taxon name.
 
-```{r}
+```{r eval=F}
 parse_names <- bdc_clean_names(sci_names = database$scientificName)
 ```
 
+```{r echo=F}
+message("
+>> Family names prepended to scientific names were flagged and removed from 20 records.
+>> Terms denoting taxonomic uncertainty were flagged and removed from 35 records.
+>> Other issues, capitalizing the first letter of the generic name, replacing empty names by NA, and removing extra spaces, were flagged and corrected or removed from 29 records.
+>> Infraspecific terms were flagged and removed from 46 records.
 
-## Names harmonization
-The taxonomic harmonization is based upon **one** of those taxonomic authorities previously mentioned.
+The latest gnparser version is v0.14.4
+tentando a URL 'https://gitlab.com/gogna/gnparser/uploads/4ce35a78d821297308363cc3f4770f29/gnparser-v0.14.4-win-64.zip'
+Content type 'application/zip' length 7947842 bytes (7.6 MB)
+downloaded 7.6 MB
+
+gnparser has been installed to C:/Users/Bruno R. Ribeiro/AppData/Roaming/gnparser
+>> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.
+")
+```
+
+<br/>
+
+An example of bdc_clean_names output.
+```{r echo=F, message=FALSE, warning=FALSE}
+# read
+parse_names <-
+  readr::read_csv("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.csv")
+
+DT::datatable(
+  parse_names[2000:2100,], class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
+
+Let's merge the names parsed with the full database. As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of parsing names process in "Output/Check/02_parsed_names.qs"
 
 ```{r}
+parse_names <- 
+  parse_names %>%
+  dplyr::select(.uncer_terms, names_clean)
+
+database <- dplyr::bind_cols(database, parse_names)
+```
+
+  
+## Names harmonization
+The taxonomic harmonization is based upon **one** of those taxonomic authorities previously mentioned. It starts with the creation of a local database by download, extraction, and importation of the taxonomic database informed by users using taxadb package. The download may take a time depending on the internet connection. 
+
+```{r eval=F}
 query_names <- bdc_query_names_taxadb(
   sci_name = database$names_clean,
   replace_synonyms = TRUE,
@@ -122,8 +169,15 @@ query_names <- bdc_query_names_taxadb(
   rank = "kingdom",
   parallel = TRUE,
   ncores = 2,
-  export_accepted = FALSE
+  export_accepted = FALSE # multiple accepted names 
 )
+```
+
+```{r echo=F}
+query_names <-
+  data.table::fread(
+    "inst/extdata/example_bdc_query_names_taxadb/example_bdc_query_names_taxadb.csv"
+  )
 ```
 
 
@@ -137,13 +191,28 @@ database <-
   dplyr::bind_cols(., query_names)
 ```
 
+<br/>
+
+```{r echo=F, message=FALSE, warning=FALSE}
+DT::datatable(
+  database, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 5,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
+<br/>
 
 ## Report
 The report is based on the column "notes" containing the results of the name standardization process.
 
 ```{r}
 report <-
-  bdc_create_report(data = check_pf,
+  bdc_create_report(data = database,
                     database_id = "database_id",
                     workflow_step = "taxonomy")
 
@@ -169,7 +238,7 @@ unresolved_names %>%
 
 
 ## Filter the database
-It is possible to remove records with unresolved or invalid names to get a 'clean' database . However, to ensure that all records be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.
+It is possible to remove records with unresolved or invalid names ╣to get a 'clean' database. However, to ensure that all records be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.
 ```{r}
 # output <-
 #   bdc_filter_out_names(
