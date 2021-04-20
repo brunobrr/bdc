@@ -28,11 +28,11 @@ Handle biodiversity data from several different sources is not an easy task. Thi
 
 The workflow is composed of five core steps:
 
-1. **Standardization** and **integration** of different datasets;
-2. **Pre-filter**: flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names);
-3. **Taxonomy**: cleaning, parsing, and standardization of scientific names against multiple taxonomic references. The workflow corrects spelling errors and converts nomenclatural synonyms to currently accepted names;
-4. **Space**: flagging of erroneous, suspicious, and low-precision geographic coordinates;
-5. **Time**: flagging and, whenever possible, correction of inconsistent collection date.
+1. [**Standardization** and **integration**](https://brunobrr.github.io/bdc/articles/integrate_datasets.html) of different datasets;
+2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/prefilter.html): flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names);
+3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/taxonomy.html): cleaning, parsing, and standardization of scientific names against multiple taxonomic references. The workflow corrects spelling errors and converts nomenclatural synonyms to currently accepted names;
+4. [**Space**](https://brunobrr.github.io/bdc/articles/space.html): flagging of erroneous, suspicious, and low-precision geographic coordinates;
+5. [**Time**](https://brunobrr.github.io/bdc/articles/time.html): flagging and, whenever possible, correction of inconsistent collection date.
 
 Aim to facilitate the interpretation and visualization of results, reports and figures are created in each step of the workflow. Further, standardized databases resulting from each step as well as data needing further inspection are automatically saved in the "Output" folder.
 
