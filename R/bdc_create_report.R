@@ -14,9 +14,8 @@
 #' everything summarise_all pull rename if_else add_row bind_rows
 #' @importFrom data.table fwrite
 #' @importFrom tibble as_tibble
-#' @importFrom knitr kable
+#' @importFrom fs file_exists
 #' @importFrom tidyselect starts_with
-#' @importFrom kableExtra kable_styling
 #' @export
 #'
 #' @examples
@@ -45,7 +44,7 @@ bdc_create_report <-
   suppressMessages({
 
     # Total number of records
-    if (!file_exists("data/n_records.csv")) {
+    if (!fs::file_exists("data/n_records.csv")) {
       n_records <-
         data %>%
         dplyr::summarise(n = dplyr::n())
@@ -88,9 +87,14 @@ bdc_create_report <-
 
       data <-
         x %>%
-        knitr::kable(.) %>%
-        kableExtra::kable_styling(bootstrap_options = c("striped", "hover",
-                                                        "condensed"))
+        DT::datatable(
+          ., class = 'stripe',
+          options = list(
+            pageLength = 10,
+            dom = 'Brtip',
+            scrollX = TRUE
+          )
+        )
       return(list(x, data))
     }
 
@@ -130,12 +134,12 @@ bdc_create_report <-
           ),
           Description = dplyr::if_else(
             Description == ".coordinates_outOfRange",
-            "Records coordiantes out-of-range",
+            "Records with coordinates out-of-range",
             Description
           ),
           Description = dplyr::if_else(
             Description == ".basisOfRrecords_notStandard",
-            "Records from doubtful source",
+            "Records from a doubtful source",
             Description
           ),
           Description = dplyr::if_else(
@@ -251,7 +255,7 @@ bdc_create_report <-
           ),
           Description = dplyr::if_else(
             Description == "notFound",
-            "invalid: name not found in the taxonomic database or no interpretable name", Description
+            "invalid: name not found in the taxonomic database or a non-interpretable name", Description
           ),
           Description = dplyr::if_else(
             Description == "multipleAccepted",
@@ -346,7 +350,7 @@ bdc_create_report <-
           ),
           Description = dplyr::if_else(
             Description == ".rou",
-            "Rounded coordinates",
+            "Rounded (probably imprecise) coordinates",
             Description
           ),
           Description = dplyr::if_else(

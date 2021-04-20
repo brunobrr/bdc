@@ -23,6 +23,7 @@
 #' @importFrom data.table fwrite
 #' @importFrom dplyr filter select
 #' @importFrom here here
+#' @importFrom stringr str_detect str_squish
 #' 
 #' @export 
 #'
@@ -58,10 +59,14 @@ bdc_coordinates_from_locality <-
     
     df <-
       data %>%
+      dplyr::mutate(locality == stringr::str_squish(.data[[locality]])) %>%
       dplyr::filter(
-        .coordinates_empty == FALSE | .coordinates_outOfRange == FALSE,
-        {{ locality }} != "" & !is.na( {{ locality }} )
+        locality != "" & !is.na(locality),
+        stringr::str_detect(locality, "^(\\. )", negate = T),
+        .coordinates_empty == FALSE |
+          .coordinates_outOfRange == FALSE
       )
+    
     
     df <-
       df %>%
