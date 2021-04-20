@@ -27,9 +27,9 @@ The combination of large datasets from several sources requires careful standard
 The workflow tools used to standardize names (*bdc_clean_name* and *bdc_query_names_taxadb*) contains additions to the *taxadb* package, including tools for:  
 
 1. Clean and parse scientific names;  
-2. Resolve misspelled names or variant spellings using a fuzzy matching application;    
+2. Resolve misspelled names or variant spellings using a fuzzy matching application;  
 3. Convert nomenclatural synonyms to current accepted name;  
-4. Flag ambiguous results.   
+4. Flag ambiguous results.  
 
 The taxonomic standardization is based on one taxonomic database chosen by the user. *taxadb* makes available the following taxonomic sources:
 
@@ -67,7 +67,7 @@ Read the database created in the step **Pre-filter** of the BDC workflow. It is 
 
 ```{r}
 database <-
-  qs::qread("Output/Intermediate/01_prefilter_database.qs")
+  qs::qread(here::here("Output", "Intermediate", "01_prefilter_database.qs"))
 ```
 
 Standardization of character encoding

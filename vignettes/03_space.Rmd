@@ -260,6 +260,6 @@ It is possible to removed flagged records (potentially problematic ones) to get 
 ```{r}
 check_space %>%
   qs::qsave(.,
-            here::here("Output", "Intermediate", "01_prefilter_database.qs"))
+            here::here("Output", "Intermediate", "03_space_database.qs"))
 ```
 
