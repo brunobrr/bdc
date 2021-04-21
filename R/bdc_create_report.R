@@ -4,7 +4,7 @@
 #' the results of data quality tests.
 #' @param database_id character string. The column name with a unique record identifier.
 #' Default = "database_id".
-#' @param workflow_step character string containing one of the following
+#' @param workflow_step character string containing the following
 #' options("prefiter", "taxonomy", "space" or "time").
 #'
 #' @return A data.frame containing a report summarizing the results of data
@@ -16,6 +16,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom fs file_exists
 #' @importFrom tidyselect starts_with
+#' 
 #' @export
 #'
 #' @examples
@@ -99,7 +100,7 @@ bdc_create_report <-
     }
 
     # Prefilter
-    if (workflow_step == "prefilter") {
+    if ("prefilter" %in% workflow_step) {
 
       pf <-
         data %>%
@@ -160,7 +161,7 @@ bdc_create_report <-
     }
     
     # Taxonomy
-    if (workflow_step == "taxonomy") {
+    if ("taxonomy" %in% workflow_step) {
       names <-
         data %>%
         dplyr::group_by(notes) %>%
@@ -283,7 +284,7 @@ bdc_create_report <-
     }
 
     # Space
-    if (workflow_step == "space") {
+    if ("space" %in% workflow_step) {
       space <-
         data %>%
         dplyr::select(tidyselect::starts_with(".")) %>%
@@ -373,7 +374,7 @@ bdc_create_report <-
 
     }
 
-    if (workflow_step == "time") {
+    if ("time" %in% workflow_step) {
       date <-
         data %>%
         dplyr::select(tidyselect::starts_with(".")) %>%

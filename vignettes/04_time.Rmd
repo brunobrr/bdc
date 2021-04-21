@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   out.width = "100%",
   echo = TRUE,
   warning = FALSE,
-  eval = FALSE
+  eval = T
 )
 ```
 
@@ -27,7 +27,7 @@ This step of the BDC workflow extracts the collection year whenever possible fro
 
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
-The results of *validation* test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.
+The results of **VALIDATION** test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.
 
 ### Installation
 
@@ -38,26 +38,24 @@ if (!require("remotes")) install.packages("remotes")
 if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
-Creating folders to save the results
+Creating folders to save the results.
 ```{r}
 bdc::bdc_create_dir()
 ```
 
 
 ### Read the database
-Read the merged database created in the step **Standardization and integration of different datasets** of the BDC workflow. It is also possible to read any datasets containing the *required* fields to run the workflow.
+
+Read the merged database created in the **step** of the BDC workflow. It is also possible to read any datasets containing the *required* fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
+
 
 ```{r}
 database <-
-  system.file("extdata",
-              "Output",
-              "Intermediate/03_space_database.qs", package = "bdc") %>%
-  readr::read_csv(database)
-
-head(database)
+  qs::qread("Output/Intermediate/03_space_database.qs")
 ```
 
-Standardization of character encoding
+Standardization of character encoding.
+
 ```{r}
 for (i in 1:ncol(database)){
   if(is.character(database[,i])){
@@ -66,9 +64,24 @@ for (i in 1:ncol(database)){
 }
 ```
 
+<br/>
 
-### 1 - Records lacking event date information
-*validation*. This function flags records lacking event date information (e.g., empty or NA).
+```{r echo=F, message=FALSE, warning=FALSE}
+DT::datatable(
+  database, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
+
+## 1 - Records lacking event date information
+
+*VALIDATION*. This function flags records lacking event date information (e.g., empty or NA).
 
 ```{r}
 check_time <-
@@ -76,8 +89,9 @@ check_time <-
 ```
 
 
-### 2 - Extract year from event date
-*enrichment*. This function extracts four-digit year from unambiguously interpretable collecting dates.
+## 2 - Extract year from event date
+
+*ENRICHMENT*. This function extracts four-digit year from unambiguously interpretable collecting dates.
 
 ```{r}
 check_time <-
@@ -85,8 +99,9 @@ check_time <-
 ```
 
 
-### 3 - Records with out-of-range collecting year
-*validation*. This function identifies records with illegitimate or potentially imprecise collecting year. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900).  Older records are more likely to be imprecise due to the locality-derived geo-referencing process.
+## 3 - Records with out-of-range collecting year
+
+*VALIDATION*. This function identifies records with illegitimate or potentially imprecise collecting year. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900).  Older records are more likely to be imprecise due to the locality-derived geo-referencing process.
 
 ```{r}
 check_time <-
@@ -96,14 +111,29 @@ check_time <-
 ```
 
 
+## Report
 
-### Report
-Creating a column named ".summary" summarizing the results of all "validation" tests. This column is "FALSE" if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
+Creating a column named ".summary" summarizing the results of all **VALIDATION** tests. This column is **FALSE** if [any]{.ul} test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
 
 ```{r}
 check_time <- bdc_summary_col(data = check_time)
 ```
 
+<br/>
+
+```{r echo=F, message=FALSE, warning=FALSE}
+DT::datatable(
+  check_time, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
+<br/>
 
 Creating a report summarizing the results of all tests.
 
@@ -111,14 +141,17 @@ Creating a report summarizing the results of all tests.
 report <-
   bdc_create_report(data = check_time,
                     database_id = "database_id",
-                    workflow_step = "time")
+                    workflow_step = c("prefilter", "taxonomy", "space", "time"))
 
 report
 ```
 
+<br/>
 
-### Figures
-Creating histogram showing the number of records collecting over the years.
+
+## Figures
+
+Creating a histogram showing the number of records collecting over the years.
 
 ```{r}
 bdc_create_figures(data = check_time,
@@ -126,8 +159,10 @@ bdc_create_figures(data = check_time,
                    workflow_step = "time")
 ```
 
-### Save a "raw" database
-Save the original database containing the results of each data quality tests appended in separate columns.
+
+## Save a "raw" database
+
+Save the original database containing the results of all data quality tests appended in separate columns.
 
 ```{r}
 check_time %>%
@@ -136,7 +171,8 @@ check_time %>%
 ```
 
 
-### Filter the database
+## Filter the database
+
 Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all steps of the BDC workflow to get a "clean", "fitness-for-use" database.
 
 ```{r}
@@ -147,9 +183,10 @@ output <-
 ```
 
 
-### Save a "fitness-for-use" database
+## Save a "fitness-for-use" database
+
 ```{r}
-check_pf %>%
+output %>%
   qs::qsave(.,
             here::here("Output", "Intermediate", "04_time_clean_database.qs"))
 ```

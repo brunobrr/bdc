@@ -13,7 +13,7 @@ the results of data quality tests.}
 \item{database_id}{character string. The column name with a unique record identifier.
 Default = "database_id".}
 
-\item{workflow_step}{character string containing one of the following
+\item{workflow_step}{character string containing the following
 options("prefiter", "taxonomy", "space" or "time").}
 }
 \value{

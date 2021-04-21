@@ -30,11 +30,10 @@ Once standardized, datasets are then integrated into a standardized database hav
 
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
-- Original datasets must be formatted in comma-separated format (**.csv**);
-- When filling out the configuration table, please provide the **exact** name of a column of original dataset and the the **full path** of each original dataset;
-- Names of original datasets without a correspond DarwinCore term must be fill out as **NA** (not available);
-- The workflow is adjustable so you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
-
+-   Original datasets must be formatted in comma-separated format (**.csv**);
+-   When filling out the configuration table, please provide the **exact** name of a column of original dataset and the the **full path** of each original dataset;
+-   Names of original datasets without a correspond DarwinCore term must be fill out as **NA** (not available);
+-   The workflow is adjustable so you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
 
 ## Installation
 
@@ -45,24 +44,22 @@ if (!require("remotes")) install.packages("remotes")
 if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
-
 First, let's create folders to save the results.
+
 ```{r}
 bdc::bdc_create_dir()
 ```
 
-
 ## Read databasets
 
-Read an example of the *configuration table*:
+Read an example of the **configuration table**. You can download the table by clicking on "csv" button.
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 metadata <-
   readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo.csv"))
 ```
 
-<br/>
-<br/>
+<br/> <br/>
 
 ```{r echo = FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 if (!require("DT")) install.packages('DT')
@@ -83,18 +80,17 @@ DT::datatable(
 
 <br/>
 
-The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the workflow: i) *required*, i.e., the minimum information necessary to run the workflow, ii) *recommended*, i.e., not mandatory but having important details on species records, and iii) *additional*, i.e., information potentially useful for detailed data analyses.
+The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the workflow: i) **required**, i.e., the minimum information necessary to run the workflow, ii) **recommended**, i.e., not mandatory but having important details on species records, and iii) **additional**, i.e., information potentially useful for detailed data analyses.
 
 Below are listed the specifications of each field of the configuration table:
 
-- **Field**: Name of the fields in *DatabaseInfo.csv* to be filled in.
-- **Category**: Classification of each field in *DatabaseInfo.csv*. *required (RQ)*, i.e., the minimum information necessary to run the workflow, ii) *recommended (RE)*, i.e., not mandatory but having important details on species records, and iii) *additional (AD)*, i.e., information potentially useful for detailed data analyses. As a general guidance, be careful to include all *required* fields and supply as many recommended and additional fields as possible.
-- **Description**: Description about the content of the specified field in the original database.
-- **Type**: Type of content data on the specified field in the original database.
-- **Example**: An example of a single content on the specified field in the original database.
+-   **Field**: Name of the fields in *DatabaseInfo.csv* to be filled in.
+-   **Category**: Classification of each field in *DatabaseInfo.csv*. *required (RQ)*, i.e., the minimum information necessary to run the workflow, ii) *recommended (RE)*, i.e., not mandatory but having important details on species records, and iii) *additional (AD)*, i.e., information potentially useful for detailed data analyses. As a general guidance, be careful to include all *required* fields and supply as many recommended and additional fields as possible.
+-   **Description**: Description about the content of the specified field in the original database.
+-   **Type**: Type of content data on the specified field in the original database.
+-   **Example**: An example of a single content on the specified field in the original database.
 
-<br/>
-<br/>
+<br/> <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 config_description <-
@@ -114,7 +110,6 @@ DT::datatable(
 )
 ```
 
-
 ## Standardization and integration of datasets
 
 Note that the standardized database integrating all dataset are saved in the "Output/Intermediate" folder as *"00_merged_database.qs"*. The database is saved with a "qs" extension, a format useful for quickly saving and reading large databases. This files can be read using the function "qread" from the "qs" package (see below).
@@ -128,7 +123,6 @@ database <-
   here::here("Output", "Intermediate", "00_merged_database.qs") %>%
   qs::qread()
 ```
-
 
 An example of a standardized database containing the required field to run the BDC workflow.
 
