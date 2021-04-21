@@ -47,7 +47,7 @@ bdc::bdc_create_dir()
 
 ### Read the database
 
-Read the database created in the **Space** step of the BDC workflow. It is also possible to read any datasets containing the \*\*required\*\* fields to run the workflow (more details [here](%5Bhttps://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
+Read the database created in the [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html) step of the BDC workflow. It is also possible to read any datasets containing the \*\*required\*\* fields to run the workflow (more details [here](%5Bhttps://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
 ```{r}
 database <-
@@ -134,11 +134,10 @@ DT::datatable(
 Creating a report summarizing the results of all tests of the BDC workflow
 
 ```{r}
-# If you choose to not keep the columns containing the results of tests of the previous steps of the workflow, inform only "time" in  workflow_step argument.
 report <-
   bdc_create_report(data = check_time,
                     database_id = "database_id",
-                    workflow_step = c("prefilter", "taxonomy", "space", "time"))
+                    workflow_step = "time")
 
 report
 ```
