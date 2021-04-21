@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-### Introduction
+## Introduction
 
 This step of the BDC workflow extracts the collection year whenever possible from complete and legitimate date information, and flags dubious (e.g., 07/07/10), illegitimate (e.g., 1300, 2100), or not supplied (e.g., 0 or NA) collecting year.
 
@@ -29,7 +29,7 @@ This step of the BDC workflow extracts the collection year whenever possible fro
 
 The results of **VALIDATION** test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.
 
-### Installation
+## Installation
 
 You can install the released version of 'BDC' from [github](https://github.com/brunobrr/bdc) with:
 
@@ -39,15 +39,14 @@ if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
 Creating folders to save the results.
+
 ```{r}
 bdc::bdc_create_dir()
 ```
 
-
 ### Read the database
 
-Read the merged database created in the **step** of the BDC workflow. It is also possible to read any datasets containing the *required* fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
-
+Read the database created in the [\*Space\*\*]([https://brunobrr.github.io/bdc/articles/03_space.html)](https://brunobrr.github.io/bdc/articles/03_space.html) step of the BDC workflow. It is also possible to read any datasets containing the \*\*required\*\* fields to run the workflow (more details [here]([https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).)
 
 ```{r}
 database <-
@@ -78,7 +77,6 @@ DT::datatable(
 )
 ```
 
-
 ## 1 - Records lacking event date information
 
 *VALIDATION*. This function flags records lacking event date information (e.g., empty or NA).
@@ -87,7 +85,6 @@ DT::datatable(
 check_time <-
   bdc_eventDate_empty(data = database, eventDate = "verbatimEventDate")
 ```
-
 
 ## 2 - Extract year from event date
 
@@ -98,10 +95,9 @@ check_time <-
   bdc_year_from_eventDate(data = check_time, eventDate = "verbatimEventDate")
 ```
 
-
 ## 3 - Records with out-of-range collecting year
 
-*VALIDATION*. This function identifies records with illegitimate or potentially imprecise collecting year. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900).  Older records are more likely to be imprecise due to the locality-derived geo-referencing process.
+*VALIDATION*. This function identifies records with illegitimate or potentially imprecise collecting year. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900). Older records are more likely to be imprecise due to the locality-derived geo-referencing process.
 
 ```{r}
 check_time <-
@@ -109,7 +105,6 @@ check_time <-
                       eventDate = "year",
                       year_threshold = 1900)
 ```
-
 
 ## Report
 
@@ -148,7 +143,6 @@ report
 
 <br/>
 
-
 ## Figures
 
 Creating a histogram showing the number of records collecting over the years.
@@ -159,6 +153,19 @@ bdc_create_figures(data = check_time,
                    workflow_step = "time")
 ```
 
+<br/>
+
+![Number of records sampled over the years](https://github.com/brunobrr/bdc/raw/master/vignettes/inst/extdata/example_figures/time_year_BAR.png){width="20cm"}
+
+<br/>
+
+![Summary of all tests of the time step; note that some database lack event date information](https://github.com/brunobrr/bdc/raw/master/vignettes/inst/extdata/example_figures/time_.summary_BAR.png){width="20cm"}
+
+<br/>
+
+![Summary of all validation tests of the BDC workflow](https://github.com/brunobrr/bdc/raw/master/vignettes/inst/extdata/example_figures/time_summary_all_tests_BAR.png){width="20cm"}
+
+<br/>
 
 ## Save a "raw" database
 
@@ -169,7 +176,6 @@ check_time %>%
   qs::qsave(.,
             here::here("Output", "Intermediate", "04_time_raw_database.qs"))
 ```
-
 
 ## Filter the database
 
@@ -182,7 +188,6 @@ output <-
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 ```
 
-
 ## Save a "fitness-for-use" database
 
 ```{r}
@@ -191,3 +196,16 @@ output %>%
             here::here("Output", "Intermediate", "04_time_clean_database.qs"))
 ```
 
+<br/>
+
+```{r echo=F, message=FALSE, warning=FALSE}
+DT::datatable(
+  output, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```

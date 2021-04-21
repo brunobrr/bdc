@@ -63,7 +63,7 @@ bdc::bdc_create_dir()
 
 ## Read the database
 
-Read the database created in the step [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
+Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) step of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
 
 ```{r}
 database <-
