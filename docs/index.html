@@ -101,24 +101,26 @@
 <a href="#a-comprehensive-and-straightforward-workflow-for-standardizing-integrating-and-cleaning-biodiversity-data" class="anchor"></a>A comprehensive and straightforward workflow for standardizing, integrating, and cleaning biodiversity data</h2>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <div id="overview" class="section level3">
 <h3 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h3>
-<p>Handle biodiversity data from several different sources is not an easy task. This workflow was created to facilitate i) the standardization and integration of heterogeneous datasets; and ii) flag, document, clean, and correct errors in biodiversity datasets.</p>
+<p>Handle biodiversity data from several different sources is not an easy task. Here we presente the <strong>Biodiversity Data Cleaning (BDC) workflow</strong>, an <strong>automated</strong> workflow to adress <strong>quality issues and improve datas’ fitness-for-use</strong>. The workflow harmonizes and integrates data from different sources following common standards and protocols and implements various tests and tools to flag, document, clean, and correct the taxonomic, spatial, and temporal information of biodiversity data.</p>
 <p>The workflow is composed of five core steps:</p>
 <ol>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/integrate_datasets.html"><strong>Standardization</strong> and <strong>integration</strong></a> of different datasets;</li>
+<a href="https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html"><strong>Standardization</strong> and <strong>integration</strong></a> of different datasets;</li>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/prefilter.html"><strong>Pre-filter</strong></a>: flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names);</li>
+<a href="https://brunobrr.github.io/bdc/articles/01_%E2%98%BAprefilter.html"><strong>Pre-filter</strong></a>: flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names);</li>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/taxonomy.html"><strong>Taxonomy</strong></a>: cleaning, parsing, and standardization of scientific names against multiple taxonomic references. The workflow corrects spelling errors and converts nomenclatural synonyms to currently accepted names;</li>
+<a href="https://brunobrr.github.io/bdc/articles/02_taxonomy.html"><strong>Taxonomy</strong></a>: cleaning, parsing, and standardization of scientific names against multiple taxonomic references. The workflow corrects spelling errors and converts nomenclatural synonyms to currently accepted names;</li>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/space.html"><strong>Space</strong></a>: flagging of erroneous, suspicious, and low-precision geographic coordinates;</li>
+<a href="https://brunobrr.github.io/bdc/articles/03_space.html"><strong>Space</strong></a>: flagging of erroneous, suspicious, and low-precision geographic coordinates;</li>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/time.html"><strong>Time</strong></a>: flagging and, whenever possible, correction of inconsistent collection date.</li>
+<a href="https://brunobrr.github.io/bdc/articles/04_time.html"><strong>Time</strong></a>: flagging and, whenever possible, correction of inconsistent collection date.</li>
 </ol>
-<p>Aim to facilitate the interpretation and visualization of results, reports and figures are created in each step of the workflow. Further, standardized databases resulting from each step as well as data needing further inspection are automatically saved in the “Output” folder.</p>
+<p>Aim to facilitate the <strong>documentation, visualization, and interpretation of results</strong> of data quality tests, in all steps, several files documenting the results of the workflow are saved automatically in a folder named “Output”. These files include i) r<strong>ecords needing further inspection</strong>, ii) <strong>databases</strong> containing the results of each step,</p>
+<p>iii) <strong>figures</strong>, and iv) <strong>data-quality reports</strong> documenting the results.</p>
 </div>
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
