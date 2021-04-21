@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Matching scientific names against local stored taxonomic authority database — bdc_query_names_taxadb • bdc</title>
+<title>Matching scientific names against local stored taxonomic databases — bdc_query_names_taxadb • bdc</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,12 @@
 
 
 
-<meta property="og:title" content="Matching scientific names against local stored taxonomic authority database — bdc_query_names_taxadb" />
-<meta property="og:description" content="This function borrows heavily from the great work done by Norman et al.
-(2020) in their package 'taxadb', which contains functions that allow
-querying millions of taxonomic names in a fast and consistent way. The
-bdc_get_taxadb contains additions that allow queries using fuzzy matching and
+<meta property="og:title" content="Matching scientific names against local stored taxonomic databases — bdc_query_names_taxadb" />
+<meta property="og:description" content="The taxonomic standardization process borrows heavily from Norman et al.
+(2020; taxadb package), which contains functions that allow querying millions
+of taxonomic names in a fast, automatable, and consistent way using
+high-quality locally stored taxonomic databases.  The bdc_get_taxadb contains
+additions to the taxadb packagethat allow queries using fuzzy matching and
 converting synonyms to the current accepted name. The fuzzy match algorithm
 was inspired by get.taxa function of the 'flora' package." />
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
@@ -142,16 +143,17 @@ was inspired by get.taxa function of the 'flora' package." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Matching scientific names against local stored taxonomic authority database</h1>
+    <h1>Matching scientific names against local stored taxonomic databases</h1>
     
     <div class="hidden name"><code>bdc_query_names_taxadb.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function borrows heavily from the great work done by Norman et al.
-(2020) in their package 'taxadb', which contains functions that allow
-querying millions of taxonomic names in a fast and consistent way. The
-bdc_get_taxadb contains additions that allow queries using fuzzy matching and
+    <p>The taxonomic standardization process borrows heavily from Norman et al.
+(2020; taxadb package), which contains functions that allow querying millions
+of taxonomic names in a fast, automatable, and consistent way using
+high-quality locally stored taxonomic databases.  The bdc_get_taxadb contains
+additions to the taxadb packagethat allow queries using fuzzy matching and
 converting synonyms to the current accepted name. The fuzzy match algorithm
 was inspired by get.taxa function of the 'flora' package.</p>
     </div>
@@ -174,38 +176,36 @@ was inspired by get.taxa function of the 'flora' package.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>sci_name</th>
-      <td><p>A character vector of species names. The function does not
-clean species names (e.g.: infraespecific, var., inf.), it is expected
-clean names. The inclusion of 'var.' increases name distances and it is
-advised to set smaller suggestion_distance values.</p></td>
+      <td><p>character string. Containing scientific names to be queried.</p></td>
     </tr>
     <tr>
       <th>replace_synonyms</th>
-      <td><p>A logical value (default = TRUE) whether synonyms
-must be replaced by the valid names found in taxadb database.</p></td>
+      <td><p>logical. Should synonyms be replaced by accepted
+names? Default = TRUE.</p></td>
     </tr>
     <tr>
       <th>suggest_names</th>
-      <td><p>A logical value (default = TRUE) whether species names
-must be suggested if it is not found in the first search.</p></td>
+      <td><p>logical. Try to find potential candidate names for
+misspelled names not resolved by an exact match. Default = TRUE.</p></td>
     </tr>
     <tr>
       <th>suggestion_distance</th>
-      <td><p>A numeric value (default = 0.9). It is the
-accepted distance between the searched names and suggested ones. Distances
-higher than specified here are not suggested and NA is returned.</p></td>
+      <td><p>numeric. A threshold value determining the
+acceptable orthographical distance between searched and candidate names.
+Names with matching distance value lower threshold informed are returned as
+NA. Default = 0.9.</p></td>
     </tr>
     <tr>
       <th>db</th>
-      <td><p>Character string. Contains the name of the taxonomic database where
-information should be searched. By default, 'gbif' will be installed. Use
-'all' to install all available taxonomic database automatically.</p></td>
+      <td><p>character string. The name of the taxonomic authority database to
+be in the taxonomic standardization process. Default = "gbif". Use "all" to
+install all available taxonomic databases automatically.</p></td>
     </tr>
     <tr>
       <th>rank_name</th>
-      <td><p>character string. A taxonomic rank used to be used to filter
-data. Options available are: "kingdom", "phylum", "class", "order",
-"family", and "genus".</p></td>
+      <td><p>character string. A taxonomic rank used to filter the
+taxonomic database. Options available are: "kingdom", "phylum", "class",
+"order", "family", and "genus".</p></td>
     </tr>
     <tr>
       <th>rank</th>
@@ -214,25 +214,116 @@ data. Options available are: "kingdom", "phylum", "class", "order",
     </tr>
     <tr>
       <th>parallel</th>
-      <td><p>A logical value indicating whether distance calculation
-should be done in parallel.</p></td>
+      <td><p>logical. Should a parallelization process be used?
+Default=FALSE</p></td>
     </tr>
     <tr>
       <th>ncores</th>
-      <td><p>Number of cores to run in parallel.</p></td>
+      <td><p>numeric. The number of cores to run in parallel.</p></td>
     </tr>
     <tr>
       <th>export_accepted</th>
-      <td><p>A logical value (default = FALSE) whether a table is
-exported containing all species with more than one valid name to be further
-explored by the user.</p></td>
+      <td><p>logical. Determines if a table containing all records
+with names linked to multiple accepted names must be saved for further
+inspection. Default = FALSE.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>This function returns a data.frame with the same number of rows and
-order than sci_name with the information provided by the database.</p>
+    <p>This function returns data.frame containing the results of the
+taxonomic harmonization process. The database is returned in the same order
+of sci_name.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Taxadb databases</h3>
+
+
+<p>The taxonomic harmonization is based upon one taxonomic authority database.
+The following taxonomic databases are available in taxadb package are:</p><ul>
+<li><p><strong>itis</strong>: Integrated Taxonomic Information System</p></li>
+<li><p><strong>ncbi</strong>: National Center for Biotechnology Information</p></li>
+<li><p><strong>col</strong>: Catalogue of Life</p></li>
+<li><p><strong>tpl</strong>: The Plant List</p></li>
+<li><p><strong>gbif</strong>: Global Biodiversity Information Facility</p></li>
+<li><p><strong>fb</strong>: FishBase</p></li>
+<li><p><strong>slb</strong>: SeaLifeBase</p></li>
+<li><p><strong>wd</strong>: Wikidata</p></li>
+<li><p><strong>ott</strong>: OpenTree Taxonomy</p></li>
+<li><p><strong>iucn</strong>: International Union for Conservation of Nature’s (IUCN) Red List</p></li>
+</ul>
+
+<p>The bdc_query_names_taxadb processes as this:</p>
+<p><strong>Creation of a local taxonomic database</strong></p>
+<p>This is one-time setup used to download, extract, and import one or all (n=10)  taxonomic databases specified in the argument "db". The downloading process
+may take some minutes depending on internet connection and database size. By
+default, the "gbif" database following a Darwin Core schema is installed.
+(see ?taxadb::td_create for details).</p>
+<p><strong>Taxonomic harmonization</strong></p>
+<p>The taxonomic harmonization is divided into two distinct phases according to
+the matching type to be undertaken.</p>
+<p><strong>Exact matching</strong></p>
+<p>Firstly, the algorithm attempts to find an exact matching
+for each original scientific name supplied using the function "filter_name"
+from taxadb package. If an exact matching cannot be found, names are returned
+as Not Available (NA). Also, it is possible that a scientific name match
+multiple accepted names. In such cases, the "bdc_clean_duplicates" function
+is used to flag and remove names with multiple accepted names.</p>
+<p>Information on higher taxa (e.g., kingdom or phylum) can be used to
+disambiguates names linked to multiple accepted names. For example, the genus
+“Casearia” is present in both Animalia and Plantae kingdoms. When handling
+names of Plantae, it would be helpful to get rid of names belonging to the
+Animalia to avoid flagging “Caseria” as having multiple accepted names.
+Following Norman et al. (2020), such cases are left to be fixed by the user.
+If "export_accepted" = TRUE a database containing a list of all records with
+names linked to multiple accepted names are saved in the “Output” folder.</p>
+<p><strong>Fuzzy matching</strong></p>
+<p>Fuzzy matching will be applied when "suggest_names" is TRUE and only for
+names not resolved by an exact match. . In such cases, a fuzzy matching
+algorithm processes name-matching queries to find a potential matching
+candidate from the specified taxonomic database. Fuzzy matching identifies
+probable names (here identified as suggested names) for original names via a
+measure of orthographic similarity (i.e., distance). Orthographic distance is
+calculated by optimal string alignment (restricted Damerau-Levenshtein
+distance) that counts the number of deletions, insertions, substitutions, and
+adjacent characters’ transpositions. It ranges from 0 to 1, being 1 an
+indicative of a perfect match. A threshold distance, i.e. the lower value of
+match acceptable, can be informed by user (in the “suggest_distance”
+argument). If the distance of a candidate name is equal or higher than the
+distance informed by user, the candidate name is returned as suggested name.
+Otherwise, names are returned as NA.</p>
+<p>To increase the probability of finding potential match candidate and to save
+computational time, two steps are taken before conducting fuzzy matching.
+First, if supplied, information on higher taxon (e.g., kingdom, family) is
+used to filter the taxonomic database. This step removes ambiguity in
+matching by avoiding matching names from unrelated taxonomic ranks (e.g.,
+match a plant species against a taxonomic database containing animal names)
+and decreases the number of names in the taxonomic database used to calculate
+the matching distance. Then, the taxonomic database is filtered according to
+a set of firsts letters of all input names. This process reduces the number
+of names in the taxonomic database that each original name should be compared
+When a same suggested name is returned for different input names, a warning
+is returned asking users to check whether the suggested name is valid.</p>
+<p><strong>Report</strong></p>
+<p>The name standardization processes’ quality can be accessed in the column
+“notes” placed in the table resulting from the name standardization process.
+The column “notes” contains assertions on the name standardization process
+based on Carvalho (2017). The notes can be grouped in two categories:
+accepted names and those with a taxonomic issue or warning, needing further
+inspections. Accepted names can be returned as “accepted” (valid accepted
+name), “replaceSynonym” (a synonym replaced by an accepted name),
+“wasMisspelled” (original name was misspelled), “wasMisspelled |
+replaceSynonym” (misspelled synonym replaced by an accepted name), and
+“synonym” (original names is a synonym without accepted names in the
+database). Similarly, the following notes are used to flag taxonomic issues:
+“notFound” (no matching name found), “multipleAccepted” (name with multiple
+accepted names), “noAcceptedName” (no accepted name found), and ambiguous
+synonyms such as “heterotypic synonym”, “homotypic synonym”, and “pro-parte
+synonym”. Ambiguous synonyms, names that have been published more than once
+describing different species, have more than one accepted name and cannot be
+resolved. Such cases are flagged and left to be determined by the user.</p>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>

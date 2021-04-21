@@ -1,5 +1,6 @@
 ---
 title: "Time"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Time}
@@ -25,13 +26,13 @@ This step of the BDC workflow extracts the collection year whenever possible fro
 
 <br/>
 
-<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
+![](https://img.icons8.com/windows/96/000000/box-important--v1.png){width="40"} **Important**:
 
-The results of **VALIDATION** test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.
+The results of **VALIDATION** test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
 
 ## Installation
 
-You can install the released version of 'BDC' from [github](https://github.com/brunobrr/bdc) with:
+You can install the released version of BDC from [github](https://github.com/brunobrr/bdc) with:
 
 ```{r, message=FALSE, warning=FALSE}
 if (!require("remotes")) install.packages("remotes")
@@ -46,7 +47,7 @@ bdc::bdc_create_dir()
 
 ### Read the database
 
-Read the database created in the [\*Space\*\*]([https://brunobrr.github.io/bdc/articles/03_space.html)](https://brunobrr.github.io/bdc/articles/03_space.html) step of the BDC workflow. It is also possible to read any datasets containing the \*\*required\*\* fields to run the workflow (more details [here]([https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).)
+Read the database created in the **Space** step of the BDC workflow. It is also possible to read any datasets containing the \*\*required\*\* fields to run the workflow (more details [here](%5Bhttps://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
 ```{r}
 database <-
@@ -108,7 +109,7 @@ check_time <-
 
 ## Report
 
-Creating a column named ".summary" summarizing the results of all **VALIDATION** tests. This column is **FALSE** if [any]{.ul} test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
+Creating a column named **.summary** summing up the results of all **VALIDATION** tests. This column is **FALSE** witharecord is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
 
 ```{r}
 check_time <- bdc_summary_col(data = check_time)
@@ -130,9 +131,10 @@ DT::datatable(
 
 <br/>
 
-Creating a report summarizing the results of all tests.
+Creating a report summarizing the results of all tests of the BDC workflow
 
 ```{r}
+# If you choose to not keep the columns containing the results of tests of the previous steps of the workflow, inform only "time" in  workflow_step argument.
 report <-
   bdc_create_report(data = check_time,
                     database_id = "database_id",
@@ -179,7 +181,7 @@ check_time %>%
 
 ## Filter the database
 
-Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all steps of the BDC workflow to get a "clean", "fitness-for-use" database.
+Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all steps of the BDC workflow to get a "clean", "fitness-for-use" database. Note that **29%** (2,631 out of 9.000 records) of original records were considered "fitness-for-use" after the data-cleaning process.
 
 ```{r}
 output <-

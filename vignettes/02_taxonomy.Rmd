@@ -22,14 +22,15 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The combination of large datasets from several sources requires careful standardization taxon names. Non-standardized incorrect, ambiguous, or synonymous taxonomic names can lead to unreliable results and conclusions. The BDC workflow includes tools to help standardize major taxonomic groups' names by comparing scientific names against **one out of 10 taxonomic references**. The taxonomic standardization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow querying millions of taxonomic names in a fast, automatable, and consistent way using high-quality locally stored taxonomic databases.
+The combination of large datasets from several sources requires careful standardization taxon names. Non-standardized incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The BDC workflow includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic references**. The taxonomic standardization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automatable, and consistent way using high-quality locally stored taxonomic databases.
 
-The workflow tools used to standardize names (*bdc_clean_name* and *bdc_query_names_taxadb*) contains additions to the *taxadb* package, including tools for:
+The workflow tools used to standardize names (*bdc_clean_name* and *bdc_query_names_taxadb*) **contains additions to the *taxadb* package**, including tools for:
 
 1.  Clean and parse scientific names;
 2.  Resolve misspelled names or variant spellings using a fuzzy matching application;
 3.  Convert nomenclatural synonyms to current accepted name;
-4.  Flag ambiguous results.
+4.  Flag ambiguous results;
+5.  Report the results.
 
 The taxonomic standardization is based on one taxonomic database chosen by the user. *taxadb* makes available the following taxonomic sources:
 
@@ -48,14 +49,14 @@ The taxonomic standardization is based on one taxonomic database chosen by the u
 
 ## Installation
 
-You can install the released version of 'BDC' from [github](https://github.com/brunobrr/bdc) with:
+You can install the released version of BDC from [github](https://github.com/brunobrr/bdc) with:
 
 ```{r, message=FALSE, warning=FALSE}
 if (!require("remotes")) install.packages("remotes")
 if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
-Creating folders to save the results
+Creating folders to save the results.
 
 ```{r}
 bdc::bdc_create_dir()
@@ -98,7 +99,7 @@ DT::datatable(
 
 ## Clean and parse species names
 
-Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the *bdc_clean_name* containing functionalities to optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to remove:
+Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the *bdc_clean_name* containing functionalities to **optimize the taxonomic queries** by increasing the probability of finding matching names. This tool is used to remove:
 
 1.  Family names pre-pended to species names;
 2.  Qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);
@@ -106,13 +107,15 @@ Scientific names improperly formatted usually cannot be matched with a valid nam
 4.  Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);
 5.  Parse names, i.e., separate author, date, annotations from taxon name.
 
+<br/>
+
 ```{r eval=F}
 parse_names <- bdc_clean_names(sci_names = database$scientificName)
 ```
 
 <br/>
 
-An example of bdc_clean_names output.
+An example of *bdc_clean_names* output.
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 # read
@@ -132,7 +135,7 @@ DT::datatable(
 
 <br/>
 
-Let's merge the names parsed with the full database. As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of parsing names process in "Output/Check/02_parsed_names.qs".
+**Let's merge the names parsed with the full database.** As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of parsing names process in "Output/Check/02_parsed_names.qs".
 
 ```{r}
 parse_names <- 
@@ -194,7 +197,7 @@ database <-
 
 ## Report
 
-The report is based on the column "notes" containing the results of the name standardization process. The notes can be grouped in two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as "valid" in the column "Description".
+The report is based on the **column notes** containing the results of the name standardization process. The notes can be grouped in two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as "valid" in the column "Description".
 
 ```{r}
 report <-
@@ -207,7 +210,7 @@ report
 
 ## Unresolved names
 
-It also possible filter out records with taxonomic status different of "accepted". Such records can be potentially resolved manually.
+It also possible filter out records with taxonomic status different of "accepted". Such records may be potentially resolved manually.
 
 ```{r}
 unresolved_names <-

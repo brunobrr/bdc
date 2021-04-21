@@ -33,11 +33,11 @@ Once standardized, datasets are then integrated into a standardized database hav
 -   Original datasets must be formatted in comma-separated format (**.csv**);
 -   When filling out the configuration table, please provide the **exact** name of a column of original dataset and the the **full path** of each original dataset;
 -   Names of original datasets without a correspond DarwinCore term must be fill out as **NA** (not available);
--   The workflow is adjustable so you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
+-   The workflow is **adjustable** so you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
 
 ## Installation
 
-You can install the released version of 'BDC' from [github](https://github.com/brunobrr/bdc) with:
+You can install the released version of BDC from [github](https://github.com/brunobrr/bdc) with:
 
 ```{r, message=FALSE, warning=FALSE}
 if (!require("remotes")) install.packages("remotes")
@@ -50,9 +50,9 @@ First, let's create folders to save the results.
 bdc::bdc_create_dir()
 ```
 
-## Read databasets
+## Read the configuration table
 
-Read an example of the **configuration table**. You can download the table by clicking on "csv" button.
+Read an example of the **configuration table**. You can download the table by clicking on "CSV" button. We demontrate the usefullness of the workflow using a database of terrestrial plant species occuring in Brazil. This database contains 9.000 records compiled from nive different sources (see bellow).
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 metadata <-
@@ -112,7 +112,7 @@ DT::datatable(
 
 ## Standardization and integration of datasets
 
-Note that the standardized database integrating all dataset are saved in the "Output/Intermediate" folder as *"00_merged_database.qs"*. The database is saved with a "qs" extension, a format useful for quickly saving and reading large databases. This files can be read using the function "qread" from the "qs" package (see below).
+Note that the standardized database integrating all dataset are saved in the folder "Output/Intermediate" as *"00_merged_database.qs"*. The database is saved with a **"qs" extension**, a format useful for quickly saving and reading large databases. This files can be read using the function "qread" from the "qs" package (see below).
 
 ```{r message=F, warning=F}
 bdc_standardize_datasets(metadata = metadata)
@@ -124,13 +124,15 @@ database <-
   qs::qread()
 ```
 
+<br/>
+
 An example of a standardized database containing the required field to run the BDC workflow.
 
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 DT::datatable(
-  head(database), class = 'stripe', extensions = 'FixedColumns',
+  database, class = 'stripe', extensions = 'FixedColumns',
   options = list(
     pageLength = 3,
     dom = 'Bfrtip',

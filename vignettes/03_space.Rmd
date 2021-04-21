@@ -34,7 +34,7 @@ The results of each test used to flag data quality is appended in separate field
 
 ## Installation
 
-You can install the released version of 'BDC' from [github](https://github.com/brunobrr/bdc) with:
+You can install the released version of BDC from [github](https://github.com/brunobrr/bdc) with:
 
 ```{r, message=FALSE, warning=FALSE}
 if (!require("remotes")) install.packages("remotes")
@@ -49,7 +49,7 @@ bdc::bdc_create_dir()
 
 ## Read the database
 
-Read the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html)step the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)
+Read the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html)step the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
 ```{r}
 database <-
@@ -142,7 +142,7 @@ check_space <-
 
 ## Mapping spatial errors
 
-It is possible to map a column containing the results of one spatial test. For example, let's map records in country or provinces centroids.
+It is possible to map a column containing the results of **one spatial test each time**. For example, let's map records in country or provinces centroids.
 
 ```{r eval=F}
 check_space %>%
@@ -162,7 +162,7 @@ check_space %>%
 
 ## Report
 
-Creating a column named ".summary" summarizing the results of all tests. This column is "FALSE" if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
+Creating a column named **.summary** summing upthe results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
 
 ```{r}
 check_space <- bdc_summary_col(data = check_space)
@@ -190,7 +190,7 @@ Creating a report summarizing the results of all tests.
 report <-
   bdc_create_report(data = check_space,
                     database_id = "database_id",
-                    workflow_step = "space")
+                    workflow_step = c("taxonomy", "space"))
 
 report
 ```
