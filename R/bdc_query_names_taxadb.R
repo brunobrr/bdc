@@ -477,12 +477,20 @@ bdc_query_names_taxadb <-
     w <-
       which(found_name$taxonomicStatus != "accepted" &
               found_name$taxonomicStatus != "synonym")
+<<<<<<< HEAD
 
     found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
 
     # Trimming extra-spaces from the column "notes
     found_name$notes <- stringr::str_squish(found_name$notes)
 
+=======
+    
+    if(length(w) > 0){
+      found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
+    }
+    
+>>>>>>> bdc
     # joining  names queried to the original (complete) list of names
     found_name <-
       dplyr::left_join(raw_sci_name, found_name, by = "original_search")
