@@ -397,7 +397,9 @@ bdc_query_names_taxadb <-
       which(found_name$taxonomicStatus != "accepted" &
               found_name$taxonomicStatus != "synonym")
     
-    found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
+    if(length(w) > 0){
+      found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
+    }
     
     # joining  names queried to the original (complete) list of names
     found_name <-
