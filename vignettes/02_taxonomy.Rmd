@@ -163,7 +163,7 @@ query_names <- bdc_query_names_taxadb(
 ```{r echo=F}
 query_names <-
   data.table::fread(
-    here::here("extdata/example_bdc_query_names_taxadb/example_bdc_query_names_taxadb.csv")
+    here::here("inst/extdata/example_bdc_query_names_taxadb/example_bdc_query_names_taxadb.csv")
   )
 
 DT::datatable(
@@ -193,7 +193,7 @@ database <-
 
 The report is based on the **column notes** containing the results of the name standardization process. The notes can be grouped in two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as "valid" in the column "Description".
 
-```{r}
+```{r, eval = FALSE}
 report <-
   bdc_create_report(data = database,
                     database_id = "database_id",

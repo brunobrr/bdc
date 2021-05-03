@@ -127,7 +127,7 @@ DT::datatable(
 
 Creating a report summarizing the results of all tests of the BDC workflow
 
-```{r}
+```{r, eval = FALSE}
 report <-
   bdc_create_report(data = check_time,
                     database_id = "database_id",
@@ -142,7 +142,7 @@ report
 
 Creating a histogram showing the number of records collecting over the years.
 
-```{r}
+```{r, eval = FALSE}
 bdc_create_figures(data = check_time,
                    database_id = "database_id",
                    workflow_step = "time")
@@ -150,15 +150,15 @@ bdc_create_figures(data = check_time,
 
 <br/>
 
-![Number of records sampled over the years](https://github.com/brunobrr/bdc/raw/master/vignettes/inst/extdata/example_figures/time_year_BAR.png){width="20cm"}
+![Number of records sampled over the years](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/time_year_BAR.png){width="20cm"}
 
 <br/>
 
-![Summary of all tests of the time step; note that some database lack event date information](https://github.com/brunobrr/bdc/raw/master/vignettes/inst/extdata/example_figures/time_.summary_BAR.png){width="20cm"}
+![Summary of all tests of the time step; note that some database lack event date information](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/time_.summary_BAR.png){width="20cm"}
 
 <br/>
 
-![Summary of all validation tests of the BDC workflow](https://github.com/brunobrr/bdc/raw/master/vignettes/inst/extdata/example_figures/time_summary_all_tests_BAR.png){width="20cm"}
+![Summary of all validation tests of the BDC workflow](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/time_summary_all_tests_BAR.png){width="20cm"}
 
 <br/>
 
