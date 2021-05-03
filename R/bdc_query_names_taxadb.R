@@ -185,6 +185,10 @@ bdc_query_names_taxadb <-
            ncores = 2,
            export_accepted = FALSE) {
 
+    
+    Sys.setenv("CONTENTID_REGISTRIES"  = "https://hash-archive.thelio.carlboettiger.info")
+    
+
     # Measuring execution time
     start <- Sys.time()
 
