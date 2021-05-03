@@ -55,8 +55,7 @@ bdc::bdc_create_dir()
 Read an example of the **configuration table**. You can download the table by clicking on "CSV" button. We demontrate the usefullness of the workflow using a database of terrestrial plant species occuring in Brazil. This database contains 9.000 records compiled from nive different sources (see bellow).
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
-metadata <-
-  readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo.csv"))
+metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"))
 ```
 
 <br/> <br/>
