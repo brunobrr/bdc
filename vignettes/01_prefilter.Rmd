@@ -39,19 +39,13 @@ if (!require("remotes")) install.packages("remotes")
 if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
-Creating folders to save the results.
-
-```{r}
-bdc::bdc_create_dir()
-```
-
 ## Read the database
 
 Read the merged database created in the step **Standardization and integration of different datasets** of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
 ```{r}
 database <-
-  qs::qread("Output/Intermediate/00_merged_database.qs")
+  qs::qread(here::here("Output/Intermediate/00_merged_database.qs"))
 ```
 
 Standardization of character encoding.
