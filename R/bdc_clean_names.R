@@ -26,6 +26,7 @@ bdc_clean_names <- function(sci_names){
 
 # Family names ------------------------------------------------------------
   bdc_rem_family_names <- function(data, sci_names) {
+    Sys.setenv("CONTENTID_REGISTRIES"  = "https://hash-archive.thelio.carlboettiger.info")
     
     # Get animalia family names from gbif via taxadb package
     animalia_families <-

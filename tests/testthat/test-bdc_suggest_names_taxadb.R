@@ -1,5 +1,7 @@
 context("suggest names")
 
+Sys.setenv("CONTENTID_REGISTRIES"  = "https://hash-archive.thelio.carlboettiger.info")
+
 sci_names <- c("Janusia occhioni", "Janusia", "Xilosma ciliatifolium",  "Crataeva benthamii", "Oxalis rhombeo ovata", "Cebus apella", "Puma concolar") 
 
 test_that("bdc_suggest_names_taxadb suggest valid names", {

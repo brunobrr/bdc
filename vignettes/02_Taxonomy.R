@@ -17,6 +17,8 @@ ipak(
   )
 )
 
+Sys.setenv("CONTENTID_REGISTRIES"  = "https://hash-archive.thelio.carlboettiger.info")
+
 # CREATE DIRECTORIES ------------------------------------------------------
 # Create directories for saving the results. If not existing, four new folders will be created in the folder 'Output'
 bdc_create_dir()
