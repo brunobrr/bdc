@@ -27,6 +27,7 @@ bdc_geographic_outlier <-
            lat = "decimalLatitude",
            lon = "decimalLongitude") {
 
+    check_require_cran("geobr")
 
     # brazilian states
     bra_states <-

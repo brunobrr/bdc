@@ -10,6 +10,10 @@
 #' worldmap <- bdc_get_world_map()
 #' }
 bdc_get_world_map <- function() {
+
+  check_require_cran("rnaturalearth")
+  check_require_github("ropensci/rnaturalearthdata")
+
   suppressWarnings({
 
   worldmap <- rnaturalearth::ne_countries(scale = "large")
