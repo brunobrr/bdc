@@ -27,7 +27,6 @@
 #' scale_y_continuous ggsave geom_polygon geom_hex coord_equal theme_void
 #' scale_fill_viridis_c geom_histogram
 #' @importFrom here here
-#' @importFrom readr read_csv
 #' @importFrom rworldmap getMap
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
@@ -64,6 +63,7 @@ bdc_create_figures <-
 
     check_require_cran("cowplot")
     check_require_cran("scales")
+    check_require_cran("readr")
 
     # Total number of records
     suppressMessages({

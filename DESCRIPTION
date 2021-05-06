@@ -59,7 +59,6 @@ Imports:
     qs,
     rangeBuilder,
     raster,
-    readr,
     rgnparser,
     rlang,
     rworldmap,

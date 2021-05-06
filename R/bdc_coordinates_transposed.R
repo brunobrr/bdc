@@ -39,7 +39,6 @@
 #'
 #' @importFrom CoordinateCleaner cc_val cc_sea
 #' @importFrom dplyr filter left_join contains pull rename
-#' @importFrom readr write_csv
 #'
 #' @export
 #'
@@ -81,6 +80,7 @@ bdc_coordinates_transposed <-
            ) {
 
   check_require_cran("rnaturalearth")
+  check_require_cran("readr")
   check_require_github("ropensci/rnaturalearthdata")
 
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
