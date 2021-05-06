@@ -29,7 +29,6 @@
 #' @importFrom here here
 #' @importFrom readr read_csv
 #' @importFrom rworldmap getMap
-#' @importFrom scales comma
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
 #' @importFrom tidyselect starts_with
@@ -64,6 +63,7 @@ bdc_create_figures <-
            workflow_step = NULL) {
 
     check_require_cran("cowplot")
+    check_require_cran("scales")
 
     # Total number of records
     suppressMessages({
