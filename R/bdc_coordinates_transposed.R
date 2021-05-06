@@ -140,7 +140,7 @@ bdc_coordinates_transposed <-
     dplyr::select(database_id, scientificName, dplyr::contains("decimal"))
 
   corrected_coordinates %>%
-    readr::write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
+    write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
 
   # finding the position of records with lon/lat modified
   w <-

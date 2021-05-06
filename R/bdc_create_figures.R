@@ -23,7 +23,6 @@
 #' select mutate_if summarise_all rename
 #' @importFrom fs file_exists
 #' @importFrom here here
-#' @importFrom rworldmap getMap
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
 #' @importFrom tidyselect starts_with
@@ -86,11 +85,11 @@ bdc_create_figures <-
 
       } else {
         n_records <-
-          readr::read_csv(here::here("data/n_records.csv")) %>%
+          read_csv(here::here("data/n_records.csv")) %>%
           dplyr::pull(n)
 
         n_record_database <-
-          readr::read_csv(here::here("data/n_record_database.csv"))
+          read_csv(here::here("data/n_record_database.csv"))
       }
 
 
@@ -377,7 +376,7 @@ bdc_create_figures <-
       }
 
       # Worldmap
-      m <- rworldmap::getMap() # rworldmap
+      m <- getMap() # rworldmap
 
       # new theme
       our_theme2 <-
