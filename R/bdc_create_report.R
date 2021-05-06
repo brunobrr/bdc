@@ -16,7 +16,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom fs file_exists
 #' @importFrom tidyselect starts_with
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -42,6 +42,8 @@ bdc_create_report <-
   function(data,
            database_id = "database_id",
            workflow_step) {
+
+    check_require_cran("readr")
   suppressMessages({
 
     # Total number of records
@@ -159,7 +161,7 @@ bdc_create_report <-
       data.table::fwrite(res[[1]],
                          here::here("Output/Report/01_Report_Prefilter.csv"))
     }
-    
+
     # Taxonomy
     if ("taxonomy" %in% workflow_step) {
       names <-
@@ -193,7 +195,7 @@ bdc_create_report <-
 
       names <-
         names %>%
-        dplyr::mutate(notes = dplyr::if_else(notes == "", 
+        dplyr::mutate(notes = dplyr::if_else(notes == "",
                                              "valid names", notes)) %>%
         dplyr::mutate(Description = notes) %>%
         dplyr::mutate(
