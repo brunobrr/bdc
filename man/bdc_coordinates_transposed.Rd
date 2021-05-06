@@ -66,7 +66,7 @@ database containing verbatim and corrected coordinates is created in
 \examples{
 \dontrun{
 id <- c(1,2,3,4)
-scientificName <- c("Rhinella major", "Scinax ruber", 
+scientificName <- c("Rhinella major", "Scinax ruber",
                     "Siparuna guianensis", "Psychotria vellosiana")
 decimalLatitude <- c(63.43333, -14.43333, -41.90000, -46.69778)
 decimalLongitude <- c(-17.90000, -67.91667, -13.25000, -13.82444)
@@ -84,8 +84,8 @@ bdc_coordinates_transposed(
   sci_names = "scientificName",
   lat = "decimalLatitude",
   lon = "decimalLongitude",
-  country = "country", 
-  countryCode = "countryCode", 
+  country = "country",
+  countryCode = "countryCode",
   border_buffer = 0.2) # in decimal degrees
 }
 

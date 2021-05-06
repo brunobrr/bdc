@@ -11,43 +11,46 @@
 #' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
 #' @param  country character string. The column name with the country assignment
 #' of each record. Default = "country".
-#' 
+#'
 #' @details This function assigns country name for records missing such
 #' information. Country names are extracted from valid geographic coordinates
 #' by using a high-quality map of the world (rnaturalearth package). No
 #' country name is added to records whose coordinates are in the sea.
-#' 
-#' @return A data.frame containing country names for records missing such 
+#'
+#' @return A data.frame containing country names for records missing such
 #' information.
-#' 
+#'
 #' @importFrom CoordinateCleaner cc_val cc_sea
 #' @importFrom dplyr filter left_join pull rename
 #' @importFrom readr write_csv
-#' @importFrom rnaturalearth ne_countries
-#' @importFrom sf st_as_sf st_set_crs st_crs st_intersection 
-#' 
+#' @importFrom sf st_as_sf st_set_crs st_crs st_intersection
+#'
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' decimalLatitude <- c(-63.43333, -67.91667, -41.90000, -46.69778)
 #' decimalLongitude <- c(-17.90000, -14.43333, -13.25000, -13.82444)
 #' country <- c("", "NA", NA, "Brazil")
-#' 
+#'
 #' x <- data.frame(decimalLatitude, decimalLongitude, country)
-#' 
+#'
 #' bdc_country_from_coordinates(
 #'   data = x,
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude",
 #'   country = "country")
 #' }
-#' 
+#'
 bdc_country_from_coordinates <-
   function(data,
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            country = "country") {
+
+    check_require_cran("rnaturalearth")
+    check_require_github("ropensci/rnaturalearthdata")
+
     # create an id
     data$id <- 1:nrow(data)
 
@@ -75,7 +78,7 @@ bdc_country_from_coordinates <-
         decimalLatitude = as.numeric(.data[[lat]]),
         decimalLongitude = as.numeric(.data[[lon]])
       )
-    
+
     worldmap <- rnaturalearth::ne_countries(scale = "large")
 
     data_no_country <-
@@ -124,7 +127,7 @@ bdc_country_from_coordinates <-
     }
 
     data <- data %>% dplyr::select(-id)
-    
+
     message(
       paste(
         "\nbdc_country_from_coordinates:\nCountry names were added to",
