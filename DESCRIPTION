@@ -42,7 +42,6 @@ License: GPL (>= 3)
 Imports:
     CoordinateCleaner,
     countrycode,
-    cowplot,
     data.table,
     doParallel,
     dplyr,

@@ -18,7 +18,6 @@
 #' @return Figures in a png format.
 #'
 #' @importFrom CoordinateCleaner cc_val
-#' @importFrom cowplot plot_grid
 #' @importFrom data.table fwrite fread
 #' @importFrom dplyr summarise n mutate group_by pull intersect filter full_join
 #' select mutate_if summarise_all rename
@@ -63,6 +62,8 @@ bdc_create_figures <-
   function(data,
            database_id = "database_id",
            workflow_step = NULL) {
+
+    check_require_cran("cowplot")
 
     # Total number of records
     suppressMessages({
