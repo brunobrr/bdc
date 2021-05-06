@@ -67,8 +67,8 @@ bdc_create_report <-
       data.table::fwrite(n_record_database,
                          here::here("data/n_record_database.csv"))
       } else {
-      n_records <- readr::read_csv("data/n_records.csv") %>% dplyr::pull(n)
-      n_record_database <- readr::read_csv("data/n_record_database.csv")
+      n_records <- read_csv("data/n_records.csv") %>% dplyr::pull(n)
+      n_record_database <- read_csv("data/n_record_database.csv")
     }
 
     # Function used to formatting report
