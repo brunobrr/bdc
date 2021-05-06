@@ -31,7 +31,6 @@
 #'
 #' @importFrom dplyr rename distinct select mutate_all na_if filter pull
 #' bind_cols full_join
-#' @importFrom Hmisc capitalize
 #' @importFrom rgnparser install_gnparser gn_parse_tidy
 #' @importFrom stringr str_squish str_count str_remove_all regex str_detect
 #' str_which str_replace_all str_to_lower
@@ -53,6 +52,11 @@
 #' }
 bdc_clean_names <- function(sci_names) {
 
+  firstup <- function(x) {
+    substr(x, 1, 1) <- toupper(substr(x, 1, 1))
+    x
+  }
+
   # names raw
   names_raw <-
     sci_names %>%
@@ -72,7 +76,7 @@ bdc_clean_names <- function(sci_names) {
   bdc_rem_family_names <- function(data, sci_names) {
 
     Sys.setenv("CONTENTID_REGISTRIES"  = "https://hash-archive.thelio.carlboettiger.info")
-    
+
 
     # Get animalia family names from gbif via taxadb package
     animalia_families <-
@@ -657,11 +661,11 @@ bdc_clean_names <- function(sci_names) {
     # names (POLYGONACEAE to Polygonaceae; polygonaceae to Polygonaceae)
     w1 <- which(word_count == 1)
     res[w1] <- stringr::str_to_lower(res[w1])
-    res[w1] <- Hmisc::capitalize(res[w1])
+    res[w1] <- firstup(res[w1])
 
     res <-
       gsub("^$", NA, res) %>% # substitute empty records by NA
-      Hmisc::capitalize(.) # Capitalize first letter
+      firstup(.) # Capitalize first letter
 
     all_capitalize <- NULL
     for (i in 1:length(res)) {
@@ -672,7 +676,7 @@ bdc_clean_names <- function(sci_names) {
     for (i in 1:length(cap_words)) {
       res[i] <-
         stringr::str_to_lower(res[i]) %>%
-        Hmisc::capitalize(.)
+        firstup(.)
     }
 
     clean_other_issues <- res

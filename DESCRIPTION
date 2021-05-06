@@ -52,7 +52,6 @@ Imports:
     geobr,
     ggplot2,
     here,
-    Hmisc,
     kableExtra,
     knitr,
     lubridate,
