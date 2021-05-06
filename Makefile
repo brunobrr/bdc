@@ -13,7 +13,7 @@ document: ## refresh function documentation
 	$(R) "devtools::document()"
 
 build: document ## build package
-	$(R) "devtools::build()"
+	$(R) "devtools::build(vignettes = FALSE)"
 
 check: ## check package
 	$(R) "Sys.setenv('_R_CHECK_SYSTEM_CLOCK_' = 0); devtools::check(document = FALSE, build_args = c('--no-build-vignettes'))"
