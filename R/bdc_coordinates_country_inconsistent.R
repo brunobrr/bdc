@@ -35,9 +35,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' decimalLatitude <- c(19.9358, -13.016667, NA, "")
 #' decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
-#' x <- data.frame(decimalLatitude, decimalLongitude)
+#' decimalLatitude <- c(19.9358, -13.016667, NA, "")
+#' x <- data.frame(decimalLongitude, decimalLatitude)
 #' 
 #' bdc_coordinates_country_inconsistent(
 #'   data = x,
@@ -45,6 +45,14 @@
 #'   lon = "decimalLongitude",
 #'   lat = "decimalLatitude",
 #'   dist = 0.1 # in decimal degrees
+#' )
+#' 
+#' bdc_coordinates_country_inconsistent(
+#' data = x,
+#' country_name = c("Argentina", "Brazil"),
+#' lon = "decimalLongitude",
+#' lat = "decimalLatitude",
+#' dist = 0.2 # in decimal degrees
 #' )
 #' }
 bdc_coordinates_country_inconsistent <-
@@ -90,12 +98,13 @@ bdc_coordinates_country_inconsistent <-
       scale = "large",
       returnclass = "sf")
   
+  
   # Spatial points
   data_sp <-
     sf::st_as_sf(
       df,
       coords = c("decimalLongitude", "decimalLatitude"),
-      remove = F
+      remove = FALSE
     ) %>%
     sf::st_set_crs(., sf::st_crs(country_shp))
 
@@ -110,24 +119,33 @@ bdc_coordinates_country_inconsistent <-
   suppressMessages({
     data_sp <-
       data_sp %>%
-      dplyr::mutate(points_in_buf = sf::st_intersects(data_sp, buf, sparse = F))
+      dplyr::mutate(points_in_buf = sf::st_intersects(data_sp, buf, sparse = FALSE))
   })
-
+  
+  
+  # Remove additional columns within 'points_in_buf' object
+  if(length(country_name)>1){
+    data_sp$points_in_buf <- apply(data_sp$points_in_buf, 1, any)
+  }
+  
+  
   # Filter points within the buffer
   data_fil <-
     data_sp %>%
     dplyr::filter(points_in_buf == TRUE)
 
   # Points in other countries
-  suppressMessages({
-    suppressWarnings({
-      all_countries <-
-        rnaturalearth::ne_countries(returnclass = "sf") %>%
-        dplyr::select(name_long) %>%
-        sf::st_crop(., sf::st_bbox(data_fil)) # Crop according to points bbox
+  # if(nrow(data_fil)>0){
+    suppressMessages({
+      suppressWarnings({
+        all_countries <-
+          rnaturalearth::ne_countries(returnclass = "sf") %>%
+          dplyr::select(name_long) %>%
+          sf::st_crop(., sf::st_bbox(data_fil)) # Crop according to points bbox
+      })
     })
-  })
-
+  # }
+  
   # Extract country names from points
   suppressWarnings({
     ext_country <- sf::st_intersection(data_sp, all_countries)
