@@ -63,9 +63,8 @@ Imports:
     rangeBuilder,
     raster,
     readr,
-    rgnparser (>= 0.2.0),
+    rgnparser,
     rlang,
-    rnaturalearth,
     rvest,
     rworldmap,
     scales,
@@ -80,11 +79,10 @@ Imports:
     vroom,
     xml2
 Suggests:
-    testthat
+    testthat,
+    rnaturalearth
 VignetteBuilder:
     knitr
-Remotes:
-    kguidonimartins/rgnparser@fix-gnparser-install
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
