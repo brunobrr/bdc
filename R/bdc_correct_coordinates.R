@@ -1,4 +1,4 @@
-#' Internal function.Detects and corrects transposed geographic coordinates
+#' Internal function. Detects and corrects transposed geographic coordinates
 #'
 #' This functions detects mismatches between country names informed coordinates.
 #' Once detects, transposed coordinates are corrected by the used of different
@@ -28,11 +28,10 @@
 #' @return
 #'
 #' @importFrom CoordinateCleaner cc_val clean_coordinates
-#' @importFrom dplyr filter mutate as_tibble group_by_ group_split select_
-#' bind_rows distinct_ relocate left_join select
+#' @importFrom dplyr filter mutate as_tibble select all_of pull bind_rows distinct relocate left_join
 #' @importFrom raster buffer
 #' @importFrom sp SpatialPoints over
-#'
+#' 
 #' @noRd
 #'
 #' @examples
@@ -95,7 +94,7 @@ bdc_correct_coordinates <-
 
     # Split database
     occ_country <-
-      occ_country %>% dplyr::group_by_(cntr_iso2) %>% dplyr::group_split()
+      split(occ_country, occ_country[cntr_iso2])
 
 
     # bdc_coord_trans() function will try different coordinate transformations
@@ -128,7 +127,7 @@ bdc_correct_coordinates <-
     for (i in 1:length(coord_test)) {
       n <-
         coord_test[[i]] %>%
-        dplyr::select(cntr_iso2) %>%
+        dplyr::select(dplyr::all_of(cntr_iso2)) %>%
         unique %>%
         dplyr::pull()
 
@@ -139,17 +138,10 @@ bdc_correct_coordinates <-
       #0.5 degree ~50km near to equator
       my_country2 <- raster::buffer(my_country, width = border_buffer)
 
-      coord_sp <- sp::SpatialPoints(coord_test[[i]] %>% dplyr::select_(x, y))
+      coord_sp <- sp::SpatialPoints(coord_test[[i]] %>% dplyr::select({{x}}, {{y}}))
 
       coord_sp@proj4string <- my_country2@proj4string
       over_occ <- sp::over(coord_sp, my_country2)
-
-      # plot(my_country)
-      # plot(my_country2, add = T)
-      # coord_test[[i]] %>%
-      #   dplyr::filter(over_occ == 1) %>%
-      #   dplyr::select_(x, y) %>%
-      #   points(., pch = 19, col = 'red')
 
       # Eliminate as corrected those records too close to country border
       coord_test[[i]] <-
@@ -158,12 +150,12 @@ bdc_correct_coordinates <-
 
     # Elimination of those records with more than two possible correction
     coord_test <-
-      dplyr::bind_rows(coord_test) %>%
+      dplyr::bind_rows(dplyr::all_of(coord_test)) %>%
       dplyr::as_tibble() # binding dataframes allocated in the list in a single one
 
     coord_test <-
       coord_test %>%
-      dplyr::distinct_(., id, .keep_all = TRUE) %>%
+      dplyr::distinct(., {id}, .keep_all = TRUE) %>%
       dplyr::relocate(id, x, y)
 
     # Merge coord_test with other columns of occurrence database
