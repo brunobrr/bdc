@@ -49,7 +49,6 @@ Imports:
     flora,
     foreach,
     fs,
-    geobr,
     ggplot2,
     here,
     kableExtra,
