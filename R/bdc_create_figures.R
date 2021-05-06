@@ -22,10 +22,6 @@
 #' @importFrom dplyr summarise n mutate group_by pull intersect filter full_join
 #' select mutate_if summarise_all rename
 #' @importFrom fs file_exists
-#' @importFrom ggplot2 theme_minimal theme element_text element_line
-#' element_blank unit ggplot aes geom_col coord_flip labs geom_hline
-#' scale_y_continuous ggsave geom_polygon geom_hex coord_equal theme_void
-#' scale_fill_viridis_c geom_histogram
 #' @importFrom here here
 #' @importFrom rworldmap getMap
 #' @importFrom stats reorder
@@ -65,6 +61,7 @@ bdc_create_figures <-
     check_require_cran("scales")
     check_require_cran("readr")
     check_require_cran("rworldmap")
+    check_require_cran("ggplot2")
 
     # Total number of records
     suppressMessages({

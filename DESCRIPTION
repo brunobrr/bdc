@@ -47,9 +47,7 @@ Imports:
     dplyr,
     foreach,
     fs,
-    ggplot2,
     here,
-    kableExtra,
     knitr,
     magrittr,
     plyr,
@@ -67,8 +65,7 @@ Imports:
     taxadb,
     tibble,
     tidyselect,
-    vroom,
-    xml2
+    vroom
 Suggests:
     testthat,
     rnaturalearth
