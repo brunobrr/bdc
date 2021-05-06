@@ -5,7 +5,6 @@
 #' @param year_threshold Numeric. A years threshold (four digit year) to flag records due to their age. Default = NULL.
 #'
 #' @importFrom dplyr if_else
-#' @importFrom lubridate year
 #' @importFrom stringr str_extract
 #' @details The function filters the column containing event dates and extract the dates with four digits. If the event dates are older than 1500, or the threshold year, they are flagged FALSE.
 #' @return A data frame with the original data (x), a flagged column (.year) and a column with the extracted four digit years (year). Records with .year = FALSE means dates older than year threshold or 1500.
@@ -16,6 +15,8 @@ bdc_parse_date <-
            col_to_test,
            year_threshold = NULL) {
 
+    current_year <- format(Sys.Date(), "%Y")
+
     col <- data[[col_to_test]]
 
     year <-
@@ -25,14 +26,14 @@ bdc_parse_date <-
     if (is.null(year_threshold)) {
       .year <-
         dplyr::if_else(
-          year %in% 1500:lubridate::year(Sys.Date()),
+          year %in% 1500:current_year,
           TRUE,
           FALSE
         )
     } else if (is.numeric(year_threshold)) {
       .year <-
         dplyr::if_else(
-          year %in% 1500:lubridate::year(Sys.Date()),
+          year %in% 1500:current_year,
           TRUE,
           FALSE
         )

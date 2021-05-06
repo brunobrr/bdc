@@ -64,6 +64,7 @@ bdc_create_figures <-
     check_require_cran("cowplot")
     check_require_cran("scales")
     check_require_cran("readr")
+    check_require_cran("rworldmap")
 
     # Total number of records
     suppressMessages({
