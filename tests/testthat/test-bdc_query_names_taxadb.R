@@ -1,7 +1,5 @@
 context("bdc_query_names_taxadb")
 
-Sys.setenv("CONTENTID_REGISTRIES"  = "https://hash-archive.thelio.carlboettiger.info")
-
 sci_names <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
   "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
    

@@ -70,9 +70,6 @@ bdc_suggest_names_taxadb <-
            ncores = 2) {
 
     
-    Sys.setenv("CONTENTID_REGISTRIES"  = "https://hash-archive.thelio.carlboettiger.info")
-    
-
     # Get first letter of all scientific names
     first_letter <-
       unique(sapply(sci_name, function(i) {

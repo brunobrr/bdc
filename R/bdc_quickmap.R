@@ -51,6 +51,34 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
       legend.position = "none"
     )
 
+  data <-
+    data %>%
+    dplyr::mutate(decimalLatitude = as.numeric(.data[[lat]]),
+                  decimalLongitude = as.numeric(.data[[lon]]))
+  
+  # identifying empty or out-of-range coordinates
+  suppressMessages({
+    data_raw <-
+      bdc_coordinates_empty(data = data, 
+                            lat = {{ lat }}, 
+                            lon = {{ lon}})
+    
+    data_raw <-
+      bdc_coordinates_outOfRange(data = data_raw, 
+                                 lat = {{ lat }}, 
+                                 lon = {{ lon }})
+    
+    data_raw <- bdc_summary_col(data_raw)
+  })
+  
+  df <-
+    data_raw %>%
+    dplyr::filter(.summary == TRUE)
+  
+  df <-
+    df %>%
+    dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange, .summary))
+  
   if (all(col_to_map %in% names(data))) {
     our_map <-
       data %>%
