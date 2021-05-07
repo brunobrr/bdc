@@ -22,7 +22,6 @@
 #'
 #' @importFrom CoordinateCleaner cc_val cc_sea
 #' @importFrom dplyr filter left_join pull rename
-#' @importFrom readr write_csv
 #' @importFrom sf st_as_sf st_set_crs st_crs st_intersection
 #'
 #' @export
@@ -48,8 +47,9 @@ bdc_country_from_coordinates <-
            lon = "decimalLongitude",
            country = "country") {
 
-    check_require_cran("rnaturalearth")
-    check_require_github("ropensci/rnaturalearthdata")
+  check_require_cran("rnaturalearth")
+  require("rnaturalearth")
+  check_require_github("ropensci/rnaturalearthdata")
 
     # create an id
     data$id <- 1:nrow(data)
@@ -79,7 +79,7 @@ bdc_country_from_coordinates <-
         decimalLongitude = as.numeric(.data[[lon]])
       )
 
-    worldmap <- rnaturalearth::ne_countries(scale = "large")
+    worldmap <- ne_countries(scale = "large")
 
     data_no_country <-
       data %>%

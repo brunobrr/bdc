@@ -34,7 +34,7 @@
 bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
 
   world_borders <-
-    ggplot2::borders(
+    borders(
       database = "world",
       fill = "gray75",
       colour = "gray88",
@@ -43,11 +43,11 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
   check_require_cran("ggplot2")
 
   our_theme <-
-    ggplot2::theme_void() +
-    ggplot2::theme(
-      panel.border = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
+    theme_void() +
+    theme(
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
       legend.position = "none"
     )
 
@@ -81,16 +81,16 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
   
   if (all(col_to_map %in% names(data))) {
     our_map <-
-      df %>%
-      ggplot2::ggplot() +
+      data %>%
+      ggplot() +
       world_borders +
       # theme_bw() +
-      ggplot2::labs(
+      labs(
         x = "Longitude",
         y = "Latitude"
         # title = paste("Based on ", n_nrow_data, "points")
       ) +
-      ggplot2::geom_point(ggplot2::aes(
+      geom_point(aes(
         x = .data[[lon]],
         y = .data[[lat]],
         col = .data[[col_to_map]], # Map the column
@@ -99,21 +99,21 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
       size = size
       ) +
       our_theme +
-      ggplot2::coord_quickmap()+
-      ggplot2::scale_color_manual(values = c("red", "blue"))
+      coord_quickmap()+
+      scale_color_manual(values = c("red", "blue"))
     } else {
     our_map <-
-      df %>%
-      ggplot2::ggplot() +
+      data %>%
+      ggplot() +
       world_borders +
       # theme_bw() +
-      ggplot2::labs(
+      labs(
         x = "Longitude",
         y = "Latitude"
         # title = paste("Based on ", n_nrow_data, "points")
       ) +
-      ggplot2::geom_point(
-        ggplot2::aes(
+      geom_point(
+        aes(
           x = .data[[lon]],
           y = .data[[lat]]
         ),
@@ -122,7 +122,7 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
         size = size
       ) +
       our_theme +
-      ggplot2::coord_quickmap()
+      coord_quickmap()
     }
   return(our_map)
 }

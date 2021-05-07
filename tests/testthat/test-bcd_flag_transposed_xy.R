@@ -6,28 +6,28 @@ test_that("multiplication works", {
 
 
 bcd_flag_transposed_xy <- function(data) {
-  
+
   minimum_colnames <- c("database_id", "scientificName", "decimalLongitude", "decimalLatitude")
   check_minimum_colnames <-
     data %>%
     dplyr::select(minimum_colnames) %>% {
       names(.) %in% minimum_colnames
     }
-  
+
   if (sum(check_minimum_colnames) < length(check_minimum_colnames)) {
     stop(
       "Your data does not have the minimum default columns names: ",
       paste(minimum_colnames, collapse = ", "), call. = FALSE
     )
   }
-  
-  
-  
-  
+
+
+
+
   # load auxiliar data
   wiki_cntr <- bdc_get_wiki_country() # get country names from Wikipedia
-  worldmap <- bdc_get_world_map()  # 
-  
+  worldmap <- bdc_get_world_map()  #
+
   # standardize the name of countries
   standard_country_names <-
     bdc_standardize_country(
@@ -35,11 +35,11 @@ bcd_flag_transposed_xy <- function(data) {
       country = "country",
       country_names_db = wiki_cntr
     )
-  
+
   data <-
     data %>%
     dplyr::left_join(standard_country_names, by = c("country" = "cntr_original"))
-  
+
   # Correct latitude and longitude transposed
   corrected_coordinates <-
     bdc_correct_coordinates(
@@ -52,11 +52,11 @@ bcd_flag_transposed_xy <- function(data) {
       world_poly = worldmap,
       world_poly_iso = "iso2c"
     )
-  
+
   rows_to_remove <-
     corrected_coordinates %>%
     dplyr::pull(database_id)
-  
+
   rows_to_insert <-
     corrected_coordinates %>%
     # remove columns with coordinates transposed
@@ -66,7 +66,7 @@ bcd_flag_transposed_xy <- function(data) {
                   decimalLongitude = decimalLongitude_modified) %>%
     # flag all of them
     dplyr::mutate(transposed_xy = TRUE)
-  
+
   data <-
     data %>%
     # remove wrong coordinates
@@ -75,10 +75,10 @@ bcd_flag_transposed_xy <- function(data) {
     dplyr::mutate(transposed_xy = FALSE) %>%
     # add corrected coordinates
     dplyr::bind_rows(rows_to_insert)
-  
+
   # save issued coordinates
   message("Saving issued coordinates in Output/Check/01_prefilter_transposed_coordinates.csv")
-  
+
   corrected_coordinates %>%
     dplyr::select(
       database_id,
@@ -88,8 +88,8 @@ bcd_flag_transposed_xy <- function(data) {
       stateProvince,
       cntr_suggested
     ) %>%
-    readr::write_csv(here::here("Output", "Check", "01_prefilter_transposed_coordinates.csv"))
-  
+    write_csv(here::here("Output", "Check", "01_prefilter_transposed_coordinates.csv"))
+
   return(data)
-  
+
 }

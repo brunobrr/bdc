@@ -34,8 +34,9 @@ bdc_country_standardized <-
   function(data,
            country = "country") {
 
-    check_require_cran("rnaturalearth")
-    check_require_github("ropensci/rnaturalearthdata")
+  check_require_cran("rnaturalearth")
+  require("rnaturalearth")
+  check_require_github("ropensci/rnaturalearthdata")
 
     # load auxiliary data
     message("Loading auxiliary data: country names from wikipedia\n")

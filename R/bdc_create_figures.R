@@ -94,13 +94,13 @@ bdc_create_figures <-
 
 
     our_theme <-
-      ggplot2::theme_minimal() +
-      ggplot2::theme(
-        axis.title = ggplot2::element_text(size = 18),
-        axis.text = ggplot2::element_text(size = 12),
-        panel.grid.major.x = ggplot2::element_line(color = "#cbcbcb"),
-        panel.grid.major.y = ggplot2::element_blank(),
-        plot.margin = ggplot2::unit(c(0.5, 0.5, 0.5, 0.5), "cm")
+      theme_minimal() +
+      theme(
+        axis.title = element_text(size = 18),
+        axis.text = element_text(size = 12),
+        panel.grid.major.x = element_line(color = "#cbcbcb"),
+        panel.grid.major.y = element_blank(),
+        plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm")
       )
 
     # prefilter
@@ -177,19 +177,19 @@ bdc_create_figures <-
         temp[is.na(temp)] <- 0
 
         b <-
-          ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(database_id, -freq), y = freq)) +
-          ggplot2::geom_col(colour = "white", fill = "royalblue") +
-          ggplot2::coord_flip() +
+          ggplot(temp, aes(x = stats::reorder(database_id, -freq), y = freq)) +
+          geom_col(colour = "white", fill = "royalblue") +
+          coord_flip() +
           our_theme +
-          ggplot2::labs(x = "Dataset", y = "% of records flagged") +
-          # scale_y_continuous(labels = scales::percent) +
-          ggplot2::geom_hline(
+          labs(x = "Dataset", y = "% of records flagged") +
+          # scale_y_continuous(labels = percent) +
+          geom_hline(
             yintercept = 0,
             size = 1,
             colour = "#333333"
           ) +
-          # ggplot2::geom_label(
-          #   ggplot2::aes(
+          # geom_label(
+          #   aes(
           #     x = stats::reorder(database_id, -freq),
           #     y = freq,
           #     label = n_flagged
@@ -203,9 +203,9 @@ bdc_create_figures <-
         #   size = 4,
         #   fontface = "bold"
         # ) +
-        ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+        scale_y_continuous(expand = c(0, 0), labels = comma)
 
-        ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
+        ggsave(paste("Output/", "Figures/", workflow_step, "_",
                               column_to_map, "_", "BAR", ".png",
                               sep = ""
         ),
@@ -243,19 +243,19 @@ bdc_create_figures <-
         temp[is.na(temp)] <- 0
 
         b <-
-          ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(Name, -freq), y = freq)) +
-          ggplot2::geom_col(colour = "white", fill = "royalblue") +
-          ggplot2::coord_flip() +
+          ggplot(temp, aes(x = stats::reorder(Name, -freq), y = freq)) +
+          geom_col(colour = "white", fill = "royalblue") +
+          coord_flip() +
           our_theme +
-          ggplot2::labs(x = "Tests", y = "% of records flagged") +
-          # scale_y_continuous(labels = scales::percent) +
-          ggplot2::geom_hline(
+          labs(x = "Tests", y = "% of records flagged") +
+          # scale_y_continuous(labels = percent) +
+          geom_hline(
             yintercept = 0,
             size = 1,
             colour = "#333333"
           ) +
-          # ggplot2::geom_label(
-          #   ggplot2::aes(
+          # geom_label(
+          #   aes(
           #     x = stats::reorder(Name, -freq),
           #     y = freq,
           #     label = n_flagged
@@ -268,9 +268,9 @@ bdc_create_figures <-
         #   size = 3,
         #   fontface = "bold"
         # ) +
-        ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+        scale_y_continuous(expand = c(0, 0), labels = comma)
 
-        ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
+        ggsave(paste("Output/", "Figures/", workflow_step, "_",
                               column_to_map,
                               "_", "BAR", ".png", sep = ""),
                         b,
@@ -380,11 +380,11 @@ bdc_create_figures <-
 
       # new theme
       our_theme2 <-
-        ggplot2::theme_void() +
-        ggplot2::theme(
-          panel.border = ggplot2::element_blank(),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank(),
+        theme_void() +
+        theme(
+          panel.border = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
         )
 
       for (i in 1:length(w_maps)) {
@@ -403,24 +403,24 @@ bdc_create_figures <-
           dplyr::filter(. == FALSE)
 
         p <-
-          ggplot2::ggplot() +
-          ggplot2::geom_polygon(data = m,
-                                ggplot2::aes(x = long, y = lat, group = group),
+          ggplot() +
+          geom_polygon(data = m,
+                                aes(x = long, y = lat, group = group),
                                 fill = "gray70") +
-          ggplot2::geom_hex(
+          geom_hex(
             data = d,
-            ggplot2::aes(x = decimalLongitude, y = decimalLatitude),
+            aes(x = decimalLongitude, y = decimalLatitude),
             bins = 70
           ) +
-          ggplot2::coord_quickmap() +
-          ggplot2::theme_void() +
-          ggplot2::labs(fill = "# of Records") +
-          ggplot2::scale_fill_viridis_c() +
+          coord_quickmap() +
+          theme_void() +
+          labs(fill = "# of Records") +
+          scale_fill_viridis_c() +
           our_theme2
-          # ggplot2::theme(legend.position = "left")
+          # theme(legend.position = "left")
 
 
-        ggplot2::ggsave(
+        ggsave(
           paste("Output/", "Figures/", workflow_step, "_", w_maps[i], "_",
                 "MAP", ".png",
                 sep = ""
@@ -456,9 +456,9 @@ bdc_create_figures <-
           col_to_map = "royalblue",
           size = 0.7
         )
-      p <- cowplot::plot_grid(p1, p2, labels = "AUTO", scale = 1)
+      p <- plot_grid(p1, p2, labels = "AUTO", scale = 1)
 
-      ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
+      ggsave(paste("Output/", "Figures/", workflow_step, "_",
                             "coordinates_transposed", "_", "MAP", ".png",
                             sep = ""
       ),
@@ -480,21 +480,21 @@ bdc_create_figures <-
       max_year <- max(data$year, na.rm = T)
 
       p <- data %>%
-        ggplot2::ggplot(ggplot2::aes(x = year)) +
-        ggplot2::geom_histogram(
+        ggplot(aes(x = year)) +
+        geom_histogram(
           colour = "white",
           fill = "royalblue", position = "identity", bins = 80
         ) +
         our_theme +
-        ggplot2::labs(x = "Year", y = "Number of records") +
-        ggplot2::geom_hline(
+        labs(x = "Year", y = "Number of records") +
+        geom_hline(
           yintercept = 0,
           size = 1,
           colour = "#333333"
         ) +
-        ggplot2::scale_y_continuous(labels = scales::comma)
+        scale_y_continuous(labels = comma)
 
-      ggplot2::ggsave(
+      ggsave(
         paste("Output/", "Figures/", workflow_step, "_", "year", "_",
               "BAR", ".png",
               sep = ""

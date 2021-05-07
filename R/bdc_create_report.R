@@ -44,6 +44,7 @@ bdc_create_report <-
            workflow_step) {
 
     check_require_cran("readr")
+    check_require_cran("DT")
   suppressMessages({
 
     # Total number of records
@@ -90,7 +91,7 @@ bdc_create_report <-
 
       data <-
         x %>%
-        DT::datatable(
+        datatable(
           ., class = 'stripe',
           options = list(
             pageLength = 10,
