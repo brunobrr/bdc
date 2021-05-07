@@ -12,11 +12,12 @@
 bdc_get_world_map <- function() {
 
   check_require_cran("rnaturalearth")
+  require("rnaturalearth")
   check_require_github("ropensci/rnaturalearthdata")
 
   suppressWarnings({
 
-  worldmap <- rnaturalearth::ne_countries(scale = "large")
+  worldmap <- ne_countries(scale = "large")
 
   # Add some iso code to some countries polygons
   iso2c <- countrycode::countrycode(unique(worldmap$name_en),

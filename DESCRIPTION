@@ -67,8 +67,11 @@ Imports:
     tidyselect,
     vroom
 Suggests:
+    readr,
+    rnaturalearth,
+    rvest,
     testthat,
-    rnaturalearth
+    xml2
 VignetteBuilder:
     knitr
 Encoding: UTF-8

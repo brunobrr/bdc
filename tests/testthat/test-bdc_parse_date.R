@@ -4,7 +4,7 @@ fakedates <-
   data.frame(
     common_date = c(1499, 20, 1885, 1985, 200002, 3),
     string_date = letters[1:6],
-    lubris_date = seq(lubridate::ymd('2019-04-01'),lubridate::ymd('2019-04-06'), by = '1 day')
+    lubris_date = seq(ymd('2019-04-01'),ymd('2019-04-06'), by = '1 day')
   )
 
 bdc_parse_date(x = fakedates, column_to_test = "lubris_date")

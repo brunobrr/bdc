@@ -22,7 +22,7 @@
 bdc_get_wiki_country <- function() {
 
   check_require_cran("rvest")
-  check_require_cran("xlm2")
+  check_require_cran("xml2")
 
   # Test if file was downloaded
   file <- here::here("inst", "extdata", "countries_names", "wiki_country_names.txt")
@@ -47,10 +47,10 @@ bdc_get_wiki_country <- function() {
 
     for (i in 1:length(URL)) {
       temp <- URL[i] %>%
-        xml2::read_html() %>%
-        rvest::html_nodes("table")
+        read_html() %>%
+        html_nodes("table")
 
-      temp <- rvest::html_table(temp[2]) ## Just the "legend" table
+      temp <- html_table(temp[2]) ## Just the "legend" table
 
       temp <-
         temp[[1]] %>%

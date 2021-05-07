@@ -114,7 +114,7 @@ An example of *bdc_clean_names* output.
 ```{r echo=F, message=FALSE, warning=FALSE}
 # read
 parse_names <-
-  readr::read_csv(here::here("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.csv"))
+  read_csv(here::here("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.csv"))
 
 DT::datatable(
   parse_names[2000:2100,], class = 'stripe', extensions = 'FixedColumns',
@@ -132,7 +132,7 @@ DT::datatable(
 **Let's merge the names parsed with the full database.** As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of parsing names process in "Output/Check/02_parsed_names.qs".
 
 ```{r}
-parse_names <- 
+parse_names <-
   parse_names %>%
   dplyr::select(.uncer_terms, names_clean)
 
@@ -150,11 +150,11 @@ query_names <- bdc_query_names_taxadb(
   suggest_names = TRUE, # try to found a candidate name for misspelled names?
   suggestion_distance = 0.9, # distance between the searched and suggested names
   db = "gbif", # taxonomic database
-  rank_name = "Plantae", # a taxonomic rank 
+  rank_name = "Plantae", # a taxonomic rank
   rank = "kingdom", # name of the taxonomic rank
   parallel = TRUE, # should parallel processing be used?
   ncores = 2, # number of cores to be used in the parallelization process
-  export_accepted = FALSE # save names linked to multiple accepted names 
+  export_accepted = FALSE # save names linked to multiple accepted names
 )
 ```
 
