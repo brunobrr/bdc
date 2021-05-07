@@ -54,9 +54,12 @@ bdc::bdc_create_dir()
 
 Read an example of the **configuration table**. You can download the table by clicking on "CSV" button. We demontrate the usefullness of the workflow using a database of terrestrial plant species occuring in Brazil. This database contains 9.000 records compiled from nive different sources (see bellow).
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
-metadata <-
-  readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo.csv"))
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"))
+```
+
+```{r message=FALSE, warning=FALSE, eval=TRUE, echo = FALSE}
+metadata <- readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo.csv"))
 ```
 
 <br/> <br/>
@@ -118,7 +121,7 @@ Note that the standardized database integrating all dataset are saved in the fol
 bdc_standardize_datasets(metadata = metadata)
 ```
 
-```{r message=F, warning=F}
+```{r message=F, warning=F, echo = FALSE}
 database <-
   here::here("Output", "Intermediate", "00_merged_database.qs") %>%
   qs::qread()

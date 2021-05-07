@@ -56,17 +56,11 @@ if (!require("remotes")) install.packages("remotes")
 if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
-Creating folders to save the results.
-
-```{r}
-bdc::bdc_create_dir()
-```
-
 ## Read the database
 
 Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) step of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
 
-```{r}
+```{r, echo = FALSE}
 database <-
   qs::qread(here::here("Output", "Intermediate", "01_prefilter_database.qs"))
 ```
@@ -120,7 +114,7 @@ An example of *bdc_clean_names* output.
 ```{r echo=F, message=FALSE, warning=FALSE}
 # read
 parse_names <-
-  readr::read_csv("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.csv")
+  readr::read_csv(here::here("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.csv"))
 
 DT::datatable(
   parse_names[2000:2100,], class = 'stripe', extensions = 'FixedColumns',
@@ -169,7 +163,7 @@ query_names <- bdc_query_names_taxadb(
 ```{r echo=F}
 query_names <-
   data.table::fread(
-    "inst/extdata/example_bdc_query_names_taxadb/example_bdc_query_names_taxadb.csv"
+    here::here("inst/extdata/example_bdc_query_names_taxadb/example_bdc_query_names_taxadb.csv")
   )
 
 DT::datatable(
@@ -199,7 +193,7 @@ database <-
 
 The report is based on the **column notes** containing the results of the name standardization process. The notes can be grouped in two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as "valid" in the column "Description".
 
-```{r}
+```{r, eval = FALSE}
 report <-
   bdc_create_report(data = database,
                     database_id = "database_id",
@@ -223,7 +217,7 @@ Save the table containing unresolved names
 
 ```{r}
 unresolved_names %>%
- data.table::fwrite(., here::here("Output", "Check", "02_unresolved_names.csv"))
+ data.table::fwrite(., here::here("Output/Check/02_unresolved_names.csv"))
 ```
 
 ## Filter the database

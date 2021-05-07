@@ -18,19 +18,11 @@
 #' @return Figures in a png format.
 #'
 #' @importFrom CoordinateCleaner cc_val
-#' @importFrom cowplot plot_grid
 #' @importFrom data.table fwrite fread
 #' @importFrom dplyr summarise n mutate group_by pull intersect filter full_join
 #' select mutate_if summarise_all rename
 #' @importFrom fs file_exists
-#' @importFrom ggplot2 theme_minimal theme element_text element_line
-#' element_blank unit ggplot aes geom_col coord_flip labs geom_hline
-#' scale_y_continuous ggsave geom_polygon geom_hex coord_equal theme_void
-#' scale_fill_viridis_c geom_histogram
 #' @importFrom here here
-#' @importFrom readr read_csv
-#' @importFrom rworldmap getMap
-#' @importFrom scales comma
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
 #' @importFrom tidyselect starts_with
@@ -64,6 +56,12 @@ bdc_create_figures <-
            database_id = "database_id",
            workflow_step = NULL) {
 
+    check_require_cran("cowplot")
+    check_require_cran("scales")
+    check_require_cran("readr")
+    check_require_cran("rworldmap")
+    check_require_cran("ggplot2")
+
     # Total number of records
     suppressMessages({
       if (!fs::file_exists("data/n_records.csv")) {
@@ -87,11 +85,11 @@ bdc_create_figures <-
 
       } else {
         n_records <-
-          readr::read_csv(here::here("data/n_records.csv")) %>%
+          read_csv(here::here("data/n_records.csv")) %>%
           dplyr::pull(n)
 
         n_record_database <-
-          readr::read_csv(here::here("data/n_record_database.csv"))
+          read_csv(here::here("data/n_record_database.csv"))
       }
 
 
@@ -378,7 +376,7 @@ bdc_create_figures <-
       }
 
       # Worldmap
-      m <- rworldmap::getMap() # rworldmap
+      m <- getMap() # rworldmap
 
       # new theme
       our_theme2 <-

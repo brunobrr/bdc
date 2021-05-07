@@ -10,22 +10,20 @@
 #' Can be a color name (e.g "red") the the name of a column of data. Default =
 #' "blue"
 #' @param size numeric. The size of the points.
-#' 
+#'
 #' @details Only records with valid coordinates can be plotted. Records missing
 #' or with invalid coordinates are removed prior creating the map.
-#' 
-#' @importFrom ggplot2 borders theme_void theme element_blank ggplot labs
-#' geom_point aes coord_quickmap scale_color_manual
-#' 
+#'
+#'
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' decimalLatitude <- c(19.9358, -13.016667, -19.935800)
 #' decimalLongitude <- c(-40.6003, -39.6, -40.60030)
 #' .coordinates_out_country <- c(FALSE, TRUE, TRUE)
 #' x <- data.frame(decimalLatitude, decimalLongitude, .coordinates_out_country)
-#' 
+#'
 #' bdc_quickmap(
 #'   data = x,
 #'   lat = "decimalLatitude",
@@ -42,6 +40,8 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
       colour = "gray88",
     )
 
+  check_require_cran("ggplot2")
+
   our_theme <-
     ggplot2::theme_void() +
     ggplot2::theme(
@@ -49,7 +49,7 @@ bdc_quickmap <- function(data, lat, lon, col_to_map = NULL, size = size) {
       panel.grid.major = ggplot2::element_blank(),
       panel.grid.minor = ggplot2::element_blank(),
       legend.position = "none"
-    ) 
+    )
 
   data <-
     data %>%

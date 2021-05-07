@@ -69,6 +69,7 @@ bdc_suggest_names_taxadb <-
            parallel = TRUE,
            ncores = 2) {
 
+    
     # Get first letter of all scientific names
     first_letter <-
       unique(sapply(sci_name, function(i) {
@@ -104,7 +105,7 @@ bdc_suggest_names_taxadb <-
       doParallel::registerDoParallel(cl)
 
       sug_dat <-
-        foreach(i = sci_name,
+        foreach::foreach(i = sci_name,
                 .combine = rbind, .export = "bdc_return_names") %dopar% {
                   bdc_return_names(i, max_distance, species_first_letter)
                 } # end foreach

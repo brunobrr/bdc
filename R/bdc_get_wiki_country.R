@@ -8,9 +8,7 @@
 #' @importFrom fs file_exists dir_create
 #' @importFrom here here
 #' @importFrom plyr ldply
-#' @importFrom rvest html_nodes html_table
 #' @importFrom vroom vroom
-#' @importFrom xml2 read_html
 #'
 #' @return A data.frame with country names in different languages. This database
 #' is also saved in 'data/countries_names.csv'.
@@ -22,6 +20,9 @@
 #' country_names <- bdc_get_wiki_country()
 #' }
 bdc_get_wiki_country <- function() {
+
+  check_require_cran("rvest")
+  check_require_cran("xlm2")
 
   # Test if file was downloaded
   file <- here::here("inst", "extdata", "countries_names", "wiki_country_names.txt")

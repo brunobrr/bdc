@@ -168,7 +168,11 @@
 #'   parallel = FALSE,
 #'   ncores = 2,
 #'   export_accepted = FALSE)
+#' sci_name <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
+#' "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
+#' test <- bdc_query_names_taxadb(sci_name, suggestion_distance = 0.9, db = "gbif")
 #' }
+#' 
 bdc_query_names_taxadb <-
   function(sci_name,
            replace_synonyms = TRUE,
@@ -477,13 +481,16 @@ bdc_query_names_taxadb <-
     w <-
       which(found_name$taxonomicStatus != "accepted" &
               found_name$taxonomicStatus != "synonym")
-
-    found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
+    
+    if(length(w) > 0){
+      found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
+    }
 
     # Trimming extra-spaces from the column "notes
     found_name$notes <- stringr::str_squish(found_name$notes)
 
-    # joining  names queried to the original (complete) list of names
+
+   # joining  names queried to the original (complete) list of names
     found_name <-
       dplyr::left_join(raw_sci_name, found_name, by = "original_search")
 

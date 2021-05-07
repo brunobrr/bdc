@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-R := Rscript -e
+R := Rscript --no-init-file -e
 
 PKGNAME := $(shell sed -n "s/Package: *\([^ ]*\)/\1/p" DESCRIPTION)
 PKGVERS := $(shell sed -n "s/Version: *\([^ ]*\)/\1/p" DESCRIPTION)
@@ -13,7 +13,7 @@ document: ## refresh function documentation
 	$(R) "devtools::document()"
 
 build: document ## build package
-	$(R) "devtools::build()"
+	$(R) "devtools::build(vignettes = FALSE)"
 
 check: ## check package
 	$(R) "Sys.setenv('_R_CHECK_SYSTEM_CLOCK_' = 0); devtools::check(document = FALSE, build_args = c('--no-build-vignettes'))"
@@ -53,6 +53,9 @@ README.md: README.Rmd ## render README
 
 render: ## force render README
 	$(R) "rmarkdown::render('README.Rmd')"
+
+eg:     ## run examples
+	$(R) "devtools::run_examples(run = TRUE)"
 
 help:         ## show this message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \

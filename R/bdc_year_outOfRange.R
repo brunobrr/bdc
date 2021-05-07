@@ -1,13 +1,13 @@
 #' Identify records with year out-of-range
-#' 
-#' This function identifies records out-of-range collecting year (e.g., in the future) 
+#'
+#' This function identifies records out-of-range collecting year (e.g., in the future)
 #' or old records collected before a year informed in 'year_threshold'.
-#' 
+#'
 #' @param data A data frame containing column with event date information.
 #' @param eventDate numeric or date. The column with event date information.
 #' @param year_threshold numeric. A four-digit year threshold used to flag old
 #' (potentially invalid) records. Default = 1900
-#' 
+#'
 #' @details Following the "VALIDATION:YEAR_OUTOFRANGE"
 #' \href{https://github.com/tdwg/bdq/projects/2}{Biodiversity data quality
 #' group}, the results of this test are time-dependent. While the user may
@@ -17,36 +17,36 @@
 #' (1980). If 'year_threshold' is not provided, the lower limit to the year is
 #' by default 1600, a lower limit for collecting dates of biological specimens.
 #' Records with empty or NA 'eventDate' are not tested and returned as NA.
-#' 
+#'
 #' @return A data.frame contain the column ".year_outOfRange". Compliant
 #' (TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".
-#' 
+#'
 #' @importFrom dplyr if_else
-#' @importFrom lubridate year
 #' @importFrom stringr str_extract
-#' 
+#'
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' collection_date <- c(NA, "31/12/2015", "2013-06-13T00:00:00Z", "2013-06-20",
 #' "", "2013", "0001-01-00")
 #' x <- data.frame(collection_date)
-#' 
+#'
 #' bdc_year_outOfRange(data = x, eventDate = "collection_date")
 #' }
 bdc_year_outOfRange <-
   function(data,
            eventDate,
            year_threshold = 1900) {
-    
+
+    current_year <- format(Sys.Date(), "%Y")
     col <- data[[eventDate]]
     nDigits <- function(x) nchar(trunc(abs(x)))
 
     if (is.null(year_threshold)) {
       .year_outOfRange <-
         dplyr::if_else(
-          col %in% 1600:lubridate::year(Sys.Date()),
+          col %in% 1600:current_year,
           TRUE,
           FALSE
         )
@@ -54,16 +54,16 @@ bdc_year_outOfRange <-
       if (!is.numeric(year_threshold)) {
         stop("'year_threshold' is not numeric")
       }
-      
+
       if (nDigits(year_threshold) != 4) {
         stop("'year_threshold' does not have four digits")
       }
 
       w <- which(is.na(col))
-      
+
       .year_outOfRange <-
         ifelse(
-          col %in% 1600:lubridate::year(Sys.Date()) & col > year_threshold,
+          col %in% 1600:current_year & col > year_threshold,
           TRUE,
           FALSE
         )
