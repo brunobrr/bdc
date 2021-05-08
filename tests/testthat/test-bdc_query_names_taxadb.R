@@ -4,7 +4,7 @@ sci_names <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhom
   "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
    
 
-test <- bdc_query_names_taxadb(sci_names, suggestion.distance = 0.9, db = "gbif")
+test <- bdc_query_names_taxadb(sci_names, suggestion_distance = 0.9, db = "gbif")
 
 test_that("bdc_query_names_taxadb", {
  
