@@ -35,7 +35,6 @@ bdc_country_standardized <-
            country = "country") {
 
   check_require_cran("rnaturalearth")
-  require("rnaturalearth")
   check_require_github("ropensci/rnaturalearthdata")
 
     # load auxiliary data

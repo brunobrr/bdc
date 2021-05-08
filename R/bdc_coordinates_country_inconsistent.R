@@ -62,7 +62,6 @@ bdc_coordinates_country_inconsistent <-
            dist = 0.1) {
 
   check_require_cran("rnaturalearth")
-  require("rnaturalearth")
 
   df <-
     data %>%

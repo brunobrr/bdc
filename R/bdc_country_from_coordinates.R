@@ -48,7 +48,6 @@ bdc_country_from_coordinates <-
            country = "country") {
 
   check_require_cran("rnaturalearth")
-  require("rnaturalearth")
   check_require_github("ropensci/rnaturalearthdata")
 
     # create an id
