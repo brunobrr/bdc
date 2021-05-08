@@ -47,8 +47,7 @@
 #' "Gymnanthes edwalliana (Pax & K.Hoffm.) Laurenio-Melo & M.F.Sales",
 #' "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby")
 #'
-#' x <- data.frame(scientificName)
-#' bdc_clean_names(data = x, scientificName)
+#' bdc_clean_names(scientificName)
 #' }
 bdc_clean_names <- function(sci_names) {
 

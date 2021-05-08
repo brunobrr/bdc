@@ -86,11 +86,11 @@ bdc_create_figures <-
 
       } else {
         n_records <-
-          read_csv(here::here("data/n_records.csv")) %>%
+          readr::read_csv(here::here("data/n_records.csv")) %>%
           dplyr::pull(n)
 
         n_record_database <-
-          read_csv(here::here("data/n_record_database.csv"))
+          readr::read_csv(here::here("data/n_record_database.csv"))
       }
 
 

@@ -28,16 +28,17 @@
 #' .summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
 #'
 #' x <- data.frame(database_id,
-#'                 .scientificName_empty,
-#'                 .coordinates_empty,
-#'                 .basisOfRrecords_notStandard,
+#'                 .missing_names,
+#'                 .missing_coordinates ,
+#'                 .invalid_basis_of_records,
 #'                 .summary)
 #'
 #' bdc_create_report(
-#' data = x,
-#' database_id = "database_id",
-#' workflow_step = "prefilter")
+#'   data = x,
+#'   database_id = "database_id",
+#'   workflow_step = "prefilter")
 #' }
+#' 
 bdc_create_report <-
   function(data,
            database_id = "database_id",
@@ -68,8 +69,8 @@ bdc_create_report <-
       data.table::fwrite(n_record_database,
                          here::here("data/n_record_database.csv"))
       } else {
-      n_records <- read_csv("data/n_records.csv") %>% dplyr::pull(n)
-      n_record_database <- read_csv("data/n_record_database.csv")
+      n_records <- readr::read_csv("data/n_records.csv") %>% dplyr::pull(n)
+      n_record_database <- readr::read_csv("data/n_record_database.csv")
     }
 
     # Function used to formatting report

@@ -42,9 +42,7 @@ specific description of the place" where a organism were recorded.
 \dontrun{
 lat <- c(NA, NA, "")
 lon <- c("", NA, NA)
-locality <- data.frame(.missing_names, .missing_coordinates)
-
-x <- data.frame(lat, long, locality)
+x <- data.frame(lat = lat, lon = lon, locality =  c("Brazil", "Argentina", "Chile"))
 bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon")
 }
 }
