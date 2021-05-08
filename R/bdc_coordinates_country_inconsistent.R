@@ -1,5 +1,5 @@
 #' Identify records within a reference country
-#' 
+#'
 #' This function flags geographic coordinates within a reference country. A
 #' spatial buffer can be added to the reference country for ensuring that
 #' records in mangroves, marshes, estuaries as well as records with low
@@ -14,23 +14,23 @@
 #' Default = “decimallongitude”.
 #' @param dist numeric. A distance in decimal degrees used to created a buffer
 #' around the country. Default = 0.1 (~11 km at the equator)
-#' 
+#'
 #' @details The distance informed in the argument 'dist' is used to create a
 #' buffer around the reference country. Records within the reference country
 #' or at a specified distance from the coastline of the reference country
 #' (i.e., records within the buffer) are flagged as valid (TRUE). Note that
 #' records within the buffer but in other countries are flagged as invalid
 #' (FALSE).
-#' 
+#'
 #' @return A data.frame contain the column '.coordinates_country_inconsistent'.
-#' Compliant (TRUE) if coordinates fall within the boundaries plus a specified 
+#' Compliant (TRUE) if coordinates fall within the boundaries plus a specified
 #' distance (if 'dist' is supplied) of 'country_name'; otherwise "FALSE".
-#' 
+#'
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom dplyr select mutate filter full_join bind_cols
 #' @importFrom rnaturalearth ne_countries
 #' @importFrom sf st_as_sf st_set_crs st_bbox st_buffer st_crop st_intersects
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -38,7 +38,7 @@
 #' decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
 #' decimalLatitude <- c(19.9358, -13.016667, NA, "")
 #' x <- data.frame(decimalLongitude, decimalLatitude)
-#' 
+#'
 #' bdc_coordinates_country_inconsistent(
 #'   data = x,
 #'   country_name = "Brazil",
@@ -46,7 +46,7 @@
 #'   lat = "decimalLatitude",
 #'   dist = 0.1 # in decimal degrees
 #' )
-#' 
+#'
 #' bdc_coordinates_country_inconsistent(
 #' data = x,
 #' country_name = c("Argentina", "Brazil"),
@@ -61,35 +61,37 @@ bdc_coordinates_country_inconsistent <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            dist = 0.1) {
-    
+
+  check_require_cran("rnaturalearth")
+
   df <-
     data %>%
     dplyr::select(.data[[lon]], .data[[lat]]) %>%
     dplyr::mutate(id = 1:nrow(data))
-  
+
   # identifying empty or out-of-range coordinates
   suppressMessages({
       data_raw <-
-        bdc_coordinates_empty(data = df, 
-                              lat = {{ lat }}, 
+        bdc_coordinates_empty(data = df,
+                              lat = {{ lat }},
                               lon = {{ lon}})
-      
+
       data_raw <-
-        bdc_coordinates_outOfRange(data = data_raw, 
-                                   lat = {{ lat }}, 
+        bdc_coordinates_outOfRange(data = data_raw,
+                                   lat = {{ lat }},
                                    lon = {{ lon }})
-  
+
   data_raw <- bdc_summary_col(data_raw)
   })
-  
+
   df <-
     data_raw %>%
     dplyr::filter(.summary == TRUE)
-  
+
   df <-
     df %>%
     dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange, .summary))
-  
+
 
   # get country limits
   country_shp <-
@@ -97,8 +99,8 @@ bdc_coordinates_country_inconsistent <-
       country = country_name,
       scale = "large",
       returnclass = "sf")
-  
-  
+
+
   # Spatial points
   data_sp <-
     sf::st_as_sf(
@@ -121,14 +123,14 @@ bdc_coordinates_country_inconsistent <-
       data_sp %>%
       dplyr::mutate(points_in_buf = sf::st_intersects(data_sp, buf, sparse = FALSE))
   })
-  
-  
+
+
   # Remove additional columns within 'points_in_buf' object
   if(length(country_name)>1){
     data_sp$points_in_buf <- apply(data_sp$points_in_buf, 1, any)
   }
-  
-  
+
+
   # Filter points within the buffer
   data_fil <-
     data_sp %>%
@@ -145,7 +147,7 @@ bdc_coordinates_country_inconsistent <-
       })
     })
   # }
-  
+
   # Extract country names from points
   suppressWarnings({
     ext_country <- sf::st_intersection(data_sp, all_countries)
@@ -173,23 +175,23 @@ bdc_coordinates_country_inconsistent <-
 
   data_raw <-
     dplyr::left_join(data_raw, data_to_join, by = 'id')
-  
+
   data_raw$.coordinates_country_inconsistent <-
     ifelse(
       is.na(data_raw$.coordinates_country_inconsistent),
       TRUE,
       data_raw$.coordinates_country_inconsistent
     )
-  
+
   data_raw$.coordinates_country_inconsistent <-
     ifelse(
       data_raw$.summary == FALSE,
       TRUE,
       data_raw$.coordinates_country_inconsistent
     )
-  
+
   data_raw <- data_raw %>% dplyr::select(.coordinates_country_inconsistent)
-  
+
   df <- dplyr::bind_cols(data, data_raw)
 
   message(
