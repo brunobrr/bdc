@@ -14,7 +14,7 @@ test_that("bdc_query_names_taxadb", {
 
 test_that("bdc_get_taxa_taxadb datase order", {
   
-  expect_equal(test$original.search,  sci_names)
+  expect_equal(test$original_search,  sci_names)
 }
 )
 
