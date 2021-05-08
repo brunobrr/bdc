@@ -6,8 +6,9 @@
 #'
 #' @importFrom dplyr if_else
 #' @importFrom stringr str_extract
-#' @details The function filters the column containing event dates and extract the dates with four digits. If the event dates are older than 1500, or the threshold year, they are flagged FALSE.
-#' @return A data frame with the original data (x), a flagged column (.year) and a column with the extracted four digit years (year). Records with .year = FALSE means dates older than year threshold or 1500.
+#' @details The function filters the column containing event dates and extract the dates with four digits. If the event dates are older than 1600, or the threshold year, they are flagged FALSE.
+#' 
+#' @return A data frame with the original data (x), a flagged column (.year) and a column with the extracted four digit years (year). Records with .year = FALSE means dates older than year threshold or 1600.
 #' @export
 #'
 bdc_parse_date <-
@@ -26,14 +27,14 @@ bdc_parse_date <-
     if (is.null(year_threshold)) {
       .year <-
         dplyr::if_else(
-          year %in% 1500:current_year,
+          year %in% 1600:current_year,
           TRUE,
           FALSE
         )
     } else if (is.numeric(year_threshold)) {
       .year <-
         dplyr::if_else(
-          year %in% 1500:current_year,
+          year %in% 1600:current_year,
           TRUE,
           FALSE
         )

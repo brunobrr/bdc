@@ -1,8 +1,10 @@
 #' Identify records with out-of-range geographic coordinates
 #'
-#' This function identifies records with out-of-range coordinates (not between -90 and 90 for latitude; between -180 and 180 for longitude).
-#'
-#' @param data data.frame. Containing geographical coordinates. Coordinates must be expressed in decimal degree and in WGS84. 
+#' This function identifies records with out-of-range coordinates (not between
+#' -90 and 90 for latitude; between -180 and 180 for longitude).
+#' 
+#' @param data data.frame. Containing geographical coordinates. Coordinates must
+#' be expressed in decimal degree and in WGS84.
 #' @param lat character string. The column name with latitude. Coordinates must 
 #' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
 #' @param lon character string. The column with longitude. Coordinates must be

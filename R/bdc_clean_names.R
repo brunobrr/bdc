@@ -1,7 +1,7 @@
 #' Clean and parse scientific names
 #'
 #' This functions is composed of a series of name-checking routines for cleaning
-#' and parsing scientific names. This tools is used to remove 1) family names of
+#' and parsing scientific names. It removes 1) family names of
 #' animals or plants pre-pended to species names, 2) qualifiers denoting
 #' uncertain or provisional status of taxonomic identification (e.g., confer,
 #' species, affinis), and 3) infraspecific terms, for example: variety (var.),
@@ -44,7 +44,7 @@
 #' scientificName = c(
 #' "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
 #' "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
-#' "Gymnanthes edwalliana (Pax & K.Hoffm.) Laurênio-Melo & M.F.Sales",
+#' "Gymnanthes edwalliana (Pax & K.Hoffm.) Laurenio-Melo & M.F.Sales",
 #' "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby")
 #'
 #' x <- data.frame(scientificName)
