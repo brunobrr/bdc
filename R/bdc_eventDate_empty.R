@@ -20,7 +20,7 @@
 #' "", "2013", "0001-01-00")
 #' x <- data.frame(collection_date)
 #' 
-#' bdc_coordinates_empty(data = x, eventDate = "collection_date")
+#' bdc_eventDate_empty(data = x, eventDate = "collection_date")
 #' }
 bdc_eventDate_empty <-
   function(data,
