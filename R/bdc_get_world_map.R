@@ -12,7 +12,6 @@
 bdc_get_world_map <- function() {
 
   check_require_cran("rnaturalearth")
-  require("rnaturalearth")
   check_require_github("ropensci/rnaturalearthdata")
 
   suppressWarnings({

@@ -80,7 +80,6 @@ bdc_coordinates_transposed <-
            ) {
 
   check_require_cran("rnaturalearth")
-  require("rnaturalearth")
   check_require_cran("readr")
   check_require_github("ropensci/rnaturalearthdata")
 
