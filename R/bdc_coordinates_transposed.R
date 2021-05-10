@@ -78,11 +78,13 @@ bdc_coordinates_transposed <-
            countryCode = "countryCode",
            border_buffer = 0.2
            ) {
-
+  
+  suppressWarnings({
   check_require_cran("rnaturalearth")
   check_require_cran("readr")
   check_require_github("ropensci/rnaturalearthdata")
-
+  })
+  
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
 
   if (length(minimum_colnames) < 6) {

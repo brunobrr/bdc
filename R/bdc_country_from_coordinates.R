@@ -46,10 +46,12 @@ bdc_country_from_coordinates <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            country = "country") {
-
-  check_require_cran("rnaturalearth")
-  check_require_github("ropensci/rnaturalearthdata")
-
+    
+    suppressWarnings({
+      check_require_cran("rnaturalearth")
+      check_require_github("ropensci/rnaturalearthdata")
+    })
+    
     # create an id
     data$id <- 1:nrow(data)
 

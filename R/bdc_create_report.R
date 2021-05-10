@@ -38,15 +38,17 @@
 #'   database_id = "database_id",
 #'   workflow_step = "prefilter")
 #' }
-#' 
+#'
 bdc_create_report <-
   function(data,
            database_id = "database_id",
            workflow_step) {
-
+    suppressWarnings({
     check_require_cran("readr")
     check_require_cran("DT")
-  suppressMessages({
+    })
+    suppressMessages({
+      
 
     # Total number of records
     if (!fs::file_exists("data/n_records.csv")) {

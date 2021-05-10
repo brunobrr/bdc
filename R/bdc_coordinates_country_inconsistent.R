@@ -61,9 +61,10 @@ bdc_coordinates_country_inconsistent <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            dist = 0.1) {
-
+  suppressWarnings({
   check_require_cran("rnaturalearth")
-
+  })
+    
   df <-
     data %>%
     dplyr::select(.data[[lon]], .data[[lat]]) %>%
