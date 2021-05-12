@@ -34,7 +34,7 @@
 #'   col_to_map = ".coordinates_out_country",
 #'   size = 1)
 #' }
-bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude", col_to_map = "red", size = size) {
+bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude", col_to_map = "red", size = 1) {
 
   world_borders <-
     ggplot2::borders(
@@ -73,17 +73,16 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
                                  lat = {{ lat }}, 
                                  lon = {{ lon }})
     
-    data_raw <- bdc_summary_col(data_raw)
-    
     df <-
-      data_raw %>%
+      bdc_summary_col(data_raw)
       dplyr::filter(.summary == TRUE)
-    
-    df <-
-      df %>%
       dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange, .summary))
+    
     } else{
-    df <- data
+    df <- 
+      bdc_summary_col(data) %>% 
+      dplyr::filter(.summary == TRUE) %>% 
+      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange, .summary))
   }
   })
   

@@ -48,8 +48,10 @@ bdc_country_from_coordinates <-
            country = "country") {
     
     suppressWarnings({
+      suppressMessages({
       check_require_cran("rnaturalearth")
       check_require_github("ropensci/rnaturalearthdata")
+      })
     })
     
     # create an id

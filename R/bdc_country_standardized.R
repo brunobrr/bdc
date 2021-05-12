@@ -44,8 +44,10 @@ bdc_country_standardized <-
     # load auxiliary data
     message("Loading auxiliary data: country names from wikipedia\n")
     suppressMessages({
+      suppressWarnings({
       wiki_cntr <-
         bdc_get_wiki_country() # get country names from Wikipedia
+      })
     })
 
     message("Loading auxiliary data: world map and country iso\n")
