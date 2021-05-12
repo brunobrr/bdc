@@ -148,7 +148,7 @@ bdc_coordinates_transposed <-
 
   # finding the position of records with lon/lat modified
   w <-
-    which(data[, "database_id"] %in% (corrected_coordinates %>% dplyr::pull(database_id)))
+    which((data %>% dplyr::pull(dplyr::all_of(database_id))) %in% (corrected_coordinates %>% dplyr::pull(dplyr::all_of(database_id))))
 
   data[w, "decimalLatitude"] <-
     corrected_coordinates[, "decimalLatitude_modified"]

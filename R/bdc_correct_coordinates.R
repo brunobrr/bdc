@@ -155,7 +155,7 @@ bdc_correct_coordinates <-
 
     coord_test <-
       coord_test[!duplicated(coord_test[id]),] %>% 
-      dplyr::relocate(all_of(id), all_of(x), all_of(y))
+      dplyr::relocate(dplyr::all_of(id), dplyr::all_of(x), dplyr::all_of(y))
 
     # Merge coord_test with other columns of occurrence database
     coord_test <-
