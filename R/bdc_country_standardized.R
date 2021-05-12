@@ -35,8 +35,10 @@ bdc_country_standardized <-
            country = "country") {
     
   suppressWarnings({
+    suppressMessages({
   check_require_cran("rnaturalearth")
   check_require_github("ropensci/rnaturalearthdata")
+    })
   })
     
     # load auxiliary data

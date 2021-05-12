@@ -80,9 +80,11 @@ bdc_coordinates_transposed <-
            ) {
   
   suppressWarnings({
+    suppressMessages({
   check_require_cran("rnaturalearth")
   check_require_cran("readr")
   check_require_github("ropensci/rnaturalearthdata")
+    })
   })
   
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)

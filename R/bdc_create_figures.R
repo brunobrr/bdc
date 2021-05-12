@@ -58,11 +58,13 @@ bdc_create_figures <-
            workflow_step = NULL) {
 
     suppressWarnings({
+      suppressMessages({
     check_require_cran("cowplot")
     check_require_cran("scales")
     check_require_cran("readr")
     check_require_cran("rworldmap")
     check_require_cran("ggplot2")
+      })
     })
     
     # Total number of records

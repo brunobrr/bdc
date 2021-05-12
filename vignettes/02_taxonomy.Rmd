@@ -114,7 +114,7 @@ An example of *bdc_clean_names* output.
 ```{r echo=F, message=FALSE, warning=FALSE}
 # read
 parse_names <-
-  read_csv(here::here("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.csv"))
+  qs::qread(here::here("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.qs"))
 
 DT::datatable(
   parse_names[2000:2100,], class = 'stripe', extensions = 'FixedColumns',

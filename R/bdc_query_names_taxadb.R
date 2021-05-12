@@ -48,7 +48,7 @@
 #' * **slb**: SeaLifeBase 
 #' * **wd**: Wikidata 
 #' * **ott**: OpenTree Taxonomy 
-#' * **iucn**: International Union for Conservation of Nature’s (IUCN) Red List
+#' * **iucn**: International Union for Conservation of Nature
 #' 
 #'The bdc_query_names_taxadb processes as this:
 #'
@@ -74,13 +74,13 @@
 #' is used to flag and remove names with multiple accepted names.
 #' 
 #' Information on higher taxa (e.g., kingdom or phylum) can be used to
-#' disambiguates names linked to multiple accepted names. For example, the genus
-#' “Casearia” is present in both Animalia and Plantae kingdoms. When handling
+#' disambiguate names linked to multiple accepted names. For example, the genus
+#' "Casearia" is present in both Animalia and Plantae kingdoms. When handling
 #' names of Plantae, it would be helpful to get rid of names belonging to the
-#' Animalia to avoid flagging “Caseria” as having multiple accepted names.
+#' Animalia to avoid flagging "Caseria" as having multiple accepted names.
 #' Following Norman et al. (2020), such cases are left to be fixed by the user.
 #' If "export_accepted" = TRUE a database containing a list of all records with
-#' names linked to multiple accepted names are saved in the “Output” folder.
+#' names linked to multiple accepted names are saved in the "Output" folder.
 #' 
 #' **Fuzzy matching**
 #'
@@ -92,9 +92,9 @@
 #' measure of orthographic similarity (i.e., distance). Orthographic distance is
 #' calculated by optimal string alignment (restricted Damerau-Levenshtein
 #' distance) that counts the number of deletions, insertions, substitutions, and
-#' adjacent characters’ transpositions. It ranges from 0 to 1, being 1 an
+#' adjacent characters' transpositions. It ranges from 0 to 1, being 1 an
 #' indicative of a perfect match. A threshold distance, i.e. the lower value of
-#' match acceptable, can be informed by user (in the “suggest_distance”
+#' match acceptable, can be informed by user (in the "suggest_distance"
 #' argument). If the distance of a candidate name is equal or higher than the
 #' distance informed by user, the candidate name is returned as suggested name.
 #' Otherwise, names are returned as NA.
@@ -114,21 +114,21 @@
 #'
 #' **Report**
 #'
-#' The name standardization processes’ quality can be accessed in the column
-#' “notes” placed in the table resulting from the name standardization process.
-#' The column “notes” contains assertions on the name standardization process
+#' The name standardization processes' quality can be accessed in the column
+#' "notes" placed in the table resulting from the name standardization process.
+#' The column "notes" contains assertions on the name standardization process
 #' based on Carvalho (2017). The notes can be grouped in two categories:
 #' accepted names and those with a taxonomic issue or warning, needing further
-#' inspections. Accepted names can be returned as “accepted” (valid accepted
-#' name), “replaceSynonym” (a synonym replaced by an accepted name),
-#' “wasMisspelled” (original name was misspelled), “wasMisspelled |
-#' replaceSynonym” (misspelled synonym replaced by an accepted name), and
-#' “synonym” (original names is a synonym without accepted names in the
+#' inspections. Accepted names can be returned as "accepted" (valid accepted
+#' name), "replaceSynonym" (a synonym replaced by an accepted name),
+#' "wasMisspelled" (original name was misspelled), "wasMisspelled |
+#' replaceSynonym" (misspelled synonym replaced by an accepted name), and
+#' "synonym" (original names is a synonym without accepted names in the
 #' database). Similarly, the following notes are used to flag taxonomic issues:
-#' “notFound” (no matching name found), “multipleAccepted” (name with multiple
-#' accepted names), “noAcceptedName” (no accepted name found), and ambiguous
-#' synonyms such as “heterotypic synonym”, “homotypic synonym”, and “pro-parte
-#' synonym”. Ambiguous synonyms, names that have been published more than once
+#' "notFound" (no matching name found), "multipleAccepted" (name with multiple
+#' accepted names), "noAcceptedName" (no accepted name found), and ambiguous
+#' synonyms such as "heterotypic synonym", "homotypic synonym", and "pro-parte
+#' synonym". Ambiguous synonyms, names that have been published more than once
 #' describing different species, have more than one accepted name and cannot be
 #' resolved. Such cases are flagged and left to be determined by the user.
   
