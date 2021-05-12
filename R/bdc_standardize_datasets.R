@@ -9,6 +9,9 @@
 #'   name, path, and columns of the original data set that need to be
 #'   renamed. See @details.
 #'
+#' @param overwrite A logical vector indicating whether the final merged
+#'   dataset should be overwritten. The default is FALSE.
+#'
 #' @importFrom data.table fread
 #' @importFrom dplyr pull filter select select_if mutate n everything mutate_if all_of
 #' @importFrom fs dir_exists dir_create
@@ -52,11 +55,17 @@
 #'  metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
 #   # TODO: finish example
 #' }
-bdc_standardize_datasets <- function(metadata) {
+bdc_standardize_datasets <- function(metadata, overwrite = FALSE) {
 
   fs::dir_create(here::here("Output", "Intermediate"))
 
   merged_filename <- here::here("Output", "Intermediate", "00_merged_database.qs")
+
+  if (file.exists(merged_filename) & overwrite) {
+
+    unlink(merged_filename)
+
+  }
 
   if (!file.exists(merged_filename)) {
 

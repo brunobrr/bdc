@@ -4,12 +4,15 @@
 \alias{bdc_standardize_datasets}
 \title{Standardize datasets columns based on metadata}
 \usage{
-bdc_standardize_datasets(metadata)
+bdc_standardize_datasets(metadata, overwrite = FALSE)
 }
 \arguments{
 \item{metadata}{A data frame with metadata containing information about the
 name, path, and columns of the original data set that need to be
 renamed. See @details.}
+
+\item{overwrite}{A logical vector indicating whether the final merged
+dataset should be overwritten. The default is FALSE.}
 }
 \description{
 This function's main goal is to merge and standardize different
