@@ -182,6 +182,9 @@ bdc_query_names_taxadb <-
            ncores = 2,
            export_accepted = FALSE) {
 
+    # Create a directory to save the result
+    bdc::bdc_create_dir()
+    
     # Measuring execution time
     start <- Sys.time()
 

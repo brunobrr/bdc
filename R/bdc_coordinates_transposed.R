@@ -87,6 +87,9 @@ bdc_coordinates_transposed <-
     })
   })
   
+  # Create a directory to save the result
+  bdc::bdc_create_dir()
+    
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
 
   if (length(minimum_colnames) < 6) {

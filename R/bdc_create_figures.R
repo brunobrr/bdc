@@ -67,6 +67,9 @@ bdc_create_figures <-
       })
     })
     
+    # Create a directory to save the result
+    bdc::bdc_create_dir()
+    
     # Total number of records
     suppressMessages({
       if (!fs::file_exists("data/n_records.csv")) {

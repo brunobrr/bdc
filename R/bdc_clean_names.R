@@ -51,6 +51,10 @@
 #' }
 bdc_clean_names <- function(sci_names) {
 
+  # Create a directory to save the result
+  bdc::bdc_create_dir()
+  
+  # Function to capitalize first letter
   firstup <- function(x) {
     substr(x, 1, 1) <- toupper(substr(x, 1, 1))
     x

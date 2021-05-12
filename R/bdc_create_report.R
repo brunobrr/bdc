@@ -44,6 +44,9 @@ bdc_create_report <-
            database_id = "database_id",
            workflow_step) {
     
+    # Create a directory to save the result
+    bdc::bdc_create_dir()
+    
     suppressWarnings({
       suppressMessages({
     check_require_cran("readr")

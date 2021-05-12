@@ -40,6 +40,9 @@ bdc_coordinates_from_locality <-
            lon = "decimalLongitude",
            locality = "locality") {
     
+    # Create a directory to save the result
+    bdc::bdc_create_dir()
+    
     suppressMessages({
     col_names <- c(".coordinates_empty", ".coordinates_outOfRange")
     if (!all(col_names %in% names(data))){
