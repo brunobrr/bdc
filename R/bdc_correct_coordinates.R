@@ -154,9 +154,8 @@ bdc_correct_coordinates <-
       dplyr::as_tibble() # binding dataframes allocated in the list in a single one
 
     coord_test <-
-      coord_test %>%
-      dplyr::distinct(., {id}, .keep_all = TRUE) %>%
-      dplyr::relocate(id, x, y)
+      coord_test[!duplicated(coord_test[id]),] %>% 
+      dplyr::relocate(all_of(id), all_of(x), all_of(y))
 
     # Merge coord_test with other columns of occurrence database
     coord_test <-
