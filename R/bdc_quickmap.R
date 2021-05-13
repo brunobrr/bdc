@@ -36,14 +36,14 @@
 #' }
 bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude", col_to_map = "red", size = 1) {
 
+  check_require_cran("ggplot2")
+  
   world_borders <-
     ggplot2::borders(
       database = "world",
       fill = "gray75",
       colour = "gray88",
     )
-
-  check_require_cran("ggplot2")
 
   our_theme <-
     ggplot2::theme_void() +
@@ -74,15 +74,15 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
                                  lon = {{ lon }})
     
     df <-
-      bdc_summary_col(data_raw)
-      dplyr::filter(.summary == TRUE)
-      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange, .summary))
+      data_raw %>% 
+      dplyr::filter(.coordinates_empty == T & .coordinates_outOfRange == T) %>% 
+      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
     
     } else{
     df <- 
-      bdc_summary_col(data) %>% 
-      dplyr::filter(.summary == TRUE) %>% 
-      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange, .summary))
+      data %>% 
+      dplyr::filter(.coordinates_empty == T & .coordinates_outOfRange == T) %>% 
+      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
   }
   })
   

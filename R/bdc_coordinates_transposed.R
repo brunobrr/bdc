@@ -113,7 +113,7 @@ bdc_coordinates_transposed <-
            decimalLatitude = {{lat}},
            decimalLongitude = {{lon}},
            scientificName = {{ sci_names }},
-           country = {{ country }},
+           country_name = {{ country }},
            countryCode = {{ countryCode }}
            )
 

@@ -53,9 +53,10 @@ bdc_create_report <-
     check_require_cran("DT")
       })
     })
+    
     suppressMessages({
+      suppressWarnings({
       
-
     # Total number of records
     if (!fs::file_exists("data/n_records.csv")) {
       n_records <-
@@ -430,8 +431,8 @@ bdc_create_report <-
       data.table::fwrite(res[[1]],
                          here::here("Output/Report/04_Report_time.csv"))
     }
-  })
-
+  }) # message
+  }) # warning
   message(
     paste(
       "\nbdc_create_report:\nCheck the report summarizing the results of the",
