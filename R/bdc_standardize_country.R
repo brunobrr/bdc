@@ -19,9 +19,9 @@ bdc_standardize_country <-
     # Create a country database based on occ database
     cntr_db <-
       data %>%
-      dplyr::distinct(country, .keep_all = FALSE) %>%
-      dplyr::arrange(country) %>%
-      dplyr::rename(cntr_original = country)
+      dplyr::distinct(.data[[country]], .keep_all = FALSE) %>%
+      dplyr::arrange(.data[[country]]) %>%
+      dplyr::rename(cntr_original = .data[[country]])
     
     cntr_db$cntr_original2 <-
       stringr::str_replace_all(cntr_db$cntr_original, "[[:punct:]]", " ") %>%
