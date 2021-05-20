@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The first step of the BDC workflow handles the harmonization of heterogeneous datasets in a standard format in a simple and efficient way. How is this accomplished? Basically, by replacing in the headers of original datasets by standardized terms. To do so, you have to fill-out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**.
+The first step of the BDC workflow handles the harmonization of heterogeneous datasets in a standard format simply and efficiently. How is this accomplished? Basically, by replacing the headers of original datasets with standardized terms. To do so, you have to fill out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**.
 
 Once standardized, datasets are then integrated into a standardized database having a minimum set of terms required for sharing biodiversity data and metadata across a wide variety of biodiversity applications ([Simple Darwin Core standards](https://dwc.tdwg.org/terms/)).
 
@@ -31,9 +31,9 @@ Once standardized, datasets are then integrated into a standardized database hav
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
 -   Original datasets must be formatted in comma-separated format (**.csv**);
--   When filling out the configuration table, please provide the **exact** name of a column of original dataset and the the **full path** of each original dataset;
--   Names of original datasets without a correspond DarwinCore term must be fill out as **NA** (not available);
--   The workflow is **adjustable** so you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
+-   When filling out the configuration table, please provide the **exact** name of a column of the original dataset and the **full path** of each original dataset;
+-   Names of original datasets without a corresponding DarwinCore term must be filled as **NA** (not available);
+-   The workflow is **adjustable** so that you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
 
 ## Installation
 
@@ -52,14 +52,14 @@ bdc::bdc_create_dir()
 
 ## Read the configuration table
 
-Read an example of the **configuration table**. You can download the table by clicking on "CSV" button. We demontrate the usefullness of the workflow using a database of terrestrial plant species occuring in Brazil. This database contains 9.000 records compiled from nive different sources (see bellow).
+Read an example of the **configuration table**. You can download the table by clicking on "CSV" button. We demonstrate the usefulness of the workflow using a database of terrestrial plant species occurring in Brazil. This database contains 9.000 records compiled from nine different sources (see below).
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-metadata <- read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"))
+metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"))
 ```
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo = FALSE}
-metadata <- read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo.csv"))
+metadata <- readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo.csv"))
 ```
 
 <br/> <br/>
@@ -97,7 +97,7 @@ Below are listed the specifications of each field of the configuration table:
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 config_description <-
-  read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo_description.csv"))
+  readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo_description.csv"))
 
 DT::datatable(
   config_description, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
@@ -115,7 +115,7 @@ DT::datatable(
 
 ## Standardization and integration of datasets
 
-Note that the standardized database integrating all dataset are saved in the folder "Output/Intermediate" as *"00_merged_database.qs"*. The database is saved with a **"qs" extension**, a format useful for quickly saving and reading large databases. This files can be read using the function "qread" from the "qs" package (see below).
+Note that the standardized database integrating all dataset is saved in the folder "Output/Intermediate" as *"00_merged_database.qs"*. The database is saved with a **"qs" extension**, a format useful for quickly saving and reading large databases. This file can be read using the function "qread" from the "qs" package (see below).
 
 ```{r message=F, warning=F}
 bdc_standardize_datasets(metadata = metadata)
