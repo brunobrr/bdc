@@ -29,7 +29,6 @@
 #'
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom dplyr select mutate filter full_join bind_cols
-#' @importFrom rnaturalearth ne_countries
 #' @importFrom sf st_as_sf st_set_crs st_bbox st_buffer st_crop st_intersects
 #'
 #' @export
