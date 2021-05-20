@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Identify records with out-of-range geographic coordinates — bdc_coordinates_outOfRange" />
-<meta property="og:description" content="This function identifies records with out-of-range coordinates (not between -90 and 90 for latitude; between -180 and 180 for longitude)." />
+<meta property="og:description" content="This function identifies records with out-of-range coordinates (not between
+-90 and 90 for latitude; between -180 and 180 for longitude)." />
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
@@ -143,7 +144,8 @@
     </div>
 
     <div class="ref-description">
-    <p>This function identifies records with out-of-range coordinates (not between -90 and 90 for latitude; between -180 and 180 for longitude).</p>
+    <p>This function identifies records with out-of-range coordinates (not between
+-90 and 90 for latitude; between -180 and 180 for longitude).</p>
     </div>
 
     <pre class="usage"><span class='fu'>bdc_coordinates_outOfRange</span><span class='op'>(</span>
@@ -157,24 +159,26 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>data.frame. Containing geographical coordinates. Coordinates must be expressed in decimal degree and in WGS84.</p></td>
+      <td><p>data.frame. Containing geographical coordinates. Coordinates must
+be expressed in decimal degrees and WGS84.</p></td>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>character string. The column name with latitude. Coordinates must
-be expressed in decimal degree and in WGS84. Default = "decimalLatitude".</p></td>
+      <td><p>character string. The column name with latitude in decimal degree
+and in WGS84. Default = "decimalLatitude".</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>character string. The column with longitude. Coordinates must be
-expressed in decimal degree and in WGS84. Default = "decimalLongitude".</p></td>
+      <td><p>character string. The column with longitude in decimal degree and
+in WGS84. Default = "decimalLongitude".</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame contain the column ".coordinates_outOfRange". Compliant
-(TRUE) if 'lat' and 'lon' are not out-of-range; otherwise "FALSE".</p>
+    <p>A data.frame containing the column ".coordinates_outOfRange".
+Compliant (TRUE) if 'lat' and 'lon' are not out-of-range; otherwise
+"FALSE".</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>

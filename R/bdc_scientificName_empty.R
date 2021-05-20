@@ -2,14 +2,14 @@
 #'
 #' Flags records with empty or not interpretable scientific names.
 #' 
-#' @param data data.frame. Containing species scientific names.
-#' @param sci_names character string. The column name with species scientific
-#' name. Default = "scientificName".
+#' @param data data.frame. Containing the species scientific names.
+#' @param sci_names character string. The column name with the species
+#' scientific name. Default = "scientificName".
 #' 
 #' @details This test identifies records missing scientific names (i.e., empty
 #' or not applicable [NA] names)
 #' 
-#' @return A data.frame contain the column ".scientificName_empty". Compliant
+#' @return A data.frame containing the column ".scientificName_empty". Compliant
 #' (TRUE) if 'sci_names' is not empty; otherwise "FALSE".
 #' 
 #' @export

@@ -6,8 +6,8 @@
 #'
 #' @param data data.frame. Containing a column with information on the taxonomic
 #' status of scientific names.
-#' @param taxonomic_notes character string. The column name containing notes on
-#' the taxonomic status of a name. Default = "notes".
+#' @param taxonomic_notes character string. The column name containing notes
+#' about the taxonomic status of a name. Default = "notes".
 #' @param opposite logical. Should taxonomic notes different from those listed
 #' in 'taxonomic_notes' be returned? Default = FALSE
 #'

@@ -1,7 +1,7 @@
 #' Remove columns with the results of data quality tests
 #'
-#' This function filters out columns containing the results of data
-#' quality tests (i.e., columns starting with '.') or other columns specified.
+#' This function filters out columns containing the results of data quality
+#' tests (i.e., columns starting with '.') or other columns specified.
 #'
 #' @param data data.frame. Containing columns to be removed.
 #' @param col_to_remove logical. Which columns should be removed? Default =

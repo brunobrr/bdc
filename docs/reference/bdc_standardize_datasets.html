@@ -152,7 +152,7 @@ Core terminology. All the process is based on a metadata file
 provided by the user.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bdc_standardize_datasets</span><span class='op'>(</span><span class='va'>metadata</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bdc_standardize_datasets</span><span class='op'>(</span><span class='va'>metadata</span>, overwrite <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,8 +160,13 @@ provided by the user.</p>
     <tr>
       <th>metadata</th>
       <td><p>A data frame with metadata containing information about the
-name, path, and columns of the original data set that need to be
+name, path, and columns of the original data set which need to be
 renamed. See @details.</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>A logical vector indicating whether the final merged
+dataset should be overwritten. The default is FALSE.</p></td>
     </tr>
     </table>
 
@@ -169,19 +174,19 @@ renamed. See @details.</p></td>
 
     <p><code>bdc_standardize_datasets()</code> facilitate the standardization of datasets with
 different column names converting them into a new dataset following the
-Darwin Core terminology. All the standardization process rely on a metadata
+Darwin Core terminology. The standardization process relies on a metadata
 file containing the name, path, and columns that need to be renamed. The
 metadata file can be constructed using built-in functions (e.g.,
 <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame()</a></code>) or storing the information in a CSV file and importing it
 into R. Regardless of the method chosen, the data frame with metadata needs
 to contain the following column names (this is a list of required column
-names; for compreensive list of column names following Darwin Core
-terminology, see LINK):</p><ul>
+names; for a comprehensive list of column names following Darwin Core
+terminology, see here(https://dwc.tdwg.org/terms/:</p><ul>
 <li><p><code>datasetName</code>: A short name identifying the dataset (e.g., GBIF)</p></li>
-<li><p><code>fileName</code>: The relative path containg the name of the input dataset (e.g.,
+<li><p><code>fileName</code>: The relative path containing the name of the input dataset (e.g.,
 Input_files/GBIF.csv)</p></li>
 <li><p><code>scientificName</code>: Name of the column in the original database presenting
-the scientific name of the taxon with or without authorship information,
+the scientific names of the taxon with or without authorship information,
 depending on the format of the source dataset (e.g., Myrcia acuminata)</p></li>
 <li><p><code>decimalLatitude</code>: Name of the column in the original database presenting
 the geographic latitude in decimal degrees (e.g., -6.370833)</p></li>

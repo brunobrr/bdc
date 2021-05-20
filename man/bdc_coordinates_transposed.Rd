@@ -16,9 +16,9 @@ bdc_coordinates_transposed(
 )
 }
 \arguments{
-\item{data}{data.frame. Containing a unique identifier for each records,
-geographical coordinates, and country names. Coordinates must be expressed in
-decimal degree and in WGS84.}
+\item{data}{data.frame. Containing a unique identifier for each record,
+geographical coordinates, and country names. Coordinates must be expressed
+in decimal degrees and WGS84.}
 
 \item{id}{character string. The column name with a unique record identifier.
 Default = "database_id".}
@@ -27,10 +27,10 @@ Default = "database_id".}
 name. Default = "scientificName".}
 
 \item{lat}{character string. The column name with latitude. Coordinates must
-be expressed in decimal degree and in WGS84. Default = "decimalLatitude".}
+be expressed in decimal degrees and WGS84. Default = "decimalLatitude".}
 
 \item{lon}{character string. The column with longitude. Coordinates must be
-expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
+expressed in decimal degrees and WGS84. Default = "decimalLongitude".}
 
 \item{country}{character string. The column name with the country
 assignment of each record. Default = "country".}
@@ -55,10 +55,10 @@ to be transposed.
 }
 \details{
 This test identifies transposed coordinates resulted from mismatches
-between the country informed to a record and coordinates. Transposed
+between the country informed for a record and coordinates. Transposed
 coordinates often fall outside of the indicated country (i.e., in other
 countries or in the sea). Different coordinate transformations are
-performed to correct country/coordinates mismatch. Importantly, verbatim
+performed to correct country/coordinates mismatches. Importantly, verbatim
 coordinates are replaced by the corrected ones in the returned database. A
 database containing verbatim and corrected coordinates is created in
 "Output/Check/01_coordinates_transposed.csv".

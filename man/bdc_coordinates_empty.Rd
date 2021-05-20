@@ -9,14 +9,14 @@ bdc_coordinates_empty(data, lat = "decimalLatitude", lon = "decimalLongitude")
 \arguments{
 \item{data}{data.frame. Containing geographical coordinates.}
 
-\item{lat}{character string. The column name with latitude. Coordinates must
-be expressed in decimal degree and in WGS84. Default = "decimalLatitude".}
+\item{lat}{character string. The column name with latitude in decimal degrees
+and WGS84. Default = "decimalLatitude".}
 
-\item{lon}{character string. The column with longitude. Coordinates must be
-expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
+\item{lon}{character string. The column with longitude in decimal degrees and
+WGS84. Default = "decimalLongitude".}
 }
 \value{
-A data.frame contain the column ".coordinates_empty". Compliant
+A data.frame containing the column ".coordinates_empty". Compliant
 (TRUE) if 'lat' and 'lon' are not empty; otherwise "FALSE".
 }
 \description{

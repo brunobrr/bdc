@@ -4,14 +4,15 @@
 #' -90 and 90 for latitude; between -180 and 180 for longitude).
 #' 
 #' @param data data.frame. Containing geographical coordinates. Coordinates must
-#' be expressed in decimal degree and in WGS84.
-#' @param lat character string. The column name with latitude. Coordinates must 
-#' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
-#' @param lon character string. The column with longitude. Coordinates must be
-#' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
+#' be expressed in decimal degrees and WGS84.
+#' @param lat character string. The column name with latitude in decimal degree
+#' and in WGS84. Default = "decimalLatitude".
+#' @param lon character string. The column with longitude in decimal degree and
+#' in WGS84. Default = "decimalLongitude".
 #' 
-#' @return A data.frame contain the column ".coordinates_outOfRange". Compliant
-#' (TRUE) if 'lat' and 'lon' are not out-of-range; otherwise "FALSE".
+#' @return A data.frame containing the column ".coordinates_outOfRange".
+#' Compliant (TRUE) if 'lat' and 'lon' are not out-of-range; otherwise
+#' "FALSE".
 #' 
 #' @importFrom dplyr select rename mutate_all mutate case_when bind_cols
 #' 

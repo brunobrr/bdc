@@ -13,13 +13,13 @@ bdc_country_from_coordinates(
 }
 \arguments{
 \item{data}{data.frame. Containing geographical coordinates and country
-names. Coordinates must be expressed in decimal degree and in WGS84.}
+names.}
 
-\item{lat}{character string. The column name with latitude. Coordinates must
-be expressed in decimal degree and in WGS84. Default = "decimalLatitude".}
+\item{lat}{character string. The column name with latitude in decimal degrees
+and WGS84. Default = "decimalLatitude".}
 
-\item{lon}{character string. The column with longitude. Coordinates must be
-expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
+\item{lon}{character string. The column with longitude in decimal degrees and
+WGS84. Default = "decimalLongitude".}
 
 \item{country}{character string. The column name with the country assignment
 of each record. Default = "country".}
@@ -33,9 +33,9 @@ Country names derived from valid geographic coordinates are added to records
 missing country names.
 }
 \details{
-This function assigns country name for records missing such
+This function assigns a country name for records missing such
 information. Country names are extracted from valid geographic coordinates
-by using a high-quality map of the world (rnaturalearth package). No
+using a high-quality map of the world (rnaturalearth package). No
 country name is added to records whose coordinates are in the sea.
 }
 \examples{

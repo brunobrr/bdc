@@ -23,7 +23,7 @@ bdc_query_names_taxadb(
 \item{replace_synonyms}{logical. Should synonyms be replaced by accepted
 names? Default = TRUE.}
 
-\item{suggest_names}{logical. Try to find potential candidate names for
+\item{suggest_names}{logical. Tries to find potential candidate names for
 misspelled names not resolved by an exact match. Default = TRUE.}
 
 \item{suggestion_distance}{numeric. A threshold value determining the
@@ -32,8 +32,8 @@ Names with matching distance value lower threshold informed are returned as
 NA. Default = 0.9.}
 
 \item{db}{character string. The name of the taxonomic authority database to
-be in the taxonomic standardization process. Default = "gbif". Use "all" to
-install all available taxonomic databases automatically.}
+be used in the taxonomic standardization process. Default = "gbif".
+Use "all" to install all available taxonomic databases automatically.}
 
 \item{rank_name}{character string. A taxonomic rank used to filter the
 taxonomic database. Options available are: "kingdom", "phylum", "class",
@@ -59,11 +59,11 @@ of sci_name.
 \description{
 The taxonomic standardization process borrows heavily from Norman et al.
 (2020; taxadb package), which contains functions that allow querying millions
-of taxonomic names in a fast, automatable, and consistent way using
-high-quality locally stored taxonomic databases.  The bdc_get_taxadb contains
+of taxonomic names in a fast, automated, and consistent way using
+high-quality locally stored taxonomic databases. The bdc_get_taxadb contains
 additions to the taxadb packagethat allow queries using fuzzy matching and
-converting synonyms to the current accepted name. The fuzzy match algorithm
-was inspired by get.taxa function of the 'flora' package.
+converting synonyms to the current accepted name. The fuzzy matching algorithm
+was inspired by the get.taxa function of the 'flora' package.
 }
 \details{
 \subsection{Taxadb databases}{
@@ -80,17 +80,18 @@ The following taxonomic databases are available in taxadb package are:
 \item \strong{slb}: SeaLifeBase
 \item \strong{wd}: Wikidata
 \item \strong{ott}: OpenTree Taxonomy
-\item \strong{iucn}: International Union for Conservation of Nature’s (IUCN) Red List
+\item \strong{iucn}: International Union for Conservation of Nature
 }
 
 The bdc_query_names_taxadb processes as this:
 
 \strong{Creation of a local taxonomic database}
 
-This is one-time setup used to download, extract, and import one or all (n=10)  taxonomic databases specified in the argument "db". The downloading process
-may take some minutes depending on internet connection and database size. By
-default, the "gbif" database following a Darwin Core schema is installed.
-(see ?taxadb::td_create for details).
+This is a one-time setup used to download, extract, and import one or all
+(n=10)  taxonomic databases specified in the argument "db". The downloading
+process may take a few minutes depending on your connection and database
+size. By default, the "gbif" database following a Darwin Core schema is
+installed. (see ?taxadb::td_create for details).
 
 \strong{Taxonomic harmonization}
 
@@ -107,13 +108,13 @@ multiple accepted names. In such cases, the "bdc_clean_duplicates" function
 is used to flag and remove names with multiple accepted names.
 
 Information on higher taxa (e.g., kingdom or phylum) can be used to
-disambiguates names linked to multiple accepted names. For example, the genus
-“Casearia” is present in both Animalia and Plantae kingdoms. When handling
+disambiguate names linked to multiple accepted names. For example, the genus
+"Casearia" is present in both Animalia and Plantae kingdoms. When handling
 names of Plantae, it would be helpful to get rid of names belonging to the
-Animalia to avoid flagging “Caseria” as having multiple accepted names.
+Animalia to avoid flagging "Caseria" as having multiple accepted names.
 Following Norman et al. (2020), such cases are left to be fixed by the user.
 If "export_accepted" = TRUE a database containing a list of all records with
-names linked to multiple accepted names are saved in the “Output” folder.
+names linked to multiple accepted names is saved in the "Output" folder.
 
 \strong{Fuzzy matching}
 
@@ -125,43 +126,43 @@ probable names (here identified as suggested names) for original names via a
 measure of orthographic similarity (i.e., distance). Orthographic distance is
 calculated by optimal string alignment (restricted Damerau-Levenshtein
 distance) that counts the number of deletions, insertions, substitutions, and
-adjacent characters’ transpositions. It ranges from 0 to 1, being 1 an
+adjacent characters' transpositions. It ranges from 0 to 1, being 1 an
 indicative of a perfect match. A threshold distance, i.e. the lower value of
-match acceptable, can be informed by user (in the “suggest_distance”
+match acceptable, can be informed by user (in the "suggest_distance"
 argument). If the distance of a candidate name is equal or higher than the
 distance informed by user, the candidate name is returned as suggested name.
 Otherwise, names are returned as NA.
 
-To increase the probability of finding potential match candidate and to save
-computational time, two steps are taken before conducting fuzzy matching.
-First, if supplied, information on higher taxon (e.g., kingdom, family) is
-used to filter the taxonomic database. This step removes ambiguity in
-matching by avoiding matching names from unrelated taxonomic ranks (e.g.,
-match a plant species against a taxonomic database containing animal names)
-and decreases the number of names in the taxonomic database used to calculate
-the matching distance. Then, the taxonomic database is filtered according to
-a set of firsts letters of all input names. This process reduces the number
-of names in the taxonomic database that each original name should be compared
-When a same suggested name is returned for different input names, a warning
-is returned asking users to check whether the suggested name is valid.
+To increase the probability of finding a potential match candidate and to
+save time, two steps are taken before conducting fuzzy matching. First, if
+supplied, information on higher taxon (e.g., kingdom, family) is used to
+filter the taxonomic database. This step removes matching ambiguity by
+avoiding matching names from unrelated taxonomic ranks (e.g., match a plant
+species against a taxonomic database containing animal names) and decreases
+the number of names in the taxonomic database used to calculate the matching
+distance. Then, the taxonomic database is filtered according to a set of
+firsts letters of all input names. This process reduces the number of names
+in the taxonomic database to which each original name should be compared When
+a same suggested name is returned for different input names, a warning is
+returned asking users to check whether the suggested name is valid.
 
 \strong{Report}
 
-The name standardization processes’ quality can be accessed in the column
-“notes” placed in the table resulting from the name standardization process.
-The column “notes” contains assertions on the name standardization process
+The name standardization processes' quality can be accessed in the column
+"notes" placed in the table resulting from the name standardization process.
+The column "notes" contains assertions on the name standardization process
 based on Carvalho (2017). The notes can be grouped in two categories:
 accepted names and those with a taxonomic issue or warning, needing further
-inspections. Accepted names can be returned as “accepted” (valid accepted
-name), “replaceSynonym” (a synonym replaced by an accepted name),
-“wasMisspelled” (original name was misspelled), “wasMisspelled |
-replaceSynonym” (misspelled synonym replaced by an accepted name), and
-“synonym” (original names is a synonym without accepted names in the
+inspections. Accepted names can be returned as "accepted" (valid accepted
+name), "replaceSynonym" (a synonym replaced by an accepted name),
+"wasMisspelled" (original name was misspelled), "wasMisspelled |
+replaceSynonym" (misspelled synonym replaced by an accepted name), and
+"synonym" (original names is a synonym without accepted names in the
 database). Similarly, the following notes are used to flag taxonomic issues:
-“notFound” (no matching name found), “multipleAccepted” (name with multiple
-accepted names), “noAcceptedName” (no accepted name found), and ambiguous
-synonyms such as “heterotypic synonym”, “homotypic synonym”, and “pro-parte
-synonym”. Ambiguous synonyms, names that have been published more than once
+"notFound" (no matching name found), "multipleAccepted" (name with multiple
+accepted names), "noAcceptedName" (no accepted name found), and ambiguous
+synonyms such as "heterotypic synonym", "homotypic synonym", and "pro-parte
+synonym". Ambiguous synonyms, names that have been published more than once
 describing different species, have more than one accepted name and cannot be
 resolved. Such cases are flagged and left to be determined by the user.
 }

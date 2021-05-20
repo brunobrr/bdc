@@ -1,12 +1,12 @@
 #' Clean and parse scientific names
 #'
-#' This functions is composed of a series of name-checking routines for cleaning
+#' This function is composed of a series of name-checking routines for cleaning
 #' and parsing scientific names. It removes 1) family names of
-#' animals or plants pre-pended to species names, 2) qualifiers denoting
+#' animals or plants pre-pended to species names, 2) qualifiers denoting the
 #' uncertain or provisional status of taxonomic identification (e.g., confer,
-#' species, affinis), and 3) infraspecific terms, for example: variety (var.),
+#' species, affinis), and 3) infraspecific terms, for example, variety (var.),
 #' subspecies (subsp), forma (f.), and their spelling variations. It also
-#' includes applications to: 4) standardize names, i.e., capitalize only the
+#' includes applications to 4) standardize names, i.e., capitalize only the
 #' first letter of the genus name and remove extra whitespaces), and 5) parse
 #' names, i.e., separate author, date, annotations from taxon name.
 #'
@@ -25,7 +25,7 @@
 #' processes), and 'quality (an index indicating the quality of parsing
 #' process. It ranges from 0 to 4, being 1 no problem detected, 4 serious
 #' problems detected; a value of 0 indicates no interpretable name that was
-#' not parsed). Also, data.frame containing all tests of the cleaning names
+#' not parsed). Also, a data.frame containing all tests of the cleaning names
 #' process and the results of the parsing names process is saved in
 #' "Output/Check/02_parse_names.csv".
 #'
@@ -51,10 +51,6 @@
 #' }
 bdc_clean_names <- function(sci_names) {
 
-  # Create a directory to save the result
-  bdc::bdc_create_dir()
-  
-  # Function to capitalize first letter
   firstup <- function(x) {
     substr(x, 1, 1) <- toupper(substr(x, 1, 1))
     x
@@ -836,7 +832,7 @@ bdc_clean_names <- function(sci_names) {
     # one-time setup to download and install rgnparser, which is used to parse
     # scientific name (for more details, see
     # https://github.com/ropensci/rgnparser)
-    rgnparser::install_gnparser(force = F)
+    rgnparser::install_gnparser(force = T)
 
     data_temp <- data
     w <- which(colnames(data_temp) == sci_names)

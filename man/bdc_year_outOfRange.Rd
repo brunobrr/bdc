@@ -7,20 +7,21 @@
 bdc_year_outOfRange(data, eventDate, year_threshold = 1900)
 }
 \arguments{
-\item{data}{A data frame containing column with event date information.}
+\item{data}{A data frame containing a column with event date information.}
 
-\item{eventDate}{numeric or date. The column with event date information.}
+\item{eventDate}{numeric or date. The column containing event date
+information.}
 
 \item{year_threshold}{numeric. A four-digit year threshold used to flag old
 (potentially invalid) records. Default = 1900}
 }
 \value{
-A data.frame contain the column ".year_outOfRange". Compliant
+A data.frame containing the column ".year_outOfRange". Compliant
 (TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".
 }
 \description{
-This function identifies records out-of-range collecting year (e.g., in the future)
-or old records collected before a year informed in 'year_threshold'.
+This function identifies records out-of-range collecting year (e.g., in the
+future) or old records collected before a year informed in 'year_threshold'.
 }
 \details{
 Following the "VALIDATION:YEAR_OUTOFRANGE"

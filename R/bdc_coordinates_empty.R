@@ -3,15 +3,15 @@
 #' This function flags records missing latitude or longitude coordinates.
 #'
 #' @param data data.frame. Containing geographical coordinates.
-#' @param lat character string. The column name with latitude. Coordinates must 
-#' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
-#' @param lon character string. The column with longitude. Coordinates must be
-#' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
+#' @param lat character string. The column name with latitude in decimal degrees
+#' and WGS84. Default = "decimalLatitude".
+#' @param lon character string. The column with longitude in decimal degrees and
+#' WGS84. Default = "decimalLongitude".
 #'
 #' @details This test identifies records missing geographic coordinates (i.e.,
 #' empty or not applicable [NA] longitude or latitude)
 #'
-#' @return A data.frame contain the column ".coordinates_empty". Compliant
+#' @return A data.frame containing the column ".coordinates_empty". Compliant
 #' (TRUE) if 'lat' and 'lon' are not empty; otherwise "FALSE".
 #'
 #' @importFrom dplyr mutate_all mutate case_when select bind_cols

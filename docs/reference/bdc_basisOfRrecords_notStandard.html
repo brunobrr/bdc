@@ -47,10 +47,10 @@
 
 
 <meta property="og:title" content="Identify records from doubtful source (e.g., 'fossil', MachineObservation') — bdc_basisOfRrecords_notStandard" />
-<meta property="og:description" content="This function flags records with informed basis of records (i.e., the records
-type, for example, a specimen, a human observation, or a fossil specimen) no
-interpretable, that do not comply with Darwin Core recommended vocabulary, or
-unreliable or unsuitable for certain analyses." />
+<meta property="og:description" content="This function flags records with an informed basis of records (i.e., the
+records type, for example, a specimen, a human observation, or a fossil
+specimen) not interpretable, which does not comply with Darwin Core
+vocabulary, or unreliable or unsuitable for specific analyses." />
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
@@ -146,10 +146,10 @@ unreliable or unsuitable for certain analyses." />
     </div>
 
     <div class="ref-description">
-    <p>This function flags records with informed basis of records (i.e., the records
-type, for example, a specimen, a human observation, or a fossil specimen) no
-interpretable, that do not comply with Darwin Core recommended vocabulary, or
-unreliable or unsuitable for certain analyses.</p>
+    <p>This function flags records with an informed basis of records (i.e., the
+records type, for example, a specimen, a human observation, or a fossil
+specimen) not interpretable, which does not comply with Darwin Core
+vocabulary, or unreliable or unsuitable for specific analyses.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bdc_basisOfRrecords_notStandard</span><span class='op'>(</span>
@@ -163,26 +163,26 @@ unreliable or unsuitable for certain analyses.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>data.frame. Containing information on basis of records.</p></td>
+      <td><p>data.frame. Containing information about the basis of records.</p></td>
     </tr>
     <tr>
       <th>basisOfRecord</th>
-      <td><p>character string. The column name with information on
+      <td><p>character string. The column name with information about
 basis of records. Default = "basisOfRecord".</p></td>
     </tr>
     <tr>
       <th>names_to_keep</th>
       <td><p>character string. Elements of the column BasisOfRecords
-to keep. Default is 'all', which considers a selected list of recommended
+to keep. Default is "all", which considers a selected list of recommended
 standard Darwin Core classes (and their spelling variations, see details).
-By default, records missing (i.e., NA) or with "unknown" information on
+By default, records missing (i.e., NA) or with "unknown" information about
 basis of records are kept.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame contain the column ".basisOfRrecords_notStandard"
+    <p>A data.frame containing the column ".basisOfRrecords_notStandard"
 .Compliant (TRUE) if 'basisOfRecord' is standard; otherwise "FALSE".</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

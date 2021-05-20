@@ -1,20 +1,20 @@
-#' Identify records missing or with invalid coordinates but with information on
-#' locality
+#' Identify records lacking or with invalid coordinates but containing locality
+#' information
 #'
 #' This function Identifies records whose coordinates can potentially be
-#' extracted from information on locality.
+#' extracted from locality information.
 #'
 #' @param data data.frame. Containing geographical coordinates and the column
 #' "locality'.
-#' @param lat character string. The column name with latitude. Coordinates must
-#' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
-#' @param lon character string. The column with longitude. Coordinates must be
-#' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
-#' @param locality character string. The column name with information on
-#' locality. Default = "locality".
+#' @param lat character string. The column name with latitude in decimal degrees
+#' and WGS84. Default = "decimalLatitude".
+#' @param lon character string. The column with longitude in decimal degrees and
+#' WGS84. Default = "decimalLongitude".
+#' @param locality character string. The column name with locality information.
+#' Default = "locality".
 #' 
 #' @details According to DarwinCore terminology, locality refers to "the
-#' specific description of the place" where a organism were recorded.
+#' specific description of the place" where an organism was recorded.
 #' 
 #' @return A data.frame containing records missing or with invalid coordinates
 #' but with potentially useful locality information is saved in
@@ -39,10 +39,6 @@ bdc_coordinates_from_locality <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            locality = "locality") {
-    
-    # Create a directory to save the result
-    bdc::bdc_create_dir()
-    
     suppressMessages({
     col_names <- c(".coordinates_empty", ".coordinates_outOfRange")
     if (!all(col_names %in% names(data))){

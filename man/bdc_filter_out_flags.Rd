@@ -17,8 +17,8 @@ tests are removed.}
 A data.frame without columns specified in 'col_to_remove'.
 }
 \description{
-This function filters out columns containing the results of data
-quality tests (i.e., columns starting with '.') or other columns specified.
+This function filters out columns containing the results of data quality
+tests (i.e., columns starting with '.') or other columns specified.
 }
 \examples{
 \dontrun{

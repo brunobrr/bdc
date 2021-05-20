@@ -47,10 +47,10 @@
 
 
 <meta property="og:title" content="Flag low-precise geographic coordinates — bdc_coordinates_precision" />
-<meta property="og:description" content="This function is used to flags records with a coordinate precision below a
+<meta property="og:description" content="This function is used to flag records with a coordinate precision below a
 specified number of decimal places. Coordinates with one, two, or three
-decimal places have precision of~11.1 km, ~1.1 km, and ~111 m at the equator,
-respectively." />
+decimal places present a precision of~11.1 km, ~1.1 km, and ~111 m at the
+equator, respectively." />
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
@@ -146,10 +146,10 @@ respectively." />
     </div>
 
     <div class="ref-description">
-    <p>This function is used to flags records with a coordinate precision below a
+    <p>This function is used to flag records with a coordinate precision below a
 specified number of decimal places. Coordinates with one, two, or three
-decimal places have precision of~11.1 km, ~1.1 km, and ~111 m at the equator,
-respectively.</p>
+decimal places present a precision of~11.1 km, ~1.1 km, and ~111 m at the
+equator, respectively.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bdc_coordinates_precision</span><span class='op'>(</span>
@@ -168,25 +168,25 @@ respectively.</p>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>character string. The column with latitude Default =
-"decimalLatitude".</p></td>
+      <td><p>character string. The column with latitude in decimal degrees and
+WGS84. Default = "decimalLatitude".</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>character string. The column with longitude. Default =
-"decimalLongitude".</p></td>
+      <td><p>character string. The column with longitude in decimal degrees and
+WGS84. Default = "decimalLongitude".</p></td>
     </tr>
     <tr>
       <th>ndec</th>
-      <td><p>numeric. The numbers of decimals place to be tested.
-Default = c(0,1,2).</p></td>
+      <td><p>numeric. The numbers of decimals place to be tested. Default =
+c(0,1,2).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame with logical values indicating whether values are
-rounded by the specified decimal number (ndec). In other word, potentially
+rounded by the specified decimal number (ndec). In other words, potentially
 imprecise coordinates.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

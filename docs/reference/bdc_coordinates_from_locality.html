@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Identify records missing or with invalid coordinates but with information on
-locality — bdc_coordinates_from_locality • bdc</title>
+<title>Identify records lacking or with invalid coordinates but containing locality
+information — bdc_coordinates_from_locality • bdc</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -47,10 +47,10 @@ locality — bdc_coordinates_from_locality • bdc</title>
 
 
 
-<meta property="og:title" content="Identify records missing or with invalid coordinates but with information on
-locality — bdc_coordinates_from_locality" />
+<meta property="og:title" content="Identify records lacking or with invalid coordinates but containing locality
+information — bdc_coordinates_from_locality" />
 <meta property="og:description" content="This function Identifies records whose coordinates can potentially be
-extracted from information on locality." />
+extracted from locality information." />
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
@@ -140,15 +140,15 @@ extracted from information on locality." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Identify records missing or with invalid coordinates but with information on
-locality</h1>
+    <h1>Identify records lacking or with invalid coordinates but containing locality
+information</h1>
     
     <div class="hidden name"><code>bdc_coordinates_from_locality.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This function Identifies records whose coordinates can potentially be
-extracted from information on locality.</p>
+extracted from locality information.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bdc_coordinates_from_locality</span><span class='op'>(</span>
@@ -168,18 +168,18 @@ extracted from information on locality.</p>
     </tr>
     <tr>
       <th>lat</th>
-      <td><p>character string. The column name with latitude. Coordinates must
-be expressed in decimal degree and in WGS84. Default = "decimalLatitude".</p></td>
+      <td><p>character string. The column name with latitude in decimal degrees
+and WGS84. Default = "decimalLatitude".</p></td>
     </tr>
     <tr>
       <th>lon</th>
-      <td><p>character string. The column with longitude. Coordinates must be
-expressed in decimal degree and in WGS84. Default = "decimalLongitude".</p></td>
+      <td><p>character string. The column with longitude in decimal degrees and
+WGS84. Default = "decimalLongitude".</p></td>
     </tr>
     <tr>
       <th>locality</th>
-      <td><p>character string. The column name with information on
-locality. Default = "locality".</p></td>
+      <td><p>character string. The column name with locality information.
+Default = "locality".</p></td>
     </tr>
     </table>
 
@@ -191,15 +191,13 @@ Output/Check/01_coordinates_from_locality.csv.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>According to DarwinCore terminology, locality refers to "the
-specific description of the place" where a organism were recorded.</p>
+specific description of the place" where an organism was recorded.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='va'>lat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='st'>""</span><span class='op'>)</span>
 <span class='va'>lon</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>""</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>
-<span class='va'>locality</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>.missing_names</span>, <span class='va'>.missing_coordinates</span><span class='op'>)</span>
-
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>lat</span>, <span class='va'>long</span>, <span class='va'>locality</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>lat <span class='op'>=</span> <span class='va'>lat</span>, lon <span class='op'>=</span> <span class='va'>lon</span>, locality <span class='op'>=</span>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Brazil"</span>, <span class='st'>"Argentina"</span>, <span class='st'>"Chile"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>bdc_coordinates_from_locality</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>x</span>, lat <span class='op'>=</span> <span class='st'>"lat"</span>, lon <span class='op'>=</span> <span class='st'>"lon"</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>

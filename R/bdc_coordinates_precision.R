@@ -1,20 +1,20 @@
 #' Flag low-precise geographic coordinates
 #'
-#' This function is used to flags records with a coordinate precision below a
+#' This function is used to flag records with a coordinate precision below a
 #' specified number of decimal places. Coordinates with one, two, or three
-#' decimal places have precision of~11.1 km, ~1.1 km, and ~111 m at the equator,
-#' respectively.
+#' decimal places present a precision of~11.1 km, ~1.1 km, and ~111 m at the
+#' equator, respectively.
 #'
 #' @param data data.frame. A data.frame containing geographic coordinates.
-#' @param lon character string. The column with longitude. Default =
-#' "decimalLongitude".
-#' @param lat character string. The column with latitude Default =
-#' "decimalLatitude".
-#' @param ndec numeric. The numbers of decimals place to be tested.
-#' Default = c(0,1,2).
+#' @param lon character string. The column with longitude in decimal degrees and
+#' WGS84. Default = "decimalLongitude".
+#' @param lat character string. The column with latitude in decimal degrees and
+#' WGS84. Default = "decimalLatitude".
+#' @param ndec numeric. The numbers of decimals place to be tested. Default =
+#' c(0,1,2).
 #'
 #' @return A data.frame with logical values indicating whether values are
-#' rounded by the specified decimal number (ndec). In other word, potentially
+#' rounded by the specified decimal number (ndec). In other words, potentially
 #' imprecise coordinates.
 #'
 #' @importFrom dplyr select bind_cols rename

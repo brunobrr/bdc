@@ -4,18 +4,27 @@
 \alias{bdc_quickmap}
 \title{Create a map of points using ggplot2}
 \usage{
-bdc_quickmap(data, lat, lon, col_to_map = NULL, size = size)
+bdc_quickmap(
+  data,
+  lat = "decimalLatitude",
+  lon = "decimalLongitude",
+  col_to_map = "red",
+  size = 1
+)
 }
 \arguments{
-\item{data}{data.frame. Containing longitude and latitude}
+\item{data}{data.frame. Containing geographical coordinates. Coordinates must
+be expressed in decimal degree and in WGS84.}
 
-\item{lat}{character string. The column with the latitude coordinates}
+\item{lat}{character string. The column name with latitude. Coordinates must
+be expressed in decimal degree and in WGS84. Default = "decimalLatitude".}
 
-\item{lon}{character string. The column with the longitude coordinates}
+\item{lon}{character string. The column with longitude. Coordinates must be
+expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
 
 \item{col_to_map}{character string. Defining the column or color used to map.
-Can be a color name (e.g "red") the the name of a column of data. Default =
-"blue"}
+It can be a color name (e.g., "red") or the name of a column of data. Default
+= "blue"}
 
 \item{size}{numeric. The size of the points.}
 }
@@ -25,7 +34,7 @@ tests implemented in the bdc workflow.
 }
 \details{
 Only records with valid coordinates can be plotted. Records missing
-or with invalid coordinates are removed prior creating the map.
+or containing invalid coordinates are removed prior creating the map.
 }
 \examples{
 \dontrun{

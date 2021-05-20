@@ -5,18 +5,17 @@
 #'
 #' @param data data.frame. Containing geographical coordinates. Coordinates must
 #' be expressed in decimal degree and in WGS84.
-#' @param lat character string. The column name with latitude. Coordinates must 
+#' @param lat character string. The column name with latitude. Coordinates must
 #' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
 #' @param lon character string. The column with longitude. Coordinates must be
 #' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
 #' @param col_to_map character string. Defining the column or color used to map.
-#' Can be a color name (e.g "red") the the name of a column of data. Default =
-#' "blue"
+#' It can be a color name (e.g., "red") or the name of a column of data. Default
+#' = "blue"
 #' @param size numeric. The size of the points.
 #'
 #' @details Only records with valid coordinates can be plotted. Records missing
-#' or with invalid coordinates are removed prior creating the map.
-#'
+#' or containing invalid coordinates are removed prior creating the map.
 #'
 #' @export
 #'

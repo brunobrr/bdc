@@ -14,10 +14,10 @@
 ### Overview
 
 Handle biodiversity data from several different sources is not an easy
-task. Here we presente the **Biodiversity Data Cleaning (BDC)
-workflow**, an **automated** workflow to adress **quality issues and
-improve datas’ fitness-for-use**. The workflow harmonizes and integrates
-data from different sources following common standards and protocols and
+task. Here we present the **Biodiversity Data Cleaning (BDC) workflow**,
+an **automated** workflow to address **quality issues and improve datas’
+fitness-for-use**. The workflow harmonizes and integrates data from
+different sources following common standards and protocols and
 implements various tests and tools to flag, document, clean, and correct
 the taxonomic, spatial, and temporal information of biodiversity data.
 
@@ -43,8 +43,8 @@ The workflow is composed of five core steps:
 
 Aim to facilitate the **documentation, visualization, and interpretation
 of results** of data quality tests, in all steps, several files
-documenting the results of the workflow are saved automatically in a
-folder named “Output”. These files include i) r**ecords needing further
+documenting the workflow results are saved automatically in a folder
+named “Output”. These files include i) r**ecords needing further
 inspection**, ii) **databases** containing the results of each step,
 iii) **figures**, and iv) **data-quality reports** documenting the
 results.

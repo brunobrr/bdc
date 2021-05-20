@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Creates figures reporting the results of the bdc workflow — bdc_create_figures • bdc</title>
+<title>Create figures reporting the results of the BDC workflow — bdc_create_figures • bdc</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,9 @@
 
 
 
-<meta property="og:title" content="Creates figures reporting the results of the bdc workflow — bdc_create_figures" />
-<meta property="og:description" content="Creates figures (i.e., barplots and maps) reporting the results of data
-quality tests implemented in the bdc workflow." />
+<meta property="og:title" content="Create figures reporting the results of the BDC workflow — bdc_create_figures" />
+<meta property="og:description" content="Creates figures (i.e., bar plots and maps) reporting the results of data
+quality tests implemented in the BDC workflow." />
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
@@ -138,14 +138,14 @@ quality tests implemented in the bdc workflow." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Creates figures reporting the results of the bdc workflow</h1>
+    <h1>Create figures reporting the results of the BDC workflow</h1>
     
     <div class="hidden name"><code>bdc_create_figures.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates figures (i.e., barplots and maps) reporting the results of data
-quality tests implemented in the bdc workflow.</p>
+    <p>Creates figures (i.e., bar plots and maps) reporting the results of data
+quality tests implemented in the BDC workflow.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bdc_create_figures</span><span class='op'>(</span><span class='va'>data</span>, database_id <span class='op'>=</span> <span class='st'>"database_id"</span>, workflow_step <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
@@ -155,7 +155,8 @@ quality tests implemented in the bdc workflow.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>data.frame. Containing the results of data quality tests and a .</p></td>
+      <td><p>data.frame. Containing the results of data quality tests; that
+is, columns starting wit ".".</p></td>
     </tr>
     <tr>
       <th>database_id</th>
@@ -178,7 +179,7 @@ available are "prefilter", "space", and "time".</p></td>
     <p>This function creates figures based on the results of data quality
 tests implemented. A pre-defined list of test names is used for creating
 figures depending on the name of the workflow step informed. Figures are
-saving in "Output/Figures".</p>
+saved in "Output/Figures".</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>

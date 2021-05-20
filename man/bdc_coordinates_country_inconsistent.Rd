@@ -2,11 +2,7 @@
 % Please edit documentation in R/bdc_coordinates_country_inconsistent.R
 \name{bdc_coordinates_country_inconsistent}
 \alias{bdc_coordinates_country_inconsistent}
-\title{Identify records within a reference country
-This function flags geographic coordinates within a reference country. A
-spatial buffer can be added to the reference country for ensuring that
-records in mangroves, marshes, estuaries as well as records with low
-coordinates precision are not flagged as invalid.}
+\title{Identify records within a reference country}
 \usage{
 bdc_coordinates_country_inconsistent(
   data,
@@ -18,7 +14,7 @@ bdc_coordinates_country_inconsistent(
 }
 \arguments{
 \item{data}{data.frame. Containing longitude and latitude. Coordinates must
-be expressed in decimal degree and in WGS84.}
+be expressed in decimal degrees and WGS84.}
 
 \item{country_name}{character string. Name of the country to considered.}
 
@@ -28,20 +24,20 @@ Default = “decimallatitude”.}
 \item{lon}{character string. The column name with the longitude coordinates.
 Default = “decimallongitude”.}
 
-\item{dist}{numeric. A distance in decimal degrees used to created a buffer
-around the country. Default = 0.1 (~11 km at the equator)}
+\item{dist}{numeric. The distance in decimal degrees used to created a buffer
+around the country. Default = 0.1 (~11 km at the equator).}
 }
 \value{
-A data.frame contain the column '.coordinates_country_inconsistent'.
-Compliant (TRUE) if coordinates fall within the boundaries plus a specified
-distance (if 'dist' is supplied) of 'country_name'; otherwise "FALSE".
+A data.frame containing the column
+'.coordinates_country_inconsistent'. Compliant (TRUE) if coordinates fall
+within the boundaries plus a specified distance (if 'dist' is supplied) of
+'country_name'; otherwise "FALSE".
 }
 \description{
-Identify records within a reference country
 This function flags geographic coordinates within a reference country. A
-spatial buffer can be added to the reference country for ensuring that
-records in mangroves, marshes, estuaries as well as records with low
-coordinates precision are not flagged as invalid.
+spatial buffer can be added to the reference country to ensure that
+records in mangroves, marshes, estuaries, and records with low
+coordinate precision are not flagged as invalid.
 }
 \details{
 The distance informed in the argument 'dist' is used to create a

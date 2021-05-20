@@ -3,17 +3,17 @@
 #' This function flags and corrects records when latitude and longitude appear
 #' to be transposed.
 #'
-#' @param data data.frame. Containing a unique identifier for each records,
-#' geographical coordinates, and country names. Coordinates must be expressed in
-#' decimal degree and in WGS84.
+#' @param data data.frame. Containing a unique identifier for each record,
+#' geographical coordinates, and country names. Coordinates must be expressed
+#' in decimal degrees and WGS84.
 #' @param id character string. The column name with a unique record identifier.
 #' Default = "database_id".
 #' @param sci_names character string. The column name with species scientific
 #' name. Default = "scientificName".
 #' @param lat character string. The column name with latitude. Coordinates must
-#' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
+#' be expressed in decimal degrees and WGS84. Default = "decimalLatitude".
 #' @param lon character string. The column with longitude. Coordinates must be
-#' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
+#' expressed in decimal degrees and WGS84. Default = "decimalLongitude".
 #' @param country character string. The column name with the country
 #' assignment of each record. Default = "country".
 #' @param countryCode character string. The column name with an ISO-2 country
@@ -24,10 +24,10 @@
 #' Default = 0.2 (~22 km at the equator).
 #
 #' @details This test identifies transposed coordinates resulted from mismatches
-#' between the country informed to a record and coordinates. Transposed
+#' between the country informed for a record and coordinates. Transposed
 #' coordinates often fall outside of the indicated country (i.e., in other
 #' countries or in the sea). Different coordinate transformations are
-#' performed to correct country/coordinates mismatch. Importantly, verbatim
+#' performed to correct country/coordinates mismatches. Importantly, verbatim
 #' coordinates are replaced by the corrected ones in the returned database. A
 #' database containing verbatim and corrected coordinates is created in
 #' "Output/Check/01_coordinates_transposed.csv".
@@ -78,18 +78,11 @@ bdc_coordinates_transposed <-
            countryCode = "countryCode",
            border_buffer = 0.2
            ) {
-  
-  suppressWarnings({
-    suppressMessages({
+
   check_require_cran("rnaturalearth")
   check_require_cran("readr")
   check_require_github("ropensci/rnaturalearthdata")
-    })
-  })
-  
-  # Create a directory to save the result
-  bdc::bdc_create_dir()
-    
+
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
 
   if (length(minimum_colnames) < 6) {
@@ -113,7 +106,7 @@ bdc_coordinates_transposed <-
            decimalLatitude = {{lat}},
            decimalLongitude = {{lon}},
            scientificName = {{ sci_names }},
-           country_name = {{ country }},
+           country = {{ country }},
            countryCode = {{ countryCode }}
            )
 
@@ -151,7 +144,7 @@ bdc_coordinates_transposed <-
 
   # finding the position of records with lon/lat modified
   w <-
-    which((data %>% dplyr::pull(dplyr::all_of(database_id))) %in% (corrected_coordinates %>% dplyr::pull(dplyr::all_of(database_id))))
+    which(data[, "database_id"] %in% (corrected_coordinates %>% dplyr::pull(database_id)))
 
   data[w, "decimalLatitude"] <-
     corrected_coordinates[, "decimalLatitude_modified"]

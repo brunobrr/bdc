@@ -7,14 +7,14 @@
 bdc_create_report(data, database_id = "database_id", workflow_step)
 }
 \arguments{
-\item{data}{data.frame. Containing a unique identifier for each records and
+\item{data}{data.frame. Containing a unique identifier for each record and
 the results of data quality tests.}
 
-\item{database_id}{character string. The column name with a unique record identifier.
-Default = "database_id".}
+\item{database_id}{character string. The column name with a unique record
+identifier.Default = "database_id".}
 
 \item{workflow_step}{character string containing the following
-options("prefiter", "taxonomy", "space" or "time").}
+options("prefilter", "taxonomy", "space" or "time").}
 }
 \value{
 A data.frame containing a report summarizing the results of data

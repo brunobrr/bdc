@@ -10,8 +10,8 @@ bdc_filter_out_names(data, taxonomic_notes = "accepted", opposite = FALSE)
 \item{data}{data.frame. Containing a column with information on the taxonomic
 status of scientific names.}
 
-\item{taxonomic_notes}{character string. The column name containing notes on
-the taxonomic status of a name. Default = "notes".}
+\item{taxonomic_notes}{character string. The column name containing notes
+about the taxonomic status of a name. Default = "notes".}
 
 \item{opposite}{logical. Should taxonomic notes different from those listed
 in 'taxonomic_notes' be returned? Default = FALSE}

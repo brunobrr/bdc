@@ -9,7 +9,7 @@
 #' @details This test identifies records missing event date information (i.e.,
 #' empty or not applicable [NA]).
 #' 
-#' @return A data.frame contain the column ".eventDate_empty". Compliant
+#' @return A data.frame containing the column ".eventDate_empty". Compliant
 #' (TRUE) if 'eventDate' is not empty; otherwise "FALSE".
 #' 
 #' @export

@@ -1,19 +1,19 @@
 #' Identify records within a reference country
 #'
 #' This function flags geographic coordinates within a reference country. A
-#' spatial buffer can be added to the reference country for ensuring that
-#' records in mangroves, marshes, estuaries as well as records with low
-#' coordinates precision are not flagged as invalid.
+#' spatial buffer can be added to the reference country to ensure that
+#' records in mangroves, marshes, estuaries, and records with low
+#' coordinate precision are not flagged as invalid.
 #'
 #' @param data data.frame. Containing longitude and latitude. Coordinates must
-#' be expressed in decimal degree and in WGS84.
+#' be expressed in decimal degrees and WGS84.
 #' @param country_name character string. Name of the country to considered.
 #' @param lat character string. The column name with the latitude coordinates.
 #' Default = “decimallatitude”.
 #' @param lon character string. The column name with the longitude coordinates.
 #' Default = “decimallongitude”.
-#' @param dist numeric. A distance in decimal degrees used to created a buffer
-#' around the country. Default = 0.1 (~11 km at the equator)
+#' @param dist numeric. The distance in decimal degrees used to created a buffer
+#' around the country. Default = 0.1 (~11 km at the equator).
 #'
 #' @details The distance informed in the argument 'dist' is used to create a
 #' buffer around the reference country. Records within the reference country
@@ -22,9 +22,10 @@
 #' records within the buffer but in other countries are flagged as invalid
 #' (FALSE).
 #'
-#' @return A data.frame contain the column '.coordinates_country_inconsistent'.
-#' Compliant (TRUE) if coordinates fall within the boundaries plus a specified
-#' distance (if 'dist' is supplied) of 'country_name'; otherwise "FALSE".
+#' @return A data.frame containing the column
+#' '.coordinates_country_inconsistent'. Compliant (TRUE) if coordinates fall
+#' within the boundaries plus a specified distance (if 'dist' is supplied) of
+#' 'country_name'; otherwise "FALSE".
 #'
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom dplyr select mutate filter full_join bind_cols
@@ -61,10 +62,9 @@ bdc_coordinates_country_inconsistent <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            dist = 0.1) {
-  suppressWarnings({
+
   check_require_cran("rnaturalearth")
-  })
-    
+
   df <-
     data %>%
     dplyr::select(.data[[lon]], .data[[lat]]) %>%

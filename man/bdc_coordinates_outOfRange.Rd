@@ -11,20 +11,23 @@ bdc_coordinates_outOfRange(
 )
 }
 \arguments{
-\item{data}{data.frame. Containing geographical coordinates. Coordinates must be expressed in decimal degree and in WGS84.}
+\item{data}{data.frame. Containing geographical coordinates. Coordinates must
+be expressed in decimal degrees and WGS84.}
 
-\item{lat}{character string. The column name with latitude. Coordinates must
-be expressed in decimal degree and in WGS84. Default = "decimalLatitude".}
+\item{lat}{character string. The column name with latitude in decimal degree
+and in WGS84. Default = "decimalLatitude".}
 
-\item{lon}{character string. The column with longitude. Coordinates must be
-expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
+\item{lon}{character string. The column with longitude in decimal degree and
+in WGS84. Default = "decimalLongitude".}
 }
 \value{
-A data.frame contain the column ".coordinates_outOfRange". Compliant
-(TRUE) if 'lat' and 'lon' are not out-of-range; otherwise "FALSE".
+A data.frame containing the column ".coordinates_outOfRange".
+Compliant (TRUE) if 'lat' and 'lon' are not out-of-range; otherwise
+"FALSE".
 }
 \description{
-This function identifies records with out-of-range coordinates (not between -90 and 90 for latitude; between -180 and 180 for longitude).
+This function identifies records with out-of-range coordinates (not between
+-90 and 90 for latitude; between -180 and 180 for longitude).
 }
 \examples{
 \dontrun{

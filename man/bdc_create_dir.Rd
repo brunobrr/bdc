@@ -2,7 +2,7 @@
 % Please edit documentation in R/bdc_create_dir.R
 \name{bdc_create_dir}
 \alias{bdc_create_dir}
-\title{Creates directories for saving the outputs of the bdc workflow}
+\title{Create directories for saving the outputs of the bdc workflow}
 \usage{
 bdc_create_dir()
 }
@@ -10,8 +10,8 @@ bdc_create_dir()
 None
 }
 \description{
-Creates directories for saving the outputs of bdc workflow, which including
-databases, figures, reports, and databases which need to be checked.
+Creates directories for saving the outputs of BDC workflow, which including
+databases, figures, reports, and databases that need to be checked.
 }
 \details{
 :

@@ -1,7 +1,7 @@
-#' Creates figures reporting the results of the bdc workflow
+#' Create figures reporting the results of the BDC workflow
 #'
-#' Creates figures (i.e., barplots and maps) reporting the results of data
-#' quality tests implemented in the bdc workflow.
+#' Creates figures (i.e., bar plots and maps) reporting the results of data
+#' quality tests implemented in the BDC workflow.
 #'
 #' @param data data.frame. Containing the results of data quality tests; that
 #' is, columns starting wit ".".
@@ -14,7 +14,7 @@
 #' @details This function creates figures based on the results of data quality
 #' tests implemented. A pre-defined list of test names is used for creating
 #' figures depending on the name of the workflow step informed. Figures are
-#' saving in "Output/Figures".
+#' saved in "Output/Figures".
 #'
 #' @return Figures in a png format.
 #'
@@ -57,19 +57,12 @@ bdc_create_figures <-
            database_id = "database_id",
            workflow_step = NULL) {
 
-    suppressWarnings({
-      suppressMessages({
     check_require_cran("cowplot")
     check_require_cran("scales")
     check_require_cran("readr")
     check_require_cran("rworldmap")
     check_require_cran("ggplot2")
-      })
-    })
-    
-    # Create a directory to save the result
-    bdc::bdc_create_dir()
-    
+
     # Total number of records
     suppressMessages({
       if (!fs::file_exists("data/n_records.csv")) {

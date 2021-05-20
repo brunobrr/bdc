@@ -17,18 +17,18 @@ terms), '.infraesp_names' (indicates the presence of infraspecific terms),
 processes), and 'quality (an index indicating the quality of parsing
 process. It ranges from 0 to 4, being 1 no problem detected, 4 serious
 problems detected; a value of 0 indicates no interpretable name that was
-not parsed). Also, data.frame containing all tests of the cleaning names
+not parsed). Also, a data.frame containing all tests of the cleaning names
 process and the results of the parsing names process is saved in
 "Output/Check/02_parse_names.csv".
 }
 \description{
-This functions is composed of a series of name-checking routines for cleaning
-and parsing scientific names. This tools is used to remove 1) family names of
-animals or plants pre-pended to species names, 2) qualifiers denoting
+This function is composed of a series of name-checking routines for cleaning
+and parsing scientific names. It removes 1) family names of
+animals or plants pre-pended to species names, 2) qualifiers denoting the
 uncertain or provisional status of taxonomic identification (e.g., confer,
-species, affinis), and 3) infraspecific terms, for example: variety (var.),
+species, affinis), and 3) infraspecific terms, for example, variety (var.),
 subspecies (subsp), forma (f.), and their spelling variations. It also
-includes applications to: 4) standardize names, i.e., capitalize only the
+includes applications to 4) standardize names, i.e., capitalize only the
 first letter of the genus name and remove extra whitespaces), and 5) parse
 names, i.e., separate author, date, annotations from taxon name.
 }
@@ -44,7 +44,7 @@ parse process can be found in
 scientificName = c(
 "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
 "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
-"Gymnanthes edwalliana (Pax & K.Hoffm.) Laurênio-Melo & M.F.Sales",
+"Gymnanthes edwalliana (Pax & K.Hoffm.) Laurenio-Melo & M.F.Sales",
 "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby")
 
 bdc_clean_names(scientificName)

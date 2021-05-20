@@ -1,10 +1,11 @@
 #' Identify records with year out-of-range
 #'
-#' This function identifies records out-of-range collecting year (e.g., in the future)
-#' or old records collected before a year informed in 'year_threshold'.
+#' This function identifies records out-of-range collecting year (e.g., in the
+#' future) or old records collected before a year informed in 'year_threshold'.
 #'
-#' @param data A data frame containing column with event date information.
-#' @param eventDate numeric or date. The column with event date information.
+#' @param data A data frame containing a column with event date information.
+#' @param eventDate numeric or date. The column containing event date
+#' information.
 #' @param year_threshold numeric. A four-digit year threshold used to flag old
 #' (potentially invalid) records. Default = 1900
 #'
@@ -18,7 +19,7 @@
 #' by default 1600, a lower limit for collecting dates of biological specimens.
 #' Records with empty or NA 'eventDate' are not tested and returned as NA.
 #'
-#' @return A data.frame contain the column ".year_outOfRange". Compliant
+#' @return A data.frame containing the column ".year_outOfRange". Compliant
 #' (TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".
 #'
 #' @importFrom dplyr if_else

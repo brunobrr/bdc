@@ -7,13 +7,13 @@
 bdc_scientificName_empty(data, sci_names = "scientificName")
 }
 \arguments{
-\item{data}{data.frame. Containing species scientific names.}
+\item{data}{data.frame. Containing the species scientific names.}
 
-\item{sci_names}{character string. The column name with species scientific
-name. Default = "scientificName".}
+\item{sci_names}{character string. The column name with the species
+scientific name. Default = "scientificName".}
 }
 \value{
-A data.frame contain the column ".scientificName_empty". Compliant
+A data.frame containing the column ".scientificName_empty". Compliant
 (TRUE) if 'sci_names' is not empty; otherwise "FALSE".
 }
 \description{

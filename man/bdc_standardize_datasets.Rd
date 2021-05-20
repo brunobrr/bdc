@@ -8,7 +8,7 @@ bdc_standardize_datasets(metadata, overwrite = FALSE)
 }
 \arguments{
 \item{metadata}{A data frame with metadata containing information about the
-name, path, and columns of the original data set that need to be
+name, path, and columns of the original data set which need to be
 renamed. See @details.}
 
 \item{overwrite}{A logical vector indicating whether the final merged
@@ -23,20 +23,20 @@ provided by the user.
 \details{
 \code{bdc_standardize_datasets()} facilitate the standardization of datasets with
 different column names converting them into a new dataset following the
-Darwin Core terminology. All the standardization process rely on a metadata
+Darwin Core terminology. The standardization process relies on a metadata
 file containing the name, path, and columns that need to be renamed. The
 metadata file can be constructed using built-in functions (e.g.,
 \code{data.frame()}) or storing the information in a CSV file and importing it
 into R. Regardless of the method chosen, the data frame with metadata needs
 to contain the following column names (this is a list of required column
-names; for compreensive list of column names following Darwin Core
-terminology, see LINK):
+names; for a comprehensive list of column names following Darwin Core
+terminology, see \link{here}(https://dwc.tdwg.org/terms/:
 \itemize{
 \item \code{datasetName}: A short name identifying the dataset (e.g., GBIF)
-\item \code{fileName}: The relative path containg the name of the input dataset (e.g.,
+\item \code{fileName}: The relative path containing the name of the input dataset (e.g.,
 Input_files/GBIF.csv)
 \item \code{scientificName}: Name of the column in the original database presenting
-the scientific name of the taxon with or without authorship information,
+the scientific names of the taxon with or without authorship information,
 depending on the format of the source dataset (e.g., Myrcia acuminata)
 \item \code{decimalLatitude}: Name of the column in the original database presenting
 the geographic latitude in decimal degrees (e.g., -6.370833)

@@ -2,8 +2,8 @@
 % Please edit documentation in R/bdc_coordinates_from_locality.R
 \name{bdc_coordinates_from_locality}
 \alias{bdc_coordinates_from_locality}
-\title{Identify records missing or with invalid coordinates but with information on
-locality}
+\title{Identify records lacking or with invalid coordinates but containing locality
+information}
 \usage{
 bdc_coordinates_from_locality(
   data,
@@ -16,14 +16,14 @@ bdc_coordinates_from_locality(
 \item{data}{data.frame. Containing geographical coordinates and the column
 "locality'.}
 
-\item{lat}{character string. The column name with latitude. Coordinates must
-be expressed in decimal degree and in WGS84. Default = "decimalLatitude".}
+\item{lat}{character string. The column name with latitude in decimal degrees
+and WGS84. Default = "decimalLatitude".}
 
-\item{lon}{character string. The column with longitude. Coordinates must be
-expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
+\item{lon}{character string. The column with longitude in decimal degrees and
+WGS84. Default = "decimalLongitude".}
 
-\item{locality}{character string. The column name with information on
-locality. Default = "locality".}
+\item{locality}{character string. The column name with locality information.
+Default = "locality".}
 }
 \value{
 A data.frame containing records missing or with invalid coordinates
@@ -32,11 +32,11 @@ Output/Check/01_coordinates_from_locality.csv.
 }
 \description{
 This function Identifies records whose coordinates can potentially be
-extracted from information on locality.
+extracted from locality information.
 }
 \details{
 According to DarwinCore terminology, locality refers to "the
-specific description of the place" where a organism were recorded.
+specific description of the place" where an organism was recorded.
 }
 \examples{
 \dontrun{

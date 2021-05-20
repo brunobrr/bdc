@@ -6,14 +6,15 @@
 #' provided by the user.
 #'
 #' @param metadata A data frame with metadata containing information about the
-#'   name, path, and columns of the original data set that need to be
-#'   renamed. See @details.
+#' name, path, and columns of the original data set which need to be
+#' renamed. See @details.
 #'
 #' @param overwrite A logical vector indicating whether the final merged
-#'   dataset should be overwritten. The default is FALSE.
+#' dataset should be overwritten. The default is FALSE.
 #'
 #' @importFrom data.table fread
-#' @importFrom dplyr pull filter select select_if mutate n everything mutate_if all_of
+#' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
+#' all_of
 #' @importFrom fs dir_exists dir_create
 #' @importFrom here here
 #' @importFrom purrr set_names
@@ -23,22 +24,22 @@
 #' @details
 #' `bdc_standardize_datasets()` facilitate the standardization of datasets with
 #' different column names converting them into a new dataset following the
-#' Darwin Core terminology. All the standardization process rely on a metadata
+#' Darwin Core terminology. The standardization process relies on a metadata
 #' file containing the name, path, and columns that need to be renamed. The
 #' metadata file can be constructed using built-in functions (e.g.,
 #' `data.frame()`) or storing the information in a CSV file and importing it
 #' into R. Regardless of the method chosen, the data frame with metadata needs
 #' to contain the following column names (this is a list of required column
-#' names; for compreensive list of column names following Darwin Core
-#' terminology, see LINK):
+#' names; for a comprehensive list of column names following Darwin Core
+#' terminology, see [here](https://dwc.tdwg.org/terms/:
 #'
 #' - `datasetName`: A short name identifying the dataset (e.g., GBIF)
 #'
-#' - `fileName`: The relative path containg the name of the input dataset (e.g.,
+#' - `fileName`: The relative path containing the name of the input dataset (e.g.,
 #' Input_files/GBIF.csv)
 #'
 #' - `scientificName`: Name of the column in the original database presenting
-#' the scientific name of the taxon with or without authorship information,
+#' the scientific names of the taxon with or without authorship information,
 #' depending on the format of the source dataset (e.g., Myrcia acuminata)
 #'
 #' - `decimalLatitude`: Name of the column in the original database presenting

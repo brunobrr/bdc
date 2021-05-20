@@ -1,11 +1,11 @@
 #' Create a report summarizing the results of data quality tests
 #'
-#' @param data data.frame. Containing a unique identifier for each records and
+#' @param data data.frame. Containing a unique identifier for each record and
 #' the results of data quality tests.
-#' @param database_id character string. The column name with a unique record identifier.
-#' Default = "database_id".
+#' @param database_id character string. The column name with a unique record
+#' identifier.Default = "database_id".
 #' @param workflow_step character string containing the following
-#' options("prefiter", "taxonomy", "space" or "time").
+#' options("prefilter", "taxonomy", "space" or "time").
 #'
 #' @return A data.frame containing a report summarizing the results of data
 #'   quality assessment.
@@ -38,25 +38,16 @@
 #'   database_id = "database_id",
 #'   workflow_step = "prefilter")
 #' }
-#'
+#' 
 bdc_create_report <-
   function(data,
            database_id = "database_id",
            workflow_step) {
-    
-    # Create a directory to save the result
-    bdc::bdc_create_dir()
-    
-    suppressWarnings({
-      suppressMessages({
+
     check_require_cran("readr")
     check_require_cran("DT")
-      })
-    })
-    
-    suppressMessages({
-      suppressWarnings({
-      
+  suppressMessages({
+
     # Total number of records
     if (!fs::file_exists("data/n_records.csv")) {
       n_records <-
@@ -431,8 +422,8 @@ bdc_create_report <-
       data.table::fwrite(res[[1]],
                          here::here("Output/Report/04_Report_time.csv"))
     }
-  }) # message
-  }) # warning
+  })
+
   message(
     paste(
       "\nbdc_create_report:\nCheck the report summarizing the results of the",

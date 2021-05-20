@@ -11,26 +11,26 @@ bdc_basisOfRrecords_notStandard(
 )
 }
 \arguments{
-\item{data}{data.frame. Containing information on basis of records.}
+\item{data}{data.frame. Containing information about the basis of records.}
 
-\item{basisOfRecord}{character string. The column name with information on
+\item{basisOfRecord}{character string. The column name with information about
 basis of records. Default = "basisOfRecord".}
 
 \item{names_to_keep}{character string. Elements of the column BasisOfRecords
-to keep. Default is 'all', which considers a selected list of recommended
+to keep. Default is "all", which considers a selected list of recommended
 standard Darwin Core classes (and their spelling variations, see details).
-By default, records missing (i.e., NA) or with "unknown" information on
+By default, records missing (i.e., NA) or with "unknown" information about
 basis of records are kept.}
 }
 \value{
-A data.frame contain the column ".basisOfRrecords_notStandard"
+A data.frame containing the column ".basisOfRrecords_notStandard"
 .Compliant (TRUE) if 'basisOfRecord' is standard; otherwise "FALSE".
 }
 \description{
-This function flags records with informed basis of records (i.e., the records
-type, for example, a specimen, a human observation, or a fossil specimen) no
-interpretable, that do not comply with Darwin Core recommended vocabulary, or
-unreliable or unsuitable for certain analyses.
+This function flags records with an informed basis of records (i.e., the
+records type, for example, a specimen, a human observation, or a fossil
+specimen) not interpretable, which does not comply with Darwin Core
+vocabulary, or unreliable or unsuitable for specific analyses.
 }
 \details{
 Users are encourage to select the set of basis of records classes

@@ -2,12 +2,13 @@
 % Please edit documentation in R/bdc_create_figures.R
 \name{bdc_create_figures}
 \alias{bdc_create_figures}
-\title{Creates figures reporting the results of the bdc workflow}
+\title{Create figures reporting the results of the BDC workflow}
 \usage{
 bdc_create_figures(data, database_id = "database_id", workflow_step = NULL)
 }
 \arguments{
-\item{data}{data.frame. Containing the results of data quality tests and a .}
+\item{data}{data.frame. Containing the results of data quality tests; that
+is, columns starting wit ".".}
 
 \item{database_id}{character string. The column name with a unique record
 identifier.
@@ -20,14 +21,14 @@ available are "prefilter", "space", and "time".}
 Figures in a png format.
 }
 \description{
-Creates figures (i.e., barplots and maps) reporting the results of data
-quality tests implemented in the bdc workflow.
+Creates figures (i.e., bar plots and maps) reporting the results of data
+quality tests implemented in the BDC workflow.
 }
 \details{
 This function creates figures based on the results of data quality
 tests implemented. A pre-defined list of test names is used for creating
 figures depending on the name of the workflow step informed. Figures are
-saving in "Output/Figures".
+saved in "Output/Figures".
 }
 \examples{
 \dontrun{

@@ -1,7 +1,7 @@
-#' Creates directories for saving the outputs of the bdc workflow
+#' Create directories for saving the outputs of the bdc workflow
 #'
-#' Creates directories for saving the outputs of bdc workflow, which including
-#' databases, figures, reports, and databases which need to be checked.
+#' Creates directories for saving the outputs of BDC workflow, which including
+#' databases, figures, reports, and databases that need to be checked.
 #'
 #' @importFrom fs dir_create
 #' @importFrom here here

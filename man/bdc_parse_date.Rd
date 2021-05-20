@@ -7,18 +7,32 @@
 bdc_parse_date(data, col_to_test, year_threshold = NULL)
 }
 \arguments{
-\item{data}{A data frame containing column of event date.}
+\item{data}{A data frame containing a column of the event date.}
 
-\item{col_to_test}{Numeric or date. The column with event date information.}
+\item{col_to_test}{numeric or date. The column with event date information.}
 
-\item{year_threshold}{Numeric. A years threshold (four digit year) to flag records due to their age. Default = NULL.}
+\item{year_threshold}{numeric. A years threshold (four-digit year) to flag
+records due to their age. Default = NULL.}
 }
 \value{
-A data frame with the original data (x), a flagged column (.year) and a column with the extracted four digit years (year). Records with .year = FALSE means dates older than year threshold or 1500.
+A data frame with the original data, a flagged column (.year) and a
+column with the extracted four-digit years (year). Records with .year = FALSE
+means dates older than the year threshold or 1600.
 }
 \description{
 Extract and flag year from date
 }
 \details{
-The function filters the column containing event dates and extract the dates with four digits. If the event dates are older than 1500, or the threshold year, they are flagged FALSE.
+The function filters the column containing event dates and extracts
+the dates with four digits. If the event dates are older than 1600, or the
+threshold year, they are flagged FALSE.
+}
+\examples{
+\dontrun{
+collection_date <- c(NA, "31/12/2015", "2013-06-13T00:00:00Z", "2013-06-20",
+"", "2013", "10-10-10", "20/05/2031", "1590")
+x <- data.frame(collection_date)
+
+bdc_parse_date(data = x, col_to_test = "collection_date")
+}
 }

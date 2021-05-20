@@ -12,7 +12,7 @@ bdc_eventDate_empty(data, eventDate = "eventDate")
 \item{eventDate}{Numeric or date. The column with event date information.}
 }
 \value{
-A data.frame contain the column ".eventDate_empty". Compliant
+A data.frame containing the column ".eventDate_empty". Compliant
 (TRUE) if 'eventDate' is not empty; otherwise "FALSE".
 }
 \description{

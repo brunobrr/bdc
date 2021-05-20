@@ -4,17 +4,17 @@
 #' missing country names.
 #'
 #' @param data data.frame. Containing geographical coordinates and country
-#' names. Coordinates must be expressed in decimal degree and in WGS84.
-#' @param lat character string. The column name with latitude. Coordinates must
-#' be expressed in decimal degree and in WGS84. Default = "decimalLatitude".
-#' @param lon character string. The column with longitude. Coordinates must be
-#' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
+#' names.
+#' @param lat character string. The column name with latitude in decimal degrees
+#' and WGS84. Default = "decimalLatitude".
+#' @param lon character string. The column with longitude in decimal degrees and
+#' WGS84. Default = "decimalLongitude".
 #' @param  country character string. The column name with the country assignment
 #' of each record. Default = "country".
-#'
-#' @details This function assigns country name for records missing such
+#'   
+#' @details This function assigns a country name for records missing such
 #' information. Country names are extracted from valid geographic coordinates
-#' by using a high-quality map of the world (rnaturalearth package). No
+#' using a high-quality map of the world (rnaturalearth package). No
 #' country name is added to records whose coordinates are in the sea.
 #'
 #' @return A data.frame containing country names for records missing such
@@ -46,14 +46,10 @@ bdc_country_from_coordinates <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            country = "country") {
-    
-    suppressWarnings({
-      suppressMessages({
-      check_require_cran("rnaturalearth")
-      check_require_github("ropensci/rnaturalearthdata")
-      })
-    })
-    
+
+  check_require_cran("rnaturalearth")
+  check_require_github("ropensci/rnaturalearthdata")
+
     # create an id
     data$id <- 1:nrow(data)
 
