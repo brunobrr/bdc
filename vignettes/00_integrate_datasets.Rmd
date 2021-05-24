@@ -52,7 +52,7 @@ bdc::bdc_create_dir()
 
 ## Read the configuration table
 
-Read an example of the **configuration table**. You can download the table by clicking on "CSV" button. We demonstrate the usefulness of the workflow using a database of terrestrial plant species occurring in Brazil. This database contains 9.000 records compiled from nine different sources (see below).
+Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the workflow using a database of terrestrial plant species occurring in Brazil. This database contains 9.000 records compiled from nine different sources (see below).
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"))
@@ -88,8 +88,8 @@ The standardized database embodies information on species taxonomy, geolocation,
 Below are listed the specifications of each field of the configuration table:
 
 -   **Field**: Name of the fields in *DatabaseInfo.csv* to be filled in.
--   **Category**: Classification of each field in *DatabaseInfo.csv*. *required (RQ)*, i.e., the minimum information necessary to run the workflow, ii) *recommended (RE)*, i.e., not mandatory but having important details on species records, and iii) *additional (AD)*, i.e., information potentially useful for detailed data analyses. As a general guidance, be careful to include all *required* fields and supply as many recommended and additional fields as possible.
--   **Description**: Description about the content of the specified field in the original database.
+-   **Category**: Classification of each field in *DatabaseInfo.csv*. *required (RQ)*, i.e., the minimum information necessary to run the workflow, ii) *recommended (RE)*, i.e., not mandatory but having important details on species records, and iii) *additional (AD)*, i.e., information potentially useful for detailed data analyses. As general guidance, be careful to include all *required* fields and supply as many recommended and additional fields as possible.
+-   **Description**: Description of the content of the specified field in the original database.
 -   **Type**: Type of content data on the specified field in the original database.
 -   **Example**: An example of a single content on the specified field in the original database.
 
@@ -115,7 +115,7 @@ DT::datatable(
 
 ## Standardization and integration of datasets
 
-Note that the standardized database integrating all dataset is saved in the folder "Output/Intermediate" as *"00_merged_database.qs"*. The database is saved with a **"qs" extension**, a format useful for quickly saving and reading large databases. This file can be read using the function "qread" from the "qs" package (see below).
+Note that the standardized database integrating all dataset is saved in the folder "Output/Intermediate" as *"00_merged_database.qs"*. The database is saved with a **"qs" extension**, a helpful format for quickly saving and reading large databases. This file can be read using the function "qread" from the "qs" package (see below).
 
 ```{r message=F, warning=F}
 bdc_standardize_datasets(metadata = metadata)

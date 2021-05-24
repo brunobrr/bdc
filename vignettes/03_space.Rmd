@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-We used the R package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to country capital, provinces and country centroids, coordinates in urban areas, around biodiversity institutions or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
+We used the R package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to capitals, provinces, and country centroids, coordinates in urban areas, around biodiversity institutions, or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
 
 Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter step of the workflow (more details [here](https://brunobrr.github.io/bdc/articles/prefilter.html)).
 
@@ -30,7 +30,7 @@ Note that we do not use the "seas" test to remove records in the ocean because s
 
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
-The results of each test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and **the latter potentially problematic or suspect records**.
+The results of each test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and **the latter potentially problematic or suspect records**.
 
 ## Installation
 
@@ -41,7 +41,7 @@ if (!require("remotes")) install.packages("remotes")
 if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
-## Create directories
+## Creating directories
 
 Create directories to save the results of the workflow. If not existing, four new folders are created in a folder named 'Output'.
 
@@ -49,9 +49,9 @@ Create directories to save the results of the workflow. If not existing, four ne
 bdc_create_dir()
 ```
 
-## Read the database
+## Reading the database
 
-Read the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html) step the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
+Reading the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html) step the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
 ```{r}
 database <-
@@ -84,7 +84,7 @@ DT::datatable(
 
 <br/>
 
-## Flag common spatial issues
+## Flagging common spatial issues
 
 ```{r}
 check_space <-
@@ -128,9 +128,9 @@ check_space <-
   )
 ```
 
-### Flag coordinates with low decimal precision
+### Flagging coordinates with low decimal precision
 
-Identification of records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
+Here we Identify records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
 
 ```{r}
 check_space <-
@@ -144,7 +144,7 @@ check_space <-
 
 ## Mapping spatial errors
 
-It is possible to map a column containing the results of **one spatial test each time**. For example, let's map records in country or provinces centroids.
+It is possible to map a column containing the results of **one spatial test each time**. For example, let's map records in centroids of countries or provinces.
 
 ```{r eval=F}
 check_space %>%
@@ -164,7 +164,7 @@ check_space %>%
 
 ## Report
 
-Creating a column named **.summary** summing upthe results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
+Here we create a column named **.summary** summing upthe results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
 
 ```{r}
 check_space <- bdc_summary_col(data = check_space)
@@ -201,7 +201,7 @@ report
 
 ## Figures
 
-Creating figures (bar plots and maps) to facilitate the interpretation of the results of data quality tests.
+Here we create figures (bar plots and maps) to make the interpretation of the results of data quality tests easier.
 
 ```{r, eval = FALSE}
 bdc_create_figures(data = check_space,
@@ -223,9 +223,9 @@ bdc_create_figures(data = check_space,
 
 <br/>
 
-## Filter the database
+## Filtering the database
 
-It is possible to removed flagged records (potentially problematic ones) to get a 'clean' database (i.e., without test columns starting with "."). However, to ensure that all records be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.
+It is possible to remove flagged records (potentially problematic ones) to get a 'clean' database (i.e., without test columns starting with "."). However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.
 
 ```{r}
 # output <-
@@ -234,7 +234,7 @@ It is possible to removed flagged records (potentially problematic ones) to get 
 #   bdc_filter_out_flags(data = ., col_to_remove = "all")
 ```
 
-### Save the database
+### Saving the database
 
 ```{r}
 check_space %>%

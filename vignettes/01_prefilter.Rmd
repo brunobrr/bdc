@@ -22,13 +22,13 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-Large and heterogeneous datasets may contain thousands of records missing spatial or taxonomic information (partially or entirely) as well as several records outside a region of interest or from doubtful sources. Such lower quality data are not fit for use in many research applications without prior amendments. The 'Pre-filter' step contains a series of of **tests to detect, remove, and, whenever, possible, correct such erroneous or suspect records**.
+Large and heterogeneous datasets may contain thousands of records missing spatial or taxonomic information (partially or entirely) as well as several records outside a region of interest or from untrustworthy sources. Such lower quality data are not fit for use in many research applications without prior amendments. The 'Pre-filter' step contains a series of **tests to detect, remove, and, whenever, possible, correct such erroneous or suspect records**.
 
 <br/>
 
 <img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
-The results of **VALIDATION** test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
+The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
 
 ## Installation
 
@@ -39,7 +39,7 @@ if (!require("remotes")) install.packages("remotes")
 if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
-## Create directories
+## Creating directories
 
 Create directories to save the results of the workflow. If not existing, four new folders are created in a folder named 'Output'.
 
@@ -47,7 +47,7 @@ Create directories to save the results of the workflow. If not existing, four ne
 bdc_create_dir()
 ```
 
-## Read the database
+## Reading the database
 
 Read the merged database created in the step **Standardization and integration of different datasets** of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
@@ -105,7 +105,7 @@ check_pf <- bdc_coordinates_empty(
 
 ## 3 - Records with out-of-range coordinates
 
-*VALIDATION*. This test flags records with out-of-range coordinates, that is latitude \> 90 or -90; longitude \>180 or -180.
+*VALIDATION*. This test flags records with out-of-range coordinates: latitude \> 90 or -90; longitude \>180 or -180.
 
 ```{r}
 check_pf <- bdc_coordinates_outOfRange(
@@ -116,7 +116,7 @@ check_pf <- bdc_coordinates_outOfRange(
 
 ## 4 - Records from distrustful sources
 
-*VALIDATION*. This test flags records from doubtful source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.
+*VALIDATION*. This test flags records from untrustworthy source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.
 
 ```{r}
 check_pf <- bdc_basisOfRrecords_notStandard(
@@ -182,7 +182,7 @@ check_pf <-
   )
 ```
 
-## 9 - Save records not geo-referenced but with locality information
+## 9 - Saving records not geo-referenced but containing locality information
 
 *ENRICHMENT*. Coordinates can be derived from a detailed description of the locality associated with records in a process called retrospective geo-referencing.
 
@@ -197,7 +197,7 @@ xyFromLocality <- bdc_coordinates_from_locality(
 
 ## Report
 
-Creating a column named ".summary" summing up the results of all **VALIDATION** tests. This column is **FALSE** witharecord is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
+Here we create a column named ".summary" summing up the results of all **VALIDATION** tests. This column is **FALSE** when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
 
 ```{r}
 check_pf <- bdc_summary_col(data = check_pf)
@@ -234,7 +234,7 @@ report
 
 ## Figures
 
-Creating figures (bar plots and maps) to facilitate the interpretation of the results of data quality tests. See some examples below.
+Here we create figures (bar plots and maps) to make the interpretation of the results of data quality tests easier. See some examples below.
 
 ```{r, eval = FALSE}
 bdc_create_figures(data = check_pf,
@@ -256,9 +256,9 @@ bdc_create_figures(data = check_pf,
 
 <br/>
 
-## Filter the database
+## Filtering the database
 
-We can remove records flagged as erroneous or suspect to obtain a "clean" database. Records missing names or coordinates, outside a region of interest or from distrustful sources are rarely suitable for biodiversity analyses. We can use the collumn **.summary** to filter valid records passing in all tests (i.e., flagged as "TRUE"). Next, we use the *bdc_filter_out_falgs* function to remove all tests' columns (that is, those starting with ".").
+We can remove records flagged as erroneous or suspect to obtain a "clean" database. Records missing names or coordinates, outside a region of interest or from distrustful sources are rarely suitable for biodiversity analyses. We can use the column **.summary** to filter valid records passing in all tests (i.e., flagged as "TRUE"). Next, we use the *bdc_filter_out_falgs* function to remove all tests' columns (that is, those starting with ".").
 
 ```{r}
 output <-
@@ -267,7 +267,7 @@ output <-
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 ```
 
-## Save the database
+## Saving the database
 
 ```{r}
 output %>%

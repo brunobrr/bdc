@@ -22,13 +22,13 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-This step of the BDC workflow extracts the collection year whenever possible from complete and legitimate date information, and flags dubious (e.g., 07/07/10), illegitimate (e.g., 1300, 2100), or not supplied (e.g., 0 or NA) collecting year.
+This step of the BDC workflow extracts the collection year whenever possible from complete and legitimate date information and flags dubious (e.g., 07/07/10), illegitimate (e.g., 1300, 2100), or not supplied (e.g., 0 or NA) collecting year.
 
 <br/>
 
 ![](https://img.icons8.com/windows/96/000000/box-important--v1.png){width="40"} **Important**:
 
-The results of **VALIDATION** test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
+The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
 
 ## Installation
 
@@ -39,7 +39,7 @@ if (!require("remotes")) install.packages("remotes")
 if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 ```
 
-## Create directories
+## Creating directories
 
 Create directories to save the results of the workflow. If not existing, four new folders are created in a folder named 'Output'.
 
@@ -47,7 +47,7 @@ Create directories to save the results of the workflow. If not existing, four ne
 bdc_create_dir()
 ```
 
-## Read the database
+## Reading the database
 
 Read the database created in the [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html) step of the BDC workflow. It is also possible to read any datasets containing the \*\*required\*\* fields to run the workflow (more details [here](%5Bhttps://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
@@ -91,7 +91,7 @@ check_time <-
 
 ## 2 - Extract year from event date
 
-*ENRICHMENT*. This function extracts four-digit year from unambiguously interpretable collecting dates.
+*ENRICHMENT*. This function extracts four-digit years from unambiguously interpretable collecting dates.
 
 ```{r}
 check_time <-
@@ -100,7 +100,7 @@ check_time <-
 
 ## 3 - Records with out-of-range collecting year
 
-*VALIDATION*. This function identifies records with illegitimate or potentially imprecise collecting year. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900). Older records are more likely to be imprecise due to the locality-derived geo-referencing process.
+*VALIDATION*. This function identifies records with illegitimate or potentially imprecise collecting years. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900). Older records are more likely to be imprecise due to the locality-derived geo-referencing process.
 
 ```{r}
 check_time <-
@@ -111,7 +111,7 @@ check_time <-
 
 ## Report
 
-Creating a column named **.summary** summing up the results of all **VALIDATION** tests. This column is **FALSE** witharecord is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
+Here we create a column named **.summary** summing up the results of all **VALIDATION** tests. This column is **FALSE** when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
 
 ```{r}
 check_time <- bdc_summary_col(data = check_time)
@@ -148,7 +148,7 @@ report
 
 ## Figures
 
-Creating a histogram showing the number of records collecting over the years.
+Here we create a histogram showing the number of records collecting over the years.
 
 ```{r, eval = FALSE}
 bdc_create_figures(data = check_time,
@@ -170,7 +170,7 @@ bdc_create_figures(data = check_time,
 
 <br/>
 
-## Save a "raw" database
+## Saving a "raw" database
 
 Save the original database containing the results of all data quality tests appended in separate columns.
 
@@ -180,7 +180,7 @@ check_time %>%
             here::here("Output", "Intermediate", "04_time_raw_database.qs"))
 ```
 
-## Filter the database
+## Filtering the database
 
 Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all steps of the BDC workflow to get a "clean", "fitness-for-use" database. Note that **29%** (2,631 out of 9.000 records) of original records were considered "fitness-for-use" after the data-cleaning process.
 
@@ -191,7 +191,7 @@ output <-
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 ```
 
-## Save a "fitness-for-use" database
+## Saving a clean "fitness-for-use" database
 
 ```{r}
 output %>%
