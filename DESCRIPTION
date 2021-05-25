@@ -71,7 +71,8 @@ Suggests:
     rnaturalearth,
     rvest,
     testthat,
-    xml2
+    xml2,
+    rmarkdown
 VignetteBuilder:
     knitr
 Encoding: UTF-8
