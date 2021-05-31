@@ -35,7 +35,7 @@ bdc_coord_trans <-
            worldmap_cntr_code
   ) {
     
-    data <- data %>% dplyr::select(x, y, country_code, id)
+    data <- data %>% dplyr::select(dplyr::all_of(x), dplyr::all_of(y), dplyr::all_of(country_code), dplyr::all_of(id))
     d1 <- data.frame(x = data[, x], y = -data[, y])
     d2 <- data.frame(x = -data[, x], y = data[, y])
     d3 <- data.frame(x = -data[, x], y = -data[, y])
