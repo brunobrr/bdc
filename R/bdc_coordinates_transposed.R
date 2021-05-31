@@ -78,7 +78,7 @@ bdc_coordinates_transposed <-
            countryCode = "countryCode",
            border_buffer = 0.2
            ) {
-
+  data <- dplyr::tibble(data)
   check_require_cran("rnaturalearth")
   check_require_cran("readr")
   check_require_github("ropensci/rnaturalearthdata")
@@ -148,7 +148,7 @@ bdc_coordinates_transposed <-
 
   # finding the position of records with lon/lat modified
   w <-
-    which(data[, "database_id"] %in% (corrected_coordinates %>% dplyr::pull(database_id)))
+    which(data%>% dplyr::pull(database_id) %in% (corrected_coordinates %>% dplyr::pull(database_id)))
 
   data[w, "decimalLatitude"] <-
     corrected_coordinates[, "decimalLatitude_modified"]
