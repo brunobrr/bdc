@@ -67,12 +67,6 @@ jobs:
           remotes::install_cran(c("rcmdcheck", "curl"))
         shell: Rscript {0}
 
-      - name: Install gnparser
-        run: |
-          remotes::install_local(force = TRUE)
-          rgnparser::install_gnparser()
-        shell: Rscript {0}
-
       - name: Session info
         run: |
           options(width = 100)
