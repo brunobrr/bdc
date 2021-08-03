@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-This step of the BDC workflow extracts the collection year whenever possible from complete and legitimate date information and flags dubious (e.g., 07/07/10), illegitimate (e.g., 1300, 2100), or not supplied (e.g., 0 or NA) collecting year.
+This step of the `bdc` package extracts the collection year whenever possible from complete and legitimate date information and flags dubious (e.g., 07/07/10), illegitimate (e.g., 1300, 2100), or not supplied (e.g., 0 or NA) collecting year.
 
 <br/>
 
@@ -41,7 +41,7 @@ if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 
 ## Creating directories
 
-Create directories to save the results of the workflow. If not existing, four new folders are created in a folder named 'Output'.
+Create directories to save the results of the functions. If not existing, four new folders are created in a folder named 'Output'.
 
 ```{r}
 bdc_create_dir()
@@ -49,7 +49,7 @@ bdc_create_dir()
 
 ## Reading the database
 
-Read the database created in the [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html) step of the BDC workflow. It is also possible to read any datasets containing the \*\*required\*\* fields to run the workflow (more details [here](%5Bhttps://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
+Read the database created in the [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html) module of the `bdc` package. It is also possible to read any datasets containing the \*\*required\*\* fields to run the funtion (more details [here](%5Bhttps://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
 ```{r}
 database <-
@@ -133,7 +133,7 @@ DT::datatable(
 
 <br/>
 
-Creating a report summarizing the results of all tests of the BDC workflow
+Creating a report summarizing the results of all tests of the `bdc` package.
 
 ```{r, eval = FALSE}
 report <-
@@ -166,7 +166,7 @@ bdc_create_figures(data = check_time,
 
 <br/>
 
-![Summary of all validation tests of the BDC workflow](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/time_summary_all_tests_BAR.png){width="20cm"}
+![Summary of all validation tests of the `bdc` package](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/time_summary_all_tests_BAR.png){width="20cm"}
 
 <br/>
 
@@ -182,7 +182,7 @@ check_time %>%
 
 ## Filtering the database
 
-Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all steps of the BDC workflow to get a "clean", "fitness-for-use" database. Note that **29%** (2,631 out of 9.000 records) of original records were considered "fitness-for-use" after the data-cleaning process.
+Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all steps of the `bdc` package to get a "clean", "fitness-for-use" database. Note that **29%** (2,631 out of 9.000 records) of original records were considered "fitness-for-use" after the data-cleaning process.
 
 ```{r}
 output <-

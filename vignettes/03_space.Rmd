@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 We used the R package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to capitals, provinces, and country centroids, coordinates in urban areas, around biodiversity institutions, or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
 
-Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter step of the workflow (more details [here](https://brunobrr.github.io/bdc/articles/prefilter.html)).
+Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter module of the package (more details [here](https://brunobrr.github.io/bdc/articles/prefilter.html)).
 
 <br/>
 
@@ -43,7 +43,7 @@ if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 
 ## Creating directories
 
-Create directories to save the results of the workflow. If not existing, four new folders are created in a folder named 'Output'.
+Create directories to save the results of the functions. If not existing, four new folders are created in a folder named 'Output'.
 
 ```{r}
 bdc_create_dir()
@@ -51,7 +51,7 @@ bdc_create_dir()
 
 ## Reading the database
 
-Reading the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html) step the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
+Reading the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html) step the `bdc` package. It is also possible to read any datasets containing the **required** fields to run the function (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
 ```{r}
 database <-
@@ -225,7 +225,7 @@ bdc_create_figures(data = check_space,
 
 ## Filtering the database
 
-It is possible to remove flagged records (potentially problematic ones) to get a 'clean' database (i.e., without test columns starting with "."). However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.
+It is possible to remove flagged records (potentially problematic ones) to get a 'clean' database (i.e., without test columns starting with "."). However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal module of the package), potentially erroneous or suspect records will be removed in the final module of the package.
 
 ```{r}
 # output <-

@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The first step of the BDC workflow handles the harmonization of heterogeneous datasets in a standard format simply and efficiently. How is this accomplished? Basically, by replacing the headers of original datasets with standardized terms. To do so, you have to fill out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**.
+The first step of the BDC package handles the harmonization of heterogeneous datasets in a standard format simply and efficiently. How is this accomplished? Basically, by replacing the headers of original datasets with standardized terms. To do so, you have to fill out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**.
 
 Once standardized, datasets are then integrated into a standardized database having a minimum set of terms required for sharing biodiversity data and metadata across a wide variety of biodiversity applications ([Simple Darwin Core standards](https://dwc.tdwg.org/terms/)).
 
@@ -33,7 +33,7 @@ Once standardized, datasets are then integrated into a standardized database hav
 -   Original datasets must be formatted in comma-separated format (**.csv**);
 -   When filling out the configuration table, please provide the **exact** name of a column of the original dataset and the **full path** of each original dataset;
 -   Names of original datasets without a corresponding DarwinCore term must be filled as **NA** (not available);
--   The workflow is **adjustable** so that you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
+-   The function is **adjustable** so that you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
 
 ## Installation
 
@@ -52,7 +52,7 @@ bdc::bdc_create_dir()
 
 ## Read the configuration table
 
-Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the workflow using a database of terrestrial plant species occurring in Brazil. This database contains 9.000 records compiled from nine different sources (see below).
+Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 9.000 records compiled from nine different sources (see below).
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"))
@@ -83,12 +83,12 @@ DT::datatable(
 
 <br/>
 
-The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the workflow: i) **required**, i.e., the minimum information necessary to run the workflow, ii) **recommended**, i.e., not mandatory but having important details on species records, and iii) **additional**, i.e., information potentially useful for detailed data analyses.
+The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the function: i) **required**, i.e., the minimum information necessary to run the function, ii) **recommended**, i.e., not mandatory but having important details on species records, and iii) **additional**, i.e., information potentially useful for detailed data analyses.
 
 Below are listed the specifications of each field of the configuration table:
 
 -   **Field**: Name of the fields in *DatabaseInfo.csv* to be filled in.
--   **Category**: Classification of each field in *DatabaseInfo.csv*. *required (RQ)*, i.e., the minimum information necessary to run the workflow, ii) *recommended (RE)*, i.e., not mandatory but having important details on species records, and iii) *additional (AD)*, i.e., information potentially useful for detailed data analyses. As general guidance, be careful to include all *required* fields and supply as many recommended and additional fields as possible.
+-   **Category**: Classification of each field in *DatabaseInfo.csv*. *required (RQ)*, i.e., the minimum information necessary to run the function, ii) *recommended (RE)*, i.e., not mandatory but having important details on species records, and iii) *additional (AD)*, i.e., information potentially useful for detailed data analyses. As general guidance, be careful to include all *required* fields and supply as many recommended and additional fields as possible.
 -   **Description**: Description of the content of the specified field in the original database.
 -   **Type**: Type of content data on the specified field in the original database.
 -   **Example**: An example of a single content on the specified field in the original database.
@@ -129,7 +129,7 @@ database <-
 
 <br/>
 
-An example of a standardized database containing the required field to run the BDC workflow.
+An example of a standardized database containing the required field to run the `bdc` package.
 
 <br/>
 

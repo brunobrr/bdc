@@ -22,9 +22,9 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The combination of large datasets from several sources requires careful standardization taxon names. Non-standardized incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The BDC workflow includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic references**. The taxonomic standardization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
+The combination of large datasets from several sources requires careful standardization taxon names. Non-standardized incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The `bdc` package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic references**. The taxonomic standardization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
 
-The workflow tools used to standardize names (*bdc_clean_name* and *bdc_query_names_taxadb*) **contain additions to the *taxadb* package**, including tools for:
+The functions used to standardize names (*bdc_clean_name* and *bdc_query_names_taxadb*) **contain additions to the *taxadb* package**, including tools for:
 
 1.  Cleaning and parsing scientific names;
 2.  Resolving misspelled names or variant spellings using a fuzzy matching application;
@@ -58,7 +58,7 @@ if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 
 ## Creating directories
 
-Create directories to save the results of the workflow. If not existing, four new folders are created in a folder named 'Output'.
+Create directories to save the results of the functions. If not existing, four new folders are created in a folder named 'Output'.
 
 ```{r}
 bdc_create_dir()
@@ -66,7 +66,7 @@ bdc_create_dir()
 
 ## Reading the database
 
-Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) step of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
+Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) step of the `bdc` package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
 
 ```{r, echo = FALSE}
 database <-
@@ -230,7 +230,7 @@ unresolved_names %>%
 
 ## Filtering the database
 
-It is possible to remove records with unresolved or invalid names to get a 'clean' database. However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.
+It is possible to remove records with unresolved or invalid names to get a 'clean' database. However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal modules of the package), potentially erroneous or suspect records will be removed in the final module of the package.
 
 ```{r}
 # output <-
