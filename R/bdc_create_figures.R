@@ -63,6 +63,8 @@ bdc_create_figures <-
     check_require_cran("rworldmap")
     check_require_cran("ggplot2")
 
+    bdc_create_dir()
+
     # Total number of records
     suppressMessages({
       if (!fs::file_exists("data/n_records.csv")) {

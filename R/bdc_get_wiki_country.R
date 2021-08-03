@@ -24,6 +24,8 @@ bdc_get_wiki_country <- function() {
   check_require_cran("rvest")
   check_require_cran("xml2")
 
+  bdc_create_dir()
+
   # Test if file was downloaded
   file <- here::here("inst", "extdata", "countries_names", "wiki_country_names.txt")
 

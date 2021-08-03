@@ -38,7 +38,7 @@
 #'   database_id = "database_id",
 #'   workflow_step = "prefilter")
 #' }
-#' 
+#'
 bdc_create_report <-
   function(data,
            database_id = "database_id",
@@ -46,6 +46,9 @@ bdc_create_report <-
 
     check_require_cran("readr")
     check_require_cran("DT")
+
+    bdc_create_dir()
+
   suppressMessages({
 
     # Total number of records

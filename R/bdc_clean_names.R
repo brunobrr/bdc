@@ -51,6 +51,8 @@
 #' }
 bdc_clean_names <- function(sci_names) {
 
+  bdc_create_dir()
+
   firstup <- function(x) {
     substr(x, 1, 1) <- toupper(substr(x, 1, 1))
     x
