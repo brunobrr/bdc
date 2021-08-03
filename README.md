@@ -3,7 +3,7 @@
 
 # BDC <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" height="200"/></a>
 
-## A comprehensive and straightforward workflow for standardizing, integrating, and cleaning biodiversity data
+## bdc: An R toolkit for standardizing, integrating, and cleaning biodiversity data
 
 <!-- badges: start -->
 
@@ -14,14 +14,15 @@
 ### Overview
 
 Handle biodiversity data from several different sources is not an easy
-task. Here we present the **Biodiversity Data Cleaning (BDC) workflow**,
-an **automated** workflow to address **quality issues and improve data
-fitness-for-use**. The workflow harmonizes and integrates data from
+task. Here, we present the Biodiversity Data Cleaning (bdc), an R
+package to address quality issues and improve the fitness-for-use of a
+dataset. bdc contains functions to harmonize and integrate data from
 different sources following common standards and protocols and
 implements various tests and tools to flag, document, clean, and correct
-the taxonomic, spatial, and temporal information of biodiversity data.
+taxonomic, spatial, and temporal data.
 
-The workflow is composed of five core steps:
+The bdc package is organized in thematic modules related to different
+biodiversity dimensions, including:
 
 1.  [**Standardization** and
     **integration**](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)
@@ -41,13 +42,12 @@ The workflow is composed of five core steps:
     flagging and, whenever possible, correction of inconsistent
     collection date.
 
-Aim to facilitate the **documentation, visualization, and interpretation
-of results** of data quality tests, in all steps, several files
-documenting the workflow results are saved automatically in a folder
-named “Output”. These files include i) r**ecords needing further
-inspection**, ii) **databases** containing the results of each step,
-iii) **figures**, and iv) **data-quality reports** documenting the
-results.
+Aim to facilitate the documentation, visualization, and interpretation
+of results of data quality teststhe package contains functions for
+documenting the results of the data-cleaning tests, including functions
+for saving i) records needing further inspection, ii) databases
+containing the results of each step, iii) figures, and iv) data-quality
+reports.
 
 ### Installation
 
