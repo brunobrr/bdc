@@ -41,7 +41,7 @@ if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 
 ## Creating directories
 
-Create directories to save the results of the workflow. If not existing, four new folders are created in a folder named 'Output'.
+Create directories to save the results of the functions. If not existing, four new folders are created in a folder named 'Output'.
 
 ```{r}
 bdc_create_dir()
@@ -49,7 +49,7 @@ bdc_create_dir()
 
 ## Reading the database
 
-Read the merged database created in the step **Standardization and integration of different datasets** of the BDC workflow. It is also possible to read any datasets containing the **required** fields to run the workflow (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
+Read the merged database created in the step **Standardization and integration of different datasets** of the `bdc` package. It is also possible to read any datasets containing the **required** fields to run the functions (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
 ```{r}
 database <-
@@ -162,7 +162,7 @@ check_pf <-
     lat = "decimalLatitude",
     lon = "decimalLongitude",
     country = "country_suggested",
-    countryCode = "countryCode", 
+    countryCode = "countryCode",
     border_buffer = 0.2 # in decimal degrees (~22 km at the equator)
   )
 ```

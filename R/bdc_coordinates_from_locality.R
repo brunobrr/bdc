@@ -12,20 +12,20 @@
 #' WGS84. Default = "decimalLongitude".
 #' @param locality character string. The column name with locality information.
 #' Default = "locality".
-#' 
+#'
 #' @details According to DarwinCore terminology, locality refers to "the
 #' specific description of the place" where an organism was recorded.
-#' 
+#'
 #' @return A data.frame containing records missing or with invalid coordinates
 #' but with potentially useful locality information is saved in
 #' Output/Check/01_coordinates_from_locality.csv.
-#' 
+#'
 #' @importFrom data.table fwrite
 #' @importFrom dplyr filter select
 #' @importFrom here here
 #' @importFrom stringr str_detect str_squish
-#' 
-#' @export 
+#'
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -43,18 +43,20 @@ bdc_coordinates_from_locality <-
     col_names <- c(".coordinates_empty", ".coordinates_outOfRange")
     if (!all(col_names %in% names(data))){
     data <-
-      bdc_coordinates_empty(data = data, 
-                            lat = {{ lat }}, 
+      bdc_coordinates_empty(data = data,
+                            lat = {{ lat }},
                             lon = {{ lon}})
 
     data <-
-      bdc_coordinates_outOfRange(data = data, 
-                                lat = {{ lat }}, 
+      bdc_coordinates_outOfRange(data = data,
+                                lat = {{ lat }},
                                 lon = {{ lon }})
     }
 
     })
-    
+
+    bdc_create_dir()
+
     df <-
       data %>%
       dplyr::mutate(locality == stringr::str_squish(.data[[locality]])) %>%
@@ -64,12 +66,12 @@ bdc_coordinates_from_locality <-
         .coordinates_empty == FALSE |
           .coordinates_outOfRange == FALSE
       )
-    
-    
+
+
     df <-
       df %>%
       dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
-    
+
     save <- here::here("Output/Check/01_coordinates_from_locality.csv")
     df %>% data.table::fwrite(save)
 
