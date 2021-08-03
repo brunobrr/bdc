@@ -14,29 +14,30 @@
 #' calculated from sci_name. Default = "species_first_letter".
 #' @return A data.frame whose first column is the closest matching name for a misspelled name and the second one a matching distance.
 #' @noRd
+#' @export
 #'
 #' @examples
 #' \dontrun{
 #' bdc_return_names(
-#' "Cebus apela", 
-#' max_distance = 0.75, 
+#' "Cebus apela",
+#' max_distance = 0.75,
 #' species_first_letter = c("Cebus apella", "Puma concolar"))
 #' }
 bdc_return_names <- function(sci_name, max_distance, species_first_letter) {
   out <- stringdist::stringdist(sci_name, species_first_letter)
-  min_dist_name <- 
+  min_dist_name <-
     species_first_letter[out == sort(out, decreasing = FALSE)[1]][1]
   sorted <- sort(c(nchar(sci_name), nchar(min_dist_name)))
   max_dist <- 1 - (min(out) / sorted[2])
 
   if (max_dist >= max_distance) {
-    return(data.frame(original = sci_name, 
-                      suggested = min_dist_name, 
+    return(data.frame(original = sci_name,
+                      suggested = min_dist_name,
                       distance = round(max_dist, 2)))
   }
   else {
-    return(data.frame(original = sci_name, 
-                      suggested = NA, 
+    return(data.frame(original = sci_name,
+                      suggested = NA,
                       distance = round(max_dist, 2)))
   }
 }

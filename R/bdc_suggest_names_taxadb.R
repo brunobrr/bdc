@@ -47,10 +47,11 @@
 #' @importFrom foreach %dopar%
 #'
 #' @noRd
+#' @export
 #'
 #' @examples
 #' \dontrun{
-#' x <- ("Cebus apela", "Puma concolar")
+#' x <- c("Cebus apela", "Puma concolar")
 #' bdc_suggest_names_taxadb(
 #' x,
 #' max_distance = 0.75,
@@ -69,7 +70,10 @@ bdc_suggest_names_taxadb <-
            parallel = TRUE,
            ncores = 2) {
 
-    
+    # FIXME: set a env var for now
+    # REVIEW: https://github.com/ropensci/taxadb/issues/91
+    Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.org")
+
     # Get first letter of all scientific names
     first_letter <-
       unique(sapply(sci_name, function(i) {

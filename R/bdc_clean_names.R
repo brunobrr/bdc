@@ -78,11 +78,16 @@ bdc_clean_names <- function(sci_names) {
 
     # Get animalia family names from gbif via taxadb package
     animalia_families <-
-      taxadb::taxa_tbl("gbif") %>%
-      dplyr::filter(kingdom == "Animalia") %>%
-      dplyr::select(family) %>%
-      dplyr::distinct() %>%
-      dplyr::pull(family)
+      system.file("extdata", "family_names/animalia_families.txt", package = "bdc") %>%
+      read.table() %>%
+      pull(V1)
+
+    # FIXME 03-08-2021: solve duckdb bug
+      # taxadb::taxa_tbl("gbif") %>%
+      # dplyr::filter(kingdom == "Animalia") %>%
+      # dplyr::select(family) %>%
+      # dplyr::distinct() %>%
+      # dplyr::pull(family)
 
     # Raw scientific names
     sci_names_raw <- data[[sci_names]] %>% stringr::str_squish()
