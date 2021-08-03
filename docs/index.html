@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -96,17 +96,17 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#bdc-" class="anchor"></a>BDC <a href="https://github.com/brunobrr/bdc"><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" height="200"></a>
 </h1></div>
-<div id="a-comprehensive-and-straightforward-workflow-for-standardizing-integrating-and-cleaning-biodiversity-data" class="section level2">
+<div id="bdc-an-r-toolkit-for-standardizing-integrating-and-cleaning-biodiversity-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#a-comprehensive-and-straightforward-workflow-for-standardizing-integrating-and-cleaning-biodiversity-data" class="anchor"></a>A comprehensive and straightforward workflow for standardizing, integrating, and cleaning biodiversity data</h2>
+<a href="#bdc-an-r-toolkit-for-standardizing-integrating-and-cleaning-biodiversity-data" class="anchor"></a>bdc: An R toolkit for standardizing, integrating, and cleaning biodiversity data</h2>
 <!-- badges: start -->
 
 <!-- badges: end -->
 <div id="overview" class="section level3">
 <h3 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h3>
-<p>Handle biodiversity data from several different sources is not an easy task. Here we present the <strong>Biodiversity Data Cleaning (BDC) workflow</strong>, an <strong>automated</strong> workflow to address <strong>quality issues and improve datas’ fitness-for-use</strong>. The workflow harmonizes and integrates data from different sources following common standards and protocols and implements various tests and tools to flag, document, clean, and correct the taxonomic, spatial, and temporal information of biodiversity data.</p>
-<p>The workflow is composed of five core steps:</p>
+<p>Handle biodiversity data from several different sources is not an easy task. Here, we present the Biodiversity Data Cleaning (bdc), an R package to address quality issues and improve the fitness-for-use of a dataset. bdc contains functions to harmonize and integrate data from different sources following common standards and protocols and implements various tests and tools to flag, document, clean, and correct taxonomic, spatial, and temporal data.</p>
+<p>The bdc package is organized in thematic modules related to different biodiversity dimensions, including:</p>
 <ol>
 <li>
 <a href="https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html"><strong>Standardization</strong> and <strong>integration</strong></a> of different datasets;</li>
@@ -119,8 +119,7 @@
 <li>
 <a href="https://brunobrr.github.io/bdc/articles/04_time.html"><strong>Time</strong></a>: flagging and, whenever possible, correction of inconsistent collection date.</li>
 </ol>
-<p>Aim to facilitate the <strong>documentation, visualization, and interpretation of results</strong> of data quality tests, in all steps, several files documenting the workflow results are saved automatically in a folder named “Output”. These files include i) r<strong>ecords needing further inspection</strong>, ii) <strong>databases</strong> containing the results of each step,</p>
-<p>iii) <strong>figures</strong>, and iv) <strong>data-quality reports</strong> documenting the results.</p>
+<p>Aim to facilitate the documentation, visualization, and interpretation of results of data quality teststhe package contains functions for documenting the results of the data-cleaning tests, including functions for saving i) records needing further inspection, ii) databases containing the results of each step, iii) figures, and iv) data-quality reports.</p>
 </div>
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
