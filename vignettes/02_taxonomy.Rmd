@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-The combination of large datasets from several sources requires careful standardization taxon names. Non-standardized incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The `bdc` package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic references**. The taxonomic standardization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
+The combination of large datasets from several sources requires careful standardization taxon names. Non-standardized incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The *bdc* package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic references**. The taxonomic standardization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
 
 The functions used to standardize names (*bdc_clean_name* and *bdc_query_names_taxadb*) **contain additions to the *taxadb* package**, including tools for:
 
@@ -66,7 +66,7 @@ bdc_create_dir()
 
 ## Reading the database
 
-Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) step of the `bdc` package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
+Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) module of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
 
 ```{r, echo = FALSE}
 database <-

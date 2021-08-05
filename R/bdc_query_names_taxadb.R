@@ -1,12 +1,12 @@
 #' Matching scientific names against local stored taxonomic databases
-#'
-#' The taxonomic standardization process borrows heavily from Norman et al.
-#' (2020; taxadb package), which contains functions that allow querying millions
-#' of taxonomic names in a fast, automated, and consistent way using
-#' high-quality locally stored taxonomic databases. The bdc_get_taxadb contains
-#' additions to the taxadb packagethat allow queries using fuzzy matching and
-#' converting synonyms to the current accepted name. The fuzzy matching algorithm
-#' was inspired by the get.taxa function of the 'flora' package.
+#' 
+#' Standardization of scientific names by correcting spelling errors and
+#' converting nomenclatural synonyms to currently accepted names. Names are
+#' standardized based on one out of ten taxonomic authorities (i.e., backbones)
+#' available in the taxadb package. Spelling errors are corrected using a fuzzy
+#' match algorithm based on a match distance defined by the user. The name
+#' standardization quality can be accessed in the column “notes” placed in the
+#' table resulting from the name standardization process.
 #'
 #'
 #' @param sci_name character string. Containing scientific names to be queried.
@@ -86,7 +86,7 @@
 #' **Fuzzy matching**
 #'
 #' Fuzzy matching will be applied when "suggest_names" is TRUE and only for
-#' names not resolved by an exact match. . In such cases, a fuzzy matching
+#' names not resolved by an exact match. In such cases, a fuzzy matching
 #' algorithm processes name-matching queries to find a potential matching
 #' candidate from the specified taxonomic database. Fuzzy matching identifies
 #' probable names (here identified as suggested names) for original names via a

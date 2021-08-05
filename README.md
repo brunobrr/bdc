@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# BDC <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" height="200"/></a>
+# ***bdc*** <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" height="200"/></a>
 
 ## bdc: An R toolkit for standardizing, integrating, and cleaning biodiversity data
 
@@ -16,12 +16,12 @@
 Handle biodiversity data from several different sources is not an easy
 task. Here, we present the Biodiversity Data Cleaning (bdc), an R
 package to address quality issues and improve the fitness-for-use of a
-dataset. bdc contains functions to harmonize and integrate data from
+dataset. *bdc* contains functions to harmonize and integrate data from
 different sources following common standards and protocols and
 implements various tests and tools to flag, document, clean, and correct
 taxonomic, spatial, and temporal data.
 
-The bdc package is organized in thematic modules related to different
+The *bdc* package is organized in thematic modules related to different
 biodiversity dimensions, including:
 
 1.  [**Standardization** and
@@ -42,16 +42,20 @@ biodiversity dimensions, including:
     flagging and, whenever possible, correction of inconsistent
     collection date.
 
-Aim to facilitate the documentation, visualization, and interpretation
-of results of data quality teststhe package contains functions for
-documenting the results of the data-cleaning tests, including functions
-for saving i) records needing further inspection, ii) databases
-containing the results of each step, iii) figures, and iv) data-quality
-reports.
+Aim to facilitate the **documentation, visualization, and
+interpretation** of results of data quality tests the package contains
+functions for documenting the results of the data-cleaning tests,
+including functions for saving i) records needing further inspection,
+ii) databases containing the results of each step, iii) figures, and iv)
+data-quality reports.
+
+The modules illustrated, and functions within, can be linked to form a
+workflow (see [vignettes](https://brunobrr.github.io/bdc/)), but can
+also be executed independently depending on user needs.
 
 ### Installation
 
-You can install the released version of “BDC” from
+You can install the released version of *bdc* from
 [github](https://github.com/brunobrr/bdc) with:
 
 ``` r
@@ -61,8 +65,8 @@ if (!require("bdc")) remotes::install_github("brunobrr/bdc")
 
 ### Package website
 
-See BDC package website (<https://brunobrr.github.io/bdc/>) for detailed
-explanation on each step of the workflow.
+See *bdc* package website (<https://brunobrr.github.io/bdc/>) for
+detailed explanation on each step of the workflow.
 
 ### Getting help
 
