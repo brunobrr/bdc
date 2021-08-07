@@ -65,7 +65,8 @@ Imports:
     taxadb,
     tibble,
     tidyselect,
-    vroom
+    vroom,
+    MonetDBLite (== 0.6.0)
 Suggests:
     readr,
     rnaturalearth,
