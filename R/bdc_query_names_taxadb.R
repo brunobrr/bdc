@@ -1,5 +1,5 @@
 #' Matching scientific names against local stored taxonomic databases
-#' 
+#'
 #' Standardization of scientific names by correcting spelling errors and
 #' converting nomenclatural synonyms to currently accepted names. Names are
 #' standardized based on one out of ten taxonomic authorities (i.e., backbones)
@@ -189,6 +189,7 @@ bdc_query_names_taxadb <-
     # FIXME: set a env var for now
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
     Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.org")
+    Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
 
     # Measuring the execution time
     start <- Sys.time()
