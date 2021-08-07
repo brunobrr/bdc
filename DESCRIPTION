@@ -74,7 +74,7 @@ Suggests:
     xml2,
     rmarkdown
 Remotes:
-    MonetDB/MonetDBLite-R@*release
+    MonetDB/MonetDBLite-R
 VignetteBuilder:
     knitr
 Encoding: UTF-8
