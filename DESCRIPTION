@@ -65,8 +65,7 @@ Imports:
     taxadb,
     tibble,
     tidyselect,
-    vroom,
-    MonetDBLite
+    vroom
 Suggests:
     readr,
     rnaturalearth,
@@ -74,7 +73,7 @@ Suggests:
     testthat,
     xml2,
     rmarkdown
-Remotes: MonetDB/MonetDBLite-R@v0.6.0
+Remotes: hannesmuehleisen/MonetDBLite-R@v0.6.0
 VignetteBuilder:
     knitr
 Encoding: UTF-8
