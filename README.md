@@ -6,9 +6,6 @@
 ## bdc: An R toolkit for standardizing, integrating, and cleaning biodiversity data
 
 <!-- badges: start -->
-
-[![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
-
 <!-- badges: end -->
 
 ### Overview
