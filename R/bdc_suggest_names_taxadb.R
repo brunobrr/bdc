@@ -72,7 +72,7 @@ bdc_suggest_names_taxadb <-
 
     # FIXME: set a env var for now
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
-    Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.org")
+    Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
     Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
 
     # Get first letter of all scientific names
