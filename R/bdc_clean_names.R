@@ -839,7 +839,7 @@ bdc_clean_names <- function(sci_names) {
     # one-time setup to download and install rgnparser, which is used to parse
     # scientific name (for more details, see
     # https://github.com/ropensci/rgnparser)
-    rgnparser::install_gnparser(force = T)
+    rgnparser::install_gnparser(force = FALSE)
 
     data_temp <- data
     w <- which(colnames(data_temp) == sci_names)
