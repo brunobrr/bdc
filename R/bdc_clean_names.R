@@ -888,7 +888,7 @@ bdc_clean_names <- function(sci_names) {
   df_join <- dplyr::full_join(names_raw, parse_names, by = "scientificName")
   
   # Save the results of the parsing names process
-  data.table::fwrite(df_join, paste0("Output/", "Check/", "02_parsed_names.csv"))
+  data.table::fwrite(df_join, here::here("Output", "Check", "02_parsed_names.csv"))
   
   # Save a "clean" database
   df_join <-
