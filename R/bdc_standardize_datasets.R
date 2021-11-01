@@ -11,6 +11,9 @@
 #'
 #' @param overwrite A logical vector indicating whether the final merged
 #' dataset should be overwritten. The default is FALSE.
+#' 
+#' @format a character setting the output file type. Option available are "csv"
+#' and "qs" (recommenced for saving large datasets). Default == "csv".
 #'
 #' @importFrom data.table fread
 #' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
@@ -56,21 +59,27 @@
 #'  metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
 #   # TODO: finish example
 #' }
-bdc_standardize_datasets <- function(metadata, overwrite = FALSE) {
+bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE) {
 
   fs::dir_create(here::here("Output", "Intermediate"))
 
-  merged_filename <- here::here("Output", "Intermediate", "00_merged_database.qs")
+  merged_filename_qs <-
+    here::here("Output", "Intermediate", "00_merged_database.qs")
+  
+  merged_filename_csv <-
+    here::here("Output", "Intermediate", "00_merged_database.csv")
+  
+  if (file.exists(merged_filename_qs) & overwrite | 
+      file.exists(merged_filename_csv) & overwrite) {
 
-  if (file.exists(merged_filename) & overwrite) {
-
-    unlink(merged_filename)
+    unlink(merged_filename_qs)
+    unlink(merged_filename_csv)
 
   }
 
-  if (!file.exists(merged_filename)) {
+  if (!file.exists(merged_filename_qs) | !file.exists(merged_filename_csv)) {
 
-    save_in_dir <- here::here("data", "temp_datasets")
+    save_in_dir <- here::here("data", "temp_datasets", "/")
 
     if (!fs::dir_exists(save_in_dir)) {
 
@@ -78,10 +87,16 @@ bdc_standardize_datasets <- function(metadata, overwrite = FALSE) {
 
     }
 
-    input_file <-
+    # change path according to users directory
+    metadata$fileName <-
+      gsub("C:/Users/Bruno Ribeiro/Documents/bdc/vignettes",
+           here::here(),
+           metadata$fileName)
+    
+  input_file <-
       metadata %>%
       dplyr::pull(fileName)
-
+    
     for (file_index in seq_along(input_file)) {
 
       input_filename <-
@@ -95,7 +110,6 @@ bdc_standardize_datasets <- function(metadata, overwrite = FALSE) {
         dplyr::select(datasetName) %>%
         dplyr::pull()
 
-      save_in_filename <- paste0(save_in_dir, "/standard_", dataset_name, ".qs")
 
       if (!file.exists(save_in_filename)) {
 
@@ -161,10 +175,22 @@ bdc_standardize_datasets <- function(metadata, overwrite = FALSE) {
 
               message(paste("Creating", save_in_filename))
 
+              standard_dataset <- 
               standard_dataset %>%
-                dplyr::mutate_if(is.numeric, as.character) %>%
-                qs::qsave(save_in_filename)
-
+                dplyr::mutate_if(is.numeric, as.character)
+              
+              if (format == "qs"){
+                
+                qs::qsave(standard_dataset,
+                          paste0(save_in_dir, "standard_", dataset_name, ".", format))
+                
+              } else {
+                
+                data.table::fwrite(standard_dataset, 
+                                   paste0(save_in_dir, "standard_", dataset_name, ".", format))
+              }
+              
+  
             },
 
             error = function(e) {
