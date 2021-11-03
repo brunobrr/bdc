@@ -118,7 +118,7 @@ DT::datatable(
 Note that the standardized database integrating all dataset is saved in the folder "Output/Intermediate" as *"00_merged_database.qs"*. The database is saved with a **"qs" extension**, a helpful format for quickly saving and reading large databases. This file can be read using the function "qread" from the "qs" package (see below).
 
 ```{r message=F, warning=F}
-bdc_standardize_datasets(metadata = metadata)
+bdc_standardize_datasets(metadata = metadata, format = "qs", overwrite = T)
 ```
 
 ```{r message=F, warning=F, echo = FALSE}

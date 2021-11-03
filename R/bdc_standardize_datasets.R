@@ -61,23 +61,27 @@
 #' }
 bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE) {
   
+  if (format == "qs") {
+    
+    merged_filename <-
+      here::here("Output", "Intermediate", "00_merged_database.qs")
+  
+  } else {
+    
+    merged_filename <-
+      here::here("Output", "Intermediate", "00_merged_database.csv")
+
+  }
+  
   fs::dir_create(here::here("Output", "Intermediate"))
   
-  merged_filename_qs <-
-    here::here("Output", "Intermediate", "00_merged_database.qs")
-  
-  merged_filename_csv <-
-    here::here("Output", "Intermediate", "00_merged_database.csv")
-  
-  if (file.exists(merged_filename_qs) & overwrite | 
-      file.exists(merged_filename_csv) & overwrite) {
+  if (file.exists(merged_filename) & overwrite) {
     
-    unlink(merged_filename_qs)
-    unlink(merged_filename_csv)
+    unlink(merged_filename)
     
   }
   
-  if (!file.exists(merged_filename_qs) | !file.exists(merged_filename_csv)) {
+  if (!file.exists(merged_filename)) {
     
     save_in_dir <- here::here("data", "temp_datasets", "/")
     
@@ -181,16 +185,13 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
               standard_dataset %>%
               dplyr::mutate_if(is.numeric, as.character)
             
-            if (format == "qs"){
-              
-              ## TODO: not running: "basic_ios::clear: iostream error"
+            if (format == "qs") {
               qs::qsave(standard_dataset,
                         paste0(save_in_dir, "standard_", dataset_name,
                                ".", format))
               
             } else {
-              
-              data.table::fwrite(standard_dataset, 
+              data.table::fwrite(standard_dataset,
                                  paste0(save_in_dir, "standard_", dataset_name,
                                         ".", format))
             }
@@ -220,6 +221,9 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
     }
     
     # Concatenate all the resulting standardized databases
+    
+    if (format == "qs"){
+      
     merged_database <-
       here::here("data", "temp_datasets") %>%
       fs::dir_ls(regexp = "*.qs") %>%
@@ -228,23 +232,32 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
                   .progress = plyr::progress_text(char = "."),
                   .id = NULL)
     
-    ## merged_database %>%
-    ##   mutate(database_name = str_remove(database_id, "_[0-9].*")) %>%
-    ##   distinct(database_name)
+    } else {
+      
+      merged_database <-
+        here::here("data", "temp_datasets") %>%
+        fs::dir_ls(regexp = "*.csv") %>%
+        plyr::ldply(.data = .,
+                    .fun = data.table::fread,
+                    .progress = plyr::progress_text(char = "."),
+                    .id = NULL)
+    }
     
-    ## waldo::compare(
-    ##   x = merged_database %>% names(),
-    ##   y = metadata %>% names()
-    ## )
-    
+
     merged_database <-
       merged_database %>%
       select_if((function(x) any(!is.na(x))))
     
-    merged_database %>%
-      qs::qsave(merged_filename)
+    if (format == "qs"){
+      
+      qs::qsave(merged_database, merged_filename)
+
+    } else {
+      
+      data.table::fwrite(merged_database, merged_filename)
+      
+    }
     
-    message(paste("Merged database saved in", merged_filename))
     
   } else {
     
@@ -253,3 +266,4 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
   }
   
 }
+
