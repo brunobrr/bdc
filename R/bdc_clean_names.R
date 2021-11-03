@@ -51,6 +51,18 @@
 #' }
 bdc_clean_names <- function(sci_names) {
   
+  # one-time setup to download and install rgnparser, which is used to parse
+  # scientific name (for more details, see
+  # https://github.com/ropensci/rgnparser)
+
+  win_bin <- Sys.getenv("APPDATA")
+  check <- file.exists(paste0(win_bin, "\\gnparser", "\\gnparser.exe"))
+  
+  if (check == FALSE){
+    rgnparser::install_gnparser(force = FALSE)
+  }
+  
+  # create a directory to salve the output
   bdc_create_dir()
   
   firstup <- function(x) {
@@ -835,11 +847,6 @@ bdc_clean_names <- function(sci_names) {
   # Parse scientific names using rgnparser package. For more details,
   # see https://ropensci.org/technotes/2020/08/25/scientific-name-parsing/
   bdc_gnparser <- function(data, sci_names) {
-    
-    # one-time setup to download and install rgnparser, which is used to parse
-    # scientific name (for more details, see
-    # https://github.com/ropensci/rgnparser)
-    # rgnparser::install_gnparser(force = FALSE)
     
     data_temp <- data
     w <- which(colnames(data_temp) == sci_names)
