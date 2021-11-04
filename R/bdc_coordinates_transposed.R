@@ -63,7 +63,7 @@
 #'   sci_names = "scientificName",
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude",
-#'   country = "country",
+#'   country = "country_suggested",
 #'   countryCode = "countryCode",
 #'   border_buffer = 0.2) # in decimal degrees
 #' }
@@ -78,11 +78,12 @@ bdc_coordinates_transposed <-
            countryCode = "countryCode",
            border_buffer = 0.2
            ) {
-  data <- dplyr::tibble(data)
+    
   check_require_cran("rnaturalearth")
   check_require_cran("readr")
   check_require_github("ropensci/rnaturalearthdata")
 
+  data <- dplyr::tibble(data)
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
 
   if (length(minimum_colnames) < 6) {
@@ -106,7 +107,6 @@ bdc_coordinates_transposed <-
            decimalLatitude = {{lat}},
            decimalLongitude = {{lon}},
            scientificName = {{ sci_names }},
-           country_verbatim = {{ country }},
            countryCode = {{ countryCode }}
            )
 
@@ -131,7 +131,8 @@ bdc_coordinates_transposed <-
       id = "database_id",
       cntr_iso2 = "countryCode",
       world_poly = worldmap,
-      world_poly_iso = "iso2c"
+      world_poly_iso = "iso2c",
+      border_buffer = border_buffer
     )
 
   # Exports a table with verbatim and transposed xy
@@ -145,10 +146,9 @@ bdc_coordinates_transposed <-
   corrected_coordinates %>%
     write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
   
-
   # finding the position of records with lon/lat modified
   w <-
-    which(data%>% dplyr::pull(database_id) %in% (corrected_coordinates %>% dplyr::pull(database_id)))
+    which(data %>% dplyr::pull(database_id) %in% (corrected_coordinates %>% dplyr::pull(database_id)))
 
   data[w, "decimalLatitude"] <-
     corrected_coordinates[, "decimalLatitude_modified"]

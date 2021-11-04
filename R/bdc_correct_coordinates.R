@@ -46,7 +46,7 @@ bdc_correct_coordinates <-
            cntr_iso2,
            world_poly,
            world_poly_iso,
-           border_buffer = 0.2) {
+           border_buffer = border_buffer) {
 
     x_mod <- paste0(x, "_modified")
     y_mod <- paste0(y, "_modified")
@@ -61,24 +61,26 @@ bdc_correct_coordinates <-
              decimalLongitude = as.numeric(decimalLongitude))
 
     # Detect records outside a country
-    suppressWarnings(
-      occ_country <- CoordinateCleaner::clean_coordinates(
-        x =  occ_country,
-        lon = x,
-        lat = y,
-        species = sp,
-        countries = cntr_iso2,
-        # iso2 code column name
-        # testing records in the sea and outside georeferenced countries
-        tests = c("seas", "countries"),
-        # high-quality countries border database
-        country_ref = world_poly,
-        # iso2 code column of country polygon database
-        country_refcol = world_poly_iso,
-        seas_ref = world_poly,
-        value = "spatialvalid"
-      )
-    )
+    suppressWarnings({
+      suppressMessages({
+        occ_country <- CoordinateCleaner::clean_coordinates(
+          x =  occ_country,
+          lon = x,
+          lat = y,
+          species = sp,
+          countries = cntr_iso2,
+          # iso2 code column name
+          # testing records in the sea and outside georeferenced countries
+          tests = c("seas", "countries"),
+          # high-quality countries border database
+          country_ref = world_poly,
+          # iso2 code column of country polygon database
+          country_refcol = world_poly_iso,
+          seas_ref = world_poly,
+          value = "spatialvalid"
+        )
+      })
+    })
 
     summary(occ_country)
 
