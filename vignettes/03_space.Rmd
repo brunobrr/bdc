@@ -143,6 +143,28 @@ check_space <-
 ```
 
 
+Here we create a column named **.summary** summing up the results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
+
+```{r}
+check_space <- bdc_summary_col(data = check_space)
+```
+
+<br/>
+
+```{r echo=F, message=FALSE, warning=FALSE}
+DT::datatable(
+  check_space, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
+<br/>
+
 ## Mapping spatial errors
 
 It is possible to map a column containing the results of **one spatial test each time**. For example, let's map records in centroids of countries or provinces. Besides, we can use the column **".summary"** to map all records flagged as potentially problematic (i.e., FALSE).
@@ -164,28 +186,6 @@ check_space %>%
 ![Coordinates in country and province centroies](https://github.com/brunobrr/bdc/raw/master/vignettes/man/figures/README-unnamed-chunk-9-1.png){width="20cm" height="10cm"} <br/>
 
 ## Report
-
-Here we create a column named **.summary** summing upthe results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
-
-```{r}
-check_space <- bdc_summary_col(data = check_space)
-```
-
-<br/>
-
-```{r echo=F, message=FALSE, warning=FALSE}
-DT::datatable(
-  check_space, class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 3,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
-```
-
-<br/>
 
 Creating a report summarizing the results of all tests.
 
