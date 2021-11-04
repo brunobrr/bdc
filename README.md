@@ -57,7 +57,7 @@ You can install the released version of *bdc* from
 
 ``` r
 if (!require("remotes")) install.packages("remotes")
-if (!require("bdc")) remotes::install_github("brunobrr/bdc")
+remotes::install_github("brunobrr/bdc")
 ```
 
 ### Package website
