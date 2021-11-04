@@ -1,3 +1,42 @@
+bin_on_path <- function() grepl("gnparser", Sys.getenv("PATH"))
+bin_exec    <- function() Sys.which("gnparser") != ""
+exec_exists <- function(path) file.exists(path)
+is_windows  <- function() .Platform$OS.type == "windows"
+is_macos    <- function() unname(Sys.info()["sysname"] == "Darwin")
+is_linux    <- function() unname(Sys.info()["sysname"] == "Linux")
+
+ensure_config <- function(bin_full_path, sep, user_path) {
+
+    gnparser_path <- dirname(bin_full_path)
+
+    if (!exec_exists(bin_full_path)) rgnparser::install_gnparser()
+
+    Sys.setenv(PATH = paste0(user_path, sep, gnparser_path))
+
+}
+
+setup_gnparser <- function() {
+
+  user_path <- Sys.getenv("PATH")
+
+  if (is_windows() && !bin_on_path() && !bin_exec()) {
+
+    ensure_config(paste0(Sys.getenv("APPDATA"), "\\gnparser\\gnparser.exe"), ";", user_path)
+
+  } else if(is_macos() && !bin_on_path() && !bin_exec()) {
+
+    ensure_config(normalizePath("~/Library/Application Support/gnparser"), ":", user_path)
+
+  } else if (is_linux() && !bin_on_path() && !bin_exec()){
+
+    ensure_config(normalizePath("~/bin/gnparser"), ":", user_path)
+
+  }
+
+  ## return(Sys.getenv("PATH"))
+
+}
+
 #' Clean and parse scientific names
 #'
 #' This function is composed of a series of name-checking routines for cleaning
@@ -54,14 +93,8 @@ bdc_clean_names <- function(sci_names) {
   # one-time setup to download and install rgnparser, which is used to parse
   # scientific name (for more details, see
   # https://github.com/ropensci/rgnparser)
+  setup_gnparser()
 
-  win_bin <- Sys.getenv("APPDATA")
-  check <- file.exists(paste0(win_bin, "\\gnparser", "\\gnparser.exe"))
-  
-  if (check == FALSE){
-    rgnparser::install_gnparser(force = FALSE)
-  }
-  
   # create a directory to salve the output
   bdc_create_dir()
   
