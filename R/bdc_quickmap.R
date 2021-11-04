@@ -1,7 +1,7 @@
 #' Create a map of points using ggplot2
 #'
 #' Creates a map of points using ggplot2 useful for inspecting the results of
-#' tests implemented in the bdc workflow.
+#' tests implemented in the bdc package.
 #'
 #' @param data data.frame. Containing geographical coordinates. Coordinates must
 #' be expressed in decimal degree and in WGS84.
@@ -78,6 +78,7 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
       dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
     
     } else{
+      
     df <- 
       data %>% 
       dplyr::filter(.coordinates_empty == T & .coordinates_outOfRange == T) %>% 

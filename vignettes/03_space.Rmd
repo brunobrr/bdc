@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-We used the R package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to capitals, provinces, and country centroids, coordinates in urban areas, around biodiversity institutions, or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
+We used one test of the *bdc* and other tests of the *R* package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to capitals, provinces, and country centroids, coordinates in urban areas, around biodiversity institutions, or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
 
 Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter module of the package (more details [here](https://brunobrr.github.io/bdc/articles/prefilter.html)).
 
@@ -86,10 +86,24 @@ DT::datatable(
 
 ## Flagging common spatial issues
 
+Here we Identify records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
+
+```{r}
+check_space <-
+  bdc_coordinates_precision(
+    data = database,
+    lon = "decimalLongitude",
+    lat = "decimalLatitude",
+    ndec = c(0, 1) # number of decimals to be tested
+  )
+```
+
+Next, we will flag common spatial issues using functions of the package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152).
+
 ```{r}
 check_space <-
   CoordinateCleaner::clean_coordinates(
-    x =  database,
+    x =  check_space,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
     species = "scientificName",
@@ -128,33 +142,20 @@ check_space <-
   )
 ```
 
-### Flagging coordinates with low decimal precision
-
-Here we Identify records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
-
-```{r}
-check_space <-
-  bdc_coordinates_precision(
-    data = check_space,
-    lon = "decimalLongitude",
-    lat = "decimalLatitude",
-    ndec = c(0, 1) # number of decimals to be tested
-  )
-```
 
 ## Mapping spatial errors
 
-It is possible to map a column containing the results of **one spatial test each time**. For example, let's map records in centroids of countries or provinces.
+It is possible to map a column containing the results of **one spatial test each time**. For example, let's map records in centroids of countries or provinces. Besides, we can use the column **".summary"** to map all records flagged as potentially problematic (i.e., FALSE).
 
 ```{r eval=F}
 check_space %>%
   dplyr::filter(.cen == FALSE) %>%
   bdc_quickmap(
-    data = .,
+    data = .,○
     lon = "decimalLongitude",
     lat = "decimalLatitude",
     col_to_map = ".cen",
-    size = 0.7
+    size = 0.9
   )
 ```
 
