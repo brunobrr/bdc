@@ -5,12 +5,14 @@
 #'
 #' @param data data.frame. Containing geographical coordinates and country
 #' names.
-#' @param lat character string. The column name with latitude in decimal degrees
+#' @param lat character string. The column name with latitude in decimal
+#' degrees
 #' and WGS84. Default = "decimalLatitude".
 #' @param lon character string. The column with longitude in decimal degrees and
 #' WGS84. Default = "decimalLongitude".
 #' @param  country character string. The column name with the country assignment
-#' of each record. Default = "country".
+#' of each record. Default = "country". If no column name is provided a new column
+#' "country" is created.
 #'   
 #' @details This function assigns a country name for records missing such
 #' information. Country names are extracted from valid geographic coordinates
@@ -47,29 +49,30 @@ bdc_country_from_coordinates <-
            lon = "decimalLongitude",
            country = "country") {
 
-  check_require_cran("rnaturalearth")
-  check_require_github("ropensci/rnaturalearthdata")
-
+    check_require_cran("rnaturalearth")
+    check_require_github("ropensci/rnaturalearthdata")
+    
     # create an id
     data$id <- 1:nrow(data)
-
-    minimum_colnames <- c(lat, lon, country)
-
-    if (length(minimum_colnames) < 3) {
-      stop("Fill all function arguments: data, id, lon, lat, and
-         country")
-    }
-
+    
+    minimum_colnames <- c(lat, lon)
+    
     if (!all(minimum_colnames %in% colnames(data))) {
       stop(
         "These columns names were not found in your database: ",
         paste(minimum_colnames[!minimum_colnames %in% colnames(data)],
-          collapse = ", "
-        ),
+              collapse = ", "),
         call. = FALSE
       )
     }
-
+    
+    # check if data has a country column
+    has_country <- any(colnames(data) == country)
+    
+    if (!has_country){
+      data$country <- NA
+    }
+      
     # converts coordinates columns to numeric
     data <-
       data %>%
@@ -112,13 +115,15 @@ bdc_country_from_coordinates <-
       worldmap <- sf::st_as_sf(worldmap) %>% dplyr::select(name_long)
 
       # Extract country names from coordinates
-      suppressMessages({
-        ext_country <-
-          data_sp %>%
-          dplyr::select(id, geometry) %>%
-          sf::st_intersection(., worldmap)
+      suppressWarnings({
+        suppressMessages({
+          ext_country <-
+            data_sp %>%
+            dplyr::select(id, geometry) %>%
+            sf::st_intersection(., worldmap)
+        })
       })
-
+      
       ext_country$geometry <- NULL
       w <- which(data$id %in% ext_country$id)
 
@@ -127,13 +132,21 @@ bdc_country_from_coordinates <-
 
     data <- data %>% dplyr::select(-id)
 
-    message(
+    if (has_country) {
+      message(
+        paste(
+          "\nbdc_country_from_coordinates:\nCountry names were added to",
+          length(w),
+          "records.\n"
+        ))
+    } else {
+      message(
       paste(
         "\nbdc_country_from_coordinates:\nCountry names were added to",
         length(w),
-        "records.\n"
-      )
-    )
-
+        "records in a new collumn named 'country'.\n"
+      ))
+    }
+    
     return(data)
   }
