@@ -114,9 +114,9 @@ check_pf <- bdc_coordinates_outOfRange(
   lon = "decimalLongitude")
 ```
 
-## 4 - Records from distrustful sources
+## 4 - Records from doubtful sources
 
-*VALIDATION*. This test flags records from untrustworthy source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.
+*VALIDATION*. This test flags records from doubtful source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.
 
 ```{r}
 check_pf <- bdc_basisOfRrecords_notStandard(
