@@ -54,12 +54,18 @@ bdc_correct_coordinates <-
     occ_country <- data %>% dplyr::filter(!is.na(data[cntr_iso2]))
 
     # Filter occurrences database to avoid error in clean_coordinates errors
-    occ_country <-
-      occ_country %>%
-      CoordinateCleaner::cc_val(., lon = x, lat = y) %>%
-      dplyr::mutate(decimalLatitude = as.numeric(decimalLatitude),
-             decimalLongitude = as.numeric(decimalLongitude))
-
+    suppressWarnings({
+      suppressMessages({
+        occ_country <-
+          occ_country %>%
+          CoordinateCleaner::cc_val(., lon = x, lat = y) %>%
+          dplyr::mutate(
+            decimalLatitude = as.numeric(decimalLatitude),
+            decimalLongitude = as.numeric(decimalLongitude)
+          )
+      })
+    })
+    
     # Detect records outside a country
     suppressWarnings({
       suppressMessages({
