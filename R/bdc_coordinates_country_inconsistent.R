@@ -143,6 +143,7 @@ bdc_coordinates_country_inconsistent <-
         all_countries <-
           rnaturalearth::ne_countries(returnclass = "sf") %>%
           dplyr::select(name_long) %>%
+          sf::st_make_valid(.) %>% 
           sf::st_crop(., sf::st_bbox(data_fil)) # Crop according to points bbox
       })
     })
