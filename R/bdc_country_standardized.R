@@ -34,12 +34,17 @@ bdc_country_standardized <-
   function(data,
            country = "country") {
     
-  suppressWarnings({
-    suppressMessages({
-  check_require_cran("rnaturalearth")
-  check_require_github("ropensci/rnaturalearthdata")
+    if (all(colnames(data) != country))
+      stop(
+        "The column containing country names was not found. The function bdc_country_from_coordinatesYou can be used to obtain country names from valid geographic coordinates"
+      )
+    
+    suppressWarnings({
+      suppressMessages({
+        check_require_cran("rnaturalearth")
+        check_require_github("ropensci/rnaturalearthdata")
+      })
     })
-  })
     
     # load auxiliary data
     message("Loading auxiliary data: country names from wikipedia\n")
@@ -68,17 +73,18 @@ bdc_country_standardized <-
 
     data <-
       data %>%
-      dplyr::rename(
-        country_suggested = cntr_suggested,
-        countryCode = cntr_iso2c)
-
+      dplyr::rename(country_suggested = cntr_suggested,
+                    countryCode = cntr_iso2c) %>%
+      dplyr::mutate(country_suggested = 
+                    stringr::str_to_sentence(country_suggested))
+    
      w <- which(data$country != data$country_suggested)
 
     message(
       paste(
         "\nbdc_country_standardized:\nThe country names of",
         length(w),
-        "records were standardized.\nTwo columns were added to the database.\n"
+        "records were standardized.\nTwo columns ('country_suggested' and 'countryCode') were added to the database.\n"
       )
     )
 
