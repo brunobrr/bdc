@@ -36,7 +36,7 @@ bdc_country_standardized <-
     
     if (all(colnames(data) != country))
       stop(
-        "The column containing country names was not found. The function bdc_country_from_coordinatesYou can be used to obtain country names from valid geographic coordinates"
+        "The column containing country names was not found. The function bdc_country_from_coordinates can be used to retrieve country names from valid geographic coordinates"
       )
     
     suppressWarnings({
