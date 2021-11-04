@@ -30,7 +30,9 @@
 #' performed to correct country/coordinates mismatches. Importantly, verbatim
 #' coordinates are replaced by the corrected ones in the returned database. A
 #' database containing verbatim and corrected coordinates is created in
-#' "Output/Check/01_coordinates_transposed.csv".
+#' "Output/Check/01_coordinates_transposed.csv". The columns "country" and
+#' "countryCode" can be retrieved by using the function
+#' \code{\link{bdc_country_standardized}}.
 #'
 #' @return A data.frame containing the column "coordinates_transposed"
 #' indicating if verbatim coordinates were not transposed (TRUE). Otherwise

@@ -15,14 +15,16 @@ bdc_country_from_coordinates(
 \item{data}{data.frame. Containing geographical coordinates and country
 names.}
 
-\item{lat}{character string. The column name with latitude in decimal degrees
+\item{lat}{character string. The column name with latitude in decimal
+degrees
 and WGS84. Default = "decimalLatitude".}
 
 \item{lon}{character string. The column with longitude in decimal degrees and
 WGS84. Default = "decimalLongitude".}
 
 \item{country}{character string. The column name with the country assignment
-of each record. Default = "country".}
+of each record. Default = "country". If no column name is provided a new column
+"country" is created.}
 }
 \value{
 A data.frame containing country names for records missing such

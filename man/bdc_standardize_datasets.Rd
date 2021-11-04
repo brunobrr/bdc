@@ -3,8 +3,12 @@
 \name{bdc_standardize_datasets}
 \alias{bdc_standardize_datasets}
 \title{Standardize datasets columns based on metadata}
+\format{
+a character setting the output file type. Option available are "csv"
+and "qs" (recommenced for saving large datasets). Default == "csv".
+}
 \usage{
-bdc_standardize_datasets(metadata, overwrite = FALSE)
+bdc_standardize_datasets(metadata, format = "csv", overwrite = FALSE)
 }
 \arguments{
 \item{metadata}{A data frame with metadata containing information about the
