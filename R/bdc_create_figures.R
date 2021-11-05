@@ -65,6 +65,9 @@ bdc_create_figures <-
       check_require_cran("ggplot2")
     })
     
+    match.arg(arg = workflow_step,
+              choices = c("prefilter", "space", "time"))
+    
     bdc_create_dir()
 
     # Total number of records

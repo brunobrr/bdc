@@ -43,10 +43,14 @@ bdc_create_report <-
   function(data,
            database_id = "database_id",
            workflow_step) {
+    
     suppressWarnings({
       check_require_cran("readr")
       check_require_cran("DT")
     })
+    
+    match.arg(arg = workflow_step,
+              choices = c("prefilter", "taxonomy", "space", "time"))
     
     bdc_create_dir()
     
