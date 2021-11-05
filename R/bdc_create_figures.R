@@ -57,12 +57,14 @@ bdc_create_figures <-
            database_id = "database_id",
            workflow_step = NULL) {
 
-    check_require_cran("cowplot")
-    check_require_cran("scales")
-    check_require_cran("readr")
-    check_require_cran("rworldmap")
-    check_require_cran("ggplot2")
-
+    suppressWarnings({
+      check_require_cran("cowplot")
+      check_require_cran("scales")
+      check_require_cran("readr")
+      check_require_cran("rworldmap")
+      check_require_cran("ggplot2")
+    })
+    
     bdc_create_dir()
 
     # Total number of records
