@@ -11,8 +11,8 @@
 #' @param lon character string. The column with longitude in decimal degrees and
 #' WGS84. Default = "decimalLongitude".
 #' @param  country character string. The column name with the country assignment
-#' of each record. Default = "country". If no column name is provided a new column
-#' "country" is created.
+#' of each record. Default = "country". If no column name is provided a new
+#' column "country" is created.
 #'   
 #' @details This function assigns a country name for records missing such
 #' information. Country names are extracted from valid geographic coordinates
@@ -49,8 +49,10 @@ bdc_country_from_coordinates <-
            lon = "decimalLongitude",
            country = "country") {
 
+    suppressWarnings({
     check_require_cran("rnaturalearth")
     check_require_github("ropensci/rnaturalearthdata")
+    })
     
     # create an id
     data$id <- 1:nrow(data)

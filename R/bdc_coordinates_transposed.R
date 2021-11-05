@@ -81,10 +81,12 @@ bdc_coordinates_transposed <-
            border_buffer = 0.2
            ) {
     
+  suppressWarnings({
   check_require_cran("rnaturalearth")
   check_require_cran("readr")
   check_require_github("ropensci/rnaturalearthdata")
-
+  })
+  
   data <- dplyr::tibble(data)
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
 

@@ -8,7 +8,7 @@
 #' options("prefilter", "taxonomy", "space" or "time").
 #'
 #' @return A data.frame containing a report summarizing the results of data
-#'   quality assessment.
+#' quality assessment.
 #'
 #' @importFrom dplyr summarise n select group_by filter mutate mutate_if
 #' everything summarise_all pull rename if_else add_row bind_rows
@@ -51,32 +51,33 @@ bdc_create_report <-
     bdc_create_dir()
     
     suppressMessages({
-      # Total number of records
-      if (!fs::file_exists("data/n_records.csv")) {
-        n_records <-
-          data %>%
-          dplyr::summarise(n = dplyr::n())
+      # # Total number of records
+      # if (!fs::file_exists("data/n_records.csv")) {
+      n_records <-
+        data %>%
+        dplyr::summarise(n = dplyr::n()) %>% 
+        dplyr::pull(n)
         
-        data.table::fwrite(n_records, here::here("data/n_records.csv"))
+        # data.table::fwrite(n_records, here::here("data/n_records.csv"))
         
         # Total number of records per database
-        n_record_database <-
-          data %>%
-          dplyr::mutate(
-            database_id = gsub("[[:digit:]]+", "", database_id),
-            database_id = gsub("_", "", database_id)
-          ) %>%
-          dplyr::group_by(database_id) %>%
-          dplyr::summarise(n_total = dplyr::n())
+      n_record_database <-
+        data %>%
+        dplyr::mutate(
+          database_id = gsub("[[:digit:]]+", "", database_id),
+          database_id = gsub("_", "", database_id)
+        ) %>%
+        dplyr::group_by(database_id) %>%
+        dplyr::summarise(n_total = dplyr::n())
         
-        data.table::fwrite(n_record_database,
-                           here::here("data/n_record_database.csv"))
-      } else {
-        n_records <-
-          readr::read_csv("data/n_records.csv") %>% dplyr::pull(n)
-        n_record_database <-
-          readr::read_csv("data/n_record_database.csv")
-      }
+      #   data.table::fwrite(n_record_database,
+      #                      here::here("data/n_record_database.csv"))
+      # } else {
+      #   n_records <-
+      #     readr::read_csv("data/n_records.csv") %>% dplyr::pull(n)
+      #   n_record_database <-
+      #     readr::read_csv("data/n_record_database.csv")
+      # }
       
       # Function used to formatting report
       format_df <- function(x) {
