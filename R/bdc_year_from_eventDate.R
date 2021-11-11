@@ -3,6 +3,7 @@
 #' This function extracts a four-digit year from unambiguously interpretable
 #' collecting dates.
 #'
+#' @family {time}
 #' @param data A data frame containing a column with event date information.
 #' @param eventDate Numeric or date. The column with event date information.
 #'

@@ -4,6 +4,7 @@
 #' status.  By default, only records with accepted scientific names are
 #' returned.
 #'
+#' @family {taxonomy}
 #' @param data data.frame. Containing a column with information on the taxonomic
 #' status of scientific names.
 #' @param taxonomic_notes character string. The column name containing notes

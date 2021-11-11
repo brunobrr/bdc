@@ -3,6 +3,7 @@
 #' This function flags and corrects records when latitude and longitude appear
 #' to be transposed.
 #'
+#' @family {prefilter}
 #' @param data data.frame. Containing a unique identifier for each record,
 #' geographical coordinates, and country names. Coordinates must be expressed
 #' in decimal degrees and WGS84.

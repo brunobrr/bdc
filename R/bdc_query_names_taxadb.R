@@ -8,7 +8,7 @@
 #' standardization quality can be accessed in the column “notes” placed in the
 #' table resulting from the name standardization process.
 #'
-#'
+#' @family {taxonomy}
 #' @param sci_name character string. Containing scientific names to be queried.
 #' @param replace_synonyms logical. Should synonyms be replaced by accepted
 #' names? Default = TRUE.

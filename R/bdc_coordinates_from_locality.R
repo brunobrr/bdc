@@ -4,6 +4,7 @@
 #' This function Identifies records whose coordinates can potentially be
 #' extracted from locality information.
 #'
+#' @family {prefilter}
 #' @param data data.frame. Containing geographical coordinates and the column
 #' "locality'.
 #' @param lat character string. The column name with latitude in decimal degrees

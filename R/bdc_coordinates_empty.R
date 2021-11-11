@@ -2,6 +2,7 @@
 #'
 #' This function flags records missing latitude or longitude coordinates.
 #'
+#' @family {prefilter}
 #' @param data data.frame. Containing geographical coordinates.
 #' @param lat character string. The column name with latitude in decimal degrees
 #' and WGS84. Default = "decimalLatitude".
