@@ -125,7 +125,7 @@ parse_names <-
   qs::qread(here::here("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.qs"))
 
 DT::datatable(
-  parse_names[2000:2100,], class = 'stripe', extensions = 'FixedColumns',
+  parse_names[2000:2030,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
     pageLength = 5,
     dom = 'Bfrtip',
