@@ -87,7 +87,7 @@ for (i in 1:ncol(database)){
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 DT::datatable(
-  database, class = 'stripe', extensions = 'FixedColumns',
+  database[1:30,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
     pageLength = 3,
     dom = 'Bfrtip',
@@ -175,7 +175,7 @@ query_names <-
   )
 
 DT::datatable(
-  query_names, class = 'stripe', extensions = 'FixedColumns',
+  query_names[1:30,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
     pageLength = 5,
     dom = 'Bfrtip',
