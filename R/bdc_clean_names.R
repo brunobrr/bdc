@@ -430,7 +430,7 @@ bdc_clean_names <- function(sci_names) {
     taxo_uncertainty <- ifelse(taxo_uncertainty == TRUE, FALSE, TRUE)
     taxo_uncertainty <- ifelse(is.na(taxo_uncertainty), TRUE, taxo_uncertainty)
     
-    tab_res <- as.data.frame(cbind(taxo_uncertainty, term_uncertainty))
+    tab_res <- cbind.data.frame(taxo_uncertainty, term_uncertainty)
     w <- which(is.na(spp_names))
     tab_res[w, "taxo_uncertainty"] <- NA
     
@@ -806,7 +806,7 @@ bdc_clean_names <- function(sci_names) {
     .infraesp_names <- ifelse(.infraesp_names == TRUE, FALSE, TRUE)
     .infraesp_names <- ifelse(is.na(.infraesp_names), TRUE, .infraesp_names)
     
-    tab_res <- as.data.frame(cbind(.infraesp_names, infraesp_term))
+    tab_res <- cbind.data.frame(.infraesp_names, infraesp_term)
     w <- which(is.na(sci_names))
     tab_res[w, ".infraesp_names"] <- NA
     
