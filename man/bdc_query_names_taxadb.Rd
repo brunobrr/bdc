@@ -193,3 +193,9 @@ names_harmonization <-
 }
 
 }
+\seealso{
+Other {taxonomy}: 
+\code{\link{bdc_clean_names}()},
+\code{\link{bdc_filter_out_names}()}
+}
+\concept{{taxonomy}}

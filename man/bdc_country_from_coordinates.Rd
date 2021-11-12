@@ -23,8 +23,8 @@ and WGS84. Default = "decimalLatitude".}
 WGS84. Default = "decimalLongitude".}
 
 \item{country}{character string. The column name with the country assignment
-of each record. Default = "country". If no column name is provided a new column
-"country" is created.}
+of each record. Default = "country". If no column name is provided a new
+column "country" is created.}
 }
 \value{
 A data.frame containing country names for records missing such

@@ -32,3 +32,9 @@ x <- data.frame(collection_date)
 bdc_eventDate_empty(data = x, eventDate = "collection_date")
 }
 }
+\seealso{
+Other {time}: 
+\code{\link{bdc_year_from_eventDate}()},
+\code{\link{bdc_year_outOfRange}()}
+}
+\concept{{time}}

@@ -35,3 +35,9 @@ customize the list of taxonomic notes to be kept in the argument
 \code{\link{bdc_create_report}}. If 'opposite' is TRUE, records with notes
 different from names listed in 'taxonomic_notes' are returned.
 }
+\seealso{
+Other {taxonomy}: 
+\code{\link{bdc_clean_names}()},
+\code{\link{bdc_query_names_taxadb}()}
+}
+\concept{{taxonomy}}

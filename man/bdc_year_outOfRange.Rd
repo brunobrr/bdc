@@ -43,3 +43,9 @@ x <- data.frame(collection_date)
 bdc_year_outOfRange(data = x, eventDate = "collection_date")
 }
 }
+\seealso{
+Other {time}: 
+\code{\link{bdc_eventDate_empty}()},
+\code{\link{bdc_year_from_eventDate}()}
+}
+\concept{{time}}

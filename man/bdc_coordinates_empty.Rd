@@ -38,3 +38,14 @@ lat = "decimalLatitude",
 lon = "decimalLongitude")
 }
 }
+\seealso{
+Other {prefilter}: 
+\code{\link{bdc_basisOfRrecords_notStandard}()},
+\code{\link{bdc_coordinates_country_inconsistent}()},
+\code{\link{bdc_coordinates_from_locality}()},
+\code{\link{bdc_coordinates_outOfRange}()},
+\code{\link{bdc_coordinates_transposed}()},
+\code{\link{bdc_country_standardized}()},
+\code{\link{bdc_scientificName_empty}()}
+}
+\concept{{prefilter}}

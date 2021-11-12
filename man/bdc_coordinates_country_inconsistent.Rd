@@ -70,3 +70,14 @@ dist = 0.2 # in decimal degrees
 )
 }
 }
+\seealso{
+Other {prefilter}: 
+\code{\link{bdc_basisOfRrecords_notStandard}()},
+\code{\link{bdc_coordinates_empty}()},
+\code{\link{bdc_coordinates_from_locality}()},
+\code{\link{bdc_coordinates_outOfRange}()},
+\code{\link{bdc_coordinates_transposed}()},
+\code{\link{bdc_country_standardized}()},
+\code{\link{bdc_scientificName_empty}()}
+}
+\concept{{prefilter}}

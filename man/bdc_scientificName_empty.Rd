@@ -29,3 +29,14 @@ x <- data.frame(scientificName = c("Ocotea odorifera", NA, "Panthera onca", ""))
 bdc_scientificName_empty(data = x, sci_names = "scientificName")
 }
 }
+\seealso{
+Other {prefilter}: 
+\code{\link{bdc_basisOfRrecords_notStandard}()},
+\code{\link{bdc_coordinates_country_inconsistent}()},
+\code{\link{bdc_coordinates_empty}()},
+\code{\link{bdc_coordinates_from_locality}()},
+\code{\link{bdc_coordinates_outOfRange}()},
+\code{\link{bdc_coordinates_transposed}()},
+\code{\link{bdc_country_standardized}()}
+}
+\concept{{prefilter}}
