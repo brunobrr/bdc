@@ -85,16 +85,16 @@ for (i in 1:ncol(database)){
 
 <br/>
 
-```{r echo=F, message=FALSE, warning=FALSE}
-DT::datatable(
-  database[1:30,], class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 3,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
+# DT::datatable(
+#   database[1:30,], class = 'stripe', extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 3,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
 ```
 
 <br/>
@@ -111,8 +111,9 @@ Scientific names improperly formatted usually cannot be matched with valid names
 
 <br/>
 
-```{r eval=F}
-parse_names <- bdc_clean_names(sci_names = database$scientificName)
+```{r}
+parse_names <- bdc_clean_names(sci_names = database$scientificName) %>%
+  dplyr::filter(!is.na(scientificName))
 ```
 
 <br/>
@@ -121,18 +122,18 @@ An example of *bdc_clean_names* output.
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 # read
-parse_names <-
-  qs::qread(here::here("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.qs"))
+# parse_names <-
+#   qs::qread(here::here("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.qs"))
 
-DT::datatable(
-  parse_names[2000:2030,], class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 5,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+# DT::datatable(
+#   parse_names[2000:2030,], class = 'stripe', extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 5,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
 ```
 
 <br/>
@@ -170,19 +171,19 @@ query_names <- bdc_query_names_taxadb(
 
 ```{r echo=F}
 query_names <-
-  data.table::fread(
+  readr::read_csv(
     here::here("inst/extdata/example_bdc_query_names_taxadb/example_bdc_query_names_taxadb.csv")
   )
 
-DT::datatable(
-  query_names[1:30,], class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 5,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+# DT::datatable(
+#   query_names[1:30,], class = 'stripe', extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 5,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
 ```
 
 <br/>
@@ -207,7 +208,6 @@ report <-
                     database_id = "database_id",
                     workflow_step = "taxonomy")
 
-report
 ```
 
 ## Unresolved names
@@ -225,7 +225,7 @@ Save the table containing unresolved names
 
 ```{r}
 unresolved_names %>%
- data.table::fwrite(., here::here("Output/Check/02_unresolved_names.csv"))
+  readr::write_csv(., here::here("Output/Check/02_unresolved_names.csv"))
 ```
 
 ## Filtering the database

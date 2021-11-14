@@ -68,16 +68,9 @@ for (i in 1:ncol(database)){
 
 <br/>
 
-```{r echo=F, message=FALSE, warning=FALSE}
-DT::datatable(
-  database, class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 3,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
+database %>%
+  knitr::kable()
 ```
 
 <br/>
@@ -87,7 +80,8 @@ DT::datatable(
 *VALIDATION*. Flag records missing species names.
 
 ```{r}
-check_pf <- bdc_scientificName_empty(
+check_pf <-
+  bdc_scientificName_empty(
   data = database,
   sci_name = "scientificName")
 ```
@@ -205,16 +199,16 @@ check_pf <- bdc_summary_col(data = check_pf)
 
 <br/>
 
-```{r echo=F, message=FALSE, warning=FALSE}
-DT::datatable(
-  check_pf, class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 3,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+```{r echo=F, message=FALSE, warning=FALSE,eval=FALSE}
+# DT::datatable(
+#   check_pf, class = 'stripe', extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 3,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
 ```
 
 <br/>
@@ -227,7 +221,6 @@ report <-
                     database_id = "database_id",
                     workflow_step = "prefilter")
 
-report
 ```
 
 <br/>

@@ -71,15 +71,15 @@ for (i in 1:ncol(database)){
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-DT::datatable(
-  database, class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 3,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+# DT::datatable(
+#   database, class = 'stripe', extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 3,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
 ```
 
 <br/>
@@ -95,7 +95,9 @@ check_space <-
     lon = "decimalLongitude",
     lat = "decimalLatitude",
     ndec = c(0, 1) # number of decimals to be tested
-  )
+  ) %>%
+  # FIXME:
+  tidyr::drop_na(contains("decimal"))
 ```
 
 Next, we will flag common spatial issues using functions of the package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152).
@@ -106,7 +108,7 @@ check_space <-
     x =  check_space,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
-    species = "scientificName",
+    species = "verbatim_scientificName",
     countries = ,
     tests = c(
       "capitals",     # records within 2km around country and province centroids
@@ -152,15 +154,15 @@ check_space <- bdc_summary_col(data = check_space)
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-DT::datatable(
-  check_space, class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 3,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+# DT::datatable(
+#   check_space, class = 'stripe', extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 3,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
 ```
 
 <br/>
@@ -173,10 +175,10 @@ It is possible to map a column containing the results of **one spatial test each
 check_space %>%
   dplyr::filter(.cen == FALSE) %>%
   bdc_quickmap(
-    data = .,○
+    data = .,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
-    col_to_map = ".cen",
+    col_to_map = ".cen", # FIXME: no column named .cen
     size = 0.9
   )
 ```
@@ -195,7 +197,6 @@ report <-
                     database_id = "database_id",
                     workflow_step = "space")
 
-report
 ```
 
 <br/>
