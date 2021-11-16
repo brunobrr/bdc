@@ -1,7 +1,8 @@
 context("standardize country")
 
 
-wiki_cntr <- bdc_get_wiki_country()
+wiki_cntr <- here::here("inst", "extdata", "countries_names", "wiki_country_names.txt") %>%
+  vroom::vroom()
 worldmap <- bdc_get_world_map()
 
 data <- data.frame(country = c("brezil", "USA", "Bolibia", "Vietnam"))

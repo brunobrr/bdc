@@ -16,7 +16,7 @@ bdc_get_world_map <- function() {
 
   suppressWarnings({
 
-  worldmap <- ne_countries(scale = "large")
+  worldmap <- rnaturalearth::ne_countries(scale = "large")
 
   # Add some iso code to some countries polygons
   iso2c <- countrycode::countrycode(unique(worldmap$name_en),

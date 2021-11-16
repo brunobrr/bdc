@@ -25,7 +25,8 @@ bcd_flag_transposed_xy <- function(data) {
 
 
   # load auxiliar data
-  wiki_cntr <- bdc_get_wiki_country() # get country names from Wikipedia
+  wiki_cntr <- here::here("inst", "extdata", "countries_names", "wiki_country_names.txt") %>%
+    vroom::vroom() # get country names from Wikipedia
   worldmap <- bdc_get_world_map()  #
 
   # standardize the name of countries

@@ -53,7 +53,8 @@ bdc_country_standardized <-
     suppressMessages({
       suppressWarnings({
       wiki_cntr <-
-        bdc_get_wiki_country() # get country names from Wikipedia
+        here::here("inst", "extdata", "countries_names", "wiki_country_names.txt") %>%
+        vroom::vroom() # get country names from Wikipedia
       })
     })
 
