@@ -3,10 +3,6 @@
 \name{bdc_standardize_datasets}
 \alias{bdc_standardize_datasets}
 \title{Standardize datasets columns based on metadata}
-\format{
-a character setting the output file type. Option available are "csv"
-and "qs" (recommenced for saving large datasets). Default == "csv".
-}
 \usage{
 bdc_standardize_datasets(metadata, format = "csv", overwrite = FALSE)
 }
@@ -14,6 +10,9 @@ bdc_standardize_datasets(metadata, format = "csv", overwrite = FALSE)
 \item{metadata}{A data frame with metadata containing information about the
 name, path, and columns of the original data set which need to be
 renamed. See @details.}
+
+\item{format}{a character setting the output file type. Option available are "csv"
+and "qs" (recommenced for saving large datasets). Default == "csv".}
 
 \item{overwrite}{A logical vector indicating whether the final merged
 dataset should be overwritten. The default is FALSE.}

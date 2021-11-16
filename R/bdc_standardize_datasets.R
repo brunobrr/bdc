@@ -12,7 +12,7 @@
 #' @param overwrite A logical vector indicating whether the final merged
 #' dataset should be overwritten. The default is FALSE.
 #' 
-#' @format a character setting the output file type. Option available are "csv"
+#' @param format a character setting the output file type. Option available are "csv"
 #' and "qs" (recommenced for saving large datasets). Default == "csv".
 #'
 #' @importFrom data.table fread

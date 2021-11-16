@@ -68,10 +68,11 @@ Imports:
     vroom,
     ggplot2,
     cowplot, 
-    scales
+    scales,
+    rnaturalearth, 
+    DT
 Suggests:
     readr,
-    rnaturalearth,
     rvest,
     testthat,
     xml2,

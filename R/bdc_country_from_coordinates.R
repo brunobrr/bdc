@@ -23,7 +23,8 @@
 #' information.
 #'
 #' @importFrom CoordinateCleaner cc_val cc_sea
-#' @importFrom dplyr filter left_join pull rename
+#' @importFrom dplyr mutate filter select
+#' @importFrom rnaturalearth ne_countries
 #' @importFrom sf st_as_sf st_set_crs st_crs st_intersection
 #'
 #' @export
@@ -83,7 +84,7 @@ bdc_country_from_coordinates <-
         decimalLongitude = as.numeric(.data[[lon]])
       )
 
-    worldmap <- ne_countries(scale = "large")
+    worldmap <- rnaturalearth::ne_countries(scale = "large")
 
     data_no_country <-
       data %>%
