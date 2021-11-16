@@ -54,7 +54,7 @@ metadata <- tibble::tribble(
   "datafake3", "datafake3.csv", NA, "nome_das_especies", "y", "x"
 )
 
-with_dir(
+withr::with_dir(
   new = ".",
   code = {
     bdc_standardize_datasets(metadata = metadata)
