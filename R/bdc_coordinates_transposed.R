@@ -40,8 +40,9 @@
 #' records are flagged as (FALSE) and, in this case, verbatim coordinates are
 #' replaced by corrected coordinates.
 #'
-#' @importFrom CoordinateCleaner cc_val cc_sea
-#' @importFrom dplyr filter left_join contains pull rename
+#' @importFrom data.table fwrite
+#' @importFrom dplyr tibble rename mutate select contains pull
+#' @importFrom here here
 #'
 #' @export
 #'
@@ -149,7 +150,7 @@ bdc_coordinates_transposed <-
     bdc_create_dir()
   }
   corrected_coordinates %>%
-    write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
+    data.table::fwrite(here::here("Output/Check/01_coordinates_transposed.csv"))
   
   # finding the position of records with lon/lat modified
   w <-

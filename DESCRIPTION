@@ -65,7 +65,10 @@ Imports:
     taxadb,
     tibble,
     tidyselect,
-    vroom
+    vroom,
+    ggplot2,
+    cowplot, 
+    scales
 Suggests:
     readr,
     rnaturalearth,
