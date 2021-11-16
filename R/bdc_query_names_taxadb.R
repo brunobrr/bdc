@@ -182,7 +182,8 @@ bdc_query_names_taxadb <-
            parallel = FALSE,
            ncores = 2,
            export_accepted = FALSE) {
-
+    original <- NULL
+    
     # Create a directory to save the result
     bdc::bdc_create_dir()
 

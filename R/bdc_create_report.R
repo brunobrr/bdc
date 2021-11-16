@@ -10,11 +10,12 @@
 #' @return A data.frame containing a report summarizing the results of data
 #' quality assessment.
 #'
-#' @importFrom dplyr summarise n select group_by filter mutate mutate_if
-#' everything summarise_all pull rename if_else add_row bind_rows
 #' @importFrom data.table fwrite
+#' @importFrom dplyr summarise n pull mutate group_by add_row select everything mutate_if summarise_all rename if_else filter bind_rows
+#' @importFrom DT datatable
+#' @importFrom here here
+#' @importFrom stringr str_squish
 #' @importFrom tibble as_tibble
-#' @importFrom fs file_exists
 #' @importFrom tidyselect starts_with
 #'
 #' @export
@@ -102,7 +103,7 @@ bdc_create_report <-
         
         data <-
           x %>%
-          datatable(
+          DT::datatable(
             .,
             class = 'stripe',
             options = list(

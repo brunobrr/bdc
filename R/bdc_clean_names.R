@@ -69,12 +69,11 @@ setup_gnparser <- function() {
 #' process and the results of the parsing names process is saved in
 #' "Output/Check/02_parse_names.csv".
 #'
-#' @importFrom dplyr rename distinct select mutate_all na_if filter pull
-#' bind_cols full_join
-#' @importFrom rgnparser install_gnparser gn_parse_tidy
-#' @importFrom stringr str_squish str_count str_remove_all regex str_detect
-#' str_which str_replace_all str_to_lower
-#' @importFrom taxadb taxa_tbl
+#' @importFrom data.table fread fwrite
+#' @importFrom dplyr rename distinct select mutate_all na_if filter tibble pull bind_cols full_join
+#' @importFrom here here
+#' @importFrom rgnparser gn_parse_tidy
+#' @importFrom stringr str_squish str_count str_remove_all regex str_detect str_which str_replace_all str_to_lower
 #' @importFrom tibble as_tibble
 #'
 #' @export
@@ -125,8 +124,9 @@ bdc_clean_names <- function(sci_names) {
     # Get animalia family names from gbif via taxadb package
     animalia_families <-
       system.file("extdata", "family_names/animalia_families.txt", package = "bdc") %>%
-      read.table() %>%
-      pull(V1)
+      data.table::fread() %>%
+      dplyr::tibble() %>% 
+      dplyr::pull(V1)
     
     # FIXME 03-08-2021: solve duckdb bug
     # taxadb::taxa_tbl("gbif") %>%

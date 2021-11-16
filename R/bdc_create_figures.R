@@ -19,11 +19,13 @@
 #' @return Figures in a png format.
 #'
 #' @importFrom CoordinateCleaner cc_val
-#' @importFrom data.table fwrite fread
-#' @importFrom dplyr summarise n mutate group_by pull intersect filter full_join
-#' select mutate_if summarise_all rename
-#' @importFrom fs file_exists
+#' @importFrom cowplot plot_grid
+#' @importFrom data.table fread
+#' @importFrom dplyr summarise n pull mutate group_by intersect filter full_join select mutate_if summarise_all rename
+#' @importFrom ggplot2 theme_minimal theme element_text element_line element_blank unit ggplot aes geom_col coord_flip labs geom_hline scale_y_continuous ggsave theme_void geom_polygon geom_hex coord_quickmap scale_fill_viridis_c geom_histogram
 #' @importFrom here here
+#' @importFrom rnaturalearth ne_countries
+#' @importFrom scales comma
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
 #' @importFrom tidyselect starts_with
@@ -56,6 +58,7 @@ bdc_create_figures <-
   function(data,
            database_id = "database_id",
            workflow_step = NULL) {
+    year <- NULL
 
     suppressWarnings({
       check_require_cran("cowplot")
@@ -395,7 +398,7 @@ bdc_create_figures <-
       }
 
       # Worldmap
-      m <- getMap() # rworldmap
+      m <- rnaturalearth::ne_countries(returnclass = "sp") # rworldmap
 
       # new theme
       our_theme2 <-
