@@ -48,6 +48,8 @@ bdc_correct_coordinates <-
            world_poly_iso,
            border_buffer = border_buffer) {
 
+    . <- decimalLatitude <- decimalLongitude <- .summary <- NULL
+    
     x_mod <- paste0(x, "_modified")
     y_mod <- paste0(y, "_modified")
 

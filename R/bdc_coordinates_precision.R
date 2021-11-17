@@ -40,6 +40,8 @@ bdc_coordinates_precision <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            ndec = c(0, 1, 2)) {
+    . <- .ndec_all <- NULL
+    
     df <-
       data %>%
       dplyr::select({{ lon }}, {{ lat }}) %>%

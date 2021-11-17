@@ -41,6 +41,8 @@ bdc_coordinates_from_locality <-
            lon = "decimalLongitude",
            locality = "locality") {
     
+    .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
+    
     suppressMessages({
 
     if (!any(".coordinates_empty" == names(data))){

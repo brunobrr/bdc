@@ -34,7 +34,8 @@
 bdc_country_standardized <-
   function(data,
            country = "country") {
-  country_suggested <- NULL
+  
+    cntr_suggested <- cntr_iso2c <- country_suggested <- NULL
     
     if (all(colnames(data) != country))
       stop(

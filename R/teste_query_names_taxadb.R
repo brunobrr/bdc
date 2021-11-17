@@ -182,7 +182,9 @@ teste_bdc_query_names_taxadb <-
            parallel = FALSE,
            ncores = 2,
            export_accepted = FALSE) {
-    original <- NULL
+    
+    value <- original_search <- input <- . <- notes <- scientificName <- NULL
+    acceptedNameUsageID <- original <- NULL
     
     # Create a directory to save the result
     bdc::bdc_create_dir()

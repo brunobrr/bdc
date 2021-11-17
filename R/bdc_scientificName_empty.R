@@ -23,6 +23,9 @@
 bdc_scientificName_empty <-
   function(data,
            sci_names = "scientificName") {
+    
+    . <- NULL
+    
     sci_names <- data[[sci_names]]
     
     sci_names <-

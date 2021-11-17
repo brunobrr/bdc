@@ -28,6 +28,7 @@ bdc_clean_duplicates <-
   function(data,
            rank = NULL,
            rank_name = NULL) {
+    . <- .data <- scientificName <- NULL
     # Filter all names except those flag as "accepted" (e.g.,  heterotypic,
     # homotypic, pro-parte synonyms, and doubtful)
     data <- data[order(data$taxonomicStatus), ]

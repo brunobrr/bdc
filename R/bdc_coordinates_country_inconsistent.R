@@ -62,6 +62,8 @@ bdc_coordinates_country_inconsistent <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            dist = 0.1) {
+    .data <- .summary <- .coordinates_empty <- .coordinates_outOfRange <- . <- NULL
+    points_in_buf <- name_long <- id <- .coordinates_country_inconsistent <- NULL
 
   check_require_cran("rnaturalearth")
 

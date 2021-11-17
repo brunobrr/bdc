@@ -33,6 +33,8 @@ bdc_filter_out_names <-
   function(data,
            taxonomic_notes = "accepted",
            opposite = FALSE) {
+    notes <- id <- NULL
+    
     data$id <- 1:nrow(data)
 
     if (!"notes" %in% names(data)) {
