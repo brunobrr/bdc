@@ -45,6 +45,10 @@ bdc_create_report <-
            database_id = "database_id",
            workflow_step) {
     
+    Description <- . <- NULL
+    . <- V1 <- Test_name <- Description <- notes <- NULL
+    number_of_records <- .uncer_terms <- NULL
+    
     suppressWarnings({
       check_require_cran("readr")
       check_require_cran("DT")

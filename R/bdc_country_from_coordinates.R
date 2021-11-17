@@ -50,6 +50,8 @@ bdc_country_from_coordinates <-
            lon = "decimalLongitude",
            country = "country") {
 
+    .data <- . <- name_long <- id <- geometry <- NULL
+    
     suppressWarnings({
     check_require_cran("rnaturalearth")
     check_require_github("ropensci/rnaturalearthdata")

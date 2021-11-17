@@ -71,6 +71,8 @@ bdc_suggest_names_taxadb <-
            parallel = TRUE,
            ncores = 2) {
     
+    suggestion_distance <- db <- . <- .data <- scientificName <- NULL
+    
     # FIXME: set a env var for now
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
     Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")

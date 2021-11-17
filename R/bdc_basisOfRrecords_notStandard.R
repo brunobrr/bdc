@@ -43,7 +43,7 @@ bdc_basisOfRrecords_notStandard <-
   function(data,
            basisOfRecord = "basisOfRecord",
            names_to_keep = "all") {
-
+    .data <- .basisOfRrecords_notStandard <- NULL
     if (names_to_keep == "all") {
       names_to_keep <-
         c(

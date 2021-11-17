@@ -26,6 +26,9 @@
 bdc_eventDate_empty <-
   function(data,
            eventDate = "eventDate") {
+    
+    . <- NULL
+    
     col <- data[[eventDate]]
 
     col <-

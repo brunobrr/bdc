@@ -35,6 +35,8 @@ bdc_coordinates_empty <-
   function(data,
            lat = "decimalLatitude",
            lon = "decimalLongitude") {
+    .coordinates_empt <- .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
+    
     df <- data
     
     suppressWarnings({

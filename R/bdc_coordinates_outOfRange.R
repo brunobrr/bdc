@@ -34,6 +34,8 @@ bdc_coordinates_outOfRange <-
   function(data,
            lat = "decimalLatitude",
            lon = "decimalLongitude") {
+    .data <- .coordinates_outOfRange <- NULL
+    
     data_filtered <-
       data %>%
       dplyr::select(.data[[lon]], .data[[lat]]) %>%

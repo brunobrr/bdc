@@ -82,6 +82,7 @@ bdc_coordinates_transposed <-
            countryCode = "countryCode",
            border_buffer = 0.2
            ) {
+    decimalLatitude <- decimalLongitude <- database_id <- scientificName <- NULL
     
   suppressWarnings({
   check_require_cran("rnaturalearth")

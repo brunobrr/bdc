@@ -26,6 +26,9 @@
 #' }
 bdc_summary_col <- function(data) {
   if (any(names(data) == ".summary")) {
+    
+    .summary <- . <- NULL
+    
     message("Column '.summary' already exist. It will be updated")
 
     data <-

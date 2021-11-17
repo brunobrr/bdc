@@ -61,6 +61,8 @@
 #' }
 bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE) {
   
+  fileName <- datasetName <- . <- database_id <- NULL
+  
   if (format == "qs") {
     
     merged_filename <-

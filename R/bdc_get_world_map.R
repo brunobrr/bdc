@@ -11,6 +11,8 @@
 #' }
 bdc_get_world_map <- function() {
 
+  name_en <- NULL
+  
   check_require_cran("rnaturalearth")
   check_require_github("ropensci/rnaturalearthdata")
 

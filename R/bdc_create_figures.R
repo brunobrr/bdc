@@ -58,7 +58,11 @@ bdc_create_figures <-
   function(data,
            database_id = "database_id",
            workflow_step = NULL) {
-    year <- NULL
+    
+    . <- .data <- n_flagged <- n_total <- freq <- NULL
+    . <- V1 <- Name <- freq <- year <- decimalLongitude <- NULL
+    decimalLatitude <- . <- long <- lat <- group <- .summary <- NULL
+    
 
     suppressWarnings({
       check_require_cran("cowplot")

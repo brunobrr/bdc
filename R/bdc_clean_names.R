@@ -90,6 +90,10 @@ setup_gnparser <- function() {
 #' }
 bdc_clean_names <- function(sci_names) {
   
+  value <- scientificName <- V1 <- value <- . <- temp <- canonicalfull <- NULL
+  cardinality <- quality <- verbatim <- id <- . <- .uncer_terms <- . <- NULL
+  .infraesp_names <- names_clean <- NULL
+  
   # one-time setup to download and install rgnparser, which is used to parse
   # scientific name (for more details, see
   # https://github.com/ropensci/rgnparser)

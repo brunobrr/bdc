@@ -7,6 +7,8 @@
 #' \dontrun{
 #' }
 bdc_extract_cntr_names <- function(x) {
+  . <- NULL
+  
   if (stringr::str_detect(x, "Note")) {
     x <- stringr::str_split(x, "Note")[[1]][1]
   }
