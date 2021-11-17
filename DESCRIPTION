@@ -76,7 +76,8 @@ Suggests:
     rvest,
     testthat,
     xml2,
-    rmarkdown
+    rmarkdown,
+    covr
 Remotes: hannesmuehleisen/MonetDBLite-R@v0.6.0
 VignetteBuilder:
     knitr
