@@ -90,7 +90,7 @@ setup_gnparser <- function() {
 #' }
 bdc_clean_names <- function(sci_names) {
   
-  value <- scientificName <- V1 <- value <- . <- temp <- canonicalfull <- NULL
+  value <- scientificName <- X1 <- value <- . <- temp <- canonicalfull <- NULL
   cardinality <- quality <- verbatim <- id <- . <- .uncer_terms <- . <- NULL
   .infraesp_names <- names_clean <- NULL
   
@@ -128,9 +128,9 @@ bdc_clean_names <- function(sci_names) {
     # Get animalia family names from gbif via taxadb package
     animalia_families <-
       system.file("extdata", "family_names/animalia_families.txt", package = "bdc") %>%
-      data.table::fread() %>%
+      readr::read_csv(col_names =F) %>%
       dplyr::tibble() %>% 
-      dplyr::pull(V1)
+      dplyr::pull(X1)
     
     # FIXME 03-08-2021: solve duckdb bug
     # taxadb::taxa_tbl("gbif") %>%
