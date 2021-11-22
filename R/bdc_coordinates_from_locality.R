@@ -67,7 +67,7 @@ bdc_coordinates_from_locality <-
 
     df <-
       data %>%
-      dplyr::mutate(locality == stringr::str_squish(.data[[locality]])) %>%
+      dplyr::mutate(locality = stringr::str_squish(.data[[locality]])) %>%
       dplyr::filter(
         locality != "" & !is.na(locality),
         stringr::str_detect(locality, "^(\\. )", negate = T),
