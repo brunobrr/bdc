@@ -905,7 +905,7 @@ bdc_clean_names <- function(sci_names) {
     })
     
     Encoding(gnparser$temp) <- "latin1"
-    
+    Encoding(data_temp$temp) <- "latin1"
     # Add names parsed to the full database
     df <-
       dplyr::full_join(data_temp, gnparser, by = "temp") %>%
