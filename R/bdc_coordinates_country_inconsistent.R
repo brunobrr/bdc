@@ -134,11 +134,6 @@ bdc_coordinates_country_inconsistent <-
   }
 
 
-  # Filter points within the buffer
-  data_fil <-
-    data_sp %>%
-    dplyr::filter(points_in_buf == TRUE)
-
   # Points in other countries
   all_countries <-
     rnaturalearth::ne_countries(returnclass = "sf", scale = "large") %>%
