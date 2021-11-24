@@ -10,7 +10,7 @@
 #' threshold year, they are flagged FALSE.
 #' 
 #' @return A data frame with the original data, a flagged column (.year) and a
-#' column with the extracted four-digit years (year). Records with .year = FALSE
+#' column with the extracted four-digit years (year_corrected). Records with .year = FALSE
 #' means dates older than the year threshold or 1600.
 #' 
 #' @importFrom dplyr if_else
@@ -58,7 +58,7 @@ bdc_parse_date <-
       stop("The 'year_threshold' argument should be used with one year as a numeric data")
     }
 
-    res <- cbind(data, .year, year)
+    res <- cbind(data, .year, year_corrected=year)
     return(res)
   }
 
