@@ -1,96 +1,59 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
+
+
+id <- c(1, 2, 3, 4)
+scientificName <- c("Rhinella major",
+                    "Scinax ruber",
+                    "Siparuna guianensis",
+                    "Psychotria vellosiana")
+decimalLatitude <- c(63.43333, -14.43333, -41.90000, -46.69778)
+decimalLongitude <- c(-17.90000, -67.91667, -13.25000, -13.82444)
+country_suggested <- c("Bolivia", "Bolivia", "Brazil", "Brazil")
+countryCode <- c("BO", "BO", "BR", "BR")
+x <- data.frame(id, scientificName, decimalLatitude,
+                decimalLongitude,  country_suggested, countryCode)
+
+
+test_that("test based on function example dataset", {
+  df <- bdc_coordinates_transposed(
+    data = x,
+    id = "id",
+    sci_names = "scientificName",
+    lat = "decimalLatitude",
+    lon = "decimalLongitude",
+    country = "country_suggested",
+    countryCode = "countryCode",
+    border_buffer = 0.2
+  ) # in decimal degrees
+  
+  expect_equal(df$coordinates_transposed, c(FALSE, TRUE, FALSE, FALSE))
+  
 })
 
 
+test_that("Misuse of arguments", {
+  # Misuse of arguments
+  expect_error(df <- bdc_coordinates_transposed(
+    data = x,
+    # id = "id",
+    sci_names = "scientificName",
+    lat = "decimalLatitude",
+    lon = "decimalLongitude",
+    country = "country_suggested",
+    countryCode = "countryCode",
+    border_buffer = 0.2
+  ))
 
+})
 
-bcd_flag_transposed_xy <- function(data) {
-
-  minimum_colnames <- c("database_id", "scientificName", "decimalLongitude", "decimalLatitude")
-  check_minimum_colnames <-
-    data %>%
-    dplyr::select(minimum_colnames) %>% {
-      names(.) %in% minimum_colnames
-    }
-
-  if (sum(check_minimum_colnames) < length(check_minimum_colnames)) {
-    stop(
-      "Your data does not have the minimum default columns names: ",
-      paste(minimum_colnames, collapse = ", "), call. = FALSE
-    )
-  }
-
-
-
-
-  # load auxiliar data
-  wiki_cntr <- here::here("inst", "extdata", "countries_names", "wiki_country_names.txt") %>%
-    vroom::vroom() # get country names from Wikipedia
-  worldmap <- bdc_get_world_map()  #
-
-  # standardize the name of countries
-  standard_country_names <-
-    bdc_standardize_country(
-      data = data,
-      country = "country",
-      country_names_db = wiki_cntr
-    )
-
-  data <-
-    data %>%
-    dplyr::left_join(standard_country_names, by = c("country" = "cntr_original"))
-
-  # Correct latitude and longitude transposed
-  corrected_coordinates <-
-    bdc_correct_coordinates(
-      data = data,
-      x = "decimalLongitude",
-      y = "decimalLatitude",
-      sp = "scientificName",
-      id = "database_id",
-      cntr_iso2 = "cntr_iso2c",
-      world_poly = worldmap,
-      world_poly_iso = "iso2c"
-    )
-
-  rows_to_remove <-
-    corrected_coordinates %>%
-    dplyr::pull(database_id)
-
-  rows_to_insert <-
-    corrected_coordinates %>%
-    # remove columns with coordinates transposed
-    dplyr::select(-decimalLatitude, -decimalLongitude) %>%
-    # new columns coordinates with the corrected info
-    dplyr::rename(decimalLatitude = decimalLatitude_modified,
-                  decimalLongitude = decimalLongitude_modified) %>%
-    # flag all of them
-    dplyr::mutate(transposed_xy = TRUE)
-
-  data <-
-    data %>%
-    # remove wrong coordinates
-    dplyr::filter(!database_id %in% rows_to_remove) %>%
-    # flag no issued rows as FALSE
-    dplyr::mutate(transposed_xy = FALSE) %>%
-    # add corrected coordinates
-    dplyr::bind_rows(rows_to_insert)
-
-  # save issued coordinates
-  message("Saving issued coordinates in Output/Check/01_prefilter_transposed_coordinates.csv")
-
-  corrected_coordinates %>%
-    dplyr::select(
-      database_id,
-      scientificName,
-      dplyr::contains("decimal"),
-      locality,
-      stateProvince,
-      cntr_suggested
-    ) %>%
-    write_csv(here::here("Output", "Check", "01_prefilter_transposed_coordinates.csv"))
-
-  return(data)
-
-}
+test_that("Misuse of column names", {
+  expect_error(df <- bdc_coordinates_transposed(
+    data = x,
+    # id = "id",
+    sci_names = "scientificName",
+    lat = "decimalLatit",
+    lon = "decimalLongit",
+    country = "country_suggested",
+    countryCode = "countryCode",
+    border_buffer = 0.2
+  ))
+})
