@@ -11,12 +11,12 @@
 #' WGS84. Default = "decimalLongitude".
 #' @param lat character string. The column with latitude in decimal degrees and
 #' WGS84. Default = "decimalLatitude".
-#' @param ndec numeric. The numbers of decimals place to be tested. Default =
-#' c(0,1,2).
+#' @param ndec numeric. The minimum number of decimal places that the coordinates should 
+#' have to be considered valid. Default = 2.
 #'
 #' @return A data.frame with logical values indicating whether values are
-#' rounded by the specified decimal number (ndec). In other words, potentially
-#' imprecise coordinates.
+#' equal or higher than the specified minimum decimal number (ndec). Coordinates flagged as 
+#' FALSE in .rou column are considered imprecise.
 #'
 #' @importFrom dplyr select bind_cols rename
 #' @importFrom stringr str_split_fixed str_length
@@ -33,7 +33,7 @@
 #' data = x,
 #' lat = "lat",
 #' lon = "lon",  
-#' ndec = c(0, 2))
+#' ndec = 2)
 #' }
 bdc_coordinates_precision <-
   function(data,
@@ -63,7 +63,7 @@ bdc_coordinates_precision <-
     names(ndec_list) <- paste0(".", "ndec", ndec)
 
     for (i in 1:length(ndec)) {
-      ndec_list[[i]] <- !(ndec_lat == ndec[i] & ndec_lon == ndec[i])
+      ndec_list[[i]] <- (ndec_lat >= ndec[i] & ndec_lon >= ndec[i])
     }
     ndec_list <- dplyr::bind_cols(ndec_list)
     ndec_list$.ndec_all <- apply(ndec_list, 1, all) # all flagged as low decimal precision
