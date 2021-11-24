@@ -20,13 +20,13 @@ WGS84. Default = "decimalLatitude".}
 \item{lon}{character string. The column with longitude in decimal degrees and
 WGS84. Default = "decimalLongitude".}
 
-\item{ndec}{numeric. The numbers of decimals place to be tested. Default =
-c(0,1,2).}
+\item{ndec}{numeric. The minimum number of decimal places that the coordinates should
+have to be considered valid. Default = 2.}
 }
 \value{
 A data.frame with logical values indicating whether values are
-rounded by the specified decimal number (ndec). In other words, potentially
-imprecise coordinates.
+equal or higher than the specified minimum decimal number (ndec). Coordinates flagged as
+FALSE in .rou column are considered imprecise.
 }
 \description{
 This function is used to flag records with a coordinate precision below a
@@ -44,7 +44,7 @@ bdc_coordinates_precision(
 data = x,
 lat = "lat",
 lon = "lon",  
-ndec = c(0, 2))
+ndec = 2)
 }
 }
 \concept{{space}}
