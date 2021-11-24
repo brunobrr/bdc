@@ -16,7 +16,7 @@ records due to their age. Default = NULL.}
 }
 \value{
 A data frame with the original data, a flagged column (.year) and a
-column with the extracted four-digit years (year). Records with .year = FALSE
+column with the extracted four-digit years (year_corrected). Records with .year = FALSE
 means dates older than the year threshold or 1600.
 }
 \description{
