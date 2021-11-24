@@ -17,9 +17,6 @@ test_that("test with function example", {
   decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA, -64.105)
   decimalLatitude <- c(19.9358, -13.016667, NA, "",  -12.558)
   x <- data.frame(decimalLongitude, decimalLatitude)
-  # b <- rnaturalearth::ne_countries(country = "Brazil", scale = "medium")
-  plot(x)
-  plot(b, add=T)
   
   df <- bdc_coordinates_country_inconsistent(
     data = x,
@@ -29,5 +26,5 @@ test_that("test with function example", {
     dist = 10 # in decimal degrees
   )
   df
-  expect_equal(df$.coordinates_country_inconsistent, c(FALSE, FALSE, TRUE, TRUE, FALSE))
+  expect_equal(df$.coordinates_country_inconsistent, c(FALSE, TRUE, TRUE, TRUE, FALSE))
 })
