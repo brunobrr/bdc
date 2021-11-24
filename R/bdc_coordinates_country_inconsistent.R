@@ -28,9 +28,9 @@
 #' within the boundaries plus a specified distance (if 'dist' is supplied) of
 #' 'country_name'; otherwise "FALSE".
 #'
-#' @importFrom CoordinateCleaner cc_val
-#' @importFrom dplyr select mutate filter full_join bind_cols
-#' @importFrom sf st_as_sf st_set_crs st_bbox st_buffer st_crop st_intersects
+#' @importFrom dplyr select mutate filter full_join case_when left_join bind_cols
+#' @importFrom rnaturalearth ne_countries
+#' @importFrom sf st_as_sf st_set_crs st_crs st_buffer st_intersects st_intersection
 #'
 #' @export
 #'
@@ -140,28 +140,20 @@ bdc_coordinates_country_inconsistent <-
     dplyr::filter(points_in_buf == TRUE)
 
   # Points in other countries
-  # if(nrow(data_fil)>0){
-    suppressMessages({
-      suppressWarnings({
-        all_countries <-
-          rnaturalearth::ne_countries(returnclass = "sf") %>%
-          dplyr::select(name_long) %>%
-          sf::st_make_valid(.) %>% 
-          sf::st_crop(., sf::st_bbox(data_fil)) # Crop according to points bbox
-      })
-    })
-  # }
-
+  all_countries <-
+    rnaturalearth::ne_countries(returnclass = "sf", scale = "large") %>%
+    dplyr::select(name_long)
+  
   # Extract country names from points
-  suppressWarnings({
-    ext_country <- sf::st_intersection(data_sp, all_countries)
-  })
-  data_sp$geometry <- NULL
-  ext_country$geometry <- NULL
-
-  names_to_join <-
-    ext_country %>%
-    dplyr::select(id, name_long)
+    suppressWarnings({
+      ext_country <- sf::st_intersection(data_sp, all_countries)
+    })
+    data_sp$geometry <- NULL
+    ext_country$geometry <- NULL
+    
+    names_to_join <-
+      ext_country %>%
+      dplyr::select(id, name_long) 
 
   data_to_join <-
     dplyr::full_join(data_sp, names_to_join, by = "id") %>%
