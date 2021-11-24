@@ -1,12 +1,9 @@
 test_that("test with function example", {
-  decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA, -84.5)
-  decimalLatitude <- c(19.9358, -13.016667, NA, "",  -33.742280)
-  x <- data.frame(decimalLongitude, decimalLatitude)
-  
-  points(x[1:2])
+
+  metadata <- readr::read_csv("vignettes/input_files/gbif.csv")
   
   df <- bdc_coordinates_country_inconsistent(
-    data = x,
+    data = metadata,
     country_name = "Brazil",
     lon = "decimalLongitude",
     lat = "decimalLatitude",
@@ -14,15 +11,23 @@ test_that("test with function example", {
   )
   
   expect_true(".coordinates_country_inconsistent" %in% names(df))
+  expect_equal(sum(!df$.coordinates_country_inconsistent), 10)
   
   # With different values of dist
+  decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA, -64.105)
+  decimalLatitude <- c(19.9358, -13.016667, NA, "",  -12.558)
+  x <- data.frame(decimalLongitude, decimalLatitude)
+  # b <- rnaturalearth::ne_countries(country = "Brazil", scale = "medium")
+  plot(x)
+  plot(b, add=T)
+  
   df <- bdc_coordinates_country_inconsistent(
     data = x,
-    country_name = "Brazil",
+    country_name = c("Brazil"),
     lon = "decimalLongitude",
     lat = "decimalLatitude",
-    dist = 5 # in decimal degrees
+    dist = 10 # in decimal degrees
   )
-  # TODO correct or check dist argument in sf::st_buffer 
-  expect_equal(df$.coordinates_country_inconsistent, c(FALSE, TRUE, TRUE, TRUE, FALSE))
+  df
+  expect_equal(df$.coordinates_country_inconsistent, c(FALSE, FALSE, TRUE, TRUE, FALSE))
 })

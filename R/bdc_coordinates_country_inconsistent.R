@@ -30,7 +30,7 @@
 #'
 #' @importFrom dplyr select mutate filter full_join case_when left_join bind_cols
 #' @importFrom rnaturalearth ne_countries
-#' @importFrom sf st_as_sf st_set_crs st_crs st_buffer st_intersects st_intersection
+#' @importFrom sf sf_use_s2 st_as_sf st_set_crs st_crs st_buffer st_intersects st_intersection
 #'
 #' @export
 #'
@@ -66,7 +66,8 @@ bdc_coordinates_country_inconsistent <-
     points_in_buf <- name_long <- id <- .coordinates_country_inconsistent <- NULL
 
   check_require_cran("rnaturalearth")
-
+  sf::sf_use_s2(FALSE)
+  
   df <-
     data %>%
     dplyr::select(.data[[lon]], .data[[lat]]) %>%
@@ -118,7 +119,6 @@ bdc_coordinates_country_inconsistent <-
   suppressWarnings({
     buf <- sf::st_buffer(country_shp, dist = dist)
   })
-
 
   # Extract points within the buffer
   suppressMessages({
