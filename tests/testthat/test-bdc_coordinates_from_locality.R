@@ -6,8 +6,8 @@ test_that("test based on function example", {
   
   expect_message(bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon"))
   
-  r <- bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon")
+  r <- bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon", locality = "locality")
   
-  expect_equal(dim(r), c(3,4))
+  expect_equal(dim(r), c(3,3))
   
   })

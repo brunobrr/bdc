@@ -33,7 +33,7 @@
 #' lat <- c(NA, NA, "")
 #' lon <- c("", NA, NA)
 #' x <- data.frame(lat = lat, lon = lon, locality =  c("Brazil", "Argentina", "Chile"))
-#' bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon")
+#' bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon", locality = "locality")
 #' }
 bdc_coordinates_from_locality <-
   function(data,
