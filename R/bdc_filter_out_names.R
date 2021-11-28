@@ -5,61 +5,94 @@
 #' returned.
 #'
 #' @family {taxonomy}
-#' @param data data.frame. Containing a column with information on the taxonomic
-#' status of scientific names.
-#' @param taxonomic_notes character string. The column name containing notes
+#' @param data data.frame. Containing the column "notes" with information on the
+#' taxonomic status of scientific names.
+#' @param col_name character string. The column name containing notes
 #' about the taxonomic status of a name. Default = "notes".
-#' @param opposite logical. Should taxonomic notes different from those listed
-#' in 'taxonomic_notes' be returned? Default = FALSE
+#' @param taxonomic_status character string. Taxonomic status of a name. Default 
+#' = "accepted".
+#' @param opposite logical. Should taxonomic status different from those listed
+#' in 'taxonomic_status' be returned? Default = FALSE
 #'
 #' @details By default, only records with accepted scientific names are kept in
-#' the database. Such records are listed in the column 'taxonomic_notes' as
+#' the database. Such records are listed in the column 'taxonomic_status' as
 #' "accepted", "accepted | replaceSynonym",  "accepted | wasMisspelled" or
 #' "accepted | wasMisspelled | replaceSynonym". It is also possible to
 #' customize the list of taxonomic notes to be kept in the argument
-#' 'taxonomic_notes'. See 'notes' in the data.frame resulted from the function
+#' 'taxonomic_status'. See 'notes' in the data.frame resulted from the function
 #' \code{\link{bdc_create_report}}. If 'opposite' is TRUE, records with notes
-#' different from names listed in 'taxonomic_notes' are returned.
+#' different from names listed in 'taxonomic_status' are returned.
 
 #' @return A data.frame filtered out according to names listed in
-#' 'taxonomic_notes'.
+#' 'taxonomic_status'.
 #'
-#' @importFrom dplyr filter select
+#' @importFrom dplyr filter select distinct
 #' @importFrom stringr str_detect
 #'
 #' @export
-#'
+#' 
+#' @examples
+#' \dontrun{
+#' df_notes <-
+#'  data.frame(
+#'    notes = c("notFound", "accepted | replaceSynonym",
+#'              "accepted | wasMisspelled",
+#'              "accepted | wasMisspelled | replaceSynonym",
+#'              "multipleAccepted",
+#'              "heterotypic synonym")
+#'  )
+#'  
+#'bdc_filter_out_names(
+#'  data = df_notes,
+#'  taxonomic_status = "accepted",
+#'  col_name = "notes",
+#'  opposite = F
+#')
+#' }
 bdc_filter_out_names <-
   function(data,
-           taxonomic_notes = "accepted",
+           col_name = "notes",
+           taxonomic_status = "accepted",
            opposite = FALSE) {
-    notes <- id <- NULL
+    notes <- id <- temp <- NULL
+    
+    if (!is.data.frame(data)) {
+      stop("data is not a data.frame")
+    }
+    
+    if (!col_name %in% names(data)) {
+      stop(paste0("column ", "'", col_name, "'", "not found"))
+    }
+    
+    unique_status <- unique(data[, col_name])
+    if (!all(taxonomic_status %in% unique_status)) {
+      stop(paste0(
+        "Taxonomic status provided are not present in column",
+        " '",
+        col_name,
+        "'"
+      ))
+    }
     
     data$id <- 1:nrow(data)
-
-    if (!"notes" %in% names(data)) {
-      message("column 'notes' not found")
-    }
-
-    unique_notes <- unique(data$notes)
-    if (!taxonomic_notes %in% unique_notes) {
-      message("Names provided are not present in column 'notes'")
-    }
-
-    if (all(taxonomic_notes == "accepted")) {
-      df <-
+    
+    df <- NULL
+    for (i in 1:length(taxonomic_status)) {
+      temp <-
         data %>%
-        dplyr::filter(stringr::str_detect(notes, "accepted"))
-    } else {
-      df <- data %>% dplyr::filter(notes %in% taxonomic_notes)
+        dplyr::filter(stringr::str_detect(.data[[col_name]],
+                                          taxonomic_status[i]))
+      df <- bind_rows(df, temp)
     }
-
-    if (opposite == TRUE) {
+    
+    df <- df %>% dplyr::distinct(id, .keep_all = T)
+    
+    if (opposite) {
       df <-
         data %>%
         dplyr::filter(!id %in% df$id)
     }
-
+    
     df <- df %>% dplyr::select(-id)
     return(df)
   }
