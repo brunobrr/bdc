@@ -8,15 +8,15 @@ worldmap <- bdc_get_world_map()
 data <- data.frame(country = c("brezil", "USA", "Bolibia", "Vietnam"))
 
 x <-  bdc_standardize_country(
-      data = data,
-      country = "country",
-      country_names_db = wiki_cntr
-  )
+  data = data,
+  country = "country",
+  country_names_db = wiki_cntr
+)
 
 
 test_that("bdc_standardize_country standardize country names", {
   expect_equal(x$cntr_suggested, 
-               list("BOLIVIA", "BRAZIL", "UNITED STATES", "VIETNAM"))
+               c("BOLIVIA", "BRAZIL", "UNITED STATES", "VIETNAM"))
   
 }
 )

@@ -12,7 +12,8 @@
 #' matching. Values close to 1 indicate that only a few differences between
 #' scientific names and name suggested are allowed. Default = 0.9.
 #' @param provider character string. A database where the valid will be
-#' searched. The options are those provided by the 'taxadb' package.
+#' searched. The options are those provided by the 'taxadb' package. Only "col", "itis",
+#'  "ncbi" and "ott" are currently working.
 #' @param rank_name character string. Taxonomic rank name (e.g. "Plantae",
 #' "Animalia", "Aves", "Carnivora". Default = NULL.
 #' @param rank character string. A taxonomic rank to filter the database.
@@ -89,11 +90,12 @@ bdc_suggest_names_taxadb <-
     first_letter <- toupper(first_letter)
     
     # for some reasons, all names in gbif database are in lowercase
-    if (provider == "gbif"){
+    if (provider %in% c("gbif", "itis", "ncbi", "ott")){
       first_letter <- tolower(first_letter)
+      
     }
     
-    # Should taxonomic database be filter according to a taxonomic rank name?
+    # Should taxonomic database be filtered according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
       species_first_letter <-
         taxadb::taxa_tbl(provider) %>%
