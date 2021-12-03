@@ -35,12 +35,12 @@ NA. Default = 0.9.}
 be used in the taxonomic standardization process. Default = "gbif".
 Use "all" to install all available taxonomic databases automatically.}
 
-\item{rank_name}{character string. A taxonomic rank used to filter the
+\item{rank_name}{character string. Taxonomic rank name (e.g. "Plantae",
+"Animalia", "Aves", "Carnivora". Default is NULL.}
+
+\item{rank}{character string. A taxonomic rank used to filter the
 taxonomic database. Options available are: "kingdom", "phylum", "class",
 "order", "family", and "genus".}
-
-\item{rank}{character string. Taxonomic rank name (e.g. "Plantae",
-"Animalia", "Aves", "Carnivora". Default is NULL.}
 
 \item{parallel}{logical. Should a parallelization process be used?
 Default=FALSE}
@@ -180,7 +180,7 @@ sci_name <- c(
     "Poincianella pyramidalis",
     "Hymenophyllum polyanthos")
 
-names_harmonization <-
+names_standardization <-
   bdc_query_names_taxadb(
   sci_name,
   replace_synonyms = TRUE,
@@ -193,9 +193,3 @@ names_harmonization <-
 }
 
 }
-\seealso{
-Other {taxonomy}: 
-\code{\link{bdc_clean_names}()},
-\code{\link{bdc_filter_out_names}()}
-}
-\concept{{taxonomy}}

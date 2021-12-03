@@ -52,7 +52,6 @@ bdc_clean_names(scientificName)
 }
 \seealso{
 Other {taxonomy}: 
-\code{\link{bdc_filter_out_names}()},
-\code{\link{bdc_query_names_taxadb}()}
+\code{\link{bdc_filter_out_names}()}
 }
 \concept{{taxonomy}}

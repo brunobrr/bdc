@@ -4,21 +4,29 @@
 \alias{bdc_filter_out_names}
 \title{Filter out records according to their taxonomic status}
 \usage{
-bdc_filter_out_names(data, taxonomic_notes = "accepted", opposite = FALSE)
+bdc_filter_out_names(
+  data,
+  col_name = "notes",
+  taxonomic_status = "accepted",
+  opposite = FALSE
+)
 }
 \arguments{
-\item{data}{data.frame. Containing a column with information on the taxonomic
-status of scientific names.}
+\item{data}{data.frame. Containing the column "notes" with information on the
+taxonomic status of scientific names.}
 
-\item{taxonomic_notes}{character string. The column name containing notes
+\item{col_name}{character string. The column name containing notes
 about the taxonomic status of a name. Default = "notes".}
 
-\item{opposite}{logical. Should taxonomic notes different from those listed
-in 'taxonomic_notes' be returned? Default = FALSE}
+\item{taxonomic_status}{character string. Taxonomic status of a name. Default
+= "accepted".}
+
+\item{opposite}{logical. Should taxonomic status different from those listed
+in 'taxonomic_status' be returned? Default = FALSE}
 }
 \value{
 A data.frame filtered out according to names listed in
-'taxonomic_notes'.
+'taxonomic_status'.
 }
 \description{
 This function is useful for selecting records according to their taxonomic
@@ -27,17 +35,35 @@ returned.
 }
 \details{
 By default, only records with accepted scientific names are kept in
-the database. Such records are listed in the column 'taxonomic_notes' as
+the database. Such records are listed in the column 'taxonomic_status' as
 "accepted", "accepted | replaceSynonym",  "accepted | wasMisspelled" or
 "accepted | wasMisspelled | replaceSynonym". It is also possible to
 customize the list of taxonomic notes to be kept in the argument
-'taxonomic_notes'. See 'notes' in the data.frame resulted from the function
+'taxonomic_status'. See 'notes' in the data.frame resulted from the function
 \code{\link{bdc_create_report}}. If 'opposite' is TRUE, records with notes
-different from names listed in 'taxonomic_notes' are returned.
+different from names listed in 'taxonomic_status' are returned.
+}
+\examples{
+\dontrun{
+df_notes <-
+ data.frame(
+   notes = c("notFound", "accepted | replaceSynonym",
+             "accepted | wasMisspelled",
+             "accepted | wasMisspelled | replaceSynonym",
+             "multipleAccepted",
+             "heterotypic synonym")
+ )
+ 
+bdc_filter_out_names(
+ data = df_notes,
+ taxonomic_status = "accepted",
+ col_name = "notes",
+ opposite = F
+)
+}
 }
 \seealso{
 Other {taxonomy}: 
-\code{\link{bdc_clean_names}()},
-\code{\link{bdc_query_names_taxadb}()}
+\code{\link{bdc_clean_names}()}
 }
 \concept{{taxonomy}}
