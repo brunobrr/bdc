@@ -67,9 +67,9 @@ Imports:
     tidyselect,
     vroom,
     ggplot2,
-    cowplot, 
+    cowplot,
     scales,
-    rnaturalearth, 
+    rnaturalearth,
     DT
 Suggests:
     readr,
@@ -78,7 +78,6 @@ Suggests:
     xml2,
     rmarkdown,
     covr
-Remotes: hannesmuehleisen/MonetDBLite-R@v0.6.0
 VignetteBuilder:
     knitr
 Encoding: UTF-8
