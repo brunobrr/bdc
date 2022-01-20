@@ -6,7 +6,7 @@
 #' linked to multiple accepted names.
 #'
 #' @family {taxonomy}
-#' @param data data.frame. Database exported from bdc_get_taxa_taxadb function.
+#' @param data data.frame. Database exported from bdc_query_names_taxadb function.
 #' @param rank_name character string. A taxonomic rank to filter the database.
 #' Options available are: "kingdom", "phylum", "class", "order", "family", and
 #' "genus".
