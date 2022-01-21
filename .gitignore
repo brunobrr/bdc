@@ -14,3 +14,4 @@ renv/activate.R
 renv/settings.dcf
 
 README.html
+tests/testthat/Rplots.pdf
