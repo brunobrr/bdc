@@ -70,7 +70,8 @@ Imports:
     cowplot,
     scales,
     rnaturalearth,
-    DT
+    DT,
+    withr
 Suggests:
     readr,
     rvest,
