@@ -1,13 +1,19 @@
 context("creating directories")
 
-if (!require("here")) install.packages("here")
+withr::with_dir(
+  new = ".",
+  code = {
 
-Output_path <- here::here("Output")
-Output <- file.exists(here::here("Output"))
+    bdc_create_dir()
 
-test_that("file exist", {
-  if(isFALSE(Output)){
-    "folder Output not found. Please run the function bdc::bdc_create_dir"
+    test_that("bdc dir exists", {
+
+      expect_true(dir.exists(here::here("Output/Check")))
+      expect_true(dir.exists(here::here("Output/Intermediate")))
+      expect_true(dir.exists(here::here("Output/Report")))
+      expect_true(dir.exists(here::here("Output/Figures")))
+
+    })
+
   }
-})
-
+)
