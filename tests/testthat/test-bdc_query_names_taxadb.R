@@ -1,32 +1,34 @@
 context("bdc_query_names_taxadb")
 
+skip("dont run")
+
 sci_names <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
   "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
-   
+
 
 test <- bdc_query_names_taxadb(sci_names, suggestion_distance = 0.9, db = "gbif")
 
 test_that("bdc_query_names_taxadb", {
- 
+
   expect_equal(length(test$scientificName),  length(sci_names))
 }
 )
 
 test_that("bdc_get_taxa_taxadb datase order", {
-  
+
   expect_equal(test$original_search,  sci_names)
 }
 )
 
 test_that("suggest_name FALSE", {
-  
-  test <- bdc_query_names_taxadb(c("Puma concola", "Cebus apela"), 
-                               suggestion_distance = 0.9, 
+
+  test <- bdc_query_names_taxadb(c("Puma concola", "Cebus apela"),
+                               suggestion_distance = 0.9,
                                db = "gbif",
                                suggest_names = FALSE,
                                rank_name = "Mammalia",
                                rank = "class")
-  
+
   expected <- tibble(data.frame(original_search = c("Puma concola", "Cebus apela"),
                      sort = integer(2),
                      taxonID = character(2),
@@ -50,23 +52,23 @@ test_that("suggest_name FALSE", {
                      notes = character(2),
                      distance = numeric(2)
   ))
-  
+
   expected$original_search <- c("Puma concola", "Cebus apela")
-  
+
   expected$input <-  c("Puma concola", "Cebus apela")
-  
+
   expected$sort <- as.integer(c(1 ,2))
-  
+
   for(i in 3:ncol(expected)){
     expected[, i] <- as.character(c(NA, NA))
   }
-  
+
   expected$distance <- as.numeric(c(0, 0))
-  
+
   expected$notes <- c("NA", "NA")
-  
+
   testthat::expect_equal(test, expected)
-  
+
 }
 )
 
