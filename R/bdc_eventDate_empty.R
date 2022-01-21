@@ -34,7 +34,7 @@ bdc_eventDate_empty <-
     col <-
       col %>%
       trimws(.) %>%
-      ifelse(. == "" | . == "NA", NA, .)
+      ifelse(. == "" | . == "NA" | . == "-" | . == "/", NA, .)
 
     .eventDate_empty <- ifelse(is.na(col) == FALSE, TRUE, FALSE)
 

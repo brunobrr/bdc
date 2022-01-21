@@ -1,5 +1,3 @@
-context("filter out names")
-
 df_notes <-
   data.frame(
     notes_a = c(
