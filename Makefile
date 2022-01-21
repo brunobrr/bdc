@@ -55,7 +55,7 @@ render: ## force render README
 	$(R) "rmarkdown::render('README.Rmd')"
 
 eg:     ## run examples
-	$(R) "devtools::run_examples(run = TRUE)"
+	$(R) "devtools::run_examples(run_dontrun = TRUE)"
 
 help:         ## show this message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
