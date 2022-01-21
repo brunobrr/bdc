@@ -1,7 +1,7 @@
 test_that("test with function example", {
 
-  metadata <- readr::read_csv("vignettes/input_files/gbif.csv")
-  
+  metadata <- readr::read_csv(here::here("vignettes/input_files/gbif.csv"))
+
   df <- bdc_coordinates_country_inconsistent(
     data = metadata,
     country_name = "Brazil",
@@ -9,15 +9,15 @@ test_that("test with function example", {
     lat = "decimalLatitude",
     dist = 0.1 # in decimal degrees
   )
-  
+
   expect_true(".coordinates_country_inconsistent" %in% names(df))
   expect_equal(sum(!df$.coordinates_country_inconsistent), 10)
-  
+
   # With different values of dist
   decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA, -64.105)
   decimalLatitude <- c(19.9358, -13.016667, NA, "",  -12.558)
   x <- data.frame(decimalLongitude, decimalLatitude)
-  
+
   df <- bdc_coordinates_country_inconsistent(
     data = x,
     country_name = c("Brazil"),
