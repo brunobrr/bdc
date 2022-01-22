@@ -24,7 +24,7 @@
 #' "PreservedSpecimen", "preservedspecimen", "S", "Specimen", "Taxon",
 #' "UNKNOWN", "", NA)
 #'
-#' @return A data.frame containing the column ".basisOfRrecords_notStandard"
+#' @return A data.frame containing the column ".basisOfRecords_notStandard"
 #' .Compliant (TRUE) if 'basisOfRecord' is standard; otherwise "FALSE".
 #'
 #' @importFrom dplyr mutate filter select distinct
@@ -36,15 +36,16 @@
 #' x <- data.frame(basisOfRecord = c("FOSSIL_SPECIMEN", "UNKNOWN",
 #' "RON", NA, "Specimen", "PRESERVED_SPECIMEN"))
 #' 
-#' bdc_basisOfRrecords_notStandard(data = x, basisOfRecord = "basisOfRecord",
+#' bdc_basisOfRecords_notStandard(data = x, basisOfRecord = "basisOfRecord",
 #' names_to_keep = "all")
 #' }
-bdc_basisOfRrecords_notStandard <-
+bdc_basisOfRecords_notStandard <-
   function(data,
            basisOfRecord = "basisOfRecord",
            names_to_keep = "all") {
-    .data <- .basisOfRrecords_notStandard <- NULL
-    if (names_to_keep == "all") {
+    .data <- .basisOfRecords_notStandard <- NULL
+    
+    if (names_to_keep[1] == "all") {
       names_to_keep <-
         c(
           "Event",
@@ -73,22 +74,22 @@ bdc_basisOfRrecords_notStandard <-
           NA
         )
     }
-
+    
     data <-
       data %>%
-      dplyr::mutate(.basisOfRrecords_notStandard = .data[[basisOfRecord]] %in%
-                    names_to_keep)
-
+      dplyr::mutate(.basisOfRecords_notStandard = 
+                    tolower(.data[[basisOfRecord]]) %in% tolower(names_to_keep))
+    
     removed <-
       data %>%
-      dplyr::filter(.basisOfRrecords_notStandard == FALSE) %>%
+      dplyr::filter(.basisOfRecords_notStandard == FALSE) %>%
       dplyr::select(.data[[basisOfRecord]]) %>%
       dplyr::distinct()
-
+    
     message(
       paste(
-        "\nbdc_basisOfRrecords_notStandard:\nFlagged",
-        sum(data$.basisOfRrecords_notStandard == FALSE),
+        "\nbdc_basisOfRecords_notStandard:\nFlagged",
+        sum(data$.basisOfRecords_notStandard == FALSE),
         "of the following specific nature:\n",
         removed,
         "\nOne column was added to the database.\n"
@@ -96,4 +97,3 @@ bdc_basisOfRrecords_notStandard <-
     )
     return(data)
   }
-
