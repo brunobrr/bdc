@@ -43,7 +43,7 @@ lon = "decimalLongitude")
 }
 \seealso{
 Other {prefilter}: 
-\code{\link{bdc_basisOfRrecords_notStandard}()},
+\code{\link{bdc_basisOfRecords_notStandard}()},
 \code{\link{bdc_coordinates_country_inconsistent}()},
 \code{\link{bdc_coordinates_empty}()},
 \code{\link{bdc_coordinates_from_locality}()},

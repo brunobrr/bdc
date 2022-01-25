@@ -168,7 +168,7 @@ resolved. Such cases are flagged and left to be determined by the user.
 }
 }
 \examples{
-\dontrun{
+if (interactive()) {
 sci_name <- c(
     "Polystachya estrellensis",
     "Tachigali rubiginosa",
