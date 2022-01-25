@@ -97,7 +97,7 @@ Below are listed the specifications of each field of the configuration table:
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 config_description <-
-  readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo_description.csv"))
+  readr::read_csv(system.file("extdata", "Config", "DatabaseInfo_description.csv"), package = "bdc")
 
 # DT::datatable(
 #   config_description, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
