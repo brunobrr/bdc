@@ -51,9 +51,10 @@ The taxonomic standardization is based on one taxonomic database chosen by the u
 
 You can install the released version of BDC from [github](https://github.com/brunobrr/bdc) with:
 
-```{r, message=FALSE, warning=FALSE}
-if (!require("remotes")) install.packages("remotes")
-if (!require("bdc")) remotes::install_github("brunobrr/bdc")
+```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
+# install.packages("remotes")
+# remotes::install_github("brunobrr/bdc")
+library(bdc)
 ```
 
 ## Creating directories

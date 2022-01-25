@@ -34,9 +34,10 @@ The results of the **VALIDATION** test used to flag data quality are appended in
 
 You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
 
-```{r, message=FALSE, warning=FALSE}
-if (!require("remotes")) install.packages("remotes")
-if (!require("bdc")) remotes::install_github("brunobrr/bdc")
+```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
+# install.packages("remotes")
+# remotes::install_github("brunobrr/bdc")
+library(bdc)
 ```
 
 ## Creating directories
@@ -51,9 +52,18 @@ bdc_create_dir()
 
 Read the merged database created in the module **Standardization and integration of different datasets** of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the functions (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
-```{r}
+```{r, echo=TRUE,eval=FALSE}
 database <-
   qs::qread(here::here("Output/Intermediate/00_merged_database.qs"))
+```
+
+```{r, echo=FALSE,eval=TRUE}
+database <-
+  qs::qread(here::here("Output/Intermediate/00_merged_database.qs"))
+
+# FIXME: solve path
+system.file(c("exdata", "*.qs"), package = "bdc")
+
 ```
 
 Standardization of character encoding.

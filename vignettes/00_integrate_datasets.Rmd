@@ -39,9 +39,15 @@ Once standardized, datasets are then integrated into a standardized database hav
 
 You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
 
-```{r, message=FALSE, warning=FALSE}
-if (!require("remotes")) install.packages("remotes")
-if (!require("bdc")) remotes::install_github("brunobrr/bdc")
+```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=FALSE}
+install.packages("remotes")
+remotes::install_github("brunobrr/bdc")
+```
+
+And load the package with:
+
+```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
+library(bdc)
 ```
 
 First, let's create folders to save the results.
@@ -55,7 +61,8 @@ bdc::bdc_create_dir()
 Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 9.000 records compiled from nine different sources (see below).
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"))
+# TODO: repetir isso para a entrada dos dados dos outros vignettes
+metadata <- readr::read_csv(system.file(c("extdata/Config/DatabaseInfo.csv"), package = "bdc"))
 ```
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE, echo = FALSE}
