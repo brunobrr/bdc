@@ -1,6 +1,6 @@
 test_that("test with function example", {
 
-  metadata <- readr::read_csv(here::here("vignettes/input_files/gbif.csv"))
+  metadata <- readr::read_csv(system.file("extdata", "input_files/gbif.csv", package = "bdc"))
 
   df <- bdc_coordinates_country_inconsistent(
     data = metadata,

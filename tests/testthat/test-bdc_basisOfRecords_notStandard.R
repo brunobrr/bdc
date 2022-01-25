@@ -9,6 +9,17 @@ x <- data.frame(
   )
 )
 
+
+r2 <- bdc_basisOfRecords_notStandard(
+  data = x,
+  basisOfRecord = "basisOfRecord",
+  names_to_keep = c("Fossil", "Ron", "RON", "S", "unknown", "FOSSEL")
+)
+
+
+r3 <- bdc_basisOfRecords_notStandard(data = x,
+                                     basisOfRecord = "basisOfRecord")
+
 test_that("bdc_basisOfRecords correct use of arguments", {
   expect_message(
     bdc_basisOfRecords_notStandard(
@@ -20,12 +31,7 @@ test_that("bdc_basisOfRecords correct use of arguments", {
 })
 
 test_that("bdc_basisOfRecords results using a selected names to keep", {
-  r2 <- bdc_basisOfRecords_notStandard(
-    data = x,
-    basisOfRecord = "basisOfRecord",
-    names_to_keep = c("Fossil", "Ron", "RON", "S", "unknown", "FOSSEL")
-  )
-  
+
   expect_equal(r2$.basisOfRecords_notStandard, c(F, T, T, F, F, F))
 })
 
@@ -38,9 +44,7 @@ test_that("bdc_basisOfRecords results with default names to keep", {
 })
 
 test_that("bdc_basisOfRecords testing default argument", {
-  r3 <- bdc_basisOfRecords_notStandard(data = x,
-                                        basisOfRecord = "basisOfRecord")
-  
+
   expect_equal(r3$.basisOfRecords_notStandard, c(F, T, F, T, T, T))
 })
 
