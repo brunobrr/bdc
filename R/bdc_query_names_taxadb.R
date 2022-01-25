@@ -147,7 +147,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
 #' sci_name <- c(
 #'     "Polystachya estrellensis",
 #'     "Tachigali rubiginosa",
@@ -182,32 +182,32 @@ bdc_query_names_taxadb <-
            parallel = FALSE,
            ncores = 2,
            export_accepted = FALSE) {
-    
+
     value <- original_search <- input <- . <- notes <- scientificName <- NULL
     acceptedNameUsageID <- original <- NULL
-    
+
     # Create a directory to save the result
     bdc::bdc_create_dir()
-    
+
     # FIXME: set a env var for now
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
     Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
     Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
-    
+
     # Measuring the execution time
     start <- Sys.time()
-    
+
     # This is one-time setup used to download, extract and import taxonomic
     # database from the taxonomic authority defined by the user (see
     # ?taxadb::td_create for details)
     taxadb::td_create(provider = db, schema = "dwc", overwrite = FALSE)
-    
+
     # Raw taxa names
     raw_sci_name <-
       sci_name %>%
       tibble::as_tibble() %>%
       dplyr::rename(original_search = value)
-    
+
     # Only unique names will be queried (empty or NA names are temporarily
     # excluded)
     sci_name <-
@@ -217,15 +217,15 @@ bdc_query_names_taxadb <-
                                              NA, original_search)) %>%
       dplyr::filter(!is.na(original_search)) %>%
       dplyr::pull(original_search)
-    
+
     # Querying names using 'taxadb' (only EXACT match allowed)
     found_name <- suppressWarnings(taxadb::filter_name(sci_name, provider = db))
-    
+
     # Create a vector containing the number of columns of the taxonomic
     # database. This is important because the number of columns varies according
     # to the taxonomic authority selected.
     ncol_tab_taxadb <- ncol(found_name)
-    
+
     # Add three new columns (notes, original_search, and distance).
     # notes: save results of the taxonomic standardization process;
     # original_search: contains original names queried;
@@ -240,7 +240,7 @@ bdc_query_names_taxadb <-
         distance = numeric(nrow(found_name))
       ) %>%
       dplyr::mutate(original_search = input)
-    
+
     # Flag names with names with multiple accepted names
     if (nrow(found_name) != length(sci_name)) {
       found_name <-
@@ -248,20 +248,20 @@ bdc_query_names_taxadb <-
                              rank = rank,
                              rank_name = rank_name)
     }
-    
+
     # Reordering the database
     found_name <- found_name[order(found_name$sort), ]
-    
+
     # Selects unresolved names. Such names are queried using fuzzy match if
     # suggest_names is TRUE.
     not_found <-
       is.na(found_name$scientificName) &
       !grepl("multipleAccepted", found_name$notes)
-    
+
     if (any(not_found == TRUE)) {
       if (suggest_names == TRUE) {
         not_found_index <- which(not_found == TRUE)
-        
+
         # Searches for best matches to each unresolved names based
         # on a value of match distance value defined by the user.
         suggested_search <-
@@ -273,32 +273,32 @@ bdc_query_names_taxadb <-
             rank = rank,
             ncores = ncores
           )
-        
+
         suggested_name <- suggested_search[, "suggested"]
         distance <- suggested_search[, "distance"]
         suggested <- !is.na(suggested_name)
         found_name[not_found_index, "distance"] <- distance
-        
+
         ### Table containing original and suggested names
         original_suggested_names <- suggested_search[suggested, 1:2]
-        
+
         # Searching for accepted names for each suggested names using 'taxadb'
         if (any(suggested == TRUE)) {
-          
+
           # Exclude names without suggestion
           suggested_names_filtered <- suggested_name[suggested]
-          
+
           # Only unique names will be returned. Two or more misspelled names can
           # have a same suggested names.
           suggested_names_filtered <- unique(suggested_names_filtered)
-          
+
           # Searching for matching names for suggested names using taxadb
           suggest_data <-
             suppressWarnings(
               taxadb::filter_name(suggested_names_filtered,
                                   provider = db
               ))
-          
+
           # Add three new columns (notes, original_search, and distance)
           suggest_data <-
             suggest_data %>%
@@ -308,16 +308,16 @@ bdc_query_names_taxadb <-
               original_search = character(nrow(suggest_data)),
               distance = numeric(nrow(suggest_data))
             )
-          
+
           # Create a warning when one suggested name match multiple original
           # names.
           if (any(duplicated(suggested_names_filtered))) {
             duplicated <- duplicated(suggested_names_filtered)
-            
+
             report <-
               which(suggested_names_filtered %in%
                       suggested_names_filtered[duplicated])
-            
+
             names_to_check <-
               suggested_search[suggested_search[, "suggested"] %in%
                                  suggested_names_filtered[report], 1:2]
@@ -334,16 +334,16 @@ bdc_query_names_taxadb <-
               )
             )
           }
-          
+
           # Filter duplicated names returned by filter_name (excluding synonyms
           # when there are valid names)
           if (any(duplicated(suggest_data$input))) {
             suggest_data <- bdc_clean_duplicates(data = suggest_data)
           }
-          
+
           # Reordering the database
           suggest_data <- suggest_data[order(suggest_data$sort), ]
-          
+
           ### Join original names to suggested names. Remember: the column input
           # contains the candidate (suggested) names.
           suggest_data <-
@@ -352,19 +352,19 @@ bdc_query_names_taxadb <-
             dplyr::mutate(original_search = original) %>%
             dplyr::select(-original) %>%
             dplyr::distinct(original_search, .keep_all = T)
-          
-          
+
+
           # Adding suggested data on found_name data.frame
           posi_misspelled_names <-
             match(suggest_data$original_search, found_name$original_search)
-          
+
           found_name[posi_misspelled_names, 1:ncol_tab_taxadb] <-
             suggest_data[, 1:ncol_tab_taxadb]
-          
+
           # Flag misspelled names
           found_name[posi_misspelled_names, "notes"] <-
             "| wasMisspelled "
-          
+
         } else {
           suggested_search <-
             data.frame(
@@ -373,29 +373,29 @@ bdc_query_names_taxadb <-
               distance = NA
             )
         } # end of else
-        
+
       } # end of suggest_names
     } # end of not_found
-    
-    
+
+
     # searching for accepted names for synonyms.
     synonym_index <- which(found_name$taxonomicStatus == "synonym")
     nrow_synonym <- length(synonym_index)
-    
+
     if (nrow_synonym > 0L) {
       if (replace_synonyms) {
         accepted <-
           suppressWarnings(taxadb::filter_id
                            (found_name$acceptedNameUsageID[synonym_index], db))
-        
+
         # Add original names
         ori_names <-
           found_name %>%
           dplyr::select(original_search) %>%
           dplyr::slice(synonym_index)
-        
+
         accepted <- dplyr::bind_cols(accepted, ori_names)
-        
+
         # Split names by equal original_search
         accepted_list <- split(accepted, as.factor(accepted$original_search))
         nrow_accepted <- sapply(accepted_list, nrow)
@@ -405,50 +405,50 @@ bdc_query_names_taxadb <-
         )
         nrow_accepted[accepted_empty] <- 0L
         one_accepted <- nrow_accepted == 1L
-        
+
         # Substitute synonyms by the accepted names
         if (any(one_accepted & accepted_empty == FALSE)) {
           replace_tab <- purrr::map_dfr(
             accepted_list[one_accepted],
             function(i) i
           )[, -1]
-          
+
           replace_tab <- replace_tab[order(replace_tab$sort), ]
           p0 <- match(replace_tab$original_search, found_name$original_search)
           found_name[p0, colnames(replace_tab)] <- replace_tab
-          
+
           found_name[p0, "notes"] <-
             paste(found_name$notes[p0], "replaceSynonym", sep = "| ")
         }
-        
+
         # Flag synonyms with no accepted names
         if (any(accepted_empty == TRUE)) {
           p <- match(
             names(accepted_list[accepted_empty]), found_name$original_search
           )
-          
+
           found_name[p, "notes"] <-
             paste(found_name[p, "notes"][[1]], "noAcceptedName", sep = "| ")
         }
-        
+
         # Flag synonyms with multiple accepted name
         if (any(nrow_accepted > 1L)) {
           p1 <- match(
             names(accepted_list[nrow_accepted > 1]),
             found_name$original_search
           )
-          
+
           found_name[p1, "notes"] <-
             paste(found_name[p1, "notes"][[1]], "multipleAccepted", sep = "| ")
         }
       } # end of replace_synonyms
     } # end of nrow_synonym
-    
-    
+
+
     ### Formatting the resulted data.frame (only if suggest_name is TRUE)
     if (any(not_found == TRUE)) {
       if (suggest_names == TRUE) {
-        
+
         found_name <-
           suggested_search %>%
           dplyr::select(-distance) %>%
@@ -471,8 +471,8 @@ bdc_query_names_taxadb <-
           ))
       }
     }
-    
-    
+
+
     ### Adding information on 'taxonomicStatus' in the column 'notes'.
     found_name <-
       found_name %>%
@@ -482,29 +482,29 @@ bdc_query_names_taxadb <-
                         paste(found_name$taxonomicStatus, notes, sep = " "),
                         notes
                       ))
-    
+
     # Returning as NA names whose 'taxonomicStatus' are different of "accepted"
     # and "synonym"
     w <-
       which(found_name$taxonomicStatus != "accepted" &
               found_name$taxonomicStatus != "synonym")
-    
+
     if(length(w) > 0){
       found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
     }
-    
+
     # Trimming extra-spaces from the column "notes"
     found_name$notes <- stringr::str_squish(found_name$notes)
-    
+
     # Converting the first letter of "scientificName" to uppercase
-    found_name$scientificName <- 
+    found_name$scientificName <-
       stringr::str_to_sentence(found_name$scientificName)
-    
+
     # Export a table containing names linked to multiple accepted names.
     if (export_accepted == TRUE) {
       dir <- here::here("Output", "Check")
       fs::dir_create(dir)
-      
+
       multi_accName <-
         found_name %>%
         dplyr::filter(stringr::str_detect(notes, regex("multiple"))) %>%
@@ -516,20 +516,20 @@ bdc_query_names_taxadb <-
           .,
           here::here("Output/Check/02_names_multiple_accepted_names.csv")
         )
-      
+
       message(
         "\nCheck names with more than one valid name in 'Output/Check/02_names_multiple_accepted_names.csv'\n"
       )
     }
-    
-    
+
+
     # joining  names queried to the original (complete) database
     found_name <-
       dplyr::left_join(raw_sci_name, found_name, by = "original_search")
-    
+
     end <- Sys.time()
     total_time <- round(as.numeric (end - start, units = "mins"), 1)
-    
+
     message(paste(
       "\n",
       nrow(found_name),
@@ -537,6 +537,6 @@ bdc_query_names_taxadb <-
       total_time,
       "minutes\n"
     ))
-    
+
     return(found_name)
   }

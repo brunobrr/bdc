@@ -9,7 +9,7 @@
 #' taxonomic status of scientific names.
 #' @param col_name character string. The column name containing notes
 #' about the taxonomic status of a name. Default = "notes".
-#' @param taxonomic_status character string. Taxonomic status of a name. Default 
+#' @param taxonomic_status character string. Taxonomic status of a name. Default
 #' = "accepted".
 #' @param opposite logical. Should taxonomic status different from those listed
 #' in 'taxonomic_status' be returned? Default = FALSE
@@ -30,41 +30,42 @@
 #' @importFrom stringr str_detect
 #'
 #' @export
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' df_notes <-
 #'  data.frame(
-#'    notes = c("notFound", "accepted | replaceSynonym",
+#'    notes = c("notFound", "accepted", "accepted | replaceSynonym",
 #'              "accepted | wasMisspelled",
 #'              "accepted | wasMisspelled | replaceSynonym",
 #'              "multipleAccepted",
 #'              "heterotypic synonym")
 #'  )
-#'  
-#'bdc_filter_out_names(
+#'
+#' bdc_filter_out_names(
 #'  data = df_notes,
 #'  taxonomic_status = "accepted",
 #'  col_name = "notes",
 #'  opposite = F
-#')
+#' )
 #' }
 bdc_filter_out_names <-
   function(data,
            col_name = "notes",
            taxonomic_status = "accepted",
            opposite = FALSE) {
-    notes <- id <- temp <- NULL
-    
+    notes <- id <- temp <- .data <- NULL
+
     if (!is.data.frame(data)) {
       stop("data is not a data.frame")
     }
-    
+
     if (!col_name %in% names(data)) {
       stop(paste0("column ", "'", col_name, "'", "not found"))
     }
-    
+
     unique_status <- unique(data[, col_name])
+
     if (!all(taxonomic_status %in% unique_status)) {
       stop(paste0(
         "Taxonomic status provided are not present in column",
@@ -73,9 +74,9 @@ bdc_filter_out_names <-
         "'"
       ))
     }
-    
+
     data$id <- 1:nrow(data)
-    
+
     df <- NULL
     for (i in 1:length(taxonomic_status)) {
       temp <-
@@ -84,15 +85,15 @@ bdc_filter_out_names <-
                                           taxonomic_status[i]))
       df <- bind_rows(df, temp)
     }
-    
+
     df <- df %>% dplyr::distinct(id, .keep_all = T)
-    
+
     if (opposite) {
       df <-
         data %>%
         dplyr::filter(!id %in% df$id)
     }
-    
+
     df <- df %>% dplyr::select(-id)
     return(df)
   }

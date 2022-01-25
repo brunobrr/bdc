@@ -44,31 +44,31 @@ bdc_create_report <-
   function(data,
            database_id = "database_id",
            workflow_step) {
-    
+
     Description <- . <- NULL
     . <- V1 <- Test_name <- Description <- notes <- NULL
-    number_of_records <- .uncer_terms <- NULL
-    
+    number_of_records <- .uncer_terms  <- `NA` <- NULL
+
     suppressWarnings({
       check_require_cran("readr")
       check_require_cran("DT")
     })
-    
+
     match.arg(arg = workflow_step,
               choices = c("prefilter", "taxonomy", "space", "time"))
-    
+
     bdc_create_dir()
-    
+
     suppressMessages({
       # # Total number of records
       # if (!fs::file_exists("data/n_records.csv")) {
       n_records <-
         data %>%
-        dplyr::summarise(n = dplyr::n()) %>% 
+        dplyr::summarise(n = dplyr::n()) %>%
         dplyr::pull(n)
-        
+
         # data.table::fwrite(n_records, here::here("data/n_records.csv"))
-        
+
         # Total number of records per database
       n_record_database <-
         data %>%
@@ -78,7 +78,7 @@ bdc_create_report <-
         ) %>%
         dplyr::group_by(database_id) %>%
         dplyr::summarise(n_total = dplyr::n())
-        
+
       #   data.table::fwrite(n_record_database,
       #                      here::here("data/n_record_database.csv"))
       # } else {
@@ -87,24 +87,24 @@ bdc_create_report <-
       #   n_record_database <-
       #     readr::read_csv("data/n_record_database.csv")
       # }
-      
+
       # Function used to formatting report
       format_df <- function(x) {
         x <-
           x %>%
           dplyr::add_row() %>%
           as.data.frame()
-        
+
         x <- x %>% dplyr::select(Description, dplyr::everything())
-        
+
         x[1 + nrow(x), 1] <-
           paste("(*) calculated in relation to total number of records, i.e.",
                 n_records,
                 "records")
-        
+
         names(x)[4] <- "perc_number_records(*)"
         x <- x %>% replace(is.na(.), "")
-        
+
         data <-
           x %>%
           DT::datatable(
@@ -118,7 +118,7 @@ bdc_create_report <-
           )
         return(list(x, data))
       }
-      
+
       # Prefilter
       if ("prefilter" %in% workflow_step) {
         pf <-
@@ -133,7 +133,7 @@ bdc_create_report <-
                           round((V1 / nrow(data) * 100), 2)) %>%
           dplyr::rename(Test_name = `NA`,
                         Records_flagged = V1)
-        
+
         pf <-
           pf %>%
           dplyr::mutate(Description = Test_name) %>%
@@ -169,13 +169,13 @@ bdc_create_report <-
               Description
             )
           )
-        
+
         res <- format_df(pf)
         data <- res[[2]]
         data.table::fwrite(res[[1]],
                            here::here("Output/Report/01_Report_Prefilter.csv"))
       }
-      
+
       # Taxonomy
       if ("taxonomy" %in% workflow_step) {
         names <-
@@ -184,9 +184,9 @@ bdc_create_report <-
           dplyr::summarise(number_of_records = dplyr::n()) %>%
           dplyr::mutate(perc_number_records =
                           round((number_of_records / n_records) * 100, 2))
-        
+
         names$notes <- stringr::str_squish(names$notes)
-        
+
         if (".uncer_terms" %in% names(data)) {
           taxo_unc <-
             data %>%
@@ -199,10 +199,10 @@ bdc_create_report <-
             dplyr::rename(notes = .uncer_terms) %>%
             dplyr::mutate(notes = ifelse(notes == "FALSE", "taxo_uncer", notes))
         }
-        
+
         names <- dplyr::bind_rows(names, taxo_unc)
         names$notes <- stringr::str_squish(names$notes)
-        
+
         names <-
           names %>%
           dplyr::mutate(notes = dplyr::if_else(notes == "",
@@ -290,13 +290,13 @@ bdc_create_report <-
               Description
             )
           )
-        
+
         res <- format_df(names)
         data <- res[[2]]
         data.table::fwrite(res[[1]],
                            here::here("Output/Report/02_Report_taxonomy.csv"))
       }
-      
+
       # Space
       if ("space" %in% workflow_step) {
         space <-
@@ -311,7 +311,7 @@ bdc_create_report <-
                           round((V1 / n_records * 100), 2)) %>%
           dplyr::rename(Test_name = `NA`,
                         Records_flagged = V1)
-        
+
         space <-
           space %>%
           dplyr::mutate(Description = Test_name) %>%
@@ -373,14 +373,14 @@ bdc_create_report <-
               Description
             )
           )
-        
+
         res <- format_df(space)
         data <- res[[2]]
         data.table::fwrite(res[[1]],
                            here::here("Output/Report/03_Report_space.csv"))
-        
+
       }
-      
+
       if ("time" %in% workflow_step) {
         date <-
           data %>%
@@ -394,7 +394,7 @@ bdc_create_report <-
                           round((V1 / n_records * 100), 2)) %>%
           dplyr::rename(Test_name = `NA`,
                         Records_flagged = V1)
-        
+
         date <-
           date %>%
           dplyr::mutate(Description = Test_name) %>%
@@ -415,15 +415,15 @@ bdc_create_report <-
               Description
             )
           )
-        
-        
+
+
         res <- format_df(date)
         data <- res[[2]]
         data.table::fwrite(res[[1]],
                            here::here("Output/Report/04_Report_time.csv"))
       }
     })
-    
+
     message(
       paste(
         "\nbdc_create_report:\nCheck the report summarizing the results of the",

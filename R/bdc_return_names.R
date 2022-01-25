@@ -14,7 +14,6 @@
 #' calculated from sci_name. Default = "species_first_letter".
 #' @return A data.frame whose first column is the closest matching name for a misspelled name and the second one a matching distance.
 #' @noRd
-#' @export
 #'
 #' @examples
 #' \dontrun{

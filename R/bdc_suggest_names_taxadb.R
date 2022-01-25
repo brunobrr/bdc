@@ -49,7 +49,6 @@
 #' @importFrom foreach %dopar%
 #'
 #' @noRd
-#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -71,14 +70,14 @@ bdc_suggest_names_taxadb <-
            rank = NULL,
            parallel = TRUE,
            ncores = 2) {
-    
+
     suggestion_distance <- db <- . <- .data <- scientificName <- NULL
-    
+
     # FIXME: set a env var for now
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
     Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
     Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
-    
+
     # Get first letter of all scientific names
     first_letter <-
       unique(sapply(sci_name, function(i) {
@@ -86,15 +85,15 @@ bdc_suggest_names_taxadb <-
       },
       USE.NAMES = FALSE
       ))
-    
+
     first_letter <- toupper(first_letter)
-    
+
     # for some reasons, all names in gbif database are in lowercase
     if (provider %in% c("gbif", "itis", "ncbi", "ott")){
       first_letter <- tolower(first_letter)
-      
+
     }
-    
+
     # Should taxonomic database be filtered according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
       species_first_letter <-
@@ -112,13 +111,13 @@ bdc_suggest_names_taxadb <-
         dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
     }
-    
+
     # Should parallel processing be used?
     if (parallel == TRUE) {
       # setup parallel backend to use many processors
       cl <- parallel::makeCluster(ncores) # not to overload your computer
       doParallel::registerDoParallel(cl)
-      
+
       sug_dat <-
         foreach::foreach(i = sci_name,
                          .combine = rbind, .export = "bdc_return_names") %dopar% {
@@ -132,7 +131,7 @@ bdc_suggest_names_taxadb <-
           suggested = character(length(sci_name)),
           distance = numeric(length(sci_name))
         )
-      
+
       for (i in seq_along(sci_name)) {
         sug_dat[i, ] <-
           bdc_return_names(sci_name[i], max_distance, species_first_letter)

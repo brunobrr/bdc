@@ -58,11 +58,11 @@ bdc_create_figures <-
   function(data,
            database_id = "database_id",
            workflow_step = NULL) {
-    
+
     . <- .data <- n_flagged <- n_total <- freq <- NULL
     . <- V1 <- Name <- freq <- year <- decimalLongitude <- NULL
-    decimalLatitude <- . <- long <- lat <- group <- .summary <- NULL
-    
+    decimalLatitude <- . <- long <- lat <- group  <- `NA` <- .summary <- NULL
+
 
     suppressWarnings({
       check_require_cran("cowplot")
@@ -71,19 +71,19 @@ bdc_create_figures <-
       check_require_cran("rworldmap")
       check_require_cran("ggplot2")
     })
-    
+
     match.arg(arg = workflow_step,
               choices = c("prefilter", "space", "time"))
-    
+
     bdc_create_dir()
 
     # Total number of records
     suppressMessages({
-      
+
       # if (!fs::file_exists("data/n_records.csv")) {
         n_records <-
           data %>%
-          dplyr::summarise(n = dplyr::n()) %>% 
+          dplyr::summarise(n = dplyr::n()) %>%
           dplyr::pull(n)
 
         # data.table::fwrite(n_records, here::here("data/n_records.csv"))
@@ -104,7 +104,7 @@ bdc_create_figures <-
       #   n_records <-
       #     readr::read_csv(here::here("data/n_records.csv")) %>%
       #     dplyr::pull(n)
-      # 
+      #
       #   n_record_database <-
       #     readr::read_csv(here::here("data/n_record_database.csv"))
       # }
@@ -132,10 +132,10 @@ bdc_create_figures <-
           ".summary",
           "summary_all_tests"
         )
-      
+
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
-      
+
       if (file.exists("Output/Check/01_coordinates_transposed.csv")) {
         col_to_tests <- c(col_to_tests, "coordinates_transposed")
       }
@@ -157,7 +157,7 @@ bdc_create_figures <-
           ".urb",
           "summary_all_tests"
         )
-      
+
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
     }
@@ -169,7 +169,7 @@ bdc_create_figures <-
           ".year_outOfRange",
           ".summary",
           "summary_all_tests")
-      
+
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
     }
@@ -261,10 +261,10 @@ bdc_create_figures <-
           temp$freq <- 0.000001
         } else {
           gg <-
-            ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(Name,-freq), 
+            ggplot2::ggplot(temp, ggplot2::aes(x = stats::reorder(Name,-freq),
                                                y = freq))
         }
-        
+
         b <-
           gg +
           ggplot2::geom_col(colour = "white", fill = "royalblue") +
@@ -350,8 +350,8 @@ bdc_create_figures <-
     w_maps <- dplyr::intersect(col_to_tests, maps)
     w_tranposed <- dplyr::intersect(col_to_tests, "coordinates_transposed")
     w_hist <- dplyr::intersect(col_to_tests, hist)
-    
-    
+
+
     # Create bar plots
     if (length(w_bar) == 0 & workflow_step %in% c("prefilter", "space")) {
       message("At least one column 'starting with '.' must be provided")
@@ -367,7 +367,7 @@ bdc_create_figures <-
         )
         w_bar <- w_bar[-w]
       }
-      
+
       if (nrow(n_record_database) != 1) {
         for (i in 1:length(w_bar)) {
           create_barplot_database(
@@ -377,7 +377,7 @@ bdc_create_figures <-
           )
         }
       }
-      
+
       create_barplot_all_tests(
         data = data,
         column_to_map = "summary_all_tests",
