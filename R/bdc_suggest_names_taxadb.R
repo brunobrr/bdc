@@ -75,9 +75,15 @@ bdc_suggest_names_taxadb <-
 
     # FIXME: set a env var for now
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
+<<<<<<< HEAD
     Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
     Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
 
+=======
+    #Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
+    #Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
+    
+>>>>>>> taxalight
     # Get first letter of all scientific names
     first_letter <-
       unique(sapply(sci_name, function(i) {

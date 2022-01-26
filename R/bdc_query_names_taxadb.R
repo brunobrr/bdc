@@ -21,6 +21,7 @@
 #' @param db character string. The name of the taxonomic authority database to
 #' be used in the taxonomic standardization process. Default = "gbif".
 #' Use "all" to install all available taxonomic databases automatically.
+#' @param version database version. Default is 2021.
 #' @param rank_name character string. Taxonomic rank name (e.g. "Plantae",
 #' "Animalia", "Aves", "Carnivora". Default is NULL.
 #' @param rank character string. A taxonomic rank used to filter the
@@ -177,6 +178,7 @@ bdc_query_names_taxadb <-
            suggest_names = TRUE,
            suggestion_distance = 0.9,
            db = "gbif",
+           version = 2022,
            rank_name = NULL,
            rank = NULL,
            parallel = FALSE,
@@ -191,17 +193,34 @@ bdc_query_names_taxadb <-
 
     # FIXME: set a env var for now
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
+<<<<<<< HEAD
     Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
     Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
 
+=======
+    #Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
+    #Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
+    
+>>>>>>> taxalight
     # Measuring the execution time
     start <- Sys.time()
 
     # This is one-time setup used to download, extract and import taxonomic
     # database from the taxonomic authority defined by the user (see
     # ?taxadb::td_create for details)
+<<<<<<< HEAD
     taxadb::td_create(provider = db, schema = "dwc", overwrite = FALSE)
 
+=======
+    
+    #taxadb::td_create(provider = db, schema = "dwc", overwrite = FALSE)
+    db_name <- paste0(version, "_", "dwc", "_", db)
+    
+    if (!taxadb:::has_table(db_name, taxadb::td_connect(taxadb:::taxadb_dir()))) {
+      td_create(provider = db, schema = "dwc")
+    }
+    
+>>>>>>> taxalight
     # Raw taxa names
     raw_sci_name <-
       sci_name %>%
@@ -219,8 +238,13 @@ bdc_query_names_taxadb <-
       dplyr::pull(original_search)
 
     # Querying names using 'taxadb' (only EXACT match allowed)
+<<<<<<< HEAD
     found_name <- suppressWarnings(taxadb::filter_name(sci_name, provider = db))
 
+=======
+    found_name <- suppressWarnings(bdc_filter_name(sci_name, db = db, version = version))
+    
+>>>>>>> taxalight
     # Create a vector containing the number of columns of the taxonomic
     # database. This is important because the number of columns varies according
     # to the taxonomic authority selected.
@@ -257,7 +281,18 @@ bdc_query_names_taxadb <-
     not_found <-
       is.na(found_name$scientificName) &
       !grepl("multipleAccepted", found_name$notes)
+<<<<<<< HEAD
 
+=======
+    
+    suggested_search <-
+      data.frame(
+        original = found_name$original_search,
+        suggested = NA,
+        distance = NA
+      )
+    
+>>>>>>> taxalight
     if (any(not_found == TRUE)) {
       if (suggest_names == TRUE) {
         not_found_index <- which(not_found == TRUE)
@@ -265,7 +300,7 @@ bdc_query_names_taxadb <-
         # Searches for best matches to each unresolved names based
         # on a value of match distance value defined by the user.
         suggested_search <-
-          bdc::bdc_suggest_names_taxadb(
+          bdc_suggest_names_taxadb(
             sci_name = found_name$input[not_found_index],
             max_distance = suggestion_distance,
             provider = db,
@@ -295,8 +330,9 @@ bdc_query_names_taxadb <-
           # Searching for matching names for suggested names using taxadb
           suggest_data <-
             suppressWarnings(
-              taxadb::filter_name(suggested_names_filtered,
-                                  provider = db
+              bdc_filter_name(suggested_names_filtered,
+                                  db = db,
+                                  version = version
               ))
 
           # Add three new columns (notes, original_search, and distance)
@@ -385,9 +421,15 @@ bdc_query_names_taxadb <-
     if (nrow_synonym > 0L) {
       if (replace_synonyms) {
         accepted <-
+<<<<<<< HEAD
           suppressWarnings(taxadb::filter_id
                            (found_name$acceptedNameUsageID[synonym_index], db))
 
+=======
+          suppressWarnings(bdc_filter_id
+                           (found_name$acceptedNameUsageID[synonym_index], db, version = version))
+        
+>>>>>>> taxalight
         # Add original names
         ori_names <-
           found_name %>%
@@ -446,9 +488,15 @@ bdc_query_names_taxadb <-
 
 
     ### Formatting the resulted data.frame (only if suggest_name is TRUE)
+<<<<<<< HEAD
     if (any(not_found == TRUE)) {
       if (suggest_names == TRUE) {
 
+=======
+   # if (any(not_found == TRUE)) {
+    #  if (suggest_names == TRUE) {
+        
+>>>>>>> taxalight
         found_name <-
           suggested_search %>%
           dplyr::select(-distance) %>%
@@ -469,10 +517,17 @@ bdc_query_names_taxadb <-
             'notFound',
             notes
           ))
+<<<<<<< HEAD
       }
     }
 
 
+=======
+      #}
+   # }
+    
+    
+>>>>>>> taxalight
     ### Adding information on 'taxonomicStatus' in the column 'notes'.
     found_name <-
       found_name %>%
@@ -490,7 +545,7 @@ bdc_query_names_taxadb <-
               found_name$taxonomicStatus != "synonym")
 
     if(length(w) > 0){
-      found_name[w, 5:(ncol_tab_taxadb+2)] <- NA
+      found_name[w, 5:(ncol_tab_taxadb+1)] <- NA
     }
 
     # Trimming extra-spaces from the column "notes"
@@ -499,7 +554,14 @@ bdc_query_names_taxadb <-
     # Converting the first letter of "scientificName" to uppercase
     found_name$scientificName <-
       stringr::str_to_sentence(found_name$scientificName)
+<<<<<<< HEAD
 
+=======
+    
+    found_name$original_search <- 
+      stringr::str_to_sentence(found_name$original_search)
+    
+>>>>>>> taxalight
     # Export a table containing names linked to multiple accepted names.
     if (export_accepted == TRUE) {
       dir <- here::here("Output", "Check")
@@ -509,9 +571,9 @@ bdc_query_names_taxadb <-
         found_name %>%
         dplyr::filter(stringr::str_detect(notes, regex("multiple"))) %>%
         dplyr::pull(., scientificName) %>%
-        taxadb::filter_name(., provider = db) %>%
+        bdc_filter_name(., db = db, version = version) %>%
         dplyr::pull(., acceptedNameUsageID) %>%
-        taxadb::filter_id(., db) %>%
+        bdc_filter_id(., db, version = version) %>%
         data.table::fwrite(
           .,
           here::here("Output/Check/02_names_multiple_accepted_names.csv")
@@ -524,9 +586,18 @@ bdc_query_names_taxadb <-
 
 
     # joining  names queried to the original (complete) database
+<<<<<<< HEAD
     found_name <-
       dplyr::left_join(raw_sci_name, found_name, by = "original_search")
 
+=======
+    #found_name <-
+     
+    found_name <- 
+      dplyr::left_join(found_name, raw_sci_name, by = "original_search")
+      
+    
+>>>>>>> taxalight
     end <- Sys.time()
     total_time <- round(as.numeric (end - start, units = "mins"), 1)
 

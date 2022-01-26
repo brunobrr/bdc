@@ -143,3 +143,7 @@ test_that("testing null rank_name", {
 
 }
 )
+<<<<<<< HEAD
+=======
+
+>>>>>>> taxalight
