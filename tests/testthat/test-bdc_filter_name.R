@@ -9,7 +9,7 @@ expected_cols <- c("sort", "taxonID","scientificName", "taxonRank",
 "parentNameUsageID", "originalNameUsageID", "scientificNameAuthorship", 
 "vernacularName", "input")   
 
-x <- bdc_filter_name("Puma concolor", db = "gbif", version = 2021) 
+x <- bdc_filter_name("Puma concolor", db = "gbif", version = "2021") 
 
 
 test_that("testing filter name columns", {
@@ -18,7 +18,7 @@ test_that("testing filter name columns", {
   
 })
 
-x <- bdc_filter_name("Puma concoloar", db = "gbif", version = 2021, collect = TRUE) 
+x <- bdc_filter_name("Puma concoloar", db = "gbif", version = "2021") 
 
 test_that("testing not found names", {
   
@@ -28,7 +28,7 @@ test_that("testing not found names", {
   
 })
 
-x <- bdc_filter_name(sci_names, db = "gbif", version = 2021, collect = TRUE) 
+x <- bdc_filter_name(sci_names, db = "gbif", version = "2021") 
 
 test_that("testing multiple names", {
   
