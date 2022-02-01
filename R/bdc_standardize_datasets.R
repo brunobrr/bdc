@@ -11,7 +11,7 @@
 #'
 #' @param overwrite A logical vector indicating whether the final merged
 #' dataset should be overwritten. The default is FALSE.
-#' 
+#'
 #' @param format a character setting the output file type. Option available are "csv"
 #' and "qs" (recommenced for saving large datasets). Default == "csv".
 #'
@@ -60,94 +60,88 @@
 #   # TODO: finish example
 #' }
 bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE) {
-  
+
   fileName <- datasetName <- . <- database_id <- NULL
-  
+
   if (format == "qs") {
-    
+
     merged_filename <-
       here::here("Output", "Intermediate", "00_merged_database.qs")
-  
+
   } else {
-    
+
     merged_filename <-
       here::here("Output", "Intermediate", "00_merged_database.csv")
 
   }
-  
+
   fs::dir_create(here::here("Output", "Intermediate"))
-  
+
   if (file.exists(merged_filename) & overwrite) {
-    
+
     unlink(merged_filename)
-    
+
   }
-  
+
   if (!file.exists(merged_filename)) {
-    
+
     save_in_dir <- here::here("data", "temp_datasets", "/")
-    
+
     if (!fs::dir_exists(save_in_dir)) {
-      
+
       fs::dir_create(save_in_dir)
-      
+
     }
-    
-    # change path according to users directory
-    metadata$fileName <-
-      gsub("C:/Users/Bruno Ribeiro/Documents/bdc/vignettes",
-           here::here(),
-           metadata$fileName)
-    
+
     input_file <-
       metadata %>%
       dplyr::pull(fileName)
-    
+
     for (file_index in seq_along(input_file)) {
-      
+
       input_filename <-
         metadata %>%
         dplyr::filter(fileName == input_file[file_index]) %>%
         dplyr::pull(fileName)
-      
+
       dataset_name <-
         metadata %>%
         dplyr::filter(fileName == input_file[file_index]) %>%
         dplyr::select(datasetName) %>%
         dplyr::pull()
-      
+
       save_in_filename <-
         paste0(save_in_dir, "standard_", dataset_name, ".", format)
-      
+
       if (!file.exists(save_in_filename)) {
-        
+
         base_names <-
           metadata %>%
           dplyr::filter(fileName == input_file[file_index]) %>%
           dplyr::select_if(~ !is.na(.))
-        
+
         standard_names <-
           base_names %>%
           names(.)
-        
+
         required <- c(
           "datasetName", "fileName", "scientificName",
           "decimalLatitude", "decimalLongitude"
         )
-        
+
         if (!(required %in% standard_names %>% all())) {
-          
+
           stop(paste("Required field is missing. Please check the columns of the", dataset_name, "in our", metadata))
-          
+
         }
-        
+
         basename_names <- base_names %>%
           dplyr::select(-datasetName, -fileName)
-        
+
         standard_names <-
           basename_names %>%
           names(.)
-        
+
         vector_for_recode <-
           basename_names %>%
           purrr::set_names(standard_names) %>%
@@ -155,24 +149,24 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
             c(.)
           } %>%
           unlist()
-        
+
         imported_raw_dataset <-
           input_file[file_index] %>%
           vroom::vroom(guess_max = 10^6, col_types = vroom::cols(.default = "c"), n_max = 1)
-        
+
         skip_to_next <- FALSE
-        
+
         error_message <-
           paste("[ERROR]: Column names defined in the metadata do not match column names in the", dataset_name, "file")
-        
+
         tryCatch(
-          
+
           if (sum(!vector_for_recode %in% names(imported_raw_dataset)) != 0) {
-            
+
             stop(error_message)
-            
+
           } else {
-            
+
             standard_dataset <-
               input_file[file_index] %>%
               data.table::fread() %>%
@@ -180,52 +174,52 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
               purrr::set_names(names(vector_for_recode)) %>%
               dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
               dplyr::select(database_id, dplyr::everything())
-            
+
             message(paste("Creating", save_in_filename))
-            
-            standard_dataset <- 
+
+            standard_dataset <-
               standard_dataset %>%
               dplyr::mutate_if(is.numeric, as.character)
-            
+
             if (format == "qs") {
               qs::qsave(standard_dataset,
                         paste0(save_in_dir, "standard_", dataset_name,
                                ".", format))
-              
+
             } else {
               data.table::fwrite(standard_dataset,
                                  paste0(save_in_dir, "standard_", dataset_name,
                                         ".", format))
             }
-            
-            
+
+
           },
-          
+
           error = function(e) {
             message(error_message)
             skip_to_next <<- TRUE
           }
-          
+
         )
-        
+
         if (skip_to_next) {
-          
+
           next
-          
+
         }
-        
+
       } else {
-        
+
         message(paste(save_in_filename, "already exists!"))
-        
+
       }
-      
+
     }
-    
+
     # Concatenate all the resulting standardized databases
-    
+
     if (format == "qs"){
-      
+
     merged_database <-
       here::here("data", "temp_datasets") %>%
       fs::dir_ls(regexp = "*.qs") %>%
@@ -233,9 +227,9 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
                   .fun = qs::qread,
                   .progress = plyr::progress_text(char = "."),
                   .id = NULL)
-    
+
     } else {
-      
+
       merged_database <-
         here::here("data", "temp_datasets") %>%
         fs::dir_ls(regexp = "*.csv") %>%
@@ -244,28 +238,28 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
                     .progress = plyr::progress_text(char = "."),
                     .id = NULL)
     }
-    
+
 
     merged_database <-
       merged_database %>%
       select_if((function(x) any(!is.na(x))))
-    
+
     if (format == "qs"){
-      
+
       qs::qsave(merged_database, merged_filename)
 
     } else {
-      
+
       data.table::fwrite(merged_database, merged_filename)
-      
+
     }
-    
-    
+
+
   } else {
-    
+
     message(paste(merged_filename, "already exists!"))
-    
+
   }
-  
+
 }
 
