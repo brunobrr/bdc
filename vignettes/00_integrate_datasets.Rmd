@@ -60,13 +60,13 @@ bdc::bdc_create_dir()
 
 Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 9.000 records compiled from nine different sources (see below).
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
 # TODO: repetir isso para a entrada dos dados dos outros vignettes
-metadata <- readr::read_csv(system.file(c("extdata/Config/DatabaseInfo.csv"), package = "bdc"))
+metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-```{r message=FALSE, warning=FALSE, eval=TRUE, echo = FALSE}
-metadata <- readr::read_csv(here::here("inst", "extdata", "Config", "DatabaseInfo.csv"))
+```{r message=FALSE, warning=FALSE, eval=FALSE, echo = TRUE}
+metadata <- readr::read_csv(here::here("DatabaseInfo.csv"))
 ```
 
 <br/> <br/>
@@ -104,7 +104,7 @@ Below are listed the specifications of each field of the configuration table:
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 config_description <-
-  readr::read_csv(system.file("extdata", "Config", "DatabaseInfo_description.csv"), package = "bdc")
+  readr::read_csv(system.file("extdata/Config/DatabaseInfo_description.csv", package = "bdc"), show_col_types = FALSE)
 
 # DT::datatable(
 #   config_description, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
@@ -124,7 +124,7 @@ config_description <-
 
 Note that the standardized database integrating all dataset is saved in the folder "Output/Intermediate" as *"00_merged_database.qs"*. The database is saved with a **"qs" extension**, a helpful format for quickly saving and reading large databases. This file can be read using the function "qread" from the "qs" package (see below).
 
-```{r message=F, warning=F}
+```{r message=F, warning=F, eval=TRUE, echo=TRUE}
 bdc_standardize_datasets(metadata = metadata, format = "qs", overwrite = T)
 ```
 

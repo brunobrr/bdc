@@ -36,9 +36,14 @@ The results of each test used to flag data quality are appended in separate fiel
 
 You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
 
+```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=FALSE}
+install.packages("remotes")
+remotes::install_github("brunobrr/bdc")
+```
+
+And load the package with:
+
 ```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
-# install.packages("remotes")
-# remotes::install_github("brunobrr/bdc")
 library(bdc)
 ```
 
