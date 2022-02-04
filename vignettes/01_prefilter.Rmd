@@ -68,7 +68,6 @@ database <-
 
 # FIXME: solve path
 system.file(c("exdata", "*.qs"), package = "bdc")
-
 ```
 
 Standardization of character encoding.
@@ -206,7 +205,7 @@ xyFromLocality <- bdc_coordinates_from_locality(
 
 ## Report
 
-Here we create a column named ".summary" summing up the results of all **VALIDATION** tests. This column is **FALSE** when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
+Here we create a column named ".summary" summing up the results of all **VALIDATION** tests (those starting with "."). This column is **FALSE** when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
 
 ```{r}
 check_pf <- bdc_summary_col(data = check_pf)

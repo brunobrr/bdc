@@ -154,7 +154,7 @@ bdc_create_report <-
               Description
             ),
             Description = dplyr::if_else(
-              Description == ".basisOfRrecords_notStandard",
+              Description == ".basisOfRecords_notStandard",
               "Records from a doubtful source",
               Description
             ),

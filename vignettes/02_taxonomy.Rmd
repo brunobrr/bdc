@@ -47,6 +47,8 @@ The taxonomic standardization is based on one taxonomic database chosen by the u
 | slb          | SeaLifeBase                                               |
 | wd           | Wikidata                                                  |
 
+Note that some taxonomic databases may be *momentarily unavailable* in taxadb. Check ?bdc_query_names_taxadb for a list of available taxonomic databases.
+
 ## Installation
 
 You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
@@ -118,7 +120,8 @@ Scientific names improperly formatted usually cannot be matched with valid names
 <br/>
 
 ```{r}
-parse_names <- bdc_clean_names(sci_names = database$scientificName) %>%
+parse_names <- 
+  bdc_clean_names(sci_names = database$scientificName) %>%
   dplyr::filter(!is.na(scientificName))
 ```
 
@@ -127,19 +130,26 @@ parse_names <- bdc_clean_names(sci_names = database$scientificName) %>%
 An example of *bdc_clean_names* output.
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-# read
-# parse_names <-
-#   qs::qread(here::here("inst/extdata/example_bdc_clean_names/example_bdc_names_clean.qs"))
+parse_names2 <-
+  readr::read_csv(
+    system.file(
+      "inst/extdata/example_bdc_clean_names/example_bdc_names_clean.csv",
+      package = "bdc"
+    ),
+    show_col_types = FALSE
+  )
 
-# DT::datatable(
-#   parse_names[2000:2030,], class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 5,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
+DT::datatable(
+  parse_names2[2000:2030,],
+  class = 'stripe',
+  extensions = 'FixedColumns',
+  options = list(
+    pageLength = 5,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
 ```
 
 <br/>
