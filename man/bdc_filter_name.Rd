@@ -27,7 +27,3 @@ database and returns the matched information
 as a data.frame in Darwin Core format. Unmatched species return NA values for
 all taxonomic information.
 }
-\examples{
-\dontrun{
-}
-}
