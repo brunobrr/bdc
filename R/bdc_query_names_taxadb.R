@@ -21,7 +21,7 @@
 #' @param db character string. The name of the taxonomic authority database to
 #' be used in the taxonomic standardization process. Default = "gbif".
 #' Use "all" to install all available taxonomic databases automatically.
-#' @param version database version. Default is 2022.
+#' @param db_version database version. Default is 2022.
 #' @param rank_name character string. Taxonomic rank name (e.g. "Plantae",
 #' "Animalia", "Aves", "Carnivora". Default is NULL.
 #' @param rank character string. A taxonomic rank used to filter the
@@ -178,7 +178,7 @@ bdc_query_names_taxadb <-
            suggest_names = TRUE,
            suggestion_distance = 0.9,
            db = "gbif",
-           version = 2022,
+           db_version = 2022,
            rank_name = NULL,
            rank = NULL,
            parallel = FALSE,
@@ -188,6 +188,10 @@ bdc_query_names_taxadb <-
     value <- original_search <- input <- . <- notes <- scientificName <- NULL
     acceptedNameUsageID <- original <- NULL
 
+    if (!db %in% c('itis', 'ncbi', 'col', 'tpl', 'gbif', 'fb', 'slb', 'wd', 'ott', 'iucn')) {
+      stop (db, ' provided is not a valid name')
+    }
+      
     # Create a directory to save the result
     bdc::bdc_create_dir()
 
@@ -203,10 +207,10 @@ bdc_query_names_taxadb <-
     # database from the taxonomic authority defined by the user (see
     # ?taxadb::td_create for details)
 
-    db_name <- paste0(version, "_", "dwc", "_", db)
+    db_name <- paste0(db_version, "_", "dwc", "_", db)
     
     if (!taxadb:::has_table(db_name, taxadb::td_connect(taxadb:::taxadb_dir()))) {
-      td_create(provider = db, schema = "dwc")
+      td_create(provider = db, schema = "dwc", overwrite = FALSE)
     }
     
     # Raw taxa names
@@ -227,7 +231,8 @@ bdc_query_names_taxadb <-
 
     # Querying names using 'taxadb' (only EXACT match allowed)
 
-    found_name <- suppressWarnings(bdc_filter_name(sci_name, db = db, version = version))
+    found_name <- suppressWarnings(bdc_filter_name(sci_name, db = db,
+                                                   db_version = db_version))
     
 
     # Create a vector containing the number of columns of the taxonomic
@@ -315,7 +320,7 @@ bdc_query_names_taxadb <-
             suppressWarnings(
               bdc_filter_name(suggested_names_filtered,
                                   db = db,
-                                  version = version
+                                  db_version = db_version
               ))
 
           # Add three new columns (notes, original_search, and distance)
@@ -405,7 +410,7 @@ bdc_query_names_taxadb <-
       if (replace_synonyms) {
         accepted <-
           suppressWarnings(bdc_filter_id
-                           (found_name$acceptedNameUsageID[synonym_index], db, version = version))
+                           (found_name$acceptedNameUsageID[synonym_index], db, db_version = db_version))
 
         # Add original names
         ori_names <-
@@ -534,9 +539,9 @@ bdc_query_names_taxadb <-
         found_name %>%
         dplyr::filter(stringr::str_detect(notes, regex("multiple"))) %>%
         dplyr::pull(., scientificName) %>%
-        bdc_filter_name(., db = db, version = version) %>%
+        bdc_filter_name(., db = db, db_version = db_version) %>%
         dplyr::pull(., acceptedNameUsageID) %>%
-        bdc_filter_id(., db, version = version) %>%
+        bdc_filter_id(., db, db_version = db_version) %>%
         data.table::fwrite(
           .,
           here::here("Output/Check/02_names_multiple_accepted_names.csv")

@@ -89,10 +89,10 @@ bdc_suggest_names_taxadb <-
     first_letter <- toupper(first_letter)
 
     # for some reasons, all names in gbif database are in lowercase
-    if (provider %in% c("gbif", "itis", "ncbi", "ott")){
-      first_letter <- tolower(first_letter)
-
-    }
+    # if (provider %in% c("gbif", "itis", "ncbi", "ott")){
+    #   first_letter <- tolower(first_letter)
+    # 
+    # }
 
     # Should taxonomic database be filtered according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
