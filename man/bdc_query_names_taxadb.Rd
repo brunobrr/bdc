@@ -10,7 +10,7 @@ bdc_query_names_taxadb(
   suggest_names = TRUE,
   suggestion_distance = 0.9,
   db = "gbif",
-  version = 2022,
+  db_version = 2022,
   rank_name = NULL,
   rank = NULL,
   parallel = FALSE,
@@ -36,7 +36,7 @@ NA. Default = 0.9.}
 be used in the taxonomic standardization process. Default = "gbif".
 Use "all" to install all available taxonomic databases automatically.}
 
-\item{version}{database version. Default is 2022.}
+\item{db_version}{database version. Default is 2022.}
 
 \item{rank_name}{character string. Taxonomic rank name (e.g. "Plantae",
 "Animalia", "Aves", "Carnivora". Default is NULL.}
