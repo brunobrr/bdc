@@ -21,9 +21,8 @@
 #' @param db character string. The name of the taxonomic authority database to
 #' be used in the taxonomic standardization process. Default = "gbif".
 #' Use "all" to install all available taxonomic databases automatically.
-#' @param db_version database version. Default is 2022.
 #' @param rank_name character string. Taxonomic rank name (e.g. "Plantae",
-#' "Animalia", "Aves", "Carnivora". Default is NULL.
+#' "Animalia", "Aves", "Carnivora". Default = NULL.
 #' @param rank character string. A taxonomic rank used to filter the
 #' taxonomic database. Options available are: "kingdom", "phylum", "class",
 #' "order", "family", and "genus".
@@ -35,21 +34,22 @@
 #' inspection. Default = FALSE.
 #' @details
 #'
-#' ## Taxadb databases
-#'
 #' The taxonomic harmonization is based upon one taxonomic authority database.
-#' The following taxonomic databases are available in taxadb package are:
+#' The lastest version of each database is used to perform queries, but
+#' note that only older versions are available for some taxonomic databases. The
+#' database version is shown in parenthesis. Note that some databases are
+#' momentary unavailable in taxadb.
 #'
-#' * **itis**: Integrated Taxonomic Information System
-#' * **ncbi**: National Center for Biotechnology Information
-#' * **col**: Catalogue of Life
-#' * **tpl**: The Plant List
-#' * **gbif**: Global Biodiversity Information Facility
-#' * **fb**: FishBase
-#' * **slb**: SeaLifeBase
-#' * **wd**: Wikidata
-#' * **ott**: OpenTree Taxonomy
-#' * **iucn**: International Union for Conservation of Nature
+#' * **itis**: Integrated Taxonomic Information System (v. 2022)
+#' * **ncbi**: National Center for Biotechnology Information (v. 2022)
+#' * **col**: Catalogue of Life (v. 2022)
+#' * **tpl**: The Plant List (v. 2019)
+#' * **gbif**: Global Biodiversity Information Facility (v. 2022)
+#' * **fb**: FishBase (v. 2019)
+#' * **slb**: SeaLifeBase (unavailable)
+#' * **wd**: Wikidata (unavailable)
+#' * **ott**: OpenTree Taxonomy (v. 2021)
+#' * **iucn**: International Union for Conservation of Nature (v. 2022)
 #'
 #'The bdc_query_names_taxadb processes as this:
 #'
@@ -155,8 +155,9 @@
 #'     "Oxalis rhombeo ovata",
 #'     "Axonopus canescens",
 #'     "Prosopis",
-#'     "Guapira opposita",
-#'     "Clidemia naevula",
+#'     "Haematococcus salinus", 
+#'     'Monas pulvisculus', 
+#'     'Cryptomonas lenticulari'
 #'     "Poincianella pyramidalis",
 #'     "Hymenophyllum polyanthos")
 #'
@@ -178,7 +179,6 @@ bdc_query_names_taxadb <-
            suggest_names = TRUE,
            suggestion_distance = 0.9,
            db = "gbif",
-           db_version = 2022,
            rank_name = NULL,
            rank = NULL,
            parallel = FALSE,
@@ -187,11 +187,45 @@ bdc_query_names_taxadb <-
 
     value <- original_search <- input <- . <- notes <- scientificName <- NULL
     acceptedNameUsageID <- original <- NULL
-
-    if (!db %in% c('itis', 'ncbi', 'col', 'tpl', 'gbif', 'fb', 'slb', 'wd', 'ott', 'iucn')) {
+    
+    if (!db %in% c('itis', 'ncbi', 'col', 'tpl', 'gbif',
+                   'fb', 'slb', 'wd', 'ott', 'iucn')) {
       stop (db, ' provided is not a valid name')
     }
-      
+     
+    if (db %in% c('slb', 'wd')) {
+      stop (db, ' database is momentarily unavailable in taxadb package')
+    }
+    
+    # Currently available databases and versions 
+    switch(
+      EXPR = db,
+      itis = {
+        db_version <- 2022
+      },
+      ncbi = {
+        db_version <- 2022
+      },
+      col = {
+        db_version <- 2022
+      },
+      gbif = {
+        db_version <- 2022
+      },
+      iucn = {
+        db_version <- 2022
+      },
+      ott = {
+        db_version <- 2021
+      },
+      fb = {
+        db_version <- 2019
+      },
+      tpl = {
+        db_version <- 2019
+      }
+    )
+    
     # Create a directory to save the result
     bdc::bdc_create_dir()
 
@@ -210,7 +244,7 @@ bdc_query_names_taxadb <-
     db_name <- paste0(db_version, "_", "dwc", "_", db)
     
     if (!taxadb:::has_table(db_name, taxadb::td_connect(taxadb:::taxadb_dir()))) {
-      td_create(provider = db, schema = "dwc", overwrite = FALSE)
+      taxaddb::td_create(provider = db, schema = "dwc", overwrite = FALSE)
     }
     
     # Raw taxa names
@@ -408,10 +442,18 @@ bdc_query_names_taxadb <-
 
     if (nrow_synonym > 0L) {
       if (replace_synonyms) {
+        accepted <- suppressWarnings(
+          bdc_filter_id(found_name$acceptedNameUsageID[synonym_index], db,
+                        db_version = db_version))
+        
+        # for cases when one same has more than one vernacular name
+        # TODO: check if everything is ok from now on
         accepted <-
-          suppressWarnings(bdc_filter_id
-                           (found_name$acceptedNameUsageID[synonym_index], db, db_version = db_version))
-
+          accepted %>% 
+          dplyr::distinct(scientificName, .keep_all = T) %>% 
+          dplyr::arrange(sort)
+          
+        
         # Add original names
         ori_names <-
           found_name %>%
@@ -486,7 +528,7 @@ bdc_query_names_taxadb <-
                         suggested_name,
                         distance,
                         notes,
-                        everything()) %>%
+                        tidyselect::everything()) %>%
           dplyr::mutate(distance = ifelse(distance > suggestion_distance,
                                           distance, NA)) %>%
           dplyr::mutate(notes = ifelse(

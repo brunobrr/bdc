@@ -11,17 +11,22 @@ bdc_filter_name(sci_name, db, db_version = taxadb:::latest_version())
 
 \item{db}{character vector. Local taxonomic database, eg. "gbif".}
 
-\item{db_version}{character vector. The year of database version, eg. "2022". The default is the latest version.}
+\item{db_version}{character vector. The year of database version, eg. "2022".
+The default is the latest version.}
+
 }
 \value{
-This function returns a data.frame in Darwin Core format with the taxonomic information for the queried species.
+This function returns a data.frame in Darwin Core format with the
+taxonomic information for the queried species.
 }
 \description{
 This function filters, by exact match, species information from taxonomic database.
 }
 \details{
-The function looks for an exact match of scientific name in the local stored database and returns the matched information
-as a data.frame in Darwin Core format. Unmatched species return NA values for all taxonomic information.
+The function looks for an exact match of scientific name in the local stored
+database and returns the matched information
+as a data.frame in Darwin Core format. Unmatched species return NA values for
+all taxonomic information.
 }
 \examples{
 \dontrun{
