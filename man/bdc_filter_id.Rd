@@ -23,7 +23,3 @@ This function filters, by exact match, species information from taxonomic databa
 The function looks for an exact match of taxonomic code in the local stored database and returns the matched information
 as a data.frame in Darwin Core format. Unmatched ids return NA values for all taxonomic information.
 }
-\examples{
-\dontrun{
-}
-}

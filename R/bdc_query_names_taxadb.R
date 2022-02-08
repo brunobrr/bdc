@@ -138,12 +138,15 @@
 #' taxonomic harmonization process. The database is returned in the same order
 #' of sci_name.
 #'
+#' @importFrom data.table fwrite
+#' @importFrom dplyr rename distinct mutate filter pull full_join select arrange slice bind_cols left_join
 #' @importFrom fs dir_create
 #' @importFrom here here
 #' @importFrom purrr map_dfr
-#' @importFrom stringr str_detect str_squish str_to_sentence
-#' @importFrom taxadb td_create filter_name filter_id
+#' @importFrom stringr str_squish str_to_sentence str_detect
+#' @importFrom taxadb td_connect td_create
 #' @importFrom tibble as_tibble
+#' @importFrom tidyselect everything
 #'
 #' @export
 #'
@@ -157,7 +160,7 @@
 #'     "Prosopis",
 #'     "Haematococcus salinus", 
 #'     'Monas pulvisculus', 
-#'     'Cryptomonas lenticulari'
+#'     'Cryptomonas lenticulari',
 #'     "Poincianella pyramidalis",
 #'     "Hymenophyllum polyanthos")
 #'
@@ -227,7 +230,7 @@ bdc_query_names_taxadb <-
     )
     
     # Create a directory to save the result
-    bdc::bdc_create_dir()
+    bdc_create_dir()
 
     # FIXME: set a env var for now
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
@@ -244,7 +247,7 @@ bdc_query_names_taxadb <-
     db_name <- paste0(db_version, "_", "dwc", "_", db)
     
     if (!taxadb:::has_table(db_name, taxadb::td_connect(taxadb:::taxadb_dir()))) {
-      taxaddb::td_create(provider = db, schema = "dwc", overwrite = FALSE)
+      taxadb::td_create(provider = db, schema = "dwc", overwrite = FALSE)
     }
     
     # Raw taxa names

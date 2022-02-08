@@ -177,7 +177,7 @@ sci_name <- c(
     "Prosopis",
     "Haematococcus salinus", 
     'Monas pulvisculus', 
-    'Cryptomonas lenticulari'
+    'Cryptomonas lenticulari',
     "Poincianella pyramidalis",
     "Hymenophyllum polyanthos")
 

@@ -17,18 +17,16 @@
 #'
 #' @return  This function returns a data.frame in Darwin Core format with the
 #' taxonomic information for the queried species.
-#' @importFrom dplyr mutate collect right_join relocate sym
-#' @importFrom taxadb td_connect
+#' @importFrom dplyr mutate sym collect right_join relocate
+#' @importFrom taxadb taxa_tbl td_connect
 #' @importFrom tibble tibble
-#' @examples
-#' \dontrun{
-#' }
 
 bdc_filter_name <-
   function (sci_name,
             db,
             db_version = taxadb:::latest_version())
   {
+    taxonID <- NULL
     # x <- tolower(sci_name)
     x <- sci_name
     
@@ -67,14 +65,12 @@ bdc_filter_name <-
 #' @importFrom dplyr mutate collect right_join relocate sym
 #' @importFrom taxadb td_connect
 #' @importFrom tibble tibble
-#' @examples
-#' \dontrun{
-#' }
 
 
 bdc_filter_id <-
   function (id, db, db_version = taxadb:::latest_version())
   {
+    taxonID <- NULL
     db_tbl <-
       dplyr::mutate(
         taxadb::taxa_tbl(db, schema = "dwc", db_version,
