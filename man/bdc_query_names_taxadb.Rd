@@ -10,7 +10,6 @@ bdc_query_names_taxadb(
   suggest_names = TRUE,
   suggestion_distance = 0.9,
   db = "gbif",
-  version = 2022,
   rank_name = NULL,
   rank = NULL,
   parallel = FALSE,
@@ -36,10 +35,8 @@ NA. Default = 0.9.}
 be used in the taxonomic standardization process. Default = "gbif".
 Use "all" to install all available taxonomic databases automatically.}
 
-\item{version}{database version. Default is 2022.}
-
 \item{rank_name}{character string. Taxonomic rank name (e.g. "Plantae",
-"Animalia", "Aves", "Carnivora". Default is NULL.}
+"Animalia", "Aves", "Carnivora". Default = NULL.}
 
 \item{rank}{character string. A taxonomic rank used to filter the
 taxonomic database. Options available are: "kingdom", "phylum", "class",
@@ -69,21 +66,22 @@ standardization quality can be accessed in the column “notes” placed in the
 table resulting from the name standardization process.
 }
 \details{
-\subsection{Taxadb databases}{
-
 The taxonomic harmonization is based upon one taxonomic authority database.
-The following taxonomic databases are available in taxadb package are:
+The lastest version of each database is used to perform queries, but
+note that only older versions are available for some taxonomic databases. The
+database version is shown in parenthesis. Note that some databases are
+momentary unavailable in taxadb.
 \itemize{
-\item \strong{itis}: Integrated Taxonomic Information System
-\item \strong{ncbi}: National Center for Biotechnology Information
-\item \strong{col}: Catalogue of Life
-\item \strong{tpl}: The Plant List
-\item \strong{gbif}: Global Biodiversity Information Facility
-\item \strong{fb}: FishBase
-\item \strong{slb}: SeaLifeBase
-\item \strong{wd}: Wikidata
-\item \strong{ott}: OpenTree Taxonomy
-\item \strong{iucn}: International Union for Conservation of Nature
+\item \strong{itis}: Integrated Taxonomic Information System (v. 2022)
+\item \strong{ncbi}: National Center for Biotechnology Information (v. 2022)
+\item \strong{col}: Catalogue of Life (v. 2022)
+\item \strong{tpl}: The Plant List (v. 2019)
+\item \strong{gbif}: Global Biodiversity Information Facility (v. 2022)
+\item \strong{fb}: FishBase (v. 2019)
+\item \strong{slb}: SeaLifeBase (unavailable)
+\item \strong{wd}: Wikidata (unavailable)
+\item \strong{ott}: OpenTree Taxonomy (v. 2021)
+\item \strong{iucn}: International Union for Conservation of Nature (v. 2022)
 }
 
 The bdc_query_names_taxadb processes as this:
@@ -169,7 +167,6 @@ synonym". Ambiguous synonyms, names that have been published more than once
 describing different species, have more than one accepted name and cannot be
 resolved. Such cases are flagged and left to be determined by the user.
 }
-}
 \examples{
 if (interactive()) {
 sci_name <- c(
@@ -178,8 +175,9 @@ sci_name <- c(
     "Oxalis rhombeo ovata",
     "Axonopus canescens",
     "Prosopis",
-    "Guapira opposita",
-    "Clidemia naevula",
+    "Haematococcus salinus", 
+    'Monas pulvisculus', 
+    'Cryptomonas lenticulari'
     "Poincianella pyramidalis",
     "Hymenophyllum polyanthos")
 

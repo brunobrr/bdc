@@ -4,14 +4,14 @@
 \alias{bdc_filter_id}
 \title{Internal function. Filter species information from local stored taxonomic databases}
 \usage{
-bdc_filter_id(id, db, version = taxadb:::latest_version())
+bdc_filter_id(id, db, db_version = taxadb:::latest_version())
 }
 \arguments{
 \item{id}{character vector. Containing taxonomic code.}
 
 \item{db}{character vector. Local taxonomic database, eg. "gbif".}
 
-\item{version}{character vector. The year of database version, eg. "2022". The default is the latest version.}
+\item{db_version}{character vector. The year of database version, eg. "2022". The default is the latest version.}
 }
 \value{
 This function returns a data.frame in Darwin Core format with the taxonomic information for the queried ids.
