@@ -35,7 +35,6 @@ NA. Default = 0.9.}
 be used in the taxonomic standardization process. Default = "gbif".
 Use "all" to install all available taxonomic databases automatically.}
 
-
 \item{rank_name}{character string. Taxonomic rank name (e.g. "Plantae",
 "Animalia", "Aves", "Carnivora". Default = NULL.}
 

@@ -13,7 +13,6 @@ bdc_filter_name(sci_name, db, db_version = taxadb:::latest_version())
 
 \item{db_version}{character vector. The year of database version, eg. "2022".
 The default is the latest version.}
-
 }
 \value{
 This function returns a data.frame in Darwin Core format with the
