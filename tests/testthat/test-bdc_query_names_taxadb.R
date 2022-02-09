@@ -29,9 +29,7 @@ test_that("bdc_get_taxa_taxadb datase order", {
 )
 
 
-test_that("suggest_name FALSE", {
-
-  test <- bdc_query_names_taxadb(c("Puma concola", "Cebus apela"),
+test <- bdc_query_names_taxadb(c("Puma concola", "Cebus apela"),
                                suggestion_distance = 0.9,
                                db = "gbif",
                                suggest_names = FALSE,
