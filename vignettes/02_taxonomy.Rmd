@@ -119,8 +119,8 @@ Scientific names improperly formatted usually cannot be matched with valid names
 
 <br/>
 
-```{r}
-parse_names <- 
+```{r, eval=FALSE}
+parse_names <-
   bdc_clean_names(sci_names = database$scientificName) %>%
   dplyr::filter(!is.na(scientificName))
 ```
@@ -133,7 +133,7 @@ An example of *bdc_clean_names* output.
 parse_names2 <-
   readr::read_csv(
     system.file(
-      "inst/extdata/example_bdc_clean_names/example_bdc_names_clean.csv",
+      "extdata/example_bdc_clean_names/02_parsed_names.csv",
       package = "bdc"
     ),
     show_col_types = FALSE
@@ -150,6 +150,8 @@ DT::datatable(
     fixedColumns = list(leftColumns = 2)
   )
 )
+
+parse_names <- parse_names2
 ```
 
 <br/>
@@ -170,16 +172,16 @@ The taxonomic harmonization is based upon **one** of those taxonomic authorities
 
 ```{r eval=F}
 query_names <- bdc_query_names_taxadb(
-  sci_name = database$names_clean,
-  replace_synonyms = TRUE, # replace synonyms by accepted names?
-  suggest_names = TRUE, # try to found a candidate name for misspelled names?
+  sci_name            = database$names_clean,
+  replace_synonyms    = TRUE, # replace synonyms by accepted names?
+  suggest_names       = TRUE, # try to found a candidate name for misspelled names?
   suggestion_distance = 0.9, # distance between the searched and suggested names
-  db = "gbif", # taxonomic database
-  rank_name = "Plantae", # a taxonomic rank
-  rank = "kingdom", # name of the taxonomic rank
-  parallel = TRUE, # should parallel processing be used?
-  ncores = 2, # number of cores to be used in the parallelization process
-  export_accepted = FALSE # save names linked to multiple accepted names
+  db                  = "gbif", # taxonomic database
+  rank_name           = "Plantae", # a taxonomic rank
+  rank                = "kingdom", # name of the taxonomic rank
+  parallel            = FALSE, # should parallel processing be used?
+  ncores              = 1, # number of cores to be used in the parallelization process
+  export_accepted     = FALSE # save names linked to multiple accepted names
 )
 ```
 
@@ -188,7 +190,7 @@ query_names <- bdc_query_names_taxadb(
 ```{r echo=F}
 query_names <-
   readr::read_csv(
-    here::here("inst/extdata/example_bdc_query_names_taxadb/example_bdc_query_names_taxadb.csv")
+    system.file("extdata/example_bdc_query_names_taxadb/example_bdc_names_clean.csv", package = "bdc")
   )
 
 # DT::datatable(
