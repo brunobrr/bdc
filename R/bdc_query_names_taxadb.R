@@ -138,7 +138,6 @@
 #' taxonomic harmonization process. The database is returned in the same order
 #' of sci_name.
 #'
-#' @importFrom data.table fwrite
 #' @importFrom dplyr rename distinct mutate filter pull full_join select arrange slice bind_cols left_join
 #' @importFrom fs dir_create
 #' @importFrom here here
@@ -449,21 +448,21 @@ bdc_query_names_taxadb <-
           bdc_filter_id(found_name$acceptedNameUsageID[synonym_index], db,
                         db_version = db_version))
         
-        # for cases when one same has more than one vernacular name
-        # TODO: check if everything is ok from now on
-        accepted <-
+        # remove synomyns with multiple vernacular name
+        accepted <- 
           accepted %>% 
-          dplyr::distinct(scientificName, .keep_all = T) %>% 
-          dplyr::arrange(sort)
-          
+          dplyr::group_by(taxonID) %>% 
+          slice(1)
         
         # Add original names
         ori_names <-
           found_name %>%
-          dplyr::select(original_search) %>%
+          dplyr::select(original_search, acceptedNameUsageID) %>%
           dplyr::slice(synonym_index)
 
-        accepted <- dplyr::bind_cols(accepted, ori_names)
+        # accepted <- dplyr::bind_cols(accepted, ori_names)
+        accepted <-
+          dplyr::left_join(accepted, ori_names, c('taxonID' = 'acceptedNameUsageID'))
 
         # Split names by equal original_search
         accepted_list <- split(accepted, as.factor(accepted$original_search))
@@ -587,7 +586,7 @@ bdc_query_names_taxadb <-
         bdc_filter_name(., db = db, db_version = db_version) %>%
         dplyr::pull(., acceptedNameUsageID) %>%
         bdc_filter_id(., db, db_version = db_version) %>%
-        data.table::fwrite(
+        readr::write_csv(
           .,
           here::here("Output/Check/02_names_multiple_accepted_names.csv")
         )
