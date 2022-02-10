@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove columns with the results of data quality tests — bdc_filter_out_flags • bdc</title>
+<title>Internal function. Filter species information from local stored taxonomic databases — bdc_filter_id • bdc</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,9 +46,8 @@
 
 
 
-<meta property="og:title" content="Remove columns with the results of data quality tests — bdc_filter_out_flags" />
-<meta property="og:description" content="This function filters out columns containing the results of data quality
-tests (i.e., columns starting with '.') or other columns specified." />
+<meta property="og:title" content="Internal function. Filter species information from local stored taxonomic databases — bdc_filter_id" />
+<meta property="og:description" content="This function filters, by exact match, species information from taxonomic database based on a taxonomic code." />
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png" />
 
 
@@ -138,57 +137,42 @@ tests (i.e., columns starting with '.') or other columns specified." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove columns with the results of data quality tests</h1>
+    <h1>Internal function. Filter species information from local stored taxonomic databases</h1>
     
-    <div class="hidden name"><code>bdc_filter_out_flags.Rd</code></div>
+    <div class="hidden name"><code>bdc_filter_id.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function filters out columns containing the results of data quality
-tests (i.e., columns starting with '.') or other columns specified.</p>
+    <p>This function filters, by exact match, species information from taxonomic database based on a taxonomic code.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bdc_filter_out_flags</span><span class='op'>(</span><span class='va'>data</span>, col_to_remove <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bdc_filter_id</span><span class='op'>(</span><span class='va'>id</span>, <span class='va'>db</span>, db_version <span class='op'>=</span> <span class='fu'>taxadb</span><span class='fu'>:::</span><span class='fu'>latest_version</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>data.frame. Containing columns to be removed.</p></td>
+      <th>id</th>
+      <td><p>character vector. Containing taxonomic code.</p></td>
     </tr>
     <tr>
-      <th>col_to_remove</th>
-      <td><p>logical. Which columns should be removed? Default =
-"all", which means that all columns containing the results of data quality
-tests are removed.</p></td>
+      <th>db</th>
+      <td><p>character vector. Local taxonomic database, eg. "gbif".</p></td>
+    </tr>
+    <tr>
+      <th>db_version</th>
+      <td><p>character vector. The year of database version, eg. "2022". The default is the latest version.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame without columns specified in 'col_to_remove'.</p>
+    <p>This function returns a data.frame in Darwin Core format with the taxonomic information for the queried ids.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>database_id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"test_1"</span>, <span class='st'>"test_2"</span>, <span class='st'>"test_3"</span>, <span class='st'>"test_4"</span>, <span class='st'>"test_5"</span><span class='op'>)</span>
-<span class='va'>.missing_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>.missing_coordinates</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>.invalid_basis_of_records</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>.summary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
+    <p>The function looks for an exact match of taxonomic code in the local stored database and returns the matched information
+as a data.frame in Darwin Core format. Unmatched ids return NA values for all taxonomic information.</p>
 
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>database_id</span>,
-                <span class='va'>.missing_names</span>,
-                <span class='va'>.missing_coordinates</span>,
-                <span class='va'>.invalid_basis_of_records</span>,
-                <span class='va'>.summary</span><span class='op'>)</span>
-
-<span class='fu'>bdc_filter_out_flags</span><span class='op'>(</span>
-  data <span class='op'>=</span> <span class='va'>x</span>,
-  col_to_remove <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

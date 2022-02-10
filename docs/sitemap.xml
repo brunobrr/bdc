@@ -4,7 +4,7 @@
     <loc>https://brunobrr.github.io/bdc/index.html</loc>
   </url>
   <url>
-    <loc>https://brunobrr.github.io/bdc/reference/bdc_basisOfRrecords_notStandard.html</loc>
+    <loc>https://brunobrr.github.io/bdc/reference/bdc_basisOfRecords_notStandard.html</loc>
   </url>
   <url>
     <loc>https://brunobrr.github.io/bdc/reference/bdc_clean_names.html</loc>
@@ -44,6 +44,12 @@
   </url>
   <url>
     <loc>https://brunobrr.github.io/bdc/reference/bdc_eventDate_empty.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/reference/bdc_filter_id.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/reference/bdc_filter_name.html</loc>
   </url>
   <url>
     <loc>https://brunobrr.github.io/bdc/reference/bdc_filter_out_flags.html</loc>
