@@ -20,11 +20,10 @@
 #'
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom cowplot plot_grid
-#' @importFrom data.table fread
+#' @importFrom readr read_csv
 #' @importFrom dplyr summarise n pull mutate group_by intersect filter full_join select mutate_if summarise_all rename
 #' @importFrom ggplot2 theme_minimal theme element_text element_line element_blank unit ggplot aes geom_col coord_flip labs geom_hline scale_y_continuous ggsave theme_void geom_polygon geom_hex coord_quickmap scale_fill_viridis_c geom_histogram
 #' @importFrom here here
-#' @importFrom rnaturalearth ne_countries
 #' @importFrom scales comma
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
@@ -86,7 +85,7 @@ bdc_create_figures <-
           dplyr::summarise(n = dplyr::n()) %>%
           dplyr::pull(n)
 
-        # data.table::fwrite(n_records, here::here("data/n_records.csv"))
+        # readr::write_csv(n_records, here::here("data/n_records.csv"))
 
         # Total number of records per database
         n_record_database <-
@@ -98,7 +97,7 @@ bdc_create_figures <-
           dplyr::group_by(database_id) %>%
           dplyr::summarise(n_total = dplyr::n())
 
-        # data.table::fwrite(n_record_database, "data/n_record_database.csv")
+        # readr::write_csv(n_record_database, "data/n_record_database.csv")
 
       # } else {
       #   n_records <-
@@ -463,7 +462,7 @@ bdc_create_figures <-
     }
 
     if (length(w_tranposed) != 0) {
-      temp <- data.table::fread("Output/Check/01_coordinates_transposed.csv")
+      temp <- readr::read_csv("Output/Check/01_coordinates_transposed.csv")
 
       p1 <-
         bdc_quickmap(

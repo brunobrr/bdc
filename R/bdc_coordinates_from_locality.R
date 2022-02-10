@@ -21,7 +21,7 @@
 #' but with potentially useful locality information is saved in
 #' Output/Check/01_coordinates_from_locality.csv.
 #'
-#' @importFrom data.table fwrite
+#' @importFrom readr write_csv
 #' @importFrom dplyr filter select
 #' @importFrom here here
 #' @importFrom stringr str_detect str_squish
@@ -40,13 +40,13 @@ bdc_coordinates_from_locality <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            locality = "locality") {
-    
+
     .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
-    
+
     suppressMessages({
 
     if (!any(".coordinates_empty" == names(data))){
-      
+
     data <-
       bdc_coordinates_empty(data = data,
                             lat = {{ lat }},
@@ -54,7 +54,7 @@ bdc_coordinates_from_locality <-
     }
 
     if (!any(".coordinates_outOfRange" == names(data))){
-      
+
     data <-
       bdc_coordinates_outOfRange(data = data,
                                 lat = {{ lat }},
@@ -81,7 +81,7 @@ bdc_coordinates_from_locality <-
       dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
 
     save <- here::here("Output/Check/01_coordinates_from_locality.csv")
-    df %>% data.table::fwrite(save)
+    df %>% readr::write_csv(save)
 
     message(
       paste(
