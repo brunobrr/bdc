@@ -44,15 +44,15 @@ datafake3 <- tibble::tribble(
 )
 
 datafake4 <- tibble::tribble(
-  ~nome_das_especies, ~x, 
-  "Eragrostis maypurensis", -47.824956, 
-  "Mimosa sensitiva", -43.651389, 
-  "Aegiphila integrifolia", -48.434722, 
-  "Rhodospatha venosa", -60, 
-  "Ditassa succedanea", -43.615833, 
-  "Sebastiania macrocarpa", -39.404722, 
-  "Caladium bicolor", -34.960278, 
-  "Amaioua intermedia", -45.0711, 
+  ~nome_das_especies, ~x,
+  "Eragrostis maypurensis", -47.824956,
+  "Mimosa sensitiva", -43.651389,
+  "Aegiphila integrifolia", -48.434722,
+  "Rhodospatha venosa", -60,
+  "Ditassa succedanea", -43.615833,
+  "Sebastiania macrocarpa", -39.404722,
+  "Caladium bicolor", -34.960278,
+  "Amaioua intermedia", -45.0711,
   "Mikania officinalis", -48.801389
 )
 
@@ -69,9 +69,9 @@ metadata <- tibble::tribble(
 )
 
 metadata_missing_column <- tibble::tribble(
-  ~datasetName, ~fileName, ~occurrenceID, ~scientificName, ~decimalLatitude, 
-  "datafake1", "datafake1.csv", "id", "species", "latitude", 
-  "datafake2", "datafake2.csv", "id_number", "spp", "lat", 
+  ~datasetName, ~fileName, ~occurrenceID, ~scientificName, ~decimalLatitude,
+  "datafake1", "datafake1.csv", "id", "species", "latitude",
+  "datafake2", "datafake2.csv", "id_number", "spp", "lat",
   "datafake4", "datafake3.csv", NA, "nome_das_especies", "y"
 )
 
@@ -108,8 +108,8 @@ withr::with_dir(
 
       expect_equal(df1, c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"))
     })
-    
-    
+
+
 
     test_that("datafake3 has the default column names", {
       created_qs_files <-
@@ -140,76 +140,75 @@ withr::with_dir(
   new = ".",
   code = {
     bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "csv")
-    
+
     test_that("bdc_standardize_datasets can create qs files", {
       created_qs_files <-
         fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*") %>%
         basename()
-      
+
       expected_qs_files <-
         c("standard_datafake1.csv", "standard_datafake2.csv", "standard_datafake3.csv")
-      
+
       expect_equal(created_qs_files, expected_qs_files)
     })
-    
+
     test_that("datafake1 has the default column names", {
       created_qs_files <-
         fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
-      
+
       df1 <-
         readr::read_csv(created_qs_files[1]) %>%
         names()
-      
+
       expect_equal(df1, c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"))
     })
-    
-    
-    
+
+
+
     test_that("datafake3 has the default column names", {
       created_qs_files <-
         fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
-      
+
       df1 <-
         readr::read_csv(created_qs_files[3]) %>%
         names()
-      
+
       expect_equal(df1, c("database_id", "scientificName", "decimalLatitude", "decimalLongitude"))
     })
-    
+
     test_that("bdc_standardize_datasets can create 00_merged_datasets.csv", {
       merged <- here::here("Output/Intermediate/00_merged_database.csv")
-      
+
       expect_true(file.exists(merged))
     })
-    
-    
+
+
   }
 )
 
 withr::with_dir(
   new = ".",
   code = {
-    
+
     test_that("bdc_standardize_datasets missing required column", {
-    
+
     result <- testthat::capture_error(bdc_standardize_datasets(metadata = metadata_missing_column, overwrite = TRUE, format = "csv"))
-    
+
     expect_equal(any(class(result) %in% "error"), TRUE)
-    
+
     })
-    
+
     test_that("bdc_standardize_datasets already exist", {
-    
+
     result_message <- testthat::capture_message(bdc_standardize_datasets(metadata = metadata, overwrite = FALSE, format = "csv"))
-    
-    expect_equal(any(class(result_message) %in% "message"), TRUE)
-    
+
+    expect_equal(any(class(result_message) %in% "condition"), TRUE)
+
     })
-    
+
     unlink(here::here("data"), recursive = TRUE)
     unlink(here::here("Output"), recursive = TRUE)
     csv <- fs::dir_ls(glob = "*.csv")
-    unlink(csv)  
-    
+    unlink(csv)
+
 })
-      
