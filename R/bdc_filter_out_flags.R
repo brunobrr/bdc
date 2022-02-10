@@ -15,18 +15,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
-#' .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
-#' .missing_coordinates <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
-#' .invalid_basis_of_records <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
-#' .summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
-#'
-#' x <- data.frame(database_id,
-#'                 .missing_names,
-#'                 .missing_coordinates,
-#'                 .invalid_basis_of_records,
-#'                 .summary)
-#'
+#' x <- data.frame(
+#' database_id = c("test_1", "test_2", "test_3", "test_4", "test_5"),
+#' .bdc_scientificName_empty = c(TRUE, TRUE, TRUE, FALSE, FALSE),
+#' .bdc_coordinates_empty = c(TRUE, FALSE, FALSE, FALSE, FALSE),
+#' .bdc_coordinates_outOfRange = c(TRUE, FALSE, FALSE, FALSE, FALSE),
+#' .summary = c(TRUE, FALSE, FALSE, FALSE, FALSE))
+#' 
 #' bdc_filter_out_flags(
 #'   data = x,
 #'   col_to_remove = "all")
