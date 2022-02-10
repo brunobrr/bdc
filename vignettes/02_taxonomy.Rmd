@@ -190,7 +190,7 @@ query_names <- bdc_query_names_taxadb(
 ```{r echo=F}
 query_names <-
   readr::read_csv(
-    system.file("extdata/example_bdc_query_names_taxadb/example_bdc_names_clean.csv", package = "bdc")
+    system.file("extdata/example_bdc_query_names_taxadb/example_bdc_query_names_taxadb.csv", package = "bdc")
   )
 
 # DT::datatable(
@@ -235,7 +235,8 @@ It is also possible to filter out records with taxonomic status different from "
 ```{r}
 unresolved_names <-
   bdc_filter_out_names(data = database,
-                       taxonomic_notes = "accepted",
+                       col_name = "notes",
+                       taxonomic_status = "accepted",
                        opposite = TRUE)
 ```
 

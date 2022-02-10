@@ -114,7 +114,7 @@ check_space <-
     x =  check_space,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
-    species = "verbatim_scientificName",
+    species = "scientificName",
     countries = ,
     tests = c(
       "capitals",     # records within 2km around country and province centroids
@@ -151,7 +151,7 @@ check_space <-
 ```
 
 
-Here we create a column named **.summary** summing up the results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
+Here we update the column named **.summary** summing up the results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
 
 ```{r}
 check_space <- bdc_summary_col(data = check_space)
@@ -184,7 +184,7 @@ check_space %>%
     data = .,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
-    col_to_map = ".cen", # FIXME: no column named .cen
+    col_to_map = ".cen", 
     size = 0.9
   )
 ```

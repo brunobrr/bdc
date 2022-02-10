@@ -66,7 +66,7 @@ bdc_filter_out_names <-
 
     unique_status <- unique(data[, col_name])
 
-    if (!all(taxonomic_status %in% unique_status)) {
+    if (!all(taxonomic_status %in% unique_status$notes)) {
       stop(paste0(
         "Taxonomic status provided are not present in column",
         " '",
