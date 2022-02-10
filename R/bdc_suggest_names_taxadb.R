@@ -14,6 +14,7 @@
 #' @param provider character string. A database where the valid will be
 #' searched. The options are those provided by the 'taxadb' package. Only "col", "itis",
 #'  "ncbi" and "ott" are currently working.
+#' @param db_version numeric string. A database version (eg. 2002).
 #' @param rank_name character string. Taxonomic rank name (e.g. "Plantae",
 #' "Animalia", "Aves", "Carnivora". Default = NULL.
 #' @param rank character string. A taxonomic rank to filter the database.
@@ -66,6 +67,7 @@ bdc_suggest_names_taxadb <-
   function(sci_name,
            max_distance = suggestion_distance,
            provider = db,
+           db_version = db_version,
            rank_name = NULL,
            rank = NULL,
            parallel = TRUE,
@@ -97,7 +99,7 @@ bdc_suggest_names_taxadb <-
     # Should taxonomic database be filtered according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
       species_first_letter <-
-        taxadb::taxa_tbl(provider) %>%
+        taxadb::taxa_tbl(provider, version = db_version) %>%
         dplyr::filter(., .data[[rank]] == rank_name | is.na(.data[[rank]])) %>%
         dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
@@ -107,7 +109,7 @@ bdc_suggest_names_taxadb <-
       message("Please, provide both 'rank_name' and 'rank' arguments")
     } else {
       species_first_letter <-
-        taxadb::taxa_tbl(provider) %>%
+        taxadb::taxa_tbl(provider, version = db_version) %>%
         dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
     }

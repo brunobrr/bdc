@@ -327,6 +327,7 @@ bdc_query_names_taxadb <-
             sci_name = found_name$input[not_found_index],
             max_distance = suggestion_distance,
             provider = db,
+            db_version = db_version,
             rank_name = rank_name,
             rank = rank,
             ncores = ncores
