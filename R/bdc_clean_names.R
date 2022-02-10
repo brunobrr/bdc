@@ -75,6 +75,7 @@ setup_gnparser <- function() {
 #' @importFrom rgnparser gn_parse_tidy
 #' @importFrom stringr str_squish str_count str_remove_all regex str_detect str_which str_replace_all str_to_lower
 #' @importFrom tibble as_tibble
+#' @importFrom stringi stri_trans_general
 #'
 #' @export
 #'
@@ -930,6 +931,7 @@ bdc_gnparser <- function(data, sci_names) {
   w <- which(colnames(data_temp) == sci_names)
   colnames(data_temp)[w] <- "temp"
   data_temp$id <- 1:nrow(data_temp)
+  data_temp$temp <- stringi::stri_trans_general(str = data_temp$temp, id = "Latin-ASCII")
 
   # Parse names using rgnparser
   suppressWarnings({
@@ -943,9 +945,6 @@ bdc_gnparser <- function(data, sci_names) {
                       temp = verbatim)
     })
   })
-
-  Encoding(gnparser$temp) <- "latin1"
-  # Encoding(data_temp$temp) <- "latin1"
 
   # Add names parsed to the full database
   df <-
