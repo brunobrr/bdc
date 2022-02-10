@@ -215,7 +215,7 @@ bdc_query_names_taxadb <-
         db_version <- 2022
       },
       iucn = {
-        db_version <- 2022
+        db_version <- 2019 ### TODO: Change to 2022
       },
       ott = {
         db_version <- 2021
@@ -270,7 +270,6 @@ bdc_query_names_taxadb <-
     found_name <- suppressWarnings(bdc_filter_name(sci_name, db = db,
                                                    db_version = db_version))
     
-
     # Create a vector containing the number of columns of the taxonomic
     # database. This is important because the number of columns varies according
     # to the taxonomic authority selected.
@@ -449,9 +448,9 @@ bdc_query_names_taxadb <-
                         db_version = db_version))
         
         # remove synomyns with multiple vernacular name
-        accepted <- 
-          accepted %>% 
-          dplyr::group_by(taxonID) %>% 
+        accepted <-
+          accepted %>%
+          dplyr::group_by(taxonID) %>%
           slice(1)
         
         # Add original names
@@ -459,6 +458,11 @@ bdc_query_names_taxadb <-
           found_name %>%
           dplyr::select(original_search, acceptedNameUsageID) %>%
           dplyr::slice(synonym_index)
+        
+        # ori_names <-
+        #   found_name %>%
+        #   dplyr::select(original_search) %>%
+        #   dplyr::slice(synonym_index)
 
         # accepted <- dplyr::bind_cols(accepted, ori_names)
         accepted <-
@@ -514,34 +518,27 @@ bdc_query_names_taxadb <-
 
 
     ### Formatting the resulted data.frame (only if suggest_name is TRUE)
+    found_name <-
+      suggested_search %>%
+      dplyr::select(-distance) %>%
+      dplyr::full_join(found_name, .,
+                       by = c("original_search" = "original")) %>%
+      dplyr::rename(suggested_name = suggested,
+                    original_search = original_search) %>%
+      dplyr::select(-c(input, sort)) %>%
+      dplyr::select(original_search,
+                    suggested_name,
+                    distance,
+                    notes,
+                    tidyselect::everything()) %>%
+      dplyr::mutate(distance = ifelse(distance > suggestion_distance,
+                                      distance, NA)) %>%
+      dplyr::mutate(notes = ifelse(
+        is.na(scientificName) & notes != "multipleAccepted",
+        'notFound',
+        notes
+      ))
 
-   # if (any(not_found == TRUE)) {
-    #  if (suggest_names == TRUE) {
-        
-        found_name <-
-          suggested_search %>%
-          dplyr::select(-distance) %>%
-          dplyr::full_join(found_name, .,
-                           by = c("original_search" = "original")) %>%
-          dplyr::rename(suggested_name = suggested,
-                        original_search = original_search) %>%
-          dplyr::select(-c(input, sort)) %>%
-          dplyr::select(original_search,
-                        suggested_name,
-                        distance,
-                        notes,
-                        tidyselect::everything()) %>%
-          dplyr::mutate(distance = ifelse(distance > suggestion_distance,
-                                          distance, NA)) %>%
-          dplyr::mutate(notes = ifelse(
-            is.na(scientificName) & notes != "multipleAccepted",
-            'notFound',
-            notes
-          ))
-
-      #}
-   # }
-    
 
     ### Adding information on 'taxonomicStatus' in the column 'notes'.
     found_name <-
@@ -599,12 +596,18 @@ bdc_query_names_taxadb <-
 
     # joining  names queried to the original (complete) database
     found_name <- 
-      dplyr::left_join(found_name, raw_sci_name, by = "original_search")
+      dplyr::left_join(raw_sci_name, found_name, by = "original_search")
       
-    
     end <- Sys.time()
     total_time <- round(as.numeric (end - start, units = "mins"), 1)
 
+    message(paste(
+      "\n",
+      "A total of",
+      sum(is.na(found_name$original_search)),
+      "NA was/were found in sci_name."
+    ))
+    
     message(paste(
       "\n",
       nrow(found_name),
@@ -612,6 +615,7 @@ bdc_query_names_taxadb <-
       total_time,
       "minutes\n"
     ))
+    
 
     return(found_name)
   }

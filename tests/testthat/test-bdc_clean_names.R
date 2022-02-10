@@ -6,7 +6,8 @@ scientificName <- c(
   "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
   "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
   "Gymnanthes edwalliana (Pax & K.Hoffm.) Laurenio-Melo & M.F.Sales",
-  "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby")
+  "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby",
+  "Aspidosperma australe Müll.Arg.")
 
 
 testthat::test_that("test with function example", {
@@ -14,6 +15,11 @@ testthat::test_that("test with function example", {
   r <- bdc_clean_names(sci_names = scientificName)
   expect_equal(class(bdc_clean_names(sci_names = scientificName)), c("tbl_df", "tbl", "data.frame"))
   expect_equal(names(r), c("scientificName", ".uncer_terms", ".infraesp_names", "names_clean", "quality"))
+})
+
+testthat::test_that("test names with accent", {
+  r <- bdc_clean_names(sci_names = scientificName)
+  expect_equal(nrow(r), length(scientificName))
 })
 
 sci_names <- "Lauraceae Ocotea odorifera"
@@ -59,6 +65,7 @@ testthat::test_that("avoid remove valid suffix dae", {
   expect_equal(r$clean_family_names, "Solanum lacerdae")
 
 })
+
 
 sci_names <- "Taccaceae Solanum lacerdae"
 names_raw <-

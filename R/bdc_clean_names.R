@@ -930,7 +930,7 @@ bdc_gnparser <- function(data, sci_names) {
   w <- which(colnames(data_temp) == sci_names)
   colnames(data_temp)[w] <- "temp"
   data_temp$id <- 1:nrow(data_temp)
-
+  
   # Parse names using rgnparser
   suppressWarnings({
     suppressMessages({
@@ -945,7 +945,8 @@ bdc_gnparser <- function(data, sci_names) {
   })
 
   Encoding(gnparser$temp) <- "latin1"
-  Encoding(data_temp$temp) <- "latin1"
+  # Encoding(data_temp$temp) <- "latin1"
+
   # Add names parsed to the full database
   df <-
     dplyr::full_join(data_temp, gnparser, by = "temp") %>%

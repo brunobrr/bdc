@@ -121,8 +121,7 @@ Scientific names improperly formatted usually cannot be matched with valid names
 
 ```{r, eval=FALSE}
 parse_names <-
-  bdc_clean_names(sci_names = database$scientificName) %>%
-  dplyr::filter(!is.na(scientificName))
+  bdc_clean_names(sci_names = database$scientificName)
 ```
 
 <br/>
@@ -160,10 +159,11 @@ parse_names <- parse_names2
 
 ```{r}
 parse_names <-
-  parse_names %>%
+  parse_names %>% 
   dplyr::select(.uncer_terms, names_clean)
 
 database <- dplyr::bind_cols(database, parse_names)
+
 ```
 
 ## Names harmonization
