@@ -1,4 +1,4 @@
-pandoc: 2.7.3
+pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -7,7 +7,7 @@ articles:
   02_taxonomy: 02_taxonomy.html
   03_space: 03_space.html
   04_time: 04_time.html
-last_built: 2021-08-05T20:31Z
+last_built: 2022-02-10T19:20Z
 urls:
   reference: https://brunobrr.github.io/bdc/reference
   article: https://brunobrr.github.io/bdc/articles

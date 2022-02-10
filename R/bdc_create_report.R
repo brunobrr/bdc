@@ -10,7 +10,7 @@
 #' @return A data.frame containing a report summarizing the results of data
 #' quality assessment.
 #'
-#' @importFrom data.table fwrite
+#' @importFrom readr write_csv
 #' @importFrom dplyr summarise n pull mutate group_by add_row select everything mutate_if summarise_all rename if_else filter bind_rows
 #' @importFrom DT datatable
 #' @importFrom here here
@@ -67,7 +67,7 @@ bdc_create_report <-
         dplyr::summarise(n = dplyr::n()) %>%
         dplyr::pull(n)
 
-        # data.table::fwrite(n_records, here::here("data/n_records.csv"))
+        # readr::write_csv(n_records, here::here("data/n_records.csv"))
 
         # Total number of records per database
       n_record_database <-
@@ -79,7 +79,7 @@ bdc_create_report <-
         dplyr::group_by(database_id) %>%
         dplyr::summarise(n_total = dplyr::n())
 
-      #   data.table::fwrite(n_record_database,
+      #   readr::write_csv(n_record_database,
       #                      here::here("data/n_record_database.csv"))
       # } else {
       #   n_records <-
@@ -172,7 +172,7 @@ bdc_create_report <-
 
         res <- format_df(pf)
         data <- res[[2]]
-        data.table::fwrite(res[[1]],
+        readr::write_csv(res[[1]],
                            here::here("Output/Report/01_Report_Prefilter.csv"))
       }
 
@@ -293,7 +293,7 @@ bdc_create_report <-
 
         res <- format_df(names)
         data <- res[[2]]
-        data.table::fwrite(res[[1]],
+        readr::write_csv(res[[1]],
                            here::here("Output/Report/02_Report_taxonomy.csv"))
       }
 
@@ -376,7 +376,7 @@ bdc_create_report <-
 
         res <- format_df(space)
         data <- res[[2]]
-        data.table::fwrite(res[[1]],
+        readr::write_csv(res[[1]],
                            here::here("Output/Report/03_Report_space.csv"))
 
       }
@@ -419,7 +419,7 @@ bdc_create_report <-
 
         res <- format_df(date)
         data <- res[[2]]
-        data.table::fwrite(res[[1]],
+        readr::write_csv(res[[1]],
                            here::here("Output/Report/04_Report_time.csv"))
       }
     })

@@ -42,7 +42,6 @@ License: GPL (>= 3)
 Imports:
     CoordinateCleaner,
     countrycode,
-    data.table,
     doParallel,
     dplyr,
     foreach,
@@ -50,7 +49,6 @@ Imports:
     here,
     knitr,
     magrittr,
-    plyr,
     purrr,
     qs,
     rangeBuilder,
@@ -71,9 +69,9 @@ Imports:
     scales,
     rnaturalearth,
     DT,
+    readr,
     withr
 Suggests:
-    readr,
     rvest,
     testthat,
     xml2,

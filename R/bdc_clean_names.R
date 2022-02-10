@@ -69,12 +69,13 @@ setup_gnparser <- function() {
 #' process and the results of the parsing names process is saved in
 #' "Output/Check/02_parse_names.csv".
 #'
-#' @importFrom data.table fread fwrite
+#' @importFrom readr read_csv write_csv
 #' @importFrom dplyr rename distinct select mutate_all na_if filter tibble pull bind_cols full_join
 #' @importFrom here here
 #' @importFrom rgnparser gn_parse_tidy
 #' @importFrom stringr str_squish str_count str_remove_all regex str_detect str_which str_replace_all str_to_lower
 #' @importFrom tibble as_tibble
+#' @importFrom stringi stri_trans_general
 #'
 #' @export
 #'
@@ -131,7 +132,7 @@ bdc_clean_names <- function(sci_names) {
   df_join <- dplyr::full_join(names_raw, parse_names, by = "scientificName")
 
   # Save the results of the parsing names process
-  data.table::fwrite(df_join, here::here("Output", "Check", "02_parsed_names.csv"))
+  readr::write_csv(df_join, here::here("Output", "Check", "02_parsed_names.csv"))
 
   # Save a "clean" database
   df_join <-
@@ -930,7 +931,8 @@ bdc_gnparser <- function(data, sci_names) {
   w <- which(colnames(data_temp) == sci_names)
   colnames(data_temp)[w] <- "temp"
   data_temp$id <- 1:nrow(data_temp)
-  
+  data_temp$temp <- stringi::stri_trans_general(str = data_temp$temp, id = "Latin-ASCII")
+
   # Parse names using rgnparser
   suppressWarnings({
     suppressMessages({
@@ -943,9 +945,6 @@ bdc_gnparser <- function(data, sci_names) {
                       temp = verbatim)
     })
   })
-
-  Encoding(gnparser$temp) <- "latin1"
-  # Encoding(data_temp$temp) <- "latin1"
 
   # Add names parsed to the full database
   df <-

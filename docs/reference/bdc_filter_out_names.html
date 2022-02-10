@@ -90,7 +90,7 @@ returned." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -150,43 +150,76 @@ status.  By default, only records with accepted scientific names are
 returned.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bdc_filter_out_names</span><span class='op'>(</span><span class='va'>data</span>, taxonomic_notes <span class='op'>=</span> <span class='st'>"accepted"</span>, opposite <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bdc_filter_out_names</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  col_name <span class='op'>=</span> <span class='st'>"notes"</span>,
+  taxonomic_status <span class='op'>=</span> <span class='st'>"accepted"</span>,
+  opposite <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>data.frame. Containing a column with information on the taxonomic
-status of scientific names.</p></td>
+      <td><p>data.frame. Containing the column "notes" with information on the
+taxonomic status of scientific names.</p></td>
     </tr>
     <tr>
-      <th>taxonomic_notes</th>
+      <th>col_name</th>
       <td><p>character string. The column name containing notes
 about the taxonomic status of a name. Default = "notes".</p></td>
     </tr>
     <tr>
+      <th>taxonomic_status</th>
+      <td><p>character string. Taxonomic status of a name. Default
+= "accepted".</p></td>
+    </tr>
+    <tr>
       <th>opposite</th>
-      <td><p>logical. Should taxonomic notes different from those listed
-in 'taxonomic_notes' be returned? Default = FALSE</p></td>
+      <td><p>logical. Should taxonomic status different from those listed
+in 'taxonomic_status' be returned? Default = FALSE</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame filtered out according to names listed in
-'taxonomic_notes'.</p>
+'taxonomic_status'.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>By default, only records with accepted scientific names are kept in
-the database. Such records are listed in the column 'taxonomic_notes' as
+the database. Such records are listed in the column 'taxonomic_status' as
 "accepted", "accepted | replaceSynonym",  "accepted | wasMisspelled" or
 "accepted | wasMisspelled | replaceSynonym". It is also possible to
 customize the list of taxonomic notes to be kept in the argument
-'taxonomic_notes'. See 'notes' in the data.frame resulted from the function
+'taxonomic_status'. See 'notes' in the data.frame resulted from the function
 <code><a href='bdc_create_report.html'>bdc_create_report</a></code>. If 'opposite' is TRUE, records with notes
-different from names listed in 'taxonomic_notes' are returned.</p>
+different from names listed in 'taxonomic_status' are returned.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p>Other taxonomy: 
+<code><a href='bdc_clean_names.html'>bdc_clean_names</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>df_notes</span> <span class='op'>&lt;-</span>
+ <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+   notes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"notFound"</span>, <span class='st'>"accepted"</span>, <span class='st'>"accepted | replaceSynonym"</span>,
+             <span class='st'>"accepted | wasMisspelled"</span>,
+             <span class='st'>"accepted | wasMisspelled | replaceSynonym"</span>,
+             <span class='st'>"multipleAccepted"</span>,
+             <span class='st'>"heterotypic synonym"</span><span class='op'>)</span>
+ <span class='op'>)</span>
+
+<span class='fu'>bdc_filter_out_names</span><span class='op'>(</span>
+ data <span class='op'>=</span> <span class='va'>df_notes</span>,
+ taxonomic_status <span class='op'>=</span> <span class='st'>"accepted"</span>,
+ col_name <span class='op'>=</span> <span class='st'>"notes"</span>,
+ opposite <span class='op'>=</span> <span class='cn'>F</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
