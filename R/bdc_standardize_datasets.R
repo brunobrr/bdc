@@ -15,7 +15,7 @@
 #' @param format a character setting the output file type. Option available are "csv"
 #' and "qs" (recommenced for saving large datasets). Default == "csv".
 #'
-#' @importFrom data.table fread
+#' @importFrom readr read_csv
 #' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
 #' all_of
 #' @importFrom fs dir_exists dir_create
@@ -169,7 +169,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
 
             standard_dataset <-
               input_file[file_index] %>%
-              data.table::fread() %>%
+              readr::read_csv() %>%
               dplyr::select(dplyr::all_of(vector_for_recode)) %>%
               purrr::set_names(names(vector_for_recode)) %>%
               dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
@@ -187,7 +187,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
                                ".", format))
 
             } else {
-              data.table::fwrite(standard_dataset,
+              readr::write_csv(standard_dataset,
                                  paste0(save_in_dir, "standard_", dataset_name,
                                         ".", format))
             }
@@ -233,10 +233,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
       merged_database <-
         here::here("data", "temp_datasets") %>%
         fs::dir_ls(regexp = "*.csv") %>%
-        plyr::ldply(.data = .,
-                    .fun = data.table::fread,
-                    .progress = plyr::progress_text(char = "."),
-                    .id = NULL)
+        purrr::map_dfr( ~ readr::read_csv(.x))
     }
 
 
@@ -250,7 +247,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
 
     } else {
 
-      data.table::fwrite(merged_database, merged_filename)
+      readr::write_csv(merged_database, merged_filename)
 
     }
 
@@ -262,4 +259,3 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
   }
 
 }
-

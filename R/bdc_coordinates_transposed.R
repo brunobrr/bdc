@@ -40,7 +40,7 @@
 #' records are flagged as (FALSE) and, in this case, verbatim coordinates are
 #' replaced by corrected coordinates.
 #'
-#' @importFrom data.table fwrite
+#' @importFrom readr write_csv
 #' @importFrom dplyr tibble rename mutate select contains pull
 #' @importFrom here here
 #'
@@ -83,13 +83,13 @@ bdc_coordinates_transposed <-
            border_buffer = 0.2
            ) {
     decimalLatitude <- decimalLongitude <- database_id <- scientificName <- NULL
-    
+
   suppressWarnings({
   check_require_cran("rnaturalearth")
   check_require_cran("readr")
   check_require_github("ropensci/rnaturalearthdata")
   })
-  
+
   data <- dplyr::tibble(data)
   minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
 
@@ -151,8 +151,8 @@ bdc_coordinates_transposed <-
     bdc_create_dir()
   }
   corrected_coordinates %>%
-    data.table::fwrite(here::here("Output/Check/01_coordinates_transposed.csv"))
-  
+    readr::write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
+
   # finding the position of records with lon/lat modified
   w <-
     which(data %>% dplyr::pull(database_id) %in% (corrected_coordinates %>% dplyr::pull(database_id)))
