@@ -22,7 +22,7 @@
 #' @importFrom here here
 #' @importFrom purrr set_names
 #' @importFrom qs qsave
-#' @importFrom vroom vroom cols
+#' @importFrom readr read_csv cols
 #'
 #' @details
 #' `bdc_standardize_datasets()` facilitate the standardization of datasets with
@@ -152,7 +152,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
 
         imported_raw_dataset <-
           input_file[file_index] %>%
-          vroom::vroom(guess_max = 10^6, col_types = vroom::cols(.default = "c"), n_max = 1)
+          readr::read_csv(guess_max = 10^6, col_types = readr::cols(.default = "c"), n_max = 1)
 
         skip_to_next <- FALSE
 
@@ -223,10 +223,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
     merged_database <-
       here::here("data", "temp_datasets") %>%
       fs::dir_ls(regexp = "*.qs") %>%
-      plyr::ldply(.data = .,
-                  .fun = qs::qread,
-                  .progress = plyr::progress_text(char = "."),
-                  .id = NULL)
+      purrr::map_dfr( ~ qs::qread(.x))
 
     } else {
 

@@ -147,9 +147,8 @@ bdc_coordinates_transposed <-
     corrected_coordinates %>%
     dplyr::select(database_id, scientificName, dplyr::contains("decimal"))
 
-  if (!dir.exists(here::here("Output/Check"))) {
-    bdc_create_dir()
-  }
+  bdc_create_dir()
+
   corrected_coordinates %>%
     readr::write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
 

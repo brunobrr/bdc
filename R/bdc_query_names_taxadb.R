@@ -157,8 +157,8 @@
 #'     "Oxalis rhombeo ovata",
 #'     "Axonopus canescens",
 #'     "Prosopis",
-#'     "Haematococcus salinus", 
-#'     'Monas pulvisculus', 
+#'     "Haematococcus salinus",
+#'     'Monas pulvisculus',
 #'     'Cryptomonas lenticulari',
 #'     "Poincianella pyramidalis",
 #'     "Hymenophyllum polyanthos")
@@ -188,18 +188,18 @@ bdc_query_names_taxadb <-
            export_accepted = FALSE) {
 
     value <- original_search <- input <- . <- notes <- scientificName <- NULL
-    acceptedNameUsageID <- original <- NULL
-    
+    acceptedNameUsageID <- original <- taxonID  <- NULL
+
     if (!db %in% c('itis', 'ncbi', 'col', 'tpl', 'gbif',
                    'fb', 'slb', 'wd', 'ott', 'iucn')) {
       stop (db, ' provided is not a valid name')
     }
-     
+
     if (db %in% c('slb', 'wd')) {
       stop (db, ' database is momentarily unavailable in taxadb package')
     }
-    
-    # Currently available databases and versions 
+
+    # Currently available databases and versions
     switch(
       EXPR = db,
       itis = {
@@ -227,7 +227,7 @@ bdc_query_names_taxadb <-
         db_version <- 2019
       }
     )
-    
+
     # Create a directory to save the result
     bdc_create_dir()
 
@@ -244,11 +244,11 @@ bdc_query_names_taxadb <-
     # ?taxadb::td_create for details)
 
     db_name <- paste0(db_version, "_", "dwc", "_", db)
-    
+
     if (!taxadb:::has_table(db_name, taxadb::td_connect(taxadb:::taxadb_dir()))) {
       taxadb::td_create(provider = db, schema = "dwc", overwrite = FALSE)
     }
-    
+
     # Raw taxa names
     raw_sci_name <-
       sci_name %>%
@@ -269,7 +269,7 @@ bdc_query_names_taxadb <-
 
     found_name <- suppressWarnings(bdc_filter_name(sci_name, db = db,
                                                    db_version = db_version))
-    
+
     # Create a vector containing the number of columns of the taxonomic
     # database. This is important because the number of columns varies according
     # to the taxonomic authority selected.
@@ -307,14 +307,14 @@ bdc_query_names_taxadb <-
       is.na(found_name$scientificName) &
       !grepl("multipleAccepted", found_name$notes)
 
-    
+
     suggested_search <-
       data.frame(
         original = found_name$original_search,
         suggested = NA,
         distance = NA
       )
-    
+
 
     if (any(not_found == TRUE)) {
       if (suggest_names == TRUE) {
@@ -447,19 +447,19 @@ bdc_query_names_taxadb <-
         accepted <- suppressWarnings(
           bdc_filter_id(found_name$acceptedNameUsageID[synonym_index], db,
                         db_version = db_version))
-        
+
         # remove synomyns with multiple vernacular name
         accepted <-
           accepted %>%
           dplyr::group_by(taxonID) %>%
           slice(1)
-        
+
         # Add original names
         ori_names <-
           found_name %>%
           dplyr::select(original_search, acceptedNameUsageID) %>%
           dplyr::slice(synonym_index)
-        
+
         # ori_names <-
         #   found_name %>%
         #   dplyr::select(original_search) %>%
@@ -568,9 +568,9 @@ bdc_query_names_taxadb <-
     found_name$scientificName <-
       stringr::str_to_sentence(found_name$scientificName)
 
-    found_name$original_search <- 
+    found_name$original_search <-
       stringr::str_to_sentence(found_name$original_search)
-    
+
 
     # Export a table containing names linked to multiple accepted names.
     if (export_accepted == TRUE) {
@@ -596,9 +596,9 @@ bdc_query_names_taxadb <-
 
 
     # joining  names queried to the original (complete) database
-    found_name <- 
+    found_name <-
       dplyr::left_join(raw_sci_name, found_name, by = "original_search")
-      
+
     end <- Sys.time()
     total_time <- round(as.numeric (end - start, units = "mins"), 1)
 
@@ -608,7 +608,7 @@ bdc_query_names_taxadb <-
       sum(is.na(found_name$original_search)),
       "NA was/were found in sci_name."
     ))
-    
+
     message(paste(
       "\n",
       nrow(found_name),
@@ -616,7 +616,7 @@ bdc_query_names_taxadb <-
       total_time,
       "minutes\n"
     ))
-    
+
 
     return(found_name)
   }

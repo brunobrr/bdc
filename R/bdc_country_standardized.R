@@ -18,6 +18,8 @@
 #' \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2}{Wikipedia}).
 #'
 #' @importFrom dplyr left_join rename
+#' @importFrom readr read_delim
+#' @importFrom stringr str_to_sentence
 #'
 #' @export
 #'
@@ -34,28 +36,28 @@
 bdc_country_standardized <-
   function(data,
            country = "country") {
-  
+
     cntr_suggested <- cntr_iso2c <- country_suggested <- NULL
-    
+
     if (all(colnames(data) != country))
       stop(
         "The column containing country names was not found. The function bdc_country_from_coordinates can be used to retrieve country names from valid geographic coordinates"
       )
-    
+
     suppressWarnings({
       suppressMessages({
         check_require_cran("rnaturalearth")
         check_require_github("ropensci/rnaturalearthdata")
       })
     })
-    
+
     # load auxiliary data
     message("Loading auxiliary data: country names from wikipedia\n")
     suppressMessages({
       suppressWarnings({
       wiki_cntr <-
         here::here("inst", "extdata", "countries_names", "wiki_country_names.txt") %>%
-        vroom::vroom() # get country names from Wikipedia
+        readr::read_delim(delim = "\t") # get country names from Wikipedia
       })
     })
 
@@ -79,9 +81,9 @@ bdc_country_standardized <-
       data %>%
       dplyr::rename(country_suggested = cntr_suggested,
                     countryCode = cntr_iso2c) %>%
-      dplyr::mutate(country_suggested = 
+      dplyr::mutate(country_suggested =
                     stringr::str_to_sentence(country_suggested))
-    
+
      w <- which(data$country != data$country_suggested)
 
     message(

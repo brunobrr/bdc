@@ -54,7 +54,6 @@ Imports:
     rangeBuilder,
     raster,
     rgnparser,
-    rlang,
     sf,
     sp,
     stringdist,
@@ -63,14 +62,12 @@ Imports:
     taxadb,
     tibble,
     tidyselect,
-    vroom,
     ggplot2,
     cowplot,
     scales,
     rnaturalearth,
     DT,
-    readr,
-    withr
+    readr
 Suggests:
     rvest,
     testthat,

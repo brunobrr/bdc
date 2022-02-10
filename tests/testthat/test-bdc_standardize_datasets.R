@@ -82,133 +82,114 @@ wrong_metadata <- tibble::tribble(
   "datafake3", "datafake3.csv", NA, "nome_das_especies", "y", "x", "missing"
 )
 
-withr::with_dir(
-  new = ".",
-  code = {
-    bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs")
+bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs")
 
-    test_that("bdc_standardize_datasets can create qs files", {
-      created_qs_files <-
-        fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*") %>%
-        basename()
+test_that("bdc_standardize_datasets can create qs files", {
+  created_qs_files <-
+    fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*") %>%
+    basename()
 
-      expected_qs_files <-
-        c("standard_datafake1.qs", "standard_datafake2.qs", "standard_datafake3.qs")
+  expected_qs_files <-
+    c("standard_datafake1.qs", "standard_datafake2.qs", "standard_datafake3.qs")
 
-      expect_equal(created_qs_files, expected_qs_files)
-    })
+  expect_equal(created_qs_files, expected_qs_files)
+})
 
-    test_that("datafake1 has the default column names", {
-      created_qs_files <-
-        fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
+test_that("datafake1 has the default column names", {
+  created_qs_files <-
+    fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
 
-      df1 <-
-        qs::qread(created_qs_files[1]) %>%
-        names()
+  df1 <-
+    qs::qread(created_qs_files[1]) %>%
+    names()
 
-      expect_equal(df1, c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"))
-    })
+  expect_equal(df1, c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"))
+})
 
 
 
-    test_that("datafake3 has the default column names", {
-      created_qs_files <-
-        fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
+test_that("datafake3 has the default column names", {
+  created_qs_files <-
+    fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
 
-      df1 <-
-        qs::qread(created_qs_files[3]) %>%
-        names()
+  df1 <-
+    qs::qread(created_qs_files[3]) %>%
+    names()
 
-      expect_equal(df1, c("database_id", "scientificName", "decimalLatitude", "decimalLongitude"))
-    })
+  expect_equal(df1, c("database_id", "scientificName", "decimalLatitude", "decimalLongitude"))
+})
 
-    test_that("bdc_standardize_datasets can create 00_merged_datasets.qs", {
-      merged <- here::here("Output/Intermediate/00_merged_database.qs")
+test_that("bdc_standardize_datasets can create 00_merged_datasets.qs", {
+  merged <- here::here("Output/Intermediate/00_merged_database.qs")
 
-      expect_true(file.exists(merged))
-    })
+  expect_true(file.exists(merged))
+})
 
-    unlink(here::here("data"), recursive = TRUE)
-    unlink(here::here("Output"), recursive = TRUE)
-    csv <- fs::dir_ls(glob = "*.qs")
-    unlink(csv)
-  }
-)
+unlink(here::here("data"), recursive = TRUE)
+unlink(here::here("Output"), recursive = TRUE)
+csv <- fs::dir_ls(glob = "*.qs")
+unlink(csv)
 
+bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "csv")
 
-withr::with_dir(
-  new = ".",
-  code = {
-    bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "csv")
+test_that("bdc_standardize_datasets can create qs files", {
+  created_qs_files <-
+    fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*") %>%
+    basename()
 
-    test_that("bdc_standardize_datasets can create qs files", {
-      created_qs_files <-
-        fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*") %>%
-        basename()
+  expected_qs_files <-
+    c("standard_datafake1.csv", "standard_datafake2.csv", "standard_datafake3.csv")
 
-      expected_qs_files <-
-        c("standard_datafake1.csv", "standard_datafake2.csv", "standard_datafake3.csv")
+  expect_equal(created_qs_files, expected_qs_files)
+})
 
-      expect_equal(created_qs_files, expected_qs_files)
-    })
+test_that("datafake1 has the default column names", {
+  created_qs_files <-
+    fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
 
-    test_that("datafake1 has the default column names", {
-      created_qs_files <-
-        fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
+  df1 <-
+    readr::read_csv(created_qs_files[1]) %>%
+    names()
 
-      df1 <-
-        readr::read_csv(created_qs_files[1]) %>%
-        names()
-
-      expect_equal(df1, c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"))
-    })
+  expect_equal(df1, c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"))
+})
 
 
 
-    test_that("datafake3 has the default column names", {
-      created_qs_files <-
-        fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
+test_that("datafake3 has the default column names", {
+  created_qs_files <-
+    fs::dir_ls(path = here::here("data", "temp_datasets"), glob = "*datafake*")
 
-      df1 <-
-        readr::read_csv(created_qs_files[3]) %>%
-        names()
+  df1 <-
+    readr::read_csv(created_qs_files[3]) %>%
+    names()
 
-      expect_equal(df1, c("database_id", "scientificName", "decimalLatitude", "decimalLongitude"))
-    })
+  expect_equal(df1, c("database_id", "scientificName", "decimalLatitude", "decimalLongitude"))
+})
 
-    test_that("bdc_standardize_datasets can create 00_merged_datasets.csv", {
-      merged <- here::here("Output/Intermediate/00_merged_database.csv")
+test_that("bdc_standardize_datasets can create 00_merged_datasets.csv", {
+  merged <- here::here("Output/Intermediate/00_merged_database.csv")
 
-      expect_true(file.exists(merged))
-    })
+  expect_true(file.exists(merged))
+})
 
+test_that("bdc_standardize_datasets missing required column", {
 
-  }
-)
+  result <- testthat::capture_error(bdc_standardize_datasets(metadata = metadata_missing_column, overwrite = TRUE, format = "csv"))
 
-withr::with_dir(
-  new = ".",
-  code = {
-
-    test_that("bdc_standardize_datasets missing required column", {
-
-    result <- testthat::capture_error(bdc_standardize_datasets(metadata = metadata_missing_column, overwrite = TRUE, format = "csv"))
-
-    expect_equal(any(class(result) %in% "error"), TRUE)
-
-    })
-
-    test_that("bdc_standardize_datasets already exist", {
-
-    result_message <- testthat::capture_message(bdc_standardize_datasets(metadata = metadata, overwrite = FALSE, format = "csv"))
-
-    expect_equal(any(class(result_message) %in% "condition"), TRUE)
-
-    })
-
-    unlink(here::here("data"), recursive = TRUE)
-    unlink(here::here("Output"), recursive = TRUE)
-    csv <- fs::dir_ls(glob = "*.csv")
-    unlink(csv)
+  expect_equal(any(class(result) %in% "error"), TRUE)
 
 })
+
+test_that("bdc_standardize_datasets already exist", {
+
+  result_message <- testthat::capture_message(bdc_standardize_datasets(metadata = metadata, overwrite = FALSE, format = "csv"))
+
+  expect_equal(any(class(result_message) %in% "condition"), TRUE)
+
+})
+
+unlink(here::here("data"), recursive = TRUE)
+unlink(here::here("Output"), recursive = TRUE)
+csv <- fs::dir_ls(glob = "*.csv")
+unlink(csv)

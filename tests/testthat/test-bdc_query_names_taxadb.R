@@ -1,6 +1,6 @@
 context("bdc_query_names_taxadb")
 
-#skip("dont run")
+skip("dont run")
 
 sci_names <-
   c(
@@ -12,7 +12,7 @@ sci_names <-
     "Guapira opposita",
     "Clidemia naevula",
     "Poincianella pyramidalis",
-    "Hymenophyllum polyanthos", 
+    "Hymenophyllum polyanthos",
     "Puma concolor"
   )
 
@@ -58,7 +58,7 @@ expected <- tibble(data.frame(original_search = c("Puma concola", "Cebus apela")
                               originalNameUsageID = character(2),
                               scientificNameAuthorship = character(2),
                               vernacularName = character(2)
-                              
+
 ))
 
 expected$original_search <- c("Puma concola", "Cebus apela")
@@ -67,11 +67,11 @@ for(i in 4:ncol(expected)){
   expected[, i] <- as.character(c(NA, NA))
 }
 
-expected$notes <- rep("notFound", 2) 
+expected$notes <- rep("notFound", 2)
 
 
 test_that("suggest_name FALSE", {
-  
+
   testthat::expect_equal(test, expected)
 
 }

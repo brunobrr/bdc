@@ -16,8 +16,7 @@
 #' (TRUE) if 'lat' and 'lon' are not empty; otherwise "FALSE".
 #'
 #' @importFrom dplyr mutate_all mutate case_when select bind_cols
-#' @importFrom rlang sym
-#' 
+#'
 #' @export
 #'
 #' @examples
@@ -25,10 +24,10 @@
 #' decimalLatitude <- c(19.9358, -13.016667, NA, "")
 #' decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
 #' x <- data.frame(decimalLatitude, decimalLongitude)
-#' 
+#'
 #' bdc_coordinates_empty(
-#' data = x, 
-#' lat = "decimalLatitude", 
+#' data = x,
+#' lat = "decimalLatitude",
 #' lon = "decimalLongitude")
 #' }
 bdc_coordinates_empty <-
@@ -36,34 +35,34 @@ bdc_coordinates_empty <-
            lat = "decimalLatitude",
            lon = "decimalLongitude") {
     .coordinates_empt <- .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
-    
+
     df <- data
-    
+
     suppressWarnings({
       df <-
         df %>%
         dplyr::mutate_all(as.numeric)
     })
-    
+
     df <-
       df %>%
       dplyr::mutate(
         .coordinates_empty = dplyr::case_when(
-          is.na(!!rlang::sym(lat)) | is.na(!!rlang::sym(lon)) ~ FALSE,
+          is.na(.data[[lat]]) | is.na(.data[[lon]]) ~ FALSE,
           # flag empty coordinates
-          nzchar(!!rlang::sym(lat)) == FALSE |
-            nzchar(!!rlang::sym(lon)) == FALSE ~ FALSE,
+          nzchar(.data[[lat]]) == FALSE |
+            nzchar(.data[[lon]]) == FALSE ~ FALSE,
           # flag empty coordinates
-          is.numeric(!!rlang::sym(lat)) == FALSE |
-            is.numeric(!!rlang::sym(lon)) == FALSE ~ FALSE,
+          is.numeric(.data[[lat]]) == FALSE |
+            is.numeric(.data[[lon]]) == FALSE ~ FALSE,
           # opposite cases are flagged as TRUE
           TRUE ~ TRUE
         )
       ) %>%
       dplyr::select(.coordinates_empty)
-    
+
     df <- dplyr::bind_cols(data, df)
-    
+
     message(
       paste(
         "\nbdc_coordinates_empty:\nFlagged",
@@ -71,6 +70,6 @@ bdc_coordinates_empty <-
         "records.\nOne column was added to the database.\n"
       )
     )
-    
+
     return(df)
   }

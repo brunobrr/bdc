@@ -175,8 +175,8 @@ sci_name <- c(
     "Oxalis rhombeo ovata",
     "Axonopus canescens",
     "Prosopis",
-    "Haematococcus salinus", 
-    'Monas pulvisculus', 
+    "Haematococcus salinus",
+    'Monas pulvisculus',
     'Cryptomonas lenticulari',
     "Poincianella pyramidalis",
     "Hymenophyllum polyanthos")

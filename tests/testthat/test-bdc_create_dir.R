@@ -1,9 +1,5 @@
 context("creating directories")
 
-withr::with_dir(
-  new = ".",
-  code = {
-
     bdc_create_dir()
 
     test_that("bdc dir exists", {
@@ -13,7 +9,6 @@ withr::with_dir(
       expect_true(dir.exists(here::here("Output/Report")))
       expect_true(dir.exists(here::here("Output/Figures")))
 
-    })
+      unlink(here::here("Output"), recursive = TRUE)
 
-  }
-)
+    })

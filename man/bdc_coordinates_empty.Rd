@@ -33,8 +33,8 @@ decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
 x <- data.frame(decimalLatitude, decimalLongitude)
 
 bdc_coordinates_empty(
-data = x, 
-lat = "decimalLatitude", 
+data = x,
+lat = "decimalLatitude",
 lon = "decimalLongitude")
 }
 }

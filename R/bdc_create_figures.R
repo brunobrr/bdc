@@ -196,7 +196,6 @@ bdc_create_figures <-
           ggplot2::coord_flip() +
           our_theme +
           ggplot2::labs(x = "Dataset", y = "% of records flagged") +
-          # scale_y_continuous(labels = scales::percent) +
           ggplot2::geom_hline(
             yintercept = 0,
             size = 1,
@@ -270,7 +269,6 @@ bdc_create_figures <-
           ggplot2::coord_flip() +
           our_theme +
           ggplot2::labs(x = "Tests", y = "% of records flagged") +
-          # scale_y_continuous(labels = scales::percent) +
           ggplot2::geom_hline(
             yintercept = 0,
             size = 1,
