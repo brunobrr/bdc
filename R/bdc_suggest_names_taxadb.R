@@ -88,14 +88,25 @@ bdc_suggest_names_taxadb <-
       USE.NAMES = FALSE
       ))
 
-    first_letter <- toupper(first_letter)
-
-    # for some reasons, all names in gbif database are in lowercase
-    # if (provider %in% c("gbif", "itis", "ncbi", "ott")){
-    #   first_letter <- tolower(first_letter)
-    # 
-    # }
-
+    name_to_case_check  <- taxadb::taxa_tbl(provider, version = db_version) %>% 
+                            dplyr::filter(!is.na(scientificName)) %>%
+                            head(1) %>% 
+                            pull(scientificName) %>%
+                            stringr::str_split(., "") 
+    
+    lower_case <- str_detect(name_to_case_check[[1]][1] ,"[[:lower:]]")
+                  
+    
+    if(lower_case){
+      
+      first_letter <- tolower(first_letter)
+    }else{
+      
+      first_letter <- toupper(first_letter) 
+    }
+      
+     
+    
     # Should taxonomic database be filtered according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
       species_first_letter <-

@@ -127,8 +127,8 @@ test_that("testing ranks", {
 
 test_that("testing null rank", {
 
-  res <- testthat::capture_message(suppressWarnings(bdc_suggest_names_taxadb(sci_name = sci_names, rank_name = "Plantae", rank = NULL,
-                                                   max_distance = 0.75, provider = "ott", db_version = 2022, parallel = FALSE)))
+  res <- testthat::capture_message(suppressWarnings(bdc_suggest_names_taxadb(sci_name = sci_names, rank_name = "plantae", rank = NULL,
+                                                   max_distance = 0.75, provider = "ott", db_version = 2021, parallel = FALSE)))
 
   expect_equal(res$message, "Please, provide both 'rank_name' and 'rank' arguments\n")
 }
@@ -137,7 +137,7 @@ test_that("testing null rank", {
 test_that("testing null rank_name", {
 
   res <- testthat::capture_message(suppressWarnings(bdc_suggest_names_taxadb(sci_name = sci_names, rank = "kingdom",
-                                                   max_distance = 0.75, provider = "ott", db_version = 2022, parallel = FALSE)))
+                                                   max_distance = 0.75, provider = "ott", db_version = 2021, parallel = FALSE)))
 
   expect_equal(res$message, "Please, provide both 'rank_name' and 'rank' arguments\n")
 
