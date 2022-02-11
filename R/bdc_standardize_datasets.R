@@ -180,7 +180,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
 
             standard_dataset <-
               input_file[file_index] %>%
-              readr::read_csv(trim_ws = F) %>%
+              readr::read_csv(trim_ws = F, show_col_types = F) %>%
               dplyr::select(dplyr::all_of(vector_for_recode)) %>%
               purrr::set_names(names(vector_for_recode)) %>%
               dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
@@ -241,9 +241,8 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
       merged_database <-
         here::here("data", "temp_datasets") %>%
         fs::dir_ls(regexp = "*.csv") %>%
-        purrr::map_dfr( ~ readr::read_csv(.x))
+        purrr::map_dfr( ~ readr::read_csv(.x, col_types = readr::cols(.default = "c")))
     }
-
 
     merged_database <-
       merged_database %>%
