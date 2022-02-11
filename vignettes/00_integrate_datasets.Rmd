@@ -60,6 +60,12 @@ bdc::bdc_create_dir()
 
 Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 200 records compiled from nine different sources (see below).
 
+<br/>
+
+<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
+
+Remember to change the column "fileName" for the path containg the input files.
+
 ```{r echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
 metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"), show_col_types = FALSE)
 ```
