@@ -62,18 +62,29 @@
 bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE) {
 
   fileName <- datasetName <- . <- database_id <- NULL
+  
+  switch(
+    EXPR = format,
+    qs = {
+      merged_filename <- here::here("Output", "Intermediate", "00_merged_database.qs")
+    },
+    csv = {
+      merged_filename <- here::here("Output", "Intermediate", "00_merged_database.csv")
+      }
+  )
+  
 
-  if (format == "qs") {
-
-    merged_filename <-
-      here::here("Output", "Intermediate", "00_merged_database.qs")
-
-  } else {
-
-    merged_filename <-
-      here::here("Output", "Intermediate", "00_merged_database.csv")
-
-  }
+  # if (format == "qs") {
+  # 
+  #   merged_filename <-
+  #     here::here("Output", "Intermediate", "00_merged_database.qs")
+  # 
+  # } else {
+  # 
+  #   merged_filename <-
+  #     here::here("Output", "Intermediate", "00_merged_database.csv")
+  # 
+  # }
 
   fs::dir_create(here::here("Output", "Intermediate"))
 
@@ -152,7 +163,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
 
         imported_raw_dataset <-
           input_file[file_index] %>%
-          readr::read_csv(guess_max = 10^6, col_types = readr::cols(.default = "c"), n_max = 1)
+          readr::read_csv(guess_max = 10^6, col_types = readr::cols(.default = "c"), n_max = 1, show_col_types = F)
 
         skip_to_next <- FALSE
 
@@ -169,7 +180,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
 
             standard_dataset <-
               input_file[file_index] %>%
-              readr::read_csv() %>%
+              readr::read_csv(show_col_types = T) %>%
               dplyr::select(dplyr::all_of(vector_for_recode)) %>%
               purrr::set_names(names(vector_for_recode)) %>%
               dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
