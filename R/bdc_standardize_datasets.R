@@ -180,7 +180,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
 
             standard_dataset <-
               input_file[file_index] %>%
-              readr::read_csv(show_col_types = T) %>%
+              readr::read_csv(trim_ws = F) %>%
               dplyr::select(dplyr::all_of(vector_for_recode)) %>%
               purrr::set_names(names(vector_for_recode)) %>%
               dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
