@@ -1,9 +1,9 @@
 ---
-title: "Prefilter"
+title: "Pre-filter"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Prefilter}
+  %\VignetteIndexEntry{Standardization and integration of different datasets}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   out.width = "100%",
   echo = TRUE,
   warning = FALSE,
-  eval = T
+  eval = TRUE
 )
 ```
 

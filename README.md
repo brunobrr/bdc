@@ -6,6 +6,11 @@
 ## bdc: An R toolkit for standardizing, integrating, and cleaning biodiversity data
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](https://codecov.io/gh/brunobrr/bdc?branch=master)
+[![Coveralls test
+coverage](https://coveralls.io/repos/github/brunobrr/bdc/badge.svg)](https://coveralls.io/r/brunobrr/bdc?branch=master)
 <!-- badges: end -->
 
 ### Overview
@@ -56,8 +61,14 @@ You can install the released version of *bdc* from
 [github](https://github.com/brunobrr/bdc) with:
 
 ``` r
-if (!require("remotes")) install.packages("remotes")
+install.packages("remotes")
 remotes::install_github("brunobrr/bdc")
+```
+
+And load the package with:
+
+``` r
+library(bdc)
 ```
 
 ### Package website
