@@ -433,7 +433,7 @@ bdc_create_figures <-
           ggplot2::geom_hex(
             data = d,
             ggplot2::aes(x = decimalLongitude, y = decimalLatitude),
-            bins = 150
+            bins = 75
           ) +
           ggplot2::coord_quickmap() +
           ggplot2::theme_void() +

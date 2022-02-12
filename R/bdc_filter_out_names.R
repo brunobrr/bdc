@@ -26,7 +26,7 @@
 #' @return A data.frame filtered out according to names listed in
 #' 'taxonomic_status'.
 #'
-#' @importFrom dplyr filter select distinct
+#' @importFrom dplyr filter select distinct pull
 #' @importFrom stringr str_detect
 #'
 #' @export
@@ -64,7 +64,11 @@ bdc_filter_out_names <-
       stop(paste0("column ", "'", col_name, "'", "not found"))
     }
 
-    unique_status <- as.character(unique(data[, col_name]))
+    unique_status <- 
+      data %>% 
+      dplyr::select(.data[[col_name]]) %>% 
+      dplyr::distinct(.) %>% 
+      dplyr::pull(.)
 
     if (!all(taxonomic_status %in% unique_status)) {
       stop(paste0(

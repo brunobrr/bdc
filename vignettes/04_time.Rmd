@@ -26,51 +26,26 @@ This module of the *bdc* package extracts the collection year whenever possible 
 
 <br/>
 
-![](https://img.icons8.com/windows/96/000000/box-important--v1.png){width="40"} **Important**:
-
-The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
-
 ## Installation
 
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=FALSE}
-install.packages("remotes")
-remotes::install_github("brunobrr/bdc")
-```
+Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
-And load the package with:
-
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
-library(bdc)
-```
-
-## Creating directories
-
-Create directories to save the results of the functions. If not existing, four new folders are created in a folder named 'Output'.
-
-```{r}
-bdc_create_dir()
-```
+<br/>
 
 ## Reading the database
 
 Read the database created in the [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html) module of the `bdc` package. It is also possible to read any datasets containing the \*\*required\*\* fields to run the funtion (more details [here](%5Bhttps://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
-```{r}
+```{r, echo=TRUE,eval=FALSE}
 database <-
-  qs::qread(here::here("Output/Intermediate/03_space_database.qs"))
+  qs::qread(here::here("Output/Intermediate/03_space_database.csv"))
 ```
 
-Standardization of character encoding.
-
-```{r}
-for (i in 1:ncol(database)){
-  if(is.character(database[,i])){
-    Encoding(database[,i]) <- "UTF-8"
-  }
-}
+```{r, echo=FALSE,eval=TRUE}
+database <- 
+  readr::read_csv(system.file("extdata/outpus_vignettes/03_space_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-<br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 # DT::datatable(
@@ -83,6 +58,14 @@ for (i in 1:ncol(database)){
 #   )
 # )
 ```
+
+<br/>
+
+![](https://img.icons8.com/windows/96/000000/box-important--v1.png){width="40"} **Important**:
+
+The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
+
+<br/>
 
 ## 1 - Records lacking event date information
 
@@ -179,8 +162,8 @@ Save the original database containing the results of all data quality tests appe
 
 ```{r}
 check_time %>%
-  qs::qsave(.,
-            here::here("Output", "Intermediate", "04_time_raw_database.qs"))
+  readr::write_csv(.,
+            here::here("Output", "Intermediate", "04_time_raw_database.csv"))
 ```
 
 ## Filtering the database
@@ -198,20 +181,20 @@ output <-
 
 ```{r}
 output %>%
-  qs::qsave(.,
-            here::here("Output", "Intermediate", "04_time_clean_database.qs"))
+  readr::write_csv(.,
+            here::here("Output", "Intermediate", "04_time_clean_database.csv"))
 ```
 
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-# DT::datatable(
-#   output, class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 3,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
+DT::datatable(
+  output, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
 ```

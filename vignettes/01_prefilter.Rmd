@@ -26,32 +26,11 @@ Large and heterogeneous datasets may contain thousands of records missing spatia
 
 <br/>
 
-<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
-
-The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
-
 ## Installation
 
-You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
+Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=FALSE}
-install.packages("remotes")
-remotes::install_github("brunobrr/bdc")
-```
-
-And load the package with:
-
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
-library(bdc)
-```
-
-## Creating directories
-
-Create directories to save the results of the functions. If not existing, four new folders are created in a folder named 'Output'.
-
-```{r}
-bdc_create_dir()
-```
+<br/>
 
 ## Reading the database
 
@@ -59,33 +38,26 @@ Read the merged database created in the module **Standardization and integration
 
 ```{r, echo=TRUE,eval=FALSE}
 database <-
-  qs::qread(here::here("Output/Intermediate/00_merged_database.qs"))
+  readr::read_csv(here::here("Output/Intermediate/00_merged_database.csv"))
 ```
 
 ```{r, echo=FALSE,eval=TRUE}
-database <-
-  qs::qread(here::here("Output/Intermediate/00_merged_database.qs"))
-
-# FIXME: solve path
-system.file(c("exdata", "*.qs"), package = "bdc")
+database <- 
+  readr::read_csv(system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
-
-Standardization of character encoding.
-
-```{r}
-for (i in 1:ncol(database)){
-  if(is.character(database[,i])){
-    Encoding(database[,i]) <- "UTF-8"
-  }
-}
-```
-
-<br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
 database %>%
   knitr::kable()
 ```
+
+<br/>
+
+![](https://img.icons8.com/windows/96/000000/box-important--v1.png){width="40"} **Important**:
+
+The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.** We run bdc functions following a proposed workflow but all can be executed independently
+
+TODO: add explanation on *VALIDATION* and *ENRICHMENT*
 
 <br/>
 
@@ -127,6 +99,9 @@ check_pf <- bdc_coordinates_outOfRange(
 *VALIDATION*. This test flags records from doubtful source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.
 
 ```{r}
+# Check record sources of your dataset using:
+check_pf %>% group_by(basisOfRecord) %>% dplyr::summarise(n = n())
+
 check_pf <- bdc_basisOfRecords_notStandard(
   data = check_pf,
   basisOfRecord = "basisOfRecord",
@@ -161,7 +136,7 @@ check_pf <- bdc_country_standardized(
 
 *AMENDMENT*. The mismatch between informed country and coordinates can be the result of negative or transposed coordinates. Once detected a mismatch, different coordinate transformations are made to correct the country and coordinates mismatch. Verbatim coordinates are then replaced by the rectified ones in the returned database (a database containing verbatim and corrected coordinates is also created in the "Output" folder). Records near countries coastline are not tested to avoid incur in false positives.
 
-```{r}
+```{r echo=TRUE eval=F}
 check_pf <-
   bdc_coordinates_transposed(
     data = check_pf,
@@ -190,7 +165,7 @@ check_pf <-
   )
 ```
 
-## 9 - Saving records not geo-referenced but containing locality information
+## 9 - Identifying records not geo-referenced but containing locality information
 
 *ENRICHMENT*. Coordinates can be derived from a detailed description of the locality associated with records in a process called retrospective geo-referencing.
 
@@ -214,15 +189,15 @@ check_pf <- bdc_summary_col(data = check_pf)
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE,eval=FALSE}
-# DT::datatable(
-#   check_pf, class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 3,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
+DT::datatable(
+  check_pf, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
 ```
 
 <br/>
@@ -234,6 +209,7 @@ report <-
   bdc_create_report(data = check_pf,
                     database_id = "database_id",
                     workflow_step = "prefilter")
+report
 
 ```
 
@@ -251,11 +227,14 @@ bdc_create_figures(data = check_pf,
 
 <br/>
 
-![**Coordinates country inconsistent**](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/prefilter_.coordinates_country_inconsistent_MAP.png){width="20cm"}
+![**Coordinates country inconsistent**](images/prefilter_.coordinates_country_inconsistent_MAP-01.png)
 
 <br/>
 
+```{r eval=F echo=F}
 ![**Transposed coordinates**](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/prefilter_coordinates_transposed_MAP.png){width="20cm"}
+
+```
 
 <br/>
 
@@ -277,7 +256,8 @@ output <-
 ## Saving the database
 
 ```{r}
+# use qs::qread() to save the database in a compressed format
 output %>%
-  qs::qsave(.,
-            here::here("Output", "Intermediate", "01_prefilter_database.qs"))
+  readr::write_csv(.,
+            here::here("Output", "Intermediate", "01_prefilter_database.csv"))
 ```

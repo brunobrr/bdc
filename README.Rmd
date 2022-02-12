@@ -43,9 +43,15 @@ The modules illustrated, and functions within, can be linked to form a workflow 
 
 You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
 
-```{r, message=FALSE, warning=FALSE}
-if (!require("remotes")) install.packages("remotes")
-if (!require("bdc")) remotes::install_github("brunobrr/bdc")
+```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=FALSE}
+install.packages("remotes")
+remotes::install_github("brunobrr/bdc")
+```
+
+And load the package with:
+
+```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
+library(bdc)
 ```
 
 ### Package website

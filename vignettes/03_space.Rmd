@@ -32,67 +32,33 @@ Note that we do not use the "seas" test to remove records in the ocean because s
 
 The results of each test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and **the latter potentially problematic or suspect records**.
 
+<br/>
+
 ## Installation
 
-You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
+Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=FALSE}
-install.packages("remotes")
-remotes::install_github("brunobrr/bdc")
-```
-
-And load the package with:
-
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
-library(bdc)
-```
-
-## Creating directories
-
-Create directories to save the results of the functions. If not existing, four new folders are created in a folder named 'Output'.
-
-```{r}
-bdc_create_dir()
-```
+<br/>
 
 ## Reading the database
 
 Reading the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html) module the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the function (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
-```{r}
+```{r, echo=TRUE, eval=FALSE}
 database <-
-  qs::qread(here::here("Output/Intermediate/02_taxonomy_database.qs"))
+  readr::read_csv(here::here("Output/Intermediate/02_taxonomy_database.csv"))
 ```
 
-Standardization of character encoding.
-
-```{r}
-for (i in 1:ncol(database)){
-  if(is.character(database[,i])){
-    Encoding(database[,i]) <- "UTF-8"
-  }
-}
-```
-
-<br/>
-
-```{r echo=F, message=FALSE, warning=FALSE}
-# DT::datatable(
-#   database, class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 3,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
+```{r, echo=FALSE, eval=TRUE}
+database <- 
+  readr::read_csv(system.file("extdata/outpus_vignettes/02_taxonomy_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
 <br/>
 
 ## Flagging common spatial issues
 
-Here we Identify records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
+This function identifyes records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
 
 ```{r}
 check_space <-
@@ -101,9 +67,7 @@ check_space <-
     lon = "decimalLongitude",
     lat = "decimalLatitude",
     ndec = c(0, 1) # number of decimals to be tested
-  ) %>%
-  # FIXME:
-  tidyr::drop_na(contains("decimal"))
+  )
 ```
 
 Next, we will flag common spatial issues using functions of the package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152).
@@ -150,7 +114,6 @@ check_space <-
   )
 ```
 
-
 Here we update the column named **.summary** summing up the results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
 
 ```{r}
@@ -160,38 +123,38 @@ check_space <- bdc_summary_col(data = check_space)
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-# DT::datatable(
-#   check_space, class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 3,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
+DT::datatable(
+  check_space, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
 ```
 
 <br/>
 
 ## Mapping spatial errors
 
-It is possible to map a column containing the results of **one spatial test each time**. For example, let's map records in centroids of countries or provinces. Besides, we can use the column **".summary"** to map all records flagged as potentially problematic (i.e., FALSE).
+It is possible to map a column containing the results of **one spatial test each time**, for example records in country centroids (column ".cen"). Besides, we can use the column **".summary"** to map all records flagged as potentially problematic (i.e., FALSE).
 
 ```{r eval=F}
 check_space %>%
-  dplyr::filter(.cen == FALSE) %>%
+  dplyr::filter(.summary == FALSE) %>% # map only records flagged as FALSE
   bdc_quickmap(
     data = .,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
-    col_to_map = ".cen", 
+    col_to_map = ".summary", 
     size = 0.9
   )
 ```
 
 <br/>
 
-![Coordinates in country and province centroies](https://github.com/brunobrr/bdc/raw/master/vignettes/man/figures/README-unnamed-chunk-9-1.png){width="20cm" height="10cm"} <br/>
+![Coordinates flagged as FALSE in at least one test](https://github.com/brunobrr/bdc/raw/master/vignettes/man/figures/README-unnamed-chunk-9-1.png){width="20cm" height="10cm"} <br/>
 
 ## Report
 
@@ -219,15 +182,15 @@ bdc_create_figures(data = check_space,
 
 <br/>
 
-![Rounded coordinates (% of each database flagged)](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_.rou_BAR.png){width="20cm"}
+![Rounded coordinates (% of each database flagged)](images/space_.rou_BAR.png)
 
 <br/>
 
-![Records within biodiversity institutions](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_.inst_MAP.png){width="20cm"}
+![Records within urban areas](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_.inst_MAP.png){width="20cm"}
 
 <br/>
 
-![Summary of all tests](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_summary_all_tests_BAR.png){width="20cm"}
+![Summary of all tests](images/space_summary_all_tests_BAR-02.png)
 
 <br/>
 
@@ -245,7 +208,8 @@ It is possible to remove flagged records (potentially problematic ones) to get a
 ### Saving the database
 
 ```{r}
+# use qs::qread() to save the database in a compressed format
 check_space %>%
-  qs::qsave(.,
-            here::here("Output", "Intermediate", "03_space_database.qs"))
+ readr::write_csv(.,
+            here::here("Output", "Intermediate", "03_space_database.csv"))
 ```

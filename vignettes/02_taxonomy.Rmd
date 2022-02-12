@@ -49,60 +49,26 @@ The taxonomic standardization is based on one taxonomic database chosen by the u
 
 Note that some taxonomic databases may be *momentarily unavailable* in taxadb. Check ?bdc_query_names_taxadb for a list of available taxonomic databases.
 
+<br/>
+
 ## Installation
 
-You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
-
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=FALSE}
-install.packages("remotes")
-remotes::install_github("brunobrr/bdc")
-```
-
-And load the package with:
-
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
-library(bdc)
-```
-
-## Creating directories
-
-Create directories to save the results of the functions. If not existing, four new folders are created in a folder named 'Output'.
-
-```{r}
-bdc_create_dir()
-```
-
-## Reading the database
-
-Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) module of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22).
-
-```{r, echo = FALSE}
-database <-
-  qs::qread(here::here("Output", "Intermediate", "01_prefilter_database.qs"))
-```
-
-Standardization of character encoding.
-
-```{r}
-for (i in 1:ncol(database)){
-  if(is.character(database[,i])){
-    Encoding(database[,i]) <- "UTF-8"
-  }
-}
-```
+Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
 <br/>
 
-```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
-# DT::datatable(
-#   database[1:30,], class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 3,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
+## Reading the database
+
+Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) module of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
+
+```{r, echo=TRUE,eval=FALSE}
+database <-
+  readr::read_csv(here::here("Output/Intermediate/01_prefilter_database.csv"))
+```
+
+```{r, echo=FALSE,eval=TRUE}
+database <- 
+  readr::read_csv(system.file("extdata/outpus_vignettes/01_prefilter_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
 <br/>
@@ -129,17 +95,8 @@ parse_names <-
 An example of *bdc_clean_names* output.
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-parse_names2 <-
-  readr::read_csv(
-    system.file(
-      "extdata/example_bdc_clean_names/02_parsed_names.csv",
-      package = "bdc"
-    ),
-    show_col_types = FALSE
-  )
-
 DT::datatable(
-  parse_names2[2000:2030,],
+  parse_names[60:75,],
   class = 'stripe',
   extensions = 'FixedColumns',
   options = list(
@@ -168,7 +125,7 @@ database <- dplyr::bind_cols(database, parse_names)
 
 ## Names harmonization
 
-The taxonomic harmonization is based upon **one** of those taxonomic authorities previously mentioned. It starts with creating a local database by downloading, extracting, and importing the taxonomic database informed by users using the taxadb package. . The download may take some time, depending on the internet connection.
+The taxonomic harmonization is based upon **one** of those taxonomic authorities previously mentioned. It starts with creating a local database by downloading, extracting, and importing the taxonomic database informed by users using the taxadb package. The download may take some time, depending on the internet connection.
 
 ```{r eval=F}
 query_names <- bdc_query_names_taxadb(
@@ -180,17 +137,20 @@ query_names <- bdc_query_names_taxadb(
   rank_name           = "Plantae", # a taxonomic rank
   rank                = "kingdom", # name of the taxonomic rank
   parallel            = FALSE, # should parallel processing be used?
-  ncores              = 1, # number of cores to be used in the parallelization process
+  ncores              = 2, # number of cores to be used in the parallelization process
   export_accepted     = FALSE # save names linked to multiple accepted names
 )
 ```
 
 <br/>
 
-```{r echo=F}
+```{r echo=F, eval=T}
 query_names <-
   readr::read_csv(
-    system.file("extdata/example_bdc_query_names_taxadb/example_bdc_query_names_taxadb.csv", package = "bdc")
+    system.file(
+      "extdata/outpus_vignettes/example_query_names.csv",
+      package = "bdc"
+    ), show_col_types = F
   )
 
 # DT::datatable(
@@ -226,6 +186,7 @@ report <-
                     database_id = "database_id",
                     workflow_step = "taxonomy")
 
+report
 ```
 
 ## Unresolved names
@@ -263,7 +224,8 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 ## Saving the database
 
 ```{r}
+# use qs::qread() to save the database in a compressed format
 database %>%
-  qs::qsave(.,
-            here::here("Output", "Intermediate", "02_taxonomy_database.qs"))
+  readr::write_csv(.,
+            here::here("Output", "Intermediate", "02_taxonomy_database.csv"))
 ```

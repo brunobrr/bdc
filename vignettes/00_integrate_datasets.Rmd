@@ -37,34 +37,17 @@ Once standardized, datasets are then integrated into a standardized database hav
 
 ## Installation
 
-You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
-
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=FALSE}
-install.packages("remotes")
-remotes::install_github("brunobrr/bdc")
-```
-
-And load the package with:
-
-```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
-library(bdc)
-```
-
-First, let's create folders to save the results.
-
-```{r}
-bdc::bdc_create_dir()
-```
-
-## Read the configuration table
-
-Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 200 records compiled from nine different sources (see below).
+Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
 <br/>
 
-<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
+## Read the configuration table
 
-Remember to change the column "fileName" for the path containg the input files.
+Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 180 records compiled from nine different sources (see below).
+
+<br/>
+
+<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Remember** to change the column "fileName" for the path containg the input files.
 
 ```{r echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
 metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"), show_col_types = FALSE)
@@ -127,7 +110,7 @@ config_description <-
 
 ## Standardization and integration of datasets
 
-Note that the standardized database integrating all dataset is saved in the folder "Output/Intermediate" as "00_merged_database.qs". The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package
+Note that the standardized database integrating all dataset is saved in the folder **"Output/Intermediate" as "00_merged_database"**. The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package
 
 ```{r message=F, warning=F, eval=TRUE, echo=TRUE}
 bdc_standardize_datasets(metadata = metadata, format = "csv", overwrite = T)
@@ -135,8 +118,13 @@ bdc_standardize_datasets(metadata = metadata, format = "csv", overwrite = T)
 
 ```{r message=F, warning=F, echo = FALSE}
 database <-
-  here::here("Output", "Intermediate", "00_merged_database.qs") %>%
+  here::here("Output", "Intermediate", "00_merged_database.csv") %>%
   qs::qread()
+```
+
+```{r echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+database <- 
+  readr::read_csv(system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
 <br/>
@@ -146,13 +134,13 @@ An example of a standardized database containing the required field to run the *
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-# DT::datatable(
-#   database, class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 3,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
+DT::datatable(
+  database, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
 ```
