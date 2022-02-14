@@ -1,6 +1,7 @@
 context("bdc_query_names_taxadb")
 
 skip("dont run")
+skip_on_cran()
 
 sci_names <-
   c(

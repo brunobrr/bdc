@@ -1,5 +1,8 @@
 context("filter name")
 
+skip("dont run")
+skip_on_cran()
+
 sci_names <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
                "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
 

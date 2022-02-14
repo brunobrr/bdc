@@ -1,5 +1,4 @@
 library(readr)
-library(withr)
 library(stringr)
 
 context("standard dataset")
