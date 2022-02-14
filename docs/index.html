@@ -108,22 +108,107 @@
 <div class="section level3">
 <h3 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h3>
-<p>Handle biodiversity data from several different sources is not an easy task. Here, we present the Biodiversity Data Cleaning (bdc), an R package to address quality issues and improve the fitness-for-use of a dataset. <em>bdc</em> contains functions to harmonize and integrate data from different sources following common standards and protocols and implements various tests and tools to flag, document, clean, and correct taxonomic, spatial, and temporal data.</p>
-<p>The <em>bdc</em> package is organized in thematic modules related to different biodiversity dimensions, including:</p>
-<ol style="list-style-type: decimal">
+<p>Handle biodiversity data from several different sources is not an easy task. Here, we present the <strong>B</strong>iodiversity <strong>D</strong>ata <strong>C</strong>leaning (bdc), an R package to address quality issues and improve the fitness-for-use of a dataset. <em>bdc</em> contains functions to harmonize and integrate data from different sources following common standards and protocols and implements various tests and tools to flag, document, clean, and correct taxonomic, spatial, and temporal data.</p>
+</div>
+<div class="section level3">
+<h3 id="structure-of-bdc">
+<strong>Structure of bdc</strong><a class="anchor" aria-label="anchor" href="#structure-of-bdc"></a>
+</h3>
+<p>The <em>bdc</em> toolkit is organized in thematic modules related to different biodiversity dimensions. The modules illustrated, and functions within, can be linked to form a workflow (see <a href="https://brunobrr.github.io/bdc/"><strong>vignettes</strong></a>), but can also be executed independently depending on user needs.</p>
+<p><img src="https://github.com/brunobrr/bdc/blob/master/inst/extdata/icon_vignettes/Figure1.png?raw=true" width="639"></p>
+</div>
+<div class="section level3">
+<h3 id="1-merge-databases">1. <a href="https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html"><strong>Merge databases</strong></a>
+<a class="anchor" aria-label="anchor" href="#1-merge-databases"></a>
+</h3>
+<p>Standardization and integration of different datasets into a standard database.</p>
+<ul>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html"><strong>Standardization</strong> and <strong>integration</strong></a> of different datasets;</li>
+<code><a href="reference/bdc_standardize_datasets.html">bdc_standardize_datasets()</a></code> Standardization and integration of different datasets into a new dataset with column names following Darwin Core terminology</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="2-pre-filter">2. <a href="https://brunobrr.github.io/bdc/articles/01_%E2%98%BAprefilter.html"><strong>Pre-filter</strong></a>
+<a class="anchor" aria-label="anchor" href="#2-pre-filter"></a>
+</h3>
+<p>Flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names).</p>
+<ul>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/01_%E2%98%BAprefilter.html"><strong>Pre-filter</strong></a>: flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names);</li>
+<code><a href="reference/bdc_scientificName_empty.html">bdc_scientificName_empty()</a></code> Identification of records lacking names or with names not interpretable</li>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/02_taxonomy.html"><strong>Taxonomy</strong></a>: cleaning, parsing, and standardization of scientific names against multiple taxonomic references. The workflow corrects spelling errors and converts nomenclatural synonyms to currently accepted names;</li>
+<code><a href="reference/bdc_coordinates_empty.html">bdc_coordinates_empty()</a></code> Identification of records lacking information on latitude or longitude</li>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/03_space.html"><strong>Space</strong></a>: flagging of erroneous, suspicious, and low-precision geographic coordinates;</li>
+<code><a href="reference/bdc_coordinates_outOfRange.html">bdc_coordinates_outOfRange()</a></code> Identification of records with out-of-range coordinates (latitude &gt; 90 or -90; longitude &gt;180 or -180)</li>
 <li>
-<a href="https://brunobrr.github.io/bdc/articles/04_time.html"><strong>Time</strong></a>: flagging and, whenever possible, correction of inconsistent collection date.</li>
-</ol>
+<code><a href="reference/bdc_basisOfRecords_notStandard.html">bdc_basisOfRecords_notStandard()</a></code> Identification of records from doubtful sources (e.g., fossil or machine observation) impossible to interpret and not compatible with Darwin Core recommended vocabulary</li>
+<li>
+<code><a href="reference/bdc_country_from_coordinates.html">bdc_country_from_coordinates()</a></code> Derive country name from valid geographic coordinates</li>
+<li>
+<code><a href="reference/bdc_country_standardized.html">bdc_country_standardized()</a></code> Standardization of country names and retrieve country code</li>
+<li>
+<code><a href="reference/bdc_coordinates_transposed.html">bdc_coordinates_transposed()</a></code> Identification of records with potentially transposed latitude and longitude</li>
+<li>
+<code><a href="reference/bdc_coordinates_country_inconsistent.html">bdc_coordinates_country_inconsistent()</a></code> Identification of coordinates in other countries or far from a specified distance from the coast of a reference country (i.e., in the ocean)</li>
+<li>
+<code><a href="reference/bdc_coordinates_from_locality.html">bdc_coordinates_from_locality()</a></code> Identification of records lacking coordinates but with a detailed description of the locality associate with records from which coordinates can be derived</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="3-taxonomy">3. <a href="https://brunobrr.github.io/bdc/articles/02_taxonomy.html"><strong>Taxonomy</strong></a>
+<a class="anchor" aria-label="anchor" href="#3-taxonomy"></a>
+</h3>
+<p>Cleaning, parsing, and standardization of scientific names against multiple taxonomic references.</p>
+<ul>
+<li>
+<code><a href="reference/bdc_clean_names.html">bdc_clean_names()</a></code> Name-checking routines to clean and split a taxonomic name into its binomial and authority components</li>
+<li>
+<code><a href="reference/bdc_query_names_taxadb.html">bdc_query_names_taxadb()</a></code> Standardization of scientific names by correcting spelling errors and converting nomenclatural synonyms to currently accepted names.</li>
+<li>
+<code><a href="reference/bdc_filter_out_names.html">bdc_filter_out_names()</a></code> This tool is used to filter out records according to their taxonomic status present in the column “notes”. For example, to filter only valid accepted names categorized as “accepted”</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="4-space">4. <a href="https://brunobrr.github.io/bdc/articles/03_space.html"><strong>Space</strong></a>
+<a class="anchor" aria-label="anchor" href="#4-space"></a>
+</h3>
+<p>Flagging of erroneous, suspicious, and low-precision geographic coordinates.</p>
+<ul>
+<li>
+<code><a href="reference/bdc_coordinates_precision.html">bdc_coordinates_precision()</a></code> Identification of records with a coordinate precision below a specified number of decimal places</li>
+<li>
+<code>clean_coordinates()</code> (From CoordinateCleaner package and part of the data-cleaning workflow). Identification of potentially problematic geographic coordinates based on geographic gazetteers and metadata. Include tests for flagging records: around country capitals or country or province centroids, duplicated, with equal coordinates, around biodiversity institutions, within urban areas, plain zeros in the coordinates, and suspect geographic outliers</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="5-time">5. <a href="https://brunobrr.github.io/bdc/articles/04_time.html"><strong>Time</strong></a>
+<a class="anchor" aria-label="anchor" href="#5-time"></a>
+</h3>
+<p>Flagging and, whenever possible, correction of inconsistent collection date.</p>
+<ul>
+<li>
+<code><a href="reference/bdc_eventDate_empty.html">bdc_eventDate_empty()</a></code> Identification of records lacking information on event date (i.e., when a record was collected or observed)</li>
+<li>
+<code><a href="reference/bdc_year_outOfRange.html">bdc_year_outOfRange()</a></code> Identification of records with illegitimate or potentially imprecise collecting year. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900)</li>
+<li>
+<code><a href="reference/bdc_year_from_eventDate.html">bdc_year_from_eventDate()</a></code> This function extracts four-digit year from unambiguously interpretable collecting dates</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="1-other-functions-httpsbrunobrrgithubiobdcreferenceindexhtml">1. [<strong>Other functions</strong>] (<a href="https://brunobrr.github.io/bdc/reference/index.html" class="uri">https://brunobrr.github.io/bdc/reference/index.html</a>)<a class="anchor" aria-label="anchor" href="#1-other-functions-httpsbrunobrrgithubiobdcreferenceindexhtml"></a>
+</h3>
 <p>Aim to facilitate the <strong>documentation, visualization, and interpretation</strong> of results of data quality tests the package contains functions for documenting the results of the data-cleaning tests, including functions for saving i) records needing further inspection, ii) databases containing the results of each step, iii) figures, and iv) data-quality reports.</p>
-<p>The modules illustrated, and functions within, can be linked to form a workflow (see <a href="https://brunobrr.github.io/bdc/">vignettes</a>), but can also be executed independently depending on user needs.</p>
+<ul>
+<li>
+<code><a href="reference/bdc_create_report.html">bdc_create_report()</a></code> Creation of data-quality reports documenting the results of data-quality tests and the taxonomic harmonization process</li>
+<li>
+<code><a href="reference/bdc_create_figures.html">bdc_create_figures()</a></code> Creation of figures (i.e., bar plots and maps) reporting the results of data-quality tests</li>
+<li>
+<code><a href="reference/bdc_filter_out_flags.html">bdc_filter_out_flags()</a></code> Removal of columns containing the results of data quality tests (i.e., column starting with “.”) or other columns specified</li>
+<li>
+<code><a href="reference/bdc_quickmap.html">bdc_quickmap()</a></code> Creation of a map of points using ggplot2. Helpful in inspecting the results of data-cleaning tests</li>
+<li>
+<code><a href="reference/bdc_summary_col.html">bdc_summary_col()</a></code> This function creates or updates the column summarizing the results of data quality tests (i.e., the column “.summary”)</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -131,7 +216,7 @@
 <p>You can install the released version of <em>bdc</em> from <a href="https://github.com/brunobrr/bdc" class="external-link">github</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
 <p>And load the package with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">bdc</span><span class="op">)</span></code></pre></div>
@@ -139,12 +224,12 @@
 <div class="section level3">
 <h3 id="package-website">Package website<a class="anchor" aria-label="anchor" href="#package-website"></a>
 </h3>
-<p>See <em>bdc</em> package website (<a href="https://brunobrr.github.io/bdc/" class="uri">https://brunobrr.github.io/bdc/</a>) for detailed explanation on each step of the workflow.</p>
+<p>See <em>bdc</em> package website (<a href="https://brunobrr.github.io/bdc/" class="uri">https://brunobrr.github.io/bdc/</a>) for detailed explanation on each module.</p>
 </div>
 <div class="section level3">
 <h3 id="getting-help">Getting help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
 </h3>
-<p>If you encounter a clear bug, please file an issue <a href="https://github.com/brunobrr/bdc/issues" class="external-link">here</a>. For questions or suggestion, please send us a email (<a href="mailto:ribeiro.brr@gmail.com" class="email">ribeiro.brr@gmail.com</a>).</p>
+<p>If you encounter a clear bug, please file an issue <a href="https://github.com/brunobrr/bdc/issues" class="external-link"><strong>here</strong></a>. For questions or suggestion, please send us a email (<a href="mailto:ribeiro.brr@gmail.com" class="email">ribeiro.brr@gmail.com</a>).</p>
 </div>
 </div>
 </div>
@@ -182,6 +267,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="http://www.gnu.org/licenses/gpl-3.0.html" class="external-link"><img src="https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat" alt="License"></a></li>
+<li><a href="https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://codecov.io/gh/brunobrr/bdc?branch=master" class="external-link"><img src="https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://coveralls.io/r/brunobrr/bdc?branch=master" class="external-link"><img src="https://coveralls.io/repos/github/brunobrr/bdc/badge.svg" alt="Coveralls test coverage"></a></li>
 </ul>

@@ -31,15 +31,13 @@ Handle biodiversity data from several different sources is not an easy task. Her
 
 The *bdc* toolkit is organized in thematic modules related to different biodiversity dimensions. The modules illustrated, and functions within, can be linked to form a workflow (see [**vignettes**](https://brunobrr.github.io/bdc/)), but can also be executed independently depending on user needs.
 
-<img src="inst/extdata/icon_vignettes/Figure1.png" width="600"/>
-
-### 1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)
+#### ![](inst/extdata/icon_vignettes/Figure1.png)1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)
 
 Standardization and integration of different datasets into a standard database.
 
 -   `bdc_standardize_datasets()` Standardization and integration of different datasets into a new dataset with column names following Darwin Core terminology
 
-### 2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_☺prefilter.html)
+#### 2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_☺prefilter.html)
 
 Flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names).
 
@@ -53,7 +51,7 @@ Flagging and removal of invalid or non-interpretable information, followed by da
 -   `bdc_coordinates_country_inconsistent()` Identification of coordinates in other countries or far from a specified distance from the coast of a reference country (i.e., in the ocean)
 -   `bdc_coordinates_from_locality()` Identification of records lacking coordinates but with a detailed description of the locality associate with records from which coordinates can be derived
 
-### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html)
+#### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html)
 
 Cleaning, parsing, and standardization of scientific names against multiple taxonomic references.
 
@@ -61,14 +59,14 @@ Cleaning, parsing, and standardization of scientific names against multiple taxo
 -   `bdc_query_names_taxadb()` Standardization of scientific names by correcting spelling errors and converting nomenclatural synonyms to currently accepted names.
 -   `bdc_filter_out_names()` This tool is used to filter out records according to their taxonomic status present in the column "notes". For example, to filter only valid accepted names categorized as "accepted"
 
-### 4. [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html)
+#### 4. [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html)
 
 Flagging of erroneous, suspicious, and low-precision geographic coordinates.
 
 -   `bdc_coordinates_precision()` Identification of records with a coordinate precision below a specified number of decimal places
 -   `clean_coordinates()` (From CoordinateCleaner package and part of the data-cleaning workflow). Identification of potentially problematic geographic coordinates based on geographic gazetteers and metadata. Include tests for flagging records: around country capitals or country or province centroids, duplicated, with equal coordinates, around biodiversity institutions, within urban areas, plain zeros in the coordinates, and suspect geographic outliers
 
-### 5. [**Time**](https://brunobrr.github.io/bdc/articles/04_time.html)
+#### 5. [**Time**](https://brunobrr.github.io/bdc/articles/04_time.html)
 
 Flagging and, whenever possible, correction of inconsistent collection date.
 
@@ -76,7 +74,7 @@ Flagging and, whenever possible, correction of inconsistent collection date.
 -   `bdc_year_outOfRange()` Identification of records with illegitimate or potentially imprecise collecting year. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900)
 -   `bdc_year_from_eventDate()` This function extracts four-digit year from unambiguously interpretable collecting dates
 
-### 1. [**Other functions**] (https://brunobrr.github.io/bdc/reference/index.html)
+### 1. [**Other functions**](https://brunobrr.github.io/bdc/reference/index.html)
 
 Aim to facilitate the **documentation, visualization, and interpretation** of results of data quality tests the package contains functions for documenting the results of the data-cleaning tests, including functions for saving i) records needing further inspection, ii) databases containing the results of each step, iii) figures, and iv) data-quality reports.
 
