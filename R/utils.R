@@ -15,3 +15,15 @@ check_require_github <- function(pkg) {
     require(pkg, character.only = TRUE)
   }
 }
+
+has_table  <- function (table = NULL, db = td_connect()) {
+    if (is.null(db))
+        return(FALSE)
+    else if (table %in% DBI::dbListTables(db))
+        return(TRUE)
+    else FALSE
+}
+
+bdc_taxadb_dir  <- function () {
+    Sys.getenv("TAXADB_HOME", rappdirs::user_data_dir("taxadb"))
+}

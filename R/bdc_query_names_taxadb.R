@@ -245,7 +245,7 @@ bdc_query_names_taxadb <-
 
     db_name <- paste0(db_version, "_", "dwc", "_", db)
 
-    if (!taxadb:::has_table(db_name, taxadb::td_connect(taxadb:::taxadb_dir()))) {
+    if (!has_table(db_name, taxadb::td_connect(bdc_taxadb_dir()))) {
       taxadb::td_create(provider = db, schema = "dwc", overwrite = FALSE)
     }
 
