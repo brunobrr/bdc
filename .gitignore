@@ -15,3 +15,5 @@ renv/settings.dcf
 
 README.html
 tests/testthat/Rplots.pdf
+/doc/
+/Meta/

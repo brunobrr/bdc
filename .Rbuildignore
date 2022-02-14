@@ -17,3 +17,5 @@ docs
 Output
 pkgdown
 ^codecov\.yml$
+^doc$
+^Meta$
