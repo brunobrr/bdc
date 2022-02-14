@@ -5,7 +5,7 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Space}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r include = FALSE}
@@ -20,6 +20,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r, echo = FALSE, eval = TRUE, include = FALSE, messages = FALSE}
+library(bdc)
+```
+
 ## Introduction
 
 We used one test of the *bdc* and other tests of the *R* package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to capitals, provinces, and country centroids, coordinates in urban areas, around biodiversity institutions, or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
@@ -28,7 +32,7 @@ Note that we do not use the "seas" test to remove records in the ocean because s
 
 <br/>
 
-<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
+**IMPORTANT**:
 
 The results of each test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and **the latter potentially problematic or suspect records**.
 
@@ -36,7 +40,7 @@ The results of each test used to flag data quality are appended in separate fiel
 
 ## Installation
 
-Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
+Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
 <br/>
 
@@ -50,7 +54,7 @@ database <-
 ```
 
 ```{r echo=FALSE, eval=TRUE}
-database <- 
+database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/02_taxonomy_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
@@ -123,15 +127,16 @@ check_space <- bdc_summary_col(data = check_space)
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-DT::datatable(
-  check_space, class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 3,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+# DT::datatable(
+#   check_space, class = 'stripe', extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 3,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
+knitr::kable(check_space)
 ```
 
 <br/>
@@ -147,7 +152,7 @@ check_space %>%
     data = .,
     lon = "decimalLongitude",
     lat = "decimalLatitude",
-    col_to_map = ".summary", 
+    col_to_map = ".summary",
     size = 0.9
   )
 ```

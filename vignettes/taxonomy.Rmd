@@ -5,7 +5,7 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Taxonomy}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r include = FALSE}
@@ -18,6 +18,10 @@ knitr::opts_chunk$set(
   warning = FALSE,
   eval = T
 )
+```
+
+```{r, echo = FALSE, eval = TRUE, include = FALSE, messages = FALSE}
+library(bdc)
 ```
 
 ## Introduction
@@ -53,13 +57,13 @@ Note that some taxonomic databases may be *momentarily unavailable* in taxadb. C
 
 ## Installation
 
-Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
+Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
 <br/>
 
 ## Reading the database
 
-Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) module of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
+Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) module of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)).
 
 ```{r echo=TRUE,eval=FALSE}
 database <-
@@ -67,7 +71,7 @@ database <-
 ```
 
 ```{r echo=FALSE, eval=TRUE}
-database <- 
+database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/01_prefilter_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
@@ -95,17 +99,18 @@ parse_names <-
 An example of *bdc_clean_names* output.
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-DT::datatable(
-  parse_names[60:75,],
-  class = 'stripe',
-  extensions = 'FixedColumns',
-  options = list(
-    pageLength = 5,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+# DT::datatable(
+#   parse_names[60:75,],
+#   class = 'stripe',
+#   extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 5,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
+knitr::kable(parse_names)
 ```
 
 <br/>
@@ -114,7 +119,7 @@ DT::datatable(
 
 ```{r}
 parse_names <-
-  parse_names %>% 
+  parse_names %>%
   dplyr::select(.uncer_terms, names_clean)
 
 database <- dplyr::bind_cols(database, parse_names)
@@ -160,6 +165,7 @@ query_names <-
 #     fixedColumns = list(leftColumns = 2)
 #   )
 # )
+knitr::kable(query_names)
 ```
 
 <br/>

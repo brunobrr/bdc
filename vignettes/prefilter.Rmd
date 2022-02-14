@@ -1,13 +1,11 @@
 ---
 title: "Pre-filter"
 date: "`r Sys.Date()`"
-output: 
-  rmarkdown::html_vignette:
-  self_contained: yes
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Pre-filter}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r include = FALSE}
@@ -22,6 +20,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r, echo = FALSE, eval = TRUE, include = FALSE, messages = FALSE}
+library(bdc)
+if (!require("remotes")) install.packages("remotes")
+if (!require("rnaturalearthdata")) remotes::install_github("ropensci/rnaturalearthdata")
+if (!require("rnaturalearthhires")) remotes::install_github("ropensci/rnaturalearthhires")
+```
+
 ## Introduction
 
 Large and heterogeneous datasets may contain thousands of records missing spatial or taxonomic information (partially or entirely) as well as several records outside a region of interest or from doubtful sources. Such lower quality data are not fit for use in many research applications without prior amendments. The 'Pre-filter' module contains a series of **tests to detect, remove, and, whenever, possible, correct such erroneous or suspect records**.
@@ -30,7 +35,7 @@ Large and heterogeneous datasets may contain thousands of records missing spatia
 
 ## Installation
 
-Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
+Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
 <br/>
 
@@ -44,20 +49,17 @@ database <-
 ```
 
 ```{r echo=FALSE, eval=TRUE}
-database <- 
+database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
 ```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
-database %>%
-  knitr::kable()
+knitr::kable(database)
 ```
 
 <br/>
 
-<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
-
-The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.** We run bdc functions following a proposed workflow but all can be executed independently
+**NOTE**: The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.** We run bdc functions following a proposed workflow but all can be executed independently
 
 TODO: add explanation on *VALIDATION* and *ENRICHMENT*
 
@@ -102,7 +104,7 @@ check_pf <- bdc_coordinates_outOfRange(
 
 ```{r}
 # Check record sources of your dataset using:
-check_pf %>% group_by(basisOfRecord) %>% dplyr::summarise(n = n())
+check_pf %>% dplyr::group_by(basisOfRecord) %>% dplyr::summarise(n = dplyr::n())
 
 check_pf <- bdc_basisOfRecords_notStandard(
   data = check_pf,
@@ -191,15 +193,15 @@ check_pf <- bdc_summary_col(data = check_pf)
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
-DT::datatable(
-  check_pf, class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 3,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+# DT::datatable(
+#   check_pf, class = 'stripe', extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 3,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
 ```
 
 <br/>
@@ -207,11 +209,11 @@ DT::datatable(
 Creating a report summarizing the results of all tests.
 
 ```{r}
-report <-
-  bdc_create_report(data = check_pf,
-                    database_id = "database_id",
-                    workflow_step = "prefilter")
-report
+# report <-
+#   bdc_create_report(data = check_pf,
+#                     database_id = "database_id",
+#                     workflow_step = "prefilter")
+# report
 
 ```
 

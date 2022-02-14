@@ -5,7 +5,7 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Time}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r include = FALSE}
@@ -18,6 +18,10 @@ knitr::opts_chunk$set(
   warning = FALSE,
   eval = T
 )
+```
+
+```{r, echo = FALSE, eval = TRUE, include = FALSE, messages = FALSE}
+library(bdc)
 ```
 
 ## Introduction
@@ -42,7 +46,7 @@ database <-
 ```
 
 ```{r echo=FALSE, eval=TRUE}
-database <- 
+database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/03_space_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
@@ -60,7 +64,7 @@ database <-
 
 <br/>
 
-<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
+**IMPORTANT**:
 
 The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
 
@@ -108,12 +112,12 @@ check_time <- bdc_summary_col(data = check_time)
 Creating a report summarizing the results of all tests of the `bdc` package.
 
 ```{r}
-report <-
-  bdc_create_report(data = check_time,
-                    database_id = "database_id",
-                    workflow_step = "time")
+# report <-
+#   bdc_create_report(data = check_time,
+#                     database_id = "database_id",
+#                     workflow_step = "time")
 
-report
+# report
 ```
 
 <br/>
@@ -174,13 +178,14 @@ output %>%
 <br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-DT::datatable(
-  output, class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 3,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
-  )
-)
+# DT::datatable(
+#   output, class = 'stripe', extensions = 'FixedColumns',
+#   options = list(
+#     pageLength = 3,
+#     dom = 'Bfrtip',
+#     scrollX = TRUE,
+#     fixedColumns = list(leftColumns = 2)
+#   )
+# )
+knitr::kable(output)
 ```
