@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
       </span>
     </div>
 
@@ -46,7 +48,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -66,7 +68,7 @@
       <a href="../articles/integrate_datasets.html">Standardization and integration of different datasets</a>
     </li>
     <li>
-      <a href="../articles/prefilter.html">Prefilter</a>
+      <a href="../articles/prefilter.html">Pre-filter</a>
     </li>
     <li>
       <a href="../articles/taxonomy.html">Taxonomy</a>
@@ -90,18 +92,12 @@
 
       
 
-      </header><script src="integrate_datasets_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="integrate_datasets_files/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="integrate_datasets_files/jquery-1.12.4/jquery.min.js"></script><link href="integrate_datasets_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="integrate_datasets_files/datatables-binding-0.15/datatables.js"></script><link href="integrate_datasets_files/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="integrate_datasets_files/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="integrate_datasets_files/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="integrate_datasets_files/dt-ext-fixedcolumns-1.10.20/css/fixedColumns.dataTables.min.css" rel="stylesheet">
-<script src="integrate_datasets_files/dt-ext-fixedcolumns-1.10.20/js/dataTables.fixedColumns.min.js"></script><link href="integrate_datasets_files/dt-ext-buttons-1.10.20/css/buttons.dataTables.min.css" rel="stylesheet">
-<script src="integrate_datasets_files/dt-ext-buttons-1.10.20/js/dataTables.buttons.min.js"></script><script src="integrate_datasets_files/dt-ext-buttons-1.10.20/js/buttons.flash.min.js"></script><script src="integrate_datasets_files/dt-ext-buttons-1.10.20/js/buttons.html5.min.js"></script><script src="integrate_datasets_files/dt-ext-buttons-1.10.20/js/buttons.colVis.min.js"></script><script src="integrate_datasets_files/dt-ext-buttons-1.10.20/js/buttons.print.min.js"></script><link href="integrate_datasets_files/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet">
-<script src="integrate_datasets_files/crosstalk-1.1.0.1/js/crosstalk.min.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Standardization and integration of different datasets</h1>
             
-            <h4 class="date">2021-04-20</h4>
+            <h4 data-toc-skip class="date">2022-02-14</h4>
       
       
       <div class="hidden name"><code>integrate_datasets.Rmd</code></div>
@@ -110,73 +106,3497 @@
 
     
     
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The first step of the BDC workflow handles the harmonization of heterogeneous datasets in a standard format in a simple and efficient way. How is this accomplished? Basically, by replacing in the headers of original datasets by standardized terms. To do so, you have to fill-out a <strong>configuration table</strong> to indicate which field names (i.e., column headers) of each original dataset match a list of <strong>Darwin Core standard terms</strong>.</p>
-<p>Once standardized, datasets are then integrated into a standardized database having a minimum set of terms required for sharing biodiversity data and metadata across a wide variety of biodiversity applications (<a href="https://dwc.tdwg.org/terms/">Simple Darwin Core standards</a>).</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>The first step of the <em>bdc</em> package handles the harmonization of heterogeneous datasets in a standard format simply and efficiently. How is this accomplished? Basically, by replacing the headers of original datasets with standardized terms. To do so, you have to fill out a <strong>configuration table</strong> to indicate which field names (i.e., column headers) of each original dataset match a list of <strong>Darwin Core standard terms</strong>.</p>
+<p>Once standardized, datasets are then integrated into a standardized database having a minimum set of terms required for sharing biodiversity data and metadata across a wide variety of biodiversity applications (<a href="https://dwc.tdwg.org/terms/" class="external-link">Simple Darwin Core standards</a>).</p>
 <p><br></p>
-<p><img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"><strong>Important</strong>:</p>
+<p><strong>IMPORTANT</strong>:</p>
 <ul>
 <li>Original datasets must be formatted in comma-separated format (<strong>.csv</strong>);</li>
-<li>When filling out the configuration table, please provide the <strong>exact</strong> name of a column of original dataset and the the <strong>full path</strong> of each original dataset;</li>
-<li>Names of original datasets without a correspond DarwinCore term must be fill out as <strong>NA</strong> (not available);</li>
-<li>The workflow is adjustable so you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.</li>
+<li>When filling out the configuration table, please provide the <strong>exact</strong> name of a column of the original dataset and the <strong>full path</strong> of each original dataset;</li>
+<li>Names of original datasets without a corresponding DarwinCore term must be filled as <strong>NA</strong> (not available);</li>
+<li>The function is <strong>adjustable</strong> so that you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.</li>
 </ul>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version of ‘BDC’ from <a href="https://github.com/brunobrr/bdc">github</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
-<p>First, let’s create folders to save the results.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">bdc</span><span class="fu">::</span><span class="fu"><a href="../reference/bdc_create_dir.html">bdc_create_dir</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Check <a href="https://brunobrr.github.io/bdc/"><strong>here</strong></a>how to install the bdc package</p>
+<p><br></p>
 </div>
-<div id="read-databasets" class="section level2">
-<h2 class="hasAnchor">
-<a href="#read-databasets" class="anchor"></a>Read databasets</h2>
-<p>Read an example of the <em>configuration table</em>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">metadata</span> <span class="op">&lt;-</span>
-  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"extdata"</span>, <span class="st">"Config"</span>, <span class="st">"DatabaseInfo.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><br><br></p>
-<div id="htmlwidget-7409e1712fffac9b4bc1" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7409e1712fffac9b4bc1">{"x":{"filter":"none","extensions":["FixedColumns","Buttons"],"data":[["1","2","3","4","5","6","7","8","9"],["AT_EPIPHYTES","BIEN","DRYFLOR","GBIF","ICMBIO","IDIGBIO","NEOTROPTREE","SIBBR","SPECIESLINK"],["C:/Users/Bruno Ribeiro/Documents/bdc/vignettes/input_files/at_epiphytes.csv","C:/Users/Bruno Ribeiro/Documents/bdc/vignettes/input_files/bien.csv","C:/Users/Bruno Ribeiro/Documents/bdc/vignettes/input_files/dryflor.csv","C:/Users/Bruno Ribeiro/Documents/bdc/vignettes/input_files/gbif.csv","C:/Users/Bruno Ribeiro/Documents/bdc/vignettes/input_files/icmbio.csv","C:/Users/Bruno Ribeiro/Documents/bdc/vignettes/input_files/idigbio.csv","C:/Users/Bruno Ribeiro/Documents/bdc/vignettes/input_files/neotroptree.csv","C:/Users/Bruno Ribeiro/Documents/bdc/vignettes/input_files/sibbr.csv","C:/Users/Bruno Ribeiro/Documents/bdc/vignettes/input_files/specieslink.csv"],["EPIPHYTE_SPECIES","scrubbed_species_binomial","Accepted name","scientificName","Nome cientifico na base de dados","dwc:scientificName","species_name","Scientific Name","scientificname"],["LATITUDE_Y","latitude","Latitude","decimalLatitude","Latitude","dwc:decimalLatitude","lat","Latitude","latitude"],["LONGITUDE_X","longitude","Longitude","decimalLongitude","Longitude","dwc:decimalLongitude","long","Longitude","longitude"],["RECORD_ID","datasource_id",null,"gbifID","Numero do registro no portal","coreid","original_site_code","Record ID","catalognumber"],[null,null,null,"basisOfRecord",null,"dwc:basisOfRecord",null,"Basis Of Record","basisofrecord"],["YEAR_FINISH","date_collected",null,"eventDate","Data do registro","dwc:eventDate",null,"Year","yearcollected"],["COUNTRY",null,"Country","countryCode","Pais","dwc:country","country","Country - parsed","country"],["STATE",null,null,"stateProvince","Estado/Provincia","dwc:stateProvince",null,"State - parsed","stateprovince"],["MUNICIPALITY",null,null,null,"Municipio","dwc:county",null,null,"county"],["REGIONAL_NAME_OF_STUDY_SITE",null,"locality/site","locality","Localidade","dwc:locality","sitename","Locality","locality"],[null,null,null,"identifiedBy",null,"dwc:identifiedBy",null,"identified _ by","identifiedby"],[null,null,null,"coordinateUncertaintyInMeters",null,"dwc:coordinateUncertaintyInMeters",null,"Coordinate Uncertainty in Metres",null],["PRECISION",null,null,"coordinatePrecision",null,"dwc:coordinatePrecision",null,null,"coordinateprecision"],[null,null,null,"recordedBy",null,"dwc:recordedBy",null,null,"collector"]],"container":"<table class=\"stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>datasetName<\/th>\n      <th>fileName<\/th>\n      <th>scientificName<\/th>\n      <th>decimalLatitude<\/th>\n      <th>decimalLongitude<\/th>\n      <th>occurrenceID<\/th>\n      <th>basisOfRecord<\/th>\n      <th>verbatimEventDate<\/th>\n      <th>country<\/th>\n      <th>stateProvince<\/th>\n      <th>county<\/th>\n      <th>locality<\/th>\n      <th>identifiedBy<\/th>\n      <th>coordinateUncertaintyInMeters<\/th>\n      <th>coordinatePrecision<\/th>\n      <th>recordedBy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","scrollX":true,"pageLength":5,"buttons":["copy","csv","print"],"fixedColumns":{"leftColumns":2},"editable":"cell","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><br></p>
-<p>The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the workflow: i) <em>required</em>, i.e., the minimum information necessary to run the workflow, ii) <em>recommended</em>, i.e., not mandatory but having important details on species records, and iii) <em>additional</em>, i.e., information potentially useful for detailed data analyses.</p>
+<div class="section level2">
+<h2 id="read-the-configuration-table">Read the configuration table<a class="anchor" aria-label="anchor" href="#read-the-configuration-table"></a>
+</h2>
+<p>Read an example of the <strong>configuration table</strong>. You can download the table by clicking on the “CSV” button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 180 records compiled from nine different sources (see below).</p>
+<p><br></p>
+<p><strong>NOTE:</strong> Remember to change the column “fileName” for the path containg the input files.</p>
+<p><br></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"DatabaseInfo.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="3%">
+<col width="23%">
+<col width="7%">
+<col width="4%">
+<col width="5%">
+<col width="7%">
+<col width="4%">
+<col width="4%">
+<col width="4%">
+<col width="4%">
+<col width="3%">
+<col width="6%">
+<col width="4%">
+<col width="8%">
+<col width="5%">
+<col width="3%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">datasetName</th>
+<th align="left">fileName</th>
+<th align="left">scientificName</th>
+<th align="left">decimalLatitude</th>
+<th align="left">decimalLongitude</th>
+<th align="left">occurrenceID</th>
+<th align="left">basisOfRecord</th>
+<th align="left">verbatimEventDate</th>
+<th align="left">country</th>
+<th align="left">stateProvince</th>
+<th align="left">county</th>
+<th align="left">locality</th>
+<th align="left">identifiedBy</th>
+<th align="left">coordinateUncertaintyInMeters</th>
+<th align="left">coordinatePrecision</th>
+<th align="left">recordedBy</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES</td>
+<td align="left"><a href="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/at_epiphytes.csv" class="external-link uri">https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/at_epiphytes.csv</a></td>
+<td align="left">EPIPHYTE_SPECIES</td>
+<td align="left">LATITUDE_Y</td>
+<td align="left">LONGITUDE_X</td>
+<td align="left">RECORD_ID</td>
+<td align="left">NA</td>
+<td align="left">YEAR_FINISH</td>
+<td align="left">COUNTRY</td>
+<td align="left">STATE</td>
+<td align="left">MUNICIPALITY</td>
+<td align="left">REGIONAL_NAME_OF_STUDY_SITE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PRECISION</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN</td>
+<td align="left"><a href="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/bien.csv" class="external-link uri">https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/bien.csv</a></td>
+<td align="left">scrubbed_species_binomial</td>
+<td align="left">latitude</td>
+<td align="left">longitude</td>
+<td align="left">datasource_id</td>
+<td align="left">NA</td>
+<td align="left">date_collected</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR</td>
+<td align="left"><a href="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/dryflor.csv" class="external-link uri">https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/dryflor.csv</a></td>
+<td align="left">Accepted name</td>
+<td align="left">Latitude</td>
+<td align="left">Longitude</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Country</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">locality/site</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF</td>
+<td align="left"><a href="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/gbif.csv" class="external-link uri">https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/gbif.csv</a></td>
+<td align="left">scientificName</td>
+<td align="left">decimalLatitude</td>
+<td align="left">decimalLongitude</td>
+<td align="left">gbifID</td>
+<td align="left">basisOfRecord</td>
+<td align="left">eventDate</td>
+<td align="left">NA</td>
+<td align="left">stateProvince</td>
+<td align="left">NA</td>
+<td align="left">locality</td>
+<td align="left">identifiedBy</td>
+<td align="left">coordinateUncertaintyInMeters</td>
+<td align="left">coordinatePrecision</td>
+<td align="left">recordedBy</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO</td>
+<td align="left"><a href="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/icmbio.csv" class="external-link uri">https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/icmbio.csv</a></td>
+<td align="left">Nome cientifico na base de dados</td>
+<td align="left">Latitude</td>
+<td align="left">Longitude</td>
+<td align="left">Numero do registro no portal</td>
+<td align="left">NA</td>
+<td align="left">Data do registro</td>
+<td align="left">Pais</td>
+<td align="left">Estado/Provincia</td>
+<td align="left">Municipio</td>
+<td align="left">Localidade</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO</td>
+<td align="left"><a href="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/idigbio.csv" class="external-link uri">https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/idigbio.csv</a></td>
+<td align="left">dwc:scientificName</td>
+<td align="left">dwc:decimalLatitude</td>
+<td align="left">dwc:decimalLongitude</td>
+<td align="left">coreid</td>
+<td align="left">dwc:basisOfRecord</td>
+<td align="left">dwc:eventDate</td>
+<td align="left">dwc:country</td>
+<td align="left">dwc:stateProvince</td>
+<td align="left">dwc:county</td>
+<td align="left">dwc:locality</td>
+<td align="left">dwc:identifiedBy</td>
+<td align="left">dwc:coordinateUncertaintyInMeters</td>
+<td align="left">dwc:coordinatePrecision</td>
+<td align="left">dwc:recordedBy</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE</td>
+<td align="left"><a href="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/neotroptree.csv" class="external-link uri">https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/neotroptree.csv</a></td>
+<td align="left">species_name</td>
+<td align="left">lat</td>
+<td align="left">long</td>
+<td align="left">original_site_code</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">country</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">sitename</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR</td>
+<td align="left"><a href="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/sibbr.csv" class="external-link uri">https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/sibbr.csv</a></td>
+<td align="left">Scientific Name</td>
+<td align="left">Latitude</td>
+<td align="left">Longitude</td>
+<td align="left">Record ID</td>
+<td align="left">Basis Of Record</td>
+<td align="left">Year</td>
+<td align="left">Country - parsed</td>
+<td align="left">State - parsed</td>
+<td align="left">NA</td>
+<td align="left">Locality</td>
+<td align="left">identified _ by</td>
+<td align="left">Coordinate Uncertainty in Metres</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK</td>
+<td align="left"><a href="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/specieslink.csv" class="external-link uri">https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/specieslink.csv</a></td>
+<td align="left">scientificname</td>
+<td align="left">latitude</td>
+<td align="left">longitude</td>
+<td align="left">catalognumber</td>
+<td align="left">basisofrecord</td>
+<td align="left">yearcollected</td>
+<td align="left">country</td>
+<td align="left">stateprovince</td>
+<td align="left">county</td>
+<td align="left">locality</td>
+<td align="left">identifiedby</td>
+<td align="left">NA</td>
+<td align="left">coordinateprecision</td>
+<td align="left">collector</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>The standardized database embodies information on species taxonomy, geolocation, date of collection, and other relevant context information. Each field is classified in three categories according to its importance to run the function: i) <strong>required</strong>, i.e., the minimum information necessary to run the function, ii) <strong>recommended</strong>, i.e., not mandatory but having important details on species records, and iii) <strong>additional</strong>, i.e., information potentially useful for detailed data analyses.</p>
 <p>Below are listed the specifications of each field of the configuration table:</p>
 <ul>
 <li>
 <strong>Field</strong>: Name of the fields in <em>DatabaseInfo.csv</em> to be filled in.</li>
 <li>
-<strong>Category</strong>: Classification of each field in <em>DatabaseInfo.csv</em>. <em>required (RQ)</em>, i.e., the minimum information necessary to run the workflow, ii) <em>recommended (RE)</em>, i.e., not mandatory but having important details on species records, and iii) <em>additional (AD)</em>, i.e., information potentially useful for detailed data analyses. As a general guidance, be careful to include all <em>required</em> fields and supply as many recommended and additional fields as possible.</li>
+<strong>Category</strong>: Classification of each field in <em>DatabaseInfo.csv</em>. <em>required (RQ)</em>, i.e., the minimum information necessary to run the function, ii) <em>recommended (RE)</em>, i.e., not mandatory but having important details on species records, and iii) <em>additional (AD)</em>, i.e., information potentially useful for detailed data analyses. As general guidance, be careful to include all <em>required</em> fields and supply as many recommended and additional fields as possible.</li>
 <li>
-<strong>Description</strong>: Description about the content of the specified field in the original database.</li>
+<strong>Description</strong>: Description of the content of the specified field in the original database.</li>
 <li>
 <strong>Type</strong>: Type of content data on the specified field in the original database.</li>
 <li>
 <strong>Example</strong>: An example of a single content on the specified field in the original database.</li>
 </ul>
 <p><br><br></p>
-<div id="htmlwidget-47ab1c55568b2fddaf79" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-47ab1c55568b2fddaf79">{"x":{"filter":"none","extensions":["FixedColumns","Buttons"],"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],["datasetName","fileName","scientificName","decimalLatitude","decimalLongitude","occurrenceID","basisOfRecord","verbatimEventDate","country","stateProvince","county","locality","identifiedBy","coordinateUncertaintyInMeters","coordinatePrecision","recordedBy"],["RQ","RQ","RQ","RQ","RQ","RE","RE","RE","RE","RE","RE","RE","AD","AD","AD","AD"],["A short name identifying the dataset","The path containing the dataset informed in databaseName","Name of the column containing scientific names with or without authorship information","Name of the column containing information on geographic latitude in decimal degrees","Name of the column containing information on geographic longitude in decimal degrees","Name of the column presenting the unique identifiers in the original databases. If absent, NA","Name of the column in the original database containing the specific nature of the data record","The name of the column containing information on verbatim date-time. Information only on collecting year can be provided. Recommended best practice is to use an encoding scheme, such as ISO 8601-1:201","The name of the column containing information on the country or major administrative unit in which the data was recorded","Name of the column presenting the name of the next smaller administrative region than country (state, province) where taxa were sampled or observed","Name of the column containing the full, unabbreviated name of the next smaller administrative region than stateProvince (county, shire, department, etc.) where taxon was sampled or observed","Name of the column presenting the specific description of the place where taxon was sampled or observed","Name of the column presenting the list (concatenated and separated) of names of people, groups, or organizations who assigned the taxa to the subject","Name of the presenting the horizontal distance (in meters) from the given decimalLatitude and decimalLongitude","Name of the containing the decimal representation of the precision of the coordinates given in the decimalLatitude and decimalLongitude","Name of the column presenting the list (concatenated and separated) of names of people, groups, or organizations responsible for recording the original Occurrence"],["Character","Character","Character","Numeric","Numeric","Numeric","Character","date or numeric","Character","Character","Character","Character","Character","Numeric","Numeric","Character"],["GBIF","C:/Users/Geizi/Projects/Flora/Input_files/GBIF.csv","Myrcia acuminata","-6.370833","-3255","1087566037","PreservedSpecimenHumanObservation","1970; 2018-08-29T15:19 (3:19pm local time on 29 August 2018)","Brazil","Rio de Janeiro","Goiania","Serra dos Pirineus","M. Sobral","10","0.0001","Cervi, A.C"]],"container":"<table class=\"stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Field<\/th>\n      <th>Category<\/th>\n      <th>Description of DarwinCore terms (if existing)<\/th>\n      <th>Type<\/th>\n      <th>Example of data<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","scrollX":true,"pageLength":5,"buttons":["copy","csv","print"],"fixedColumns":{"leftColumns":2},"editable":"cell","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<table class="table">
+<colgroup>
+<col width="9%">
+<col width="2%">
+<col width="63%">
+<col width="5%">
+<col width="19%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Field</th>
+<th align="left">Category</th>
+<th align="left">Description of DarwinCore terms (if existing)</th>
+<th align="left">Type</th>
+<th align="left">Example of data</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">datasetName</td>
+<td align="left">RQ</td>
+<td align="left">A short name identifying the dataset</td>
+<td align="left">Character</td>
+<td align="left">GBIF</td>
+</tr>
+<tr class="even">
+<td align="left">fileName</td>
+<td align="left">RQ</td>
+<td align="left">The path containing the dataset informed in databaseName</td>
+<td align="left">Character</td>
+<td align="left">C:/Users/Geizi/Projects/Flora/Input_files/GBIF.csv</td>
+</tr>
+<tr class="odd">
+<td align="left">scientificName</td>
+<td align="left">RQ</td>
+<td align="left">Name of the column containing scientific names with or without authorship information</td>
+<td align="left">Character</td>
+<td align="left">Myrcia acuminata</td>
+</tr>
+<tr class="even">
+<td align="left">decimalLatitude</td>
+<td align="left">RQ</td>
+<td align="left">Name of the column containing information on geographic latitude in decimal degrees</td>
+<td align="left">Numeric</td>
+<td align="left">-6.370833</td>
+</tr>
+<tr class="odd">
+<td align="left">decimalLongitude</td>
+<td align="left">RQ</td>
+<td align="left">Name of the column containing information on geographic longitude in decimal degrees</td>
+<td align="left">Numeric</td>
+<td align="left">-3255</td>
+</tr>
+<tr class="even">
+<td align="left">occurrenceID</td>
+<td align="left">RE</td>
+<td align="left">Name of the column presenting the unique identifiers in the original databases. If absent, NA</td>
+<td align="left">Numeric</td>
+<td align="left">1087566037</td>
+</tr>
+<tr class="odd">
+<td align="left">basisOfRecord</td>
+<td align="left">RE</td>
+<td align="left">Name of the column in the original database containing the specific nature of the data record</td>
+<td align="left">Character</td>
+<td align="left">PreservedSpecimenHumanObservation</td>
+</tr>
+<tr class="even">
+<td align="left">verbatimEventDate</td>
+<td align="left">RE</td>
+<td align="left">The name of the column containing information on verbatim date-time. Information only on collecting year can be provided. Recommended best practice is to use an encoding scheme, such as ISO 8601-1:201</td>
+<td align="left">date or numeric</td>
+<td align="left">1970; 2018-08-29T15:19 (3:19pm local time on 29 August 2018)</td>
+</tr>
+<tr class="odd">
+<td align="left">country</td>
+<td align="left">RE</td>
+<td align="left">The name of the column containing information on the country or major administrative unit in which the data was recorded</td>
+<td align="left">Character</td>
+<td align="left">Brazil</td>
+</tr>
+<tr class="even">
+<td align="left">stateProvince</td>
+<td align="left">RE</td>
+<td align="left">Name of the column presenting the name of the next smaller administrative region than country (state, province) where taxa were sampled or observed</td>
+<td align="left">Character</td>
+<td align="left">Rio de Janeiro</td>
+</tr>
+<tr class="odd">
+<td align="left">county</td>
+<td align="left">RE</td>
+<td align="left">Name of the column containing the full, unabbreviated name of the next smaller administrative region than stateProvince (county, shire, department, etc.) where taxon was sampled or observed</td>
+<td align="left">Character</td>
+<td align="left">Goiania</td>
+</tr>
+<tr class="even">
+<td align="left">locality</td>
+<td align="left">RE</td>
+<td align="left">Name of the column presenting the specific description of the place where taxon was sampled or observed</td>
+<td align="left">Character</td>
+<td align="left">Serra dos Pirineus</td>
+</tr>
+<tr class="odd">
+<td align="left">identifiedBy</td>
+<td align="left">AD</td>
+<td align="left">Name of the column presenting the list (concatenated and separated) of names of people, groups, or organizations who assigned the taxa to the subject</td>
+<td align="left">Character</td>
+<td align="left">M. Sobral</td>
+</tr>
+<tr class="even">
+<td align="left">coordinateUncertaintyInMeters</td>
+<td align="left">AD</td>
+<td align="left">Name of the presenting the horizontal distance (in meters) from the given decimalLatitude and decimalLongitude</td>
+<td align="left">Numeric</td>
+<td align="left">10</td>
+</tr>
+<tr class="odd">
+<td align="left">coordinatePrecision</td>
+<td align="left">AD</td>
+<td align="left">Name of the containing the decimal representation of the precision of the coordinates given in the decimalLatitude and decimalLongitude</td>
+<td align="left">Numeric</td>
+<td align="left">0.0001</td>
+</tr>
+<tr class="even">
+<td align="left">recordedBy</td>
+<td align="left">AD</td>
+<td align="left">Name of the column presenting the list (concatenated and separated) of names of people, groups, or organizations responsible for recording the original Occurrence</td>
+<td align="left">Character</td>
+<td align="left">Cervi, A.C</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="standardization-and-integration-of-datasets" class="section level2">
-<h2 class="hasAnchor">
-<a href="#standardization-and-integration-of-datasets" class="anchor"></a>Standardization and integration of datasets</h2>
-<p>Note that the standardized database integrating all dataset are saved in the “Output/Intermediate” folder as <em>“00_merged_database.qs”</em>. The database is saved with a “qs” extension, a format useful for quickly saving and reading large databases. This files can be read using the function “qread” from the “qs” package (see below).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/bdc_standardize_datasets.html">bdc_standardize_datasets</a></span><span class="op">(</span>metadata <span class="op">=</span> <span class="va">metadata</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="section level2">
+<h2 id="standardization-and-integration-of-datasets">Standardization and integration of datasets<a class="anchor" aria-label="anchor" href="#standardization-and-integration-of-datasets"></a>
+</h2>
+<p>Note that the standardized database integrating all dataset is saved in the folder <strong>“Output/Intermediate” as “00_merged_database”</strong>. The database is saved with a <strong>“csv”</strong> or <strong>“qs”</strong> extension, being “qs” a helpful format for quickly saving and reading large databases. “qs” files can be read using the function “qread” from the “qs” package</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/bdc_standardize_datasets.html">bdc_standardize_datasets</a></span><span class="op">(</span>metadata <span class="op">=</span> <span class="va">metadata</span>, format <span class="op">=</span> <span class="st">"csv"</span>, overwrite <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">database</span> <span class="op">&lt;-</span>
-  <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"00_merged_database.qs"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html">qread</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>An example of a standardized database containing the required field to run the BDC workflow.</p>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"00_merged_database.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><br></p>
-<div id="htmlwidget-c0927b8b6e47218414c2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c0927b8b6e47218414c2">{"x":{"filter":"none","extensions":["FixedColumns"],"data":[["1","2","3","4","5","6"],["AT_EPIPHYTES_1","AT_EPIPHYTES_2","AT_EPIPHYTES_3","AT_EPIPHYTES_4","AT_EPIPHYTES_5","AT_EPIPHYTES_6"],["Elaphoglossum rigidum","Gomesa longicornu","Anthurium pentaphyllum","Tillandsia loliacea","Pleopeltis hirsutissima","Aechmea distichantha"],["-15.391667","-22.142","-22.684167","-18.2880555","-28.464002","-25.598863"],["-39.565278","-44.7328","-48.475","-44.185","-50.157705","-49.519503"],["E0324","E7325","E0187","E28040","E2304","E4941"],["2010","2013","2013",null,"2014","2006"],["Brazil","Brazil","Brazil","Brazil","Brazil","Brazil"],["BAHIA","MATO GROSSO DO SUL","SAO PAULO","MATO GROSSO DO SUL","RIO GRANDE DO SUL","PARANA"],["CAMACAN","BAEPENDI","SAO MANUEL","MONJOLOS","BOM JESUS","ARAUCARIA"],["RPPN Serra Bonita","Parque Estadual da Serra do Papagaio","Margem do rio Araqua","Ca. de 5Km alem de Santo Hipolito, em direcao a Monjolos, no antigo leito da estrada de ferro. Afloramento calcareo a margem esquerda do Rio Pardo Pequeno.","Rio Pelotas","Guajuvira"],["Study site","2000","Forest fragment","Coordinates given in the herbarium record","Forest fragment","Forest fragment"],[null,null,null,null,null,null],[null,null,null,null,null,null],[null,null,null,null,null,null],[null,null,null,null,null,null]],"container":"<table class=\"stripe\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>database_id<\/th>\n      <th>scientificName<\/th>\n      <th>decimalLatitude<\/th>\n      <th>decimalLongitude<\/th>\n      <th>occurrenceID<\/th>\n      <th>verbatimEventDate<\/th>\n      <th>country<\/th>\n      <th>stateProvince<\/th>\n      <th>county<\/th>\n      <th>locality<\/th>\n      <th>coordinatePrecision<\/th>\n      <th>basisOfRecord<\/th>\n      <th>identifiedBy<\/th>\n      <th>coordinateUncertaintyInMeters<\/th>\n      <th>recordedBy<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":3,"dom":"Bfrtip","scrollX":true,"fixedColumns":{"leftColumns":2},"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}],"lengthMenu":[3,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p>An example of a standardized database containing the required field to run the <em>bdc</em> package.</p>
+<p><br></p>
+<table class="table">
+<colgroup>
+<col width="2%">
+<col width="11%">
+<col width="2%">
+<col width="2%">
+<col width="6%">
+<col width="3%">
+<col width="1%">
+<col width="3%">
+<col width="4%">
+<col width="25%">
+<col width="7%">
+<col width="3%">
+<col width="3%">
+<col width="5%">
+<col width="14%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">database_id</th>
+<th align="left">scientificName</th>
+<th align="right">decimalLatitude</th>
+<th align="right">decimalLongitude</th>
+<th align="left">occurrenceID</th>
+<th align="left">verbatimEventDate</th>
+<th align="left">country</th>
+<th align="left">stateProvince</th>
+<th align="left">county</th>
+<th align="left">locality</th>
+<th align="left">coordinatePrecision</th>
+<th align="left">basisOfRecord</th>
+<th align="left">identifiedBy</th>
+<th align="right">coordinateUncertaintyInMeters</th>
+<th align="left">recordedBy</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_1</td>
+<td align="left">Tillandsia tenuifolia</td>
+<td align="right">-25.5218630</td>
+<td align="right">-5.141667e+01</td>
+<td align="left">E8802</td>
+<td align="left">2003</td>
+<td align="left">Brazil</td>
+<td align="left">PARANA</td>
+<td align="left">GUARAPUAVA</td>
+<td align="left">Rio Sao Jeronimo</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_2</td>
+<td align="left">Peperomia obtusifolia</td>
+<td align="right">-14.6597200</td>
+<td align="right">-3.914972e+01</td>
+<td align="left">635992</td>
+<td align="left">2015</td>
+<td align="left">Brazil</td>
+<td align="left">BAHIA</td>
+<td align="left">ILHEUS</td>
+<td align="left">NA</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_3</td>
+<td align="left">Tillandsia recurvata</td>
+<td align="right">-21.7466670</td>
+<td align="right">-4.335472e+01</td>
+<td align="left">E1617</td>
+<td align="left">2016</td>
+<td align="left">Brazil</td>
+<td align="left">MATO GROSSO DO SUL</td>
+<td align="left">JUIZ DE FORA</td>
+<td align="left">Praca Mariano Procopio</td>
+<td align="left">50</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_4</td>
+<td align="left">Vriesea flammea</td>
+<td align="right">-23.3500000</td>
+<td align="right">-4.485833e+01</td>
+<td align="left">E0272</td>
+<td align="left">2011</td>
+<td align="left">Brazil</td>
+<td align="left">SAO PAULO</td>
+<td align="left">UBATUBA</td>
+<td align="left">Parque Estadual da Serra do Mar-Nucleo Picinguaba</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_5</td>
+<td align="left">Lankesterella ceracifolia</td>
+<td align="right">-28.1667000</td>
+<td align="right">-4.940000e+01</td>
+<td align="left">17541</td>
+<td align="left">2009</td>
+<td align="left">Brazil</td>
+<td align="left">SANTA CATARINA</td>
+<td align="left">ORLEANS</td>
+<td align="left">Rio Minador</td>
+<td align="left">Municipality</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_6</td>
+<td align="left">Vriesea psittacina</td>
+<td align="right">-15.1333330</td>
+<td align="right">-3.833333e+01</td>
+<td align="left">E32704</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BAHIA</td>
+<td align="left">UNA</td>
+<td align="left">Serra Javi. 9Km ao S Sao Jose -Km 550-; 5.5Km a E BR-101, p/ Faz. Cascavel.</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_7</td>
+<td align="left">Nidularium innocentii</td>
+<td align="right">-26.1833000</td>
+<td align="right">-4.903330e+01</td>
+<td align="left">20521</td>
+<td align="left">2009</td>
+<td align="left">Brazil</td>
+<td align="left">SANTA CATARINA</td>
+<td align="left">JOINVILLE</td>
+<td align="left">Serra Dona Francisca</td>
+<td align="left">Municipality</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_8</td>
+<td align="left">Acianthera serpentula</td>
+<td align="right">-25.5839000</td>
+<td align="right">-4.963560e+01</td>
+<td align="left">E23503</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">PARANA</td>
+<td align="left">BALSA NOVA</td>
+<td align="left">Base da Serra de Sao Luiz do Puruna</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_9</td>
+<td align="left">Peperomia quadrifolia</td>
+<td align="right">-26.4600000</td>
+<td align="right">-4.941000e+01</td>
+<td align="left">E18657</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">SANTA CATARINA</td>
+<td align="left">CORUPA</td>
+<td align="left">Palmeiras II</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_10</td>
+<td align="left">Peperomia circinnata</td>
+<td align="right">-23.7869000</td>
+<td align="right">-5.428360e+01</td>
+<td align="left">E16998</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">MATO GROSSO DO SUL</td>
+<td align="left">ELDORADO</td>
+<td align="left">NA</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_11</td>
+<td align="left">Microgramma squamulosa</td>
+<td align="right">-25.6662710</td>
+<td align="right">-4.926923e+01</td>
+<td align="left">E7552</td>
+<td align="left">2017</td>
+<td align="left">Brazil</td>
+<td align="left">PARANA</td>
+<td align="left">FAZENDA RIO GRANDE</td>
+<td align="left">Fazenda Experimental Gralha Azul 2</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_12</td>
+<td align="left">Vriesea gigantea</td>
+<td align="right">-29.6411000</td>
+<td align="right">-5.045250e+01</td>
+<td align="left">E0829</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">RIO GRANDE DO SUL</td>
+<td align="left">RIOZINHO</td>
+<td align="left">NA</td>
+<td align="left">Municipality</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_13</td>
+<td align="left">Aechmea leptantha</td>
+<td align="right">-8.0022000</td>
+<td align="right">-3.501830e+01</td>
+<td align="left">E1518</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">PERNAMBUCO</td>
+<td align="left">SAO LOURENCO DA MATA</td>
+<td align="left">Sao Bento</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_14</td>
+<td align="left">Vriesea tijucana</td>
+<td align="right">-15.1586340</td>
+<td align="right">-3.905715e+01</td>
+<td align="left">359</td>
+<td align="left">2000</td>
+<td align="left">Brazil</td>
+<td align="left">BAHIA</td>
+<td align="left">UNA</td>
+<td align="left">Reserva Biologica de Una</td>
+<td align="left">20</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_15</td>
+<td align="left">Rhodospatha oblongata</td>
+<td align="right">-14.4900000</td>
+<td align="right">-3.910000e+01</td>
+<td align="left">E25916</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BAHIA</td>
+<td align="left">URUCUCA</td>
+<td align="left">Mun&gt;. Urucuca, 9.4 KM. Serra do Conduru vertente E.</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_16</td>
+<td align="left">Anthurium gaudichaudianum</td>
+<td align="right">-29.3420870</td>
+<td align="right">-4.968663e+01</td>
+<td align="left">E0057</td>
+<td align="left">1992</td>
+<td align="left">Brazil</td>
+<td align="left">RIO GRANDE DO SUL</td>
+<td align="left">TORRES</td>
+<td align="left">Torres</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_17</td>
+<td align="left">Maxillaria caparaoensis</td>
+<td align="right">-20.4333000</td>
+<td align="right">-4.186830e+01</td>
+<td align="left">E11997</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">MATO GROSSO DO SUL</td>
+<td align="left">ALTO CAPARAO</td>
+<td align="left">Serra do Caparao.</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_18</td>
+<td align="left">Acianthera langeana</td>
+<td align="right">-28.4716500</td>
+<td align="right">-4.998157e+01</td>
+<td align="left">E2724</td>
+<td align="left">2014</td>
+<td align="left">Brazil</td>
+<td align="left">RIO GRANDE DO SUL</td>
+<td align="left">SAO JOSE DOS AUSENTES</td>
+<td align="left">Rio Pelotas</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_19</td>
+<td align="left">Pleopeltis monoides</td>
+<td align="right">-22.4308300</td>
+<td align="right">-4.274306e+01</td>
+<td align="left">540781</td>
+<td align="left">2010</td>
+<td align="left">Brazil</td>
+<td align="left">RIO DE JANEIRO</td>
+<td align="left">CACHOEIRAS DE MACACU</td>
+<td align="left">NA</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_20</td>
+<td align="left">Hymenophyllum fragile</td>
+<td align="right">-25.0500000</td>
+<td align="right">-4.980000e+01</td>
+<td align="left">444521</td>
+<td align="left">2003</td>
+<td align="left">Brazil</td>
+<td align="left">PARANA</td>
+<td align="left">CASTRO</td>
+<td align="left">NA</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_1</td>
+<td align="left">Solanum paniculatum</td>
+<td align="right">-7.1353060</td>
+<td align="right">-3.860147e+01</td>
+<td align="left">786</td>
+<td align="left">2010-08-25</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_2</td>
+<td align="left">Tetrapterys crispa</td>
+<td align="right">-0.9500000</td>
+<td align="right">-4.980000e+01</td>
+<td align="left">1758</td>
+<td align="left">1987-11-04</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_3</td>
+<td align="left">Clusia microstemon</td>
+<td align="right">0.2833330</td>
+<td align="right">-6.846667e+01</td>
+<td align="left">2075</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_4</td>
+<td align="left">NA</td>
+<td align="right">-9.2722220</td>
+<td align="right">-6.448278e+01</td>
+<td align="left">2756</td>
+<td align="left">2011-03-26</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_5</td>
+<td align="left">Machaerium fulvovenosum</td>
+<td align="right">-20.8488890</td>
+<td align="right">-4.111250e+01</td>
+<td align="left">1307</td>
+<td align="left">2008-10-10</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_6</td>
+<td align="left">NA</td>
+<td align="right">-20.0266670</td>
+<td align="right">-4.049222e+01</td>
+<td align="left">3510</td>
+<td align="left">2007-11-30</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_7</td>
+<td align="left">Byrsonima sericea</td>
+<td align="right">-15.1819440</td>
+<td align="right">-4.576972e+01</td>
+<td align="left">3012</td>
+<td align="left">1997-12-05</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_8</td>
+<td align="left">Euphorbia appariciana</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">971</td>
+<td align="left">1996-07-05</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_9</td>
+<td align="left">Cordia nodosa</td>
+<td align="right">-9.9500000</td>
+<td align="right">-5.710000e+01</td>
+<td align="left">2979</td>
+<td align="left">1985-09-30</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_10</td>
+<td align="left">Dorstenia turnerifolia</td>
+<td align="right">-15.1580560</td>
+<td align="right">-3.952861e+01</td>
+<td align="left">2724</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_11</td>
+<td align="left">Phoradendron crassifolium</td>
+<td align="right">-23.6202800</td>
+<td align="right">-4.540972e+01</td>
+<td align="left">104</td>
+<td align="left">1961-05-20</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_12</td>
+<td align="left">Pagamea plicata</td>
+<td align="right">-10.6052780</td>
+<td align="right">-4.628500e+01</td>
+<td align="left">3801</td>
+<td align="left">2007-09-21</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_13</td>
+<td align="left">NA</td>
+<td align="right">-11.6883330</td>
+<td align="right">-4.936111e+01</td>
+<td align="left">3527</td>
+<td align="left">2012-01-01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_14</td>
+<td align="left">Galactia striata</td>
+<td align="right">-22.4947000</td>
+<td align="right">-4.855810e+01</td>
+<td align="left">1365</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_15</td>
+<td align="left">Achyrocline alata</td>
+<td align="right">-20.4480280</td>
+<td align="right">-5.290622e+01</td>
+<td align="left">2258</td>
+<td align="left">2005-04-22</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_16</td>
+<td align="left">Coccocypselum lanceolatum</td>
+<td align="right">-10.8339000</td>
+<td align="right">-5.287310e+01</td>
+<td align="left">3567</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_17</td>
+<td align="left">NA</td>
+<td align="right">-21.8497220</td>
+<td align="right">-4.672028e+01</td>
+<td align="left">3527</td>
+<td align="left">1994-01-11</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_18</td>
+<td align="left">Oldenlandia filicaulis</td>
+<td align="right">-14.2666670</td>
+<td align="right">-4.252611e+01</td>
+<td align="left">2756</td>
+<td align="left">2006-01-10</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_19</td>
+<td align="left">Bauhinia brevipes</td>
+<td align="right">-12.8716670</td>
+<td align="right">-4.697000e+01</td>
+<td align="left">1928</td>
+<td align="left">2009-06-29</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_20</td>
+<td align="left">Paspalum guttatum</td>
+<td align="right">-11.6880560</td>
+<td align="right">-4.770250e+01</td>
+<td align="left">3120</td>
+<td align="left">2014-11-20</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_1</td>
+<td align="left">Miconia minutiflora (Bonpl.) DC.</td>
+<td align="right">-20.8449993</td>
+<td align="right">-4.491610e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Santo Antônio do Amparo, floresta semidecidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_2</td>
+<td align="left">Zanthoxylum rhoifolium Lam.</td>
+<td align="right">-8.1581001</td>
+<td align="right">-3.575390e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Bezerros, floresta semidecidual de brejo</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_3</td>
+<td align="left">Ocotea velutina (Nees) Rohwer</td>
+<td align="right">-21.1324997</td>
+<td align="right">-4.470940e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Ibituruna, floresta semidecidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_4</td>
+<td align="left">Sweetia fruticosa Spreng.</td>
+<td align="right">-18.0890007</td>
+<td align="right">-4.518300e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Três Marias, floresta decidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_5</td>
+<td align="left">Bauhinia cheilantha (Bong.) Steud.</td>
+<td align="right">-15.0031004</td>
+<td align="right">-4.390030e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Matias Cardoso, Cajueiro, caatinga arbórea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_6</td>
+<td align="left">Senna pendula (Willd.) H.S.Irwin &amp; Barneby</td>
+<td align="right">-21.5688992</td>
+<td align="right">-5.073970e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Salmourão, floresta semidecidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_7</td>
+<td align="left">Cecropia hololeuca Miq.</td>
+<td align="right">-17.8321991</td>
+<td align="right">-4.028080e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Nanuque, floresta semidecidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_8</td>
+<td align="left">Cordia glabrata (Mart.) A.DC.</td>
+<td align="right">-14.9821997</td>
+<td align="right">-4.352140e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Matias Cardoso, Gado Bravo, caatinga arbórea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_9</td>
+<td align="left">Cynophalla flexuosa (L.) J.Presl</td>
+<td align="right">-22.7831001</td>
+<td align="right">-5.353030e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Anaurilândia, floresta semidecidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_10</td>
+<td align="left">Manihot caerulescens Pohl</td>
+<td align="right">-10.1857996</td>
+<td align="right">-4.025920e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Jaguarari, floresta areno-rupícola</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_11</td>
+<td align="left">Vitex polygama Cham.</td>
+<td align="right">-14.2853003</td>
+<td align="right">-4.411110e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Juvenília, caatinga arbórea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_12</td>
+<td align="left">Trichilia pallens C.DC.</td>
+<td align="right">-22.8075008</td>
+<td align="right">-5.137920e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Primeiro de Maio, floresta semidecidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_13</td>
+<td align="left">Myrcia tomentosa (Aubl.) DC.</td>
+<td align="right">-11.2182999</td>
+<td align="right">-4.540280e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Formosa do Rio Preto, caatinga arbórea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_14</td>
+<td align="left">Zanthoxylum riedelianum Engl.</td>
+<td align="right">-18.8794003</td>
+<td align="right">-4.147970e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">São Geraldo do Baixio, floresta semidecidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_15</td>
+<td align="left">Handroanthus serratifolius (Vahl) S.O.Grose</td>
+<td align="right">-17.9339008</td>
+<td align="right">-4.456830e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Lassance, floresta ripícola</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_16</td>
+<td align="left">Croton floribundus Spreng.</td>
+<td align="right">-22.5007992</td>
+<td align="right">-4.664280e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Lindóia, floresta semidecidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_17</td>
+<td align="left">Protium spruceanum (Benth.) Engl.</td>
+<td align="right">-21.1553001</td>
+<td align="right">-4.547280e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Coqueiral, floresta semidecidual</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_18</td>
+<td align="left">Cestrum schlechtendalii G.Don</td>
+<td align="right">-14.1483002</td>
+<td align="right">-4.753190e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Ipameri, cerrado</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">DRYFLOR_19</td>
+<td align="left">Salvertia convallariodora A.St.-Hil.</td>
+<td align="right">-5.3179998</td>
+<td align="right">-4.151900e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Castelo do Piaui, cerradao mesotrofico</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">DRYFLOR_20</td>
+<td align="left">Machaerium villosum Vogel</td>
+<td align="right">-15.9642000</td>
+<td align="right">-4.794580e+01</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Fazenda Água Limpa, floresta ripícola</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_1</td>
+<td align="left">Iryanthera sagotiana Warb.</td>
+<td align="right">-10.8339000</td>
+<td align="right">-5.287310e+01</td>
+<td align="left">1228373235</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_2</td>
+<td align="left">Callisia filiformis (M.Martens &amp; Galeotti) D.R.Hunt</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1978411156</td>
+<td align="left">2007-03-30T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">Reserva Legal de Rodelas</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">Barreto, R.</td>
+<td align="right">NA</td>
+<td align="left">Oliveira, M.; Cavalcanti, A. &amp; Pessoa, L.</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_3</td>
+<td align="left">Margaritopsis cephalantha (Müll.Arg.) C.M.Taylor</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1702828595</td>
+<td align="left">1975-01-17T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Espírito Santo</td>
+<td align="left">NA</td>
+<td align="left">Mun. de Linhares, Reserva Florestal da Companhia Vale do Rio Doce, S.A. Mata de tabuleiro, so longo da picada 162</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">A. L. Peixoto &amp; O. L. Peixoto</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_4</td>
+<td align="left">Erythroxylum cuspidifolium Mart.</td>
+<td align="right">-13.9369440</td>
+<td align="right">-3.942444e+01</td>
+<td align="left">1944976406</td>
+<td align="left">2013-03-28T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">Fazenda Paineiras, BR 116, KM 390</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">Sem Informação</td>
+<td align="right">NA</td>
+<td align="left">T. Araújo</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_5</td>
+<td align="left">Ocotea lanceolata Nees</td>
+<td align="right">-13.4833300</td>
+<td align="right">-4.181667e+01</td>
+<td align="left">439130715</td>
+<td align="left">1977-02-24T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Harley, R.M.|Santos, T.S.|Pinheiro, R.S.|Mayo, S.J.|Storr, R.M.</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_6</td>
+<td align="left">Qualea cryptantha var. marginata (Miq.) Stafleu</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1090419761</td>
+<td align="left">1979-12-23T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">Velha estrada entre Andaraí e Mucugê via Igatú, a 2Km ao S de Igatú.</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">M. Lisboa</td>
+<td align="right">NA</td>
+<td align="left">S. A. Mori</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_7</td>
+<td align="left">Mollinedia clavigera Tul.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1853941450</td>
+<td align="left">2014-08-18T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Paraná</td>
+<td align="left">NA</td>
+<td align="left">Parque do Cinquentenário.</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">C.Miranda</td>
+<td align="right">NA</td>
+<td align="left">C.Miranda</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_8</td>
+<td align="left">Acisanthera variabilis Triana</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1089063026</td>
+<td align="left">1997-05-21T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Minas Gerais</td>
+<td align="left">NA</td>
+<td align="left">Estrada de acesso à Fazenda Hotel Serra das Bicas.</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Matsumoto, K; Faria, AD; Lopes, CA; Jannini, AW; Simões, AO; Singer, RB</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_9</td>
+<td align="left">Croton nepetifolius Baill.</td>
+<td align="right">-8.5072420</td>
+<td align="right">-3.735506e+01</td>
+<td align="left">1302836168</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">catimbau</td>
+<td align="left">NA</td>
+<td align="left">HUMAN_OBSERVATION</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_10</td>
+<td align="left">Pontederia lanceolata Nutt.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1095416254</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Santa Catarina</td>
+<td align="left">NA</td>
+<td align="left">Encruzilhada</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">Castellanos, A.</td>
+<td align="right">NA</td>
+<td align="left">Klein, R.</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_11</td>
+<td align="left">Dalechampia stipulacea Müll.Arg.</td>
+<td align="right">-23.0297000</td>
+<td align="right">-4.697530e+01</td>
+<td align="left">1090557438</td>
+<td align="left">1994-11-23T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">São Paulo</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">R.A. Pereira-Silva</td>
+<td align="right">NA</td>
+<td align="left">S.L. Jung-Mendaçolli; C.A.F. Pinto-Maglio; P.R.P. Andrade &amp; A.M.C. Silva</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_12</td>
+<td align="left">Handroanthus albus (Cham.) Mattos</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1316181641</td>
+<td align="left">1978-07-05T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">São Paulo</td>
+<td align="left">NA</td>
+<td align="left">Pedra Grande</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">Semir, J</td>
+<td align="right">NA</td>
+<td align="left">Taroda, N</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_13</td>
+<td align="left">Daphnopsis sellowiana Taub.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1143421447</td>
+<td align="left">2013-07-21T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Paraná</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">Barboza, E</td>
+<td align="right">NA</td>
+<td align="left">Engels, M.E.</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_14</td>
+<td align="left">Hillia parasitica Jacq.</td>
+<td align="right">-13.0700000</td>
+<td align="right">-4.137000e+01</td>
+<td align="left">912236353</td>
+<td align="left">2002-02-15T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Bahia, Mucage: Serra do Gobira. Mata do Grotao no alto do Gobira.</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Harley, R. M. et al.</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_15</td>
+<td align="left">Phyllanthus L.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1087021229</td>
+<td align="left">1967-04-14T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Amazonas</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Rodrigues, W. ; Coelho,N.</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_16</td>
+<td align="left">Chresta pacourinoides (Mart. ex DC.) Loeuille, Siniscalchi &amp; Pirani</td>
+<td align="right">-5.6405830</td>
+<td align="right">-4.260831e+01</td>
+<td align="left">1090954960</td>
+<td align="left">2000-05-16T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Piauí</td>
+<td align="left">NA</td>
+<td align="left">Fazenda Saquinho</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">B. Leonille</td>
+<td align="right">NA</td>
+<td align="left">R. Barros; R.R. Farias</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_17</td>
+<td align="left">Mollinedia schottiana Perkins</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1095482579</td>
+<td align="left">1989-10-19T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Paraná</td>
+<td align="left">NA</td>
+<td align="left">Estrada da Graciosa, próximo a Grota Funda</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">Peixoto, A.L.</td>
+<td align="right">NA</td>
+<td align="left">Hatschbach, G.; Nicolack, V.; Nicolack, V.</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_18</td>
+<td align="left">Physalis neesiana Sendtn.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1042546681</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Paraná</td>
+<td align="left">NA</td>
+<td align="left">Arredore. Clareiras da mata.</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">Hatschbach, G.G.</td>
+<td align="right">NA</td>
+<td align="left">Mike Hopkins</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_19</td>
+<td align="left">Ternstroemia carnosa Cambess.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">1090420023</td>
+<td align="left">1979-12-22T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">A 3Km ao S de Mucugê, na estrada que vai para Jussiape.</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">W. São Mateus</td>
+<td align="right">NA</td>
+<td align="left">S. A. Mori</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_20</td>
+<td align="left">Serjania laruotteana Cambess.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">188385220</td>
+<td align="left">2002-03-17T00:00:00Z</td>
+<td align="left">NA</td>
+<td align="left">Rio Grande do Sul</td>
+<td align="left">NA</td>
+<td align="left">Sao Francisco de Paula. Estrada</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">P.Acevedo</td>
+<td align="right">NA</td>
+<td align="left">R.Wasum</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_1</td>
+<td align="left">Chamaecrista incana (Vogel) H.S.Irwin &amp; Barneby</td>
+<td align="right">-25.3830556</td>
+<td align="right">-5.151111e+01</td>
+<td align="left">RB01034852</td>
+<td align="left">10/12/2013</td>
+<td align="left">Brasil</td>
+<td align="left">Paraná</td>
+<td align="left">Guarapuava</td>
+<td align="left">Rodovia BR-277, Campo em frente a concessionária Valtra-Shark.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_2</td>
+<td align="left">Tridax procumbens L.</td>
+<td align="right">-12.2630556</td>
+<td align="right">-3.804167e+01</td>
+<td align="left">RB01357838</td>
+<td align="left">09/03/2016</td>
+<td align="left">Brasil</td>
+<td align="left">Bahia</td>
+<td align="left">Itanagra</td>
+<td align="left">Conglomerado BA__E-1-1-HE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_3</td>
+<td align="left">Peperomia tetraphylla (G.Forst.) Hook. &amp; Arn.</td>
+<td align="right">-20.9386111</td>
+<td align="right">-4.154444e+01</td>
+<td align="left">RB00821048</td>
+<td align="left">08/08/2013</td>
+<td align="left">Brasil</td>
+<td align="left">Espírito Santo</td>
+<td align="left">Mimoso do Sul</td>
+<td align="left">Córrego do Jardim. Floresta de Pseudobombax, Nyctaginaceae, bromélias e aráceas, com tapete de musgos, sobre afloramento rochoso.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_4</td>
+<td align="left">Oxalis psoraleoides ssp. insipida (A.St.-Hil.) Lourteig</td>
+<td align="right">-9.6783334</td>
+<td align="right">-3.698444e+01</td>
+<td align="left">RB00534750</td>
+<td align="left">14/11/2000</td>
+<td align="left">Brasil</td>
+<td align="left">Alagoas</td>
+<td align="left">Jaramataia</td>
+<td align="left">Serra das Mãos, próximo à Vila Campestre e ao riacho Ribeira.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_5</td>
+<td align="left">Xyris mucujensis Kral &amp; L.B.Sm.</td>
+<td align="right">-13.0000000</td>
+<td align="right">-4.140000e+01</td>
+<td align="left">RB00636898</td>
+<td align="left">25/07/1979</td>
+<td align="left">Brasil</td>
+<td align="left">Bahia</td>
+<td align="left">Mucugê</td>
+<td align="left">3km ao S de Mucugê, na estrada para Jussiape.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_6</td>
+<td align="left">Groenbladia</td>
+<td align="right">-15.7338890</td>
+<td align="right">-4.792861e+01</td>
+<td align="left">43135</td>
+<td align="left">31/05/2009</td>
+<td align="left">Brasil</td>
+<td align="left">DF</td>
+<td align="left">Brasilia</td>
+<td align="left">Parque Nacional De Brasília</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_7</td>
+<td align="left">Byrsonima crispa</td>
+<td align="right">-16.5040000</td>
+<td align="right">-3.925500e+01</td>
+<td align="left">604662</td>
+<td align="left">14/10/2009</td>
+<td align="left">Brasil</td>
+<td align="left">BA</td>
+<td align="left">NA</td>
+<td align="left">Parque Nacional Do Pau Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_8</td>
+<td align="left">Paspalum multicaule Poir.</td>
+<td align="right">-12.9000000</td>
+<td align="right">-5.186667e+01</td>
+<td align="left">RB00525311</td>
+<td align="left">26/06/1968</td>
+<td align="left">Brasil</td>
+<td align="left">Mato Grosso</td>
+<td align="left">NA</td>
+<td align="left">Base Camp of the Expedition, ca. 270 km N of Xavantina on the Xavantina - São Félix road.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_9</td>
+<td align="left">Solanum megalochiton Mart.</td>
+<td align="right">-19.3513889</td>
+<td align="right">-4.054806e+01</td>
+<td align="left">RB00780705</td>
+<td align="left">19/04/2013</td>
+<td align="left">Brasil</td>
+<td align="left">Espírito Santo</td>
+<td align="left">Marilândia</td>
+<td align="left">Localidade de Alto Liberdade. Pedra do Cruzeiro, Floresta alterada ao longo da escadaria para o topo do inselbergue.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_10</td>
+<td align="left">Leiothrix curvifolia (Bong.) Ruhland</td>
+<td align="right">-18.9625000</td>
+<td align="right">-4.374194e+01</td>
+<td align="left">RB00604869</td>
+<td align="left">24/11/2009</td>
+<td align="left">Brasil</td>
+<td align="left">Minas Gerais</td>
+<td align="left">Santana de Pirapama</td>
+<td align="left">Serra do Cipó, Capela de São José, Trilha da Senhorinha, caminho a Congonhas do Norte.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_11</td>
+<td align="left">Chrysophyllum inornatum Mart.</td>
+<td align="right">-27.3344444</td>
+<td align="right">-4.994222e+01</td>
+<td align="left">RB01138574</td>
+<td align="left">10/11/2008</td>
+<td align="left">Brasil</td>
+<td align="left">Santa Catarina</td>
+<td align="left">Pouso Redondo</td>
+<td align="left">Corruchel.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_12</td>
+<td align="left">Mimosa paludosa Benth.</td>
+<td align="right">-13.6000000</td>
+<td align="right">-4.183333e+01</td>
+<td align="left">RB00164077</td>
+<td align="left">27/03/1977</td>
+<td align="left">Brasil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">Between 2,5 and 5km S. of the Vila do Rio de Contas on side road to W. of the road to livramento, leading to the Rio Brumado.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_13</td>
+<td align="left">Senegalia visco (Lorentz ex Griseb.) Seigler &amp; Ebinger</td>
+<td align="right">-18.3055556</td>
+<td align="right">-6.413194e+01</td>
+<td align="left">RB01017117</td>
+<td align="left">13/08/2014</td>
+<td align="left">Bolívia</td>
+<td align="left">Santa Cruz</td>
+<td align="left">NA</td>
+<td align="left">~2km E of El Trigal on dirt track off road to Vallegrande.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_14</td>
+<td align="left">Myrsine umbellata</td>
+<td align="right">-22.4569170</td>
+<td align="right">-4.460961e+01</td>
+<td align="left">909060</td>
+<td align="left">25/11/2014</td>
+<td align="left">Brasil</td>
+<td align="left">RJ</td>
+<td align="left">NA</td>
+<td align="left">Parque Nacional De Itatiaia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_15</td>
+<td align="left">Swartzia simplex var. continentalis Urb.</td>
+<td align="right">-20.2425000</td>
+<td align="right">-4.201972e+01</td>
+<td align="left">RB00521071</td>
+<td align="left">10/12/2007</td>
+<td align="left">Brasil</td>
+<td align="left">Espírito Santo</td>
+<td align="left">Santa Leopoldina</td>
+<td align="left">Cachoeira do Mochafongo, Sítio Mochafongo. Arbusto 5m, tronco castanho-escuro, beira da cachoeira, solo rochoso, local com alta incidência de sol.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_16</td>
+<td align="left">Tephrosia</td>
+<td align="right">-9.8497222</td>
+<td align="right">-5.240472e+01</td>
+<td align="left">RB00622100</td>
+<td align="left">11/03/2011</td>
+<td align="left">Brasil</td>
+<td align="left">Mato Grosso</td>
+<td align="left">São José do Xingu</td>
+<td align="left">Fazenda Santa Filipina, a 20-40 km da Faz. Najá, zona de amortecimento do Parque Estadual do Xingu.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_17</td>
+<td align="left">Solanum stenandrum Sendtn.</td>
+<td align="right">-51.0000000</td>
+<td align="right">-4.131667e+01</td>
+<td align="left">RB00467865</td>
+<td align="left">12/02/1977</td>
+<td align="left">Brasil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">8 km South of Andarai on road to mucugê by bridge over small river, just North of turning to Itaeté.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_18</td>
+<td align="left">Marcetia latifolia Naudin</td>
+<td align="right">-11.6333333</td>
+<td align="right">-4.103333e+01</td>
+<td align="left">RB00238744</td>
+<td align="left">30/05/1980</td>
+<td align="left">Brasil</td>
+<td align="left">Piauí</td>
+<td align="left">Morro do Chapéu do Piauí</td>
+<td align="left">Rio do Ferro Doido, 19,5 km S.E. of Morro do Chapéu on the BA 052 highway to Mundo Novo, with water-worn.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_19</td>
+<td align="left">Clusia nemorosa G.Mey.</td>
+<td align="right">-8.2800000</td>
+<td align="right">-3.495417e+01</td>
+<td align="left">RB00574427</td>
+<td align="left">24/08/2007</td>
+<td align="left">Brasil</td>
+<td align="left">Pernambuco</td>
+<td align="left">Cabo de Santo Agostinho</td>
+<td align="left">Itapuama, engenho Camaçari.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_20</td>
+<td align="left">Bertholletia excelsa</td>
+<td align="right">-10.8555070</td>
+<td align="right">-6.870040e+01</td>
+<td align="left">458788</td>
+<td align="left">31/03/2013</td>
+<td align="left">Brasil</td>
+<td align="left">AC</td>
+<td align="left">NA</td>
+<td align="left">Reserva Extrativista Chico Mendes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_1</td>
+<td align="left">Arthrocardia gardineri</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">3db83402-7892-4ede-b87e-bd6f18941f03</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Espírito Santo</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Kanagawa, AI</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_2</td>
+<td align="left">Sida galheirensis Ulbr.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">bfeb6da3-2676-49df-9cc0-63bc9b439b98</td>
+<td align="left">18/04/1971</td>
+<td align="left">Brasil</td>
+<td align="left">Pernambuco</td>
+<td align="left">NA</td>
+<td align="left">Arredores da cidade.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">M.G. Bovini</td>
+<td align="right">NA</td>
+<td align="left">Academia Brasileira de Ciências</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_3</td>
+<td align="left">Holocheilus brasiliensis (L.) Cabrera</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">e600439c-01d6-4aa3-8875-92e2dfa01a0f</td>
+<td align="left">1901-11-12</td>
+<td align="left">Brazil</td>
+<td align="left">Rio Grande do Sul</td>
+<td align="left">NA</td>
+<td align="left">Plantae Itineris Regnelliani IIdi Brasiliae civit. Rio Grande do Sul: Povo Novo pr. Pelotas</td>
+<td align="left">NA</td>
+<td align="left">preservedspecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Gust. O. A:n Malme</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_4</td>
+<td align="left">Solanum decompositiflorum</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">b1fb4bdc-e7e3-4266-8b7e-ebaf59dff76c</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Distrito Federal</td>
+<td align="left">NA</td>
+<td align="left">Fazenda Sucupira, mata próxima dos experimentos do. Mata de galeria. Relevo levemente inclinado. Solo com boa camada d eserrapilheira</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Gouvêa, YF</td>
+<td align="right">NA</td>
+<td align="left">Santos, AA; Pereira, JB; Oliveira, RC; Alves, AF; Carvalho-Silva, M</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_5</td>
+<td align="left">Coussarea acrensis C.M. Taylor</td>
+<td align="right">-10.0666667</td>
+<td align="right">-6.756667e+01</td>
+<td align="left">7e4df881-f532-4818-8d26-37984e804c5d</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Acre</td>
+<td align="left">NA</td>
+<td align="left">Senador Guiomard; Fazenda Experimental Catauba, 27km from RIo Branco on road BR-364 to Porto Velho</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">C.M. Taylor, Paratype</td>
+<td align="right">NA</td>
+<td align="left">Piero G. Delprete|M. Oliveira</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_6</td>
+<td align="left">Stenocline chionaea</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">30acef7a-5fe5-4092-9b0d-455ec24d02eb</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Minas Gerais</td>
+<td align="left">NA</td>
+<td align="left">Serra do Cipó Km 108-109, Rodovia, Cerro.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Lewinsohn, TM; Martins, RP</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_7</td>
+<td align="left">Paspalum eucomum Nees ex Trin.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">dba43752-a729-4d31-a9e2-59b9699a1bff</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Minas Gerais</td>
+<td align="left">NA</td>
+<td align="left">Serra do Cipó (110km Northeast of Bello Horizonte), Minas Gerais. Stony campo between Lagoa Santa</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Morrone &amp; Zuloaga</td>
+<td align="right">NA</td>
+<td align="left">Agnes Chase</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_8</td>
+<td align="left">NA</td>
+<td align="right">-9.5664690</td>
+<td align="right">-3.642201e+01</td>
+<td align="left">e1ed3ca5-6470-45e4-a760-bd7e09cca153</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Alagoas</td>
+<td align="left">NA</td>
+<td align="left">RPPN Santa Fé.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">M.C.S.Mota</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_9</td>
+<td align="left">Miconia minutiflora</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">bfe7a023-80a5-4f09-87b7-5119274dac2b</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Minas Gerais</td>
+<td align="left">NA</td>
+<td align="left">Estrada para Mata da Zilda, Estação Ambiental Galheiro</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Romero, R</td>
+<td align="right">NA</td>
+<td align="left">Mendes, S</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_10</td>
+<td align="left">Peltophorum dubium (Spreng.) Taub.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">a9533fe0-b92d-4375-9835-961ae798d4c4</td>
+<td align="left">2004-04-30</td>
+<td align="left">Brazil</td>
+<td align="left">Rio de Janeiro</td>
+<td align="left">Araruama</td>
+<td align="left">Morro das Canelas</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">R. D. Ribeiro</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_11</td>
+<td align="left">Crotalaria</td>
+<td align="right">-23.4166670</td>
+<td align="right">-5.195000e+01</td>
+<td align="left">01bdd102-de56-4b29-9631-57dbf0eb4df4</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Paraná</td>
+<td align="left">NA</td>
+<td align="left">distrito de Iguatemi, Campus UEM, Fazenda Experime</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">G.C.Mantovanelli; F.A.Rios</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_12</td>
+<td align="left">Rudgea cornifolia (Kunth.) Standl.</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">87f72c1b-eefa-477c-9bc0-c90649f98f2a</td>
+<td align="left">1965-10-28</td>
+<td align="left">Brazil</td>
+<td align="left">Pará</td>
+<td align="left">NA</td>
+<td align="left">Brazil. State of Pará. Road BR 22, Capanema to Maranhão. Banks of Rio Piria, north of Km. 90.</td>
+<td align="left">NA</td>
+<td align="left">preservedspecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">G.T. Prance &amp; T.D. Pennington</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_13</td>
+<td align="left">Butia paraguayensis</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">f271405a-1354-4bdc-9f63-ef581824c9bc</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">São Paulo</td>
+<td align="left">NA</td>
+<td align="left">Fazenda Campininha.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Botânico, MP</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_14</td>
+<td align="left">Mendoncia coccinea</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">154ea2f4-c94f-4316-8062-b6485507e317</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Paraná</td>
+<td align="left">NA</td>
+<td align="left">Ilha do Mel, Encantadas</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Silva, S.M.</td>
+<td align="right">NA</td>
+<td align="left">Britez, R.M.</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_15</td>
+<td align="left">Ocotea laxa (Nees) Mez</td>
+<td align="right">-25.4769000</td>
+<td align="right">-4.883420e+01</td>
+<td align="left">775655fa-be84-4db2-b9f1-ab1b93afed07</td>
+<td align="left">1971-01-19</td>
+<td align="left">Brazil</td>
+<td align="left">Paraná</td>
+<td align="left">Morretes</td>
+<td align="left">Serra Marumbi, picada ao Olimpo</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">30514</td>
+<td align="left">G. G. Hatschbach</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_16</td>
+<td align="left">Solanum paniculatum L.</td>
+<td align="right">-11.0000000</td>
+<td align="right">-4.200000e+01</td>
+<td align="left">dcba12d7-0f73-46b1-8edd-21e72c0182e9</td>
+<td align="left">1980-04-19</td>
+<td align="left">Brazil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">RRC ID Flag</td>
+<td align="right">NA</td>
+<td align="left">R. Harley</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_17</td>
+<td align="left">Heteropterys rhopalifolia</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">0cbc91a0-d67e-4c12-8962-569312ba356f</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Mato Grosso do Sul</td>
+<td align="left">NA</td>
+<td align="left">Reserva da área da Prefeitura.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">C.Pessoa</td>
+<td align="right">NA</td>
+<td align="left">Snak, C.</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_18</td>
+<td align="left">Hieracium commersonii Monnier</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">23cc095f-8d3a-4155-9289-04ae8aae45a6</td>
+<td align="left">10/11/1951</td>
+<td align="left">Brasil</td>
+<td align="left">Paraná</td>
+<td align="left">NA</td>
+<td align="left">Rio do Salto.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Graziela</td>
+<td align="right">NA</td>
+<td align="left">G.Hatschbach</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_19</td>
+<td align="left">Clidemia epiphytica (Triana) Cogn.</td>
+<td align="right">-4.6968790</td>
+<td align="right">-6.950483e+01</td>
+<td align="left">d41300b6-eb71-4a99-bdfe-717c093616b1</td>
+<td align="left">1936-09-11/1936-10-26</td>
+<td align="left">Brazil</td>
+<td align="left">Amazonas</td>
+<td align="left">São Paulo de Olivença</td>
+<td align="left">Near Palmares. Basin of Rio Solimoes.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">F. A. Michelangeli</td>
+<td align="right">201650</td>
+<td align="left">B. A. Krukoff</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_20</td>
+<td align="left">Chaptalia integerrima</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">3424cbc2-f52c-41d7-8a89-3f34b79603b0</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">RS</td>
+<td align="left">NA</td>
+<td align="left">Ijuisinho</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Emrich-Rambo</td>
+<td align="right">NA</td>
+<td align="left">Rambo, B.</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_1</td>
+<td align="left">Amaioua guianensis</td>
+<td align="right">-8.7244444</td>
+<td align="right">-3.517528e+01</td>
+<td align="left">AtlPE022</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Tamandaré, Saltinho, floresta pluvial</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_2</td>
+<td align="left">Matayba intermedia</td>
+<td align="right">-22.9294444</td>
+<td align="right">-4.297944e+01</td>
+<td align="left">AtlRJ033</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Niterói, Serra da Tiririca, floresta pluvial</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_3</td>
+<td align="left">Pagamea coriacea</td>
+<td align="right">-0.1458333</td>
+<td align="right">-6.697333e+01</td>
+<td align="left">AmzAM103</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Itacoatiara-Mirim, nanofloresta de areias brancas</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_4</td>
+<td align="left">Senna velutina</td>
+<td align="right">-13.4050000</td>
+<td align="right">-5.557444e+01</td>
+<td align="left">CerMT027</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Lucas do Rio Verde, cerrado</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_5</td>
+<td align="left">Myrsine umbellata</td>
+<td align="right">-23.8686111</td>
+<td align="right">-5.384667e+01</td>
+<td align="left">AtlPR129</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Altônia, floresta semidecídua</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_6</td>
+<td align="left">Compsoneura ulei</td>
+<td align="right">-8.1377778</td>
+<td align="right">-6.361944e+01</td>
+<td align="left">AmzRO032</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Porto Velho, Calama, savana arborizada brejosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_7</td>
+<td align="left">Cyathea corcovadensis</td>
+<td align="right">-23.8136111</td>
+<td align="right">-4.546750e+01</td>
+<td align="left">AtlSP016</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">São Sebastião, floresta pluvial</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_8</td>
+<td align="left">Myrciaria dubia</td>
+<td align="right">-3.2838889</td>
+<td align="right">-5.948444e+01</td>
+<td align="left">AmzAM223</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Careiro da Várzea, Paraná do Autaz-Mirim, floresta inundável de água negra</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_9</td>
+<td align="left">Alchornea triplinervia</td>
+<td align="right">-24.5705556</td>
+<td align="right">-4.861639e+01</td>
+<td align="left">AtlSP032</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Iporanga, floresta pluvial</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_10</td>
+<td align="left">Dahlstedtia muehlbergiana</td>
+<td align="right">-21.0700000</td>
+<td align="right">-4.743611e+01</td>
+<td align="left">AtlSP161</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Gruta do Itambé, floresta semidecídua</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_11</td>
+<td align="left">Copaifera coriacea</td>
+<td align="right">-10.1322222</td>
+<td align="right">-4.471194e+01</td>
+<td align="left">CerPI033</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Parnaguá, cerradão mesotrófico</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_12</td>
+<td align="left">Miconia gratissima</td>
+<td align="right">-4.2211111</td>
+<td align="right">-6.317222e+01</td>
+<td align="left">AmzAM163</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Coari, floresta pluvial de terra firme</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_13</td>
+<td align="left">Cabralea canjerana</td>
+<td align="right">-17.6558333</td>
+<td align="right">-4.631222e+01</td>
+<td align="left">CerMG068</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">João Pinheiro, floresta ripícola</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_14</td>
+<td align="left">Solanum megalochiton</td>
+<td align="right">-14.8350000</td>
+<td align="right">-4.055472e+01</td>
+<td align="left">AtlBA099</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Barra do Choça, floresta semidecídua</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_15</td>
+<td align="left">Machaerium acutifolium</td>
+<td align="right">-19.2183333</td>
+<td align="right">-4.914639e+01</td>
+<td align="left">CerMG240</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Prata, cerrado</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_16</td>
+<td align="left">Agonandra brasiliensis</td>
+<td align="right">-20.1538889</td>
+<td align="right">-5.456111e+01</td>
+<td align="left">CerMS034</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Jaraguari, cerradão mesotrófico</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_17</td>
+<td align="left">Iriartea deltoidea</td>
+<td align="right">-2.8283333</td>
+<td align="right">-6.779611e+01</td>
+<td align="left">AmzAM285</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Tonantins, floresta pluvial de terra firme</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_18</td>
+<td align="left">Cordia trichotoma</td>
+<td align="right">-17.0736111</td>
+<td align="right">-4.376722e+01</td>
+<td align="left">CerMG114</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Bocaiúva, floresta decídua</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">NEOTROPTREE_19</td>
+<td align="left">Nectandra amazonum</td>
+<td align="right">-3.1330556</td>
+<td align="right">-6.089694e+01</td>
+<td align="left">AmzAM220</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Lago Manacapuru, floresta inundável de água negra</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">NEOTROPTREE_20</td>
+<td align="left">Byrsonima blanchetiana</td>
+<td align="right">-10.1394444</td>
+<td align="right">-3.983000e+01</td>
+<td align="left">CaaBA019</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Andorinha, caatinga quartzítica</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_1</td>
+<td align="left">Dryopteris</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">163ea702-1a6e-473c-ad89-4948fc2758fd</td>
+<td align="left">1930</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left"></td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">C; Chr</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_2</td>
+<td align="left">Lamiaceae</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">c6723db8-f11e-4b3d-80b0-9b25312ef606</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_3</td>
+<td align="left">Erythrina</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">35332ca6-417d-40fe-825b-19c3071e9b22</td>
+<td align="left">1989</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Chiapas. Mun. Tuxtla Gutierrez Em El Carmen, 13km al SW de Tuxtla Gtz.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Soto, J.C.</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_4</td>
+<td align="left">Symplocos celastrinea</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">a4333dbe-a83c-409f-a536-bd7486a09915</td>
+<td align="left">2001</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Aranha, J.L.M.</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_5</td>
+<td align="left">Polypodium hirsutissimum</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">a1998531-ab55-495b-bcd1-38aebbd8916c</td>
+<td align="left">1993</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Ò<em>x0002</em>
+</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Kazmirczak, C</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_6</td>
+<td align="left">Piptadenia gonoacantha</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">10d02587-02e0-4c85-9ba0-648447519d25</td>
+<td align="left">2004</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Reservatório de Miranda, Cerca de 20 km do centro de Uberlândia.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_7</td>
+<td align="left">Cnidoscolus vitifolius</td>
+<td align="right">-6965.0000000</td>
+<td align="right">-4.167833e+07</td>
+<td align="left">c465ad70-0931-4947-b89c-11ef98107957</td>
+<td align="left">2009</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Água Mineral Manaíra</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_8</td>
+<td align="left">Pontederiaceae</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">c0672dd8-a417-4e52-b350-82b083c2e2b2</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Province de Saint Paul</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Saint-Hilaire</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_9</td>
+<td align="left">Gonolobus hatschbachii</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">619e3df7-1b27-4b26-a5f4-799691ce0286</td>
+<td align="left">1959</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Municipio Cerro Azul, Morro Grande, Da Mata da ecosta dos Morros</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_10</td>
+<td align="left">Plantae</td>
+<td align="right">-23.2137740</td>
+<td align="right">-4.636143e+01</td>
+<td align="left">ad73d33b-4f47-445a-bc84-bcc8397552d6</td>
+<td align="left">2013</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">HumanObservation</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_11</td>
+<td align="left">Serpocaulon latipes</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">3a156871-1899-4950-8727-1bc158082e36</td>
+<td align="left">1996</td>
+<td align="left">NA</td>
+<td align="left">Espírito Santo es</td>
+<td align="left">NA</td>
+<td align="left">Reserva Florestal de Linhares, Estrada: Flamengo. Km 1,2.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Salino, A</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_12</td>
+<td align="left">Matayba elaeagnoides</td>
+<td align="right">-24.1005600</td>
+<td align="right">-5.070694e+01</td>
+<td align="left">587d1247-b4e8-4a13-b121-6717f7f86273</td>
+<td align="left">2011</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">H|<em>x0005</em>
+</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Bonaldi, R.A.</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_13</td>
+<td align="left">Trichilia micrantha</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">a8cc67df-1c63-4830-9769-cb2ea5b6dbc6</td>
+<td align="left">1968</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">ìW</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_14</td>
+<td align="left">Sapium glandulosum</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">792bc66f-de36-4384-a449-717e084a55c6</td>
+<td align="left">1994</td>
+<td align="left">Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Socavão</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">V. Santos</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_15</td>
+<td align="left">Desmodium leiocarpum</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">ebef8d85-72da-4c9a-8cea-dad5e23850fd</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Occasional. Campo and gallery forest, Riberao Torto, near Sobradinho,</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">J. Grimes 90</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_16</td>
+<td align="left">Conocliniopsis prasiifolia</td>
+<td align="right">-8.6311280</td>
+<td align="right">-4.105718e+01</td>
+<td align="left">066c5217-6e3b-4769-a1c4-eae3e7409798</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Rita Pereira</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_17</td>
+<td align="left">Araliaceae</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">b1fecef4-e181-45d7-b38f-bc5cad9e160c</td>
+<td align="left">1971</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Rio Moa between Cachoeira Grande and Serra da Moa village</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">D. G. Frodin</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_18</td>
+<td align="left">Chamaecrista flexuosa</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">c5f2e01a-927b-4848-b389-cbe966306ddc</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_19</td>
+<td align="left">Ficus</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">369db793-3db2-419a-a1de-a298f20e77b0</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brasil.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_20</td>
+<td align="left">Podostemaceae</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">2f80860f-db79-4be1-b41c-dde5dea51fac</td>
+<td align="left">1980</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Cachoeira Porteira</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">C. T. Philbrick</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_1</td>
+<td align="left">Randia armata</td>
+<td align="right">-19.6969440</td>
+<td align="right">-3.993194e+01</td>
+<td align="left">46966</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Espírito Santo</td>
+<td align="left">NA</td>
+<td align="left">Reserva de Comboios, próximo à reserva indígena. Ponto de amostragem 8.</td>
+<td align="left">NA</td>
+<td align="left">S</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Firmino, A.D.; Valadares, R.T.</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_2</td>
+<td align="left">Myrcia decorticans</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">127977</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Alagoas</td>
+<td align="left">NA</td>
+<td align="left">Usina Corurioe - Fazenda Capiatã A - Bloco Goiabeia.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Machado, M.A.B.L.</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_3</td>
+<td align="left">Senecio subarnicoides</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">3381603</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Santa Catarina</td>
+<td align="left">NA</td>
+<td align="left">Serra do Quiriri (Mun. Campo Alegre)</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">J. M. Silva, O. S. Ribas, J. Cordeiro &amp; E. L. Barbosa</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_4</td>
+<td align="left">Baccharis polyphylla</td>
+<td align="right">-13.5500000</td>
+<td align="right">-4.195000e+01</td>
+<td align="left">2851678</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">Brazil: Estado da Bahia. Serra das Almas. Middle and upper N.E. slopes of the Pico das Almas ca. 25km. W.N.W. of the Vila do Rio de Contas</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">R. M. Harley, S. Mayo, R. M. Storr, T. S. Santos &amp; R. S. Pinheiro</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_5</td>
+<td align="left">Undesignated undesignated</td>
+<td align="right">-15.2647200</td>
+<td align="right">-4.057472e+01</td>
+<td align="left">3395923</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">“Itambé: 37.5 west of itapetinga on BR 415 to Itambé. Semi-deciduous "vine" forst (Mata de Cipó) with arborescent cacti.”</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Thomas</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_6</td>
+<td align="left">Ocotea pulchella</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Rio Grande do Sul</td>
+<td align="left">NA</td>
+<td align="left">Limeira- São José da Porteirinha</td>
+<td align="left">NA</td>
+<td align="left">S</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Alvarez, A.F.</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_7</td>
+<td align="left">Ocotea lobbii</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">15479</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Espírito Santo</td>
+<td align="left">NA</td>
+<td align="left">Setiba.</td>
+<td align="left">NA</td>
+<td align="left">S</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Fabris, L.C.</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_8</td>
+<td align="left">Aristolochia arcuata</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">88280</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">São Paulo</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">S</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Lopes, L.M.X.</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_9</td>
+<td align="left">Sematophyllum galipense</td>
+<td align="right">-13.2797220</td>
+<td align="right">-4.190389e+01</td>
+<td align="left">84295</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">Serra do Barbado. Catolés</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Bastos, C</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_10</td>
+<td align="left">Parthenium hysterophorus</td>
+<td align="right">-21.7944000</td>
+<td align="right">-4.817560e+01</td>
+<td align="left">20032</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">São Paulo</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">S</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">H.F. Leitão Filho &amp; C. Aranha</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_11</td>
+<td align="left">Endlicheria paniculata</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">21981</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Distrito Federal</td>
+<td align="left">NA</td>
+<td align="left">BR-251 após a cachoeirinha</td>
+<td align="left">NA</td>
+<td align="left">S</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Heringer, EP; et al.</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_12</td>
+<td align="left">Jacaranda simplicifolia</td>
+<td align="right">-13.9584000</td>
+<td align="right">-4.735780e+01</td>
+<td align="left">748798</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Goiás</td>
+<td align="left">NA</td>
+<td align="left">Chapada dos Veadeiros, ca. 25 km by road N of Alto Paraíso</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">W. R. Anderson</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_13</td>
+<td align="left">Chamaesyce</td>
+<td align="right">-14.4525000</td>
+<td align="right">-4.375333e+01</td>
+<td align="left">1195853</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">Rod. para o Distr. de Cana Brava, 18 km S da sede municipal, 1.6 km do povoado de Serra de João Alves.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">J. G. Jardim</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_14</td>
+<td align="left">Eriosema tacuaremboense</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">4144</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Rio Grande do Sul</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Flávio</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_15</td>
+<td align="left">Schrankia leptocarpa</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">448</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Pernambuco</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Sarmento, A.</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_16</td>
+<td align="left">Salvia consimilis</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">58044</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Santa Catarina</td>
+<td align="left">NA</td>
+<td align="left">Serra do Rio do Rastro.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Funez, L.A.; Zermiani, A.E.</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_17</td>
+<td align="left">Eucalyptus tereticornis</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">52773</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">SP</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">B.Lopes</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_18</td>
+<td align="left">Steinchisma</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">127062</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">SC</td>
+<td align="left">NA</td>
+<td align="left">BR 470 2km de acesso a Abdon Batista</td>
+<td align="left">NA</td>
+<td align="left">S</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Longhi-Wagner, HM</td>
+</tr>
+<tr class="odd">
+<td align="left">SPECIESLINK_19</td>
+<td align="left">Justicia brasiliana</td>
+<td align="right">-26.3611840</td>
+<td align="right">-4.927374e+01</td>
+<td align="left">468</td>
+<td align="left">NA</td>
+<td align="left">Brasil</td>
+<td align="left">Santa Catarina</td>
+<td align="left">NA</td>
+<td align="left">Rio Natal - Beira de estrada, sentido Corupá</td>
+<td align="left">NA</td>
+<td align="left">MachineObservation</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Schwirkowski, P.</td>
+</tr>
+<tr class="even">
+<td align="left">SPECIESLINK_20</td>
+<td align="left">Cranichis scripta</td>
+<td align="right">0.0000000</td>
+<td align="right">0.000000e+00</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">Distrito Federal</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">L. B. Smith</td>
+</tr>
+</tbody>
+</table>
 </div>
   </div>
 
@@ -191,11 +3611,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bruno Ribeiro, Geiziane Tessarolo, Santiago Velazco, Lucas Jardim, Karlo Guidoni-Martins.</p>
+  <p></p>
+<p>Developed by Bruno Ribeiro, Geiziane Tessarolo, Santiago Velazco, Lucas Jardim, Karlo Guidoni-Martins.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -203,6 +3625,8 @@
 
   
 
+
+  
 
   </body>
 </html>

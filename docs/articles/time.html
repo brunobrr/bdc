@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
       </span>
     </div>
 
@@ -46,7 +48,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -66,7 +68,7 @@
       <a href="../articles/integrate_datasets.html">Standardization and integration of different datasets</a>
     </li>
     <li>
-      <a href="../articles/prefilter.html">Prefilter</a>
+      <a href="../articles/prefilter.html">Pre-filter</a>
     </li>
     <li>
       <a href="../articles/taxonomy.html">Taxonomy</a>
@@ -90,11 +92,12 @@
 
       
 
-      </header><script src="time_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Time</h1>
             
+            <h4 data-toc-skip class="date">2022-02-14</h4>
       
       
       <div class="hidden name"><code>time.Rmd</code></div>
@@ -103,138 +106,2095 @@
 
     
     
-<div id="introduction" class="section level3">
-<h3 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h3>
-<p>This step of the BDC workflow extracts the collection year whenever possible from complete and legitimate date information, and flags dubious (e.g., 07/07/10), illegitimate (e.g., 1300, 2100), or not supplied (e.g., 0 or NA) collecting year.</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This module of the <em>bdc</em> package extracts the collection year whenever possible from complete and legitimate date information and flags dubious (e.g., 07/07/10), illegitimate (e.g., 1300, 2100), or not supplied (e.g., 0 or NA) collecting year.</p>
 <p><br></p>
-<p><img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"><strong>Important</strong>:</p>
-<p>The results of <em>validation</em> test used to flag data quality is appended in separate fields in this database and retrieved as TRUE or FALSE, in which the former indicates correct records and the latter potentially problematic or suspect records.</p>
 </div>
-<div id="installation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h3>
-<p>You can install the released version of ‘BDC’ from <a href="https://github.com/brunobrr/bdc">github</a> with:</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Check <a href="https://brunobrr.github.io/bdc/"><strong>here</strong></a> how to install the bdc package</p>
+<p><br></p>
+</div>
+<div class="section level2">
+<h2 id="reading-the-database">Reading the database<a class="anchor" aria-label="anchor" href="#reading-the-database"></a>
+</h2>
+<p>Read the database created in the <a href="https://brunobrr.github.io/bdc/articles/03_space.html"><strong>Space</strong></a> module of the <code>bdc</code> package. It is also possible to read any datasets containing the **required** fields to run the funtion (more details <a href="%5Bhttps://brunobrr.github.io/bdc/articles/integrate_datasets.html%22">here</a>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
-<p>Creating folders to save the results</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">bdc</span><span class="fu">::</span><span class="fu"><a href="../reference/bdc_create_dir.html">bdc_create_dir</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-</div>
-<div id="read-the-database" class="section level3">
-<h3 class="hasAnchor">
-<a href="#read-the-database" class="anchor"></a>Read the database</h3>
-<p>Read the merged database created in the step <strong>Standardization and integration of different datasets</strong> of the BDC workflow. It is also possible to read any datasets containing the <em>required</em> fields to run the workflow.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">database</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,
-              <span class="st">"Output"</span>,
-              <span class="st">"Intermediate/03_space_database.qs"</span>, package <span class="op">=</span> <span class="st">"bdc"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span></code></pre></div>
-<p>Standardization of character encoding</p>
+  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qread.html" class="external-link">qread</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output/Intermediate/03_space_database.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<p><strong>IMPORTANT</strong>:</p>
+<p>The results of the <strong>VALIDATION</strong> test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or <strong>FALSE</strong>, in which the former indicates correct records and the <strong>latter potentially problematic or suspect records.</strong></p>
+<p><br></p>
+</div>
+<div class="section level2">
+<h2 id="records-lacking-event-date-information">1 - Records lacking event date information<a class="anchor" aria-label="anchor" href="#records-lacking-event-date-information"></a>
+</h2>
+<p><em>VALIDATION</em>. This function flags records lacking event date information (e.g., empty or NA).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_time</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_eventDate_empty.html">bdc_eventDate_empty</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">database</span>, eventDate <span class="op">=</span> <span class="st">"verbatimEventDate"</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; bdc_eventDate_empty:</span>
+<span class="co">#&gt; Flagged 64 records.</span>
+<span class="co">#&gt; One column was added to the database.</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="extract-year-from-event-date">2 - Extract year from event date<a class="anchor" aria-label="anchor" href="#extract-year-from-event-date"></a>
+</h2>
+<p><em>ENRICHMENT</em>. This function extracts four-digit years from unambiguously interpretable collecting dates.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_time</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_year_from_eventDate.html">bdc_year_from_eventDate</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span>, eventDate <span class="op">=</span> <span class="st">"verbatimEventDate"</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; bdc_year_from_eventDate:</span>
+<span class="co">#&gt; Four-digit year were extracted from 51 records.</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="records-with-out-of-range-collecting-year">3 - Records with out-of-range collecting year<a class="anchor" aria-label="anchor" href="#records-with-out-of-range-collecting-year"></a>
+</h2>
+<p><em>VALIDATION</em>. This function identifies records with illegitimate or potentially imprecise collecting years. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900). Older records are more likely to be imprecise due to the locality-derived geo-referencing process.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">Encoding</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UTF-8"</span>
-  <span class="op">}</span>
-<span class="op">}</span></code></pre></div>
-</div>
-<div id="records-lacking-event-date-information" class="section level3">
-<h3 class="hasAnchor">
-<a href="#records-lacking-event-date-information" class="anchor"></a>1 - Records lacking event date information</h3>
-<p><em>validation</em>. This function flags records lacking event date information (e.g., empty or NA).</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">check_time</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/bdc_eventDate_empty.html">bdc_eventDate_empty</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">database</span>, eventDate <span class="op">=</span> <span class="st">"verbatimEventDate"</span><span class="op">)</span></code></pre></div>
-</div>
-<div id="extract-year-from-event-date" class="section level3">
-<h3 class="hasAnchor">
-<a href="#extract-year-from-event-date" class="anchor"></a>2 - Extract year from event date</h3>
-<p><em>enrichment</em>. This function extracts four-digit year from unambiguously interpretable collecting dates.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">check_time</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/bdc_year_from_eventDate.html">bdc_year_from_eventDate</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span>, eventDate <span class="op">=</span> <span class="st">"verbatimEventDate"</span><span class="op">)</span></code></pre></div>
-</div>
-<div id="records-with-out-of-range-collecting-year" class="section level3">
-<h3 class="hasAnchor">
-<a href="#records-with-out-of-range-collecting-year" class="anchor"></a>3 - Records with out-of-range collecting year</h3>
-<p><em>validation</em>. This function identifies records with illegitimate or potentially imprecise collecting year. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900). Older records are more likely to be imprecise due to the locality-derived geo-referencing process.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">check_time</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/bdc_year_outOfRange.html">bdc_year_outOfRange</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span>,
                       eventDate <span class="op">=</span> <span class="st">"year"</span>,
-                      year_threshold <span class="op">=</span> <span class="fl">1900</span><span class="op">)</span></code></pre></div>
+                      year_threshold <span class="op">=</span> <span class="fl">1900</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; bdc_year_outOfRange:</span>
+<span class="co">#&gt; Flagged 0 records.</span>
+<span class="co">#&gt; One column was added to the database.</span></code></pre></div>
 </div>
-<div id="report" class="section level3">
-<h3 class="hasAnchor">
-<a href="#report" class="anchor"></a>Report</h3>
-<p>Creating a column named “.summary” summarizing the results of all “validation” tests. This column is “FALSE” if any test was flagged as “FALSE” (i.e. potentially invalid or suspect record).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">check_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_summary_col.html">bdc_summary_col</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span><span class="op">)</span></code></pre></div>
-<p>Creating a report summarizing the results of all tests.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/bdc_create_report.html">bdc_create_report</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span>,
-                    database_id <span class="op">=</span> <span class="st">"database_id"</span>,
-                    workflow_step <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span>
+<div class="section level2">
+<h2 id="report">Report<a class="anchor" aria-label="anchor" href="#report"></a>
+</h2>
+<p>Here we create a column named <strong>.summary</strong> summing up the results of all <strong>VALIDATION</strong> tests. This column is <strong>FALSE</strong> when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_summary_col.html">bdc_summary_col</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span><span class="op">)</span>
+<span class="co">#&gt; Column '.summary' already exist. It will be updated</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; bdc_summary_col:</span>
+<span class="co">#&gt; Flagged 70 records.</span>
+<span class="co">#&gt; One column was added to the database.</span></code></pre></div>
+<p><br></p>
+<p>Creating a report summarizing the results of all tests of the <code>bdc</code> package.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># report &lt;-</span>
+<span class="co">#   bdc_create_report(data = check_time,</span>
+<span class="co">#                     database_id = "database_id",</span>
+<span class="co">#                     workflow_step = "time")</span>
 
-<span class="va">report</span></code></pre></div>
+<span class="co"># report</span></code></pre></div>
+<p><br></p>
 </div>
-<div id="figures" class="section level3">
-<h3 class="hasAnchor">
-<a href="#figures" class="anchor"></a>Figures</h3>
-<p>Creating histogram showing the number of records collecting over the years.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="section level2">
+<h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a>
+</h2>
+<p>Here we create a histogram showing the number of records collecting over the years.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bdc_create_figures.html">bdc_create_figures</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span>,
                    database_id <span class="op">=</span> <span class="st">"database_id"</span>,
                    workflow_step <span class="op">=</span> <span class="st">"time"</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<div class="figure">
+<img src="https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/time_year_BAR.png" style="width:20cm" alt=""><p class="caption">Number of records sampled over the years</p>
 </div>
-<div id="save-a-raw-database" class="section level3">
-<h3 class="hasAnchor">
-<a href="#save-a-raw-database" class="anchor"></a>Save a “raw” database</h3>
-<p>Save the original database containing the results of each data quality tests appended in separate columns.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">check_time</span> <span class="op">%&gt;%</span>
-  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>,
-            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"04_time_raw_database.qs"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<div class="figure">
+<img src="https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/time_.summary_BAR.png" style="width:20cm" alt=""><p class="caption">Summary of all tests of the time module; note that some database lack event date information</p>
 </div>
-<div id="filter-the-database" class="section level3">
-<h3 class="hasAnchor">
-<a href="#filter-the-database" class="anchor"></a>Filter the database</h3>
-<p>Let’s remove potentially erroneous or suspect records flagged by the data quality tests applied in all steps of the BDC workflow to get a “clean”, “fitness-for-use” database.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p><br></p>
+<div class="figure">
+<img src="https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/time_summary_all_tests_BAR.png" style="width:20cm" alt=""><p class="caption">Summary of all validation tests of the <em>bdc</em> package</p>
+</div>
+<p><br></p>
+</div>
+<div class="section level2">
+<h2 id="saving-a-raw-database">Saving a “raw” database<a class="anchor" aria-label="anchor" href="#saving-a-raw-database"></a>
+</h2>
+<p>Save the original database containing the results of all data quality tests appended in separate columns.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_time</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">.</span>,
+            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"04_time_raw_database.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="filtering-the-database">Filtering the database<a class="anchor" aria-label="anchor" href="#filtering-the-database"></a>
+</h2>
+<p>Let’s remove potentially erroneous or suspect records flagged by the data quality tests applied in all modules of the <em>bdc</em> package to get a “clean”, “fitness-for-use” database. Note that <strong>29%</strong> (2,631 out of 9.000 records) of original records were considered “fitness-for-use” after the data-cleaning process.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">output</span> <span class="op">&lt;-</span>
-  <span class="va">check_time</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.summary</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/bdc_filter_out_flags.html">bdc_filter_out_flags</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, col_to_remove <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></code></pre></div>
+  <span class="va">check_time</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.summary</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/bdc_filter_out_flags.html">bdc_filter_out_flags</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, col_to_remove <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; bdc_fiter_out_flags:</span>
+<span class="co">#&gt; The following columns were removed from the database:</span>
+<span class="co">#&gt; .uncer_terms, .rou, .val, .equ, .zer, .cap, .cen, .urb, .otl, .gbf, .inst, .dpl, .eventDate_empty, .year_outOfRange, .summary</span></code></pre></div>
 </div>
-<div id="save-a-fitness-for-use-database" class="section level3">
-<h3 class="hasAnchor">
-<a href="#save-a-fitness-for-use-database" class="anchor"></a>Save a “fitness-for-use” database</h3>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">check_pf</span> <span class="op">%&gt;%</span>
-  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>,
-            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"04_time_clean_database.qs"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="saving-a-clean-fitness-for-use-database">Saving a clean “fitness-for-use” database<a class="anchor" aria-label="anchor" href="#saving-a-clean-fitness-for-use-database"></a>
+</h2>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">output</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">.</span>,
+            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"04_time_clean_database.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="1%">
+<col width="6%">
+<col width="1%">
+<col width="1%">
+<col width="3%">
+<col width="2%">
+<col width="0%">
+<col width="1%">
+<col width="2%">
+<col width="14%">
+<col width="4%">
+<col width="1%">
+<col width="1%">
+<col width="2%">
+<col width="8%">
+<col width="1%">
+<col width="1%">
+<col width="3%">
+<col width="1%">
+<col width="0%">
+<col width="3%">
+<col width="1%">
+<col width="2%">
+<col width="0%">
+<col width="1%">
+<col width="1%">
+<col width="0%">
+<col width="1%">
+<col width="1%">
+<col width="1%">
+<col width="1%">
+<col width="1%">
+<col width="1%">
+<col width="2%">
+<col width="1%">
+<col width="1%">
+<col width="4%">
+<col width="2%">
+<col width="0%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">database_id</th>
+<th align="left">verbatim_scientificName</th>
+<th align="right">decimalLatitude</th>
+<th align="right">decimalLongitude</th>
+<th align="left">occurrenceID</th>
+<th align="left">verbatimEventDate</th>
+<th align="left">country</th>
+<th align="left">stateProvince</th>
+<th align="left">county</th>
+<th align="left">locality</th>
+<th align="left">coordinatePrecision</th>
+<th align="left">basisOfRecord</th>
+<th align="left">identifiedBy</th>
+<th align="right">coordinateUncertaintyInMeters</th>
+<th align="left">recordedBy</th>
+<th align="left">country_suggested</th>
+<th align="left">countryCode</th>
+<th align="left">original_search</th>
+<th align="left">suggested_name</th>
+<th align="left">distance</th>
+<th align="left">notes</th>
+<th align="left">taxonID</th>
+<th align="left">scientificName</th>
+<th align="left">taxonRank</th>
+<th align="left">taxonomicStatus</th>
+<th align="left">acceptedNameUsageID</th>
+<th align="left">kingdom</th>
+<th align="left">phylum</th>
+<th align="left">class</th>
+<th align="left">order</th>
+<th align="left">family</th>
+<th align="left">genus</th>
+<th align="left">specificEpithet</th>
+<th align="left">infraspecificEpithet</th>
+<th align="right">parentNameUsageID</th>
+<th align="right">originalNameUsageID</th>
+<th align="left">scientificNameAuthorship</th>
+<th align="left">vernacularName</th>
+<th align="right">year</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_1</td>
+<td align="left">Tillandsia tenuifolia</td>
+<td align="right">-25.521863</td>
+<td align="right">-51.41667</td>
+<td align="left">E8802</td>
+<td align="left">2003</td>
+<td align="left">Brazil</td>
+<td align="left">PARANA</td>
+<td align="left">GUARAPUAVA</td>
+<td align="left">Rio Sao Jeronimo</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Tillandsia tenuifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2695114</td>
+<td align="left">Tillandsia tenuifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2695114</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Tillandsia</td>
+<td align="left">tenuifolia</td>
+<td align="left">NA</td>
+<td align="right">8279994</td>
+<td align="right">NA</td>
+<td align="left">L.</td>
+<td align="left">narrowleaf airplant</td>
+<td align="right">2003</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_2</td>
+<td align="left">Peperomia obtusifolia</td>
+<td align="right">-14.659720</td>
+<td align="right">-39.14972</td>
+<td align="left">635992</td>
+<td align="left">2015</td>
+<td align="left">Brazil</td>
+<td align="left">BAHIA</td>
+<td align="left">ILHEUS</td>
+<td align="left">NA</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Peperomia obtusifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086423</td>
+<td align="left">Peperomia obtusifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086423</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Piperales</td>
+<td align="left">Piperaceae</td>
+<td align="left">Peperomia</td>
+<td align="left">obtusifolia</td>
+<td align="left">NA</td>
+<td align="right">3086367</td>
+<td align="right">3086426</td>
+<td align="left">A.Dietr. (L.)</td>
+<td align="left">pepper face</td>
+<td align="right">2015</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_4</td>
+<td align="left">Vriesea flammea</td>
+<td align="right">-23.350000</td>
+<td align="right">-44.85833</td>
+<td align="left">E0272</td>
+<td align="left">2011</td>
+<td align="left">Brazil</td>
+<td align="left">SAO PAULO</td>
+<td align="left">UBATUBA</td>
+<td align="left">Parque Estadual da Serra do Mar-Nucleo Picinguaba</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Vriesea flammea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5289378</td>
+<td align="left">Vriesea flammea</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5289378</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Vriesea</td>
+<td align="left">flammea</td>
+<td align="left">NA</td>
+<td align="right">2699764</td>
+<td align="right">NA</td>
+<td align="left">L.B.Sm.</td>
+<td align="left">NA</td>
+<td align="right">2011</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_5</td>
+<td align="left">Lankesterella ceracifolia</td>
+<td align="right">-28.166700</td>
+<td align="right">-49.40000</td>
+<td align="left">17541</td>
+<td align="left">2009</td>
+<td align="left">Brazil</td>
+<td align="left">SANTA CATARINA</td>
+<td align="left">ORLEANS</td>
+<td align="left">Rio Minador</td>
+<td align="left">Municipality</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Lankesterella ceracifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5312267</td>
+<td align="left">Lankesterella ceracifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5312267</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Asparagales</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Lankesterella</td>
+<td align="left">ceracifolia</td>
+<td align="left">NA</td>
+<td align="right">2807134</td>
+<td align="right">2807162</td>
+<td align="left">Mansf. (Barb.Rodr.)</td>
+<td align="left">NA</td>
+<td align="right">2009</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_7</td>
+<td align="left">Nidularium innocentii</td>
+<td align="right">-26.183300</td>
+<td align="right">-49.03330</td>
+<td align="left">20521</td>
+<td align="left">2009</td>
+<td align="left">Brazil</td>
+<td align="left">SANTA CATARINA</td>
+<td align="left">JOINVILLE</td>
+<td align="left">Serra Dona Francisca</td>
+<td align="left">Municipality</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Nidularium innocentii</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2697762</td>
+<td align="left">Nidularium innocentii</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2697762</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Nidularium</td>
+<td align="left">innocentii</td>
+<td align="left">NA</td>
+<td align="right">2697636</td>
+<td align="right">NA</td>
+<td align="left">Lem.</td>
+<td align="left">purpurvattensamlare</td>
+<td align="right">2009</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_11</td>
+<td align="left">Microgramma squamulosa</td>
+<td align="right">-25.666271</td>
+<td align="right">-49.26923</td>
+<td align="left">E7552</td>
+<td align="left">2017</td>
+<td align="left">Brazil</td>
+<td align="left">PARANA</td>
+<td align="left">FAZENDA RIO GRANDE</td>
+<td align="left">Fazenda Experimental Gralha Azul 2</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Microgramma squamulosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4025976</td>
+<td align="left">Microgramma squamulosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4025976</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Polypodiopsida</td>
+<td align="left">Polypodiales</td>
+<td align="left">Polypodiaceae</td>
+<td align="left">Microgramma</td>
+<td align="left">squamulosa</td>
+<td align="left">NA</td>
+<td align="right">8393217</td>
+<td align="right">7290190</td>
+<td align="left">de la Sota (Kaulf.)</td>
+<td align="left">NA</td>
+<td align="right">2017</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_14</td>
+<td align="left">Vriesea tijucana</td>
+<td align="right">-15.158634</td>
+<td align="right">-39.05715</td>
+<td align="left">359</td>
+<td align="left">2000</td>
+<td align="left">Brazil</td>
+<td align="left">BAHIA</td>
+<td align="left">UNA</td>
+<td align="left">Reserva Biologica de Una</td>
+<td align="left">20</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Vriesea tijucana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5288897</td>
+<td align="left">Vriesea tijucana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5288897</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Vriesea</td>
+<td align="left">tijucana</td>
+<td align="left">NA</td>
+<td align="right">2699764</td>
+<td align="right">NA</td>
+<td align="left">E.Pereira</td>
+<td align="left">NA</td>
+<td align="right">2000</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_16</td>
+<td align="left">Anthurium gaudichaudianum</td>
+<td align="right">-29.342087</td>
+<td align="right">-49.68663</td>
+<td align="left">E0057</td>
+<td align="left">1992</td>
+<td align="left">Brazil</td>
+<td align="left">RIO GRANDE DO SUL</td>
+<td align="left">TORRES</td>
+<td align="left">Torres</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Anthurium gaudichaudianum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2872740</td>
+<td align="left">Anthurium gaudichaudianum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2872740</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Alismatales</td>
+<td align="left">Araceae</td>
+<td align="left">Anthurium</td>
+<td align="left">gaudichaudianum</td>
+<td align="left">NA</td>
+<td align="right">2872218</td>
+<td align="right">NA</td>
+<td align="left">Kunth</td>
+<td align="left">NA</td>
+<td align="right">1992</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_18</td>
+<td align="left">Acianthera langeana</td>
+<td align="right">-28.471650</td>
+<td align="right">-49.98157</td>
+<td align="left">E2724</td>
+<td align="left">2014</td>
+<td align="left">Brazil</td>
+<td align="left">RIO GRANDE DO SUL</td>
+<td align="left">SAO JOSE DOS AUSENTES</td>
+<td align="left">Rio Pelotas</td>
+<td align="left">Forest fragment</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Acianthera langeana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2840033</td>
+<td align="left">Acianthera langeana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2840033</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Asparagales</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Acianthera</td>
+<td align="left">langeana</td>
+<td align="left">NA</td>
+<td align="right">7848554</td>
+<td align="right">2840034</td>
+<td align="left">Pridgeon &amp; M.W.Chase (Kraenzl.)</td>
+<td align="left">NA</td>
+<td align="right">2014</td>
+</tr>
+<tr class="even">
+<td align="left">AT_EPIPHYTES_19</td>
+<td align="left">Pleopeltis monoides</td>
+<td align="right">-22.430830</td>
+<td align="right">-42.74306</td>
+<td align="left">540781</td>
+<td align="left">2010</td>
+<td align="left">Brazil</td>
+<td align="left">RIO DE JANEIRO</td>
+<td align="left">CACHOEIRAS DE MACACU</td>
+<td align="left">NA</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Pleopeltis monoides</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7495967</td>
+<td align="left">Pleopeltis monoides</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7495967</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Polypodiopsida</td>
+<td align="left">Polypodiales</td>
+<td align="left">Polypodiaceae</td>
+<td align="left">Pleopeltis</td>
+<td align="left">monoides</td>
+<td align="left">NA</td>
+<td align="right">2650485</td>
+<td align="right">5649333</td>
+<td align="left">Salino (Weath.)</td>
+<td align="left">NA</td>
+<td align="right">2010</td>
+</tr>
+<tr class="odd">
+<td align="left">AT_EPIPHYTES_20</td>
+<td align="left">Hymenophyllum fragile</td>
+<td align="right">-25.050000</td>
+<td align="right">-49.80000</td>
+<td align="left">444521</td>
+<td align="left">2003</td>
+<td align="left">Brazil</td>
+<td align="left">PARANA</td>
+<td align="left">CASTRO</td>
+<td align="left">NA</td>
+<td align="left">Coordinates given in the herbarium record</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Hymenophyllum fragile</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2651313</td>
+<td align="left">Hymenophyllum fragile</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2651313</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Polypodiopsida</td>
+<td align="left">Hymenophyllales</td>
+<td align="left">Hymenophyllaceae</td>
+<td align="left">Hymenophyllum</td>
+<td align="left">fragile</td>
+<td align="left">NA</td>
+<td align="right">2651287</td>
+<td align="right">5533060</td>
+<td align="left">Morton (Hedw.)</td>
+<td align="left">fragile filmy fern</td>
+<td align="right">2003</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_1</td>
+<td align="left">Solanum paniculatum</td>
+<td align="right">-7.135306</td>
+<td align="right">-38.60147</td>
+<td align="left">786</td>
+<td align="left">2010-08-25</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Solanum paniculatum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932547</td>
+<td align="left">Solanum paniculatum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932547</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Solanales</td>
+<td align="left">Solanaceae</td>
+<td align="left">Solanum</td>
+<td align="left">paniculatum</td>
+<td align="left">NA</td>
+<td align="right">2928997</td>
+<td align="right">NA</td>
+<td align="left">L.</td>
+<td align="left">jurubeba</td>
+<td align="right">2010</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_2</td>
+<td align="left">Tetrapterys crispa</td>
+<td align="right">-0.950000</td>
+<td align="right">-49.80000</td>
+<td align="left">1758</td>
+<td align="left">1987-11-04</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Tetrapterys crispa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7285570</td>
+<td align="left">Tetrapterys crispa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7285570</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Malpighiaceae</td>
+<td align="left">Tetrapterys</td>
+<td align="left">crispa</td>
+<td align="left">NA</td>
+<td align="right">3191303</td>
+<td align="right">NA</td>
+<td align="left">A.Juss.</td>
+<td align="left">NA</td>
+<td align="right">1987</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_5</td>
+<td align="left">Machaerium fulvovenosum</td>
+<td align="right">-20.848889</td>
+<td align="right">-41.11250</td>
+<td align="left">1307</td>
+<td align="left">2008-10-10</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Machaerium fulvovenosum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5355056</td>
+<td align="left">Machaerium fulvovenosum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5355056</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Machaerium</td>
+<td align="left">fulvovenosum</td>
+<td align="left">NA</td>
+<td align="right">2959589</td>
+<td align="right">NA</td>
+<td align="left">H.C.Lima</td>
+<td align="left">jacaranda tan</td>
+<td align="right">2008</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_7</td>
+<td align="left">Byrsonima sericea</td>
+<td align="right">-15.181944</td>
+<td align="right">-45.76972</td>
+<td align="left">3012</td>
+<td align="left">1997-12-05</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Byrsonima sericea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7285418</td>
+<td align="left">Byrsonima sericea</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7285418</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Malpighiaceae</td>
+<td align="left">Byrsonima</td>
+<td align="left">sericea</td>
+<td align="left">NA</td>
+<td align="right">3191347</td>
+<td align="right">NA</td>
+<td align="left">DC.</td>
+<td align="left">NA</td>
+<td align="right">1997</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_9</td>
+<td align="left">Cordia nodosa</td>
+<td align="right">-9.950000</td>
+<td align="right">-57.10000</td>
+<td align="left">2979</td>
+<td align="left">1985-09-30</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Cordia nodosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7295069</td>
+<td align="left">Cordia nodosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7295069</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Boraginales</td>
+<td align="left">Cordiaceae</td>
+<td align="left">Cordia</td>
+<td align="left">nodosa</td>
+<td align="left">NA</td>
+<td align="right">2900865</td>
+<td align="right">NA</td>
+<td align="left">Lam.</td>
+<td align="left">pau de formiga</td>
+<td align="right">1985</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_11</td>
+<td align="left">Phoradendron crassifolium</td>
+<td align="right">-23.620280</td>
+<td align="right">-45.40972</td>
+<td align="left">104</td>
+<td align="left">1961-05-20</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Phoradendron crassifolium</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7772421</td>
+<td align="left">Phoradendron crassifolium</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7772421</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Santalales</td>
+<td align="left">Viscaceae</td>
+<td align="left">Phoradendron</td>
+<td align="left">crassifolium</td>
+<td align="left">NA</td>
+<td align="right">2889864</td>
+<td align="right">4068428</td>
+<td align="left">Eichler (Pohl ex DC.)</td>
+<td align="left">NA</td>
+<td align="right">1961</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_12</td>
+<td align="left">Pagamea plicata</td>
+<td align="right">-10.605278</td>
+<td align="right">-46.28500</td>
+<td align="left">3801</td>
+<td align="left">2007-09-21</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Pagamea plicata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2902164</td>
+<td align="left">Pagamea plicata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2902164</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Pagamea</td>
+<td align="left">plicata</td>
+<td align="left">NA</td>
+<td align="right">2902141</td>
+<td align="right">NA</td>
+<td align="left">Spruce ex Benth.</td>
+<td align="left">NA</td>
+<td align="right">2007</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_15</td>
+<td align="left">Achyrocline alata</td>
+<td align="right">-20.448028</td>
+<td align="right">-52.90622</td>
+<td align="left">2258</td>
+<td align="left">2005-04-22</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Achyrocline alata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3139547</td>
+<td align="left">Achyrocline alata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3139547</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Asterales</td>
+<td align="left">Asteraceae</td>
+<td align="left">Achyrocline</td>
+<td align="left">alata</td>
+<td align="left">NA</td>
+<td align="right">3139525</td>
+<td align="right">NA</td>
+<td align="left">DC. (Kunth)</td>
+<td align="left">macela do brejo</td>
+<td align="right">2005</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_18</td>
+<td align="left">Oldenlandia filicaulis</td>
+<td align="right">-14.266667</td>
+<td align="right">-42.52611</td>
+<td align="left">2756</td>
+<td align="left">2006-01-10</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Oldenlandia filicaulis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2915856</td>
+<td align="left">Oldenlandia filicaulis</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2915856</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Oldenlandia</td>
+<td align="left">filicaulis</td>
+<td align="left">NA</td>
+<td align="right">2915706</td>
+<td align="right">NA</td>
+<td align="left">K.Schum.</td>
+<td align="left">NA</td>
+<td align="right">2006</td>
+</tr>
+<tr class="odd">
+<td align="left">BIEN_19</td>
+<td align="left">Bauhinia brevipes</td>
+<td align="right">-12.871667</td>
+<td align="right">-46.97000</td>
+<td align="left">1928</td>
+<td align="left">2009-06-29</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Bauhinia brevipes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2953099</td>
+<td align="left">Bauhinia brevipes</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2953099</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Bauhinia</td>
+<td align="left">brevipes</td>
+<td align="left">NA</td>
+<td align="right">2952935</td>
+<td align="right">NA</td>
+<td align="left">Vogel</td>
+<td align="left">NA</td>
+<td align="right">2009</td>
+</tr>
+<tr class="even">
+<td align="left">BIEN_20</td>
+<td align="left">Paspalum guttatum</td>
+<td align="right">-11.688056</td>
+<td align="right">-47.70250</td>
+<td align="left">3120</td>
+<td align="left">2014-11-20</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Paspalum guttatum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4110078</td>
+<td align="left">Paspalum guttatum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4110078</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Poaceae</td>
+<td align="left">Paspalum</td>
+<td align="left">guttatum</td>
+<td align="left">NA</td>
+<td align="right">2705540</td>
+<td align="right">NA</td>
+<td align="left">Trin.</td>
+<td align="left">NA</td>
+<td align="right">2014</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_4</td>
+<td align="left">Erythroxylum cuspidifolium Mart.</td>
+<td align="right">-13.936944</td>
+<td align="right">-39.42444</td>
+<td align="left">1944976406</td>
+<td align="left">2013-03-28T00:00:00Z</td>
+<td align="left">Brazil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">Fazenda Paineiras, BR 116, KM 390</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">Sem Informação</td>
+<td align="right">NA</td>
+<td align="left">T. Araújo</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Erythroxylum cuspidifolium</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3694220</td>
+<td align="left">Erythroxylum cuspidifolium</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3694220</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Erythroxylaceae</td>
+<td align="left">Erythroxylum</td>
+<td align="left">cuspidifolium</td>
+<td align="left">NA</td>
+<td align="right">2873937</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">fruta de pomba</td>
+<td align="right">2013</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_5</td>
+<td align="left">Ocotea lanceolata Nees</td>
+<td align="right">-13.483330</td>
+<td align="right">-41.81667</td>
+<td align="left">439130715</td>
+<td align="left">1977-02-24T00:00:00Z</td>
+<td align="left">Brazil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Harley, R.M.|Santos, T.S.|Pinheiro, R.S.|Mayo, S.J.|Storr, R.M.</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Ocotea lanceolata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">heterotypic synonym</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1977</td>
+</tr>
+<tr class="odd">
+<td align="left">GBIF_14</td>
+<td align="left">Hillia parasitica Jacq.</td>
+<td align="right">-13.070000</td>
+<td align="right">-41.37000</td>
+<td align="left">912236353</td>
+<td align="left">2002-02-15T00:00:00Z</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">Bahia, Mucage: Serra do Gobira. Mata do Grotao no alto do Gobira.</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">Harley, R. M. et al.</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Hillia parasitica</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5340010</td>
+<td align="left">Hillia parasitica</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5340010</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Hillia</td>
+<td align="left">parasitica</td>
+<td align="left">NA</td>
+<td align="right">2916438</td>
+<td align="right">NA</td>
+<td align="left">Jacq.</td>
+<td align="left">White Bell</td>
+<td align="right">2002</td>
+</tr>
+<tr class="even">
+<td align="left">GBIF_16</td>
+<td align="left">Chresta pacourinoides (Mart. ex DC.) Loeuille, Siniscalchi &amp; Pirani</td>
+<td align="right">-5.640583</td>
+<td align="right">-42.60831</td>
+<td align="left">1090954960</td>
+<td align="left">2000-05-16T00:00:00Z</td>
+<td align="left">Brazil</td>
+<td align="left">Piauí</td>
+<td align="left">NA</td>
+<td align="left">Fazenda Saquinho</td>
+<td align="left">NA</td>
+<td align="left">PRESERVED_SPECIMEN</td>
+<td align="left">B. Leonille</td>
+<td align="right">NA</td>
+<td align="left">R. Barros; R.R. Farias</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Chresta pacourinoides</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8282348</td>
+<td align="left">Chresta pacourinoides</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8282348</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Asterales</td>
+<td align="left">Asteraceae</td>
+<td align="left">Chresta</td>
+<td align="left">pacourinoides</td>
+<td align="left">NA</td>
+<td align="right">3142054</td>
+<td align="right">3145360</td>
+<td align="left">Loeuille, Siniscalchi &amp; Pirani (Mart. ex DC.)</td>
+<td align="left">NA</td>
+<td align="right">2000</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_1</td>
+<td align="left">Chamaecrista incana (Vogel) H.S.Irwin &amp; Barneby</td>
+<td align="right">-25.383056</td>
+<td align="right">-51.51111</td>
+<td align="left">RB01034852</td>
+<td align="left">10/12/2013</td>
+<td align="left">Brasil</td>
+<td align="left">Paraná</td>
+<td align="left">Guarapuava</td>
+<td align="left">Rodovia BR-277, Campo em frente a concessionária Valtra-Shark.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Chamaecrista incana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2949514</td>
+<td align="left">Chamaecrista incana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2949514</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Chamaecrista</td>
+<td align="left">incana</td>
+<td align="left">NA</td>
+<td align="right">2949492</td>
+<td align="right">5351173</td>
+<td align="left">H.S.Irwin &amp; Barneby (Vogel)</td>
+<td align="left">NA</td>
+<td align="right">2013</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_2</td>
+<td align="left">Tridax procumbens L.</td>
+<td align="right">-12.263056</td>
+<td align="right">-38.04167</td>
+<td align="left">RB01357838</td>
+<td align="left">09/03/2016</td>
+<td align="left">Brasil</td>
+<td align="left">Bahia</td>
+<td align="left">Itanagra</td>
+<td align="left">Conglomerado BA__E-1-1-HE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Tridax procumbens</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3149462</td>
+<td align="left">Tridax procumbens</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3149462</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Asterales</td>
+<td align="left">Asteraceae</td>
+<td align="left">Tridax</td>
+<td align="left">procumbens</td>
+<td align="left">NA</td>
+<td align="right">3149429</td>
+<td align="right">NA</td>
+<td align="left">L.</td>
+<td align="left">Yerba de San Juan del monte</td>
+<td align="right">2016</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_3</td>
+<td align="left">Peperomia tetraphylla (G.Forst.) Hook. &amp; Arn.</td>
+<td align="right">-20.938611</td>
+<td align="right">-41.54444</td>
+<td align="left">RB00821048</td>
+<td align="left">08/08/2013</td>
+<td align="left">Brasil</td>
+<td align="left">Espírito Santo</td>
+<td align="left">Mimoso do Sul</td>
+<td align="left">Córrego do Jardim. Floresta de Pseudobombax, Nyctaginaceae, bromélias e aráceas, com tapete de musgos, sobre afloramento rochoso.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Peperomia tetraphylla</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086448</td>
+<td align="left">Peperomia tetraphylla</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086448</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Piperales</td>
+<td align="left">Piperaceae</td>
+<td align="left">Peperomia</td>
+<td align="left">tetraphylla</td>
+<td align="left">NA</td>
+<td align="right">3086367</td>
+<td align="right">3086450</td>
+<td align="left">Hook. &amp; Arn. (G.Forst.)</td>
+<td align="left">dou ban lu</td>
+<td align="right">2013</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_7</td>
+<td align="left">Byrsonima crispa</td>
+<td align="right">-16.504000</td>
+<td align="right">-39.25500</td>
+<td align="left">604662</td>
+<td align="left">14/10/2009</td>
+<td align="left">Brasil</td>
+<td align="left">BA</td>
+<td align="left">NA</td>
+<td align="left">Parque Nacional Do Pau Brasil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Byrsonima crispa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3986307</td>
+<td align="left">Byrsonima crispa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3986307</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Malpighiaceae</td>
+<td align="left">Byrsonima</td>
+<td align="left">crispa</td>
+<td align="left">NA</td>
+<td align="right">3191347</td>
+<td align="right">NA</td>
+<td align="left">A.Juss.</td>
+<td align="left">murici</td>
+<td align="right">2009</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_8</td>
+<td align="left">Paspalum multicaule Poir.</td>
+<td align="right">-12.900000</td>
+<td align="right">-51.86667</td>
+<td align="left">RB00525311</td>
+<td align="left">26/06/1968</td>
+<td align="left">Brasil</td>
+<td align="left">Mato Grosso</td>
+<td align="left">NA</td>
+<td align="left">Base Camp of the Expedition, ca. 270 km N of Xavantina on the Xavantina - São Félix road.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Paspalum multicaule</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4106884</td>
+<td align="left">Paspalum multicaule</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4106884</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Poaceae</td>
+<td align="left">Paspalum</td>
+<td align="left">multicaule</td>
+<td align="left">NA</td>
+<td align="right">2705540</td>
+<td align="right">NA</td>
+<td align="left">Poir.</td>
+<td align="left">NA</td>
+<td align="right">1968</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_9</td>
+<td align="left">Solanum megalochiton Mart.</td>
+<td align="right">-19.351389</td>
+<td align="right">-40.54806</td>
+<td align="left">RB00780705</td>
+<td align="left">19/04/2013</td>
+<td align="left">Brasil</td>
+<td align="left">Espírito Santo</td>
+<td align="left">Marilândia</td>
+<td align="left">Localidade de Alto Liberdade. Pedra do Cruzeiro, Floresta alterada ao longo da escadaria para o topo do inselbergue.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Solanum megalochiton</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932021</td>
+<td align="left">Solanum megalochiton</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932021</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Solanales</td>
+<td align="left">Solanaceae</td>
+<td align="left">Solanum</td>
+<td align="left">megalochiton</td>
+<td align="left">NA</td>
+<td align="right">2928997</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">NA</td>
+<td align="right">2013</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_10</td>
+<td align="left">Leiothrix curvifolia (Bong.) Ruhland</td>
+<td align="right">-18.962500</td>
+<td align="right">-43.74194</td>
+<td align="left">RB00604869</td>
+<td align="left">24/11/2009</td>
+<td align="left">Brasil</td>
+<td align="left">Minas Gerais</td>
+<td align="left">Santana de Pirapama</td>
+<td align="left">Serra do Cipó, Capela de São José, Trilha da Senhorinha, caminho a Congonhas do Norte.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Leiothrix curvifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5286550</td>
+<td align="left">Leiothrix curvifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5286550</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Eriocaulaceae</td>
+<td align="left">Leiothrix</td>
+<td align="left">curvifolia</td>
+<td align="left">NA</td>
+<td align="right">2691180</td>
+<td align="right">2691250</td>
+<td align="left">Ruhland (Bong.)</td>
+<td align="left">NA</td>
+<td align="right">2009</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_11</td>
+<td align="left">Chrysophyllum inornatum Mart.</td>
+<td align="right">-27.334444</td>
+<td align="right">-49.94222</td>
+<td align="left">RB01138574</td>
+<td align="left">10/11/2008</td>
+<td align="left">Brasil</td>
+<td align="left">Santa Catarina</td>
+<td align="left">Pouso Redondo</td>
+<td align="left">Corruchel.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Chrysophyllum inornatum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2885737</td>
+<td align="left">Chrysophyllum inornatum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2885737</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Ericales</td>
+<td align="left">Sapotaceae</td>
+<td align="left">Chrysophyllum</td>
+<td align="left">inornatum</td>
+<td align="left">NA</td>
+<td align="right">2885576</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">murta</td>
+<td align="right">2008</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_12</td>
+<td align="left">Mimosa paludosa Benth.</td>
+<td align="right">-13.600000</td>
+<td align="right">-41.83333</td>
+<td align="left">RB00164077</td>
+<td align="left">27/03/1977</td>
+<td align="left">Brasil</td>
+<td align="left">Bahia</td>
+<td align="left">NA</td>
+<td align="left">Between 2,5 and 5km S. of the Vila do Rio de Contas on side road to W. of the road to livramento, leading to the Rio Brumado.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Mimosa paludosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2969575</td>
+<td align="left">Mimosa paludosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2969575</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Mimosa</td>
+<td align="left">paludosa</td>
+<td align="left">NA</td>
+<td align="right">2969235</td>
+<td align="right">NA</td>
+<td align="left">Benth.</td>
+<td align="left">NA</td>
+<td align="right">1977</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_14</td>
+<td align="left">Myrsine umbellata</td>
+<td align="right">-22.456917</td>
+<td align="right">-44.60961</td>
+<td align="left">909060</td>
+<td align="left">25/11/2014</td>
+<td align="left">Brasil</td>
+<td align="left">RJ</td>
+<td align="left">NA</td>
+<td align="left">Parque Nacional De Itatiaia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Myrsine umbellata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7422518</td>
+<td align="left">Myrsine umbellata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7422518</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Ericales</td>
+<td align="left">Primulaceae</td>
+<td align="left">Myrsine</td>
+<td align="left">umbellata</td>
+<td align="left">NA</td>
+<td align="right">3169412</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">NA</td>
+<td align="right">2014</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_15</td>
+<td align="left">Swartzia simplex var. continentalis Urb.</td>
+<td align="right">-20.242500</td>
+<td align="right">-42.01972</td>
+<td align="left">RB00521071</td>
+<td align="left">10/12/2007</td>
+<td align="left">Brasil</td>
+<td align="left">Espírito Santo</td>
+<td align="left">Santa Leopoldina</td>
+<td align="left">Cachoeira do Mochafongo, Sítio Mochafongo. Arbusto 5m, tronco castanho-escuro, beira da cachoeira, solo rochoso, local com alta incidência de sol.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Swartzia simplex continentalis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted | replaceSynonym</td>
+<td align="left">GBIF:5352053</td>
+<td align="left">Swartzia simplex</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5352047</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Swartzia</td>
+<td align="left">simplex</td>
+<td align="left">NA</td>
+<td align="right">2950920</td>
+<td align="right">2951203</td>
+<td align="left">Spreng. (Sw.)</td>
+<td align="left">NA</td>
+<td align="right">2007</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_16</td>
+<td align="left">Tephrosia</td>
+<td align="right">-9.849722</td>
+<td align="right">-52.40472</td>
+<td align="left">RB00622100</td>
+<td align="left">11/03/2011</td>
+<td align="left">Brasil</td>
+<td align="left">Mato Grosso</td>
+<td align="left">São José do Xingu</td>
+<td align="left">Fazenda Santa Filipina, a 20-40 km da Faz. Najá, zona de amortecimento do Parque Estadual do Xingu.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Tephrosia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2933053</td>
+<td align="left">Tephrosia</td>
+<td align="left">genus</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2933053</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Tephrosia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">5386</td>
+<td align="right">NA</td>
+<td align="left">Pers.</td>
+<td align="left">hoarypea</td>
+<td align="right">2011</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_18</td>
+<td align="left">Marcetia latifolia Naudin</td>
+<td align="right">-11.633333</td>
+<td align="right">-41.03333</td>
+<td align="left">RB00238744</td>
+<td align="left">30/05/1980</td>
+<td align="left">Brasil</td>
+<td align="left">Piauí</td>
+<td align="left">Morro do Chapéu do Piauí</td>
+<td align="left">Rio do Ferro Doido, 19,5 km S.E. of Morro do Chapéu on the BA 052 highway to Mundo Novo, with water-worn.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Marcetia latifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5601599</td>
+<td align="left">Marcetia latifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5601599</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Myrtales</td>
+<td align="left">Melastomataceae</td>
+<td align="left">Marcetia</td>
+<td align="left">latifolia</td>
+<td align="left">NA</td>
+<td align="right">3231533</td>
+<td align="right">NA</td>
+<td align="left">Naudin</td>
+<td align="left">NA</td>
+<td align="right">1980</td>
+</tr>
+<tr class="even">
+<td align="left">ICMBIO_19</td>
+<td align="left">Clusia nemorosa G.Mey.</td>
+<td align="right">-8.280000</td>
+<td align="right">-34.95417</td>
+<td align="left">RB00574427</td>
+<td align="left">24/08/2007</td>
+<td align="left">Brasil</td>
+<td align="left">Pernambuco</td>
+<td align="left">Cabo de Santo Agostinho</td>
+<td align="left">Itapuama, engenho Camaçari.</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Clusia nemorosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7330253</td>
+<td align="left">Clusia nemorosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7330253</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Clusiaceae</td>
+<td align="left">Clusia</td>
+<td align="left">nemorosa</td>
+<td align="left">NA</td>
+<td align="right">3189424</td>
+<td align="right">NA</td>
+<td align="left">G.Mey.</td>
+<td align="left">orelha de burro</td>
+<td align="right">2007</td>
+</tr>
+<tr class="odd">
+<td align="left">ICMBIO_20</td>
+<td align="left">Bertholletia excelsa</td>
+<td align="right">-10.855507</td>
+<td align="right">-68.70040</td>
+<td align="left">458788</td>
+<td align="left">31/03/2013</td>
+<td align="left">Brasil</td>
+<td align="left">AC</td>
+<td align="left">NA</td>
+<td align="left">Reserva Extrativista Chico Mendes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Bertholletia excelsa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3083180</td>
+<td align="left">Bertholletia excelsa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3083180</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Ericales</td>
+<td align="left">Lecythidaceae</td>
+<td align="left">Bertholletia</td>
+<td align="left">excelsa</td>
+<td align="left">NA</td>
+<td align="right">3083179</td>
+<td align="right">NA</td>
+<td align="left">Bonpl.</td>
+<td align="left">Turury</td>
+<td align="right">2013</td>
+</tr>
+<tr class="even">
+<td align="left">IDIGBIO_15</td>
+<td align="left">Ocotea laxa (Nees) Mez</td>
+<td align="right">-25.476900</td>
+<td align="right">-48.83420</td>
+<td align="left">775655fa-be84-4db2-b9f1-ab1b93afed07</td>
+<td align="left">1971-01-19</td>
+<td align="left">Brazil</td>
+<td align="left">Paraná</td>
+<td align="left">Morretes</td>
+<td align="left">Serra Marumbi, picada ao Olimpo</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">NA</td>
+<td align="right">30514</td>
+<td align="left">G. G. Hatschbach</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Ocotea laxa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4179789</td>
+<td align="left">Ocotea laxa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4179789</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Laurales</td>
+<td align="left">Lauraceae</td>
+<td align="left">Ocotea</td>
+<td align="left">laxa</td>
+<td align="left">NA</td>
+<td align="right">3034076</td>
+<td align="right">4180505</td>
+<td align="left">Mez (Nees)</td>
+<td align="left">NA</td>
+<td align="right">1971</td>
+</tr>
+<tr class="odd">
+<td align="left">IDIGBIO_19</td>
+<td align="left">Clidemia epiphytica (Triana) Cogn.</td>
+<td align="right">-4.696879</td>
+<td align="right">-69.50483</td>
+<td align="left">d41300b6-eb71-4a99-bdfe-717c093616b1</td>
+<td align="left">1936-09-11/1936-10-26</td>
+<td align="left">Brazil</td>
+<td align="left">Amazonas</td>
+<td align="left">São Paulo de Olivença</td>
+<td align="left">Near Palmares. Basin of Rio Solimoes.</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">F. A. Michelangeli</td>
+<td align="right">201650</td>
+<td align="left">B. A. Krukoff</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Clidemia epiphytica</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">homotypic synonym</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">1936</td>
+</tr>
+<tr class="even">
+<td align="left">SIBBR_10</td>
+<td align="left">Plantae</td>
+<td align="right">-23.213774</td>
+<td align="right">-46.36143</td>
+<td align="left">ad73d33b-4f47-445a-bc84-bcc8397552d6</td>
+<td align="left">2013</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">HumanObservation</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Plantae</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:6</td>
+<td align="left">Plantae</td>
+<td align="left">kingdom</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:6</td>
+<td align="left">Plantae</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">植物界</td>
+<td align="right">2013</td>
+</tr>
+<tr class="odd">
+<td align="left">SIBBR_12</td>
+<td align="left">Matayba elaeagnoides</td>
+<td align="right">-24.100560</td>
+<td align="right">-50.70694</td>
+<td align="left">587d1247-b4e8-4a13-b121-6717f7f86273</td>
+<td align="left">2011</td>
+<td align="left">Brazil</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">H|<em>x0005</em>
+</td>
+<td align="left">NA</td>
+<td align="left">PreservedSpecimen</td>
+<td align="left">Bonaldi, R.A.</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">Brazil</td>
+<td align="left">BR</td>
+<td align="left">Matayba elaeagnoides</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3784375</td>
+<td align="left">Matayba elaeagnoides</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3784375</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Sapindales</td>
+<td align="left">Sapindaceae</td>
+<td align="left">Matayba</td>
+<td align="left">elaeagnoides</td>
+<td align="left">NA</td>
+<td align="right">3190011</td>
+<td align="right">NA</td>
+<td align="left">Radlk.</td>
+<td align="left">pau de pombo</td>
+<td align="right">2011</td>
+</tr>
+</tbody>
+</table>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 
 
 
       <footer><div class="copyright">
-  <p>Developed by Bruno Ribeiro, Geiziane Tessarolo, Santiago Velazco, Lucas Jardim, Karlo Guidoni-Martins.</p>
+  <p></p>
+<p>Developed by Bruno Ribeiro, Geiziane Tessarolo, Santiago Velazco, Lucas Jardim, Karlo Guidoni-Martins.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -242,6 +2202,8 @@
 
   
 
+
+  
 
   </body>
 </html>

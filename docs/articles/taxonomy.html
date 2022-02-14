@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
       </span>
     </div>
 
@@ -46,7 +48,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa-home"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
@@ -66,7 +68,7 @@
       <a href="../articles/integrate_datasets.html">Standardization and integration of different datasets</a>
     </li>
     <li>
-      <a href="../articles/prefilter.html">Prefilter</a>
+      <a href="../articles/prefilter.html">Pre-filter</a>
     </li>
     <li>
       <a href="../articles/taxonomy.html">Taxonomy</a>
@@ -90,12 +92,12 @@
 
       
 
-      </header><script src="taxonomy_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Taxonomy</h1>
             
-            <h4 class="date">2021-04-20</h4>
+            <h4 data-toc-skip class="date">2022-02-14</h4>
       
       
       <div class="hidden name"><code>taxonomy.Rmd</code></div>
@@ -104,11 +106,18 @@
 
     
     
-<div id="introduction" class="section level3">
-<h3 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h3>
-<p>The combination of large datasets from several sources requires careful standardization of hundreds of taxon names. The taxonomic standardization process borrows heavily from Norman et al. (2020; <em>taxadb</em> package), which contains functions that allow querying millions of taxonomic names in a fast, automatable, and consistent way using high-quality locally stored taxonomic databases.</p>
-<p>The workflow tools used to standardize names (<em>bdc_clean_name</em> and <em>bdc_query_names_taxadb</em>) contains additions to the <em>taxadb</em> package, including tools for: - 1. Clean and parse scientific names; - 2. Resolve misspelled names or variant spellings using a fuzzy matching application; - 3. Convert nomenclatural synonyms to current accepted name; - 4. Flag ambiguous results.</p>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>The combination of large datasets from several sources requires careful standardization taxon names. Non-standardized incorrect, ambiguous, or synonymous taxonomic names can lead to <strong>unreliable results and conclusions</strong>. The <em>bdc</em> package includes tools to help standardize <strong>major taxonomic groups’ names</strong> (e.g., animals and plants) by comparing scientific names against <strong>one out of 10 taxonomic references</strong>. The taxonomic standardization process borrows heavily from <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440" class="external-link">Norman et al. (2020); taxadb package)</a>, which contains functions that allow <strong>querying millions of taxonomic names</strong> in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.</p>
+<p>The functions used to standardize names (<em>bdc_clean_name</em> and <em>bdc_query_names_taxadb</em>) <strong>contain additions to the <em>taxadb</em> package</strong>, including tools for:</p>
+<ol style="list-style-type: decimal">
+<li>Cleaning and parsing scientific names;</li>
+<li>Resolving misspelled names or variant spellings using a fuzzy matching application;</li>
+<li>Converting nomenclatural synonyms to current accepted name;</li>
+<li>Flagging ambiguous results;</li>
+<li>Reporting the results.</li>
+</ol>
 <p>The taxonomic standardization is based on one taxonomic database chosen by the user. <em>taxadb</em> makes available the following taxonomic sources:</p>
 <table class="table">
 <thead><tr class="header">
@@ -158,109 +167,3633 @@
 </tr>
 </tbody>
 </table>
-<p>Details on taxonomic references and schema used in taxadb can be found in <a href="docs.ropensci.org/taxadb/articles/data-sources.html">Norman et al. (2020)</a>.</p>
+<p>Note that some taxonomic databases may be <em>momentarily unavailable</em> in taxadb. Check ?bdc_query_names_taxadb for a list of available taxonomic databases.</p>
+<p><br></p>
 </div>
-<div id="installation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h3>
-<p>You can install the released version of ‘BDC’ from <a href="https://github.com/brunobrr/bdc">github</a> with:</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>Check <a href="https://brunobrr.github.io/bdc/"><strong>here</strong></a> how to install the bdc package</p>
+<p><br></p>
+</div>
+<div class="section level2">
+<h2 id="reading-the-database">Reading the database<a class="anchor" aria-label="anchor" href="#reading-the-database"></a>
+</h2>
+<p>Read the database created in the <a href="https://brunobrr.github.io/bdc/articles/01_prefilter.html"><strong>Pre-filter</strong></a> module of the <em>bdc</em> package. It is also possible to read any datasets containing the <strong>required</strong> fields to run the package (more details <a href="https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html">here</a>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span><span class="op">)</span> <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
-<p>Creating folders to save the results</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">bdc</span><span class="fu">::</span><span class="fu"><a href="../reference/bdc_create_dir.html">bdc_create_dir</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-</div>
-<div id="read-the-database" class="section level3">
-<h3 class="hasAnchor">
-<a href="#read-the-database" class="anchor"></a>Read the database</h3>
-<p>Read the database created in the step <strong>Pre-filter</strong> of the BDC workflow. It is also possible to read any datasets containing the <em>required</em> fields to run the workflow (see the vignette “Standardization and integration of different datasets”).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">database</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,
-              <span class="st">"Output"</span>,
-              <span class="st">"Intermediate/01_prefilter_database.qs"</span>, package <span class="op">=</span> <span class="st">"bdc"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span></code></pre></div>
-<p>Standardization of character encoding</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">database</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">Encoding</a></span><span class="op">(</span><span class="va">database</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UTF-8"</span>
-  <span class="op">}</span>
-<span class="op">}</span></code></pre></div>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output/Intermediate/01_prefilter_database.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><br></p>
 </div>
-<div id="clean-and-parse-species-names" class="section level3">
-<h3 class="hasAnchor">
-<a href="#clean-and-parse-species-names" class="anchor"></a>Clean and parse species names</h3>
-<p>Scientific names improperly formatted usually cannot be matched with a valid names. To solve this issue, we developed the <em>bdc_clean_name.</em> containing functionalities to optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to remove:</p>
+<div class="section level2">
+<h2 id="clean-and-parse-species-names">Clean and parse species names<a class="anchor" aria-label="anchor" href="#clean-and-parse-species-names"></a>
+</h2>
+<p>Scientific names improperly formatted usually cannot be matched with valid names. To solve this issue, we developed the <em>bdc_clean_name</em> containing functionalities to <strong>optimize the taxonomic queries</strong> by increasing the probability of finding matching names. This tool is used to:</p>
 <ol style="list-style-type: decimal">
-<li>Family names pre-pended to species names;</li>
-<li>Qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);</li>
-<li>Infraspecific terms (e.g., variety [var.], subspecies [subsp], forma [f.], and their spelling variations);</li>
+<li>Flag and remove family names pre-pended to species names;</li>
+<li>Flag and remove qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);</li>
+<li>Flag and remove infraspecific terms (e.g., variety [var.], subspecies [subsp], forma [f.], and their spelling variations);</li>
 <li>Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);</li>
 <li>Parse names, i.e., separate author, date, annotations from taxon name.</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">parse_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_clean_names.html">bdc_clean_names</a></span><span class="op">(</span>sci_names <span class="op">=</span> <span class="va">database</span><span class="op">$</span><span class="va">scientificName</span><span class="op">)</span></code></pre></div>
+<p><br></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">parse_names</span> <span class="op">&lt;-</span>
+  <span class="fu"><a href="../reference/bdc_clean_names.html">bdc_clean_names</a></span><span class="op">(</span>sci_names <span class="op">=</span> <span class="va">database</span><span class="op">$</span><span class="va">scientificName</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; &gt;&gt; Family names prepended to scientific names were flagged and removed from 0 records.</span>
+<span class="co">#&gt; &gt;&gt; Terms denoting taxonomic uncertainty were flagged and removed from 1 records.</span>
+<span class="co">#&gt; &gt;&gt; Other issues, capitalizing the first letter of the generic name, replacing empty names by NA, and removing extra spaces, were flagged and corrected or removed from 0 records.</span>
+<span class="co">#&gt; &gt;&gt; Infraspecific terms were flagged and removed from 1 records.</span>
+<span class="co">#&gt; &gt;&gt; Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.</span></code></pre></div>
+<p><br></p>
+<p>An example of <em>bdc_clean_names</em> output.</p>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="9%">
+<col width="11%">
+<col width="22%">
+<col width="5%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">scientificName</th>
+<th align="left">.uncer_terms</th>
+<th align="left">.infraesp_names</th>
+<th align="left">names_clean</th>
+<th align="right">quality</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Tillandsia tenuifolia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Tillandsia tenuifolia</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Peperomia obtusifolia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Peperomia obtusifolia</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Tillandsia recurvata</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Tillandsia recurvata</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Vriesea flammea</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Vriesea flammea</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Lankesterella ceracifolia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Lankesterella ceracifolia</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Nidularium innocentii</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Nidularium innocentii</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Acianthera serpentula</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Acianthera serpentula</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Peperomia quadrifolia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Peperomia quadrifolia</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Peperomia circinnata</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Peperomia circinnata</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Microgramma squamulosa</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Microgramma squamulosa</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Vriesea gigantea</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Vriesea gigantea</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Aechmea leptantha</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Aechmea leptantha</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Vriesea tijucana</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Vriesea tijucana</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Rhodospatha oblongata</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Rhodospatha oblongata</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Anthurium gaudichaudianum</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Anthurium gaudichaudianum</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Maxillaria caparaoensis</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Maxillaria caparaoensis</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Acianthera langeana</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Acianthera langeana</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Pleopeltis monoides</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Pleopeltis monoides</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Hymenophyllum fragile</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Hymenophyllum fragile</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Solanum paniculatum</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Solanum paniculatum</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Tetrapterys crispa</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Tetrapterys crispa</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Clusia microstemon</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Clusia microstemon</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Machaerium fulvovenosum</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Machaerium fulvovenosum</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Byrsonima sericea</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Byrsonima sericea</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Cordia nodosa</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Cordia nodosa</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Dorstenia turnerifolia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Dorstenia turnerifolia</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Phoradendron crassifolium</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Phoradendron crassifolium</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Pagamea plicata</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Pagamea plicata</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Galactia striata</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Galactia striata</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Achyrocline alata</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Achyrocline alata</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Coccocypselum lanceolatum</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Coccocypselum lanceolatum</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Oldenlandia filicaulis</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Oldenlandia filicaulis</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Bauhinia brevipes</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Bauhinia brevipes</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Paspalum guttatum</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Paspalum guttatum</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Miconia minutiflora (Bonpl.) DC.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Miconia minutiflora</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Zanthoxylum rhoifolium Lam.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Zanthoxylum rhoifolium</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Ocotea velutina (Nees) Rohwer</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Ocotea velutina</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Sweetia fruticosa Spreng.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Sweetia fruticosa</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Bauhinia cheilantha (Bong.) Steud.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Bauhinia cheilantha</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Senna pendula (Willd.) H.S.Irwin &amp; Barneby</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Senna pendula</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Cecropia hololeuca Miq.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Cecropia hololeuca</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Cordia glabrata (Mart.) A.DC.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Cordia glabrata</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Cynophalla flexuosa (L.) J.Presl</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Cynophalla flexuosa</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Manihot caerulescens Pohl</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Manihot caerulescens</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Vitex polygama Cham.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Vitex polygama</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Trichilia pallens C.DC.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Trichilia pallens</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Myrcia tomentosa (Aubl.) DC.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Myrcia tomentosa</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Zanthoxylum riedelianum Engl.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Zanthoxylum riedelianum</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Handroanthus serratifolius (Vahl) S.O.Grose</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Handroanthus serratifolius</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Croton floribundus Spreng.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Croton floribundus</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Protium spruceanum (Benth.) Engl.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Protium spruceanum</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Cestrum schlechtendalii G.Don</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Cestrum schlechtendalii</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Salvertia convallariodora A.St.-Hil.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Salvertia convallariodora</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Machaerium villosum Vogel</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Machaerium villosum</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Iryanthera sagotiana Warb.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Iryanthera sagotiana</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Erythroxylum cuspidifolium Mart.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Erythroxylum cuspidifolium</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Ocotea lanceolata Nees</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Ocotea lanceolata</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Croton nepetifolius Baill.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Croton nepetifolius</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Dalechampia stipulacea Müll.Arg.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Dalechampia stipulacea</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Hillia parasitica Jacq.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Hillia parasitica</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Chresta pacourinoides (Mart. ex DC.) Loeuille, Siniscalchi &amp; Pirani</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Chresta pacourinoides</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Chamaecrista incana (Vogel) H.S.Irwin &amp; Barneby</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Chamaecrista incana</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Tridax procumbens L.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Tridax procumbens</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Peperomia tetraphylla (G.Forst.) Hook. &amp; Arn.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Peperomia tetraphylla</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Oxalis psoraleoides ssp. insipida (A.St.-Hil.) Lourteig</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+<td align="left">Oxalis psoraleoides insipida</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Xyris mucujensis Kral &amp; L.B.Sm.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Xyris mucujensis</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Groenbladia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Groenbladia</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Byrsonima crispa</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Byrsonima crispa</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Paspalum multicaule Poir.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Paspalum multicaule</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Solanum megalochiton Mart.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Solanum megalochiton</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Leiothrix curvifolia (Bong.) Ruhland</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Leiothrix curvifolia</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Chrysophyllum inornatum Mart.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Chrysophyllum inornatum</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Mimosa paludosa Benth.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Mimosa paludosa</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Myrsine umbellata</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Myrsine umbellata</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Swartzia simplex var. continentalis Urb.</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+<td align="left">Swartzia simplex continentalis</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Tephrosia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Tephrosia</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Marcetia latifolia Naudin</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Marcetia latifolia</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Clusia nemorosa G.Mey.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Clusia nemorosa</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Bertholletia excelsa</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Bertholletia excelsa</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Coussarea acrensis C.M. Taylor</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Coussarea acrensis</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Crotalaria</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Crotalaria</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Ocotea laxa (Nees) Mez</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Ocotea laxa</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Solanum paniculatum L.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Solanum paniculatum</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Clidemia epiphytica (Triana) Cogn.</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Clidemia epiphytica</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Amaioua guianensis</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Amaioua guianensis</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Matayba intermedia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Matayba intermedia</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Pagamea coriacea</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Pagamea coriacea</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Senna velutina</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Senna velutina</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Myrsine umbellata</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Myrsine umbellata</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Compsoneura ulei</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Compsoneura ulei</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Cyathea corcovadensis</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Cyathea corcovadensis</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Myrciaria dubia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Myrciaria dubia</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Alchornea triplinervia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Alchornea triplinervia</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Dahlstedtia muehlbergiana</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Dahlstedtia muehlbergiana</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Copaifera coriacea</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Copaifera coriacea</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Miconia gratissima</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Miconia gratissima</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Cabralea canjerana</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Cabralea canjerana</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Solanum megalochiton</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Solanum megalochiton</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Machaerium acutifolium</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Machaerium acutifolium</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Agonandra brasiliensis</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Agonandra brasiliensis</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Iriartea deltoidea</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Iriartea deltoidea</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Cordia trichotoma</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Cordia trichotoma</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Nectandra amazonum</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Nectandra amazonum</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Byrsonima blanchetiana</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Byrsonima blanchetiana</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Plantae</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Plantae</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Matayba elaeagnoides</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Matayba elaeagnoides</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Conocliniopsis prasiifolia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Conocliniopsis prasiifolia</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Randia armata</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Randia armata</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Baccharis polyphylla</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Baccharis polyphylla</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Undesignated undesignated</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Undesignated undesignated</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Sematophyllum galipense</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Sematophyllum galipense</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Parthenium hysterophorus</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Parthenium hysterophorus</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Jacaranda simplicifolia</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Jacaranda simplicifolia</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Chamaesyce</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Chamaesyce</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Justicia brasiliana</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+<td align="left">Justicia brasiliana</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><strong>Let’s merge the names parsed with the complete database.</strong> As the column ‘scientificName’ is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns “names_clean” and “.uncert_terms” will be used in the downstream analyses. But don’t worry, you can check the results of the parsing names process in “Output/Check/02_parsed_names.qs”.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">parse_names</span> <span class="op">&lt;-</span>
+  <span class="va">parse_names</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">.uncer_terms</span>, <span class="va">names_clean</span><span class="op">)</span>
+
+<span class="va">database</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">database</span>, <span class="va">parse_names</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="names-harmonization" class="section level3">
-<h3 class="hasAnchor">
-<a href="#names-harmonization" class="anchor"></a>Names harmonization</h3>
-<p>The taxonomic harmonization is based upon <strong>one</strong> of those taxonomic authorities previously mentioned.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="section level2">
+<h2 id="names-harmonization">Names harmonization<a class="anchor" aria-label="anchor" href="#names-harmonization"></a>
+</h2>
+<p>The taxonomic harmonization is based upon <strong>one</strong> of those taxonomic authorities previously mentioned. It starts with creating a local database by downloading, extracting, and importing the taxonomic database informed by users using the taxadb package. The download may take some time, depending on the internet connection.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">query_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_query_names_taxadb.html">bdc_query_names_taxadb</a></span><span class="op">(</span>
-  sci_name <span class="op">=</span> <span class="va">database</span><span class="op">$</span><span class="va">names_clean</span>,
-  replace_synonyms <span class="op">=</span> <span class="cn">TRUE</span>,
-  suggest_names <span class="op">=</span> <span class="cn">TRUE</span>,
-  suggestion_distance <span class="op">=</span> <span class="fl">0.9</span>,
-  db <span class="op">=</span> <span class="st">"gbif"</span>,
-  rank_name <span class="op">=</span> <span class="st">"Plantae"</span>,
-  rank <span class="op">=</span> <span class="st">"kingdom"</span>,
-  parallel <span class="op">=</span> <span class="cn">TRUE</span>,
-  ncores <span class="op">=</span> <span class="fl">2</span>,
-  export_accepted <span class="op">=</span> <span class="cn">FALSE</span>
+  sci_name            <span class="op">=</span> <span class="va">database</span><span class="op">$</span><span class="va">names_clean</span>,
+  replace_synonyms    <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># replace synonyms by accepted names?</span>
+  suggest_names       <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># try to found a candidate name for misspelled names?</span>
+  suggestion_distance <span class="op">=</span> <span class="fl">0.9</span>, <span class="co"># distance between the searched and suggested names</span>
+  db                  <span class="op">=</span> <span class="st">"gbif"</span>, <span class="co"># taxonomic database</span>
+  rank_name           <span class="op">=</span> <span class="st">"Plantae"</span>, <span class="co"># a taxonomic rank</span>
+  rank                <span class="op">=</span> <span class="st">"kingdom"</span>, <span class="co"># name of the taxonomic rank</span>
+  parallel            <span class="op">=</span> <span class="cn">FALSE</span>, <span class="co"># should parallel processing be used?</span>
+  ncores              <span class="op">=</span> <span class="fl">2</span>, <span class="co"># number of cores to be used in the parallelization process</span>
+  export_accepted     <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># save names linked to multiple accepted names</span>
 <span class="op">)</span></code></pre></div>
-<p>Merge results of the taxonomy harmonization process with the original database. Before, let’s rename the column containing the original scientific names to “verbatim_scientificName”. From now on “scientifiName” correspond to the verified names (resulted from the name harmonization process). As the column “original_search” in “query_names” and “names_clean” are equal, only the first will be kept.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p><br></p>
+<table class="table">
+<colgroup>
+<col width="7%">
+<col width="3%">
+<col width="2%">
+<col width="7%">
+<col width="3%">
+<col width="6%">
+<col width="2%">
+<col width="3%">
+<col width="4%">
+<col width="1%">
+<col width="3%">
+<col width="4%">
+<col width="3%">
+<col width="4%">
+<col width="3%">
+<col width="3%">
+<col width="5%">
+<col width="4%">
+<col width="4%">
+<col width="11%">
+<col width="7%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">original_search</th>
+<th align="left">suggested_name</th>
+<th align="left">distance</th>
+<th align="left">notes</th>
+<th align="left">taxonID</th>
+<th align="left">scientificName</th>
+<th align="left">taxonRank</th>
+<th align="left">taxonomicStatus</th>
+<th align="left">acceptedNameUsageID</th>
+<th align="left">kingdom</th>
+<th align="left">phylum</th>
+<th align="left">class</th>
+<th align="left">order</th>
+<th align="left">family</th>
+<th align="left">genus</th>
+<th align="left">specificEpithet</th>
+<th align="left">infraspecificEpithet</th>
+<th align="right">parentNameUsageID</th>
+<th align="right">originalNameUsageID</th>
+<th align="left">scientificNameAuthorship</th>
+<th align="left">vernacularName</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Tillandsia tenuifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2695114</td>
+<td align="left">Tillandsia tenuifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2695114</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Tillandsia</td>
+<td align="left">tenuifolia</td>
+<td align="left">NA</td>
+<td align="right">8279994</td>
+<td align="right">NA</td>
+<td align="left">L.</td>
+<td align="left">narrowleaf airplant</td>
+</tr>
+<tr class="even">
+<td align="left">Peperomia obtusifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086423</td>
+<td align="left">Peperomia obtusifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086423</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Piperales</td>
+<td align="left">Piperaceae</td>
+<td align="left">Peperomia</td>
+<td align="left">obtusifolia</td>
+<td align="left">NA</td>
+<td align="right">3086367</td>
+<td align="right">3086426</td>
+<td align="left">A.Dietr. (L.)</td>
+<td align="left">pepper face</td>
+</tr>
+<tr class="odd">
+<td align="left">Tillandsia recurvata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2695588</td>
+<td align="left">Tillandsia recurvata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2695588</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Tillandsia</td>
+<td align="left">recurvata</td>
+<td align="left">NA</td>
+<td align="right">8279994</td>
+<td align="right">5287808</td>
+<td align="left">L. (L.)</td>
+<td align="left">Tillandsia recta o heno pequeno</td>
+</tr>
+<tr class="even">
+<td align="left">Vriesea flammea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5289378</td>
+<td align="left">Vriesea flammea</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5289378</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Vriesea</td>
+<td align="left">flammea</td>
+<td align="left">NA</td>
+<td align="right">2699764</td>
+<td align="right">NA</td>
+<td align="left">L.B.Sm.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Lankesterella ceracifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5312267</td>
+<td align="left">Lankesterella ceracifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5312267</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Asparagales</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Lankesterella</td>
+<td align="left">ceracifolia</td>
+<td align="left">NA</td>
+<td align="right">2807134</td>
+<td align="right">2807162</td>
+<td align="left">Mansf. (Barb.Rodr.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Nidularium innocentii</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2697762</td>
+<td align="left">Nidularium innocentii</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2697762</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Nidularium</td>
+<td align="left">innocentii</td>
+<td align="left">NA</td>
+<td align="right">2697636</td>
+<td align="right">NA</td>
+<td align="left">Lem.</td>
+<td align="left">purpurvattensamlare</td>
+</tr>
+<tr class="odd">
+<td align="left">Acianthera serpentula</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2839474</td>
+<td align="left">Acianthera serpentula</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2839474</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Asparagales</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Acianthera</td>
+<td align="left">serpentula</td>
+<td align="left">NA</td>
+<td align="right">7848554</td>
+<td align="right">2839476</td>
+<td align="left">F.Barros (Barb.Rodr.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Peperomia quadrifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086416</td>
+<td align="left">Peperomia quadrifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086416</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Piperales</td>
+<td align="left">Piperaceae</td>
+<td align="left">Peperomia</td>
+<td align="left">quadrifolia</td>
+<td align="left">NA</td>
+<td align="right">3086367</td>
+<td align="right">3086417</td>
+<td align="left">Kunth (L.)</td>
+<td align="left">fourleaf peperomia</td>
+</tr>
+<tr class="odd">
+<td align="left">Peperomia circinnata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7304921</td>
+<td align="left">Peperomia circinnata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7304921</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Piperales</td>
+<td align="left">Piperaceae</td>
+<td align="left">Peperomia</td>
+<td align="left">circinnata</td>
+<td align="left">NA</td>
+<td align="right">3086367</td>
+<td align="right">NA</td>
+<td align="left">Link</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Microgramma squamulosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4025976</td>
+<td align="left">Microgramma squamulosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4025976</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Polypodiopsida</td>
+<td align="left">Polypodiales</td>
+<td align="left">Polypodiaceae</td>
+<td align="left">Microgramma</td>
+<td align="left">squamulosa</td>
+<td align="left">NA</td>
+<td align="right">8393217</td>
+<td align="right">7290190</td>
+<td align="left">de la Sota (Kaulf.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Vriesea gigantea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5288894</td>
+<td align="left">Vriesea gigantea</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5288894</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Vriesea</td>
+<td align="left">gigantea</td>
+<td align="left">NA</td>
+<td align="right">2699764</td>
+<td align="right">NA</td>
+<td align="left">Gaudich.</td>
+<td align="left">jattevriesea</td>
+</tr>
+<tr class="even">
+<td align="left">Aechmea leptantha</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2698687</td>
+<td align="left">Aechmea leptantha</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2698687</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Aechmea</td>
+<td align="left">leptantha</td>
+<td align="left">NA</td>
+<td align="right">2697812</td>
+<td align="right">2698688</td>
+<td align="left">Leme &amp; J.A.Siqueira (Harms)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Vriesea tijucana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5288897</td>
+<td align="left">Vriesea tijucana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5288897</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Bromeliaceae</td>
+<td align="left">Vriesea</td>
+<td align="left">tijucana</td>
+<td align="left">NA</td>
+<td align="right">2699764</td>
+<td align="right">NA</td>
+<td align="left">E.Pereira</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Rhodospatha oblongata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2871981</td>
+<td align="left">Rhodospatha oblongata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2871981</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Alismatales</td>
+<td align="left">Araceae</td>
+<td align="left">Rhodospatha</td>
+<td align="left">oblongata</td>
+<td align="left">NA</td>
+<td align="right">2871974</td>
+<td align="right">NA</td>
+<td align="left">Poepp.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Anthurium gaudichaudianum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2872740</td>
+<td align="left">Anthurium gaudichaudianum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2872740</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Alismatales</td>
+<td align="left">Araceae</td>
+<td align="left">Anthurium</td>
+<td align="left">gaudichaudianum</td>
+<td align="left">NA</td>
+<td align="right">2872218</td>
+<td align="right">NA</td>
+<td align="left">Kunth</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Maxillaria caparaoensis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5318538</td>
+<td align="left">Maxillaria caparaoensis</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5318538</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Asparagales</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Maxillaria</td>
+<td align="left">caparaoensis</td>
+<td align="left">NA</td>
+<td align="right">2825779</td>
+<td align="right">NA</td>
+<td align="left">Brade</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Acianthera langeana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2840033</td>
+<td align="left">Acianthera langeana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2840033</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Asparagales</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Acianthera</td>
+<td align="left">langeana</td>
+<td align="left">NA</td>
+<td align="right">7848554</td>
+<td align="right">2840034</td>
+<td align="left">Pridgeon &amp; M.W.Chase (Kraenzl.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Pleopeltis monoides</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7495967</td>
+<td align="left">Pleopeltis monoides</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7495967</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Polypodiopsida</td>
+<td align="left">Polypodiales</td>
+<td align="left">Polypodiaceae</td>
+<td align="left">Pleopeltis</td>
+<td align="left">monoides</td>
+<td align="left">NA</td>
+<td align="right">2650485</td>
+<td align="right">5649333</td>
+<td align="left">Salino (Weath.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Hymenophyllum fragile</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2651313</td>
+<td align="left">Hymenophyllum fragile</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2651313</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Polypodiopsida</td>
+<td align="left">Hymenophyllales</td>
+<td align="left">Hymenophyllaceae</td>
+<td align="left">Hymenophyllum</td>
+<td align="left">fragile</td>
+<td align="left">NA</td>
+<td align="right">2651287</td>
+<td align="right">5533060</td>
+<td align="left">Morton (Hedw.)</td>
+<td align="left">fragile filmy fern</td>
+</tr>
+<tr class="even">
+<td align="left">Solanum paniculatum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932547</td>
+<td align="left">Solanum paniculatum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932547</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Solanales</td>
+<td align="left">Solanaceae</td>
+<td align="left">Solanum</td>
+<td align="left">paniculatum</td>
+<td align="left">NA</td>
+<td align="right">2928997</td>
+<td align="right">NA</td>
+<td align="left">L.</td>
+<td align="left">jurubeba</td>
+</tr>
+<tr class="odd">
+<td align="left">Tetrapterys crispa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7285570</td>
+<td align="left">Tetrapterys crispa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7285570</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Malpighiaceae</td>
+<td align="left">Tetrapterys</td>
+<td align="left">crispa</td>
+<td align="left">NA</td>
+<td align="right">3191303</td>
+<td align="right">NA</td>
+<td align="left">A.Juss.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Clusia microstemon</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5556257</td>
+<td align="left">Clusia microstemon</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5556257</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Clusiaceae</td>
+<td align="left">Clusia</td>
+<td align="left">microstemon</td>
+<td align="left">NA</td>
+<td align="right">3189424</td>
+<td align="right">NA</td>
+<td align="left">Planch. &amp; Triana</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Machaerium fulvovenosum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5355056</td>
+<td align="left">Machaerium fulvovenosum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5355056</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Machaerium</td>
+<td align="left">fulvovenosum</td>
+<td align="left">NA</td>
+<td align="right">2959589</td>
+<td align="right">NA</td>
+<td align="left">H.C.Lima</td>
+<td align="left">jacaranda tan</td>
+</tr>
+<tr class="even">
+<td align="left">Byrsonima sericea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7285418</td>
+<td align="left">Byrsonima sericea</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7285418</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Malpighiaceae</td>
+<td align="left">Byrsonima</td>
+<td align="left">sericea</td>
+<td align="left">NA</td>
+<td align="right">3191347</td>
+<td align="right">NA</td>
+<td align="left">DC.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Cordia nodosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7295069</td>
+<td align="left">Cordia nodosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7295069</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Boraginales</td>
+<td align="left">Cordiaceae</td>
+<td align="left">Cordia</td>
+<td align="left">nodosa</td>
+<td align="left">NA</td>
+<td align="right">2900865</td>
+<td align="right">NA</td>
+<td align="left">Lam.</td>
+<td align="left">pau de formiga</td>
+</tr>
+<tr class="even">
+<td align="left">Dorstenia turnerifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3762794</td>
+<td align="left">Dorstenia turnerifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3762794</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Rosales</td>
+<td align="left">Moraceae</td>
+<td align="left">Dorstenia</td>
+<td align="left">turnerifolia</td>
+<td align="left">NA</td>
+<td align="right">2984540</td>
+<td align="right">NA</td>
+<td align="left">Fisch. &amp; C.A.Mey.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Phoradendron crassifolium</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7772421</td>
+<td align="left">Phoradendron crassifolium</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7772421</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Santalales</td>
+<td align="left">Viscaceae</td>
+<td align="left">Phoradendron</td>
+<td align="left">crassifolium</td>
+<td align="left">NA</td>
+<td align="right">2889864</td>
+<td align="right">4068428</td>
+<td align="left">Eichler (Pohl ex DC.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Pagamea plicata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2902164</td>
+<td align="left">Pagamea plicata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2902164</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Pagamea</td>
+<td align="left">plicata</td>
+<td align="left">NA</td>
+<td align="right">2902141</td>
+<td align="right">NA</td>
+<td align="left">Spruce ex Benth.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Galactia striata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2984047</td>
+<td align="left">Galactia striata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2984047</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Galactia</td>
+<td align="left">striata</td>
+<td align="left">NA</td>
+<td align="right">2983979</td>
+<td align="right">5361742</td>
+<td align="left">Urb. (Jacq.)</td>
+<td align="left">Guatabito</td>
+</tr>
+<tr class="even">
+<td align="left">Achyrocline alata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3139547</td>
+<td align="left">Achyrocline alata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3139547</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Asterales</td>
+<td align="left">Asteraceae</td>
+<td align="left">Achyrocline</td>
+<td align="left">alata</td>
+<td align="left">NA</td>
+<td align="right">3139525</td>
+<td align="right">NA</td>
+<td align="left">DC. (Kunth)</td>
+<td align="left">macela do brejo</td>
+</tr>
+<tr class="odd">
+<td align="left">Coccocypselum lanceolatum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2906930</td>
+<td align="left">Coccocypselum lanceolatum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2906930</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Coccocypselum</td>
+<td align="left">lanceolatum</td>
+<td align="left">NA</td>
+<td align="right">2906871</td>
+<td align="right">5338306</td>
+<td align="left">Pers. (Ruiz &amp; Pav.)</td>
+<td align="left">piririca</td>
+</tr>
+<tr class="even">
+<td align="left">Oldenlandia filicaulis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2915856</td>
+<td align="left">Oldenlandia filicaulis</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2915856</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Oldenlandia</td>
+<td align="left">filicaulis</td>
+<td align="left">NA</td>
+<td align="right">2915706</td>
+<td align="right">NA</td>
+<td align="left">K.Schum.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Bauhinia brevipes</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2953099</td>
+<td align="left">Bauhinia brevipes</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2953099</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Bauhinia</td>
+<td align="left">brevipes</td>
+<td align="left">NA</td>
+<td align="right">2952935</td>
+<td align="right">NA</td>
+<td align="left">Vogel</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Paspalum guttatum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4110078</td>
+<td align="left">Paspalum guttatum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4110078</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Poaceae</td>
+<td align="left">Paspalum</td>
+<td align="left">guttatum</td>
+<td align="left">NA</td>
+<td align="right">2705540</td>
+<td align="right">NA</td>
+<td align="left">Trin.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Miconia minutiflora</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3860591</td>
+<td align="left">Miconia minutiflora</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3860591</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Myrtales</td>
+<td align="left">Melastomataceae</td>
+<td align="left">Miconia</td>
+<td align="left">minutiflora</td>
+<td align="left">NA</td>
+<td align="right">3188558</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Zanthoxylum rhoifolium</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7269222</td>
+<td align="left">Zanthoxylum rhoifolium</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7269222</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Sapindales</td>
+<td align="left">Rutaceae</td>
+<td align="left">Zanthoxylum</td>
+<td align="left">rhoifolium</td>
+<td align="left">NA</td>
+<td align="right">3190076</td>
+<td align="right">NA</td>
+<td align="left">Lam.</td>
+<td align="left">tinguaciba</td>
+</tr>
+<tr class="odd">
+<td align="left">Ocotea velutina</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4181077</td>
+<td align="left">Ocotea velutina</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4181077</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Laurales</td>
+<td align="left">Lauraceae</td>
+<td align="left">Ocotea</td>
+<td align="left">velutina</td>
+<td align="left">NA</td>
+<td align="right">3034076</td>
+<td align="right">7304210</td>
+<td align="left">Rohwer (Nees)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Sweetia fruticosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5358234</td>
+<td align="left">Sweetia fruticosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5358234</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Sweetia</td>
+<td align="left">fruticosa</td>
+<td align="left">NA</td>
+<td align="right">8072780</td>
+<td align="right">NA</td>
+<td align="left">Spreng.</td>
+<td align="left">sucupira preta</td>
+</tr>
+<tr class="odd">
+<td align="left">Bauhinia cheilantha</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2952938</td>
+<td align="left">Bauhinia cheilantha</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2952938</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Bauhinia</td>
+<td align="left">cheilantha</td>
+<td align="left">NA</td>
+<td align="right">2952935</td>
+<td align="right">2952939</td>
+<td align="left">Steud. (Bong.)</td>
+<td align="left">Unha de vaca</td>
+</tr>
+<tr class="even">
+<td align="left">Senna pendula</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2957187</td>
+<td align="left">Senna pendula</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2957187</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Senna</td>
+<td align="left">pendula</td>
+<td align="left">NA</td>
+<td align="right">2956904</td>
+<td align="right">5354027</td>
+<td align="left">H.S.Irwin &amp; Barneby (Humb. &amp; Bonpl. ex Willd.)</td>
+<td align="left">yerba del burro</td>
+</tr>
+<tr class="odd">
+<td align="left">Cecropia hololeuca</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4013377</td>
+<td align="left">Cecropia hololeuca</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4013377</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Rosales</td>
+<td align="left">Urticaceae</td>
+<td align="left">Cecropia</td>
+<td align="left">hololeuca</td>
+<td align="left">NA</td>
+<td align="right">2984472</td>
+<td align="right">NA</td>
+<td align="left">Miq.</td>
+<td align="left">embaubacu</td>
+</tr>
+<tr class="even">
+<td align="left">Cordia glabrata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8486453</td>
+<td align="left">Cordia glabrata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8486453</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Boraginales</td>
+<td align="left">Cordiaceae</td>
+<td align="left">Cordia</td>
+<td align="left">glabrata</td>
+<td align="left">NA</td>
+<td align="right">2900865</td>
+<td align="right">4061419</td>
+<td align="left">A.DC. (Mart.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Cynophalla flexuosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3873525</td>
+<td align="left">Cynophalla flexuosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3873525</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Brassicales</td>
+<td align="left">Capparaceae</td>
+<td align="left">Cynophalla</td>
+<td align="left">flexuosa</td>
+<td align="left">NA</td>
+<td align="right">6370797</td>
+<td align="right">6370749</td>
+<td align="left">J.Presl (L.)</td>
+<td align="left">Yerba di Moster</td>
+</tr>
+<tr class="even">
+<td align="left">Manihot caerulescens</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3060817</td>
+<td align="left">Manihot caerulescens</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3060817</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Euphorbiaceae</td>
+<td align="left">Manihot</td>
+<td align="left">caerulescens</td>
+<td align="left">NA</td>
+<td align="right">3060685</td>
+<td align="right">NA</td>
+<td align="left">Pohl</td>
+<td align="left">manicoba</td>
+</tr>
+<tr class="odd">
+<td align="left">Vitex polygama</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7309300</td>
+<td align="left">Vitex polygama</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7309300</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Lamiales</td>
+<td align="left">Lamiaceae</td>
+<td align="left">Vitex</td>
+<td align="left">polygama</td>
+<td align="left">NA</td>
+<td align="right">2925556</td>
+<td align="right">NA</td>
+<td align="left">Cham.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Trichilia pallens</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3852312</td>
+<td align="left">Trichilia pallens</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3852312</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Sapindales</td>
+<td align="left">Meliaceae</td>
+<td align="left">Trichilia</td>
+<td align="left">pallens</td>
+<td align="left">NA</td>
+<td align="right">3190490</td>
+<td align="right">NA</td>
+<td align="left">C.DC.</td>
+<td align="left">Baga De Morcego</td>
+</tr>
+<tr class="odd">
+<td align="left">Myrcia tomentosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3174416</td>
+<td align="left">Myrcia tomentosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3174416</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Myrtales</td>
+<td align="left">Myrtaceae</td>
+<td align="left">Myrcia</td>
+<td align="left">tomentosa</td>
+<td align="left">NA</td>
+<td align="right">3173889</td>
+<td align="right">5415683</td>
+<td align="left">DC. (Aubl.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Zanthoxylum riedelianum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3834649</td>
+<td align="left">Zanthoxylum riedelianum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3834649</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Sapindales</td>
+<td align="left">Rutaceae</td>
+<td align="left">Zanthoxylum</td>
+<td align="left">riedelianum</td>
+<td align="left">NA</td>
+<td align="right">3190076</td>
+<td align="right">NA</td>
+<td align="left">Engl.</td>
+<td align="left">white copal</td>
+</tr>
+<tr class="odd">
+<td align="left">Handroanthus serratifolius</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4092017</td>
+<td align="left">Handroanthus serratifolius</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4092017</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Lamiales</td>
+<td align="left">Bignoniaceae</td>
+<td align="left">Handroanthus</td>
+<td align="left">serratifolius</td>
+<td align="left">NA</td>
+<td align="right">6401269</td>
+<td align="right">3172544</td>
+<td align="left">S.O.Grose (Vahl)</td>
+<td align="left">Yellow Poui (Trinidad &amp; Tobago)</td>
+</tr>
+<tr class="even">
+<td align="left">Croton floribundus</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3057803</td>
+<td align="left">Croton floribundus</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3057803</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Euphorbiaceae</td>
+<td align="left">Croton</td>
+<td align="left">floribundus</td>
+<td align="left">NA</td>
+<td align="right">3057454</td>
+<td align="right">NA</td>
+<td align="left">Spreng.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Protium spruceanum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3993127</td>
+<td align="left">Protium spruceanum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3993127</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Sapindales</td>
+<td align="left">Burseraceae</td>
+<td align="left">Protium</td>
+<td align="left">spruceanum</td>
+<td align="left">NA</td>
+<td align="right">7286732</td>
+<td align="right">3993804</td>
+<td align="left">Engl. (Benth.)</td>
+<td align="left">Quina</td>
+</tr>
+<tr class="even">
+<td align="left">Cestrum schlechtendalii</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3801334</td>
+<td align="left">Cestrum schlechtendalii</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3801334</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Solanales</td>
+<td align="left">Solanaceae</td>
+<td align="left">Cestrum</td>
+<td align="left">schlechtendalii</td>
+<td align="left">NA</td>
+<td align="right">2928784</td>
+<td align="right">NA</td>
+<td align="left">G.Don</td>
+<td align="left">peroba dagua</td>
+</tr>
+<tr class="odd">
+<td align="left">Salvertia convallariodora</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4936059</td>
+<td align="left">Salvertia convallariodora</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4936059</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Myrtales</td>
+<td align="left">Vochysiaceae</td>
+<td align="left">Salvertia</td>
+<td align="left">convallariodora</td>
+<td align="left">NA</td>
+<td align="right">7288352</td>
+<td align="right">NA</td>
+<td align="left">A.St.-Hil.</td>
+<td align="left">folha larga</td>
+</tr>
+<tr class="even">
+<td align="left">Machaerium villosum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5354918</td>
+<td align="left">Machaerium villosum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5354918</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Machaerium</td>
+<td align="left">villosum</td>
+<td align="left">NA</td>
+<td align="right">2959589</td>
+<td align="right">NA</td>
+<td align="left">Vogel</td>
+<td align="left">jacaranda preto</td>
+</tr>
+<tr class="odd">
+<td align="left">Iryanthera sagotiana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3743777</td>
+<td align="left">Iryanthera sagotiana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3743777</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Magnoliales</td>
+<td align="left">Myristicaceae</td>
+<td align="left">Iryanthera</td>
+<td align="left">sagotiana</td>
+<td align="left">NA</td>
+<td align="right">3743006</td>
+<td align="right">5564494</td>
+<td align="left">Warb. (Benth.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Erythroxylum cuspidifolium</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3694220</td>
+<td align="left">Erythroxylum cuspidifolium</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3694220</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Erythroxylaceae</td>
+<td align="left">Erythroxylum</td>
+<td align="left">cuspidifolium</td>
+<td align="left">NA</td>
+<td align="right">2873937</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">fruta de pomba</td>
+</tr>
+<tr class="odd">
+<td align="left">Ocotea lanceolata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">heterotypic synonym</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Croton nepetifolius</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3058758</td>
+<td align="left">Croton nepetifolius</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3058758</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Euphorbiaceae</td>
+<td align="left">Croton</td>
+<td align="left">nepetifolius</td>
+<td align="left">NA</td>
+<td align="right">3057454</td>
+<td align="right">NA</td>
+<td align="left">Baill.</td>
+<td align="left">velame</td>
+</tr>
+<tr class="odd">
+<td align="left">Dalechampia stipulacea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3055678</td>
+<td align="left">Dalechampia stipulacea</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3055678</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Euphorbiaceae</td>
+<td align="left">Dalechampia</td>
+<td align="left">stipulacea</td>
+<td align="left">NA</td>
+<td align="right">3055556</td>
+<td align="right">NA</td>
+<td align="left">Müll.Arg.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Hillia parasitica</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5340010</td>
+<td align="left">Hillia parasitica</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5340010</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Hillia</td>
+<td align="left">parasitica</td>
+<td align="left">NA</td>
+<td align="right">2916438</td>
+<td align="right">NA</td>
+<td align="left">Jacq.</td>
+<td align="left">White Bell</td>
+</tr>
+<tr class="odd">
+<td align="left">Chresta pacourinoides</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8282348</td>
+<td align="left">Chresta pacourinoides</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8282348</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Asterales</td>
+<td align="left">Asteraceae</td>
+<td align="left">Chresta</td>
+<td align="left">pacourinoides</td>
+<td align="left">NA</td>
+<td align="right">3142054</td>
+<td align="right">3145360</td>
+<td align="left">Loeuille, Siniscalchi &amp; Pirani (Mart. ex DC.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Chamaecrista incana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2949514</td>
+<td align="left">Chamaecrista incana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2949514</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Chamaecrista</td>
+<td align="left">incana</td>
+<td align="left">NA</td>
+<td align="right">2949492</td>
+<td align="right">5351173</td>
+<td align="left">H.S.Irwin &amp; Barneby (Vogel)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Tridax procumbens</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3149462</td>
+<td align="left">Tridax procumbens</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3149462</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Asterales</td>
+<td align="left">Asteraceae</td>
+<td align="left">Tridax</td>
+<td align="left">procumbens</td>
+<td align="left">NA</td>
+<td align="right">3149429</td>
+<td align="right">NA</td>
+<td align="left">L.</td>
+<td align="left">Yerba de San Juan del monte</td>
+</tr>
+<tr class="even">
+<td align="left">Peperomia tetraphylla</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086448</td>
+<td align="left">Peperomia tetraphylla</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086448</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Piperales</td>
+<td align="left">Piperaceae</td>
+<td align="left">Peperomia</td>
+<td align="left">tetraphylla</td>
+<td align="left">NA</td>
+<td align="right">3086367</td>
+<td align="right">3086450</td>
+<td align="left">Hook. &amp; Arn. (G.Forst.)</td>
+<td align="left">dou ban lu</td>
+</tr>
+<tr class="odd">
+<td align="left">Oxalis psoraleoides insipida</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3628345</td>
+<td align="left">Oxalis psoraleoides insipida</td>
+<td align="left">subspecies</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3628345</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Oxalidales</td>
+<td align="left">Oxalidaceae</td>
+<td align="left">Oxalis</td>
+<td align="left">psoraleoides</td>
+<td align="left">insipida</td>
+<td align="right">7678036</td>
+<td align="right">3626367</td>
+<td align="left">Lourteig (A.St.-Hil.)</td>
+<td align="left">velame vultoso</td>
+</tr>
+<tr class="even">
+<td align="left">Xyris mucujensis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2693196</td>
+<td align="left">Xyris mucujensis</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2693196</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Xyridaceae</td>
+<td align="left">Xyris</td>
+<td align="left">mucujensis</td>
+<td align="left">NA</td>
+<td align="right">2692599</td>
+<td align="right">NA</td>
+<td align="left">Kral &amp; L.B.Sm.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Groenbladia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2648401</td>
+<td align="left">Groenbladia</td>
+<td align="left">genus</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2648401</td>
+<td align="left">Plantae</td>
+<td align="left">Charophyta</td>
+<td align="left">Zygnematophyceae</td>
+<td align="left">Zygnematales</td>
+<td align="left">Desmidiaceae</td>
+<td align="left">Groenbladia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">8849</td>
+<td align="right">NA</td>
+<td align="left">Teiling, 1952</td>
+<td align="left">Groenbladia</td>
+</tr>
+<tr class="even">
+<td align="left">Byrsonima crispa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3986307</td>
+<td align="left">Byrsonima crispa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3986307</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Malpighiaceae</td>
+<td align="left">Byrsonima</td>
+<td align="left">crispa</td>
+<td align="left">NA</td>
+<td align="right">3191347</td>
+<td align="right">NA</td>
+<td align="left">A.Juss.</td>
+<td align="left">murici</td>
+</tr>
+<tr class="odd">
+<td align="left">Paspalum multicaule</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4106884</td>
+<td align="left">Paspalum multicaule</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4106884</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Poaceae</td>
+<td align="left">Paspalum</td>
+<td align="left">multicaule</td>
+<td align="left">NA</td>
+<td align="right">2705540</td>
+<td align="right">NA</td>
+<td align="left">Poir.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Solanum megalochiton</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932021</td>
+<td align="left">Solanum megalochiton</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932021</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Solanales</td>
+<td align="left">Solanaceae</td>
+<td align="left">Solanum</td>
+<td align="left">megalochiton</td>
+<td align="left">NA</td>
+<td align="right">2928997</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Leiothrix curvifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5286550</td>
+<td align="left">Leiothrix curvifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5286550</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Poales</td>
+<td align="left">Eriocaulaceae</td>
+<td align="left">Leiothrix</td>
+<td align="left">curvifolia</td>
+<td align="left">NA</td>
+<td align="right">2691180</td>
+<td align="right">2691250</td>
+<td align="left">Ruhland (Bong.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Chrysophyllum inornatum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2885737</td>
+<td align="left">Chrysophyllum inornatum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2885737</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Ericales</td>
+<td align="left">Sapotaceae</td>
+<td align="left">Chrysophyllum</td>
+<td align="left">inornatum</td>
+<td align="left">NA</td>
+<td align="right">2885576</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">murta</td>
+</tr>
+<tr class="odd">
+<td align="left">Mimosa paludosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2969575</td>
+<td align="left">Mimosa paludosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2969575</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Mimosa</td>
+<td align="left">paludosa</td>
+<td align="left">NA</td>
+<td align="right">2969235</td>
+<td align="right">NA</td>
+<td align="left">Benth.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Myrsine umbellata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7422518</td>
+<td align="left">Myrsine umbellata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7422518</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Ericales</td>
+<td align="left">Primulaceae</td>
+<td align="left">Myrsine</td>
+<td align="left">umbellata</td>
+<td align="left">NA</td>
+<td align="right">3169412</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Swartzia simplex continentalis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted | replaceSynonym</td>
+<td align="left">GBIF:5352053</td>
+<td align="left">Swartzia simplex</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5352047</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Swartzia</td>
+<td align="left">simplex</td>
+<td align="left">NA</td>
+<td align="right">2950920</td>
+<td align="right">2951203</td>
+<td align="left">Spreng. (Sw.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Tephrosia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2933053</td>
+<td align="left">Tephrosia</td>
+<td align="left">genus</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2933053</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Tephrosia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">5386</td>
+<td align="right">NA</td>
+<td align="left">Pers.</td>
+<td align="left">hoarypea</td>
+</tr>
+<tr class="odd">
+<td align="left">Marcetia latifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5601599</td>
+<td align="left">Marcetia latifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5601599</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Myrtales</td>
+<td align="left">Melastomataceae</td>
+<td align="left">Marcetia</td>
+<td align="left">latifolia</td>
+<td align="left">NA</td>
+<td align="right">3231533</td>
+<td align="right">NA</td>
+<td align="left">Naudin</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Clusia nemorosa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7330253</td>
+<td align="left">Clusia nemorosa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7330253</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Clusiaceae</td>
+<td align="left">Clusia</td>
+<td align="left">nemorosa</td>
+<td align="left">NA</td>
+<td align="right">3189424</td>
+<td align="right">NA</td>
+<td align="left">G.Mey.</td>
+<td align="left">orelha de burro</td>
+</tr>
+<tr class="odd">
+<td align="left">Bertholletia excelsa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3083180</td>
+<td align="left">Bertholletia excelsa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3083180</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Ericales</td>
+<td align="left">Lecythidaceae</td>
+<td align="left">Bertholletia</td>
+<td align="left">excelsa</td>
+<td align="left">NA</td>
+<td align="right">3083179</td>
+<td align="right">NA</td>
+<td align="left">Bonpl.</td>
+<td align="left">Turury</td>
+</tr>
+<tr class="even">
+<td align="left">Coussarea acrensis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8740440</td>
+<td align="left">Coussarea acrensis</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8740440</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Coussarea</td>
+<td align="left">acrensis</td>
+<td align="left">NA</td>
+<td align="right">2904739</td>
+<td align="right">NA</td>
+<td align="left">C.M.Taylor</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Crotalaria</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2941719</td>
+<td align="left">Crotalaria</td>
+<td align="left">genus</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2941719</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Crotalaria</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">5386</td>
+<td align="right">NA</td>
+<td align="left">L.</td>
+<td align="left">sunnhampor</td>
+</tr>
+<tr class="even">
+<td align="left">Ocotea laxa</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4179789</td>
+<td align="left">Ocotea laxa</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4179789</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Laurales</td>
+<td align="left">Lauraceae</td>
+<td align="left">Ocotea</td>
+<td align="left">laxa</td>
+<td align="left">NA</td>
+<td align="right">3034076</td>
+<td align="right">4180505</td>
+<td align="left">Mez (Nees)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Solanum paniculatum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932547</td>
+<td align="left">Solanum paniculatum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932547</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Solanales</td>
+<td align="left">Solanaceae</td>
+<td align="left">Solanum</td>
+<td align="left">paniculatum</td>
+<td align="left">NA</td>
+<td align="right">2928997</td>
+<td align="right">NA</td>
+<td align="left">L.</td>
+<td align="left">jurubeba</td>
+</tr>
+<tr class="even">
+<td align="left">Clidemia epiphytica</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">homotypic synonym</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Amaioua guianensis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2901121</td>
+<td align="left">Amaioua guianensis</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2901121</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Amaioua</td>
+<td align="left">guianensis</td>
+<td align="left">NA</td>
+<td align="right">2901120</td>
+<td align="right">NA</td>
+<td align="left">Aubl.</td>
+<td align="left">cedro bravo</td>
+</tr>
+<tr class="even">
+<td align="left">Matayba intermedia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3784293</td>
+<td align="left">Matayba intermedia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3784293</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Sapindales</td>
+<td align="left">Sapindaceae</td>
+<td align="left">Matayba</td>
+<td align="left">intermedia</td>
+<td align="left">NA</td>
+<td align="right">3190011</td>
+<td align="right">NA</td>
+<td align="left">Radlk.</td>
+<td align="left">mataiba</td>
+</tr>
+<tr class="odd">
+<td align="left">Pagamea coriacea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2902155</td>
+<td align="left">Pagamea coriacea</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2902155</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Pagamea</td>
+<td align="left">coriacea</td>
+<td align="left">NA</td>
+<td align="right">2902141</td>
+<td align="right">NA</td>
+<td align="left">Spruce ex Benth.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Senna velutina</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2957014</td>
+<td align="left">Senna velutina</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2957014</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Senna</td>
+<td align="left">velutina</td>
+<td align="left">NA</td>
+<td align="right">2956904</td>
+<td align="right">5353929</td>
+<td align="left">H.S.Irwin &amp; Barneby (Vogel)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Myrsine umbellata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7422518</td>
+<td align="left">Myrsine umbellata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7422518</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Ericales</td>
+<td align="left">Primulaceae</td>
+<td align="left">Myrsine</td>
+<td align="left">umbellata</td>
+<td align="left">NA</td>
+<td align="right">3169412</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Compsoneura ulei</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5564439</td>
+<td align="left">Compsoneura ulei</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5564439</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Magnoliales</td>
+<td align="left">Myristicaceae</td>
+<td align="left">Compsoneura</td>
+<td align="left">ulei</td>
+<td align="left">NA</td>
+<td align="right">3231414</td>
+<td align="right">NA</td>
+<td align="left">Warb. ex Pilger</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Cyathea corcovadensis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3599017</td>
+<td align="left">Cyathea corcovadensis</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3599017</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Polypodiopsida</td>
+<td align="left">Cyatheales</td>
+<td align="left">Cyatheaceae</td>
+<td align="left">Cyathea</td>
+<td align="left">corcovadensis</td>
+<td align="left">NA</td>
+<td align="right">2650273</td>
+<td align="right">5647424</td>
+<td align="left">Domin (Raddi)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Myrciaria dubia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:10342163</td>
+<td align="left">Myrciaria dubia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:10342163</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Myrtales</td>
+<td align="left">Myrtaceae</td>
+<td align="left">Myrciaria</td>
+<td align="left">dubia</td>
+<td align="left">NA</td>
+<td align="right">3186407</td>
+<td align="right">5419961</td>
+<td align="left">Mc Vaugh (Kunth)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Alchornea triplinervia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3055511</td>
+<td align="left">Alchornea triplinervia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3055511</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Euphorbiaceae</td>
+<td align="left">Alchornea</td>
+<td align="left">triplinervia</td>
+<td align="left">NA</td>
+<td align="right">3055345</td>
+<td align="right">3055521</td>
+<td align="left">Müll.Arg. (Spreng.)</td>
+<td align="left">tinteiro</td>
+</tr>
+<tr class="even">
+<td align="left">Dahlstedtia muehlbergiana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8359138</td>
+<td align="left">Dahlstedtia muehlbergiana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8359138</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Dahlstedtia</td>
+<td align="left">muehlbergiana</td>
+<td align="left">NA</td>
+<td align="right">2960229</td>
+<td align="right">2969208</td>
+<td align="left">M.J.Silva &amp; A.M.G.Azevedo (Hassl.)</td>
+<td align="left">tropeiro</td>
+</tr>
+<tr class="odd">
+<td align="left">Copaifera coriacea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2978146</td>
+<td align="left">Copaifera coriacea</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2978146</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Copaifera</td>
+<td align="left">coriacea</td>
+<td align="left">NA</td>
+<td align="right">2978115</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">sapucaia</td>
+</tr>
+<tr class="even">
+<td align="left">Miconia gratissima</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3865003</td>
+<td align="left">Miconia gratissima</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3865003</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Myrtales</td>
+<td align="left">Melastomataceae</td>
+<td align="left">Miconia</td>
+<td align="left">gratissima</td>
+<td align="left">NA</td>
+<td align="right">3188558</td>
+<td align="right">NA</td>
+<td align="left">Benth. ex Triana</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Cabralea canjerana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7271502</td>
+<td align="left">Cabralea canjerana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7271502</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Sapindales</td>
+<td align="left">Meliaceae</td>
+<td align="left">Cabralea</td>
+<td align="left">canjerana</td>
+<td align="left">NA</td>
+<td align="right">7271426</td>
+<td align="right">9152556</td>
+<td align="left">Mart. (Vell.)</td>
+<td align="left">Rebenta Canralo</td>
+</tr>
+<tr class="even">
+<td align="left">Solanum megalochiton</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932021</td>
+<td align="left">Solanum megalochiton</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2932021</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Solanales</td>
+<td align="left">Solanaceae</td>
+<td align="left">Solanum</td>
+<td align="left">megalochiton</td>
+<td align="left">NA</td>
+<td align="right">2928997</td>
+<td align="right">NA</td>
+<td align="left">Mart.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Machaerium acutifolium</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5354997</td>
+<td align="left">Machaerium acutifolium</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5354997</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Fabales</td>
+<td align="left">Fabaceae</td>
+<td align="left">Machaerium</td>
+<td align="left">acutifolium</td>
+<td align="left">NA</td>
+<td align="right">2959589</td>
+<td align="right">NA</td>
+<td align="left">Vogel</td>
+<td align="left">Sebastiao de arruda</td>
+</tr>
+<tr class="even">
+<td align="left">Agonandra brasiliensis</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7321376</td>
+<td align="left">Agonandra brasiliensis</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7321376</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Santalales</td>
+<td align="left">Opiliaceae</td>
+<td align="left">Agonandra</td>
+<td align="left">brasiliensis</td>
+<td align="left">NA</td>
+<td align="right">8219051</td>
+<td align="right">NA</td>
+<td align="left">Benth. &amp; Hook.f.</td>
+<td align="left">quina doce</td>
+</tr>
+<tr class="odd">
+<td align="left">Iriartea deltoidea</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2739059</td>
+<td align="left">Iriartea deltoidea</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2739059</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Liliopsida</td>
+<td align="left">Arecales</td>
+<td align="left">Arecaceae</td>
+<td align="left">Iriartea</td>
+<td align="left">deltoidea</td>
+<td align="left">NA</td>
+<td align="right">2739058</td>
+<td align="right">NA</td>
+<td align="left">Ruiz &amp; Pav.</td>
+<td align="left">stottpalm</td>
+</tr>
+<tr class="even">
+<td align="left">Cordia trichotoma</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7294667</td>
+<td align="left">Cordia trichotoma</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7294667</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Boraginales</td>
+<td align="left">Cordiaceae</td>
+<td align="left">Cordia</td>
+<td align="left">trichotoma</td>
+<td align="left">NA</td>
+<td align="right">2900865</td>
+<td align="right">4058152</td>
+<td align="left">Arráb. ex Steud. (Vell.)</td>
+<td align="left">louro pardo</td>
+</tr>
+<tr class="odd">
+<td align="left">Nectandra amazonum</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7304432</td>
+<td align="left">Nectandra amazonum</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7304432</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Laurales</td>
+<td align="left">Lauraceae</td>
+<td align="left">Nectandra</td>
+<td align="left">amazonum</td>
+<td align="left">NA</td>
+<td align="right">3034018</td>
+<td align="right">NA</td>
+<td align="left">Nees</td>
+<td align="left">louro do igapo</td>
+</tr>
+<tr class="even">
+<td align="left">Byrsonima blanchetiana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7284991</td>
+<td align="left">Byrsonima blanchetiana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:7284991</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Malpighiaceae</td>
+<td align="left">Byrsonima</td>
+<td align="left">blanchetiana</td>
+<td align="left">NA</td>
+<td align="right">3191347</td>
+<td align="right">NA</td>
+<td align="left">Miq.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Plantae</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:6</td>
+<td align="left">Plantae</td>
+<td align="left">kingdom</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:6</td>
+<td align="left">Plantae</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">植物界</td>
+</tr>
+<tr class="even">
+<td align="left">Matayba elaeagnoides</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3784375</td>
+<td align="left">Matayba elaeagnoides</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3784375</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Sapindales</td>
+<td align="left">Sapindaceae</td>
+<td align="left">Matayba</td>
+<td align="left">elaeagnoides</td>
+<td align="left">NA</td>
+<td align="right">3190011</td>
+<td align="right">NA</td>
+<td align="left">Radlk.</td>
+<td align="left">pau de pombo</td>
+</tr>
+<tr class="odd">
+<td align="left">Conocliniopsis prasiifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3098250</td>
+<td align="left">Conocliniopsis prasiifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3098250</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Asterales</td>
+<td align="left">Asteraceae</td>
+<td align="left">Conocliniopsis</td>
+<td align="left">prasiifolia</td>
+<td align="left">NA</td>
+<td align="right">3098249</td>
+<td align="right">3094791</td>
+<td align="left">R.King &amp; H.Rob. (DC.)</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Randia armata</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5339445</td>
+<td align="left">Randia armata</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:5339445</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Gentianales</td>
+<td align="left">Rubiaceae</td>
+<td align="left">Randia</td>
+<td align="left">armata</td>
+<td align="left">NA</td>
+<td align="right">2911655</td>
+<td align="right">5339411</td>
+<td align="left">DC. (Sw.)</td>
+<td align="left">esporao de galo</td>
+</tr>
+<tr class="odd">
+<td align="left">Baccharis polyphylla</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8127527</td>
+<td align="left">Baccharis polyphylla</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8127527</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Asterales</td>
+<td align="left">Asteraceae</td>
+<td align="left">Baccharis</td>
+<td align="left">polyphylla</td>
+<td align="left">NA</td>
+<td align="right">3129135</td>
+<td align="right">NA</td>
+<td align="left">Gardner</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Undesignated undesignated</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">notFound</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Sematophyllum galipense</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2680652</td>
+<td align="left">Sematophyllum galipense</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:2680652</td>
+<td align="left">Plantae</td>
+<td align="left">Bryophyta</td>
+<td align="left">Bryopsida</td>
+<td align="left">Hypnales</td>
+<td align="left">Sematophyllaceae</td>
+<td align="left">Sematophyllum</td>
+<td align="left">galipense</td>
+<td align="left">NA</td>
+<td align="right">2680613</td>
+<td align="right">NA</td>
+<td align="left">Mitten, 1869</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Parthenium hysterophorus</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086784</td>
+<td align="left">Parthenium hysterophorus</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3086784</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Asterales</td>
+<td align="left">Asteraceae</td>
+<td align="left">Parthenium</td>
+<td align="left">hysterophorus</td>
+<td align="left">NA</td>
+<td align="right">3086782</td>
+<td align="right">NA</td>
+<td align="left">L.</td>
+<td align="left">돼지풀아재비</td>
+</tr>
+<tr class="odd">
+<td align="left">Jacaranda simplicifolia</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4093095</td>
+<td align="left">Jacaranda simplicifolia</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:4093095</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Lamiales</td>
+<td align="left">Bignoniaceae</td>
+<td align="left">Jacaranda</td>
+<td align="left">simplicifolia</td>
+<td align="left">NA</td>
+<td align="right">3172498</td>
+<td align="right">NA</td>
+<td align="left">K.Schum. ex Bureau &amp; K.Schum.</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Chamaesyce</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8120305</td>
+<td align="left">Chamaesyce</td>
+<td align="left">genus</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:8120305</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Malpighiales</td>
+<td align="left">Euphorbiaceae</td>
+<td align="left">Chamaesyce</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="right">4691</td>
+<td align="right">NA</td>
+<td align="left">Rafinesque, 1817</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Justicia brasiliana</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3771127</td>
+<td align="left">Justicia brasiliana</td>
+<td align="left">species</td>
+<td align="left">accepted</td>
+<td align="left">GBIF:3771127</td>
+<td align="left">Plantae</td>
+<td align="left">Tracheophyta</td>
+<td align="left">Magnoliopsida</td>
+<td align="left">Lamiales</td>
+<td align="left">Acanthaceae</td>
+<td align="left">Justicia</td>
+<td align="left">brasiliana</td>
+<td align="left">NA</td>
+<td align="right">2904597</td>
+<td align="right">NA</td>
+<td align="left">Roth</td>
+<td align="left">junta de cobra vermelha</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Merging results of the taxonomy harmonization process with the original database. Before that, let’s rename the column containing the original scientific names to <strong>“verbatim_scientificName”</strong>. From now on, <strong>“scientificName” corresponds to the verified names</strong> (resulted from the name harmonization process). As the column “original_search” in “query_names” and “names_clean” are equal, only the first will be kept.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">database</span> <span class="op">&lt;-</span>
-  <span class="va">database</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>verbatim_scientificName <span class="op">=</span> <span class="va">scientificName</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">names_clean</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">query_names</span><span class="op">)</span></code></pre></div>
+  <span class="va">database</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>verbatim_scientificName <span class="op">=</span> <span class="va">scientificName</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">names_clean</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">query_names</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="report" class="section level3">
-<h3 class="hasAnchor">
-<a href="#report" class="anchor"></a>Report</h3>
-<p>The report is based on the column “notes” containing the results of the name standardization process.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="section level2">
+<h2 id="report">Report<a class="anchor" aria-label="anchor" href="#report"></a>
+</h2>
+<p>The report is based on the <strong>column notes</strong> containing the results of the name standardization process. The notes can be grouped into two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as “valid” in the column “Description”.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="../reference/bdc_create_report.html">bdc_create_report</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_pf</span>,
+  <span class="fu"><a href="../reference/bdc_create_report.html">bdc_create_report</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">database</span>,
                     database_id <span class="op">=</span> <span class="st">"database_id"</span>,
                     workflow_step <span class="op">=</span> <span class="st">"taxonomy"</span><span class="op">)</span>
 
 <span class="va">report</span></code></pre></div>
 </div>
-<div id="unresolved-names" class="section level3">
-<h3 class="hasAnchor">
-<a href="#unresolved-names" class="anchor"></a>Unresolved names</h3>
-<p>It also possible filter out records with taxonomic status different of “accepted”. Such records can be potentially resolved manually.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="section level2">
+<h2 id="unresolved-names">Unresolved names<a class="anchor" aria-label="anchor" href="#unresolved-names"></a>
+</h2>
+<p>It is also possible to filter out records with taxonomic status different from “accepted”. Such records may be potentially resolved manually.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unresolved_names</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/bdc_filter_out_names.html">bdc_filter_out_names</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">database</span>,
-                       taxonomic_notes <span class="op">=</span> <span class="st">"accepted"</span>,
+                       col_name <span class="op">=</span> <span class="st">"notes"</span>,
+                       taxonomic_status <span class="op">=</span> <span class="st">"accepted"</span>,
                        opposite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Save the table containing unresolved names</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">unresolved_names</span> <span class="op">%&gt;%</span>
- <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fwrite.html">fwrite</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Check"</span>, <span class="st">"02_unresolved_names.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">unresolved_names</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">.</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output/Check/02_unresolved_names.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="filter-the-database" class="section level3">
-<h3 class="hasAnchor">
-<a href="#filter-the-database" class="anchor"></a>Filter the database</h3>
-<p>It is possible to remove records with unresolved or invalid names to get a ‘clean’ database . However, to ensure that all records be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal steps of the workflow), potentially erroneous or suspect records will be removed in the final step of the workflow.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="section level2">
+<h2 id="filtering-the-database">Filtering the database<a class="anchor" aria-label="anchor" href="#filtering-the-database"></a>
+</h2>
+<p>It is possible to remove records with unresolved or invalid names to get a ‘clean’ database. However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal modules of the package), potentially erroneous or suspect records will be removed in the final module of the package.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># output &lt;-</span>
 <span class="co">#   bdc_filter_out_names(</span>
 <span class="co">#     data = database,</span>
@@ -268,30 +3801,35 @@
 <span class="co">#     opposite = FALSE</span>
 <span class="co">#   )</span></code></pre></div>
 </div>
-<div id="save-the-database" class="section level3">
-<h3 class="hasAnchor">
-<a href="#save-the-database" class="anchor"></a>Save the database</h3>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">database</span> <span class="op">%&gt;%</span>
-  <span class="fu">qs</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/qs/man/qsave.html">qsave</a></span><span class="op">(</span><span class="va">.</span>,
-            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"01_prefilter_database.qs"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="saving-the-database">Saving the database<a class="anchor" aria-label="anchor" href="#saving-the-database"></a>
+</h2>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># use qs::qread() to save the database in a compressed format</span>
+<span class="va">database</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">.</span>,
+            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"02_taxonomy_database.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 
 
 
       <footer><div class="copyright">
-  <p>Developed by Bruno Ribeiro, Geiziane Tessarolo, Santiago Velazco, Lucas Jardim, Karlo Guidoni-Martins.</p>
+  <p></p>
+<p>Developed by Bruno Ribeiro, Geiziane Tessarolo, Santiago Velazco, Lucas Jardim, Karlo Guidoni-Martins.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -299,6 +3837,8 @@
 
   
 
+
+  
 
   </body>
 </html>

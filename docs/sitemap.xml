@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://brunobrr.github.io/bdc/404.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/articles/integrate_datasets.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/articles/prefilter.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/articles/space.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/articles/taxonomy.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/articles/time.html</loc>
+  </url>
+  <url>
+    <loc>https://brunobrr.github.io/bdc/authors.html</loc>
+  </url>
+  <url>
     <loc>https://brunobrr.github.io/bdc/index.html</loc>
   </url>
   <url>
@@ -46,12 +73,6 @@
     <loc>https://brunobrr.github.io/bdc/reference/bdc_eventDate_empty.html</loc>
   </url>
   <url>
-    <loc>https://brunobrr.github.io/bdc/reference/bdc_filter_id.html</loc>
-  </url>
-  <url>
-    <loc>https://brunobrr.github.io/bdc/reference/bdc_filter_name.html</loc>
-  </url>
-  <url>
     <loc>https://brunobrr.github.io/bdc/reference/bdc_filter_out_flags.html</loc>
   </url>
   <url>
@@ -82,21 +103,9 @@
     <loc>https://brunobrr.github.io/bdc/reference/bdc_year_outOfRange.html</loc>
   </url>
   <url>
+    <loc>https://brunobrr.github.io/bdc/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://brunobrr.github.io/bdc/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html</loc>
-  </url>
-  <url>
-    <loc>https://brunobrr.github.io/bdc/articles/01_prefilter.html</loc>
-  </url>
-  <url>
-    <loc>https://brunobrr.github.io/bdc/articles/02_taxonomy.html</loc>
-  </url>
-  <url>
-    <loc>https://brunobrr.github.io/bdc/articles/03_space.html</loc>
-  </url>
-  <url>
-    <loc>https://brunobrr.github.io/bdc/articles/04_time.html</loc>
   </url>
 </urlset>
