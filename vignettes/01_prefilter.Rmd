@@ -55,7 +55,7 @@ database %>%
 
 <br/>
 
-![](https://img.icons8.com/windows/96/000000/box-important--v1.png){width="40"} **Important**:
+![](https://img.icons8.com/windows/96/000000/box-important--v1.png){width="40cm"} **Important**:
 
 The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.** We run bdc functions following a proposed workflow but all can be executed independently
 
@@ -229,7 +229,7 @@ bdc_create_figures(data = check_pf,
 
 <br/>
 
-![**Coordinates country inconsistent**](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/prefilter_.coordinates_country_inconsistent_MAP.png){width="20"}
+![**Coordinates country inconsistent**](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/prefilter_.coordinates_country_inconsistent_MAP.png){width="20cm"}
 
 <br/>
 

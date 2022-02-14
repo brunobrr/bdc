@@ -67,7 +67,7 @@ bdc_create_report <-
           ".coordinates_outOfRange",
           ".invalid_basis_of_records",
           ".coordinates_country_inconsistent",
-          ".summary",
+          ".summary"
         )
       
       names_tab <- names(data)
