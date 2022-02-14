@@ -11,7 +11,7 @@ test_that("test with function example", {
   )
 
   expect_true(".coordinates_country_inconsistent" %in% names(df))
-  expect_equal(sum(!df$.coordinates_country_inconsistent), 10)
+  expect_equal(sum(!df$.coordinates_country_inconsistent), 0)
 
   # With different values of dist
   decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA, -64.105)
