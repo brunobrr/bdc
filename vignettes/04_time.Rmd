@@ -28,7 +28,7 @@ This module of the *bdc* package extracts the collection year whenever possible 
 
 ## Installation
 
-Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
+Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
 <br/>
 
@@ -60,7 +60,7 @@ database <-
 
 <br/>
 
-![](https://img.icons8.com/windows/96/000000/box-important--v1.png){width="40"} **Important**:
+<img src="https://img.icons8.com/windows/96/000000/box-important--v1.png" width="40"/> **Important**:
 
 The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.**
 

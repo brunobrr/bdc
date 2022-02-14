@@ -20,7 +20,8 @@
 #' @importFrom dplyr mutate sym collect right_join relocate
 #' @importFrom taxadb taxa_tbl td_connect
 #' @importFrom tibble tibble
-
+#' 
+#' @noRd
 bdc_filter_name <-
   function (sci_name,
             db,
@@ -65,8 +66,9 @@ bdc_filter_name <-
 #' @importFrom dplyr mutate collect right_join relocate sym
 #' @importFrom taxadb td_connect
 #' @importFrom tibble tibble
-
-
+#' 
+#' @noRd
+#' 
 bdc_filter_id <-
   function (id, db, db_version = taxadb:::latest_version())
   {

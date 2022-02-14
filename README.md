@@ -7,6 +7,8 @@
 
 <!-- badges: start -->
 
+[![License](https://img.shields.io/badge/license-GPL%20%28%3E=%203%29-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](https://codecov.io/gh/brunobrr/bdc?branch=master)
 [![Coveralls test
@@ -17,10 +19,10 @@ coverage](https://coveralls.io/repos/github/brunobrr/bdc/badge.svg)](https://cov
 ### Overview
 
 Handle biodiversity data from several different sources is not an easy
-task. Here, we present the Biodiversity Data Cleaning (bdc), an R
-package to address quality issues and improve the fitness-for-use of a
-dataset. *bdc* contains functions to harmonize and integrate data from
-different sources following common standards and protocols and
+task. Here, we present the **B**iodiversity **D**ata **C**leaning (bdc),
+an R package to address quality issues and improve the fitness-for-use
+of a dataset. *bdc* contains functions to harmonize and integrate data
+from different sources following common standards and protocols and
 implements various tests and tools to flag, document, clean, and correct
 taxonomic, spatial, and temporal data.
 
@@ -36,8 +38,7 @@ biodiversity dimensions, including:
     and standardize country names);
 3.  [**Taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html):
     cleaning, parsing, and standardization of scientific names against
-    multiple taxonomic references. The workflow corrects spelling errors
-    and converts nomenclatural synonyms to currently accepted names;
+    multiple taxonomic references.
 4.  [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html):
     flagging of erroneous, suspicious, and low-precision geographic
     coordinates;
