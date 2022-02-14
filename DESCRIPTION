@@ -43,11 +43,9 @@ Imports:
     CoordinateCleaner,
     countrycode,
     doParallel,
-    dplyr,
     foreach,
     fs,
     here,
-    knitr,
     magrittr,
     purrr,
     qs,
@@ -57,24 +55,36 @@ Imports:
     sf,
     sp,
     stringdist,
-    stringi,
     stringr,
     taxadb,
-    tibble,
     tidyselect,
     ggplot2,
     cowplot,
+    tibble,
+    dplyr,
+    readr,
+    stringi,
     rnaturalearth,
+    rnaturalearthdata,
+    rnaturalearthhires,
     DT,
-    readr
+    knitr,
 Suggests:
     rvest,
     testthat,
     xml2,
     rmarkdown,
-    covr
+    markdown,
+    covr,
+    DBI,
+    rappdirs,
+    remotes
 VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Remotes:
+  github::ropensci/rnaturalearthdata,
+  github::ropensci/rnaturalearthhires
+
