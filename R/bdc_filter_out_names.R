@@ -54,7 +54,7 @@ bdc_filter_out_names <-
            col_name = "notes",
            taxonomic_status = "accepted",
            opposite = FALSE) {
-    notes <- id <- temp <- .data <- NULL
+    notes <- id <- temp <- .data <- . <- NULL
 
     if (!is.data.frame(data)) {
       stop("data is not a data.frame")
@@ -64,10 +64,10 @@ bdc_filter_out_names <-
       stop(paste0("column ", "'", col_name, "'", "not found"))
     }
 
-    unique_status <- 
-      data %>% 
-      dplyr::select(.data[[col_name]]) %>% 
-      dplyr::distinct(.) %>% 
+    unique_status <-
+      data %>%
+      dplyr::select(.data[[col_name]]) %>%
+      dplyr::distinct(.) %>%
       dplyr::pull(.)
 
     if (!all(taxonomic_status %in% unique_status)) {

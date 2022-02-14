@@ -48,6 +48,7 @@
 #' @importFrom taxadb taxa_tbl
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach %dopar%
+#' @importFrom utils head
 #'
 #' @noRd
 #'
@@ -79,7 +80,7 @@ bdc_suggest_names_taxadb <-
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
     #Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
     #Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
-    
+
     # Get first letter of all scientific names
     first_letter <-
       unique(sapply(sci_name, function(i) {
@@ -88,25 +89,25 @@ bdc_suggest_names_taxadb <-
       USE.NAMES = FALSE
       ))
 
-    name_to_case_check  <- taxadb::taxa_tbl(provider, version = db_version) %>% 
+    name_to_case_check  <- taxadb::taxa_tbl(provider, version = db_version) %>%
                             dplyr::filter(!is.na(scientificName)) %>%
-                            head(1) %>% 
+                            utils::head(1) %>%
                             pull(scientificName) %>%
-                            stringr::str_split(., "") 
-    
+                            stringr::str_split(., "")
+
     lower_case <- str_detect(name_to_case_check[[1]][1] ,"[[:lower:]]")
-                  
-    
+
+
     if(lower_case){
-      
+
       first_letter <- tolower(first_letter)
     }else{
-      
-      first_letter <- toupper(first_letter) 
+
+      first_letter <- toupper(first_letter)
     }
-      
-     
-    
+
+
+
     # Should taxonomic database be filtered according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
       species_first_letter <-
