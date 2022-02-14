@@ -24,7 +24,6 @@
 #' @importFrom dplyr summarise n pull mutate group_by intersect filter full_join select mutate_if summarise_all rename
 #' @importFrom ggplot2 theme_minimal theme element_text element_line element_blank unit ggplot aes geom_col coord_flip labs geom_hline scale_y_continuous ggsave theme_void geom_polygon geom_hex coord_quickmap scale_fill_viridis_c geom_histogram
 #' @importFrom here here
-#' @importFrom scales comma
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
 #' @importFrom tidyselect starts_with
@@ -62,10 +61,8 @@ bdc_create_figures <-
     . <- V1 <- Name <- freq <- year <- decimalLongitude <- NULL
     decimalLatitude <- . <- long <- lat <- group  <- `NA` <- .summary <- NULL
 
-
     suppressWarnings({
       check_require_cran("cowplot")
-      check_require_cran("scales")
       check_require_cran("readr")
       check_require_cran("rworldmap")
       check_require_cran("ggplot2")
@@ -76,16 +73,18 @@ bdc_create_figures <-
 
     bdc_create_dir()
 
+    # Formatting y axis of ggplot bar
+    fancy_scientific <- function(l) {
+      format(l, big.mark = ",", digits = 2, nsmall = 1)
+    }
+    
     # Total number of records
     suppressMessages({
 
-      # if (!fs::file_exists("data/n_records.csv")) {
         n_records <-
           data %>%
           dplyr::summarise(n = dplyr::n()) %>%
           dplyr::pull(n)
-
-        # readr::write_csv(n_records, here::here("data/n_records.csv"))
 
         # Total number of records per database
         n_record_database <-
@@ -96,18 +95,6 @@ bdc_create_figures <-
           ) %>%
           dplyr::group_by(database_id) %>%
           dplyr::summarise(n_total = dplyr::n())
-
-        # readr::write_csv(n_record_database, "data/n_record_database.csv")
-
-      # } else {
-      #   n_records <-
-      #     readr::read_csv(here::here("data/n_records.csv")) %>%
-      #     dplyr::pull(n)
-      #
-      #   n_record_database <-
-      #     readr::read_csv(here::here("data/n_record_database.csv"))
-      # }
-
 
     our_theme <-
       ggplot2::theme_minimal() +
@@ -128,9 +115,8 @@ bdc_create_figures <-
           ".coordinates_outOfRange",
           ".invalid_basis_of_records",
           ".coordinates_country_inconsistent",
-          ".summary",
-          "summary_all_tests"
-        )
+          ".summary"
+          )
 
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
@@ -154,7 +140,7 @@ bdc_create_figures <-
           ".dpl",
           ".rou",
           ".urb",
-          "summary_all_tests"
+          ".summary"
         )
 
       names_tab <- names(data)
@@ -164,7 +150,7 @@ bdc_create_figures <-
     # time
     if (workflow_step == "time") {
       tests <-
-        c("year",
+        c(".eventDate_empty",
           ".year_outOfRange",
           ".summary",
           "summary_all_tests")
@@ -216,7 +202,7 @@ bdc_create_figures <-
         #   size = 4,
         #   fontface = "bold"
         # ) +
-        ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+        ggplot2::scale_y_continuous(expand = c(0, 0), labels = fancy_scientific)
 
         ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
                               column_to_map, "_", "BAR", ".png",
@@ -263,6 +249,8 @@ bdc_create_figures <-
                                                y = freq))
         }
 
+
+        
         b <-
           gg +
           ggplot2::geom_col(colour = "white", fill = "royalblue") +
@@ -274,21 +262,7 @@ bdc_create_figures <-
             size = 1,
             colour = "#333333"
           ) +
-          # ggplot2::geom_label(
-          #   ggplot2::aes(
-          #     x = stats::reorder(Name, -freq),
-          #     y = freq,
-          #     label = n_flagged
-          #   ),
-          #   hjust = 1,
-          #   vjust = 0.5,
-          #   colour = "white",
-          #   fill = NA,
-          #   label.size = NA,
-        #   size = 3,
-        #   fontface = "bold"
-        # ) +
-        ggplot2::scale_y_continuous(expand = c(0, 0), labels = scales::comma)
+        ggplot2::scale_y_continuous(expand = c(0, 0), labels = fancy_scientific)
 
         ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
                               column_to_map,
@@ -309,9 +283,8 @@ bdc_create_figures <-
       ".coordinates_outOfRange",
       ".invalid_basis_of_records",
       ".coordinates_country_inconsistent",
-      ".summary",
       ".uncer_term",
-      "names_not_found",
+      ".rou",
       ".equ",
       ".zer",
       ".cap",
@@ -321,7 +294,9 @@ bdc_create_figures <-
       ".inst",
       ".urb",
       ".dpl",
-      ".rou",
+      ".eventDate_empty", 
+      ".year_outOfRange",
+      ".summary",
       "summary_all_tests"
     )
 
@@ -346,7 +321,7 @@ bdc_create_figures <-
     w_bar <- dplyr::intersect(col_to_tests, bar)
     w_maps <- dplyr::intersect(col_to_tests, maps)
     w_tranposed <- dplyr::intersect(col_to_tests, "coordinates_transposed")
-    w_hist <- dplyr::intersect(col_to_tests, hist)
+    w_hist <- hist
 
 
     # Create bar plots
@@ -515,7 +490,7 @@ bdc_create_figures <-
           size = 1,
           colour = "#333333"
         ) +
-        ggplot2::scale_y_continuous(labels = scales::comma)
+        ggplot2::scale_y_continuous(labels = fancy_scientific)
 
       ggplot2::ggsave(
         paste("Output/", "Figures/", workflow_step, "_", "year", "_",

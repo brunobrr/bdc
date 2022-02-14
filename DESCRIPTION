@@ -64,7 +64,6 @@ Imports:
     tidyselect,
     ggplot2,
     cowplot,
-    scales,
     rnaturalearth,
     DT,
     readr

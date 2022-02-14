@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -44,12 +44,12 @@ Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
 Reading the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html) module the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the function (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
-```{r, echo=TRUE, eval=FALSE}
+```{r echo=TRUE, eval=FALSE}
 database <-
   readr::read_csv(here::here("Output/Intermediate/02_taxonomy_database.csv"))
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r echo=FALSE, eval=TRUE}
 database <- 
   readr::read_csv(system.file("extdata/outpus_vignettes/02_taxonomy_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
@@ -140,7 +140,7 @@ DT::datatable(
 
 It is possible to map a column containing the results of **one spatial test each time**, for example records in country centroids (column ".cen"). Besides, we can use the column **".summary"** to map all records flagged as potentially problematic (i.e., FALSE).
 
-```{r eval=F}
+```{r eval=FALSE}
 check_space %>%
   dplyr::filter(.summary == FALSE) %>% # map only records flagged as FALSE
   bdc_quickmap(
@@ -154,18 +154,19 @@ check_space %>%
 
 <br/>
 
-![Coordinates flagged as FALSE in at least one test](https://github.com/brunobrr/bdc/raw/master/vignettes/man/figures/README-unnamed-chunk-9-1.png){width="20cm" height="10cm"} <br/>
+![Coordinates flagged as FALSE in at least one test](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/map_summary_space_vignette.jpeg){width="20cm" height="10cm"} <br/>
 
 ## Report
 
 Creating a report summarizing the results of all tests.
 
-```{r, eval = FALSE}
+```{r eval = FALSE}
 report <-
   bdc_create_report(data = check_space,
                     database_id = "database_id",
                     workflow_step = "space")
 
+report
 ```
 
 <br/>
@@ -182,7 +183,7 @@ bdc_create_figures(data = check_space,
 
 <br/>
 
-![Rounded coordinates (% of each database flagged)](images/space_.rou_BAR.png)
+![Rounded coordinates (% of each database flagged)](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_.rou_BAR.png)
 
 <br/>
 
@@ -190,7 +191,7 @@ bdc_create_figures(data = check_space,
 
 <br/>
 
-![Summary of all tests](images/space_summary_all_tests_BAR-02.png)
+![Summary of all tests](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_summary_all_tests_BAR.png)
 
 <br/>
 

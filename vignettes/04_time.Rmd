@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -36,16 +36,15 @@ Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
 Read the database created in the [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html) module of the `bdc` package. It is also possible to read any datasets containing the \*\*required\*\* fields to run the funtion (more details [here](%5Bhttps://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
-```{r, echo=TRUE,eval=FALSE}
+```{r echo=TRUE, eval=FALSE}
 database <-
   qs::qread(here::here("Output/Intermediate/03_space_database.csv"))
 ```
 
-```{r, echo=FALSE,eval=TRUE}
+```{r echo=FALSE, eval=TRUE}
 database <- 
   readr::read_csv(system.file("extdata/outpus_vignettes/03_space_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
-
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 # DT::datatable(
@@ -106,28 +105,15 @@ check_time <- bdc_summary_col(data = check_time)
 
 <br/>
 
-```{r echo=F, message=FALSE, warning=FALSE}
-# DT::datatable(
-#   check_time, class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 3,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
-```
-
-<br/>
-
 Creating a report summarizing the results of all tests of the `bdc` package.
 
-```{r, eval = FALSE}
+```{r}
 report <-
   bdc_create_report(data = check_time,
                     database_id = "database_id",
                     workflow_step = "time")
 
+report
 ```
 
 <br/>
@@ -136,7 +122,7 @@ report <-
 
 Here we create a histogram showing the number of records collecting over the years.
 
-```{r, eval = FALSE}
+```{r eval = FALSE}
 bdc_create_figures(data = check_time,
                    database_id = "database_id",
                    workflow_step = "time")

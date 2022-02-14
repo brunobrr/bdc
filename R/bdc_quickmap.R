@@ -16,7 +16,9 @@
 #'
 #' @details Only records with valid coordinates can be plotted. Records missing
 #' or containing invalid coordinates are removed prior creating the map.
-#'
+#' 
+#' @importFrom ggplot2 theme_void theme element_blank ggplot labs aes coord_quickmap scale_color_manual
+#' @importFrom dplyr mutate filter select
 #' @export
 #'
 #' @examples

@@ -17,7 +17,7 @@ navbar:
       menu:
       -  text: "Standardization and integration of different datasets"
          href: articles/00_integrate_datasets.html
-      -  text: "Prefilter"
+      -  text: "Pre-filter"
          href: articles/01_prefilter.html
       -  text: "Taxonomy"
          href: articles/02_taxonomy.html

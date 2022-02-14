@@ -58,16 +58,64 @@ bdc_create_report <-
     
     bdc_create_dir()
     
+    # prefilter
+    if (workflow_step == "prefilter") {
+      tests <-
+        c(
+          ".scientificName_empty",
+          ".coordinates_empty",
+          ".coordinates_outOfRange",
+          ".invalid_basis_of_records",
+          ".coordinates_country_inconsistent",
+          ".summary",
+        )
+      
+      names_tab <- names(data)
+      col_to_tests <- dplyr::intersect(tests, names_tab)
+      
+      if (file.exists("Output/Check/01_coordinates_transposed.csv")) {
+        col_to_tests <- c(col_to_tests, "coordinates_transposed")
+      }
+    }
+    
+    # space
+    if (workflow_step == "space") {
+      tests <-
+        c(
+          ".equ",
+          ".zer",
+          ".cap",
+          ".cen",
+          ".otl",
+          ".gbf",
+          ".inst",
+          ".dpl",
+          ".rou",
+          ".urb",
+          "summary"
+        )
+      
+      names_tab <- names(data)
+      col_to_tests <- dplyr::intersect(tests, names_tab)
+    }
+    
+    # time
+    if (workflow_step == "time") {
+      tests <-
+        c(".eventDate_empty",
+          ".year_outOfRange",
+          ".summary")
+      
+      names_tab <- names(data)
+      col_to_tests <- dplyr::intersect(tests, names_tab)
+    }
+    
     suppressMessages({
       suppressWarnings({
-        # # Total number of records
-        # if (!fs::file_exists("data/n_records.csv")) {
         n_records <-
           data %>%
           dplyr::summarise(n = dplyr::n()) %>%
           dplyr::pull(n)
-        
-        # readr::write_csv(n_records, here::here("data/n_records.csv"))
         
         # Total number of records per database
         n_record_database <-
@@ -118,6 +166,7 @@ bdc_create_report <-
           pf <-
             data %>%
             dplyr::select(tidyselect::starts_with(".")) %>%
+            dplyr::select(col_to_tests) %>% 
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%
@@ -296,6 +345,7 @@ bdc_create_report <-
           space <-
             data %>%
             dplyr::select(tidyselect::starts_with(".")) %>%
+            dplyr::select(col_to_tests) %>% 
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%
@@ -379,6 +429,7 @@ bdc_create_report <-
           date <-
             data %>%
             dplyr::select(tidyselect::starts_with(".")) %>%
+            dplyr::select(col_to_tests) %>% 
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%

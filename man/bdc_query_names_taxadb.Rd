@@ -62,7 +62,7 @@ converting nomenclatural synonyms to currently accepted names. Names are
 standardized based on one out of ten taxonomic authorities (i.e., backbones)
 available in the taxadb package. Spelling errors are corrected using a fuzzy
 match algorithm based on a match distance defined by the user. The name
-standardization quality can be accessed in the column “notes” placed in the
+standardization quality can be accessed in the column "notes" placed in the
 table resulting from the name standardization process.
 }
 \details{

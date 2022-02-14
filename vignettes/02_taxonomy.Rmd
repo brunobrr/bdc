@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -61,12 +61,12 @@ Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
 Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) module of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
-```{r, echo=TRUE,eval=FALSE}
+```{r echo=TRUE,eval=FALSE}
 database <-
   readr::read_csv(here::here("Output/Intermediate/01_prefilter_database.csv"))
 ```
 
-```{r, echo=FALSE,eval=TRUE}
+```{r echo=FALSE, eval=TRUE}
 database <- 
   readr::read_csv(system.file("extdata/outpus_vignettes/01_prefilter_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
@@ -85,7 +85,7 @@ Scientific names improperly formatted usually cannot be matched with valid names
 
 <br/>
 
-```{r, eval=FALSE}
+```{r eval=TRUE}
 parse_names <-
   bdc_clean_names(sci_names = database$scientificName)
 ```
@@ -106,8 +106,6 @@ DT::datatable(
     fixedColumns = list(leftColumns = 2)
   )
 )
-
-parse_names <- parse_names2
 ```
 
 <br/>
@@ -180,7 +178,7 @@ database <-
 
 The report is based on the **column notes** containing the results of the name standardization process. The notes can be grouped into two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as "valid" in the column "Description".
 
-```{r, eval = FALSE}
+```{r eval = FALSE}
 report <-
   bdc_create_report(data = database,
                     database_id = "database_id",
