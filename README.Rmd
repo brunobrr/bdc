@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 Handle biodiversity data from several different sources is not an easy task. Here, we present the **B**iodiversity **D**ata **C**leaning (bdc), an R package to address quality issues and improve the fitness-for-use of a dataset. *bdc* contains functions to harmonize and integrate data from different sources following common standards and protocols and implements various tests and tools to flag, document, clean, and correct taxonomic, spatial, and temporal data.
 
-#### Structure of bdc
+#### **Structure of bdc**
 
 The *bdc* toolkit is organized in thematic modules related to different biodiversity dimensions. The modules illustrated, and functions within, can be linked to form a workflow (see [**vignettes**](https://brunobrr.github.io/bdc/)), but can also be executed independently depending on user needs.
 

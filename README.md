@@ -26,7 +26,7 @@ from different sources following common standards and protocols and
 implements various tests and tools to flag, document, clean, and correct
 taxonomic, spatial, and temporal data.
 
-#### Structure of bdc
+#### **Structure of bdc**
 
 The *bdc* toolkit is organized in thematic modules related to different
 biodiversity dimensions. The modules illustrated, and functions within,

@@ -53,7 +53,7 @@ database <-
 DT::datatable(
   database, class = 'stripe', extensions = 'FixedColumns',
   options = list(
-    pageLength = 10,
+    pageLength = 5,
     dom = 'Bfrtip',
     scrollX = TRUE,
     fixedColumns = list(leftColumns = 2)
