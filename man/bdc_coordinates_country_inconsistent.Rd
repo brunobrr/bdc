@@ -71,7 +71,7 @@ dist = 0.2 # in decimal degrees
 }
 }
 \seealso{
-Other {prefilter}: 
+Other prefilter: 
 \code{\link{bdc_basisOfRecords_notStandard}()},
 \code{\link{bdc_coordinates_empty}()},
 \code{\link{bdc_coordinates_from_locality}()},
@@ -80,4 +80,4 @@ Other {prefilter}:
 \code{\link{bdc_country_standardized}()},
 \code{\link{bdc_scientificName_empty}()}
 }
-\concept{{prefilter}}
+\concept{prefilter}

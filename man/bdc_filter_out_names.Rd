@@ -63,7 +63,7 @@ bdc_filter_out_names(
 }
 }
 \seealso{
-Other {taxonomy}: 
+Other taxonomy: 
 \code{\link{bdc_clean_names}()}
 }
-\concept{{taxonomy}}
+\concept{taxonomy}

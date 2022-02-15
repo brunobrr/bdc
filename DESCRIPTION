@@ -1,91 +1,70 @@
 Package: bdc
-Title: Biodiversity data cleaning
+Title: Biodiversity Data Cleaning
 Version: 0.0.2
-Authors@R:
-    c(person(given = "Bruno",
-             family = "Ribeiro",
-             role = c("aut", "cre"),
-             email = "ribeiro.brr@gmail.com",
-             comment = c(ORCID = "0000-0002-7755-6715")),
-      person(given = "Geiziane",
-             family = "Tessarolo",
-             role = "aut",
-             email = "geites@gmail.com",
-             comment = c(ORCID = "0000-0003-1361-0062")),
-      person(given = "Santiago",
-             family = "Velazco",
-             role = "aut",
-             email = "sjevelazco@gmail.com",
-             comment = c(ORCID = "0000-0002-7527-0967")),
-      person(given = "Lucas",
-             family = "Jardim",
-             role = "aut",
-             email = "lucas.ljardim9@gmail.com",
-             comment = c(ORCID = "0000-0003-2602-5575")),
-      person(given = "Karlo",
-             family = "Guidoni-Martins",
-             role = "aut",
-             email = "kguidonimartins@gmail.com",
-             comment = c(ORCID = "0000-0002-8458-8467")),
-      person(given = "Rafael",
-             family = "Loyola",
-             role = "ctb",
-             email = "rdiasloyola@gmail.com",
-             comment = c(ORCID = "0000-0001-5323-2735")),
-      person(given = "Steven",
-             family = "Bachman",
-             role = "ctb",
-             email = "S.Bachman@kew.org ",
-             comment = c(ORCID = "0000-0003-1085-6075")))
+Authors@R:c(
+    person("Bruno", "Ribeiro", , "ribeiro.brr@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7755-6715")),
+    person("Geiziane", "Tessarolo", , "geites@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0003-1361-0062")),
+    person("Santiago", "Velazco", , "sjevelazco@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0002-7527-0967")),
+    person("Lucas", "Jardim", , "lucas.ljardim9@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0003-2602-5575")),
+    person("Karlo", "Guidoni-Martins", , "kguidonimartins@gmail.com", role = "aut",
+           comment = c(ORCID = "0000-0002-8458-8467")),
+    person("Rafael", "Loyola", , "rdiasloyola@gmail.com", role = "ctb",
+           comment = c(ORCID = "0000-0001-5323-2735")),
+    person("Steven", "Bachman", , "S.Bachman@kew.org ", role = "ctb",
+           comment = c(ORCID = "0000-0003-1085-6075"))
+  )
 Description: Easily clean up biodiversity data.
 License: GPL (>= 3)
 Imports:
     CoordinateCleaner,
     countrycode,
+    cowplot,
     doParallel,
+    dplyr,
+    DT,
     foreach,
     fs,
+    ggplot2,
     here,
     magrittr,
     purrr,
     qs,
     rangeBuilder,
     raster,
-    rgnparser,
-    sf,
-    sp,
-    stringdist,
-    stringr,
-    taxadb,
-    tidyselect,
-    ggplot2,
-    cowplot,
-    tibble,
-    dplyr,
     readr,
-    stringi,
+    rgnparser,
     rnaturalearth,
     rnaturalearthdata,
     rnaturalearthhires,
-    DT,
-    knitr
+    sf,
+    sp,
+    stringdist,
+    stringi,
+    stringr,
+    taxadb,
+    tibble,
+    tidyselect
 Suggests:
-    rvest,
-    testthat,
-    xml2,
-    rmarkdown,
-    markdown,
     covr,
     DBI,
+    knitr,
+    maps,
+    markdown,
     rappdirs,
     remotes,
-    maps
+    rmarkdown,
+    rvest,
+    testthat,
+    xml2
 VignetteBuilder:
     knitr
+Remotes:
+    github::ropensci/rnaturalearthdata,
+    github::ropensci/rnaturalearthhires
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Remotes:
-  github::ropensci/rnaturalearthdata,
-  github::ropensci/rnaturalearthhires
-

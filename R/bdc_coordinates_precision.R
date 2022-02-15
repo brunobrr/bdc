@@ -5,7 +5,7 @@
 #' decimal places present a precision of~11.1 km, ~1.1 km, and ~111 m at the
 #' equator, respectively.
 #'
-#' @family {space}
+#' @family space
 #' @param data data.frame. A data.frame containing geographic coordinates.
 #' @param lon character string. The column with longitude in decimal degrees and
 #' WGS84. Default = "decimalLongitude".

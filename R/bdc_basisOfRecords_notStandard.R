@@ -5,7 +5,7 @@
 #' specimen) not interpretable, which does not comply with Darwin Core
 #' vocabulary, or unreliable or unsuitable for specific analyses.
 #' 
-#' @family {prefilter}
+#' @family prefilter
 #' @param data data.frame. Containing information about the basis of records.
 #' @param basisOfRecord character string. The column name with information about
 #' basis of records. Default = "basisOfRecord".

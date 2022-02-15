@@ -47,4 +47,4 @@ lon = "lon",
 ndec = 3)
 }
 }
-\concept{{space}}
+\concept{space}

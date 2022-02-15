@@ -49,7 +49,7 @@ setup_gnparser <- function() {
 #' first letter of the genus name and remove extra whitespaces), and 5) parse
 #' names, i.e., separate author, date, annotations from taxon name.
 #'
-#' @family {taxonomy}
+#' @family taxonomy
 #' @param sci_names character string. Containing scientific names.
 #'
 #' @details Terms denoting uncertainty or provisional status of taxonomic

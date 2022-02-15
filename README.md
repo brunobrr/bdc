@@ -1,4 +1,3 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # ***bdc*** <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" width="155"/></a>
@@ -10,7 +9,7 @@
 [![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](https://codecov.io/gh/brunobrr/bdc?branch=master)
+coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/brunobrr/bdc?branch=master)
 [![Coveralls test
 coverage](https://coveralls.io/repos/github/brunobrr/bdc/badge.svg)](https://coveralls.io/r/brunobrr/bdc?branch=master)
 

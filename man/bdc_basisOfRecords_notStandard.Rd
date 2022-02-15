@@ -52,7 +52,7 @@ names_to_keep = "all")
 }
 }
 \seealso{
-Other {prefilter}: 
+Other prefilter: 
 \code{\link{bdc_coordinates_country_inconsistent}()},
 \code{\link{bdc_coordinates_empty}()},
 \code{\link{bdc_coordinates_from_locality}()},
@@ -61,4 +61,4 @@ Other {prefilter}:
 \code{\link{bdc_country_standardized}()},
 \code{\link{bdc_scientificName_empty}()}
 }
-\concept{{prefilter}}
+\concept{prefilter}

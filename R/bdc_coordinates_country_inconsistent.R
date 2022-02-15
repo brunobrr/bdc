@@ -5,7 +5,7 @@
 #' records in mangroves, marshes, estuaries, and records with low
 #' coordinate precision are not flagged as invalid.
 #'
-#' @family {prefilter}
+#' @family prefilter
 #' @param data data.frame. Containing longitude and latitude. Coordinates must
 #' be expressed in decimal degrees and WGS84.
 #' @param country_name character string. Name of the country to considered.

@@ -3,7 +3,7 @@
 #' This function identifies records with out-of-range coordinates (not between
 #' -90 and 90 for latitude; between -180 and 180 for longitude).
 #' 
-#' @family {prefilter}
+#' @family prefilter
 #' @param data data.frame. Containing geographical coordinates. Coordinates must
 #' be expressed in decimal degrees and WGS84.
 #' @param lat character string. The column name with latitude in decimal degree

@@ -3,7 +3,7 @@
 #' This function identifies records out-of-range collecting year (e.g., in the
 #' future) or old records collected before a year informed in 'year_threshold'.
 #'
-#' @family {time}
+#' @family time
 #' @param data A data frame containing a column with event date information.
 #' @param eventDate numeric or date. The column containing event date
 #' information.

@@ -3,7 +3,7 @@
 #' This function standardizes country names and adds a new column to the
 #' database containing two-letter country codes (ISO 3166-1 alpha-2).
 #'
-#' @family {prefilter}
+#' @family prefilter
 #' @param data data.frame. Containing country names
 #' @param  country character string. The column name with the country assignment
 #' of each record. Default = "country".
@@ -56,7 +56,7 @@ bdc_country_standardized <-
     suppressMessages({
       suppressWarnings({
       wiki_cntr <-
-        here::here("inst", "extdata", "countries_names", "wiki_country_names.txt") %>%
+        system.file("extdata/countries_names/wiki_country_names.txt", package = "bdc") %>%
         readr::read_delim(delim = "\t") # get country names from Wikipedia
       })
     })

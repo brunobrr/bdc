@@ -3,7 +3,7 @@
 #' This function identifies records missing information on an event date (i.e.,
 #' when a record was collected or observed).
 #' 
-#' @family {time}
+#' @family time
 #' @param data A data frame containing column with event date information.
 #' @param eventDate Numeric or date. The column with event date information.
 #'

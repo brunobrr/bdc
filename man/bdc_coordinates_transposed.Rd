@@ -93,7 +93,7 @@ bdc_coordinates_transposed(
 
 }
 \seealso{
-Other {prefilter}: 
+Other prefilter: 
 \code{\link{bdc_basisOfRecords_notStandard}()},
 \code{\link{bdc_coordinates_country_inconsistent}()},
 \code{\link{bdc_coordinates_empty}()},
@@ -102,4 +102,4 @@ Other {prefilter}:
 \code{\link{bdc_country_standardized}()},
 \code{\link{bdc_scientificName_empty}()}
 }
-\concept{{prefilter}}
+\concept{prefilter}

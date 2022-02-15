@@ -2,7 +2,7 @@
 #'
 #' Flags records with empty or not interpretable scientific names.
 #' 
-#' @family {prefilter}
+#' @family prefilter
 #' @param data data.frame. Containing the species scientific names.
 #' @param sci_names character string. The column name with the species
 #' scientific name. Default = "scientificName".
