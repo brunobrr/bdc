@@ -1,5 +1,5 @@
 ---
-title: "Taxonomy"
+title: "**Taxonomy**"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 library(bdc)
 ```
 
-## Introduction
+#### **Introduction**
 
 The combination of large datasets from several sources requires careful standardization taxon names. Non-standardized incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The *bdc* package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic references**. The taxonomic standardization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
 
@@ -38,30 +38,37 @@ The functions used to standardize names (*bdc_clean_name* and *bdc_query_names_t
 
 The taxonomic standardization is based on one taxonomic database chosen by the user. *taxadb* makes available the following taxonomic sources:
 
-| Abbreviation | Taxonomic database                                        |
-|--------------|-----------------------------------------------------------|
-| col          | Catalogue of Life                                         |
-| fb           | FishBase                                                  |
-| itis         | Integrated Taxonomic Information System                   |
-| iucn         | International Union for Conservation of Nature's Red List |
-| gbif         | Global Biodiversity Information Facility                  |
-| ncbi         | National Center for Biotechnology Information             |
-| ott          | OpenTree Taxonomy                                         |
-| tpl          | The Plant List                                            |
-| slb          | SeaLifeBase                                               |
-| wd           | Wikidata                                                  |
++-----------------------+-----------------------------------------------------------+
+| Abbreviation          | Taxonomic database                                        |
++=======================+===========================================================+
+| col                   | Catalogue of Life                                         |
++-----------------------+-----------------------------------------------------------+
+| fb                    | FishBase                                                  |
++-----------------------+-----------------------------------------------------------+
+| itis                  | Integrated Taxonomic Information System                   |
++-----------------------+-----------------------------------------------------------+
+| iucn                  | International Union for Conservation of Nature's Red List |
++-----------------------+-----------------------------------------------------------+
+| gbif                  | Global Biodiversity Information Facility                  |
++-----------------------+-----------------------------------------------------------+
+| ncbi                  | National Center for Biotechnology Information             |
++-----------------------+-----------------------------------------------------------+
+| ott                   | OpenTree Taxonomy                                         |
++-----------------------+-----------------------------------------------------------+
+| tpl                   | The Plant List                                            |
++-----------------------+-----------------------------------------------------------+
+| slb                   | SeaLifeBase                                               |
++-----------------------+-----------------------------------------------------------+
+| wd                    | Wikidata                                                  |
++-----------------------+-----------------------------------------------------------+
 
 Note that some taxonomic databases may be *momentarily unavailable* in taxadb. Check ?bdc_query_names_taxadb for a list of available taxonomic databases.
 
-<br/>
-
-## Installation
+#### **Installation**
 
 Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
-<br/>
-
-## Reading the database
+#### **Reading the database**
 
 Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_prefilter.html) module of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)).
 
@@ -75,9 +82,7 @@ database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/01_prefilter_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-<br/>
-
-## Clean and parse species names
+#### **Clean and parse species names**
 
 Scientific names improperly formatted usually cannot be matched with valid names. To solve this issue, we developed the *bdc_clean_name* containing functionalities to **optimize the taxonomic queries** by increasing the probability of finding matching names. This tool is used to:
 
@@ -87,33 +92,27 @@ Scientific names improperly formatted usually cannot be matched with valid names
 4.  Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);
 5.  Parse names, i.e., separate author, date, annotations from taxon name.
 
-<br/>
-
 ```{r eval=TRUE}
 parse_names <-
   bdc_clean_names(sci_names = database$scientificName)
 ```
 
-<br/>
-
 An example of *bdc_clean_names* output.
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-# DT::datatable(
-#   parse_names[60:75,],
-#   class = 'stripe',
-#   extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 5,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
-knitr::kable(parse_names)
+DT::datatable(
+  parse_names[60:75,],
+  class = 'stripe',
+  extensions = 'FixedColumns',
+  options = list(
+    pageLength = 5,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+#knitr::kable(parse_names)
 ```
-
-<br/>
 
 **Let's merge the names parsed with the complete database.** As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of the parsing names process in "Output/Check/02_parsed_names.qs".
 
@@ -123,10 +122,9 @@ parse_names <-
   dplyr::select(.uncer_terms, names_clean)
 
 database <- dplyr::bind_cols(database, parse_names)
-
 ```
 
-## Names harmonization
+#### **Names harmonization**
 
 The taxonomic harmonization is based upon **one** of those taxonomic authorities previously mentioned. It starts with creating a local database by downloading, extracting, and importing the taxonomic database informed by users using the taxadb package. The download may take some time, depending on the internet connection.
 
@@ -145,8 +143,6 @@ query_names <- bdc_query_names_taxadb(
 )
 ```
 
-<br/>
-
 ```{r echo=F, eval=T}
 query_names <-
   readr::read_csv(
@@ -156,19 +152,17 @@ query_names <-
     ), show_col_types = F
   )
 
-# DT::datatable(
-#   query_names[1:30,], class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 5,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
-knitr::kable(query_names)
+DT::datatable(
+  query_names[1:30,], class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 5,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+#knitr::kable(query_names)
 ```
-
-<br/>
 
 Merging results of the taxonomy harmonization process with the original database. Before that, let's rename the column containing the original scientific names to **"verbatim_scientificName"**. From now on, **"scientificName" corresponds to the verified names** (resulted from the name harmonization process). As the column "original_search" in "query_names" and "names_clean" are equal, only the first will be kept.
 
@@ -180,7 +174,7 @@ database <-
   dplyr::bind_cols(., query_names)
 ```
 
-## Report
+#### **Report**
 
 The report is based on the **column notes** containing the results of the name standardization process. The notes can be grouped into two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as "valid" in the column "Description".
 
@@ -193,7 +187,7 @@ report <-
 report
 ```
 
-## Unresolved names
+#### **Unresolved names**
 
 It is also possible to filter out records with taxonomic status different from "accepted". Such records may be potentially resolved manually.
 
@@ -212,7 +206,7 @@ unresolved_names %>%
   readr::write_csv(., here::here("Output/Check/02_unresolved_names.csv"))
 ```
 
-## Filtering the database
+#### **Filtering the database**
 
 It is possible to remove records with unresolved or invalid names to get a 'clean' database. However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal modules of the package), potentially erroneous or suspect records will be removed in the final module of the package.
 
@@ -225,7 +219,7 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 #   )
 ```
 
-## Saving the database
+#### **Saving the database**
 
 ```{r}
 # use qs::qread() to save the database in a compressed format

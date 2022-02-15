@@ -13,9 +13,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# ***bdc*** <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" height="200"/></a>
+# ***bdc*** <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" width="155"/></a>
 
-## bdc: An R toolkit for standardizing, integrating, and cleaning biodiversity data
+## **An R toolkit for standardizing, integrating, and cleaning biodiversity data**
 
 <!-- badges: start -->
 
@@ -23,15 +23,19 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-### Overview
+#### **Overview**
 
 Handle biodiversity data from several different sources is not an easy task. Here, we present the **B**iodiversity **D**ata **C**leaning (bdc), an R package to address quality issues and improve the fitness-for-use of a dataset. *bdc* contains functions to harmonize and integrate data from different sources following common standards and protocols and implements various tests and tools to flag, document, clean, and correct taxonomic, spatial, and temporal data.
 
-### **Structure of bdc**
+#### Structure of bdc
 
 The *bdc* toolkit is organized in thematic modules related to different biodiversity dimensions. The modules illustrated, and functions within, can be linked to form a workflow (see [**vignettes**](https://brunobrr.github.io/bdc/)), but can also be executed independently depending on user needs.
 
-#### ![](inst/extdata/icon_vignettes/Figure1.png)1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)
+#### ![](https://github.com/brunobrr/bdc/blob/master/inst/extdata/icon_vignettes/Figure1.png?raw=true)
+
+<br/>
+
+#### 1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)
 
 Standardization and integration of different datasets into a standard database.
 
@@ -74,7 +78,7 @@ Flagging and, whenever possible, correction of inconsistent collection date.
 -   `bdc_year_outOfRange()` Identification of records with illegitimate or potentially imprecise collecting year. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900)
 -   `bdc_year_from_eventDate()` This function extracts four-digit year from unambiguously interpretable collecting dates
 
-### 1. [**Other functions**](https://brunobrr.github.io/bdc/reference/index.html)
+#### [**Other functions**](https://brunobrr.github.io/bdc/reference/index.html)
 
 Aim to facilitate the **documentation, visualization, and interpretation** of results of data quality tests the package contains functions for documenting the results of the data-cleaning tests, including functions for saving i) records needing further inspection, ii) databases containing the results of each step, iii) figures, and iv) data-quality reports.
 
@@ -84,7 +88,7 @@ Aim to facilitate the **documentation, visualization, and interpretation** of re
 -   `bdc_quickmap()` Creation of a map of points using ggplot2. Helpful in inspecting the results of data-cleaning tests
 -   `bdc_summary_col()` This function creates or updates the column summarizing the results of data quality tests (i.e., the column ".summary")
 
-### Installation
+#### **Installation**
 
 You can install the released version of *bdc* from [github](https://github.com/brunobrr/bdc) with:
 
@@ -99,10 +103,10 @@ And load the package with:
 library(bdc)
 ```
 
-### Package website
+#### **Package website**
 
 See *bdc* package website (<https://brunobrr.github.io/bdc/>) for detailed explanation on each module.
 
-### Getting help
+#### **Getting help**
 
 If you encounter a clear bug, please file an issue [**here**](https://github.com/brunobrr/bdc/issues). For questions or suggestion, please send us a email (ribeiro.brr\@gmail.com).

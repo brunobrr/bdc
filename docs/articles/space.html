@@ -97,7 +97,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Space</h1>
             
-            <h4 data-toc-skip class="date">2022-02-14</h4>
+            <h4 data-toc-skip class="date">2022-02-15</h4>
       
       
       <div class="hidden name"><code>space.Rmd</code></div>
@@ -106,34 +106,33 @@
 
     
     
-<div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
-</h2>
+<div class="section level3">
+<h3 id="introduction">
+<strong>Introduction</strong><a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h3>
 <p>We used one test of the <em>bdc</em> and other tests of the <em>R</em> package <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152" class="external-link">CoordinateCleaner</a> <strong>to flag potentially erroneous, suspect, or imprecise geographical coordinates</strong> based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to capitals, provinces, and country centroids, coordinates in urban areas, around biodiversity institutions, or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).</p>
 <p>Note that we do not use the “seas” test to remove records in the ocean because such records we previously removed in the pre-filter module of the package (more details <a href="https://brunobrr.github.io/bdc/articles/prefilter.html">here</a>).</p>
-<p><br></p>
 <p><strong>IMPORTANT</strong>:</p>
-<p>The results of each test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or <strong>FALSE</strong>, in which the former indicates correct records and <strong>the latter potentially problematic or suspect records</strong>.</p>
-<p><br></p>
+<p>The results of the <strong>VALIDATION</strong> test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (ok) or <strong>FALSE</strong> (check carefully).</p>
 </div>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
+<div class="section level3">
+<h3 id="installation">
+<strong>Installation</strong><a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
 <p>Check <a href="https://brunobrr.github.io/bdc/"><strong>here</strong></a> how to install the bdc package</p>
-<p><br></p>
 </div>
-<div class="section level2">
-<h2 id="reading-the-database">Reading the database<a class="anchor" aria-label="anchor" href="#reading-the-database"></a>
-</h2>
+<div class="section level3">
+<h3 id="reading-the-database">Reading the database<a class="anchor" aria-label="anchor" href="#reading-the-database"></a>
+</h3>
 <p>Reading the database created in the <a href="https://brunobrr.github.io/bdc/articles/02_taxonomy.html"><strong>taxonomy</strong></a> module the <em>bdc</em> package. It is also possible to read any datasets containing the <strong>required</strong> fields to run the function (more details <a href="https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22">here</a>).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">database</span> <span class="op">&lt;-</span>
   <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output/Intermediate/02_taxonomy_database.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><br></p>
 </div>
-<div class="section level2">
-<h2 id="flagging-common-spatial-issues">Flagging common spatial issues<a class="anchor" aria-label="anchor" href="#flagging-common-spatial-issues"></a>
-</h2>
+<div class="section level3">
+<h3 id="flagging-common-spatial-issues">
+<strong>Flagging common spatial issues</strong><a class="anchor" aria-label="anchor" href="#flagging-common-spatial-issues"></a>
+</h3>
 <p>This function identifyes records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">check_space</span> <span class="op">&lt;-</span>
@@ -200,7 +199,7 @@
 <span class="co">#&gt; Testing urban areas</span>
 <span class="co">#&gt; Downloading urban areas via rnaturalearth</span>
 <span class="co">#&gt; OGR data source with driver: ESRI Shapefile </span>
-<span class="co">#&gt; Source: "/tmp/RtmpxOv5uU", layer: "ne_50m_urban_areas"</span>
+<span class="co">#&gt; Source: "C:\Users\Bruno R. Ribeiro\AppData\Local\Temp\Rtmpwr4v5a", layer: "ne_50m_urban_areas"</span>
 <span class="co">#&gt; with 2143 features</span>
 <span class="co">#&gt; It has 4 fields</span>
 <span class="co">#&gt; Integer64 fields read as strings:  scalerank</span>
@@ -221,22 +220,21 @@
 <span class="co">#&gt; bdc_summary_col:</span>
 <span class="co">#&gt; Flagged 9 records.</span>
 <span class="co">#&gt; One column was added to the database.</span></code></pre></div>
-<p><br></p>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
 <col width="1%">
 <col width="6%">
 <col width="1%">
 <col width="1%">
 <col width="3%">
-<col width="2%">
+<col width="1%">
 <col width="0%">
 <col width="1%">
 <col width="2%">
 <col width="13%">
 <col width="3%">
 <col width="1%">
-<col width="2%">
+<col width="1%">
 <col width="2%">
 <col width="7%">
 <col width="1%">
@@ -248,7 +246,7 @@
 <col width="2%">
 <col width="1%">
 <col width="2%">
-<col width="1%">
+<col width="0%">
 <col width="1%">
 <col width="1%">
 <col width="0%">
@@ -262,7 +260,7 @@
 <col width="1%">
 <col width="1%">
 <col width="4%">
-<col width="2%">
+<col width="4%">
 <col width="0%">
 <col width="0%">
 <col width="0%">
@@ -5881,7 +5879,7 @@
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="left">NA</td>
-<td align="left">植物界</td>
+<td align="left">&lt;U+690D&gt;&lt;U+7269&gt;&lt;U+754C&gt;</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
@@ -6253,7 +6251,7 @@
 <td align="right">3086782</td>
 <td align="right">NA</td>
 <td align="left">L.</td>
-<td align="left">돼지풀아재비</td>
+<td align="left">&lt;U+B3FC&gt;&lt;U+C9C0&gt;&lt;U+D480&gt;&lt;U+C544&gt;&lt;U+C7AC&gt;&lt;U+BE44&gt;</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
 <td align="left">TRUE</td>
@@ -6428,11 +6426,11 @@
 </tr>
 </tbody>
 </table>
-<p><br></p>
 </div>
-<div class="section level2">
-<h2 id="mapping-spatial-errors">Mapping spatial errors<a class="anchor" aria-label="anchor" href="#mapping-spatial-errors"></a>
-</h2>
+<div class="section level3">
+<h3 id="mapping-spatial-errors">
+<strong>Mapping spatial errors</strong><a class="anchor" aria-label="anchor" href="#mapping-spatial-errors"></a>
+</h3>
 <p>It is possible to map a column containing the results of <strong>one spatial test each time</strong>, for example records in country centroids (column “.cen”). Besides, we can use the column <strong>“.summary”</strong> to map all records flagged as potentially problematic (i.e., FALSE).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">check_space</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -6444,12 +6442,14 @@
     col_to_map <span class="op">=</span> <span class="st">".summary"</span>,
     size <span class="op">=</span> <span class="fl">0.9</span>
   <span class="op">)</span></code></pre></div>
-<p><br></p>
-<p><img src="https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/map_summary_space_vignette.jpeg" style="width:20cm;height:10cm" alt="Coordinates flagged as FALSE in at least one test"><br></p>
+<div class="figure">
+<img src="https://github.com/brunobrr/bdc/blob/master/inst/extdata/example_figures/map_summary_space_vignette.jpeg?raw=true" alt=""><p class="caption">Coordinates flagged as FALSE in at least one test</p>
 </div>
-<div class="section level2">
-<h2 id="report">Report<a class="anchor" aria-label="anchor" href="#report"></a>
-</h2>
+</div>
+<div class="section level3">
+<h3 id="report">
+<strong>Report</strong><a class="anchor" aria-label="anchor" href="#report"></a>
+</h3>
 <p>Creating a report summarizing the results of all tests.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">report</span> <span class="op">&lt;-</span>
@@ -6458,41 +6458,40 @@
                     workflow_step <span class="op">=</span> <span class="st">"space"</span><span class="op">)</span>
 
 <span class="va">report</span></code></pre></div>
-<p><br></p>
 </div>
-<div class="section level2">
-<h2 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a>
-</h2>
+<div class="section level3">
+<h3 id="figures">
+<strong>Figures</strong><a class="anchor" aria-label="anchor" href="#figures"></a>
+</h3>
 <p>Here we create figures (bar plots and maps) to make the interpretation of the results of data quality tests easier.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bdc_create_figures.html">bdc_create_figures</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_space</span>,
                    database_id <span class="op">=</span> <span class="st">"database_id"</span>,
                    workflow_step <span class="op">=</span> <span class="st">"space"</span><span class="op">)</span></code></pre></div>
-<p><br></p>
 <div class="figure">
-<img src="https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_.rou_BAR.png" alt=""><p class="caption">Rounded coordinates (% of each database flagged)</p>
+<img src="https://github.com/brunobrr/bdc/blob/master/inst/extdata/example_figures/space_.rou_BAR.png?raw=true" style="width:20cm" alt=""><p class="caption">Rounded coordinates (% of each database flagged)</p>
 </div>
-<p><br></p>
 <div class="figure">
-<img src="https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_.inst_MAP.png" style="width:20cm" alt=""><p class="caption">Records within urban areas</p>
+<img src="https://github.com/brunobrr/bdc/blob/master/inst/extdata/example_figures/space_.urb_MAP.png?raw=true" style="width:20cm" alt=""><p class="caption">Records within urban areas</p>
 </div>
-<p><br></p>
 <div class="figure">
-<img src="https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_summary_all_tests_BAR.png" alt=""><p class="caption">Summary of all tests</p>
+<img src="https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_summary_all_tests_BAR.png" style="width:20cm" alt=""><p class="caption">Summary of all tests</p>
 </div>
-<p><br></p>
 </div>
-<div class="section level2">
-<h2 id="filtering-the-database">Filtering the database<a class="anchor" aria-label="anchor" href="#filtering-the-database"></a>
-</h2>
+<div class="section level3">
+<h3 id="filtering-the-database">
+<strong>Filtering the database</strong><a class="anchor" aria-label="anchor" href="#filtering-the-database"></a>
+</h3>
 <p>It is possible to remove flagged records (potentially problematic ones) to get a ‘clean’ database (i.e., without test columns starting with “.”). However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal module of the package), potentially erroneous or suspect records will be removed in the final module of the package.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># output &lt;-</span>
 <span class="co">#   check_space %&gt;%</span>
 <span class="co">#   dplyr::filter(.summary == TRUE) %&gt;%</span>
 <span class="co">#   bdc_filter_out_flags(data = ., col_to_remove = "all")</span></code></pre></div>
+</div>
 <div class="section level3">
-<h3 id="saving-the-database">Saving the database<a class="anchor" aria-label="anchor" href="#saving-the-database"></a>
+<h3 id="saving-the-database">
+<strong>Saving the database</strong><a class="anchor" aria-label="anchor" href="#saving-the-database"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use qs::qread() to save the database in a compressed format</span>
@@ -6500,14 +6499,11 @@
  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">.</span>,
             <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"03_space_database.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 

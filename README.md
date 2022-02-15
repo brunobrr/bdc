@@ -1,9 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ***bdc*** <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" height="200"/></a>
+# ***bdc*** <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" width="155"/></a>
 
-## bdc: An R toolkit for standardizing, integrating, and cleaning biodiversity data
+## **An R toolkit for standardizing, integrating, and cleaning biodiversity data**
 
 <!-- badges: start -->
 
@@ -16,7 +16,7 @@ coverage](https://coveralls.io/repos/github/brunobrr/bdc/badge.svg)](https://cov
 
 <!-- badges: end -->
 
-### Overview
+#### **Overview**
 
 Handle biodiversity data from several different sources is not an easy
 task. Here, we present the **B**iodiversity **D**ata **C**leaning (bdc),
@@ -26,7 +26,7 @@ from different sources following common standards and protocols and
 implements various tests and tools to flag, document, clean, and correct
 taxonomic, spatial, and temporal data.
 
-### **Structure of bdc**
+#### Structure of bdc
 
 The *bdc* toolkit is organized in thematic modules related to different
 biodiversity dimensions. The modules illustrated, and functions within,
@@ -34,9 +34,11 @@ can be linked to form a workflow (see
 [**vignettes**](https://brunobrr.github.io/bdc/)), but can also be
 executed independently depending on user needs.
 
-<img src="https://github.com/brunobrr/bdc/blob/master/inst/extdata/icon_vignettes/Figure1.png?raw=true" width="639"/>
+#### ![](https://github.com/brunobrr/bdc/blob/master/inst/extdata/icon_vignettes/Figure1.png?raw=true)
 
-### 1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)
+<br/>
+
+#### 1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)
 
 Standardization and integration of different datasets into a standard
 database.
@@ -45,7 +47,7 @@ database.
     different datasets into a new dataset with column names following
     Darwin Core terminology
 
-### 2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_☺prefilter.html)
+#### 2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_☺prefilter.html)
 
 Flagging and removal of invalid or non-interpretable information,
 followed by data amendments (e.g., correct transposed coordinates and
@@ -74,7 +76,7 @@ standardize country names).
     coordinates but with a detailed description of the locality
     associate with records from which coordinates can be derived
 
-### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html)
+#### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html)
 
 Cleaning, parsing, and standardization of scientific names against
 multiple taxonomic references.
@@ -89,7 +91,7 @@ multiple taxonomic references.
     For example, to filter only valid accepted names categorized as
     “accepted”
 
-### 4. [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html)
+#### 4. [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html)
 
 Flagging of erroneous, suspicious, and low-precision geographic
 coordinates.
@@ -104,7 +106,7 @@ coordinates.
     coordinates, around biodiversity institutions, within urban areas,
     plain zeros in the coordinates, and suspect geographic outliers
 
-### 5. [**Time**](https://brunobrr.github.io/bdc/articles/04_time.html)
+#### 5. [**Time**](https://brunobrr.github.io/bdc/articles/04_time.html)
 
 Flagging and, whenever possible, correction of inconsistent collection
 date.
@@ -119,7 +121,7 @@ date.
 -   `bdc_year_from_eventDate()` This function extracts four-digit year
     from unambiguously interpretable collecting dates
 
-### 1. \[**Other functions**\] (<https://brunobrr.github.io/bdc/reference/index.html>)
+#### [**Other functions**](https://brunobrr.github.io/bdc/reference/index.html)
 
 Aim to facilitate the **documentation, visualization, and
 interpretation** of results of data quality tests the package contains
@@ -142,7 +144,7 @@ data-quality reports.
     summarizing the results of data quality tests (i.e., the column
     “.summary”)
 
-### Installation
+#### **Installation**
 
 You can install the released version of *bdc* from
 [github](https://github.com/brunobrr/bdc) with:
@@ -158,12 +160,12 @@ And load the package with:
 library(bdc)
 ```
 
-### Package website
+#### **Package website**
 
 See *bdc* package website (<https://brunobrr.github.io/bdc/>) for
 detailed explanation on each module.
 
-### Getting help
+#### **Getting help**
 
 If you encounter a clear bug, please file an issue
 [**here**](https://github.com/brunobrr/bdc/issues). For questions or

@@ -1,5 +1,5 @@
 ---
-title: "Pre-filter"
+title: "**Pre-filter**"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -27,19 +27,15 @@ if (!require("rnaturalearthdata")) remotes::install_github("ropensci/rnaturalear
 if (!require("rnaturalearthhires")) remotes::install_github("ropensci/rnaturalearthhires")
 ```
 
-## Introduction
+#### **Introduction**
 
 Large and heterogeneous datasets may contain thousands of records missing spatial or taxonomic information (partially or entirely) as well as several records outside a region of interest or from doubtful sources. Such lower quality data are not fit for use in many research applications without prior amendments. The 'Pre-filter' module contains a series of **tests to detect, remove, and, whenever, possible, correct such erroneous or suspect records**.
 
-<br/>
-
-## Installation
+#### **Installation**
 
 Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
-<br/>
-
-## Reading the database
+#### **Reading the database**
 
 Read the merged database created in the module **Standardization and integration of different datasets** of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the functions (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
 
@@ -53,19 +49,26 @@ database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
-knitr::kable(database)
+```{r echo=F, message=FALSE, warning=FALSE, eval=T}
+DT::datatable(
+  database, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 10,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+# knitr::kable(database)
 ```
 
-<br/>
+**IMPORTANT**:
 
-**NOTE**: The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE or **FALSE**, in which the former indicates correct records and the **latter potentially problematic or suspect records.** We run bdc functions following a proposed workflow but all can be executed independently
+The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (ok) or **FALSE** (check carefully).
 
-TODO: add explanation on *VALIDATION* and *ENRICHMENT*
+We run bdc following a proposed **workflow** but all functions can be executed independently.
 
-<br/>
-
-## 1 - Records missing species names
+#### **1 - Records missing species names**
 
 *VALIDATION*. Flag records missing species names.
 
@@ -76,7 +79,7 @@ check_pf <-
   sci_name = "scientificName")
 ```
 
-## 2 - Records lacking information on geographic coordinates
+#### **2 - Records lacking information on geographic coordinates**
 
 *VALIDATION*. Flag records missing partial or complete information on geographic coordinates.
 
@@ -87,7 +90,7 @@ check_pf <- bdc_coordinates_empty(
   lon = "decimalLongitude")
 ```
 
-## 3 - Records with out-of-range coordinates
+#### **3 - Records with out-of-range coordinates**
 
 *VALIDATION*. This test flags records with out-of-range coordinates: latitude \> 90 or -90; longitude \>180 or -180.
 
@@ -98,7 +101,7 @@ check_pf <- bdc_coordinates_outOfRange(
   lon = "decimalLongitude")
 ```
 
-## 4 - Records from doubtful sources
+#### **4 - Records from doubtful sources**
 
 *VALIDATION*. This test flags records from doubtful source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.
 
@@ -113,7 +116,7 @@ check_pf <- bdc_basisOfRecords_notStandard(
 
 ```
 
-## 5 - Getting country names from valid coordinates
+#### **5 - Getting country names from valid coordinates**
 
 *ENRICHMENT*. Deriving country names for records missing country names.
 
@@ -125,7 +128,7 @@ check_pf <- bdc_country_from_coordinates(
   country = "country")
 ```
 
-## 6 - Standardizing country names and getting country code information
+#### **6 - Standardizing country names and getting country code information**
 
 *ENRICHMENT*. Country names are standardized against a list of country names in several languages retrieved from Wikipedia.
 
@@ -136,7 +139,7 @@ check_pf <- bdc_country_standardized(
 )
 ```
 
-## 7 - Correcting latitude and longitude transposed
+#### **7 - Correcting latitude and longitude transposed**
 
 *AMENDMENT*. The mismatch between informed country and coordinates can be the result of negative or transposed coordinates. Once detected a mismatch, different coordinate transformations are made to correct the country and coordinates mismatch. Verbatim coordinates are then replaced by the rectified ones in the returned database (a database containing verbatim and corrected coordinates is also created in the "Output" folder). Records near countries coastline are not tested to avoid incur in false positives.
 
@@ -154,7 +157,7 @@ check_pf <-
   )
 ```
 
-## 8 - Records outside a region of interest
+#### **8 - Records outside a region of interest**
 
 *VALIDATION*. Records outside one or multiple reference countries; i.e., records in other countries or at an informed distance from the coast (e.g., in the ocean). This last step avoids flagging as invalid records close to country limits (e.g., records of coast or marshland species).
 
@@ -169,7 +172,7 @@ check_pf <-
   )
 ```
 
-## 9 - Identifying records not geo-referenced but containing locality information
+#### **9 - Identifying records not geo-referenced but containing locality information**
 
 *ENRICHMENT*. Coordinates can be derived from a detailed description of the locality associated with records in a process called retrospective geo-referencing.
 
@@ -182,15 +185,13 @@ xyFromLocality <- bdc_coordinates_from_locality(
 )
 ```
 
-## Report
+#### **Report**
 
 Here we create a column named ".summary" summing up the results of all **VALIDATION** tests (those starting with "."). This column is **FALSE** when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
 
 ```{r}
 check_pf <- bdc_summary_col(data = check_pf)
 ```
-
-<br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
 # DT::datatable(
@@ -204,22 +205,17 @@ check_pf <- bdc_summary_col(data = check_pf)
 # )
 ```
 
-<br/>
-
 Creating a report summarizing the results of all tests.
 
 ```{r}
-# report <-
-#   bdc_create_report(data = check_pf,
-#                     database_id = "database_id",
-#                     workflow_step = "prefilter")
-# report
-
+report <-
+  bdc_create_report(data = check_pf,
+                    database_id = "database_id",
+                    workflow_step = "prefilter")
+report
 ```
 
-<br/>
-
-## Figures
+#### **Figures**
 
 Here we create figures (bar plots and maps) to make the interpretation of the results of data quality tests easier. See some examples below.
 
@@ -229,15 +225,10 @@ bdc_create_figures(data = check_pf,
                    workflow_step = "prefilter")
 ```
 
-<br/>
-
 ![**Coordinates country inconsistent**](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/prefilter_.coordinates_country_inconsistent_MAP.png){width="20cm"}
-
-<br/>
 
 ```{r eval=F, echo=F}
 ![**Transposed coordinates**](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/prefilter_coordinates_transposed_MAP.png){width="20cm"}
-
 ```
 
 <br/>
@@ -246,7 +237,7 @@ bdc_create_figures(data = check_pf,
 
 <br/>
 
-## Filtering the database
+#### **Filtering the database**
 
 We can remove records flagged as erroneous or suspect to obtain a "clean" database. Records missing names or coordinates, outside a region of interest or from distrustful sources are rarely suitable for biodiversity analyses. We can use the column **.summary** to filter valid records passing in all tests (i.e., flagged as "TRUE"). Next, we use the *bdc_filter_out_falgs* function to remove all tests' columns (that is, those starting with ".").
 
@@ -257,7 +248,7 @@ output <-
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 ```
 
-## Saving the database
+#### **Saving the database**
 
 ```{r}
 # use qs::qread() to save the database in a compressed format

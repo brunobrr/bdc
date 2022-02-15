@@ -1,5 +1,5 @@
 ---
-title: "Standardization and integration of different datasets"
+title: "**Standardization and integration of different datasets**"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Introduction
+#### **Introduction**
 
 The first step of the *bdc* package handles the harmonization of heterogeneous datasets in a standard format simply and efficiently. How is this accomplished? Basically, by replacing the headers of original datasets with standardized terms. To do so, you have to fill out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**.
 
@@ -35,21 +35,18 @@ Once standardized, datasets are then integrated into a standardized database hav
 -   Names of original datasets without a corresponding DarwinCore term must be filled as **NA** (not available);
 -   The function is **adjustable** so that you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
 
-## Installation
+#### **Installation**
 
 Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
-<br/>
 
-## Read the configuration table
+#### **Read the configuration table**
 
 Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 180 records compiled from nine different sources (see below).
 
-<br/>
 
 **NOTE:** Remember to change the column "fileName" for the path containg the input files.
 
-<br/>
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"), show_col_types = FALSE)
@@ -62,21 +59,21 @@ metadata <- readr::read_csv(here::here("DatabaseInfo.csv"))
 <br/>
 
 ```{r echo = FALSE, message=FALSE, warning=FALSE, eval=T}
-#if (!require("DT")) install.packages('DT')
+if (!require("DT")) install.packages('DT')
 
-#DT::datatable(
-#  metadata, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
-#  options = list(
-#    #dom = 't',
-#    dom = 'Bfrtip',
-#    scrollX = TRUE,
-#    pageLength = 9,
-#    buttons = c('copy', 'csv', 'print'),
-#    fixedColumns = list(leftColumns = 2),
-#    editable = 'cell'
-#  )
-#)
-knitr::kable(metadata)
+DT::datatable(
+ metadata, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
+ options = list(
+   #dom = 't',
+   dom = 'Bfrtip',
+   scrollX = TRUE,
+   pageLength = 9,
+   buttons = c('copy', 'csv', 'print'),
+   fixedColumns = list(leftColumns = 2),
+   editable = 'cell'
+ )
+)
+# knitr::kable(metadata)
 ```
 
 <br/>
@@ -91,27 +88,28 @@ Below are listed the specifications of each field of the configuration table:
 -   **Type**: Type of content data on the specified field in the original database.
 -   **Example**: An example of a single content on the specified field in the original database.
 
-<br/> <br/>
+<br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
 config_description <-
   readr::read_csv(system.file("extdata/Config/DatabaseInfo_description.csv", package = "bdc"), show_col_types = FALSE)
-#DT::datatable(
-#  config_description, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
-#  options = list(
-#    #dom = 't',
-#    dom = 'Bfrtip',
-#    scrollX = TRUE,
-#    pageLength = 5,
-#    buttons = c('copy', 'csv', 'print'),
-#    fixedColumns = list(leftColumns = 2),
-#    editable = 'cell'
-#  )
-#)
-knitr::kable(config_description)
+
+DT::datatable(
+ config_description, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
+ options = list(
+   #dom = 't',
+   dom = 'Bfrtip',
+   scrollX = TRUE,
+   pageLength = 5,
+   buttons = c('copy', 'csv', 'print'),
+   fixedColumns = list(leftColumns = 2),
+   editable = 'cell'
+ )
+)
+# knitr::kable(config_description)
 ```
 
-## Standardization and integration of datasets
+#### **Standardization and integration of datasets**
 
 Note that the standardized database integrating all dataset is saved in the folder **"Output/Intermediate" as "00_merged_database"**. The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package
 
@@ -122,7 +120,6 @@ bdc_standardize_datasets(metadata = metadata, format = "csv", overwrite = T)
 ```{r message=FALSE, warning=FALSE, echo = TRUE, eval=FALSE}
 database <-
   readr::read_csv(here::here("Output", "Intermediate", "00_merged_database.csv"))
-
 ```
 
 ```{r echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
@@ -130,21 +127,19 @@ database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-<br/>
 
 An example of a standardized database containing the required field to run the *bdc* package.
 
-<br/>
 
 ```{r echo=F, message=FALSE, warning=FALSE}
-# DT::datatable(
-#   database, class = 'stripe', extensions = 'FixedColumns',
-#   options = list(
-#     pageLength = 10,
-#     dom = 'Bfrtip',
-#     scrollX = TRUE,
-#     fixedColumns = list(leftColumns = 2)
-#   )
-# )
-knitr::kable(database)
+DT::datatable(
+  database, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 10,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+# knitr::kable(database)
 ```
