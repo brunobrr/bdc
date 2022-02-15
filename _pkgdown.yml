@@ -15,15 +15,15 @@ navbar:
     - icon: fas fa-book
       text: "Articles"
       menu:
-      -  text: "**Standardization and integration of different datasets**"
+      -  text: "Standardization and integration of different datasets"
          href: articles/integrate_datasets.html
-      -  text: "**Pre-filter**"
+      -  text: "Pre-filter"
          href: articles/prefilter.html
-      -  text: "**Taxonomy**"
+      -  text: "Taxonomy"
          href: articles/taxonomy.html
-      -  text: "**Space**"
+      -  text: "Space"
          href: articles/space.html
-      -  text: "**Time**"
+      -  text: "Time"
          href: articles/time.html
   components:
     home: ~

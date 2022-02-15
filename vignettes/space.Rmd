@@ -30,9 +30,9 @@ We used one test of the *bdc* and other tests of the *R* package [CoordinateClea
 
 Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter module of the package (more details [here](https://brunobrr.github.io/bdc/articles/prefilter.html)).
 
-**IMPORTANT**:
+IMPORTANT:
 
-The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (ok) or **FALSE** (check carefully).
+The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE ( ✅ ok ) or FALSE (❌check carefully ).
 
 #### **Installation**
 

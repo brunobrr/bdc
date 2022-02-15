@@ -58,9 +58,9 @@ DT::datatable(
 )
 ```
 
-**IMPORTANT**:
+IMPORTANT:
 
-The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (ok) or **FALSE** (check carefully).
+The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE ( ✅ ok ) or FALSE (❌check carefully ).
 
 #### **1 - Records lacking event date information**
 

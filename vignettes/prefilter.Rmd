@@ -64,9 +64,7 @@ DT::datatable(
 
 **IMPORTANT**:
 
-The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (ok) or **FALSE** (check carefully).
-
-We run bdc following a proposed **workflow** but all functions can be executed independently.
+The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE ( ✅ ok ) or **FALSE** (❌check carefully ).
 
 #### **1 - Records missing species names**
 

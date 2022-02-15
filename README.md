@@ -29,10 +29,18 @@ taxonomic, spatial, and temporal data.
 #### **Structure of bdc**
 
 The *bdc* toolkit is organized in thematic modules related to different
-biodiversity dimensions. The modules illustrated, and functions within,
-can be linked to form a workflow (see
-[**vignettes**](https://brunobrr.github.io/bdc/)), but can also be
-executed independently depending on user needs.
+biodiversity dimensions.
+
+------------------------------------------------------------------------
+
+:warning: The modules illustrated, and **functions** within, **can be
+linked to form** a **workflow** (see
+[**vignettes**](https://brunobrr.github.io/bdc/)), but **can also be
+executed independently** depending on user needs.
+
+------------------------------------------------------------------------
+
+<br/>
 
 #### ![](https://github.com/brunobrr/bdc/blob/master/inst/extdata/icon_vignettes/Figure1.png?raw=true)
 
