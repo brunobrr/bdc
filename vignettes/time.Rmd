@@ -1,5 +1,5 @@
 ---
-title: "**Time**"
+title: "Time"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

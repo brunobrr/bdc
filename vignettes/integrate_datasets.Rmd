@@ -1,9 +1,9 @@
 ---
-title: "**Standardization and integration of different datasets**"
+title: "Standardization and integration of different datasets"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Standardization and integration of different datasets, rmarkdown.html_vignette.check_title = FALSE)}
+  %\VignetteIndexEntry{Standardization and integration of different datasets}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
