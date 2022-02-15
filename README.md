@@ -45,7 +45,7 @@ executed independently** depending on user needs.
 
 <br/>
 
-#### 1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)
+#### 1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)
 
 Standardization and integration of different datasets into a standard
 database.
@@ -54,7 +54,7 @@ database.
     different datasets into a new dataset with column names following
     Darwin Core terminology
 
-#### 2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_☺prefilter.html)
+#### 2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/prefilter.html)
 
 Flagging and removal of invalid or non-interpretable information,
 followed by data amendments (e.g., correct transposed coordinates and
@@ -83,7 +83,7 @@ standardize country names).
     coordinates but with a detailed description of the locality
     associate with records from which coordinates can be derived
 
-#### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html)
+#### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/taxonomy.html)
 
 Cleaning, parsing, and standardization of scientific names against
 multiple taxonomic references.
@@ -98,7 +98,7 @@ multiple taxonomic references.
     For example, to filter only valid accepted names categorized as
     “accepted”
 
-#### 4. [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html)
+#### 4. [**Space**](https://brunobrr.github.io/bdc/articles/space.html)
 
 Flagging of erroneous, suspicious, and low-precision geographic
 coordinates.
@@ -113,7 +113,7 @@ coordinates.
     coordinates, around biodiversity institutions, within urban areas,
     plain zeros in the coordinates, and suspect geographic outliers
 
-#### 5. [**Time**](https://brunobrr.github.io/bdc/articles/04_time.html)
+#### 5. [**Time**](https://brunobrr.github.io/bdc/articles/time.html)
 
 Flagging and, whenever possible, correction of inconsistent collection
 date.

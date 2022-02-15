@@ -18,6 +18,9 @@ Authors@R:c(
            comment = c(ORCID = "0000-0003-1085-6075"))
   )
 Description: Easily clean up biodiversity data.
+URL: https://brunobrr.github.io/bdc (website)
+    https://github.com/brunobrr/bdc
+BugReports: https://github.com/brunobrr/bdc/issues
 License: GPL (>= 3)
 Imports:
     CoordinateCleaner,
@@ -38,8 +41,6 @@ Imports:
     readr,
     rgnparser,
     rnaturalearth,
-    rnaturalearthdata,
-    rnaturalearthhires,
     sf,
     sp,
     stringdist,
@@ -57,14 +58,13 @@ Suggests:
     rappdirs,
     remotes,
     rmarkdown,
+    rnaturalearthdata,
+    rnaturalearthhires,
     rvest,
     testthat,
     xml2
 VignetteBuilder:
     knitr
-Remotes:
-    github::ropensci/rnaturalearthdata,
-    github::ropensci/rnaturalearthhires
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
