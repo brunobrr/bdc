@@ -1,6 +1,8 @@
 context("bdc_clean_names")
 
-## source(here::here("R/bdc_clean_names.R"))
+## skip("dont run")
+skip_on_cran()
+skip_if_not_installed("curl")
 
 scientificName <- c(
   "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
@@ -88,4 +90,3 @@ testthat::test_that("invalid suffix dae ", {
   expect_equal(r$clean_family_names, "Taccaceae Solanum")
 
 })
-

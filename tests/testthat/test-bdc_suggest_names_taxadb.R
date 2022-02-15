@@ -2,6 +2,7 @@ context("suggest names")
 
 ## skip("dont run")
 skip_on_cran()
+skip_if_not_installed("curl")
 
 sci_names <- c("Janusia occhioni", "Janusia", "Xilosma ciliatifolium",  "Crataeva benthamii", "Oxalis rhombeo ovata", "Cebus apella", "Puma concolar")
 

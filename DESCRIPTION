@@ -68,7 +68,7 @@ Imports:
     rnaturalearthdata,
     rnaturalearthhires,
     DT,
-    knitr,
+    knitr
 Suggests:
     rvest,
     testthat,
@@ -78,7 +78,8 @@ Suggests:
     covr,
     DBI,
     rappdirs,
-    remotes
+    remotes,
+    maps
 VignetteBuilder:
     knitr
 Encoding: UTF-8

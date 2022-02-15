@@ -2,6 +2,7 @@ context("bdc_query_names_taxadb")
 
 ## skip("dont run")
 skip_on_cran()
+skip_if_not_installed("curl")
 
 sci_names <-
   c(

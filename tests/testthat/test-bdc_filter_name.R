@@ -2,6 +2,7 @@ context("filter name")
 
 ## skip("dont run")
 skip_on_cran()
+skip_if_not_installed("curl")
 
 sci_names <- c("Polystachya estrellensis" , "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",
                "Prosopis", "Guapira opposita", "Clidemia naevula", "Poincianella pyramidalis", "Hymenophyllum polyanthos")
