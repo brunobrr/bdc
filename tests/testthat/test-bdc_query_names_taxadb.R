@@ -1,6 +1,6 @@
 context("bdc_query_names_taxadb")
 
-skip("dont run")
+## skip("dont run")
 skip_on_cran()
 
 sci_names <-
@@ -77,4 +77,3 @@ test_that("suggest_name FALSE", {
 
 }
 )
-

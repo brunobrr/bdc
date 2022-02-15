@@ -1,6 +1,6 @@
 context("suggest names")
 
-skip("dont run")
+## skip("dont run")
 skip_on_cran()
 
 sci_names <- c("Janusia occhioni", "Janusia", "Xilosma ciliatifolium",  "Crataeva benthamii", "Oxalis rhombeo ovata", "Cebus apella", "Puma concolar")
@@ -144,4 +144,3 @@ test_that("testing null rank_name", {
 
 }
 )
-
