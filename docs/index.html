@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Biodiversity data cleaning • bdc</title>
+<title>Biodiversity Data Cleaning • bdc</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Biodiversity data cleaning">
+<script src="pkgdown.js"></script><meta property="og:title" content="Biodiversity Data Cleaning">
 <meta property="og:description" content="Easily clean up biodiversity data.">
 <meta property="og:image" content="https://brunobrr.github.io/bdc/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -82,7 +82,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/brunobrr/bdc/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -129,7 +136,7 @@
 <p><br></p>
 </div>
 <div class="section level4">
-<h4 id="1-merge-databases">1. <a href="https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html"><strong>Merge databases</strong></a>
+<h4 id="1-merge-databases">1. <a href="https://brunobrr.github.io/bdc/articles/integrate_datasets.html"><strong>Merge databases</strong></a>
 <a class="anchor" aria-label="anchor" href="#1-merge-databases"></a>
 </h4>
 <p>Standardization and integration of different datasets into a standard database.</p>
@@ -139,7 +146,7 @@
 </ul>
 </div>
 <div class="section level4">
-<h4 id="2-pre-filter">2. <a href="https://brunobrr.github.io/bdc/articles/01_%E2%98%BAprefilter.html"><strong>Pre-filter</strong></a>
+<h4 id="2-pre-filter">2. <a href="https://brunobrr.github.io/bdc/articles/prefilter.html"><strong>Pre-filter</strong></a>
 <a class="anchor" aria-label="anchor" href="#2-pre-filter"></a>
 </h4>
 <p>Flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names).</p>
@@ -165,7 +172,7 @@
 </ul>
 </div>
 <div class="section level4">
-<h4 id="3-taxonomy">3. <a href="https://brunobrr.github.io/bdc/articles/02_taxonomy.html"><strong>Taxonomy</strong></a>
+<h4 id="3-taxonomy">3. <a href="https://brunobrr.github.io/bdc/articles/taxonomy.html"><strong>Taxonomy</strong></a>
 <a class="anchor" aria-label="anchor" href="#3-taxonomy"></a>
 </h4>
 <p>Cleaning, parsing, and standardization of scientific names against multiple taxonomic references.</p>
@@ -179,7 +186,7 @@
 </ul>
 </div>
 <div class="section level4">
-<h4 id="4-space">4. <a href="https://brunobrr.github.io/bdc/articles/03_space.html"><strong>Space</strong></a>
+<h4 id="4-space">4. <a href="https://brunobrr.github.io/bdc/articles/space.html"><strong>Space</strong></a>
 <a class="anchor" aria-label="anchor" href="#4-space"></a>
 </h4>
 <p>Flagging of erroneous, suspicious, and low-precision geographic coordinates.</p>
@@ -191,7 +198,7 @@
 </ul>
 </div>
 <div class="section level4">
-<h4 id="5-time">5. <a href="https://brunobrr.github.io/bdc/articles/04_time.html"><strong>Time</strong></a>
+<h4 id="5-time">5. <a href="https://brunobrr.github.io/bdc/articles/time.html"><strong>Time</strong></a>
 <a class="anchor" aria-label="anchor" href="#5-time"></a>
 </h4>
 <p>Flagging and, whenever possible, correction of inconsistent collection date.</p>
@@ -232,7 +239,7 @@
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></code></pre></div>
 <p>And load the package with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">bdc</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://brunobrr.github.io/bdc">bdc</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="package-website">
@@ -251,7 +258,15 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/brunobrr/bdc/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/brunobrr/bdc/issues" class="external-link">Report a bug</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
@@ -284,7 +299,7 @@
 <ul class="list-unstyled">
 <li><a href="http://www.gnu.org/licenses/gpl-3.0.html" class="external-link"><img src="https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat" alt="License"></a></li>
 <li><a href="https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/brunobrr/bdc?branch=master" class="external-link"><img src="https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://app.codecov.io/gh/brunobrr/bdc?branch=master" class="external-link"><img src="https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://coveralls.io/r/brunobrr/bdc?branch=master" class="external-link"><img src="https://coveralls.io/repos/github/brunobrr/bdc/badge.svg" alt="Coveralls test coverage"></a></li>
 </ul>
 </div>
