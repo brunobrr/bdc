@@ -469,7 +469,7 @@ bdc_create_figures <-
       message("Column 'year' not found")
     }
 
-    if (length(w_hist) != 0) {
+    if (length(w_hist) != 0 & workflow_step == "time") {
       data <-
         data %>%
         dplyr::filter(.summary == TRUE)
