@@ -94,9 +94,14 @@ Scientific names improperly formatted usually cannot be matched with valid names
 4.  Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);
 5.  Parse names, i.e., separate author, date, annotations from taxon name.
 
-```{r eval=TRUE}
+```{r eval=F, echo=T}
 parse_names <-
   bdc_clean_names(sci_names = database$scientificName)
+```
+
+```{r echo=FALSE, eval=TRUE}
+parse_names <-
+  readr::read_csv(system.file("extdata/example_bdc_clean_names/example_clean_names.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
 An example of *bdc_clean_names* output.
