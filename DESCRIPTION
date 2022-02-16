@@ -1,7 +1,7 @@
 Package: bdc
 Title: Biodiversity Data Cleaning
 Version: 0.0.2
-Authors@R:c(
+Authors@R: c(
     person("Bruno", "Ribeiro", , "ribeiro.brr@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7755-6715")),
     person("Geiziane", "Tessarolo", , "geites@gmail.com", role = "aut",
@@ -61,10 +61,11 @@ Suggests:
     rnaturalearthdata,
     rnaturalearthhires,
     rvest,
-    testthat,
+    testthat (>= 3.0.0),
     xml2
 VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Config/testthat/edition: 3
