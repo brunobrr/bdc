@@ -1,5 +1,3 @@
-context ("quick map")
-
 polygon.x = rnorm(100, -0,50)
 polygon.y = rnorm(100, 20, 30)
 group = rnorm(100, 50, 50)

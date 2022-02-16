@@ -1,5 +1,3 @@
-context("empty xy")
-
 df <-
   data.frame(
     long = c("",  -15, 0, -181,  NA, -45, 200, -1000),

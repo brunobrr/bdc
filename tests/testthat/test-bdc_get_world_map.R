@@ -1,5 +1,3 @@
-context("get_world_map")
-
 x <- bdc_get_world_map()
 
 test_that("returning  a polygon data frame", {

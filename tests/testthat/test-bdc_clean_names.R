@@ -1,5 +1,3 @@
-context("bdc_clean_names")
-
 ## skip("dont run")
 skip_on_cran()
 skip_if_not_installed("curl")

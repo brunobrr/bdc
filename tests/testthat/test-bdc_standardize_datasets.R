@@ -1,8 +1,6 @@
 library(readr)
 library(stringr)
 
-context("standard dataset")
-
 datafake1 <- tibble::tribble(
   ~species, ~longitude, ~latitude, ~id,
   "Eragrostis maypurensis", -47.824956, -13.17078, 3120L,

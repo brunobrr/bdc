@@ -1,5 +1,3 @@
-context("parse date")
-
 fakedates <-
   data.frame(
     common_date = c(1499, 20, 1885, 1985, 200002, 3),

@@ -1,5 +1,3 @@
-context("clean_duplicates")
-
 expected <- tibble(data.frame(original_search = c("Puma concola", "Cebus apela"),
                               sort = integer(2),
                               taxonID = character(2),

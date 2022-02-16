@@ -1,5 +1,3 @@
-context("return names")
-
 sci_names <- c("Janusia occhioni", "Janusia", "Xilosma ciliatifolium",  "Crataeva benthamii", "Oxalis rhombeo ovata", "Cebus apella", "Puma concolar") 
 
 test_that("bdc_return_names return the closest name", {

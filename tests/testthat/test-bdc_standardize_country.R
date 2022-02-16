@@ -1,6 +1,3 @@
-context("standardize country")
-
-
 wiki_cntr <- system.file("extdata/countries_names/wiki_country_names.txt", package = "bdc") %>%
   readr::read_delim(delim = "\t")
 worldmap <- bdc_get_world_map()
