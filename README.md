@@ -10,8 +10,6 @@
 [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/brunobrr/bdc?branch=master)
-[![Coveralls test
-coverage](https://coveralls.io/repos/github/brunobrr/bdc/badge.svg)](https://coveralls.io/r/brunobrr/bdc?branch=master)
 
 <!-- badges: end -->
 

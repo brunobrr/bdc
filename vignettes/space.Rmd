@@ -40,7 +40,7 @@ Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
 #### Reading the database
 
-Reading the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html) module the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the function (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
+Reading the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/taxonomy.html) module the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the function (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)).
 
 ```{r echo=TRUE, eval=FALSE}
 database <-

@@ -37,7 +37,7 @@ Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
 #### **Reading the database**
 
-Read the merged database created in the module **Standardization and integration of different datasets** of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the functions (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html%22)).
+Read the merged database created in the module **Standardization and integration of different datasets** of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the functions (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)).
 
 ```{r echo=TRUE, eval=FALSE}
 database <-
