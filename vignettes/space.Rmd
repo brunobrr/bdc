@@ -174,7 +174,7 @@ bdc_create_figures(data = check_space,
 
 ![Records within urban areas](https://github.com/brunobrr/bdc/blob/master/inst/extdata/example_figures/space_.urb_MAP.png?raw=true){width="20cm"}
 
-![Summary of all tests](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/space_summary_all_tests_BAR.png){width="20cm"}
+![Summary of all tests](./images/space_summary_all_tests_BAR.png){width="20cm"}
 
 #### **Filtering the database**
 

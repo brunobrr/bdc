@@ -18,7 +18,7 @@ to be transposed."><meta property="og:image" content="https://brunobrr.github.io
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -159,18 +159,22 @@ database containing verbatim and corrected coordinates is created in
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">scientificName</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Rhinella major"</span>, <span class="st">"Scinax ruber"</span>,</span>
-<span class="r-in">                    <span class="st">"Siparuna guianensis"</span>, <span class="st">"Psychotria vellosiana"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">scientificName</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="st">"Rhinella major"</span>, <span class="st">"Scinax ruber"</span>,</span>
+<span class="r-in">  <span class="st">"Siparuna guianensis"</span>, <span class="st">"Psychotria vellosiana"</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="va">decimalLatitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">63.43333</span>, <span class="op">-</span><span class="fl">14.43333</span>, <span class="op">-</span><span class="fl">41.90000</span>, <span class="op">-</span><span class="fl">46.69778</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">decimalLongitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">17.90000</span>, <span class="op">-</span><span class="fl">67.91667</span>, <span class="op">-</span><span class="fl">13.25000</span>, <span class="op">-</span><span class="fl">13.82444</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">country</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BOLIVIA"</span>, <span class="st">"bolivia"</span>, <span class="st">"Brasil"</span>, <span class="st">"Brazil"</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">scientificName</span>, <span class="va">decimalLatitude</span>,</span>
-<span class="r-in">                <span class="va">decimalLongitude</span>, <span class="va">country</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="va">id</span>, <span class="va">scientificName</span>, <span class="va">decimalLatitude</span>,</span>
+<span class="r-in">  <span class="va">decimalLongitude</span>, <span class="va">country</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Get country code</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="bdc_country_standardized.html">bdc_country_standardized</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">x</span>, country <span class="op">=</span> <span class="st">'country'</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="bdc_country_standardized.html">bdc_country_standardized</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">x</span>, country <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">bdc_coordinates_transposed</span><span class="op">(</span></span>
 <span class="r-in">  data <span class="op">=</span> <span class="va">x</span>,</span>
@@ -180,7 +184,8 @@ database containing verbatim and corrected coordinates is created in
 <span class="r-in">  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
 <span class="r-in">  country <span class="op">=</span> <span class="st">"country_suggested"</span>,</span>
 <span class="r-in">  countryCode <span class="op">=</span> <span class="st">"countryCode"</span>,</span>
-<span class="r-in">  border_buffer <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="co"># in decimal degrees</span></span>
+<span class="r-in">  border_buffer <span class="op">=</span> <span class="fl">0.2</span></span>
+<span class="r-in"><span class="op">)</span> <span class="co"># in decimal degrees</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>

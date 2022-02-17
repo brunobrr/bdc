@@ -223,15 +223,15 @@ bdc_create_figures(data = check_pf,
                    workflow_step = "prefilter")
 ```
 
-![**Coordinates country inconsistent**](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/prefilter_.coordinates_country_inconsistent_MAP.png){width="20cm"}
+![**Coordinates country inconsistent**](./images/prefilter_.coordinates_country_inconsistent_MAP.png){width="20cm"}
 
 ```{r eval=F, echo=F}
-![**Transposed coordinates**](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/prefilter_coordinates_transposed_MAP.png){width="20cm"}
+![**Transposed coordinates**](./images/prefilter_coordinates_transposed_MAP.png){width="20cm"}
 ```
 
 <br/>
 
-![**Summary of all tests of the pre-filter step**](https://github.com/brunobrr/bdc/raw/master/inst/extdata/example_figures/prefilter_summary_all_tests_BAR.png){width="20cm"}
+![**Summary of all tests of the pre-filter step**](./images/prefilter_summary_all_tests_BAR.png){width="20cm"}
 
 <br/>
 

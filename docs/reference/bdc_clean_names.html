@@ -25,7 +25,7 @@ names, i.e., separate author, date, annotations from taxon name."><meta property
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -134,11 +134,12 @@ parse process can be found in
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">scientificName</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in"><span class="st">"Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann"</span>,</span>
-<span class="r-in"><span class="st">"Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby"</span>,</span>
-<span class="r-in"><span class="st">"Gymnanthes edwalliana (Pax &amp; K.Hoffm.) Laurenio-Melo &amp; M.F.Sales"</span>,</span>
-<span class="r-in"><span class="st">"LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin &amp; Barneby"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">scientificName</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span class="r-in">  <span class="st">"Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann"</span>,</span>
+<span class="r-in">  <span class="st">"Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby"</span>,</span>
+<span class="r-in">  <span class="st">"Gymnanthes edwalliana (Pax &amp; K.Hoffm.) Laurenio-Melo &amp; M.F.Sales"</span>,</span>
+<span class="r-in">  <span class="st">"LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin &amp; Barneby"</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">bdc_clean_names</span><span class="op">(</span><span class="va">scientificName</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>

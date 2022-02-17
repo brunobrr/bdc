@@ -18,7 +18,7 @@ quality tests implemented in the BDC workflow."><meta property="og:image" conten
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@ saved in "Output/Figures".</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="va">database_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GBIF_01"</span>, <span class="st">"GBIF_02"</span>, <span class="st">"GBIF_03"</span>, <span class="st">"FISH_04"</span>, <span class="st">"FISH_05"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">19.93580</span>, <span class="op">-</span><span class="fl">13.01667</span>, <span class="op">-</span><span class="fl">22.34161</span>,  <span class="op">-</span><span class="fl">6.75000</span>, <span class="op">-</span><span class="fl">15.15806</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">19.93580</span>, <span class="op">-</span><span class="fl">13.01667</span>, <span class="op">-</span><span class="fl">22.34161</span>, <span class="op">-</span><span class="fl">6.75000</span>, <span class="op">-</span><span class="fl">15.15806</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40.60030</span>, <span class="op">-</span><span class="fl">39.60000</span>, <span class="op">-</span><span class="fl">49.61017</span>, <span class="op">-</span><span class="fl">35.63330</span>, <span class="op">-</span><span class="fl">39.52861</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">.scientificName_emptys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">.coordinates_empty</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -131,8 +131,10 @@ saved in "Output/Figures".</p>
 <span class="r-in">  <span class="va">.summary</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu">bdc_create_figures</span><span class="op">(</span>data <span class="op">=</span> <span class="va">x</span>, database_id <span class="op">=</span> <span class="st">"database_id"</span>,</span>
-<span class="r-in">workflow_step <span class="op">=</span> <span class="st">"prefilter"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">bdc_create_figures</span><span class="op">(</span></span>
+<span class="r-in">  data <span class="op">=</span> <span class="va">x</span>, database_id <span class="op">=</span> <span class="st">"database_id"</span>,</span>
+<span class="r-in">  workflow_step <span class="op">=</span> <span class="st">"prefilter"</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
