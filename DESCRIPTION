@@ -1,6 +1,6 @@
 Package: bdc
 Title: Biodiversity Data Cleaning
-Version: 0.0.2
+Version: 1.0.0
 Authors@R: c(
     person("Bruno", "Ribeiro", , "ribeiro.brr@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7755-6715")),
@@ -46,7 +46,7 @@ Imports:
     stringdist,
     stringi,
     stringr,
-    taxadb,
+    taxadb (>= 0.1.3),
     tibble,
     tidyselect
 Suggests:

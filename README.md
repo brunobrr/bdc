@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # ***bdc*** <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" width="155"/></a>
@@ -9,7 +10,7 @@
 [![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/brunobrr/bdc?branch=master)
+coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](https://codecov.io/gh/brunobrr/bdc?branch=master)
 
 <!-- badges: end -->
 
@@ -23,6 +24,13 @@ from different sources following common standards and protocols and
 implements various tests and tools to flag, document, clean, and correct
 taxonomic, spatial, and temporal data.
 
+Compared to other available R packages, the main strengths of the bdc
+package are that it brings together available tools – and a series of
+new ones – to assess the quality of different dimensions of biodiversity
+data into a single and flexible toolkit. The functions can be applied to
+a multitude of taxonomic groups, datasets (including regional or local
+repositories), countries, or worldwide.
+
 #### **Structure of bdc**
 
 The *bdc* toolkit is organized in thematic modules related to different
@@ -30,10 +38,10 @@ biodiversity dimensions.
 
 ------------------------------------------------------------------------
 
-:warning: The modules illustrated, and **functions** within, **can be
-linked to form** a **workflow** (see
-[**vignettes**](https://brunobrr.github.io/bdc/)), but **can also be
-executed independently** depending on user needs.
+:warning: The modules illustrated, and **functions** within, **were
+linked to form** a proposed reproducible **workflow** (see
+[**vignettes**](https://brunobrr.github.io/bdc/)). However, all
+functions **can also be executed independently**.
 
 ------------------------------------------------------------------------
 

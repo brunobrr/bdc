@@ -44,8 +44,11 @@ Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
 Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 180 records compiled from nine different sources (see below).
 
-```{r echo=FALSE, eval=T, message=FALSE, warning=FALSE}
-metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", package = "bdc"), show_col_types = FALSE)
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+metadata <-
+  readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", 
+                              package = "bdc"),
+                  show_col_types = FALSE)
 ```
 
 **NOTE:** Remember to change the column "fileName" for the path containing the input files and perform all modifications needed in the configuration table before executing *bdc_standardize_datasets*.

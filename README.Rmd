@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-[![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html) [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml) [![Codecov test coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](https://codecov.io/gh/brunobrr/bdc?branch=master) [![Coveralls test coverage](https://coveralls.io/repos/github/brunobrr/bdc/badge.svg)](https://coveralls.io/r/brunobrr/bdc?branch=master)
+[![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html) [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml) [![Codecov test coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](https://codecov.io/gh/brunobrr/bdc?branch=master)
 
 <!-- badges: end -->
 
@@ -27,13 +27,15 @@ knitr::opts_chunk$set(
 
 Handle biodiversity data from several different sources is not an easy task. Here, we present the **B**iodiversity **D**ata **C**leaning (bdc), an R package to address quality issues and improve the fitness-for-use of a dataset. *bdc* contains functions to harmonize and integrate data from different sources following common standards and protocols and implements various tests and tools to flag, document, clean, and correct taxonomic, spatial, and temporal data.
 
+Compared to other available R packages, the main strengths of the bdc package are that it brings together available tools – and a series of new ones – to assess the quality of different dimensions of biodiversity data into a single and flexible toolkit. The functions can be applied to a multitude of taxonomic groups, datasets (including regional or local repositories), countries, or worldwide.
+
 #### **Structure of bdc**
 
 The *bdc* toolkit is organized in thematic modules related to different biodiversity dimensions.
 
 ------------------------------------------------------------------------
 
-:warning: The modules illustrated, and **functions** within, **can be linked to form** a **workflow** (see [**vignettes**](https://brunobrr.github.io/bdc/)), but **can also be executed independently** depending on user needs.
+:warning: The modules illustrated, and **functions** within, **were linked to form** a proposed reproducible **workflow** (see [**vignettes**](https://brunobrr.github.io/bdc/)). However, all functions **can also be executed independently**.
 
 ------------------------------------------------------------------------
 
@@ -43,13 +45,13 @@ The *bdc* toolkit is organized in thematic modules related to different biodiver
 
 <br/>
 
-#### 1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/00_integrate_datasets.html)
+#### 1. [**Merge databases**](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)
 
 Standardization and integration of different datasets into a standard database.
 
 -   `bdc_standardize_datasets()` Standardization and integration of different datasets into a new dataset with column names following Darwin Core terminology
 
-#### 2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/01_☺prefilter.html)
+#### 2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/prefilter.html)
 
 Flagging and removal of invalid or non-interpretable information, followed by data amendments (e.g., correct transposed coordinates and standardize country names).
 
@@ -63,7 +65,7 @@ Flagging and removal of invalid or non-interpretable information, followed by da
 -   `bdc_coordinates_country_inconsistent()` Identification of coordinates in other countries or far from a specified distance from the coast of a reference country (i.e., in the ocean)
 -   `bdc_coordinates_from_locality()` Identification of records lacking coordinates but with a detailed description of the locality associate with records from which coordinates can be derived
 
-#### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/02_taxonomy.html)
+#### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/taxonomy.html)
 
 Cleaning, parsing, and standardization of scientific names against multiple taxonomic references.
 
@@ -71,14 +73,14 @@ Cleaning, parsing, and standardization of scientific names against multiple taxo
 -   `bdc_query_names_taxadb()` Standardization of scientific names by correcting spelling errors and converting nomenclatural synonyms to currently accepted names.
 -   `bdc_filter_out_names()` This tool is used to filter out records according to their taxonomic status present in the column "notes". For example, to filter only valid accepted names categorized as "accepted"
 
-#### 4. [**Space**](https://brunobrr.github.io/bdc/articles/03_space.html)
+#### 4. [**Space**](https://brunobrr.github.io/bdc/articles/space.html)
 
 Flagging of erroneous, suspicious, and low-precision geographic coordinates.
 
 -   `bdc_coordinates_precision()` Identification of records with a coordinate precision below a specified number of decimal places
 -   `clean_coordinates()` (From CoordinateCleaner package and part of the data-cleaning workflow). Identification of potentially problematic geographic coordinates based on geographic gazetteers and metadata. Include tests for flagging records: around country capitals or country or province centroids, duplicated, with equal coordinates, around biodiversity institutions, within urban areas, plain zeros in the coordinates, and suspect geographic outliers
 
-#### 5. [**Time**](https://brunobrr.github.io/bdc/articles/04_time.html)
+#### 5. [**Time**](https://brunobrr.github.io/bdc/articles/time.html)
 
 Flagging and, whenever possible, correction of inconsistent collection date.
 
