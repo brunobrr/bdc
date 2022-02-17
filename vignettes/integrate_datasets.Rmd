@@ -84,7 +84,7 @@ Below are listed the specifications of each field of the configuration table:
 
 <br/>
 
-```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
+```{r echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
 config_description <-
   readr::read_csv(system.file("extdata/Config/DatabaseInfo_description.csv", package = "bdc"), show_col_types = FALSE)
 
