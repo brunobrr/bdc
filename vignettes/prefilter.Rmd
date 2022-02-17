@@ -22,9 +22,8 @@ knitr::opts_chunk$set(
 
 ```{r, echo = FALSE, eval = TRUE, include = FALSE, messages = FALSE}
 library(bdc)
-if (!require("remotes")) install.packages("remotes")
-if (!require("rnaturalearthdata")) remotes::install_github("ropensci/rnaturalearthdata")
-if (!require("rnaturalearthhires")) remotes::install_github("ropensci/rnaturalearthhires")
+if (!requireNamespace("rnaturalearthhires", quietly = TRUE))
+  remotes::install_github("ropensci/rnaturalearthhires")
 ```
 
 #### **Introduction**
