@@ -38,7 +38,7 @@ Read the database created in the [**Space**](https://brunobrr.github.io/bdc/arti
 
 ```{r echo=TRUE, eval=FALSE}
 database <-
-  qs::qread(here::here("Output/Intermediate/03_space_database.csv"))
+  readr::read_csv(here::here("Output/Intermediate/03_space_database.csv"))
 ```
 
 ```{r echo=FALSE, eval=TRUE}
