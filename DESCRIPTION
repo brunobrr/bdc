@@ -58,16 +58,13 @@ Suggests:
     rappdirs,
     remotes,
     rmarkdown,
-    rnaturalearthdata,
-    rnaturalearthhires,
+    rnaturalearthdata (>= 0.2.0),
+    rnaturalearthhires (>= 0.2.0),
     rvest,
     testthat (>= 3.0.0),
     xml2
 VignetteBuilder:
     knitr
-Remotes:
-    github::ropensci/rnaturalearthdata,
-    github::ropensci/rnaturalearthhires
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
