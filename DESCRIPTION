@@ -17,7 +17,7 @@ Authors@R: c(
     person("Steven", "Bachman", , "S.Bachman@kew.org ", role = "ctb",
            comment = c(ORCID = "0000-0003-1085-6075"))
   )
-Description: Easily clean up biodiversity data.
+Description: An R toolkit for standardizing, integrating, and cleaning biodiversity data.
 License: GPL (>= 3)
 URL: https://brunobrr.github.io/bdc/ (website)
     https://github.com/brunobrr/bdc
