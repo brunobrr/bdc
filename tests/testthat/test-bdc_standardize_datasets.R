@@ -171,19 +171,15 @@ test_that("bdc_standardize_datasets can create 00_merged_datasets.csv", {
 })
 
 test_that("bdc_standardize_datasets missing required column", {
-
   result <- testthat::capture_error(bdc_standardize_datasets(metadata = metadata_missing_column, overwrite = TRUE, format = "csv"))
 
   expect_equal(any(class(result) %in% "error"), TRUE)
-
 })
 
 test_that("bdc_standardize_datasets already exist", {
-
   result_message <- testthat::capture_message(bdc_standardize_datasets(metadata = metadata, overwrite = FALSE, format = "csv"))
 
   expect_equal(any(class(result_message) %in% "condition"), TRUE)
-
 })
 
 unlink(here::here("data"), recursive = TRUE)

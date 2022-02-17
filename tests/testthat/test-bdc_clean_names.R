@@ -7,11 +7,11 @@ scientificName <- c(
   "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
   "Gymnanthes edwalliana (Pax & K.Hoffm.) Laurenio-Melo & M.F.Sales",
   "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby",
-  "Aspidosperma australe Müll.Arg.")
+  "Aspidosperma australe Müll.Arg."
+)
 
 
 testthat::test_that("test with function example", {
-
   r <- bdc_clean_names(sci_names = scientificName)
   expect_equal(class(bdc_clean_names(sci_names = scientificName)), c("tbl_df", "tbl", "data.frame"))
   expect_equal(names(r), c("scientificName", ".uncer_terms", ".infraesp_names", "names_clean", "quality"))
@@ -37,11 +37,9 @@ names <-
   dplyr::filter(!is.na(scientificName))
 
 testthat::test_that("remore suffix dae", {
-
   r <- bdc_rem_family_names(data = names, sci_names = "scientificName")
 
   expect_equal(r$clean_family_names, "Ocotea odorifera")
-
 })
 
 sci_names <- "Solanum lacerdae"
@@ -59,11 +57,9 @@ names <-
   dplyr::filter(!is.na(scientificName))
 
 testthat::test_that("avoid remove valid suffix dae", {
-
   r <- bdc_rem_family_names(data = names, sci_names = "scientificName")
 
   expect_equal(r$clean_family_names, "Solanum lacerdae")
-
 })
 
 
@@ -82,9 +78,7 @@ names <-
   dplyr::filter(!is.na(scientificName))
 
 testthat::test_that("invalid suffix dae ", {
-
   r <- bdc_rem_family_names(data = names, sci_names = "scientificName")
 
   expect_equal(r$clean_family_names, "Taccaceae Solanum")
-
 })

@@ -46,19 +46,21 @@ different from names listed in 'taxonomic_status' are returned.
 \examples{
 \dontrun{
 df_notes <-
- data.frame(
-   notes = c("notFound", "accepted", "accepted | replaceSynonym",
-             "accepted | wasMisspelled",
-             "accepted | wasMisspelled | replaceSynonym",
-             "multipleAccepted",
-             "heterotypic synonym")
- )
+  data.frame(
+    notes = c(
+      "notFound", "accepted", "accepted | replaceSynonym",
+      "accepted | wasMisspelled",
+      "accepted | wasMisspelled | replaceSynonym",
+      "multipleAccepted",
+      "heterotypic synonym"
+    )
+  )
 
 bdc_filter_out_names(
- data = df_notes,
- taxonomic_status = "accepted",
- col_name = "notes",
- opposite = F
+  data = df_notes,
+  taxonomic_status = "accepted",
+  col_name = "notes",
+  opposite = F
 )
 }
 }

@@ -67,18 +67,22 @@ database containing verbatim and corrected coordinates is created in
 }
 \examples{
 \dontrun{
-id <- c(1,2,3,4)
-scientificName <- c("Rhinella major", "Scinax ruber",
-                    "Siparuna guianensis", "Psychotria vellosiana")
+id <- c(1, 2, 3, 4)
+scientificName <- c(
+  "Rhinella major", "Scinax ruber",
+  "Siparuna guianensis", "Psychotria vellosiana"
+)
 decimalLatitude <- c(63.43333, -14.43333, -41.90000, -46.69778)
 decimalLongitude <- c(-17.90000, -67.91667, -13.25000, -13.82444)
 country <- c("BOLIVIA", "bolivia", "Brasil", "Brazil")
 
-x <- data.frame(id, scientificName, decimalLatitude,
-                decimalLongitude, country)
+x <- data.frame(
+  id, scientificName, decimalLatitude,
+  decimalLongitude, country
+)
 
 # Get country code
-x <- bdc_country_standardized(data = x, country = 'country')
+x <- bdc_country_standardized(data = x, country = "country")
 
 bdc_coordinates_transposed(
   data = x,
@@ -88,7 +92,8 @@ bdc_coordinates_transposed(
   lon = "decimalLongitude",
   country = "country_suggested",
   countryCode = "countryCode",
-  border_buffer = 0.2) # in decimal degrees
+  border_buffer = 0.2
+) # in decimal degrees
 }
 
 }

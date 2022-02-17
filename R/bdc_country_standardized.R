@@ -30,19 +30,20 @@
 #'
 #' bdc_country_standardized(
 #'   data = x,
-#'   country = "country")
+#'   country = "country"
+#' )
 #' }
 #'
 bdc_country_standardized <-
   function(data,
            country = "country") {
-
     cntr_suggested <- cntr_iso2c <- country_suggested <- NULL
 
-    if (all(colnames(data) != country))
+    if (all(colnames(data) != country)) {
       stop(
         "The column containing country names was not found. The function bdc_country_from_coordinates can be used to retrieve country names from valid geographic coordinates"
       )
+    }
 
     suppressWarnings({
       suppressMessages({
@@ -55,9 +56,9 @@ bdc_country_standardized <-
     message("Loading auxiliary data: country names from wikipedia\n")
     suppressMessages({
       suppressWarnings({
-      wiki_cntr <-
-        system.file("extdata/countries_names/wiki_country_names.txt", package = "bdc") %>%
-        readr::read_delim(delim = "\t") # get country names from Wikipedia
+        wiki_cntr <-
+          system.file("extdata/countries_names/wiki_country_names.txt", package = "bdc") %>%
+          readr::read_delim(delim = "\t") # get country names from Wikipedia
       })
     })
 
@@ -67,9 +68,11 @@ bdc_country_standardized <-
     # standardize the name of countries
     message("Standardizing country names\n")
     standard_country_names <-
-      bdc_standardize_country(data = data,
-                              country = country,
-                              country_names_db = wiki_cntr)
+      bdc_standardize_country(
+        data = data,
+        country = country,
+        country_names_db = wiki_cntr
+      )
 
     cntr <- "cntr_original"
     names(cntr) <- country
@@ -79,12 +82,16 @@ bdc_country_standardized <-
 
     data <-
       data %>%
-      dplyr::rename(country_suggested = cntr_suggested,
-                    countryCode = cntr_iso2c) %>%
-      dplyr::mutate(country_suggested =
-                    stringr::str_to_sentence(country_suggested))
+      dplyr::rename(
+        country_suggested = cntr_suggested,
+        countryCode = cntr_iso2c
+      ) %>%
+      dplyr::mutate(
+        country_suggested =
+          stringr::str_to_sentence(country_suggested)
+      )
 
-     w <- which(data$country != data$country_suggested)
+    w <- which(data$country != data$country_suggested)
 
     message(
       paste(

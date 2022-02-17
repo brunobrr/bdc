@@ -34,7 +34,8 @@ x <- data.frame(country)
 
 bdc_country_standardized(
   data = x,
-  country = "country")
+  country = "country"
+)
 }
 
 }

@@ -41,11 +41,12 @@ parse process can be found in
 }
 \examples{
 \dontrun{
-scientificName = c(
-"Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
-"Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
-"Gymnanthes edwalliana (Pax & K.Hoffm.) Laurenio-Melo & M.F.Sales",
-"LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby")
+scientificName <- c(
+  "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
+  "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
+  "Gymnanthes edwalliana (Pax & K.Hoffm.) Laurenio-Melo & M.F.Sales",
+  "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby"
+)
 
 bdc_clean_names(scientificName)
 }

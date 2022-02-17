@@ -20,3 +20,6 @@ pkgdown
 ^doc$
 ^Meta$
 lastMiKTeXException
+check.out
+testthat.out
+gp.out

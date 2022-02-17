@@ -4,7 +4,7 @@
 #' records type, for example, a specimen, a human observation, or a fossil
 #' specimen) not interpretable, which does not comply with Darwin Core
 #' vocabulary, or unreliable or unsuitable for specific analyses.
-#' 
+#'
 #' @family prefilter
 #' @param data data.frame. Containing information about the basis of records.
 #' @param basisOfRecord character string. The column name with information about
@@ -32,19 +32,23 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{ 
-#' x <- data.frame(basisOfRecord = c("FOSSIL_SPECIMEN", "UNKNOWN",
-#' "RON", NA, "Specimen", "PRESERVED_SPECIMEN"))
-#' 
-#' bdc_basisOfRecords_notStandard(data = x, basisOfRecord = "basisOfRecord",
-#' names_to_keep = "all")
+#' \dontrun{
+#' x <- data.frame(basisOfRecord = c(
+#'   "FOSSIL_SPECIMEN", "UNKNOWN",
+#'   "RON", NA, "Specimen", "PRESERVED_SPECIMEN"
+#' ))
+#'
+#' bdc_basisOfRecords_notStandard(
+#'   data = x, basisOfRecord = "basisOfRecord",
+#'   names_to_keep = "all"
+#' )
 #' }
 bdc_basisOfRecords_notStandard <-
   function(data,
            basisOfRecord = "basisOfRecord",
            names_to_keep = "all") {
     .data <- .basisOfRecords_notStandard <- NULL
-    
+
     if (names_to_keep[1] == "all") {
       names_to_keep <-
         c(
@@ -74,18 +78,20 @@ bdc_basisOfRecords_notStandard <-
           NA
         )
     }
-    
+
     data <-
       data %>%
-      dplyr::mutate(.basisOfRecords_notStandard = 
-                    tolower(.data[[basisOfRecord]]) %in% tolower(names_to_keep))
-    
+      dplyr::mutate(
+        .basisOfRecords_notStandard =
+          tolower(.data[[basisOfRecord]]) %in% tolower(names_to_keep)
+      )
+
     removed <-
       data %>%
       dplyr::filter(.basisOfRecords_notStandard == FALSE) %>%
       dplyr::select(.data[[basisOfRecord]]) %>%
       dplyr::distinct()
-    
+
     message(
       paste(
         "\nbdc_basisOfRecords_notStandard:\nFlagged",

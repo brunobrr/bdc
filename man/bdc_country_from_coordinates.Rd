@@ -52,7 +52,8 @@ bdc_country_from_coordinates(
   data = x,
   lat = "decimalLatitude",
   lon = "decimalLongitude",
-  country = "country")
+  country = "country"
+)
 }
 
 }

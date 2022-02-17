@@ -56,13 +56,12 @@
 #'
 #' @examples
 #' \dontrun{
-#'  metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
+#' metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
 #   # TODO: finish example
 #' }
 bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE) {
-
   fileName <- datasetName <- . <- database_id <- NULL
-  
+
   switch(
     EXPR = format,
     qs = {
@@ -70,38 +69,33 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
     },
     csv = {
       merged_filename <- here::here("Output", "Intermediate", "00_merged_database.csv")
-      }
+    }
   )
-  
+
 
   # if (format == "qs") {
-  # 
+  #
   #   merged_filename <-
   #     here::here("Output", "Intermediate", "00_merged_database.qs")
-  # 
+  #
   # } else {
-  # 
+  #
   #   merged_filename <-
   #     here::here("Output", "Intermediate", "00_merged_database.csv")
-  # 
+  #
   # }
 
   fs::dir_create(here::here("Output", "Intermediate"))
 
   if (file.exists(merged_filename) & overwrite) {
-
     unlink(merged_filename)
-
   }
 
   if (!file.exists(merged_filename)) {
-
     save_in_dir <- here::here("data", "temp_datasets", "/")
 
     if (!fs::dir_exists(save_in_dir)) {
-
       fs::dir_create(save_in_dir)
-
     }
 
     input_file <-
@@ -109,7 +103,6 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
       dplyr::pull(fileName)
 
     for (file_index in seq_along(input_file)) {
-
       input_filename <-
         metadata %>%
         dplyr::filter(fileName == input_file[file_index]) %>%
@@ -125,7 +118,6 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
         paste0(save_in_dir, "standard_", dataset_name, ".", format)
 
       if (!file.exists(save_in_filename)) {
-
         base_names <-
           metadata %>%
           dplyr::filter(fileName == input_file[file_index]) %>%
@@ -141,9 +133,7 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
         )
 
         if (!(required %in% standard_names %>% all())) {
-
           stop(paste("Required field is missing. Please check the columns of the", dataset_name, "in our", metadata))
-
         }
 
         basename_names <- base_names %>%
@@ -173,11 +163,8 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
         tryCatch(
 
           if (sum(!vector_for_recode %in% names(imported_raw_dataset)) != 0) {
-
             stop(error_message)
-
           } else {
-
             standard_dataset <-
               input_file[file_index] %>%
               readr::read_csv(trim_ws = F, show_col_types = F) %>%
@@ -193,76 +180,61 @@ bdc_standardize_datasets <- function(metadata, format = "csv", overwrite = FALSE
               dplyr::mutate_if(is.numeric, as.character)
 
             if (format == "qs") {
-              qs::qsave(standard_dataset,
-                        paste0(save_in_dir, "standard_", dataset_name,
-                               ".", format))
-
+              qs::qsave(
+                standard_dataset,
+                paste0(
+                  save_in_dir, "standard_", dataset_name,
+                  ".", format
+                )
+              )
             } else {
-              readr::write_csv(standard_dataset,
-                                 paste0(save_in_dir, "standard_", dataset_name,
-                                        ".", format))
+              readr::write_csv(
+                standard_dataset,
+                paste0(
+                  save_in_dir, "standard_", dataset_name,
+                  ".", format
+                )
+              )
             }
-
-
           },
-
           error = function(e) {
             message(error_message)
             skip_to_next <<- TRUE
           }
-
         )
 
         if (skip_to_next) {
-
           next
-
         }
-
       } else {
-
         message(paste(save_in_filename, "already exists!"))
-
       }
-
     }
 
     # Concatenate all the resulting standardized databases
 
-    if (format == "qs"){
-
-    merged_database <-
-      here::here("data", "temp_datasets") %>%
-      fs::dir_ls(regexp = "*.qs") %>%
-      purrr::map_dfr( ~ qs::qread(.x))
-
+    if (format == "qs") {
+      merged_database <-
+        here::here("data", "temp_datasets") %>%
+        fs::dir_ls(regexp = "*.qs") %>%
+        purrr::map_dfr(~ qs::qread(.x))
     } else {
-
       merged_database <-
         here::here("data", "temp_datasets") %>%
         fs::dir_ls(regexp = "*.csv") %>%
-        purrr::map_dfr( ~ readr::read_csv(.x, col_types = readr::cols(.default = "c")))
+        purrr::map_dfr(~ readr::read_csv(.x, col_types = readr::cols(.default = "c")))
     }
 
     merged_database <-
       merged_database %>%
       select_if((function(x) any(!is.na(x))))
 
-    if (format == "qs"){
-
+    if (format == "qs") {
       qs::qsave(merged_database, merged_filename)
-
     } else {
-
       readr::write_csv(merged_database, merged_filename)
-
     }
-
-
   } else {
-
     message(paste(merged_filename, "already exists!"))
-
   }
-
 }

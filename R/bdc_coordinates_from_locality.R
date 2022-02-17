@@ -32,7 +32,7 @@
 #' \dontrun{
 #' lat <- c(NA, NA, "")
 #' lon <- c("", NA, NA)
-#' x <- data.frame(lat = lat, lon = lon, locality =  c("Brazil", "Argentina", "Chile"))
+#' x <- data.frame(lat = lat, lon = lon, locality = c("Brazil", "Argentina", "Chile"))
 #' bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon", locality = "locality")
 #' }
 bdc_coordinates_from_locality <-
@@ -40,27 +40,26 @@ bdc_coordinates_from_locality <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            locality = "locality") {
-
     .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
 
     suppressMessages({
+      if (!any(".coordinates_empty" == names(data))) {
+        data <-
+          bdc_coordinates_empty(
+            data = data,
+            lat = {{ lat }},
+            lon = {{ lon }}
+          )
+      }
 
-    if (!any(".coordinates_empty" == names(data))){
-
-    data <-
-      bdc_coordinates_empty(data = data,
-                            lat = {{ lat }},
-                            lon = {{ lon}})
-    }
-
-    if (!any(".coordinates_outOfRange" == names(data))){
-
-    data <-
-      bdc_coordinates_outOfRange(data = data,
-                                lat = {{ lat }},
-                                lon = {{ lon }})
-    }
-
+      if (!any(".coordinates_outOfRange" == names(data))) {
+        data <-
+          bdc_coordinates_outOfRange(
+            data = data,
+            lat = {{ lat }},
+            lon = {{ lon }}
+          )
+      }
     })
 
     bdc_create_dir()

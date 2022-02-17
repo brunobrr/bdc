@@ -34,19 +34,21 @@
 #' @examples
 #' \dontrun{
 #' df_notes <-
-#'  data.frame(
-#'    notes = c("notFound", "accepted", "accepted | replaceSynonym",
-#'              "accepted | wasMisspelled",
-#'              "accepted | wasMisspelled | replaceSynonym",
-#'              "multipleAccepted",
-#'              "heterotypic synonym")
-#'  )
+#'   data.frame(
+#'     notes = c(
+#'       "notFound", "accepted", "accepted | replaceSynonym",
+#'       "accepted | wasMisspelled",
+#'       "accepted | wasMisspelled | replaceSynonym",
+#'       "multipleAccepted",
+#'       "heterotypic synonym"
+#'     )
+#'   )
 #'
 #' bdc_filter_out_names(
-#'  data = df_notes,
-#'  taxonomic_status = "accepted",
-#'  col_name = "notes",
-#'  opposite = F
+#'   data = df_notes,
+#'   taxonomic_status = "accepted",
+#'   col_name = "notes",
+#'   opposite = F
 #' )
 #' }
 bdc_filter_out_names <-
@@ -85,8 +87,10 @@ bdc_filter_out_names <-
     for (i in 1:length(taxonomic_status)) {
       temp <-
         data %>%
-        dplyr::filter(stringr::str_detect(.data[[col_name]],
-                                          taxonomic_status[i]))
+        dplyr::filter(stringr::str_detect(
+          .data[[col_name]],
+          taxonomic_status[i]
+        ))
       df <- bind_rows(df, temp)
     }
 

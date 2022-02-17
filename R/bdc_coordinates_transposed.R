@@ -48,18 +48,22 @@
 #'
 #' @examples
 #' \dontrun{
-#' id <- c(1,2,3,4)
-#' scientificName <- c("Rhinella major", "Scinax ruber",
-#'                     "Siparuna guianensis", "Psychotria vellosiana")
+#' id <- c(1, 2, 3, 4)
+#' scientificName <- c(
+#'   "Rhinella major", "Scinax ruber",
+#'   "Siparuna guianensis", "Psychotria vellosiana"
+#' )
 #' decimalLatitude <- c(63.43333, -14.43333, -41.90000, -46.69778)
 #' decimalLongitude <- c(-17.90000, -67.91667, -13.25000, -13.82444)
 #' country <- c("BOLIVIA", "bolivia", "Brasil", "Brazil")
 #'
-#' x <- data.frame(id, scientificName, decimalLatitude,
-#'                 decimalLongitude, country)
+#' x <- data.frame(
+#'   id, scientificName, decimalLatitude,
+#'   decimalLongitude, country
+#' )
 #'
 #' # Get country code
-#' x <- bdc_country_standardized(data = x, country = 'country')
+#' x <- bdc_country_standardized(data = x, country = "country")
 #'
 #' bdc_coordinates_transposed(
 #'   data = x,
@@ -69,7 +73,8 @@
 #'   lon = "decimalLongitude",
 #'   country = "country_suggested",
 #'   countryCode = "countryCode",
-#'   border_buffer = 0.2) # in decimal degrees
+#'   border_buffer = 0.2
+#' ) # in decimal degrees
 #' }
 #'
 bdc_coordinates_transposed <-
@@ -80,99 +85,100 @@ bdc_coordinates_transposed <-
            lon = "decimalLongitude",
            country = "country",
            countryCode = "countryCode",
-           border_buffer = 0.2
-           ) {
+           border_buffer = 0.2) {
     decimalLatitude <- decimalLongitude <- database_id <- scientificName <- NULL
 
-  suppressWarnings({
-  check_require_cran("rnaturalearth")
-  check_require_cran("readr")
-  check_require_github("ropensci/rnaturalearthdata")
-  })
+    suppressWarnings({
+      check_require_cran("rnaturalearth")
+      check_require_cran("readr")
+      check_require_github("ropensci/rnaturalearthdata")
+    })
 
-  data <- dplyr::tibble(data)
-  minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
+    data <- dplyr::tibble(data)
+    minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
 
-  if (length(minimum_colnames) < 6) {
-    stop("Fill all function arguments: id, sci_names, lon, lat, and
+    if (length(minimum_colnames) < 6) {
+      stop("Fill all function arguments: id, sci_names, lon, lat, and
          country")
-  }
+    }
 
-  if (!all(minimum_colnames %in% colnames(data))) {
-    stop(
-      "These columns names were not found in your database: ",
-      paste(minimum_colnames[!minimum_colnames %in% colnames(data)],
-            collapse = ", "),
-      call. = FALSE
-    )
-  }
+    if (!all(minimum_colnames %in% colnames(data))) {
+      stop(
+        "These columns names were not found in your database: ",
+        paste(minimum_colnames[!minimum_colnames %in% colnames(data)],
+          collapse = ", "
+        ),
+        call. = FALSE
+      )
+    }
 
-  # Standardizing columns names
-  data <-
-    data %>%
-    dplyr::rename(database_id = {{ id }},
-           decimalLatitude = {{lat}},
-           decimalLongitude = {{lon}},
-           scientificName = {{ sci_names }},
-           countryCode = {{ countryCode }}
-           )
+    # Standardizing columns names
+    data <-
+      data %>%
+      dplyr::rename(
+        database_id = {{ id }},
+        decimalLatitude = {{ lat }},
+        decimalLongitude = {{ lon }},
+        scientificName = {{ sci_names }},
+        countryCode = {{ countryCode }}
+      )
 
-  # converts coordinates columns to numeric
-  data <-
-    data %>%
-    dplyr::mutate(
-      decimalLatitude = as.numeric(decimalLatitude),
-      decimalLongitude = as.numeric(decimalLongitude)
-    )
+    # converts coordinates columns to numeric
+    data <-
+      data %>%
+      dplyr::mutate(
+        decimalLatitude = as.numeric(decimalLatitude),
+        decimalLongitude = as.numeric(decimalLongitude)
+      )
 
-  worldmap <- bdc_get_world_map() # get world map and country iso
+    worldmap <- bdc_get_world_map() # get world map and country iso
 
-  # Correct latitude and longitude transposed
-  message("Correcting latitude and longitude transposed\n")
-  corrected_coordinates <-
-    bdc_correct_coordinates(
-      data = data,
-      x = "decimalLongitude",
-      y = "decimalLatitude",
-      sp = "scientificName",
-      id = "database_id",
-      cntr_iso2 = "countryCode",
-      world_poly = worldmap,
-      world_poly_iso = "iso2c",
-      border_buffer = border_buffer
-    )
+    # Correct latitude and longitude transposed
+    message("Correcting latitude and longitude transposed\n")
+    corrected_coordinates <-
+      bdc_correct_coordinates(
+        data = data,
+        x = "decimalLongitude",
+        y = "decimalLatitude",
+        sp = "scientificName",
+        id = "database_id",
+        cntr_iso2 = "countryCode",
+        world_poly = worldmap,
+        world_poly_iso = "iso2c",
+        border_buffer = border_buffer
+      )
 
-  # Exports a table with verbatim and transposed xy
-  corrected_coordinates <-
+    # Exports a table with verbatim and transposed xy
+    corrected_coordinates <-
+      corrected_coordinates %>%
+      dplyr::select(database_id, scientificName, dplyr::contains("decimal"))
+
+    bdc_create_dir()
+
     corrected_coordinates %>%
-    dplyr::select(database_id, scientificName, dplyr::contains("decimal"))
+      readr::write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
 
-  bdc_create_dir()
+    # finding the position of records with lon/lat modified
+    w <-
+      which(data %>% dplyr::pull(database_id) %in% (corrected_coordinates %>% dplyr::pull(database_id)))
 
-  corrected_coordinates %>%
-    readr::write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
+    data[w, "decimalLatitude"] <-
+      corrected_coordinates[, "decimalLatitude_modified"]
 
-  # finding the position of records with lon/lat modified
-  w <-
-    which(data %>% dplyr::pull(database_id) %in% (corrected_coordinates %>% dplyr::pull(database_id)))
+    data[w, "decimalLongitude"] <-
+      corrected_coordinates[, "decimalLongitude_modified"]
 
-  data[w, "decimalLatitude"] <-
-    corrected_coordinates[, "decimalLatitude_modified"]
+    # Flags transposed coordinates
+    data$coordinates_transposed <- TRUE
+    data[w, "coordinates_transposed"] <- FALSE
 
-  data[w, "decimalLongitude"] <-
-    corrected_coordinates[, "decimalLongitude_modified"]
-
-  # Flags transposed coordinates
-  data$coordinates_transposed <- TRUE
-  data[w, "coordinates_transposed"] <- FALSE
-
-  message(
-    paste(
-      "\nbdc_coordinates_transposed:\nCorrected",
-      sum(data$coordinates_transposed == FALSE),
-      "records.\nOne columns were added to the database.\nCheck database containing coordinates corrected in:\nOutput/Check/01_coordinates_transposed.csv\n"
+    message(
+      paste(
+        "\nbdc_coordinates_transposed:\nCorrected",
+        sum(data$coordinates_transposed == FALSE),
+        "records.\nOne columns were added to the database.\nCheck database containing coordinates corrected in:\nOutput/Check/01_coordinates_transposed.csv\n"
+      )
     )
-  )
 
-  return(data)
-}
+    return(data)
+  }

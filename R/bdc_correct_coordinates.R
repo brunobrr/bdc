@@ -31,11 +31,12 @@
 #' @importFrom dplyr filter mutate as_tibble select all_of pull bind_rows distinct relocate left_join
 #' @importFrom raster buffer
 #' @importFrom sp SpatialPoints over
-#' 
+#'
 #' @noRd
 #'
 #' @examples
 #' \dontrun{
+#'
 #' }
 bdc_correct_coordinates <-
   function(data,
@@ -47,9 +48,8 @@ bdc_correct_coordinates <-
            world_poly,
            world_poly_iso,
            border_buffer = border_buffer) {
-
     . <- decimalLatitude <- decimalLongitude <- .summary <- NULL
-    
+
     x_mod <- paste0(x, "_modified")
     y_mod <- paste0(y, "_modified")
 
@@ -67,12 +67,12 @@ bdc_correct_coordinates <-
           )
       })
     })
-    
+
     # Detect records outside a country
     suppressWarnings({
       suppressMessages({
         occ_country <- CoordinateCleaner::clean_coordinates(
-          x =  occ_country,
+          x = occ_country,
           lon = x,
           lat = y,
           species = sp,
@@ -96,11 +96,11 @@ bdc_correct_coordinates <-
     occ_country <-
       occ_country %>%
       dplyr::as_tibble() %>%
-      dplyr::filter(!.summary,!is.na(occ_country[cntr_iso2]))
+      dplyr::filter(!.summary, !is.na(occ_country[cntr_iso2]))
 
-    #now this database have all those records with potential error that be
-    #corrected
-    message(occ_country %>% nrow, " ocurrences will be tested")
+    # now this database have all those records with potential error that be
+    # corrected
+    message(occ_country %>% nrow(), " ocurrences will be tested")
 
     # Split database
     occ_country <-
@@ -112,19 +112,21 @@ bdc_correct_coordinates <-
     coord_test <- list()
 
     for (i in 1:length(occ_country)) {
-      message('Processing occurrences from: ',
-              occ_country[[i]][cntr_iso2] %>% unique,
-              paste0(" (", nrow(occ_country[[i]]), ")"))
+      message(
+        "Processing occurrences from: ",
+        occ_country[[i]][cntr_iso2] %>% unique(),
+        paste0(" (", nrow(occ_country[[i]]), ")")
+      )
       try(coord_test[[i]] <-
-            bdc_coord_trans(
-              data = occ_country[[i]],
-              x = x,
-              y = y,
-              country_code = cntr_iso2,
-              id = id,
-              worldmap = world_poly,
-              worldmap_cntr_code = world_poly_iso
-            ))
+        bdc_coord_trans(
+          data = occ_country[[i]],
+          x = x,
+          y = y,
+          country_code = cntr_iso2,
+          id = id,
+          worldmap = world_poly,
+          worldmap_cntr_code = world_poly_iso
+        ))
     }
 
     # elimination from the list those countries without correction
@@ -138,17 +140,17 @@ bdc_correct_coordinates <-
       n <-
         coord_test[[i]] %>%
         dplyr::select(dplyr::all_of(cntr_iso2)) %>%
-        unique %>%
+        unique() %>%
         dplyr::pull()
 
       # Here filter polygon based on your country iso2c code
       my_country <-
-        world_poly[which(world_poly@data[, world_poly_iso] == n),]
+        world_poly[which(world_poly@data[, world_poly_iso] == n), ]
 
-      #0.5 degree ~50km near to equator
+      # 0.5 degree ~50km near to equator
       my_country2 <- raster::buffer(my_country, width = border_buffer)
 
-      coord_sp <- sp::SpatialPoints(coord_test[[i]] %>% dplyr::select({{x}}, {{y}}))
+      coord_sp <- sp::SpatialPoints(coord_test[[i]] %>% dplyr::select({{ x }}, {{ y }}))
 
       coord_sp@proj4string <- my_country2@proj4string
       over_occ <- sp::over(coord_sp, my_country2)
@@ -164,15 +166,15 @@ bdc_correct_coordinates <-
       dplyr::as_tibble() # binding dataframes allocated in the list in a single one
 
     coord_test <-
-      coord_test[!duplicated(coord_test[id]),] %>% 
+      coord_test[!duplicated(coord_test[id]), ] %>%
       dplyr::relocate(dplyr::all_of(id), dplyr::all_of(x), dplyr::all_of(y))
 
     # Merge coord_test with other columns of occurrence database
     coord_test <-
       dplyr::left_join(coord_test,
-                data %>% dplyr::select(-c({{x}}, {{y}}, {{cntr_iso2}})),
-                by = id)
+        data %>% dplyr::select(-c({{ x }}, {{ y }}, {{ cntr_iso2 }})),
+        by = id
+      )
 
     return(coord_test)
   }
-

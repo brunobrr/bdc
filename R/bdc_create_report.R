@@ -28,16 +28,19 @@
 #' .invalid_basis_of_records <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
 #' .summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
 #'
-#' x <- data.frame(database_id,
-#'                 .missing_names,
-#'                 .missing_coordinates ,
-#'                 .invalid_basis_of_records,
-#'                 .summary)
+#' x <- data.frame(
+#'   database_id,
+#'   .missing_names,
+#'   .missing_coordinates,
+#'   .invalid_basis_of_records,
+#'   .summary
+#' )
 #'
 #' bdc_create_report(
 #'   data = x,
 #'   database_id = "database_id",
-#'   workflow_step = "prefilter")
+#'   workflow_step = "prefilter"
+#' )
 #' }
 #'
 bdc_create_report <-
@@ -46,18 +49,20 @@ bdc_create_report <-
            workflow_step) {
     Description <- . <- NULL
     . <- V1 <- Test_name <- Description <- notes <- NULL
-    number_of_records <- .uncer_terms  <- `NA` <- NULL
-    
+    number_of_records <- .uncer_terms <- `NA` <- NULL
+
     suppressWarnings({
       check_require_cran("readr")
       check_require_cran("DT")
     })
-    
-    match.arg(arg = workflow_step,
-              choices = c("prefilter", "taxonomy", "space", "time"))
-    
+
+    match.arg(
+      arg = workflow_step,
+      choices = c("prefilter", "taxonomy", "space", "time")
+    )
+
     bdc_create_dir()
-    
+
     # prefilter
     if (workflow_step == "prefilter") {
       tests <-
@@ -69,15 +74,15 @@ bdc_create_report <-
           ".coordinates_country_inconsistent",
           ".summary"
         )
-      
+
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
-      
+
       if (file.exists("Output/Check/01_coordinates_transposed.csv")) {
         col_to_tests <- c(col_to_tests, "coordinates_transposed")
       }
     }
-    
+
     # space
     if (workflow_step == "space") {
       tests <-
@@ -94,29 +99,31 @@ bdc_create_report <-
           ".urb",
           "summary"
         )
-      
+
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
     }
-    
+
     # time
     if (workflow_step == "time") {
       tests <-
-        c(".eventDate_empty",
+        c(
+          ".eventDate_empty",
           ".year_outOfRange",
-          ".summary")
-      
+          ".summary"
+        )
+
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
     }
-    
+
     suppressMessages({
       suppressWarnings({
         n_records <-
           data %>%
           dplyr::summarise(n = dplyr::n()) %>%
           dplyr::pull(n)
-        
+
         # Total number of records per database
         n_record_database <-
           data %>%
@@ -126,7 +133,7 @@ bdc_create_report <-
           ) %>%
           dplyr::group_by(database_id) %>%
           dplyr::summarise(n_total = dplyr::n())
-        
+
 
         # Function used to formatting report
         format_df <- function(x) {
@@ -134,49 +141,53 @@ bdc_create_report <-
             x %>%
             dplyr::add_row() %>%
             as.data.frame()
-          
+
           x <- x %>% dplyr::select(Description, dplyr::everything())
-          
+
           x[1 + nrow(x), 1] <-
             paste(
               "(*) calculated in relation to total number of records, i.e.",
               n_records,
               "records"
             )
-          
+
           names(x)[4] <- "perc_number_records(*)"
           x <- x %>% replace(is.na(.), "")
-          
+
           data <-
             x %>%
             DT::datatable(
               .,
-              class = 'stripe',
+              class = "stripe",
               options = list(
                 pageLength = 10,
-                dom = 'Brtip',
+                dom = "Brtip",
                 scrollX = TRUE
               )
             )
           return(list(x, data))
         }
-        
+
         # Prefilter
         if ("prefilter" %in% workflow_step) {
           pf <-
             data %>%
             dplyr::select(tidyselect::starts_with(".")) %>%
-            dplyr::select(col_to_tests) %>% 
+            dplyr::select(col_to_tests) %>%
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%
             tibble::as_tibble(rownames = "NA") %>%
             dplyr::mutate(V1 = nrow(data) - V1) %>%
-            dplyr::mutate(Perc_records_flagged =
-                            round((V1 / nrow(data) * 100), 2)) %>%
-            dplyr::rename(Test_name = `NA`,
-                          Records_flagged = V1)
-          
+            dplyr::mutate(
+              Perc_records_flagged =
+                round((V1 / nrow(data) * 100), 2)
+            ) %>%
+            dplyr::rename(
+              Test_name = `NA`,
+              Records_flagged = V1
+            )
+
           pf <-
             pf %>%
             dplyr::mutate(Description = Test_name) %>%
@@ -212,24 +223,28 @@ bdc_create_report <-
                 Description
               )
             )
-          
+
           res <- format_df(pf)
           data <- res[[2]]
-          readr::write_csv(res[[1]],
-                           here::here("Output/Report/01_Report_Prefilter.csv"))
+          readr::write_csv(
+            res[[1]],
+            here::here("Output/Report/01_Report_Prefilter.csv")
+          )
         }
-        
+
         # Taxonomy
         if ("taxonomy" %in% workflow_step) {
           names <-
             data %>%
             dplyr::group_by(notes) %>%
             dplyr::summarise(number_of_records = dplyr::n()) %>%
-            dplyr::mutate(perc_number_records =
-                            round((number_of_records / n_records) * 100, 2))
-          
+            dplyr::mutate(
+              perc_number_records =
+                round((number_of_records / n_records) * 100, 2)
+            )
+
           names$notes <- stringr::str_squish(names$notes)
-          
+
           if (".uncer_terms" %in% names(data)) {
             taxo_unc <-
               data %>%
@@ -237,19 +252,22 @@ bdc_create_report <-
               dplyr::filter(.uncer_terms == FALSE) %>%
               dplyr::group_by(.uncer_terms) %>%
               dplyr::summarise(number_of_records = dplyr::n()) %>%
-              dplyr::mutate(perc_number_records =
-                              round((number_of_records / n_records) * 100, 2)) %>%
+              dplyr::mutate(
+                perc_number_records =
+                  round((number_of_records / n_records) * 100, 2)
+              ) %>%
               dplyr::rename(notes = .uncer_terms) %>%
               dplyr::mutate(notes = ifelse(notes == "FALSE", "taxo_uncer", notes))
           }
-          
+
           names <- dplyr::bind_rows(names, taxo_unc)
           names$notes <- stringr::str_squish(names$notes)
-          
+
           names <-
             names %>%
             dplyr::mutate(notes = dplyr::if_else(notes == "",
-                                                 "valid names", notes)) %>%
+              "valid names", notes
+            )) %>%
             dplyr::mutate(Description = notes) %>%
             dplyr::mutate(
               Description = dplyr::if_else(
@@ -333,44 +351,52 @@ bdc_create_report <-
                 Description
               )
             )
-          
+
           res <- format_df(names)
           data <- res[[2]]
-          readr::write_csv(res[[1]],
-                           here::here("Output/Report/02_Report_taxonomy.csv"))
+          readr::write_csv(
+            res[[1]],
+            here::here("Output/Report/02_Report_taxonomy.csv")
+          )
         }
-        
+
         # Space
         if ("space" %in% workflow_step) {
           space <-
             data %>%
             dplyr::select(tidyselect::starts_with(".")) %>%
-            dplyr::select(col_to_tests) %>% 
+            dplyr::select(col_to_tests) %>%
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%
             tibble::as_tibble(rownames = "NA") %>%
             dplyr::mutate(V1 = nrow(data) - V1) %>%
-            dplyr::mutate(Perc_records_flagged =
-                            round((V1 / n_records * 100), 2)) %>%
-            dplyr::rename(Test_name = `NA`,
-                          Records_flagged = V1)
-          
+            dplyr::mutate(
+              Perc_records_flagged =
+                round((V1 / n_records * 100), 2)
+            ) %>%
+            dplyr::rename(
+              Test_name = `NA`,
+              Records_flagged = V1
+            )
+
           space <-
             space %>%
             dplyr::mutate(Description = Test_name) %>%
             dplyr::mutate(
               Description = dplyr::if_else(Description == ".val",
-                                           "Coordinates valid",
-                                           Description),
+                "Coordinates valid",
+                Description
+              ),
               Description = dplyr::if_else(
                 Description == ".equ",
                 "Identical coordinates",
                 Description
               ),
               Description = dplyr::if_else(Description == ".zer",
-                                           "Plain zeros",
-                                           Description),
+                "Plain zeros",
+                Description
+              ),
               Description = dplyr::if_else(
                 Description == ".cap",
                 "Records around country capital centroid",
@@ -417,29 +443,34 @@ bdc_create_report <-
                 Description
               )
             )
-          
+
           res <- format_df(space)
           data <- res[[2]]
-          readr::write_csv(res[[1]],
-                           here::here("Output/Report/03_Report_space.csv"))
-          
+          readr::write_csv(
+            res[[1]],
+            here::here("Output/Report/03_Report_space.csv")
+          )
         }
-        
+
         if ("time" %in% workflow_step) {
           date <-
             data %>%
             dplyr::select(tidyselect::starts_with(".")) %>%
-            dplyr::select(col_to_tests) %>% 
+            dplyr::select(col_to_tests) %>%
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%
             tibble::as_tibble(rownames = "NA") %>%
             dplyr::mutate(V1 = nrow(data) - V1) %>%
-            dplyr::mutate(Perc_records_flagged =
-                            round((V1 / n_records * 100), 2)) %>%
-            dplyr::rename(Test_name = `NA`,
-                          Records_flagged = V1)
-          
+            dplyr::mutate(
+              Perc_records_flagged =
+                round((V1 / n_records * 100), 2)
+            ) %>%
+            dplyr::rename(
+              Test_name = `NA`,
+              Records_flagged = V1
+            )
+
           date <-
             date %>%
             dplyr::mutate(Description = Test_name) %>%
@@ -460,16 +491,18 @@ bdc_create_report <-
                 Description
               )
             )
-          
-          
+
+
           res <- format_df(date)
           data <- res[[2]]
-          readr::write_csv(res[[1]],
-                           here::here("Output/Report/04_Report_time.csv"))
+          readr::write_csv(
+            res[[1]],
+            here::here("Output/Report/04_Report_time.csv")
+          )
         }
       })
     })
-    
+
     message(
       paste(
         "\nbdc_create_report:\nCheck the report summarizing the results of the",

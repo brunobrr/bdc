@@ -49,6 +49,6 @@ the geographic longitude in decimal degrees (e.g., -3.25500)
 }
 \examples{
 \dontrun{
- metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
+metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
 }
 }

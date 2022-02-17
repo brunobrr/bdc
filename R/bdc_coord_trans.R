@@ -16,14 +16,15 @@
 #' polygon database.
 #'
 #' @return
-#' 
+#'
 #' @importFrom dplyr select bind_rows
 #' @importFrom sp SpatialPoints over
-#' 
+#'
 #' @noRd
 #'
 #' @examples
 #' \dontrun{
+#'
 #' }
 bdc_coord_trans <-
   function(data,
@@ -32,9 +33,7 @@ bdc_coord_trans <-
            country_code,
            id,
            worldmap,
-           worldmap_cntr_code
-  ) {
-    
+           worldmap_cntr_code) {
     data <- data %>% dplyr::select(dplyr::all_of(x), dplyr::all_of(y), dplyr::all_of(country_code), dplyr::all_of(id))
     d1 <- data.frame(x = data[, x], y = -data[, y])
     d2 <- data.frame(x = -data[, x], y = data[, y])
@@ -43,16 +42,16 @@ bdc_coord_trans <-
     d5 <- data.frame(x = data[, y], y = -data[, x])
     d6 <- data.frame(x = -data[, y], y = data[, x])
     d7 <- data.frame(x = -data[, y], y = -data[, x])
-    
+
     d.list <- list(d1, d2, d3, d4, d5, d6, d7)
     rm(list = paste0("d", 1:7))
     d.list <- lapply(d.list, function(x) {
       colnames(x) <- c("x", "y")
       return(x)
     })
-    
+
     over_list <- list()
-    
+
     for (d in 1:length(d.list)) {
       caluse <- sp::SpatialPoints(d.list[[d]])
       caluse@proj4string <- worldmap@proj4string
@@ -69,11 +68,11 @@ bdc_coord_trans <-
       }
       rm(list = c("overresult", "filt"))
     }
-    
+
     rm(d.list)
-    
+
     over_list <- over_list[!sapply(over_list <- over_list, is.null)]
     over_list <- dplyr::bind_rows(over_list)
-    
+
     return(over_list)
   }

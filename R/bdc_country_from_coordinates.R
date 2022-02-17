@@ -13,7 +13,7 @@
 #' @param  country character string. The column name with the country assignment
 #' of each record. Default = "country". If no column name is provided a new
 #' column "country" is created.
-#'   
+#'
 #' @details This function assigns a country name for records missing such
 #' information. Country names are extracted from valid geographic coordinates
 #' using a high-quality map of the world (rnaturalearth package). No
@@ -41,7 +41,8 @@
 #'   data = x,
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude",
-#'   country = "country")
+#'   country = "country"
+#' )
 #' }
 #'
 bdc_country_from_coordinates <-
@@ -49,35 +50,35 @@ bdc_country_from_coordinates <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            country = "country") {
-
     .data <- . <- name_long <- id <- geometry <- NULL
-    
+
     suppressWarnings({
-    check_require_cran("rnaturalearth")
-    check_require_github("ropensci/rnaturalearthdata")
+      check_require_cran("rnaturalearth")
+      check_require_github("ropensci/rnaturalearthdata")
     })
-    
+
     # create an id
     data$id <- 1:nrow(data)
-    
+
     minimum_colnames <- c(lat, lon)
-    
+
     if (!all(minimum_colnames %in% colnames(data))) {
       stop(
         "These columns names were not found in your database: ",
         paste(minimum_colnames[!minimum_colnames %in% colnames(data)],
-              collapse = ", "),
+          collapse = ", "
+        ),
         call. = FALSE
       )
     }
-    
+
     # check if data has a country column
     has_country <- any(colnames(data) == country)
-    
-    if (!has_country){
+
+    if (!has_country) {
       data$country <- NA
     }
-      
+
     # converts coordinates columns to numeric
     data <-
       data %>%
@@ -128,7 +129,7 @@ bdc_country_from_coordinates <-
             sf::st_intersection(., worldmap)
         })
       })
-      
+
       ext_country$geometry <- NULL
       w <- which(data$id %in% ext_country$id)
 
@@ -143,15 +144,17 @@ bdc_country_from_coordinates <-
           "\nbdc_country_from_coordinates:\nCountry names were added to",
           length(w),
           "records.\n"
-        ))
+        )
+      )
     } else {
       message(
-      paste(
-        "\nbdc_country_from_coordinates:\nCountry names were added to",
-        length(w),
-        "records in a new collumn named 'country'.\n"
-      ))
+        paste(
+          "\nbdc_country_from_coordinates:\nCountry names were added to",
+          length(w),
+          "records in a new collumn named 'country'.\n"
+        )
+      )
     }
-    
+
     return(data)
   }

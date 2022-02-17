@@ -20,32 +20,32 @@
 #' @importFrom dplyr mutate sym collect right_join relocate
 #' @importFrom taxadb taxa_tbl td_connect
 #' @importFrom tibble tibble
-#' 
+#'
 #' @noRd
 bdc_filter_name <-
-  function (sci_name,
-            db,
-            db_version = taxadb:::latest_version())
-  {
+  function(sci_name,
+           db,
+           db_version = taxadb:::latest_version()) {
     taxonID <- NULL
     # x <- tolower(sci_name)
     x <- sci_name
-    
+
     db_tbl <-
       dplyr::mutate(
-        taxadb::taxa_tbl(db, schema = "dwc", db_version,
-                         taxadb::td_connect()),
+        taxadb::taxa_tbl(db,
+          schema = "dwc", db_version,
+          taxadb::td_connect()
+        ),
         input = !!dplyr::sym("scientificName")
       )
-    
+
     species_tab <- tibble::tibble(input = x, sort = seq_along(x))
-    
+
     out <-
       dplyr::collect(dplyr::right_join(db_tbl, species_tab, by = "input", copy = TRUE))
-    
-    
+
+
     return(dplyr::relocate(out, sort, .before = taxonID))
-    
   }
 
 #' Internal function. Filter species information from local stored taxonomic databases
@@ -66,25 +66,25 @@ bdc_filter_name <-
 #' @importFrom dplyr mutate collect right_join relocate sym
 #' @importFrom taxadb td_connect
 #' @importFrom tibble tibble
-#' 
+#'
 #' @noRd
-#' 
+#'
 bdc_filter_id <-
-  function (id, db, db_version = taxadb:::latest_version())
-  {
+  function(id, db, db_version = taxadb:::latest_version()) {
     taxonID <- NULL
     db_tbl <-
       dplyr::mutate(
-        taxadb::taxa_tbl(db, schema = "dwc", db_version,
-                         taxadb::td_connect()),
+        taxadb::taxa_tbl(db,
+          schema = "dwc", db_version,
+          taxadb::td_connect()
+        ),
         input = !!dplyr::sym("taxonID")
       )
-    
+
     species_tab <- tibble::tibble(input = id, sort = seq_along(id))
-    
+
     out <-
       dplyr::collect(dplyr::right_join(db_tbl, species_tab, by = "input", copy = TRUE))
-    
+
     return(dplyr::relocate(out, sort, .after = taxonID))
-    
   }

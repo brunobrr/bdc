@@ -48,6 +48,7 @@ bdc_quickmap(
   lat = "decimalLatitude",
   lon = "decimalLongitude",
   col_to_map = ".coordinates_out_country",
-  size = 1)
+  size = 1
+)
 }
 }

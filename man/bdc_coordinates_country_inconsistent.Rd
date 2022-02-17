@@ -62,11 +62,11 @@ bdc_coordinates_country_inconsistent(
 )
 
 bdc_coordinates_country_inconsistent(
-data = x,
-country_name = c("Argentina", "Brazil"),
-lon = "decimalLongitude",
-lat = "decimalLatitude",
-dist = 0.2 # in decimal degrees
+  data = x,
+  country_name = c("Argentina", "Brazil"),
+  lon = "decimalLongitude",
+  lat = "decimalLatitude",
+  dist = 0.2 # in decimal degrees
 )
 }
 }

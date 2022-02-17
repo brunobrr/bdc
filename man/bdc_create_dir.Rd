@@ -15,12 +15,12 @@ databases, figures, reports, and databases that need to be checked.
 }
 \details{
 :
-Check below the folder structure created by \code{bdc_create_dir()}.\preformatted{.
-└── Output
-    ├── Check
-    ├── Figures
-    ├── Intermediate
-    └── Report
+Check below the folder structure created by \code{bdc_create_dir()}.\preformatted{Output
+  |-- Check
+  |-- Figures
+  |-- Intermediate
+  `-- Report
+
 }
 }
 \examples{

@@ -16,7 +16,7 @@
 #'
 #' @details Only records with valid coordinates can be plotted. Records missing
 #' or containing invalid coordinates are removed prior creating the map.
-#' 
+#'
 #' @importFrom ggplot2 theme_void theme element_blank ggplot labs aes coord_quickmap scale_color_manual
 #' @importFrom dplyr mutate filter select
 #' @export
@@ -33,14 +33,14 @@
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude",
 #'   col_to_map = ".coordinates_out_country",
-#'   size = 1)
+#'   size = 1
+#' )
 #' }
 bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude", col_to_map = "red", size = 1) {
-
   .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
-  
+
   check_require_cran("ggplot2")
-  
+
   world_borders <-
     ggplot2::borders(
       database = "world",
@@ -59,38 +59,42 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
 
   data <-
     data %>%
-    dplyr::mutate(decimalLatitude = as.numeric(.data[[lat]]),
-                  decimalLongitude = as.numeric(.data[[lon]]))
-  
+    dplyr::mutate(
+      decimalLatitude = as.numeric(.data[[lat]]),
+      decimalLongitude = as.numeric(.data[[lon]])
+    )
+
   # identifying empty or out-of-range coordinates
   suppressMessages({
-    if(!all(c(".coordinates_empty", ".coordinates_outOfRange") %in% 
-            names(data))){
-    data_raw <-
-      bdc_coordinates_empty(data = data, 
-                            lat = {{ lat }}, 
-                            lon = {{ lon}})
-    
-    data_raw <-
-      bdc_coordinates_outOfRange(data = data_raw, 
-                                 lat = {{ lat }}, 
-                                 lon = {{ lon }})
-    
-    df <-
-      data_raw %>% 
-      dplyr::filter(.coordinates_empty == T & .coordinates_outOfRange == T) %>% 
-      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
-    
-    } else{
-      
-    df <- 
-      data %>% 
-      dplyr::filter(.coordinates_empty == T & .coordinates_outOfRange == T) %>% 
-      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
-  }
+    if (!all(c(".coordinates_empty", ".coordinates_outOfRange") %in%
+      names(data))) {
+      data_raw <-
+        bdc_coordinates_empty(
+          data = data,
+          lat = {{ lat }},
+          lon = {{ lon }}
+        )
+
+      data_raw <-
+        bdc_coordinates_outOfRange(
+          data = data_raw,
+          lat = {{ lat }},
+          lon = {{ lon }}
+        )
+
+      df <-
+        data_raw %>%
+        dplyr::filter(.coordinates_empty == T & .coordinates_outOfRange == T) %>%
+        dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
+    } else {
+      df <-
+        data %>%
+        dplyr::filter(.coordinates_empty == T & .coordinates_outOfRange == T) %>%
+        dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
+    }
   })
-  
-  
+
+
   if (all(col_to_map %in% names(data))) {
     our_map <-
       df %>%
@@ -111,9 +115,9 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
       size = size
       ) +
       our_theme +
-      ggplot2::coord_quickmap()+
+      ggplot2::coord_quickmap() +
       ggplot2::scale_color_manual(values = c("red", "blue"))
-    } else {
+  } else {
     our_map <-
       df %>%
       ggplot2::ggplot() +
@@ -129,12 +133,12 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
           x = .data[[lon]],
           y = .data[[lat]]
         ),
-        col = {{col_to_map}}, # Map the color
+        col = {{ col_to_map }}, # Map the color
         alpha = 1,
         size = size
       ) +
       our_theme +
       ggplot2::coord_quickmap()
-    }
+  }
   return(our_map)
 }

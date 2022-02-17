@@ -36,15 +36,16 @@ equator, respectively.
 }
 \examples{
 \dontrun{
-lat = c(-21.34, 23.567, 16.798, -10.468)
-lon = c(-55.38, -13.897, 30.8, 90.675)
+lat <- c(-21.34, 23.567, 16.798, -10.468)
+lon <- c(-55.38, -13.897, 30.8, 90.675)
 x <- data.frame(lat, lon)
 
 bdc_coordinates_precision(
-data = x,
-lat = "lat",
-lon = "lon",  
-ndec = 3)
+  data = x,
+  lat = "lat",
+  lon = "lon",
+  ndec = 3
+)
 }
 }
 \concept{space}

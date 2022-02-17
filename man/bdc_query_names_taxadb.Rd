@@ -169,28 +169,29 @@ resolved. Such cases are flagged and left to be determined by the user.
 }
 \examples{
 if (interactive()) {
-sci_name <- c(
+  sci_name <- c(
     "Polystachya estrellensis",
     "Tachigali rubiginosa",
     "Oxalis rhombeo ovata",
     "Axonopus canescens",
     "Prosopis",
     "Haematococcus salinus",
-    'Monas pulvisculus',
-    'Cryptomonas lenticulari',
+    "Monas pulvisculus",
+    "Cryptomonas lenticulari",
     "Poincianella pyramidalis",
-    "Hymenophyllum polyanthos")
+    "Hymenophyllum polyanthos"
+  )
 
-names_standardization <-
-  bdc_query_names_taxadb(
-  sci_name,
-  replace_synonyms = TRUE,
-  suggest_names = TRUE,
-  suggestion_distance = 0.9,
-  db = "gbif",
-  parallel = TRUE,
-  ncores = 2,
-  export_accepted = FALSE)
+  names_standardization <-
+    bdc_query_names_taxadb(
+      sci_name,
+      replace_synonyms = TRUE,
+      suggest_names = TRUE,
+      suggestion_distance = 0.9,
+      db = "gbif",
+      parallel = TRUE,
+      ncores = 2,
+      export_accepted = FALSE
+    )
 }
-
 }

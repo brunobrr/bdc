@@ -8,20 +8,22 @@
 #' @details The function filters the column containing event dates and extracts
 #' the dates with four digits. If the event dates are older than 1600, or the
 #' threshold year, they are flagged FALSE.
-#' 
+#'
 #' @return A data frame with the original data, a flagged column (.year) and a
 #' column with the extracted four-digit years (year_corrected). Records with .year = FALSE
 #' means dates older than the year threshold or 1600.
-#' 
+#'
 #' @importFrom dplyr if_else
 #' @importFrom stringr str_extract
-#' 
+#'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' collection_date <- c(NA, "31/12/2015", "2013-06-13T00:00:00Z", "2013-06-20",
-#' "", "2013", "10-10-10", "20/05/2031", "1590")
+#' collection_date <- c(
+#'   NA, "31/12/2015", "2013-06-13T00:00:00Z", "2013-06-20",
+#'   "", "2013", "10-10-10", "20/05/2031", "1590"
+#' )
 #' x <- data.frame(collection_date)
 #'
 #' bdc_parse_date(data = x, col_to_test = "collection_date")
@@ -30,7 +32,6 @@ bdc_parse_date <-
   function(data,
            col_to_test,
            year_threshold = NULL) {
-
     current_year <- format(Sys.Date(), "%Y")
 
     col <- data[[col_to_test]]
@@ -58,7 +59,6 @@ bdc_parse_date <-
       stop("The 'year_threshold' argument should be used with one year as a numeric data")
     }
 
-    res <- cbind(data, .year, year_corrected=year)
+    res <- cbind(data, .year, year_corrected = year)
     return(res)
   }
-

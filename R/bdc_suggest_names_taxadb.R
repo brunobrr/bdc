@@ -56,13 +56,14 @@
 #' \dontrun{
 #' x <- c("Cebus apela", "Puma concolar")
 #' bdc_suggest_names_taxadb(
-#' x,
-#' max_distance = 0.75,
-#' provider = "gbif",
-#' rank_name = "Plantae",
-#' rank = "kingdom",
-#' parallel = TRUE,
-#' ncores = 2)
+#'   x,
+#'   max_distance = 0.75,
+#'   provider = "gbif",
+#'   rank_name = "Plantae",
+#'   rank = "kingdom",
+#'   parallel = TRUE,
+#'   ncores = 2
+#' )
 #' }
 bdc_suggest_names_taxadb <-
   function(sci_name,
@@ -73,13 +74,12 @@ bdc_suggest_names_taxadb <-
            rank = NULL,
            parallel = TRUE,
            ncores = 2) {
-
     suggestion_distance <- db <- . <- .data <- scientificName <- NULL
 
     # FIXME: set a env var for now
     # REVIEW: https://github.com/ropensci/taxadb/issues/91
-    #Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
-    #Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
+    # Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
+    # Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
 
     # Get first letter of all scientific names
     first_letter <-
@@ -89,20 +89,18 @@ bdc_suggest_names_taxadb <-
       USE.NAMES = FALSE
       ))
 
-    name_to_case_check  <- taxadb::taxa_tbl(provider, version = db_version) %>%
-                            dplyr::filter(!is.na(scientificName)) %>%
-                            utils::head(1) %>%
-                            pull(scientificName) %>%
-                            stringr::str_split(., "")
+    name_to_case_check <- taxadb::taxa_tbl(provider, version = db_version) %>%
+      dplyr::filter(!is.na(scientificName)) %>%
+      utils::head(1) %>%
+      pull(scientificName) %>%
+      stringr::str_split(., "")
 
-    lower_case <- str_detect(name_to_case_check[[1]][1] ,"[[:lower:]]")
+    lower_case <- str_detect(name_to_case_check[[1]][1], "[[:lower:]]")
 
 
-    if(lower_case){
-
+    if (lower_case) {
       first_letter <- tolower(first_letter)
-    }else{
-
+    } else {
       first_letter <- toupper(first_letter)
     }
 
@@ -133,10 +131,12 @@ bdc_suggest_names_taxadb <-
       doParallel::registerDoParallel(cl)
 
       sug_dat <-
-        foreach::foreach(i = sci_name,
-                         .combine = rbind, .export = "bdc_return_names") %dopar% {
-                           bdc_return_names(i, max_distance, species_first_letter)
-                         } # end foreach
+        foreach::foreach(
+          i = sci_name,
+          .combine = rbind, .export = "bdc_return_names"
+        ) %dopar% {
+          bdc_return_names(i, max_distance, species_first_letter)
+        } # end foreach
       parallel::stopCluster(cl) # stop cluster
     } else {
       sug_dat <-

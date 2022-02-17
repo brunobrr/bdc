@@ -49,11 +49,11 @@
 #' )
 #'
 #' bdc_coordinates_country_inconsistent(
-#' data = x,
-#' country_name = c("Argentina", "Brazil"),
-#' lon = "decimalLongitude",
-#' lat = "decimalLatitude",
-#' dist = 0.2 # in decimal degrees
+#'   data = x,
+#'   country_name = c("Argentina", "Brazil"),
+#'   lon = "decimalLongitude",
+#'   lat = "decimalLatitude",
+#'   dist = 0.2 # in decimal degrees
 #' )
 #' }
 bdc_coordinates_country_inconsistent <-
@@ -65,133 +65,138 @@ bdc_coordinates_country_inconsistent <-
     .data <- .summary <- .coordinates_empty <- .coordinates_outOfRange <- . <- NULL
     points_in_buf <- name_long <- id <- .coordinates_country_inconsistent <- NULL
 
-  check_require_cran("rnaturalearth")
-  sf::sf_use_s2(FALSE)
-  
-  df <-
-    data %>%
-    dplyr::select(.data[[lon]], .data[[lat]]) %>%
-    dplyr::mutate(id = 1:nrow(data))
+    check_require_cran("rnaturalearth")
+    sf::sf_use_s2(FALSE)
 
-  # identifying empty or out-of-range coordinates
-  suppressMessages({
+    df <-
+      data %>%
+      dplyr::select(.data[[lon]], .data[[lat]]) %>%
+      dplyr::mutate(id = 1:nrow(data))
+
+    # identifying empty or out-of-range coordinates
+    suppressMessages({
       data_raw <-
-        bdc_coordinates_empty(data = df,
-                              lat = {{ lat }},
-                              lon = {{ lon}})
+        bdc_coordinates_empty(
+          data = df,
+          lat = {{ lat }},
+          lon = {{ lon }}
+        )
 
       data_raw <-
-        bdc_coordinates_outOfRange(data = data_raw,
-                                   lat = {{ lat }},
-                                   lon = {{ lon }})
+        bdc_coordinates_outOfRange(
+          data = data_raw,
+          lat = {{ lat }},
+          lon = {{ lon }}
+        )
 
-  data_raw <- bdc_summary_col(data_raw)
-  })
+      data_raw <- bdc_summary_col(data_raw)
+    })
 
-  df <-
-    data_raw %>%
-    dplyr::filter(.summary == TRUE)
+    df <-
+      data_raw %>%
+      dplyr::filter(.summary == TRUE)
 
-  df <-
-    df %>%
-    dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange, .summary))
-
-
-  # get country limits
-  country_shp <-
-    rnaturalearth::ne_countries(
-      country = country_name,
-      scale = "large",
-      returnclass = "sf")
+    df <-
+      df %>%
+      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange, .summary))
 
 
-  # Spatial points
-  data_sp <-
-    sf::st_as_sf(
-      df,
-      coords = c("decimalLongitude", "decimalLatitude"),
-      remove = FALSE
-    ) %>%
-    sf::st_set_crs(., sf::st_crs(country_shp))
+    # get country limits
+    country_shp <-
+      rnaturalearth::ne_countries(
+        country = country_name,
+        scale = "large",
+        returnclass = "sf"
+      )
 
 
-  # buffer
-  suppressWarnings({
-    buf <- sf::st_buffer(country_shp, dist = dist)
-  })
-
-  # Extract points within the buffer
-  suppressMessages({
+    # Spatial points
     data_sp <-
-      data_sp %>%
-      dplyr::mutate(points_in_buf = sf::st_intersects(data_sp, buf, sparse = FALSE))
-  })
+      sf::st_as_sf(
+        df,
+        coords = c("decimalLongitude", "decimalLatitude"),
+        remove = FALSE
+      ) %>%
+      sf::st_set_crs(., sf::st_crs(country_shp))
 
 
-  # Remove additional columns within 'points_in_buf' object
-  if(length(country_name)>1){
-    data_sp$points_in_buf <- apply(data_sp$points_in_buf, 1, any)
-  }
+    # buffer
+    suppressWarnings({
+      buf <- sf::st_buffer(country_shp, dist = dist)
+    })
+
+    # Extract points within the buffer
+    suppressMessages({
+      data_sp <-
+        data_sp %>%
+        dplyr::mutate(points_in_buf = sf::st_intersects(data_sp, buf, sparse = FALSE))
+    })
 
 
-  # Points in other countries
-  all_countries <-
-    rnaturalearth::ne_countries(returnclass = "sf", scale = "large") %>%
-    dplyr::select(name_long)
-  
-  # Extract country names from points
+    # Remove additional columns within 'points_in_buf' object
+    if (length(country_name) > 1) {
+      data_sp$points_in_buf <- apply(data_sp$points_in_buf, 1, any)
+    }
+
+
+    # Points in other countries
+    all_countries <-
+      rnaturalearth::ne_countries(returnclass = "sf", scale = "large") %>%
+      dplyr::select(name_long)
+
+    # Extract country names from points
     suppressWarnings({
       ext_country <- sf::st_intersection(data_sp, all_countries)
     })
     data_sp$geometry <- NULL
     ext_country$geometry <- NULL
-    
+
     names_to_join <-
       ext_country %>%
-      dplyr::select(id, name_long) 
+      dplyr::select(id, name_long)
 
-  data_to_join <-
-    dplyr::full_join(data_sp, names_to_join, by = "id") %>%
-    dplyr::mutate(
-      .coordinates_country_inconsistent =
-        dplyr::case_when(
-          (points_in_buf == TRUE & is.na(name_long)) ~ TRUE,
-          (points_in_buf == FALSE) ~ FALSE,
-          (points_in_buf == TRUE &
-            name_long != country_name) ~ FALSE,
-          (points_in_buf == TRUE & name_long == country_name) ~ TRUE
-        )
-    ) %>%
-    dplyr::select(id, .coordinates_country_inconsistent)
+    data_to_join <-
+      dplyr::full_join(data_sp, names_to_join, by = "id") %>%
+      dplyr::mutate(
+        .coordinates_country_inconsistent =
+          dplyr::case_when(
+            (points_in_buf == TRUE & is.na(name_long)) ~ TRUE,
+            (points_in_buf == FALSE) ~ FALSE,
+            (points_in_buf == TRUE &
+              name_long != country_name) ~ FALSE,
+            (points_in_buf == TRUE & name_long == country_name) ~ TRUE
+          )
+      ) %>%
+      dplyr::select(id, .coordinates_country_inconsistent)
 
-  data_raw <-
-    dplyr::left_join(data_raw, data_to_join, by = 'id')
+    data_raw <-
+      dplyr::left_join(data_raw, data_to_join, by = "id")
 
-  data_raw$.coordinates_country_inconsistent <-
-    ifelse(
-      is.na(data_raw$.coordinates_country_inconsistent),
-      TRUE,
-      data_raw$.coordinates_country_inconsistent
+    data_raw$.coordinates_country_inconsistent <-
+      ifelse(
+        is.na(data_raw$.coordinates_country_inconsistent),
+        TRUE,
+        data_raw$.coordinates_country_inconsistent
+      )
+
+    data_raw$.coordinates_country_inconsistent <-
+      ifelse(
+        data_raw$.summary == FALSE,
+        TRUE,
+        data_raw$.coordinates_country_inconsistent
+      )
+
+    data_raw <- data_raw %>% dplyr::select(.coordinates_country_inconsistent)
+
+    df <- dplyr::bind_cols(data, data_raw)
+
+    message(
+      paste(
+        "\nbdc_coordinates_country_inconsistent:\nFlagged",
+        sum(df$.coordinates_country_inconsistent == FALSE),
+        "records.\nOne column was added to the database.\n"
+      )
     )
 
-  data_raw$.coordinates_country_inconsistent <-
-    ifelse(
-      data_raw$.summary == FALSE,
-      TRUE,
-      data_raw$.coordinates_country_inconsistent
-    )
-
-  data_raw <- data_raw %>% dplyr::select(.coordinates_country_inconsistent)
-
-  df <- dplyr::bind_cols(data, data_raw)
-
-  message(
-    paste(
-      "\nbdc_coordinates_country_inconsistent:\nFlagged",
-      sum(df$.coordinates_country_inconsistent == FALSE),
-      "records.\nOne column was added to the database.\n"
-    )
-  )
-
-  return(df)
-}
+    return(df)
+  }

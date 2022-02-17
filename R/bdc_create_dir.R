@@ -12,19 +12,20 @@
 #'
 #' @details:
 #' Check below the folder structure created by `bdc_create_dir()`.
+#'
 #' ```
-#' .
-#' └── Output
-#'     ├── Check
-#'     ├── Figures
-#'     ├── Intermediate
-#'     └── Report
+#' Output
+#'   |-- Check
+#'   |-- Figures
+#'   |-- Intermediate
+#'   `-- Report
+#'
 #' ```
 #' @examples
 #' \dontrun{
 #' bdc_create_dir()
 #' }
-bdc_create_dir <- function(){
+bdc_create_dir <- function() {
   fs::dir_create(here::here("Output/Check"))
   fs::dir_create(here::here("Output/Intermediate"))
   fs::dir_create(here::here("Output/Report"))

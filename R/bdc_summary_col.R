@@ -26,9 +26,8 @@
 #' }
 bdc_summary_col <- function(data) {
   if (any(names(data) == ".summary")) {
-    
     .summary <- . <- NULL
-    
+
     message("Column '.summary' already exist. It will be updated")
 
     data <-
@@ -38,18 +37,18 @@ bdc_summary_col <- function(data) {
     df <-
       data %>%
       dplyr::select(tidyselect::starts_with(".")) %>%
-      dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>%
+      dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
       dplyr::mutate(.summary = rowSums(.) / ncol(.) == TRUE) %>%
       dplyr::select(.summary)
 
     df <-
       dplyr::bind_cols(data, df) %>%
       dplyr::select(dplyr::everything(), .summary)
-  } else{
+  } else {
     df <-
       data %>%
       dplyr::select(tidyselect::starts_with(".")) %>%
-      dplyr::mutate_if(is.character, ~as.logical(as.character(.))) %>%
+      dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
       dplyr::mutate(.summary = rowSums(.) / ncol(.) == TRUE) %>%
       dplyr::select(.summary)
 

@@ -18,9 +18,10 @@
 #' @examples
 #' \dontrun{
 #' bdc_return_names(
-#' "Cebus apela",
-#' max_distance = 0.75,
-#' species_first_letter = c("Cebus apella", "Puma concolar"))
+#'   "Cebus apela",
+#'   max_distance = 0.75,
+#'   species_first_letter = c("Cebus apella", "Puma concolar")
+#' )
 #' }
 bdc_return_names <- function(sci_name, max_distance, species_first_letter) {
   out <- stringdist::stringdist(sci_name, species_first_letter)
@@ -30,13 +31,16 @@ bdc_return_names <- function(sci_name, max_distance, species_first_letter) {
   max_dist <- 1 - (min(out) / sorted[2])
 
   if (max_dist >= max_distance) {
-    return(data.frame(original = sci_name,
-                      suggested = min_dist_name,
-                      distance = round(max_dist, 2)))
-  }
-  else {
-    return(data.frame(original = sci_name,
-                      suggested = NA,
-                      distance = round(max_dist, 2)))
+    return(data.frame(
+      original = sci_name,
+      suggested = min_dist_name,
+      distance = round(max_dist, 2)
+    ))
+  } else {
+    return(data.frame(
+      original = sci_name,
+      suggested = NA,
+      distance = round(max_dist, 2)
+    ))
   }
 }

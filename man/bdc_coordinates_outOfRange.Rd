@@ -36,9 +36,10 @@ decimalLongitude <- c(-45.4, -39.6, -20.5243, -440.9055555)
 x <- data.frame(decimalLatitude, decimalLongitude)
 
 bdc_coordinates_outOfRange(
-data = x, 
-lat = "decimalLatitude", 
-lon = "decimalLongitude")
+  data = x,
+  lat = "decimalLatitude",
+  lon = "decimalLongitude"
+)
 }
 }
 \seealso{

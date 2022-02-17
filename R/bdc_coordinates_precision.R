@@ -11,29 +11,30 @@
 #' WGS84. Default = "decimalLongitude".
 #' @param lat character string. The column with latitude in decimal degrees and
 #' WGS84. Default = "decimalLatitude".
-#' @param ndec numeric. The minimum number of decimal places that the coordinates should 
+#' @param ndec numeric. The minimum number of decimal places that the coordinates should
 #' have to be considered valid. Default = 2.
 #'
 #' @return A data.frame with logical values indicating whether values are
-#' equal or higher than the specified minimum decimal number (ndec). Coordinates flagged as 
+#' equal or higher than the specified minimum decimal number (ndec). Coordinates flagged as
 #' FALSE in .rou column are considered imprecise.
 #'
 #' @importFrom dplyr select bind_cols rename
 #' @importFrom stringr str_split_fixed str_length
-#' 
+#'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' lat = c(-21.34, 23.567, 16.798, -10.468)
-#' lon = c(-55.38, -13.897, 30.8, 90.675)
+#' lat <- c(-21.34, 23.567, 16.798, -10.468)
+#' lon <- c(-55.38, -13.897, 30.8, 90.675)
 #' x <- data.frame(lat, lon)
-#' 
+#'
 #' bdc_coordinates_precision(
-#' data = x,
-#' lat = "lat",
-#' lon = "lon",  
-#' ndec = 3)
+#'   data = x,
+#'   lat = "lat",
+#'   lon = "lon",
+#'   ndec = 3
+#' )
 #' }
 bdc_coordinates_precision <-
   function(data,
@@ -41,7 +42,7 @@ bdc_coordinates_precision <-
            lon = "decimalLongitude",
            ndec = c(0, 1, 2)) {
     . <- .ndec_all <- NULL
-    
+
     df <-
       data %>%
       dplyr::select({{ lon }}, {{ lat }}) %>%

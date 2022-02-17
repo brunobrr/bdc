@@ -1,40 +1,30 @@
 bin_on_path <- function() grepl("gnparser", Sys.getenv("PATH"))
-bin_exec    <- function() Sys.which("gnparser") != ""
+bin_exec <- function() Sys.which("gnparser") != ""
 exec_exists <- function(path) file.exists(path)
-is_windows  <- function() .Platform$OS.type == "windows"
-is_macos    <- function() unname(Sys.info()["sysname"] == "Darwin")
-is_linux    <- function() unname(Sys.info()["sysname"] == "Linux")
+is_windows <- function() .Platform$OS.type == "windows"
+is_macos <- function() unname(Sys.info()["sysname"] == "Darwin")
+is_linux <- function() unname(Sys.info()["sysname"] == "Linux")
 
 ensure_config <- function(bin_full_path, sep, user_path) {
-
   gnparser_path <- dirname(bin_full_path)
 
   if (!exec_exists(bin_full_path)) rgnparser::install_gnparser()
 
   Sys.setenv(PATH = paste0(user_path, sep, gnparser_path))
-
 }
 
 setup_gnparser <- function() {
-
   user_path <- Sys.getenv("PATH")
 
   if (is_windows() && !bin_on_path() && !bin_exec()) {
-
     ensure_config(paste0(Sys.getenv("APPDATA"), "\\gnparser\\gnparser.exe"), ";", user_path)
-
-  } else if(is_macos() && !bin_on_path() && !bin_exec()) {
-
+  } else if (is_macos() && !bin_on_path() && !bin_exec()) {
     ensure_config(normalizePath("~/Library/Application Support/gnparser"), ":", user_path)
-
-  } else if (is_linux() && !bin_on_path() && !bin_exec()){
-
+  } else if (is_linux() && !bin_on_path() && !bin_exec()) {
     ensure_config(normalizePath("~/bin/gnparser"), ":", user_path)
-
   }
 
   ## return(Sys.getenv("PATH"))
-
 }
 
 #' Clean and parse scientific names
@@ -81,16 +71,16 @@ setup_gnparser <- function() {
 #'
 #' @examples
 #' \dontrun{
-#' scientificName = c(
-#' "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
-#' "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
-#' "Gymnanthes edwalliana (Pax & K.Hoffm.) Laurenio-Melo & M.F.Sales",
-#' "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby")
+#' scientificName <- c(
+#'   "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
+#'   "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",
+#'   "Gymnanthes edwalliana (Pax & K.Hoffm.) Laurenio-Melo & M.F.Sales",
+#'   "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby"
+#' )
 #'
 #' bdc_clean_names(scientificName)
 #' }
 bdc_clean_names <- function(sci_names) {
-
   value <- scientificName <- X1 <- value <- . <- temp <- canonicalfull <- NULL
   cardinality <- quality <- verbatim <- id <- . <- .uncer_terms <- . <- NULL
   .infraesp_names <- names_clean <- NULL
@@ -159,13 +149,13 @@ firstup <- function(x) {
 # of a taxonomic identification
 
 bdc_rem_family_names <- function(data, sci_names) {
-
   X1 <- NULL
 
   # Get animalia family names from gbif via taxadb package
   animalia_families <-
     system.file("extdata", "family_names/animalia_families.txt",
-                package = "bdc") %>%
+      package = "bdc"
+    ) %>%
     readr::read_csv(col_names = F, show_col_types = FALSE) %>%
     dplyr::tibble() %>%
     dplyr::pull(X1)
@@ -195,7 +185,7 @@ bdc_rem_family_names <- function(data, sci_names) {
   rem_fam <- stringr::str_remove_all(
     sci_names_raw[posi],
     stringr::regex("[a-zA-Z]+aceae|Leguminosae|Compositae",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   ) %>%
     stringr::str_squish()
@@ -238,7 +228,7 @@ bdc_rem_family_names <- function(data, sci_names) {
     rem_fam_animalia <- stringr::str_remove_all(
       sci_names_raw[posi_valid],
       stringr::regex("[a-zA-Z]+dae",
-                     ignore_case = TRUE
+        ignore_case = TRUE
       )
     ) %>%
       stringr::str_squish()
@@ -264,7 +254,6 @@ bdc_rem_family_names <- function(data, sci_names) {
 }
 
 bdc_rem_taxo_unc <- function(data, sci_names) {
-
   value <- NULL
   spp_names <- data[[sci_names]] %>% stringr::str_squish()
 
@@ -274,14 +263,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   cf0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(cf\\.|cf\\s|cf$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   ) # at the beginning
 
   cf <- stringr::str_detect(
     spp_names,
     stringr::regex("\\scf\\.|\\scf\\s|\\scf$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   ) # anywhere
 
@@ -289,14 +278,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   aff0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(aff\\.|aff\\s|aff$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
   aff <- stringr::str_detect(
     spp_names,
     stringr::regex("\\saff\\.|\\saff\\s|\\saff$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
@@ -304,14 +293,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   complex0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(complex\\s|complexo|complex$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
   complex <- stringr::str_detect(
     spp_names,
     stringr::regex("\\scomplex\\s|\\scomplexo|\\scomplex$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
@@ -319,14 +308,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   gen0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(gen\\.|gen\\s|gen$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
   gen <- stringr::str_detect(
     spp_names,
     stringr::regex("\\sgen\\.|\\sgen\\s|\\sgen$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
@@ -334,14 +323,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   sp0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(sp\\.|sp\\s|\\ssp$|spp\\.|spp\\s|\\sspp$|ssp\\.|ssp\\s|ssp$|sp[[:digit:]]|spp[[:digit:]])",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
   sp <- stringr::str_detect(
     spp_names,
     stringr::regex("\\ssp\\.|\\ssp\\s|\\ssp$|\\sspp\\.|\\sspp\\s|\\sspp$|\\sssp\\.|\\sssp\\s|\\sssp$|\\ssp[[:digit:]]|\\sspp[[:digit:]]|\\sssp[[:digit:]]",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
@@ -349,14 +338,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   sp_inc0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(inc\\.|inc\\s|inc$|\\?\\s|\\?)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
   sp_inc <- stringr::str_detect(
     spp_names,
     stringr::regex("\\sinc\\.|\\sinc\\s|\\sinc$|\\s\\?\\s|\\?",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
@@ -364,14 +353,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   sp_inq0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(inq\\.|inq\\s|inq$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
   sp_inq <- stringr::str_detect(
     spp_names,
     stringr::regex("\\sinq\\.|\\sinq\\s|\\sinq$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
@@ -396,14 +385,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   sp_nova0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(nov\\.|nov\\s|nov$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
   sp_nova <- stringr::str_detect(
     spp_names,
     stringr::regex("\\snov\\.|\\snov\\s|\\snov$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
@@ -411,14 +400,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   sp_proxima0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(prox\\.|prox\\s|prox$|nr\\.|nr\\s|nr$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
   sp_proxima <- stringr::str_detect(
     spp_names,
     stringr::regex("\\sprox\\.|\\sprox\\s|\\sprox$|\\snr\\.|\\snr\\s|\\snr$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
@@ -426,14 +415,14 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   stet0 <- stringr::str_detect(
     spp_names,
     stringr::regex("^(stet\\.|stet\\s|stet$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
   stet <- stringr::str_detect(
     spp_names,
     stringr::regex("\\sstet\\.|\\sstet\\s|\\sstet$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     )
   )
 
@@ -485,7 +474,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
     stringr::str_replace_all(
       spp_names,
       stringr::regex("^(cf\\.|cf\\s|cf$)",
-                     ignore_case = TRUE
+        ignore_case = TRUE
       ),
       replacement = " "
     ) # at the beginning
@@ -493,7 +482,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\scf\\.|\\scf\\s|\\scf$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   ) # anywhere
@@ -502,7 +491,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(aff\\.|aff\\s|aff$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -510,7 +499,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\saff\\.|\\saff\\s|\\saff$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -519,7 +508,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(complex\\s|complexo|complex$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -527,7 +516,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\scomplex\\s|\\scomplexo|\\scomplex$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -536,7 +525,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(gen\\.|gen\\s|gen$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -544,7 +533,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\sgen\\.|\\sgen\\s|\\sgen$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -553,7 +542,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(sp\\.|sp\\s|\\ssp$|spp\\.|spp\\s|\\sspp$|ssp\\.|ssp\\s|ssp$|sp[[:digit:]]|spp[[:digit:]])",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -561,7 +550,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\ssp\\.|\\ssp\\s|\\ssp$|\\sspp\\.|\\sspp\\s|\\sspp$|\\sssp\\.|\\sssp\\s|\\sssp$|\\ssp[[:digit:]]|\\sspp[[:digit:]]|\\sssp[[:digit:]]",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -570,7 +559,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(inc\\.|inc\\s|inc$|\\?\\s|\\?)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -578,7 +567,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\sinc\\.|\\sinc\\s|\\sinc$|\\s\\?\\s|\\?",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -587,7 +576,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(inq\\.|inq\\s|inq$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -595,7 +584,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\sinq\\.|\\sinq\\s|\\sinq$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -613,7 +602,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\sindet\\.|\\sindet\\s|\\sindet$|\\sind\\.|\\sind\\s|\\sind$|\\sindt\\.|\\sindt\\s|\\sindt$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -622,7 +611,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(nov\\.|nov\\s|nov$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -630,7 +619,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\snov\\.|\\snov\\s|\\snov$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -639,7 +628,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(prox\\.|prox\\s|prox$|nr\\.|nr\\s|nr$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -647,7 +636,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\sprox\\.|\\sprox\\s|\\sprox$|\\snr\\.|\\snr\\s|\\snr$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -656,7 +645,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(stet\\.|stet\\s|stet$)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -664,7 +653,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\sstet\\.|\\sstet\\s|\\sstet$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -673,7 +662,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(x\\s)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -681,7 +670,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\sx\\s|\\sx$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -691,7 +680,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\sna\\.|\\sna\\s|\\sna$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -700,7 +689,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("^(sem\\s|sem\\.)",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -708,7 +697,7 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
   spp_names_clean <- stringr::str_replace_all(
     spp_names_clean,
     stringr::regex("\\ssem\\.|\\ssem\\s|\\ssem$",
-                   ignore_case = TRUE
+      ignore_case = TRUE
     ),
     replacement = " "
   )
@@ -738,7 +727,6 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
 # substitute empty cells with NA
 
 bdc_rem_other_issues <- function(data, sci_names) {
-
   . <- NULL
   # Raw scientific names
   sci_names_raw <- data[[sci_names]] %>% stringr::str_squish()
@@ -789,8 +777,7 @@ bdc_rem_other_issues <- function(data, sci_names) {
 # Infraespecific names ----------------------------------------------------
 # Flag, identify and remove infraespecific categories from scientific names
 bdc_rem_infaesp_names <- function(data, sci_names) {
-
-  value  <- NULL
+  value <- NULL
 
   # Note that:
   # \\s = space
@@ -885,7 +872,7 @@ bdc_rem_infaesp_names <- function(data, sci_names) {
   rem_infra <- stringr::str_replace_all(
     rem_infra,
     stringr::regex("\\sf\\.\\s|\\sf\\s|\\sfo\\.\\s|\\sfo\\s",
-                   ignore_case = FALSE
+      ignore_case = FALSE
     ),
     replacement = " "
   )
@@ -925,8 +912,7 @@ bdc_rem_infaesp_names <- function(data, sci_names) {
 # Parse scientific names using rgnparser package. For more details,
 # see https://ropensci.org/technotes/2020/08/25/scientific-name-parsing/
 bdc_gnparser <- function(data, sci_names) {
-
-  temp <- canonicalfull <- cardinality <- quality <- verbatim <- id  <- NULL
+  temp <- canonicalfull <- cardinality <- quality <- verbatim <- id <- NULL
   data_temp <- data
   w <- which(colnames(data_temp) == sci_names)
   colnames(data_temp)[w] <- "temp"
@@ -941,8 +927,10 @@ bdc_gnparser <- function(data, sci_names) {
         dplyr::pull(temp) %>%
         rgnparser::gn_parse_tidy() %>%
         dplyr::select(canonicalfull, cardinality, quality, verbatim) %>%
-        dplyr::rename(names_clean = canonicalfull,
-                      temp = verbatim)
+        dplyr::rename(
+          names_clean = canonicalfull,
+          temp = verbatim
+        )
     })
   })
 
