@@ -18,7 +18,6 @@
 #' @return
 #'
 #' @importFrom dplyr select bind_rows
-#' @importFrom sp SpatialPoints over
 #'
 #' @noRd
 #'

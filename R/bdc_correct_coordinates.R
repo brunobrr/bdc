@@ -29,8 +29,6 @@
 #'
 #' @importFrom CoordinateCleaner cc_val clean_coordinates
 #' @importFrom dplyr filter mutate as_tibble select all_of pull bind_rows distinct relocate left_join
-#' @importFrom raster buffer
-#' @importFrom sp SpatialPoints over
 #'
 #' @noRd
 #'

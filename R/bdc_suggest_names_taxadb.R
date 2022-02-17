@@ -46,7 +46,6 @@
 #' @importFrom dplyr filter pull
 #' @importFrom parallel makeCluster stopCluster
 #' @importFrom taxadb taxa_tbl
-#' @importFrom doParallel registerDoParallel
 #' @importFrom foreach %dopar%
 #' @importFrom utils head
 #'
