@@ -24,3 +24,4 @@ check.out
 testthat.out
 gp.out
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

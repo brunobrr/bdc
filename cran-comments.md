@@ -38,14 +38,12 @@ kept because it is important for building the vignettes.*
 -   checking for detritus in the temp directory ... NOTE Found the
     following files/directories: 'lastMiKTeXException'
 
-'''
-
 ## GITHUB ACTIONS CHECK
 
-'-- R CMD check results ------------------------------------------ bdc
+-- R CMD check results ------------------------------------------ bdc
 1.0.0 ---- Duration: 3m 44.5s
 
 > checking for unstated dependencies in vignettes ... NOTE 'library' or
 > 'require' call not declared from: 'rnaturalearthhires'
 
-0 errors v \| 0 warnings v \| 1 note x '''
+0 errors v \| 0 warnings v \| 1 note x
