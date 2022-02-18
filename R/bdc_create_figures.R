@@ -405,8 +405,9 @@ bdc_create_figures <-
           d <-
             d %>%
             dplyr::select({{ w_maps }}[i], decimalLongitude, decimalLatitude) %>%
-            dplyr::filter(. == FALSE)
-
+            dplyr::filter(.data[[w_maps[i]]] == FALSE)
+          
+          if (nrow(d) > 0){
           p <-
             ggplot2::ggplot() +
             ggplot2::geom_polygon(
@@ -435,6 +436,7 @@ bdc_create_figures <-
             p,
             dpi = 300, width = 6, height = 3, units = "cm", scale = 4
           )
+          }
         }
       }
 

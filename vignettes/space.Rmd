@@ -145,7 +145,7 @@ check_space %>%
   )
 ```
 
-![Coordinates flagged as FALSE in at least one test](./images/map_summary_space_vignette.jpeg)
+![Coordinates flagged as FALSE in at least one test](./images/map_summary_space_vignette.png)
 
 #### **Report**
 
