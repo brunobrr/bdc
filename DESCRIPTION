@@ -58,7 +58,7 @@ Suggests:
     rappdirs,
     remotes,
     rmarkdown,
-    rnaturalearthdata (>= 0.2.0),
+    rnaturalearthdata,
     rvest,
     testthat (>= 3.0.0),
     xml2
