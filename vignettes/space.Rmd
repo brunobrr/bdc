@@ -145,7 +145,7 @@ check_space %>%
   )
 ```
 
-![Coordinates flagged as FALSE in at least one test](https://github.com/brunobrr/bdc/blob/master/inst/extdata/example_figures/map_summary_space_vignette.jpeg?raw=true)
+![Coordinates flagged as FALSE in at least one test](./images/map_summary_space_vignette.jpeg)
 
 #### **Report**
 
@@ -170,9 +170,9 @@ bdc_create_figures(data = check_space,
                    workflow_step = "space")
 ```
 
-![Rounded coordinates (% of each database flagged)](https://github.com/brunobrr/bdc/blob/master/inst/extdata/example_figures/space_.rou_BAR.png?raw=true){width="20cm"}
+![Rounded coordinates (% of each database flagged)](./images/space_.rou_BAR.png){width="20cm"}
 
-![Records within urban areas](https://github.com/brunobrr/bdc/blob/master/inst/extdata/example_figures/space_.urb_MAP.png?raw=true){width="20cm"}
+![Records within urban areas](./images/space_.urb_MAP.png){width="20cm"}
 
 ![Summary of all tests](./images/space_summary_all_tests_BAR.png){width="20cm"}
 

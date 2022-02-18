@@ -17,7 +17,8 @@ Authors@R: c(
     person("Steven", "Bachman", , "S.Bachman@kew.org ", role = "ctb",
            comment = c(ORCID = "0000-0003-1085-6075"))
   )
-Description: An R toolkit for standardizing, integrating, and cleaning biodiversity data.
+Description: An R toolkit for standardizing, integrating, and cleaning
+    biodiversity data.
 License: GPL (>= 3)
 URL: https://brunobrr.github.io/bdc/ (website)
     https://github.com/brunobrr/bdc
@@ -44,22 +45,24 @@ Imports:
     tibble,
     tidyselect
 Suggests:
+    contentid (>= 0.0.15),
+    countrycode,
     covr,
+    cowplot,
     DBI,
     doParallel,
-    sp,
-    countrycode,
-    cowplot,
-    raster,
-    rangeBuilder,
+    duckdb (>= 0.3.2),
     knitr,
     maps,
     markdown,
+    rangeBuilder,
     rappdirs,
+    raster,
     remotes,
     rmarkdown,
     rnaturalearthdata,
     rvest,
+    sp,
     testthat (>= 3.0.0),
     xml2
 VignetteBuilder:
