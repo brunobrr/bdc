@@ -145,7 +145,7 @@ check_space %>%
   )
 ```
 
-![Coordinates flagged as FALSE in at least one test](./images/map_summary_space_vignette.png)
+![Records flagged as potentially problematic](https://github.com/brunobrr/bdc/blob/master/vignettes/images/map_summary_space_vignette.png?raw=true)
 
 #### **Report**
 
@@ -170,11 +170,11 @@ bdc_create_figures(data = check_space,
                    workflow_step = "space")
 ```
 
-![Rounded coordinates (% of each database flagged)](./images/space_.rou_BAR.png){width="20cm"}
+![Rounded coordenates](https://github.com/brunobrr/bdc/blob/master/vignettes/images/space_.rou_BAR.png?raw=true)
 
-![Records within urban areas](./images/space_.urb_MAP.png){width="20cm"}
+![Records with urban areas](https://github.com/brunobrr/bdc/blob/master/vignettes/images/space_.urb_MAP.png?raw=true)
 
-![Summary of all tests](./images/space_summary_all_tests_BAR.png){width="20cm"}
+![Summary of all tests](https://github.com/brunobrr/bdc/blob/master/vignettes/images/space_summary_all_tests_BAR.png?raw=true)
 
 #### **Filtering the database**
 

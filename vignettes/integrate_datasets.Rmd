@@ -39,10 +39,9 @@ Once standardized, datasets are then integrated into a standardized database hav
 
 Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
 
-
 #### **Read the configuration table**
 
-Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil. This database contains 180 records compiled from nine different sources (see below).
+Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. We demonstrate the usefulness of the package using a database of terrestrial plant species occurring in Brazil.
 
 ```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 metadata <-
@@ -124,9 +123,7 @@ database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-
 An example of a standardized database containing the required field to run the *bdc* package.
-
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 DT::datatable(

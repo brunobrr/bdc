@@ -222,15 +222,15 @@ bdc_create_figures(data = check_pf,
                    workflow_step = "prefilter")
 ```
 
-![**Coordinates country inconsistent**](./images/prefilter_.coordinates_country_inconsistent_MAP.png){width="20cm"}
+![Coordinates country inconsistent](https://github.com/brunobrr/bdc/blob/master/vignettes/images/prefilter_.coordinates_country_inconsistent_MAP.png?raw=true)
 
 ```{r eval=F, echo=F}
-![**Transposed coordinates**](./images/prefilter_coordinates_transposed_MAP.png){width="20cm"}
+![**Transposed coordinates**](images/prefilter_coordinates_transposed_MAP.png){width="20cm"}
 ```
 
 <br/>
 
-![**Summary of all tests of the pre-filter step**](./images/prefilter_summary_all_tests_BAR.png){width="20cm"}
+![Summary of all tests of the pre-filter step](https://github.com/brunobrr/bdc/blob/master/vignettes/images/prefilter_summary_all_tests_BAR.png?raw=true)
 
 <br/>
 
