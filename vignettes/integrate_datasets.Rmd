@@ -41,7 +41,7 @@ Once standardized, datasets are then integrated into a standardized database hav
 
 #### **Installation**
 
-Check [**here**](https://brunobrr.github.io/bdc/)how to install the bdc package
+Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
 #### **Read the configuration table**
 
@@ -90,7 +90,9 @@ Below are listed the specifications of each field of the configuration table:
 ```{r echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
 config_description <-
   readr::read_csv(system.file("extdata/Config/DatabaseInfo_description.csv", package = "bdc"), show_col_types = FALSE)
+```
 
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
  config_description, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
  options = list(

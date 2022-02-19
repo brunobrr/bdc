@@ -101,11 +101,15 @@ check_time <- bdc_summary_col(data = check_time)
 
 Creating a report summarizing the results of all tests of the `bdc` package.
 
-```{r}
+```{r eval=FALSE}
 report <-
   bdc_create_report(data = check_time,
                     database_id = "database_id",
                     workflow_step = "time")
+
+#> bdc_create_report:
+#> Check the report summarizing the results of the time in:
+#> Output/Report
 
 report
 ```
@@ -134,10 +138,12 @@ DT::datatable(
 
 Here we create a histogram showing the number of records collecting over the years.
 
-```{r eval = FALSE}
+```{r eval=FALSE}
 bdc_create_figures(data = check_time,
                    database_id = "database_id",
                    workflow_step = "time")
+
+#> Check figures in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Figures
 ```
 
 <br/>

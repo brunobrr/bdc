@@ -71,78 +71,115 @@ The results of the **VALIDATION** test used to flag data quality are appended in
 
 *VALIDATION*. Flag records missing species names.
 
-```{r}
+```{r eval=FALSE}
 check_pf <-
   bdc_scientificName_empty(
   data = database,
   sci_name = "scientificName")
+
+#> bdc_scientificName_empty:
+#> Flagged 5 records.
+#> One column was added to the database.
 ```
 
 #### **2 - Records lacking information on geographic coordinates**
 
 *VALIDATION*. Flag records missing partial or complete information on geographic coordinates.
 
-```{r}
+```{r eval=FALSE}
 check_pf <- bdc_coordinates_empty(
   data = check_pf,
   lat = "decimalLatitude",
   lon = "decimalLongitude")
+
+#> bdc_coordinates_empty:
+#> Flagged 44 records.
+#> One column was added to the database.
 ```
 
 #### **3 - Records with out-of-range coordinates**
 
 *VALIDATION*. This test flags records with out-of-range coordinates: latitude \> 90 or -90; longitude \>180 or -180.
 
-```{r}
+```{r eval=FALSE}
 check_pf <- bdc_coordinates_outOfRange(
   data = check_pf,
   lat = "decimalLatitude",
   lon = "decimalLongitude")
+
+#> bdc_coordinates_outOfRange:
+#> Flagged 1 records.
+#> One column was added to the database.
 ```
 
 #### **4 - Records from doubtful sources**
 
 *VALIDATION*. This test flags records from doubtful source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.
 
-```{r}
+```{r eval=FALSE}
 # Check record sources of your dataset using:
-check_pf %>% dplyr::group_by(basisOfRecord) %>% dplyr::summarise(n = dplyr::n())
+# check_pf %>%
+#   dplyr::group_by(basisOfRecord) %>%
+#   dplyr::summarise(n = dplyr::n())
 
 check_pf <- bdc_basisOfRecords_notStandard(
   data = check_pf,
   basisOfRecord = "basisOfRecord",
   names_to_keep = "all")
 
+#> bdc_basisOfRecords_notStandard:
+#> Flagged 0 of the following specific nature:
+#>  character(0) 
+#> One column was added to the database.
 ```
 
 #### **5 - Getting country names from valid coordinates**
 
 *ENRICHMENT*. Deriving country names for records missing country names.
 
-```{r}
+```{r eval=FALSE}
 check_pf <- bdc_country_from_coordinates(
   data = check_pf,
   lat = "decimalLatitude",
   lon = "decimalLongitude",
   country = "country")
+
+#> bdc_country_from_coordinates:
+#> Country names were added to 27 records.
 ```
 
 #### **6 - Standardizing country names and getting country code information**
 
 *ENRICHMENT*. Country names are standardized against a list of country names in several languages retrieved from Wikipedia.
 
-```{r}
+```{r eval=FALSE}
 check_pf <- bdc_country_standardized(
   data = check_pf,
   country = "country"
 )
+#> Loading auxiliary data: country names from wikipedia
+#> 
+#> Loading auxiliary data: world map and country iso                                                       
+#> 
+#> Standardizing country names
+#> 
+#> country found: Bolivia
+#> country found: Brazil
+#>   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
+#>   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
+#>   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
+#> 
+#> bdc_country_standardized:
+#> The country names of 65 records were standardized.
+#> Two columns ('country_suggested' and 'countryCode') were added to the database.
+
 ```
 
 #### **7 - Correcting latitude and longitude transposed**
 
 *AMENDMENT*. The mismatch between informed country and coordinates can be the result of negative or transposed coordinates. Once detected a mismatch, different coordinate transformations are made to correct the country and coordinates mismatch. Verbatim coordinates are then replaced by the rectified ones in the returned database (a database containing verbatim and corrected coordinates is also created in the "Output" folder). Records near countries coastline are not tested to avoid incur in false positives.
 
-```{r echo=TRUE, eval=F}
+```{r eval=FALSE}
 check_pf <-
   bdc_coordinates_transposed(
     data = check_pf,
@@ -160,7 +197,7 @@ check_pf <-
 
 *VALIDATION*. Records outside one or multiple reference countries; i.e., records in other countries or at an informed distance from the coast (e.g., in the ocean). This last step avoids flagging as invalid records close to country limits (e.g., records of coast or marshland species).
 
-```{r}
+```{r eval=FALSE}
 check_pf <-
   bdc_coordinates_country_inconsistent(
     data = check_pf,
@@ -169,6 +206,12 @@ check_pf <-
     lat = "decimalLatitude",
     dist = 0.1 # in decimal degrees (~11 km at the equator)
   )
+#> dist is assumed to be in decimal degrees (arc_degrees).
+#> although coordinates are longitude/latitude, st_intersection assumes that they are planar
+#> 
+#> bdc_coordinates_country_inconsistent:
+#> Flagged 15 records.
+#> One column was added to the database.
 ```
 
 #### **9 - Identifying records not geo-referenced but containing locality information**
@@ -194,11 +237,16 @@ xyFromLocality <- bdc_coordinates_from_locality(
 
 Here we create a column named ".summary" summing up the results of all **VALIDATION** tests (those starting with "."). This column is **FALSE** when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
 
-```{r}
+```{r eval=FALSE}
 check_pf <- bdc_summary_col(data = check_pf)
+
+#> bdc_summary_col:
+#> Flagged 65 records.
+#> One column was added to the database.
+
 ```
 
-```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 # DT::datatable(
 #   check_pf, class = 'stripe', extensions = 'FixedColumns',
 #   options = list(
@@ -217,10 +265,15 @@ report <-
   bdc_create_report(data = check_pf,
                     database_id = "database_id",
                     workflow_step = "prefilter")
+
+#> bdc_create_report:
+#> Check the report summarizing the results of the prefilter in:
+#> Output/Report
+
 report
 ```
 
-```{r echo=FALSE, eval=TRUE}
+```{r eval=TRUE}
 report <-
   readr::read_csv(
     system.file("extdata/outpus_vignettes/01_Report_Prefilter.csv", package = "bdc"),
@@ -244,15 +297,17 @@ DT::datatable(
 
 Here we create figures (bar plots and maps) to make the interpretation of the results of data quality tests easier. See some examples below.
 
-```{r eval = FALSE}
+```{r eval=FALSE}
 bdc_create_figures(data = check_pf,
                    database_id = "database_id",
                    workflow_step = "prefilter")
+
+#> Check figures in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Figures
 ```
 
 ![Coordinates country inconsistent](https://github.com/brunobrr/bdc/blob/master/vignettes/images/prefilter_.coordinates_country_inconsistent_MAP.png?raw=true)
 
-```{r eval=F, echo=F}
+```{r eval=FALSE, echo=FALSE}
 ![**Transposed coordinates**](images/prefilter_coordinates_transposed_MAP.png){width="20cm"}
 ```
 
@@ -266,11 +321,15 @@ bdc_create_figures(data = check_pf,
 
 We can remove records flagged as erroneous or suspect to obtain a "clean" database. Records missing names or coordinates, outside a region of interest or from distrustful sources are rarely suitable for biodiversity analyses. We can use the column **.summary** to filter valid records passing in all tests (i.e., flagged as "TRUE"). Next, we use the *bdc_filter_out_falgs* function to remove all tests' columns (that is, those starting with ".").
 
-```{r}
+```{r eval=FALSE}
 output <-
   check_pf %>%
   dplyr::filter(.summary == TRUE) %>%
   bdc_filter_out_flags(data = ., col_to_remove = "all")
+
+#> bdc_fiter_out_flags:
+#> The following columns were removed from the database:
+#> .scientificName_empty, .coordinates_empty, .coordinates_outOfRange, .basisOfRecords_notStandard, .coordinates_country_inconsistent, .summary
 ```
 
 #### **Saving the database**

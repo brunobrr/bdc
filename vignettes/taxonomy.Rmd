@@ -103,6 +103,14 @@ Scientific names improperly formatted usually cannot be matched with valid names
 ```{r eval=F, echo=T}
 parse_names <-
   bdc_clean_names(sci_names = database$scientificName)
+
+#> >> Family names prepended to scientific names were flagged and removed from 0 records.
+#> >> Terms denoting taxonomic uncertainty were flagged and removed from 1 records.
+#> >> Other issues, capitalizing the first letter of the generic name, replacing empty names by NA, and removing extra spaces, were flagged and corrected or removed from 0 records.
+#> >> Infraspecific terms were flagged and removed from 1 records.
+#> 
+#> >> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.
+
 ```
 
 ```{r echo=FALSE, eval=TRUE}
@@ -159,6 +167,10 @@ query_names <- bdc_query_names_taxadb(
   ncores              = 2, # number of cores to be used in the parallelization process
   export_accepted     = FALSE # save names linked to multiple accepted names
 )
+
+#> A total of 0 NA was/were found in sci_name.
+#> 
+#> 115 names queried in 3.1 minutes
 ```
 
 ```{r echo=F, eval=T}
@@ -201,6 +213,10 @@ report <-
                     database_id = "database_id",
                     workflow_step = "taxonomy")
 
+#> bdc_create_report:
+#> Check the report summarizing the results of the taxonomy in:
+#> Output/Report
+
 report
 ```
 
@@ -228,7 +244,7 @@ DT::datatable(
 
 It is also possible to filter out records with taxonomic status different from "accepted". Such records may be potentially resolved manually.
 
-```{r}
+```{r eval=FALSE}
 unresolved_names <-
   bdc_filter_out_names(data = database,
                        col_name = "notes",

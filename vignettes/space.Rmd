@@ -56,7 +56,7 @@ database <-
 
 This function identifyes records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
 
-```{r}
+```{r eval=FALSE}
 check_space <-
   bdc_coordinates_precision(
     data = database,
@@ -64,11 +64,14 @@ check_space <-
     lat = "decimalLatitude",
     ndec = c(0, 1) # number of decimals to be tested
   )
+#> bdc_coordinates_precision:
+#> Flagged 2 records
+#> One column was added to the database.
 ```
 
 Next, we will flag common spatial issues using functions of the package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152).
 
-```{r}
+```{r eval=FALSE}
 check_space <-
   CoordinateCleaner::clean_coordinates(
     x =  check_space,
@@ -108,12 +111,52 @@ check_space <-
     urban_ref = NULL,
     value = "spatialvalid" # result of tests are appended in separate columns
   )
+#> Testing coordinate validity
+#> Flagged 0 records.
+#> Testing equal lat/lon
+#> Flagged 0 records.
+#> Testing zero coordinates
+#> Flagged 0 records.
+#> Testing country capitals
+#> Flagged 0 records.
+#> Testing country centroids
+#> Flagged 0 records.
+#> Testing urban areas
+#> Downloading urban areas via rnaturalearth
+#> trying URL 'http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_urban_areas.zip'
+#> Content type 'application/zip' length 452644 bytes (442 KB)
+#> downloaded 442 KB
+#> 
+#> OGR data source with driver: ESRI Shapefile 
+#> Source: "C:\Users\Bruno R. Ribeiro\AppData\Local\Temp\RtmpCo3Lyf", layer: "ne_50m_urban_areas"
+#> with 2143 features
+#> It has 4 fields
+#> Integer64 fields read as strings:  scalerank 
+#> Flagged 6 records.
+#> Testing geographic outliers
+#> Testing GBIF headquarters, flagging records around Copenhagen
+#> Flagged 0 records.
+#> Testing biodiversity institutions
+#> Flagged 0 records.
+#> Testing duplicates
+#> Flagged 0 records.
+#> Flagged 6 of 115 records, EQ = 0.05.
 ```
 
 Here we update the column named **.summary** summing up the results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
 
-```{r}
+```{r eval=FALSE}
 check_space <- bdc_summary_col(data = check_space)
+#> Column '.summary' already exist. It will be updated
+#> 
+#> bdc_summary_col:
+#> Flagged 9 records.
+#> One column was added to the database.
+```
+
+```{r echo=FALSE, eval=TRUE}
+check_space <-
+  readr::read_csv(system.file("extdata/outpus_vignettes/03_space_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -156,6 +199,10 @@ report <-
                     database_id = "database_id",
                     workflow_step = "space")
 
+#> bdc_create_report:
+#> Check the report summarizing the results of the space in:
+#> Output/Report
+
 report
 ```
 
@@ -187,6 +234,8 @@ Here we create figures (bar plots and maps) to make the interpretation of the re
 bdc_create_figures(data = check_space,
                    database_id = "database_id",
                    workflow_step = "space")
+
+#> Check figures in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Figures
 ```
 
 ![Rounded coordenates](https://github.com/brunobrr/bdc/blob/master/vignettes/images/space_.rou_BAR.png?raw=true)
