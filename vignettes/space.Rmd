@@ -116,7 +116,7 @@ Here we update the column named **.summary** summing up the results of all tests
 check_space <- bdc_summary_col(data = check_space)
 ```
 
-```{r echo=F, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 DT::datatable(
   check_space, class = 'stripe', extensions = 'FixedColumns',
   options = list(
@@ -126,7 +126,6 @@ DT::datatable(
     fixedColumns = list(leftColumns = 2)
   )
 )
-# knitr::kable(check_space)
 ```
 
 #### **Mapping spatial errors**
@@ -151,7 +150,7 @@ check_space %>%
 
 Creating a report summarizing the results of all tests.
 
-```{r eval = FALSE}
+```{r eval=FALSE}
 report <-
   bdc_create_report(data = check_space,
                     database_id = "database_id",
@@ -160,11 +159,31 @@ report <-
 report
 ```
 
+```{r echo=FALSE, eval=TRUE}
+report <-
+  readr::read_csv(
+    system.file("extdata/outpus_vignettes/03_Report_space.csv", package = "bdc"),
+    show_col_types = FALSE
+  )
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+DT::datatable(
+  report, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    # pageLength = 5,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
 #### **Figures**
 
 Here we create figures (bar plots and maps) to make the interpretation of the results of data quality tests easier.
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 bdc_create_figures(data = check_space,
                    database_id = "database_id",
                    workflow_step = "space")
@@ -189,7 +208,7 @@ It is possible to remove flagged records (potentially problematic ones) to get a
 
 #### **Saving the database**
 
-```{r}
+```{r eval=FALSE}
 # use qs::qread() to save the database in a compressed format
 check_space %>%
  readr::write_csv(.,

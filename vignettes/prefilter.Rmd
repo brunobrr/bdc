@@ -22,8 +22,8 @@ knitr::opts_chunk$set(
 
 ```{r, echo = FALSE, eval = TRUE, include = FALSE, messages = FALSE}
 library(bdc)
-if (!requireNamespace("rnaturalearthhires", quietly = TRUE))
-  remotes::install_github("ropensci/rnaturalearthhires")
+# if (!requireNamespace("rnaturalearthhires", quietly = TRUE))
+#   remotes::install_github("ropensci/rnaturalearthhires")
 ```
 
 #### **Introduction**
@@ -45,10 +45,13 @@ database <-
 
 ```{r echo=FALSE, eval=TRUE}
 database <-
-  readr::read_csv(system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"), show_col_types = FALSE)
+  readr::read_csv(
+    system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"),
+    show_col_types = FALSE
+  )
 ```
 
-```{r echo=F, message=FALSE, warning=FALSE, eval=T}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   database, class = 'stripe', extensions = 'FixedColumns',
   options = list(
@@ -58,7 +61,6 @@ DT::datatable(
     fixedColumns = list(leftColumns = 2)
   )
 )
-# knitr::kable(database)
 ```
 
 **IMPORTANT**:
@@ -173,14 +175,20 @@ check_pf <-
 
 *ENRICHMENT*. Coordinates can be derived from a detailed description of the locality associated with records in a process called retrospective geo-referencing.
 
-```{r}
+```{r eval=FALSE}
 xyFromLocality <- bdc_coordinates_from_locality(
   data = check_pf,
   locality = "locality",
   lon = "decimalLongitude",
   lat = "decimalLatitude"
 )
+
+#> dc_coordinates_from_locality 
+#> Found 38 records missing or with invalid coordinates but with potentially useful information on locality.
+#>  
+#> Check database in: C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Check/01_coordinates_from_locality.csv
 ```
+
 
 #### **Report**
 
@@ -204,12 +212,32 @@ check_pf <- bdc_summary_col(data = check_pf)
 
 Creating a report summarizing the results of all tests.
 
-```{r}
+```{r eval=FALSE}
 report <-
   bdc_create_report(data = check_pf,
                     database_id = "database_id",
                     workflow_step = "prefilter")
 report
+```
+
+```{r echo=FALSE, eval=TRUE}
+report <-
+  readr::read_csv(
+    system.file("extdata/outpus_vignettes/01_Report_Prefilter.csv", package = "bdc"),
+    show_col_types = FALSE
+  )
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+DT::datatable(
+  report, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    # pageLength = 5,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
 ```
 
 #### **Figures**
@@ -247,7 +275,7 @@ output <-
 
 #### **Saving the database**
 
-```{r}
+```{r eval=FALSE}
 # use qs::qread() to save the database in a compressed format
 output %>%
   readr::write_csv(.,

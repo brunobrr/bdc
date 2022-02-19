@@ -1,0 +1,9 @@
+Description,notes,number_of_records,perc_number_records(*)
+valid: name accepted,accepted,111,96.52
+valid: synonym replaced by an accepted name,accepted | replaceSynonym,1,0.87
+check: ambiguous synonym linked to multiple accepted names,heterotypic synonym,1,0.87
+check: ambiguous synonym linked to multiple accepted names,homotypic synonym,1,0.87
+invalid: name not found in the taxonomic database or a non-interpretable name,notFound,1,0.87
+check: doubtful taxonomic identification,taxo_uncer,1,0.87
+,,,
+"(*) calculated in relation to total number of records, i.e. 115 records",,,

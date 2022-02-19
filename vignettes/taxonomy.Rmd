@@ -81,7 +81,13 @@ database <-
 
 ```{r echo=FALSE, eval=TRUE}
 database <-
-  readr::read_csv(system.file("extdata/outpus_vignettes/01_prefilter_database.csv", package = "bdc"), show_col_types = FALSE)
+  readr::read_csv(
+    system.file(
+      "extdata/outpus_vignettes/01_prefilter_database.csv",
+      package = "bdc"
+    ),
+    show_col_types = FALSE
+  )
 ```
 
 #### **Clean and parse species names**
@@ -101,7 +107,13 @@ parse_names <-
 
 ```{r echo=FALSE, eval=TRUE}
 parse_names <-
-  readr::read_csv(system.file("extdata/example_bdc_clean_names/example_clean_names.csv", package = "bdc"), show_col_types = FALSE)
+  readr::read_csv(
+    system.file(
+      "extdata/outpus_vignettes/example_clean_names.csv",
+      package = "bdc"
+    ),
+    show_col_types = FALSE
+  )
 ```
 
 An example of *bdc_clean_names* output.
@@ -118,7 +130,6 @@ DT::datatable(
     fixedColumns = list(leftColumns = 2)
   )
 )
-#knitr::kable(parse_names)
 ```
 
 **Let's merge the names parsed with the complete database.** As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of the parsing names process in "Output/Check/02_parsed_names.qs".
@@ -168,7 +179,6 @@ DT::datatable(
     fixedColumns = list(leftColumns = 2)
   )
 )
-#knitr::kable(query_names)
 ```
 
 Merging results of the taxonomy harmonization process with the original database. Before that, let's rename the column containing the original scientific names to **"verbatim_scientificName"**. From now on, **"scientificName" corresponds to the verified names** (resulted from the name harmonization process). As the column "original_search" in "query_names" and "names_clean" are equal, only the first will be kept.
@@ -194,6 +204,26 @@ report <-
 report
 ```
 
+```{r echo=FALSE, eval=TRUE}
+report <-
+  readr::read_csv(
+    system.file("extdata/outpus_vignettes/02_Report_taxonomy.csv", package = "bdc"),
+    show_col_types = FALSE
+  )
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+DT::datatable(
+  report, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    # pageLength = 5,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
 #### **Unresolved names**
 
 It is also possible to filter out records with taxonomic status different from "accepted". Such records may be potentially resolved manually.
@@ -208,7 +238,7 @@ unresolved_names <-
 
 Save the table containing unresolved names
 
-```{r}
+```{r eval=FALSE}
 unresolved_names %>%
   readr::write_csv(., here::here("Output/Check/02_unresolved_names.csv"))
 ```
@@ -228,7 +258,7 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 
 #### **Saving the database**
 
-```{r}
+```{r eval=FALSE}
 # use qs::qread() to save the database in a compressed format
 database %>%
   readr::write_csv(.,

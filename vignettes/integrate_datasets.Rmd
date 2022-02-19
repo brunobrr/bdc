@@ -20,6 +20,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r, echo = FALSE, eval = TRUE, include = FALSE, messages = FALSE}
+library(bdc)
+```
+
 #### **Introduction**
 
 The first step of the *bdc* package handles the harmonization of heterogeneous datasets in a standard format simply and efficiently. How is this accomplished? Basically, by replacing the headers of original datasets with standardized terms. To do so, you have to fill out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**.
@@ -45,7 +49,7 @@ Read an example of the **configuration table**. You can download the table by cl
 
 ```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 metadata <-
-  readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv", 
+  readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv",
                               package = "bdc"),
                   show_col_types = FALSE)
 ```
@@ -54,9 +58,7 @@ metadata <-
 
 <br/>
 
-```{r echo = FALSE, message=FALSE, warning=FALSE, eval=T}
-if (!require("DT")) install.packages('DT')
-
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
  metadata, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
  options = list(
@@ -69,7 +71,6 @@ DT::datatable(
    editable = 'cell'
  )
 )
-# knitr::kable(metadata)
 ```
 
 <br/>
@@ -102,7 +103,6 @@ DT::datatable(
    editable = 'cell'
  )
 )
-# knitr::kable(config_description)
 ```
 
 #### **Standardization and integration of datasets**
@@ -110,15 +110,15 @@ DT::datatable(
 Note that the standardized database integrating all dataset is saved in the folder **"Output/Intermediate" as "00_merged_database"**. The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-bdc_standardize_datasets(metadata = metadata, format = "csv", overwrite = T)
+bdc_standardize_datasets(metadata = metadata, format = "csv", overwrite = TRUE)
 ```
 
-```{r message=FALSE, warning=FALSE, echo = TRUE, eval=FALSE}
+```{r message=FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
 database <-
   readr::read_csv(here::here("Output", "Intermediate", "00_merged_database.csv"))
 ```
 
-```{r echo=FALSE,eval=TRUE,message=FALSE, warning=FALSE}
+```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
 database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
@@ -135,5 +135,4 @@ DT::datatable(
     fixedColumns = list(leftColumns = 2)
   )
 )
-# knitr::kable(database)
 ```

@@ -110,6 +110,26 @@ report <-
 report
 ```
 
+```{r echo=FALSE, eval=TRUE}
+report <-
+  readr::read_csv(
+    system.file("extdata/outpus_vignettes/04_Report_time.csv", package = "bdc"),
+    show_col_types = FALSE
+  )
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+DT::datatable(
+  report, class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    # pageLength = 5,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
 #### **Figures**
 
 Here we create a histogram showing the number of records collecting over the years.
@@ -138,7 +158,7 @@ bdc_create_figures(data = check_time,
 
 Save the original database containing the results of all data quality tests appended in separate columns.
 
-```{r}
+```{r eval=FALSE}
 check_time %>%
   readr::write_csv(.,
             here::here("Output", "Intermediate", "04_time_raw_database.csv"))
@@ -157,13 +177,24 @@ output <-
 
 #### **Saving a clean "fitness-for-use" database**
 
-```{r}
+```{r eval=FALSE}
 output %>%
   readr::write_csv(.,
             here::here("Output", "Intermediate", "04_time_clean_database.csv"))
 ```
 
-```{r echo=F, message=FALSE, warning=FALSE}
+```{r echo=FALSE, eval=TRUE}
+output <-
+  readr::read_csv(
+    system.file(
+      "extdata/outpus_vignettes/04_time_clean_database.csv",
+      package = "bdc"
+    ),
+    show_col_types = FALSE
+  )
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 DT::datatable(
   output, class = 'stripe', extensions = 'FixedColumns',
   options = list(
@@ -173,5 +204,4 @@ DT::datatable(
     fixedColumns = list(leftColumns = 2)
   )
 )
-#knitr::kable(output)
 ```
