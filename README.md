@@ -47,7 +47,7 @@ functions **can also be executed independently**.
 
 <br/>
 
-#### ![](https://github.com/brunobrr/bdc/blob/master/inst/extdata/icon_vignettes/Figure1.png?raw=true)
+#### ![](https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/icon_vignettes/Figure1.png)
 
 <br/>
 

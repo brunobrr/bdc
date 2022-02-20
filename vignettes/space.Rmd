@@ -187,7 +187,7 @@ check_space %>%
   )
 ```
 
-![Records flagged as potentially problematic](https://github.com/brunobrr/bdc/blob/master/vignettes/images/map_summary_space_vignette.png?raw=true)
+![Records flagged as potentially problematic](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/map_summary_space_vignette.png)
 
 #### **Report**
 
@@ -238,11 +238,11 @@ bdc_create_figures(data = check_space,
 #> Check figures in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Figures
 ```
 
-![Rounded coordenates](https://github.com/brunobrr/bdc/blob/master/vignettes/images/space_.rou_BAR.png?raw=true)
+![Rounded coordinates](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/space_.rou_BAR.png)
 
-![Records with urban areas](https://github.com/brunobrr/bdc/blob/master/vignettes/images/space_.urb_MAP.png?raw=true)
+![Records within urban areas](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/space_.urb_MAP.png)
 
-![Summary of all tests](https://github.com/brunobrr/bdc/blob/master/vignettes/images/space_summary_all_tests_BAR.png?raw=true)
+![Summary of all tests](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/space_summary_all_tests_BAR.png)
 
 #### **Filtering the database**
 

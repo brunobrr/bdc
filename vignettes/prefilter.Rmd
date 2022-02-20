@@ -305,15 +305,15 @@ bdc_create_figures(data = check_pf,
 #> Check figures in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Figures
 ```
 
-![Coordinates country inconsistent](https://github.com/brunobrr/bdc/blob/master/vignettes/images/prefilter_.coordinates_country_inconsistent_MAP.png?raw=true)
+![Coordinates country inconsistent](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/prefilter_.coordinates_country_inconsistent_MAP.png)
 
 ```{r eval=FALSE, echo=FALSE}
-![**Transposed coordinates**](images/prefilter_coordinates_transposed_MAP.png){width="20cm"}
+![Transposed coordinates](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/prefilter_coordinates_transposed_MAP.png)
 ```
 
 <br/>
 
-![Summary of all tests of the pre-filter step](https://github.com/brunobrr/bdc/blob/master/vignettes/images/prefilter_summary_all_tests_BAR.png?raw=true)
+![Summary of all tests of the pre-filter step](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/prefilter_summary_all_tests_BAR.png)
 
 <br/>
 
