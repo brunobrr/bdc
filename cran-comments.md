@@ -13,7 +13,7 @@ We are pleased to resubmit the bdc package to CRAN. In this new version we fix a
 
 * Avoid functions to create folder/directory in the user' filespace.
 
-Below we copy the results of hrub and GitHub actions checks.
+Below we copy the results of hrub and GitHub actions checks. There were no ERRORs or WARNINGs. 
 
 Cheers,
 
