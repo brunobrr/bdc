@@ -37,7 +37,7 @@ Imports:
     readr,
     rgnparser,
     rnaturalearth,
-    sf,
+    sf (>= 1.0.5),
     stringdist,
     stringi,
     stringr,
