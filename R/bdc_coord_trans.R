@@ -69,9 +69,19 @@ bdc_coord_trans <-
     }
 
     rm(d.list)
-
-    over_list <- over_list[!sapply(over_list <- over_list, is.null)]
+    
+    non_empty_list_test <- !sapply(over_list <- over_list, is.null)
+    
+    if(any(non_empty_list_test)){
+      
+    over_list <- over_list[non_empty_list_test]
     over_list <- dplyr::bind_rows(over_list)
-
+    
+    }else{
+      over_list <- tibble(decimalLongitude = double(),
+                          decimalLatitude = double(),
+                          countryCode = character(),
+                          database_id = character())
+    }
     return(over_list)
   }

@@ -147,7 +147,9 @@ bdc_coordinates_transposed <-
         world_poly_iso = "iso2c",
         border_buffer = border_buffer
       )
-
+    
+    if(!is.null(corrected_coordinates)){
+    
     # Exports a table with verbatim and transposed xy
     corrected_coordinates <-
       corrected_coordinates %>%
@@ -181,4 +183,10 @@ bdc_coordinates_transposed <-
     )
 
     return(data)
+    }else{
+      
+      message("No latitude and longitude were transposed\n")
+      
+      return(data)
+    }
   }

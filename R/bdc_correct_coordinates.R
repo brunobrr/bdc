@@ -129,6 +129,7 @@ bdc_correct_coordinates <-
 
     # elimination from the list those countries without correction
     filt <- sapply(coord_test, function(x) nrow(x) > 0)
+    if(any(filt)){
     coord_test <- coord_test[filt]
 
     # Elimination of those records near to country border (to avoid flip
@@ -175,4 +176,7 @@ bdc_correct_coordinates <-
       )
 
     return(coord_test)
+    }else{
+      NULL
+    }
   }
