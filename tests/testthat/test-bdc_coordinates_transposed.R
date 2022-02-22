@@ -57,3 +57,57 @@ test_that("Misuse of column names", {
     border_buffer = 0.2
   ))
 })
+
+database <-
+  readr::read_csv(
+    system.file("extdata/outpus_vignettes/00_merged_database.csv", package = "bdc"),
+    show_col_types = FALSE
+  )
+
+check_pf <-
+  bdc_scientificName_empty(
+    data = database,
+    sci_name = "scientificName")
+
+check_pf <- bdc_coordinates_empty(
+  data = check_pf,
+  lat = "decimalLatitude",
+  lon = "decimalLongitude")
+
+check_pf <- bdc_coordinates_outOfRange(
+  data = check_pf,
+  lat = "decimalLatitude",
+  lon = "decimalLongitude")
+
+check_pf <- bdc_basisOfRecords_notStandard(
+  data = check_pf,
+  basisOfRecord = "basisOfRecord",
+  names_to_keep = "all")
+
+check_pf <- bdc_country_from_coordinates(
+  data = check_pf,
+  lat = "decimalLatitude",
+  lon = "decimalLongitude",
+  country = "country")
+
+check_pf <- bdc_country_standardized(
+  data = check_pf,
+  country = "country"
+)
+
+
+test_that("test one country without coordinate correction", {
+  res <- bdc_coordinates_transposed(
+    data = check_pf,
+    id = "database_id",
+    sci_names = "scientificName",
+    lat = "decimalLatitude",
+    lon = "decimalLongitude",
+    country = "country_suggested",
+    countryCode = "countryCode",
+    border_buffer = 0.2
+  ) # in decimal degrees
+  
+  expect_equal(dim(res), dim(check_pf))
+})
+
