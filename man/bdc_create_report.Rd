@@ -4,7 +4,12 @@
 \alias{bdc_create_report}
 \title{Create a report summarizing the results of data quality tests}
 \usage{
-bdc_create_report(data, database_id = "database_id", workflow_step)
+bdc_create_report(
+  data,
+  database_id = "database_id",
+  workflow_step,
+  save_report = FALSE
+)
 }
 \arguments{
 \item{data}{data.frame. Containing a unique identifier for each record and
@@ -15,6 +20,9 @@ identifier.Default = "database_id".}
 
 \item{workflow_step}{character string containing the following
 options("prefilter", "taxonomy", "space" or "time").}
+
+\item{save_report}{logical. Should the report be saved for further
+inspection? Default = FALSE.}
 }
 \value{
 A data.frame containing a report summarizing the results of data
@@ -42,7 +50,8 @@ x <- data.frame(
 bdc_create_report(
   data = x,
   database_id = "database_id",
-  workflow_step = "prefilter"
+  workflow_step = "prefilter",
+  save_report = FALSE
 )
 }
 

@@ -105,7 +105,8 @@ Creating a report summarizing the results of all tests of the `bdc` package.
 report <-
   bdc_create_report(data = check_time,
                     database_id = "database_id",
-                    workflow_step = "time")
+                    workflow_step = "time",
+                    save_report = FALSE)
 
 #> bdc_create_report:
 #> Check the report summarizing the results of the time in:

@@ -197,7 +197,8 @@ Creating a report summarizing the results of all tests.
 report <-
   bdc_create_report(data = check_space,
                     database_id = "database_id",
-                    workflow_step = "space")
+                    workflow_step = "space",
+                    save_report)
 
 #> bdc_create_report:
 #> Check the report summarizing the results of the space in:

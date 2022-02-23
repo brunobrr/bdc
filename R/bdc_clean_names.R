@@ -124,8 +124,7 @@ bdc_clean_names <- function(sci_names, save_outputs = FALSE) {
   df_join <- dplyr::full_join(names_raw, parse_names, by = "scientificName")
 
   if (save_outputs == TRUE) {
-    dir <- here::here("Output", "Check")
-    fs::dir_create(dir)
+    bdc_create_dir()
     
     # Save the results of the parsing names process
     readr::write_csv(df_join, 

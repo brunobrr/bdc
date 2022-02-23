@@ -4,7 +4,7 @@
 \alias{bdc_clean_names}
 \title{Clean and parse scientific names}
 \usage{
-bdc_clean_names(sci_names)
+bdc_clean_names(sci_names, save_outputs = FALSE)
 }
 \arguments{
 \item{sci_names}{character string. Containing scientific names.}

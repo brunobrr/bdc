@@ -213,7 +213,8 @@ The report is based on the **column notes** containing the results of the name h
 report <-
   bdc_create_report(data = database,
                     database_id = "database_id",
-                    workflow_step = "taxonomy")
+                    workflow_step = "taxonomy",
+                    save_report = FALSE)
 
 #> bdc_create_report:
 #> Check the report summarizing the results of the taxonomy in:
