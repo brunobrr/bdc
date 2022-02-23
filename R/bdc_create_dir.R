@@ -1,26 +1,17 @@
-#' Create directories for saving the outputs of the bdc workflow
+#' Internal function. Create directories for saving the outputs of the bdc package
 #'
-#' Creates directories for saving the outputs of BDC workflow, which including
-#' databases, figures, reports, and databases that need to be checked.
+#' Creates directories for saving the outputs of bdc package, namely
+#' checks, figures, reports, and databases.
 #'
 #' @importFrom fs dir_create
 #' @importFrom here here
 #'
 #' @return None
 #'
-#' @export
-#'
 #' @details:
-#' Check below the folder structure created by `bdc_create_dir()`.
-#'
-#' ```
-#' Output
-#'   |-- Check
-#'   |-- Figures
-#'   |-- Intermediate
-#'   `-- Report
-#'
-#' ```
+#' Function used to created four folder for saving results of some functions.
+#' @noRd
+
 #' @examples
 #' \dontrun{
 #' bdc_create_dir()

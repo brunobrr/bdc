@@ -1,6 +1,8 @@
-#' Internal function. Filter species information from local stored taxonomic databases
+#' Internal function. Filter species information from local stored taxonomic
+#' databases
 #'
-#' This function filters, by exact match, species information from taxonomic database.
+#' This function filters, by exact match, species information from taxonomic
+#' database.
 #'
 #' @param sci_name character vector. Containing scientific names.
 #' @param db character vector. Local taxonomic database, eg. "gbif".
@@ -13,7 +15,6 @@
 #' database and returns the matched information
 #' as a data.frame in Darwin Core format. Unmatched species return NA values for
 #' all taxonomic information.
-#'
 #'
 #' @return  This function returns a data.frame in Darwin Core format with the
 #' taxonomic information for the queried species.
@@ -29,46 +30,50 @@ bdc_filter_name <-
     taxonID <- NULL
     # x <- tolower(sci_name)
     x <- sci_name
-
+    
     db_tbl <-
       dplyr::mutate(
         taxadb::taxa_tbl(db,
-          schema = "dwc", db_version,
-          taxadb::td_connect()
-        ),
+                         schema = "dwc", db_version,
+                         taxadb::td_connect()),
         input = !!dplyr::sym("scientificName")
       )
-
+    
     species_tab <- tibble::tibble(input = x, sort = seq_along(x))
-
+    
     out <-
-      dplyr::collect(dplyr::right_join(db_tbl, species_tab, by = "input", copy = TRUE))
-
-
+      dplyr::collect(dplyr::right_join(db_tbl, species_tab, 
+                                       by = "input", copy = TRUE))
+    
+    
     return(dplyr::relocate(out, sort, .before = taxonID))
   }
 
-#' Internal function. Filter species information from local stored taxonomic databases
+#' Internal function. Filter species information from local stored taxonomic
+#' databases
 #'
-#' This function filters, by exact match, species information from taxonomic database based on a taxonomic code.
+#' This function filters, by exact match, species information from taxonomic
+#' database based on a taxonomic code.
 #'
 #' @param id character vector. Containing taxonomic code.
 #' @param db character vector. Local taxonomic database, eg. "gbif".
-#' @param db_version character vector. The year of database version, eg. "2022". The default is the latest version.
+#' @param db_version character vector. The year of database version, eg. "2022".
+#' The default is the latest version.
 #'
 #' @details
 #'
-#' The function looks for an exact match of taxonomic code in the local stored database and returns the matched information
-#' as a data.frame in Darwin Core format. Unmatched ids return NA values for all taxonomic information.
+#' The function looks for an exact match of taxonomic code in the local stored
+#' database and returns the matched information as a data.frame in Darwin Core
+#' format. Unmatched ids return NA values for all taxonomic information.
 #'
-#'
-#' @return  This function returns a data.frame in Darwin Core format with the taxonomic information for the queried ids.
+#' @return  This function returns a data.frame in Darwin Core format with the
+#' taxonomic information for the queried ids.
 #' @importFrom dplyr mutate collect right_join relocate sym
 #' @importFrom taxadb td_connect
 #' @importFrom tibble tibble
 #'
 #' @noRd
-#'
+#' 
 bdc_filter_id <-
   function(id, db, db_version = taxadb:::latest_version()) {
     taxonID <- NULL
@@ -84,7 +89,8 @@ bdc_filter_id <-
     species_tab <- tibble::tibble(input = id, sort = seq_along(id))
 
     out <-
-      dplyr::collect(dplyr::right_join(db_tbl, species_tab, by = "input", copy = TRUE))
+      dplyr::collect(dplyr::right_join(db_tbl, species_tab, 
+                                       by = "input", copy = TRUE))
 
     return(dplyr::relocate(out, sort, .after = taxonID))
   }
