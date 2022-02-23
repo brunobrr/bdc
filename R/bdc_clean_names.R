@@ -23,24 +23,24 @@ setup_gnparser <- function() {
   } else if (is_linux() && !bin_on_path() && !bin_exec()) {
     ensure_config(normalizePath("~/bin/gnparser"), ":", user_path)
   }
-
-  ## return(Sys.getenv("PATH"))
 }
 
 #' Clean and parse scientific names
 #'
 #' This function is composed of a series of name-checking routines for cleaning
-#' and parsing scientific names. It removes 1) family names of
-#' animals or plants pre-pended to species names, 2) qualifiers denoting the
-#' uncertain or provisional status of taxonomic identification (e.g., confer,
-#' species, affinis), and 3) infraspecific terms, for example, variety (var.),
-#' subspecies (subsp), forma (f.), and their spelling variations. It also
-#' includes applications to 4) standardize names, i.e., capitalize only the
-#' first letter of the genus name and remove extra whitespaces), and 5) parse
-#' names, i.e., separate author, date, annotations from taxon name.
+#' and parsing scientific names; i.e., unify writing style. It removes 1) family
+#' names of animals or plants pre-pended to species names, 2) qualifiers
+#' denoting the uncertain or provisional status of taxonomic identification
+#' (e.g., confer, species, affinis), and 3) infraspecific terms, for example,
+#' variety (var.), subspecies (subsp), forma (f.), and their spelling
+#' variations. It also includes applications to 4) standardize names, i.e.,
+#' capitalize only the first letter of the genus name and remove extra
+#' whitespaces), and 5) parse names, i.e., separate author, date, annotations
+#' from taxon name.
 #'
 #' @family taxonomy
 #' @param sci_names character string. Containing scientific names.
+#' @param save_outputs logical. Should the outputs be saved? Default = FALSE.
 #'
 #' @details Terms denoting uncertainty or provisional status of taxonomic
 #' identification as well as infraspecific terms were obtained from Sigoviniet
@@ -48,22 +48,27 @@ setup_gnparser <- function() {
 #' parse process can be found in
 #' \href{https://github.com/gnames/gnparser}{gnparser}.
 #'
-#' @return A five-column data.frame including 'scientificName' (original names
-#' supplied), '.uncer_terms' (indicates the presence of taxonomic uncertainty
-#' terms), '.infraesp_names' (indicates the presence of infraspecific terms),
-#' 'name_clean' (scientific names resulting from the cleaning and parsing
-#' processes), and 'quality (an index indicating the quality of parsing
-#' process. It ranges from 0 to 4, being 1 no problem detected, 4 serious
-#' problems detected; a value of 0 indicates no interpretable name that was
-#' not parsed). Also, a data.frame containing all tests of the cleaning names
-#' process and the results of the parsing names process is saved in
+#' @return A five-column data.frame including 
+#' * scientificName: original names supplied)
+#' * .uncer_terms: indicates the presence of taxonomic uncertainty terms
+#' * .infraesp_names: indicates the presence of infraspecific terms
+#' * name_clean: scientific names resulting from the cleaning and parsing
+#' processes
+#' * quality: an index indicating the quality of parsing process. It
+#' ranges from 0 to 4, being 1 no problem detected, 4 serious problems detected;
+#' a value of 0 indicates no interpretable name that was not parsed).
+#'
+#' If save_outputs == TRUE, a data.frame containing all tests of the cleaning
+#' names process and the results of the parsing names process is saved in
 #' "Output/Check/02_parse_names.csv".
 #'
 #' @importFrom readr read_csv write_csv
-#' @importFrom dplyr rename distinct select mutate_all na_if filter tibble pull bind_cols full_join
+#' @importFrom dplyr rename distinct select mutate_all na_if filter tibble pull
+#' bind_cols full_join
 #' @importFrom here here
 #' @importFrom rgnparser gn_parse_tidy
-#' @importFrom stringr str_squish str_count str_remove_all regex str_detect str_which str_replace_all str_to_lower
+#' @importFrom stringr str_squish str_count str_remove_all regex str_detect 
+#' str_which str_replace_all str_to_lower
 #' @importFrom tibble as_tibble
 #' @importFrom stringi stri_trans_general
 #'
@@ -78,9 +83,9 @@ setup_gnparser <- function() {
 #'   "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby"
 #' )
 #'
-#' bdc_clean_names(scientificName)
+#' bdc_clean_names(scientificName, save_outputs = FALSE)
 #' }
-bdc_clean_names <- function(sci_names) {
+bdc_clean_names <- function(sci_names, save_outputs = FALSE) {
   value <- scientificName <- X1 <- value <- . <- temp <- canonicalfull <- NULL
   cardinality <- quality <- verbatim <- id <- . <- .uncer_terms <- . <- NULL
   .infraesp_names <- names_clean <- NULL
@@ -107,9 +112,6 @@ bdc_clean_names <- function(sci_names) {
     dplyr::mutate_all(dplyr::na_if, "") %>% # change empty names to NA
     dplyr::filter(!is.na(scientificName)) # remove NAs
 
-
-
-
   # Parse names
   parse_names <-
     bdc_rem_family_names(data = names, sci_names = "scientificName") %>%
@@ -121,10 +123,22 @@ bdc_clean_names <- function(sci_names) {
   # Join results to data
   df_join <- dplyr::full_join(names_raw, parse_names, by = "scientificName")
 
-  # Save the results of the parsing names process
-  readr::write_csv(df_join, here::here("Output", "Check", "02_parsed_names.csv"))
-
-  # Save a "clean" database
+  if (save_outputs == TRUE) {
+    dir <- here::here("Output", "Check")
+    fs::dir_create(dir)
+    
+    # Save the results of the parsing names process
+    readr::write_csv(df_join, 
+                     here::here("Output", "Check", "02_parsed_names.csv"))
+    
+    message(
+      paste(
+        ">> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.\n"
+      )
+    )
+  }
+  
+  # Return a "clean" database
   df_join <-
     df_join %>%
     dplyr::select(
@@ -138,16 +152,14 @@ bdc_clean_names <- function(sci_names) {
   return(df_join)
 }
 
+
+# Function for capitalizing only first letter -----------------------------
 firstup <- function(x) {
   substr(x, 1, 1) <- toupper(substr(x, 1, 1))
   x
 }
 
-# Family names ------------------------------------------------------------
-# Uncertainty terms -------------------------------------------------------
-# Flag, identify and remove terms denoting uncertainty or provisional status
-# of a taxonomic identification
-
+# Family names -----------------------------------------------------------
 bdc_rem_family_names <- function(data, sci_names) {
   X1 <- NULL
 
@@ -159,12 +171,6 @@ bdc_rem_family_names <- function(data, sci_names) {
     readr::read_csv(col_names = F, show_col_types = FALSE) %>%
     dplyr::tibble() %>%
     dplyr::pull(X1)
-
-  # taxadb::taxa_tbl("gbif") %>%
-  # dplyr::filter(kingdom == "Animalia") %>%
-  # dplyr::select(family) %>%
-  # dplyr::distinct() %>%
-  # dplyr::pull(family)
 
   # Raw scientific names
   sci_names_raw <- data[[sci_names]] %>% stringr::str_squish()
@@ -253,6 +259,9 @@ bdc_rem_family_names <- function(data, sci_names) {
   return(df_final)
 }
 
+# Uncertainty terms -------------------------------------------------------
+# Flag, identify and remove terms denoting uncertainty or provisional status
+# of a taxonomic identification
 bdc_rem_taxo_unc <- function(data, sci_names) {
   value <- NULL
   spp_names <- data[[sci_names]] %>% stringr::str_squish()
@@ -725,7 +734,6 @@ bdc_rem_taxo_unc <- function(data, sci_names) {
 # Other issues ------------------------------------------------------------
 # Capitalizes genus name and strings in which all words are capitalized;
 # substitute empty cells with NA
-
 bdc_rem_other_issues <- function(data, sci_names) {
   . <- NULL
   # Raw scientific names
@@ -939,12 +947,6 @@ bdc_gnparser <- function(data, sci_names) {
     dplyr::full_join(data_temp, gnparser, by = "temp") %>%
     dplyr::distinct(id, .keep_all = T) %>%
     dplyr::select(-c(id, temp))
-
-  message(
-    paste(
-      ">> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.\n"
-    )
-  )
 
   return(df)
 }

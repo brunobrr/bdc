@@ -8,29 +8,37 @@ bdc_clean_names(sci_names)
 }
 \arguments{
 \item{sci_names}{character string. Containing scientific names.}
+
+\item{save_outputs}{logical. Should the outputs be saved? Default = FALSE.}
 }
 \value{
-A five-column data.frame including 'scientificName' (original names
-supplied), '.uncer_terms' (indicates the presence of taxonomic uncertainty
-terms), '.infraesp_names' (indicates the presence of infraspecific terms),
-'name_clean' (scientific names resulting from the cleaning and parsing
-processes), and 'quality (an index indicating the quality of parsing
-process. It ranges from 0 to 4, being 1 no problem detected, 4 serious
-problems detected; a value of 0 indicates no interpretable name that was
-not parsed). Also, a data.frame containing all tests of the cleaning names
-process and the results of the parsing names process is saved in
+A five-column data.frame including
+\itemize{
+\item scientificName: original names supplied)
+\item .uncer_terms: indicates the presence of taxonomic uncertainty terms
+\item .infraesp_names: indicates the presence of infraspecific terms
+\item name_clean: scientific names resulting from the cleaning and parsing
+processes
+\item quality: an index indicating the quality of parsing process. It
+ranges from 0 to 4, being 1 no problem detected, 4 serious problems detected;
+a value of 0 indicates no interpretable name that was not parsed).
+}
+
+If save_outputs == TRUE, a data.frame containing all tests of the cleaning
+names process and the results of the parsing names process is saved in
 "Output/Check/02_parse_names.csv".
 }
 \description{
 This function is composed of a series of name-checking routines for cleaning
-and parsing scientific names. It removes 1) family names of
-animals or plants pre-pended to species names, 2) qualifiers denoting the
-uncertain or provisional status of taxonomic identification (e.g., confer,
-species, affinis), and 3) infraspecific terms, for example, variety (var.),
-subspecies (subsp), forma (f.), and their spelling variations. It also
-includes applications to 4) standardize names, i.e., capitalize only the
-first letter of the genus name and remove extra whitespaces), and 5) parse
-names, i.e., separate author, date, annotations from taxon name.
+and parsing scientific names; i.e., unify writing style. It removes 1) family
+names of animals or plants pre-pended to species names, 2) qualifiers
+denoting the uncertain or provisional status of taxonomic identification
+(e.g., confer, species, affinis), and 3) infraspecific terms, for example,
+variety (var.), subspecies (subsp), forma (f.), and their spelling
+variations. It also includes applications to 4) standardize names, i.e.,
+capitalize only the first letter of the genus name and remove extra
+whitespaces), and 5) parse names, i.e., separate author, date, annotations
+from taxon name.
 }
 \details{
 Terms denoting uncertainty or provisional status of taxonomic
@@ -48,11 +56,12 @@ scientificName <- c(
   "LEGUMINOSAE Senna aff. organensis (Glaz. ex Harms) H.S.Irwin & Barneby"
 )
 
-bdc_clean_names(scientificName)
+bdc_clean_names(scientificName, save_outputs = FALSE)
 }
 }
 \seealso{
 Other taxonomy: 
-\code{\link{bdc_filter_out_names}()}
+\code{\link{bdc_filter_out_names}()},
+\code{\link{bdc_query_names_taxadb}()}
 }
 \concept{taxonomy}

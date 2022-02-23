@@ -66,6 +66,7 @@ bdc_filter_out_names(
 }
 \seealso{
 Other taxonomy: 
-\code{\link{bdc_clean_names}()}
+\code{\link{bdc_clean_names}()},
+\code{\link{bdc_query_names_taxadb}()}
 }
 \concept{taxonomy}

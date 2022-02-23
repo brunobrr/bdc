@@ -38,29 +38,29 @@ The functions used to harmonize names (*bdc_clean_name* and *bdc_query_names_tax
 
 The taxonomic harmonization is based on one taxonomic database chosen by the user. *taxadb* makes available the following taxonomic sources:
 
-+-----------------+-----------------------------------------------------------+
-| Abbreviation    | Taxonomic database                                        |
-+=================+===========================================================+
-| col             | Catalogue of Life                                         |
-+-----------------+-----------------------------------------------------------+
-| fb              | FishBase                                                  |
-+-----------------+-----------------------------------------------------------+
-| itis            | Integrated Taxonomic Information System                   |
-+-----------------+-----------------------------------------------------------+
-| iucn            | International Union for Conservation of Nature's Red List |
-+-----------------+-----------------------------------------------------------+
-| gbif            | Global Biodiversity Information Facility                  |
-+-----------------+-----------------------------------------------------------+
-| ncbi            | National Center for Biotechnology Information             |
-+-----------------+-----------------------------------------------------------+
-| ott             | OpenTree Taxonomy                                         |
-+-----------------+-----------------------------------------------------------+
-| tpl             | The Plant List                                            |
-+-----------------+-----------------------------------------------------------+
-| slb             | SeaLifeBase                                               |
-+-----------------+-----------------------------------------------------------+
-| wd              | Wikidata                                                  |
-+-----------------+-----------------------------------------------------------+
++---------------+-----------------------------------------------------------+
+| Abbreviation  | Taxonomic database                                        |
++===============+===========================================================+
+| col           | Catalogue of Life                                         |
++---------------+-----------------------------------------------------------+
+| fb            | FishBase                                                  |
++---------------+-----------------------------------------------------------+
+| itis          | Integrated Taxonomic Information System                   |
++---------------+-----------------------------------------------------------+
+| iucn          | International Union for Conservation of Nature's Red List |
++---------------+-----------------------------------------------------------+
+| gbif          | Global Biodiversity Information Facility                  |
++---------------+-----------------------------------------------------------+
+| ncbi          | National Center for Biotechnology Information             |
++---------------+-----------------------------------------------------------+
+| ott           | OpenTree Taxonomy                                         |
++---------------+-----------------------------------------------------------+
+| tpl           | The Plant List                                            |
++---------------+-----------------------------------------------------------+
+| slb           | SeaLifeBase                                               |
++---------------+-----------------------------------------------------------+
+| wd            | Wikidata                                                  |
++---------------+-----------------------------------------------------------+
 
 **IMPORTANT:**
 
@@ -102,7 +102,7 @@ Scientific names improperly formatted usually cannot be matched with valid names
 
 ```{r eval=F, echo=T}
 parse_names <-
-  bdc_clean_names(sci_names = database$scientificName)
+  bdc_clean_names(sci_names = database$scientificName, save_outputs = FALSE)
 
 #> >> Family names prepended to scientific names were flagged and removed from 0 records.
 #> >> Terms denoting taxonomic uncertainty were flagged and removed from 1 records.

@@ -1,14 +1,11 @@
-#' Matching scientific names against local stored taxonomic databases
+#' Harmonizing taxon names against local stored taxonomic databases
 #'
-#' Standardization of scientific names by correcting spelling errors and
-#' converting nomenclatural synonyms to currently accepted names. Names are
-#' standardized based on one out of ten taxonomic authorities (i.e., backbones)
-#' available in the taxadb package. Spelling errors are corrected using a fuzzy
-#' match algorithm based on a match distance defined by the user. The name
-#' standardization quality can be accessed in the column "notes" placed in the
-#' table resulting from the name standardization process.
+# Harmonization of scientific names from several taxonomic groups against
+# taxonomic databases locally stored through the application of exact and
+# partial matching algorithms he results of the name harmonization process can
+# be accessed in the column “notes”.
 #'
-#'
+#' @family taxonomy
 #' @param sci_name character string. Containing scientific names to be queried.
 #' @param replace_synonyms logical. Should synonyms be replaced by accepted
 #' names? Default = TRUE.
@@ -18,8 +15,8 @@
 #' acceptable orthographical distance between searched and candidate names.
 #' Names with matching distance value lower threshold informed are returned as
 #' NA. Default = 0.9.
-#' @param db character string. The name of the taxonomic authority database to
-#' be used in the taxonomic standardization process. Default = "gbif".
+#' @param db character string. The name of the taxonomic database to
+#' be used in harmonizing taxon names. Default = "gbif".
 #' Use "all" to install all available taxonomic databases automatically.
 #' @param rank_name character string. Taxonomic rank name (e.g. "Plantae",
 #' "Animalia", "Aves", "Carnivora". Default = NULL.
@@ -29,8 +26,8 @@
 #' @param parallel logical. Should a parallelization process be used?
 #' Default=FALSE
 #' @param ncores numeric. The number of cores to run in parallel.
-#' @param export_accepted logical. Determines if a table containing all records
-#' with names linked to multiple accepted names must be saved for further
+#' @param export_accepted logical. Should a table containing records
+#' with names linked to multiple accepted names saved for further
 #' inspection. Default = FALSE.
 #' @details
 #'
@@ -55,11 +52,11 @@
 #'
 #' **Creation of a local taxonomic database**
 #'
-#' This is a one-time setup used to download, extract, and import one or all
-#' (n=10)  taxonomic databases specified in the argument "db". The downloading
-#' process may take a few minutes depending on your connection and database
-#' size. By default, the "gbif" database following a Darwin Core schema is
-#' installed. (see ?taxadb::td_create for details).
+#' This is a one-time setup used to download, extract, and import the taxonomic
+#' databases specified in the argument "db". The downloading process may take a
+#' few minutes depending on your connection and database size. By default, the
+#' "gbif" database following a Darwin Core schema is installed. (see
+#' ?taxadb::td_create for details).
 #'
 #' **Taxonomic harmonization**
 #'
@@ -116,9 +113,9 @@
 #'
 #' **Report**
 #'
-#' The name standardization processes' quality can be accessed in the column
-#' "notes" placed in the table resulting from the name standardization process.
-#' The column "notes" contains assertions on the name standardization process
+#' The name harmonization processes' quality can be accessed in the column
+#' "notes" placed in the table resulting from the name harmonization process.
+#' The column "notes" contains assertions on the name harmonization process
 #' based on Carvalho (2017). The notes can be grouped in two categories:
 #' accepted names and those with a taxonomic issue or warning, needing further
 #' inspections. Accepted names can be returned as "accepted" (valid accepted
@@ -164,7 +161,7 @@
 #'     "Hymenophyllum polyanthos"
 #'   )
 #'
-#'   names_standardization <-
+#'   names_harmonization <-
 #'     bdc_query_names_taxadb(
 #'       sci_name,
 #'       replace_synonyms = TRUE,
@@ -281,7 +278,7 @@ bdc_query_names_taxadb <-
     ncol_tab_taxadb <- ncol(found_name)
 
     # Add three new columns (notes, original_search, and distance).
-    # notes: save results of the taxonomic standardization process;
+    # notes: save results of the taxonomic harmonization process;
     # original_search: contains original names queried;
     # distance: values of orthographic distance between original and suggested
     # names (calculated when fuzzy match is applied).
