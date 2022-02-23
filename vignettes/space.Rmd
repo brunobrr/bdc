@@ -26,13 +26,13 @@ library(bdc)
 
 #### **Introduction**
 
-We used one test of the *bdc* and other tests of the *R* package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to capitals, provinces, and country centroids, coordinates in urban areas, around biodiversity institutions, or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
+To avoid reinventing the wheel, the proposed data-cleaning workflow uses functions for other existing packages. In this module, we used one test of the *bdc* and other tests of the *R* package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to capitals, provinces, and country centroids, coordinates in urban areas, around biodiversity institutions, or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
 
 Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter module of the package (more details [here](https://brunobrr.github.io/bdc/articles/prefilter.html)).
 
-IMPORTANT:
+**IMPORTANT**:
 
-The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE ( ✅ ok ) or FALSE (❌check carefully ).
+The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (✅ ok) or FALSE (❌check carefully).
 
 #### **Installation**
 
@@ -143,7 +143,7 @@ check_space <-
 #> Flagged 6 of 115 records, EQ = 0.05.
 ```
 
-Here we update the column named **.summary** summing up the results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (i.e. potentially invalid or suspect record).
+Here we update the column named **.summary** summing up the results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (❌check carefully; potentially invalid or suspect record).
 
 ```{r eval=FALSE}
 check_space <- bdc_summary_col(data = check_space)

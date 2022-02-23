@@ -118,22 +118,23 @@
 <h4 id="overview">
 <strong>Overview</strong><a class="anchor" aria-label="anchor" href="#overview"></a>
 </h4>
-<p>Handle biodiversity data from several different sources is not an easy task. Here, we present the <strong>B</strong>iodiversity <strong>D</strong>ata <strong>C</strong>leaning (bdc), an R package to address quality issues and improve the fitness-for-use of a dataset. <em>bdc</em> contains functions to harmonize and integrate data from different sources following common standards and protocols and implements various tests and tools to flag, document, clean, and correct taxonomic, spatial, and temporal data.</p>
-<p>Compared to other available R packages, the main strengths of the bdc package are that it brings together available tools – and a series of new ones – to assess the quality of different dimensions of biodiversity data into a single and flexible toolkit. The functions can be applied to a multitude of taxonomic groups, datasets (including regional or local repositories), countries, or worldwide.</p>
+<p>Handle biodiversity data from several different sources is not an easy task. Here, we present the <strong>B</strong>iodiversity <strong>D</strong>ata <strong>C</strong>leaning (<em>bdc</em>), an R package to address quality issues and improve the fitness-for-use of biodiversiy datasets. <em>bdc</em> contains functions to harmonize and integrate data from different sources following common standards and protocols, and implements various tests and tools to flag, document, clean, and correct taxonomic, spatial, and temporal data.</p>
+<p>Compared to other available R packages, the main strengths of the <em>bdc</em> package are that it brings together available tools – and a series of new ones – to assess the quality of different dimensions of biodiversity data into a single and flexible toolkit. The functions can be applied to a multitude of taxonomic groups, datasets (including regional or local repositories), countries, or worldwide.</p>
 </div>
 <div class="section level4">
 <h4 id="structure-of-bdc">
-<strong>Structure of bdc</strong><a class="anchor" aria-label="anchor" href="#structure-of-bdc"></a>
+<strong>Structure of <em>bdc</em></strong><a class="anchor" aria-label="anchor" href="#structure-of-bdc"></a>
 </h4>
 <p>The <em>bdc</em> toolkit is organized in thematic modules related to different biodiversity dimensions.</p>
 <hr>
+<blockquote>
 <p><span class="emoji" data-emoji="warning">⚠️</span> The modules illustrated, and <strong>functions</strong> within, <strong>were linked to form</strong> a proposed reproducible <strong>workflow</strong> (see <a href="https://brunobrr.github.io/bdc/"><strong>vignettes</strong></a>). However, all functions <strong>can also be executed independently</strong>.</p>
+</blockquote>
 <hr>
-<p><br></p>
 </div>
 <div class="section level4">
 <h4 id="section">
-<img src="https://github.com/brunobrr/bdc/blob/master/inst/extdata/icon_vignettes/Figure1.png?raw=true"><a class="anchor" aria-label="anchor" href="#section"></a>
+<img src="https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/icon_vignettes/Figure1.png"><a class="anchor" aria-label="anchor" href="#section"></a>
 </h4>
 <p><br></p>
 </div>
@@ -177,14 +178,14 @@
 <h4 id="3-taxonomy">3. <a href="https://brunobrr.github.io/bdc/articles/taxonomy.html"><strong>Taxonomy</strong></a>
 <a class="anchor" aria-label="anchor" href="#3-taxonomy"></a>
 </h4>
-<p>Cleaning, parsing, and standardization of scientific names against multiple taxonomic references.</p>
+<p>Cleaning, parsing, and harmonization of scientific names against multiple taxonomic references.</p>
 <ul>
 <li>
 <code><a href="reference/bdc_clean_names.html">bdc_clean_names()</a></code> Name-checking routines to clean and split a taxonomic name into its binomial and authority components</li>
 <li>
 <code><a href="reference/bdc_query_names_taxadb.html">bdc_query_names_taxadb()</a></code> Standardization of scientific names by correcting spelling errors and converting nomenclatural synonyms to currently accepted names.</li>
 <li>
-<code><a href="reference/bdc_filter_out_names.html">bdc_filter_out_names()</a></code> This tool is used to filter out records according to their taxonomic status present in the column “notes”. For example, to filter only valid accepted names categorized as “accepted”</li>
+<code><a href="reference/bdc_filter_out_names.html">bdc_filter_out_names()</a></code> Function used to filter out records according to their taxonomic status present in the column “notes”. For example, to filter only valid accepted names categorized as “accepted”</li>
 </ul>
 </div>
 <div class="section level4">
@@ -196,7 +197,7 @@
 <li>
 <code><a href="reference/bdc_coordinates_precision.html">bdc_coordinates_precision()</a></code> Identification of records with a coordinate precision below a specified number of decimal places</li>
 <li>
-<code>clean_coordinates()</code> (From CoordinateCleaner package and part of the data-cleaning workflow). Identification of potentially problematic geographic coordinates based on geographic gazetteers and metadata. Include tests for flagging records: around country capitals or country or province centroids, duplicated, with equal coordinates, around biodiversity institutions, within urban areas, plain zeros in the coordinates, and suspect geographic outliers</li>
+<code>clean_coordinates()</code> (From <em>CoordinateCleaner</em> package and part of the data-cleaning workflow). Identification of potentially problematic geographic coordinates based on geographic gazetteers and metadata. Include tests for flagging records: around country capitals or country or province centroids, duplicated, with equal coordinates, around biodiversity institutions, within urban areas, plain zeros in the coordinates, and suspect geographic outliers</li>
 </ul>
 </div>
 <div class="section level4">
@@ -217,7 +218,7 @@
 <h4 id="other-functions">
 <a href="https://brunobrr.github.io/bdc/reference/index.html"><strong>Other functions</strong></a><a class="anchor" aria-label="anchor" href="#other-functions"></a>
 </h4>
-<p>Aim to facilitate the <strong>documentation, visualization, and interpretation</strong> of results of data quality tests the package contains functions for documenting the results of the data-cleaning tests, including functions for saving i) records needing further inspection, ii) databases containing the results of each step, iii) figures, and iv) data-quality reports.</p>
+<p>Aim to facilitate the <strong>documentation, visualization, and interpretation</strong> of results of data quality tests the package contains functions for documenting the results of the data-cleaning tests, including functions for saving i) records needing further inspection, ii) figures, and iii) data-quality reports.</p>
 <ul>
 <li>
 <code><a href="reference/bdc_create_report.html">bdc_create_report()</a></code> Creation of data-quality reports documenting the results of data-quality tests and the taxonomic harmonization process</li>
@@ -253,7 +254,9 @@
 <h4 id="getting-help">
 <strong>Getting help</strong><a class="anchor" aria-label="anchor" href="#getting-help"></a>
 </h4>
+<blockquote>
 <p>If you encounter a clear bug, please file an issue <a href="https://github.com/brunobrr/bdc/issues" class="external-link"><strong>here</strong></a>. For questions or suggestion, please send us a email (<a href="mailto:ribeiro.brr@gmail.com" class="email">ribeiro.brr@gmail.com</a>).</p>
+</blockquote>
 </div>
 </div>
 </div>

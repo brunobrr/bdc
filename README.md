@@ -17,35 +17,33 @@ coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg)](htt
 #### **Overview**
 
 Handle biodiversity data from several different sources is not an easy
-task. Here, we present the **B**iodiversity **D**ata **C**leaning (bdc),
-an R package to address quality issues and improve the fitness-for-use
-of a dataset. *bdc* contains functions to harmonize and integrate data
-from different sources following common standards and protocols and
-implements various tests and tools to flag, document, clean, and correct
-taxonomic, spatial, and temporal data.
+task. Here, we present the **B**iodiversity **D**ata **C**leaning
+(*bdc*), an R package to address quality issues and improve the
+fitness-for-use of biodiversiy datasets. *bdc* contains functions to
+harmonize and integrate data from different sources following common
+standards and protocols, and implements various tests and tools to flag,
+document, clean, and correct taxonomic, spatial, and temporal data.
 
-Compared to other available R packages, the main strengths of the bdc
+Compared to other available R packages, the main strengths of the *bdc*
 package are that it brings together available tools – and a series of
 new ones – to assess the quality of different dimensions of biodiversity
 data into a single and flexible toolkit. The functions can be applied to
 a multitude of taxonomic groups, datasets (including regional or local
 repositories), countries, or worldwide.
 
-#### **Structure of bdc**
+#### **Structure of *bdc***
 
 The *bdc* toolkit is organized in thematic modules related to different
 biodiversity dimensions.
 
 ------------------------------------------------------------------------
 
-:warning: The modules illustrated, and **functions** within, **were
-linked to form** a proposed reproducible **workflow** (see
-[**vignettes**](https://brunobrr.github.io/bdc/)). However, all
-functions **can also be executed independently**.
+> :warning: The modules illustrated, and **functions** within, **were
+> linked to form** a proposed reproducible **workflow** (see
+> [**vignettes**](https://brunobrr.github.io/bdc/)). However, all
+> functions **can also be executed independently**.
 
 ------------------------------------------------------------------------
-
-<br/>
 
 #### ![](https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/icon_vignettes/Figure1.png)
 
@@ -91,7 +89,7 @@ standardize country names).
 
 #### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/taxonomy.html)
 
-Cleaning, parsing, and standardization of scientific names against
+Cleaning, parsing, and harmonization of scientific names against
 multiple taxonomic references.
 
 -   `bdc_clean_names()` Name-checking routines to clean and split a
@@ -99,7 +97,7 @@ multiple taxonomic references.
 -   `bdc_query_names_taxadb()` Standardization of scientific names by
     correcting spelling errors and converting nomenclatural synonyms to
     currently accepted names.
--   `bdc_filter_out_names()` This tool is used to filter out records
+-   `bdc_filter_out_names()` Function used to filter out records
     according to their taxonomic status present in the column “notes”.
     For example, to filter only valid accepted names categorized as
     “accepted”
@@ -111,7 +109,7 @@ coordinates.
 
 -   `bdc_coordinates_precision()` Identification of records with a
     coordinate precision below a specified number of decimal places
--   `clean_coordinates()` (From CoordinateCleaner package and part of
+-   `clean_coordinates()` (From *CoordinateCleaner* package and part of
     the data-cleaning workflow). Identification of potentially
     problematic geographic coordinates based on geographic gazetteers
     and metadata. Include tests for flagging records: around country
@@ -140,8 +138,7 @@ Aim to facilitate the **documentation, visualization, and
 interpretation** of results of data quality tests the package contains
 functions for documenting the results of the data-cleaning tests,
 including functions for saving i) records needing further inspection,
-ii) databases containing the results of each step, iii) figures, and iv)
-data-quality reports.
+ii) figures, and iii) data-quality reports.
 
 -   `bdc_create_report()` Creation of data-quality reports documenting
     the results of data-quality tests and the taxonomic harmonization
@@ -180,6 +177,6 @@ detailed explanation on each module.
 
 #### **Getting help**
 
-If you encounter a clear bug, please file an issue
-[**here**](https://github.com/brunobrr/bdc/issues). For questions or
-suggestion, please send us a email (ribeiro.brr@gmail.com).
+> If you encounter a clear bug, please file an issue
+> [**here**](https://github.com/brunobrr/bdc/issues). For questions or
+> suggestion, please send us a email (ribeiro.brr@gmail.com).

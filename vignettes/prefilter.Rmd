@@ -232,7 +232,6 @@ xyFromLocality <- bdc_coordinates_from_locality(
 #> Check database in: C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Check/01_coordinates_from_locality.csv
 ```
 
-
 #### **Report**
 
 Here we create a column named ".summary" summing up the results of all **VALIDATION** tests (those starting with "."). This column is **FALSE** when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).

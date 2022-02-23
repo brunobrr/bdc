@@ -34,7 +34,7 @@ Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
 #### **Reading the database**
 
-Read the database created in the [**Space**](https://brunobrr.github.io/bdc/articles/space.html) module of the `bdc` package. It is also possible to read any datasets containing the \*\*required\*\* fields to run the function (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)).
+Read the database created in the [**Space**](https://brunobrr.github.io/bdc/articles/space.html) module of the *bdc* package. It is also possible to read any datasets containing the \*\*required\*\* fields to run the function (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)).
 
 ```{r echo=TRUE, eval=FALSE}
 database <-
@@ -58,9 +58,9 @@ DT::datatable(
 )
 ```
 
-IMPORTANT:
+**IMPORTANT**:
 
-The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE ( ✅ ok ) or FALSE (❌check carefully ).
+The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (✅ ok) or FALSE (❌check carefully).
 
 #### **1 - Records lacking event date information**
 
@@ -93,7 +93,7 @@ check_time <-
 
 #### **Report**
 
-Here we create a column named **.summary** summing up the results of all **VALIDATION** tests. This column is **FALSE** when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
+Here we create a column named **.summary** summing up the results of all **VALIDATION** tests. This column is **FALSE** when a record is flagged as FALSE in any data quality test (❌check carefully. potentially invalid or suspect record).
 
 ```{r}
 check_time <- bdc_summary_col(data = check_time)
@@ -136,7 +136,7 @@ DT::datatable(
 
 #### **Figures**
 
-Here we create a histogram showing the number of records collecting over the years.
+Here we create figures (bar plots and histrogram) to make the interpretation of the results of data quality tests easier.
 
 ```{r eval=FALSE}
 bdc_create_figures(data = check_time,
