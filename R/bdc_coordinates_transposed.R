@@ -23,6 +23,8 @@
 #' created a buffer around the country. Records within a given country and at
 #' a specified distance from the border will be not be corrected.
 #' Default = 0.2 (~22 km at the equator).
+#' @param save_outputs logical. Should a table containing transposed coordenates
+#' saved for further inspection? Default = FALSE.
 #
 #' @details This test identifies transposed coordinates resulted from mismatches
 #' between the country informed for a record and coordinates. Transposed
@@ -31,8 +33,8 @@
 #' performed to correct country/coordinates mismatches. Importantly, verbatim
 #' coordinates are replaced by the corrected ones in the returned database. A
 #' database containing verbatim and corrected coordinates is created in
-#' "Output/Check/01_coordinates_transposed.csv". The columns "country" and
-#' "countryCode" can be retrieved by using the function
+#' "Output/Check/01_coordinates_transposed.csv" if save_outputs == TRUE. The
+#' columns "country" and "countryCode" can be retrieved by using the function
 #' \code{\link{bdc_country_standardized}}.
 #'
 #' @return A data.frame containing the column "coordinates_transposed"
@@ -73,8 +75,9 @@
 #'   lon = "decimalLongitude",
 #'   country = "country_suggested",
 #'   countryCode = "countryCode",
-#'   border_buffer = 0.2
-#' ) # in decimal degrees
+#'   border_buffer = 0.2,
+#'   save_outputs = FALSE 
+#' ) 
 #' }
 #'
 bdc_coordinates_transposed <-
@@ -85,7 +88,8 @@ bdc_coordinates_transposed <-
            lon = "decimalLongitude",
            country = "country",
            countryCode = "countryCode",
-           border_buffer = 0.2) {
+           border_buffer = 0.2,
+           save_outputs = FALSE) {
     decimalLatitude <- decimalLongitude <- database_id <- scientificName <- NULL
 
     suppressWarnings({
@@ -95,19 +99,19 @@ bdc_coordinates_transposed <-
     })
 
     data <- dplyr::tibble(data)
-    minimum_colnames <- c(id, sci_names, lat, lon, country, countryCode)
-
+    minimum_colnames <-
+      c(id, sci_names, lat, lon, country, countryCode)
+    
     if (length(minimum_colnames) < 6) {
       stop("Fill all function arguments: id, sci_names, lon, lat, and
          country")
     }
-
+    
     if (!all(minimum_colnames %in% colnames(data))) {
       stop(
         "These columns names were not found in your database: ",
         paste(minimum_colnames[!minimum_colnames %in% colnames(data)],
-          collapse = ", "
-        ),
+              collapse = ", "),
         call. = FALSE
       )
     }
@@ -148,45 +152,49 @@ bdc_coordinates_transposed <-
         border_buffer = border_buffer
       )
     
-    if(!is.null(corrected_coordinates)){
-    
-    # Exports a table with verbatim and transposed xy
-    corrected_coordinates <-
-      corrected_coordinates %>%
-      dplyr::select(database_id, scientificName, dplyr::contains("decimal"))
-
-    bdc_create_dir()
-
-    corrected_coordinates %>%
-      readr::write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
-
-    # finding the position of records with lon/lat modified
-    w <-
-      which(data %>% dplyr::pull(database_id) %in% (corrected_coordinates %>% dplyr::pull(database_id)))
-
-    data[w, "decimalLatitude"] <-
-      corrected_coordinates[, "decimalLatitude_modified"]
-
-    data[w, "decimalLongitude"] <-
-      corrected_coordinates[, "decimalLongitude_modified"]
-
-    # Flags transposed coordinates
-    data$coordinates_transposed <- TRUE
-    data[w, "coordinates_transposed"] <- FALSE
-
-    message(
-      paste(
-        "\nbdc_coordinates_transposed:\nCorrected",
-        sum(data$coordinates_transposed == FALSE),
-        "records.\nOne columns were added to the database.\nCheck database containing coordinates corrected in:\nOutput/Check/01_coordinates_transposed.csv\n"
+    if (!is.null(corrected_coordinates)) {
+      
+      # Exports a table with verbatim and transposed xy
+      corrected_coordinates <-
+        corrected_coordinates %>%
+        dplyr::select(database_id, scientificName, dplyr::contains("decimal"))
+      
+      if (save_outputs) {
+        bdc_create_dir()
+        corrected_coordinates %>%
+          readr::write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
+        message(
+          paste(
+            "\nCheck database containing coordinates corrected in:\nOutput/Check/01_coordinates_transposed.csv"
+          )
+        )
+      }
+      
+      # finding the position of records with lon/lat modified
+      w <-
+        which(data %>% dplyr::pull(database_id) %in% (corrected_coordinates %>% dplyr::pull(database_id)))
+      
+      data[w, "decimalLatitude"] <-
+        corrected_coordinates[, "decimalLatitude_modified"]
+      
+      data[w, "decimalLongitude"] <-
+        corrected_coordinates[, "decimalLongitude_modified"]
+      
+      # Flags transposed coordinates
+      data$coordinates_transposed <- TRUE
+      data[w, "coordinates_transposed"] <- FALSE
+      
+      message(
+        paste(
+          "\nbdc_coordinates_transposed:\nCorrected",
+          sum(data$coordinates_transposed == FALSE),
+          "records.\nOne columns were added to the database.\n"
+        )
       )
-    )
-
-    return(data)
-    }else{
       
+      return(data)
+    } else{
       message("No latitude and longitude were transposed\n")
-      
       return(data)
     }
   }

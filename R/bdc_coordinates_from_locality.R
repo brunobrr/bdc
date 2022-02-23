@@ -13,6 +13,8 @@
 #' WGS84. Default = "decimalLongitude".
 #' @param locality character string. The column name with locality information.
 #' Default = "locality".
+#' @param save_outputs logical. Should a table containing transposed coordenates
+#' saved for further inspection? Default = FALSE.
 #'
 #' @details According to DarwinCore terminology, locality refers to "the
 #' specific description of the place" where an organism was recorded.
@@ -30,16 +32,26 @@
 #'
 #' @examples
 #' \dontrun{
-#' lat <- c(NA, NA, "")
-#' lon <- c("", NA, NA)
-#' x <- data.frame(lat = lat, lon = lon, locality = c("Brazil", "Argentina", "Chile"))
-#' bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon", locality = "locality")
+#' x <- data.frame(
+#' lat = c(NA, NA, ""), 
+#' lon = c("", NA, NA), 
+#' locality = c("PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE", 
+#'              "Parque Estadual da Serra de Caldas Novas, Goias, Brazil", 
+#'              "Parque Nacional Iguazu"))
+#' 
+#' bdc_coordinates_from_locality(
+#' data = x, 
+#' lat = "lat", 
+#' lon = "lon", 
+#' locality = "locality", 
+#' save_outputs = FALSE)
 #' }
 bdc_coordinates_from_locality <-
   function(data,
            lat = "decimalLatitude",
            lon = "decimalLongitude",
-           locality = "locality") {
+           locality = "locality",
+           save_outputs = FALSE) {
     .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
 
     suppressMessages({
@@ -62,8 +74,6 @@ bdc_coordinates_from_locality <-
       }
     })
 
-    bdc_create_dir()
-
     df <-
       data %>%
       dplyr::mutate(locality = stringr::str_squish(.data[[locality]])) %>%
@@ -74,13 +84,23 @@ bdc_coordinates_from_locality <-
           .coordinates_outOfRange == FALSE
       )
 
-
     df <-
       df %>%
       dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
 
-    save <- here::here("Output/Check/01_coordinates_from_locality.csv")
-    df %>% readr::write_csv(save)
+    if (save_outputs) {
+      bdc_create_dir()
+
+      df %>% readr::write_csv("Output/Check/01_coordinates_from_locality.csv")
+      
+      message(
+        paste(
+          "\nbdc_coordinates_from_locality",
+          "\nCheck database in:",
+          "Output/Check/01_coordinates_from_locality.csv"
+        )
+      )
+    }
 
     message(
       paste(
@@ -89,7 +109,7 @@ bdc_coordinates_from_locality <-
         nrow(df),
         "records missing or with invalid coordinates but with potentially useful information on locality.\n",
         "\nCheck database in:",
-        save
+        "Output/Check/01_coordinates_from_locality.csv"
       )
     )
 

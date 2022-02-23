@@ -189,7 +189,8 @@ check_pf <-
     lon = "decimalLongitude",
     country = "country_suggested",
     countryCode = "countryCode",
-    border_buffer = 0.2 # in decimal degrees (~22 km at the equator)
+    border_buffer = 0.2, # in decimal degrees (~22 km at the equator)
+    save_outputs = FALSE
   )
 ```
 
@@ -223,7 +224,8 @@ xyFromLocality <- bdc_coordinates_from_locality(
   data = check_pf,
   locality = "locality",
   lon = "decimalLongitude",
-  lat = "decimalLatitude"
+  lat = "decimalLatitude",
+  save_outputs = FALSE
 )
 
 #> dc_coordinates_from_locality 
