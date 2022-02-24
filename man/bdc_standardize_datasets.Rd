@@ -4,18 +4,26 @@
 \alias{bdc_standardize_datasets}
 \title{Standardize datasets columns based on metadata}
 \usage{
-bdc_standardize_datasets(metadata, format = "csv", overwrite = FALSE)
+bdc_standardize_datasets(
+  metadata,
+  format = "csv",
+  overwrite = FALSE,
+  save_database = FALSE
+)
 }
 \arguments{
 \item{metadata}{A data frame with metadata containing information about the
 name, path, and columns of the original data set which need to be
 renamed. See @details.}
 
-\item{format}{a character setting the output file type. Option available are "csv"
-and "qs" (recommenced for saving large datasets). Default == "csv".}
+\item{format}{a character setting the output file type. Option available are
+"csv" and "qs" (recommenced to save large datasets). Default == "csv".}
 
-\item{overwrite}{A logical vector indicating whether the final merged
-dataset should be overwritten. The default is FALSE.}
+\item{overwrite}{A logical vector indicating whether the final merged dataset
+should be overwritten. The default is FALSE.}
+
+\item{save_database}{logical. Should the standardized database be locally
+saved? Default = FALSE.}
 }
 \description{
 This function's main goal is to merge and standardize different
@@ -25,7 +33,7 @@ provided by the user.
 }
 \details{
 \code{bdc_standardize_datasets()} facilitate the standardization of datasets with
-different column names converting them into a new dataset following the
+different column names by converting them into a new dataset following the
 Darwin Core terminology. The standardization process relies on a metadata
 file containing the name, path, and columns that need to be renamed. The
 metadata file can be constructed using built-in functions (e.g.,
@@ -33,14 +41,15 @@ metadata file can be constructed using built-in functions (e.g.,
 into R. Regardless of the method chosen, the data frame with metadata needs
 to contain the following column names (this is a list of required column
 names; for a comprehensive list of column names following Darwin Core
-terminology, see \link{here}(https://dwc.tdwg.org/terms/:
+terminology, see
+\href{https://brunobrr.github.io/bdc/articles/integrate_datasets.html}{here}
 \itemize{
 \item \code{datasetName}: A short name identifying the dataset (e.g., GBIF)
-\item \code{fileName}: The relative path containing the name of the input dataset (e.g.,
-Input_files/GBIF.csv)
+\item \code{fileName}: The relative path containing the name of the input dataset
+(e.g., Input_files/GBIF.csv)
 \item \code{scientificName}: Name of the column in the original database presenting
-the scientific names of the taxon with or without authorship information,
-depending on the format of the source dataset (e.g., Myrcia acuminata)
+the taxon scientific names with or without authorship information, depending
+on the format of the source dataset (e.g., Myrcia acuminata)
 \item \code{decimalLatitude}: Name of the column in the original database presenting
 the geographic latitude in decimal degrees (e.g., -6.370833)
 \item \code{decimalLongitude}: Name of the column in the original database presenting
@@ -49,6 +58,14 @@ the geographic longitude in decimal degrees (e.g., -3.25500)
 }
 \examples{
 \dontrun{
-metadata <- system.file("extdata", "Config/DatabaseInfo.csv", package = "bdc")
+metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv",
+            package = "bdc"))
+            
+db_standardized <- 
+bdc_standardize_datasets(
+  metadata = metadata, 
+  format = "csv", 
+  overwrite = TRUE, 
+  save_database = FALSE)
 }
 }

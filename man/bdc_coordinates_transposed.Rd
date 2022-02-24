@@ -12,7 +12,8 @@ bdc_coordinates_transposed(
   lon = "decimalLongitude",
   country = "country",
   countryCode = "countryCode",
-  border_buffer = 0.2
+  border_buffer = 0.2,
+  save_outputs = FALSE
 )
 }
 \arguments{
@@ -42,6 +43,9 @@ code.}
 created a buffer around the country. Records within a given country and at
 a specified distance from the border will be not be corrected.
 Default = 0.2 (~22 km at the equator).}
+
+\item{save_outputs}{logical. Should a table containing transposed coordenates
+saved for further inspection? Default = FALSE.}
 }
 \value{
 A data.frame containing the column "coordinates_transposed"
@@ -61,8 +65,8 @@ countries or in the sea). Different coordinate transformations are
 performed to correct country/coordinates mismatches. Importantly, verbatim
 coordinates are replaced by the corrected ones in the returned database. A
 database containing verbatim and corrected coordinates is created in
-"Output/Check/01_coordinates_transposed.csv". The columns "country" and
-"countryCode" can be retrieved by using the function
+"Output/Check/01_coordinates_transposed.csv" if save_outputs == TRUE. The
+columns "country" and "countryCode" can be retrieved by using the function
 \code{\link{bdc_country_standardized}}.
 }
 \examples{
@@ -92,8 +96,9 @@ bdc_coordinates_transposed(
   lon = "decimalLongitude",
   country = "country_suggested",
   countryCode = "countryCode",
-  border_buffer = 0.2
-) # in decimal degrees
+  border_buffer = 0.2,
+  save_outputs = FALSE 
+) 
 }
 
 }

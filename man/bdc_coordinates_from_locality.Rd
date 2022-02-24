@@ -9,7 +9,8 @@ bdc_coordinates_from_locality(
   data,
   lat = "decimalLatitude",
   lon = "decimalLongitude",
-  locality = "locality"
+  locality = "locality",
+  save_outputs = FALSE
 )
 }
 \arguments{
@@ -24,6 +25,9 @@ WGS84. Default = "decimalLongitude".}
 
 \item{locality}{character string. The column name with locality information.
 Default = "locality".}
+
+\item{save_outputs}{logical. Should a table containing transposed coordenates
+saved for further inspection? Default = FALSE.}
 }
 \value{
 A data.frame containing records missing or with invalid coordinates
@@ -40,10 +44,19 @@ specific description of the place" where an organism was recorded.
 }
 \examples{
 \dontrun{
-lat <- c(NA, NA, "")
-lon <- c("", NA, NA)
-x <- data.frame(lat = lat, lon = lon, locality = c("Brazil", "Argentina", "Chile"))
-bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon", locality = "locality")
+x <- data.frame(
+lat = c(NA, NA, ""), 
+lon = c("", NA, NA), 
+locality = c("PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE", 
+             "Parque Estadual da Serra de Caldas Novas, Goias, Brazil", 
+             "Parque Nacional Iguazu"))
+
+bdc_coordinates_from_locality(
+data = x, 
+lat = "lat", 
+lon = "lon", 
+locality = "locality", 
+save_outputs = FALSE)
 }
 }
 \seealso{

@@ -2,33 +2,42 @@
 % Please edit documentation in R/bdc_create_figures.R
 \name{bdc_create_figures}
 \alias{bdc_create_figures}
-\title{Create figures reporting the results of the BDC workflow}
+\title{Create figures reporting the results of the bdc package}
 \usage{
-bdc_create_figures(data, database_id = "database_id", workflow_step = NULL)
+bdc_create_figures(
+  data,
+  database_id = "database_id",
+  workflow_step = NULL,
+  save_figures = FALSE
+)
 }
 \arguments{
 \item{data}{data.frame. Containing the results of data quality tests; that
 is, columns starting wit ".".}
 
 \item{database_id}{character string. The column name with a unique record
-identifier.
-Default = "database_id".}
+identifier. Default = "database_id".}
 
 \item{workflow_step}{character string. Name of the workflow step. Options
 available are "prefilter", "space", and "time".}
+
+\item{save_figures}{logical. Should the figures be saved for further
+inspection? Default = FALSE.}
 }
 \value{
-Figures in a png format.
+List containing figures showing the results of data quality test
+implemented in one module of bdc. When save_figures = TRUE, figures are
+also saved locally in a png format.
 }
 \description{
-Creates figures (i.e., bar plots and maps) reporting the results of data
-quality tests implemented in the BDC workflow.
+Creates figures (i.e., bar plots, maps, and histograms) reporting the results
+of data quality tests implemented in the bdc package.
 }
 \details{
 This function creates figures based on the results of data quality
 tests implemented. A pre-defined list of test names is used for creating
 figures depending on the name of the workflow step informed. Figures are
-saved in "Output/Figures".
+saved in "Output/Figures" if save_figures == TRUE.
 }
 \examples{
 \dontrun{
@@ -51,8 +60,10 @@ x <- data.frame(
 )
 
 bdc_create_figures(
-  data = x, database_id = "database_id",
-  workflow_step = "prefilter"
+  data = x, 
+  database_id = "database_id",
+  workflow_step = "prefilter",
+  save_figures = FALSE
 )
 }
 }
