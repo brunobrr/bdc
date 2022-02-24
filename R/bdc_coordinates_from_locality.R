@@ -20,8 +20,8 @@
 #' specific description of the place" where an organism was recorded.
 #'
 #' @return A data.frame containing records missing or with invalid coordinates
-#' but with potentially useful locality information is saved in
-#' Output/Check/01_coordinates_from_locality.csv.
+#'   but with potentially useful locality information. When save_outputs = FALSE
+#'   the data.frame is saved in Output/Check/01_coordinates_from_locality.csv
 #'
 #' @importFrom readr write_csv
 #' @importFrom dplyr filter select
@@ -31,13 +31,12 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' x <- data.frame(
-#' lat = c(NA, NA, ""), 
-#' lon = c("", NA, NA), 
-#' locality = c("PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE", 
-#'              "Parque Estadual da Serra de Caldas Novas, Goias, Brazil", 
-#'              "Parque Nacional Iguazu"))
+#'   lat = c(NA, NA, ""), 
+#'   lon = c("", NA, NA), 
+#'   locality = c("PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE", 
+#'                "Parque Estadual da Serra de Caldas Novas, Goias, Brazil", 
+#'                "Parque Nacional Iguazu"))
 #' 
 #' bdc_coordinates_from_locality(
 #' data = x, 
@@ -45,7 +44,7 @@
 #' lon = "lon", 
 #' locality = "locality", 
 #' save_outputs = FALSE)
-#' }
+#' 
 bdc_coordinates_from_locality <-
   function(data,
            lat = "decimalLatitude",

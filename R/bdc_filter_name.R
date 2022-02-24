@@ -1,9 +1,9 @@
 #' Internal function. Filter species information from local stored taxonomic
 #' databases
 #'
-#' This function filters, by exact match, species information from taxonomic
-#' database.
-#'
+#' This function is used to harmonize scientific names through an exact matching
+#' algorithm.
+#' 
 #' @param sci_name character vector. Containing scientific names.
 #' @param db character vector. Local taxonomic database, eg. "gbif".
 #' @param db_version character vector. The year of database version, eg. "2022".
@@ -23,6 +23,11 @@
 #' @importFrom tibble tibble
 #'
 #' @noRd
+#' 
+#' @examples
+#' \dontrun{
+#'
+#' }
 bdc_filter_name <-
   function(sci_name,
            db,
@@ -52,8 +57,8 @@ bdc_filter_name <-
 #' Internal function. Filter species information from local stored taxonomic
 #' databases
 #'
-#' This function filters, by exact match, species information from taxonomic
-#' database based on a taxonomic code.
+#' This function is used to harmonize scientific names through an exact matching
+#' algorithm based on a taxonomic code (i.e., id).
 #'
 #' @param id character vector. Containing taxonomic code.
 #' @param db character vector. Local taxonomic database, eg. "gbif".
@@ -74,6 +79,10 @@ bdc_filter_name <-
 #'
 #' @noRd
 #' 
+#' @examples
+#' \dontrun{
+#'
+#' }
 bdc_filter_id <-
   function(id, db, db_version = taxadb:::latest_version()) {
     taxonID <- NULL

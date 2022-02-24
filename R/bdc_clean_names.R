@@ -75,7 +75,7 @@ setup_gnparser <- function() {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' scientificName <- c(
 #'   "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
 #'   "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",

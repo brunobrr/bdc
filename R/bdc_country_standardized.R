@@ -24,7 +24,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' country <- c("BOLIVIA", "bolivia", "Brasil", "Brazil", "BREZIL")
 #' x <- data.frame(country)
 #'

@@ -30,16 +30,18 @@
 #'
 #' @importFrom dplyr select mutate filter full_join case_when left_join bind_cols
 #' @importFrom rnaturalearth ne_countries
-#' @importFrom sf sf_use_s2 st_as_sf st_set_crs st_crs st_buffer st_intersects st_intersection
+#' @importFrom sf sf_use_s2 st_as_sf st_set_crs st_crs st_buffer st_intersects
+#' st_intersection
 #'
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
-#' decimalLatitude <- c(19.9358, -13.016667, NA, "")
-#' x <- data.frame(decimalLongitude, decimalLatitude)
-#'
+#' \donttest{
+#' x <- data.frame(
+#'   decimalLongitude = c(-40.6003, -39.6, -20.5243, NA),
+#'   decimalLatitude = c(19.9358, -13.016667, NA, "")
+#'   )
+#'   
 #' bdc_coordinates_country_inconsistent(
 #'   data = x,
 #'   country_name = "Brazil",

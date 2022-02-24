@@ -20,17 +20,17 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' decimalLatitude <- c(19.9358, -13.016667, NA, "")
-#' decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
-#' x <- data.frame(decimalLatitude, decimalLongitude)
+#' x <- data.frame(
+#'   decimalLatitude = c(19.9358, -13.016667, NA, ""),
+#'   decimalLongitude = c(-40.6003, -39.6, -20.5243, NA)
+#' )
 #'
 #' bdc_coordinates_empty(
 #'   data = x,
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude"
 #' )
-#' }
+#' 
 bdc_coordinates_empty <-
   function(data,
            lat = "decimalLatitude",

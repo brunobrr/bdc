@@ -32,7 +32,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' df_notes <-
 #'   data.frame(
 #'     notes = c(
@@ -50,7 +49,7 @@
 #'   col_name = "notes",
 #'   opposite = F
 #' )
-#' }
+#' 
 bdc_filter_out_names <-
   function(data,
            col_name = "notes",

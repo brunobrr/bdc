@@ -49,7 +49,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' id <- c(1, 2, 3, 4)
 #' scientificName <- c(
 #'   "Rhinella major", "Scinax ruber",

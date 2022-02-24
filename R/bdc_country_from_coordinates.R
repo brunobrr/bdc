@@ -30,20 +30,17 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' decimalLatitude <- c(-63.43333, -67.91667, -41.90000, -46.69778)
-#' decimalLongitude <- c(-17.90000, -14.43333, -13.25000, -13.82444)
-#' country <- c("", "NA", NA, "Brazil")
-#'
-#' x <- data.frame(decimalLatitude, decimalLongitude, country)
-#'
+#' x <- data.frame(
+#'   decimalLatitude = c(-22.9834, -39.857030, -17.06811, -46.69778),
+#'   decimalLongitude = c(-69.095, -68.443588, 37.438108, -13.82444),
+#'   country = c("", NA, NA, "Brazil"))
+#' 
 #' bdc_country_from_coordinates(
 #'   data = x,
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude",
 #'   country = "country"
 #' )
-#' }
 #'
 bdc_country_from_coordinates <-
   function(data,

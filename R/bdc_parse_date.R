@@ -19,7 +19,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' collection_date <- c(
 #'   NA, "31/12/2015", "2013-06-13T00:00:00Z", "2013-06-20",
 #'   "", "2013", "10-10-10", "20/05/2031", "1590"
@@ -27,7 +26,7 @@
 #' x <- data.frame(collection_date)
 #'
 #' bdc_parse_date(data = x, col_to_test = "collection_date")
-#' }
+#' 
 bdc_parse_date <-
   function(data,
            col_to_test,

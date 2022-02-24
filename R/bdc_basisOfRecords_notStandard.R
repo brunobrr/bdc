@@ -32,17 +32,16 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' x <- data.frame(basisOfRecord = c(
 #'   "FOSSIL_SPECIMEN", "UNKNOWN",
 #'   "RON", NA, "Specimen", "PRESERVED_SPECIMEN"
 #' ))
 #'
 #' bdc_basisOfRecords_notStandard(
-#'   data = x, basisOfRecord = "basisOfRecord",
+#'   data = x, 
+#'   basisOfRecord = "basisOfRecord",
 #'   names_to_keep = "all"
 #' )
-#' }
 bdc_basisOfRecords_notStandard <-
   function(data,
            basisOfRecord = "basisOfRecord",
