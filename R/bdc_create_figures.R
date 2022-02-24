@@ -1,27 +1,34 @@
-#' Create figures reporting the results of the BDC workflow
+#' Create figures reporting the results of the bdc package
 #'
-#' Creates figures (i.e., bar plots and maps) reporting the results of data
-#' quality tests implemented in the BDC workflow.
+#' Creates figures (i.e., bar plots, maps, and histograms) reporting the results
+#' of data quality tests implemented in the bdc package.
 #'
 #' @param data data.frame. Containing the results of data quality tests; that
 #' is, columns starting wit ".".
 #' @param workflow_step character string. Name of the workflow step. Options
 #' available are "prefilter", "space", and "time".
 #' @param database_id character string. The column name with a unique record
-#' identifier.
-#' Default = "database_id".
+#' identifier. Default = "database_id".
+#' @param save_figures logical. Should the figures be saved for further
+#' inspection? Default = FALSE.
 #'
 #' @details This function creates figures based on the results of data quality
 #' tests implemented. A pre-defined list of test names is used for creating
 #' figures depending on the name of the workflow step informed. Figures are
-#' saved in "Output/Figures".
+#' saved in "Output/Figures" if save_figures == TRUE.
 #'
-#' @return Figures in a png format.
+#' @return List containing figures showing the results of data quality test
+#' implemented in one module of bdc. When save_figures = TRUE, figures are
+#' also saved locally in a png format.
 #'
 #' @importFrom CoordinateCleaner cc_val
 #' @importFrom readr read_csv
-#' @importFrom dplyr summarise n pull mutate group_by intersect filter full_join select mutate_if summarise_all rename
-#' @importFrom ggplot2 theme_minimal theme element_text element_line element_blank unit ggplot aes geom_col coord_flip labs geom_hline scale_y_continuous ggsave theme_void geom_polygon geom_hex coord_quickmap scale_fill_viridis_c geom_histogram
+#' @importFrom dplyr summarise n pull mutate group_by intersect filter full_join
+#' select mutate_if summarise_all rename
+#' @importFrom ggplot2 theme_minimal theme element_text element_line
+#' element_blank unit ggplot aes geom_col coord_flip labs geom_hline
+#' scale_y_continuous ggsave theme_void geom_polygon geom_hex coord_quickmap
+#' scale_fill_viridis_c geom_histogram
 #' @importFrom here here
 #' @importFrom stats reorder
 #' @importFrom tibble as_tibble
@@ -49,14 +56,17 @@
 #' )
 #'
 #' bdc_create_figures(
-#'   data = x, database_id = "database_id",
-#'   workflow_step = "prefilter"
+#'   data = x, 
+#'   database_id = "database_id",
+#'   workflow_step = "prefilter",
+#'   save_figures = FALSE
 #' )
 #' }
 bdc_create_figures <-
   function(data,
            database_id = "database_id",
-           workflow_step = NULL) {
+           workflow_step = NULL, 
+           save_figures = FALSE) {
     . <- .data <- n_flagged <- n_total <- freq <- NULL
     . <- V1 <- Name <- freq <- year <- decimalLongitude <- NULL
     decimalLatitude <- . <- long <- lat <- group <- `NA` <- .summary <- NULL
@@ -190,34 +200,9 @@ bdc_create_figures <-
               size = 1,
               colour = "#333333"
             ) +
-            # ggplot2::geom_label(
-            #   ggplot2::aes(
-            #     x = stats::reorder(database_id, -freq),
-            #     y = freq,
-            #     label = n_flagged
-            #   ),
-            #   hjust = 1,
-            #   vjust = 0.5,
-            #   colour = "white",
-            #   fill = NA,
-            #   label.size = NA,
-            #   # family="Times",
-            #   size = 4,
-            #   fontface = "bold"
-            # ) +
-            ggplot2::scale_y_continuous(expand = c(0, 0), labels = fancy_scientific)
+            ggplot2::scale_y_continuous(expand = c(0, 0), 
+                                        labels = fancy_scientific)
 
-          ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
-            column_to_map, "_", "BAR", ".png",
-            sep = ""
-          ),
-          b,
-          dpi = 300,
-          width = 6,
-          height = 3,
-          units = "cm",
-          scale = 5
-          )
         }
 
       # function to create barplots considering all datasets together
@@ -254,8 +239,6 @@ bdc_create_figures <-
               ))
           }
 
-
-
           b <-
             gg +
             ggplot2::geom_col(colour = "white", fill = "royalblue") +
@@ -267,20 +250,9 @@ bdc_create_figures <-
               size = 1,
               colour = "#333333"
             ) +
-            ggplot2::scale_y_continuous(expand = c(0, 0), labels = fancy_scientific)
+            ggplot2::scale_y_continuous(expand = c(0, 0), 
+                                        labels = fancy_scientific)
 
-          ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
-            column_to_map,
-            "_", "BAR", ".png",
-            sep = ""
-          ),
-          b,
-          dpi = 300,
-          width = 6,
-          height = 3,
-          units = "cm",
-          scale = 5
-          )
         }
 
       # Names of columns available for creating barplot
@@ -330,7 +302,9 @@ bdc_create_figures <-
       w_tranposed <- dplyr::intersect(col_to_tests, "coordinates_transposed")
       w_hist <- hist
 
-
+      # List for saving figures
+      res <- list()
+      
       # Create bar plots
       if (length(w_bar) == 0 & workflow_step %in% c("prefilter", "space")) {
         message("At least one column 'starting with '.' must be provided")
@@ -349,19 +323,32 @@ bdc_create_figures <-
 
         if (nrow(n_record_database) != 1) {
           for (i in 1:length(w_bar)) {
+            bp <- 
             create_barplot_database(
               data = data,
               column_to_map = w_bar[i],
               workflow_step = workflow_step
             )
+            
+            bp_list <- list(bp)
+            names(bp_list) <-  w_bar[i]
+            res <- c(res, bp_list)
           }
         }
-
+        
+        # summary of all tests
+        
+        bp_all <- 
         create_barplot_all_tests(
           data = data,
           column_to_map = "summary_all_tests",
           workflow_step = workflow_step
         )
+        
+        bp_all_list <- list(bp_all)
+        names(bp_all_list) <- "summary_all_tests"
+        res <- c(res, bp_all_list)
+        
       }
 
       # Create maps of invalid vs valid records
@@ -381,7 +368,7 @@ bdc_create_figures <-
         }
 
         # Worldmap
-        m <- rnaturalearth::ne_countries(returnclass = "sp") # rworldmap
+        m <- rnaturalearth::ne_countries(returnclass = "sp")
 
         # new theme
         our_theme2 <-
@@ -391,14 +378,14 @@ bdc_create_figures <-
             panel.grid.major = ggplot2::element_blank(),
             panel.grid.minor = ggplot2::element_blank(),
           )
-
+        
         for (i in 1:length(w_maps)) {
           d <-
             CoordinateCleaner::cc_val(
               data,
               lon = "decimalLongitude",
               lat = "decimalLatitude",
-              verbose = F,
+              verbose = FALSE,
               value = "clean"
             )
 
@@ -425,17 +412,10 @@ bdc_create_figures <-
             ggplot2::labs(fill = "# of Records") +
             ggplot2::scale_fill_viridis_c() +
             our_theme2
-          # ggplot2::theme(legend.position = "left")
-
-
-          ggplot2::ggsave(
-            paste("Output/", "Figures/", workflow_step, "_", w_maps[i], "_",
-              "MAP", ".png",
-              sep = ""
-            ),
-            p,
-            dpi = 300, width = 6, height = 3, units = "cm", scale = 4
-          )
+          
+          p_list <- list(p)
+          names(p_list) <-  w_maps[i]
+          res <- c(res, p_list)
           }
         }
       }
@@ -465,15 +445,12 @@ bdc_create_figures <-
             col_to_map = "royalblue",
             size = 0.7
           )
-        p <- cowplot::plot_grid(p1, p2, nrow = 2)
+        
+        pt <- cowplot::plot_grid(p1, p2, nrow = 2)
 
-        ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
-          "coordinates_transposed", "_", "MAP", ".png",
-          sep = ""
-        ),
-        p,
-        dpi = 300, width = 6, height = 3, units = "cm", scale = 4
-        )
+        pt_list <- list(pt)
+        names(pt_list) <-  "coordinates_transposed"
+        res <- c(res, pt_list)
       }
 
       if (length(w_hist) == 0 & workflow_step == "time") {
@@ -488,7 +465,7 @@ bdc_create_figures <-
         min_year <- min(data$year, na.rm = T)
         max_year <- max(data$year, na.rm = T)
 
-        p <- data %>%
+        t <- data %>%
           ggplot2::ggplot(ggplot2::aes(x = year)) +
           ggplot2::geom_histogram(
             colour = "white",
@@ -502,17 +479,32 @@ bdc_create_figures <-
             colour = "#333333"
           ) +
           ggplot2::scale_y_continuous(labels = fancy_scientific)
-
-        ggplot2::ggsave(
-          paste("Output/", "Figures/", workflow_step, "_", "year", "_",
-            "BAR", ".png",
-            sep = ""
-          ),
-          p,
-          dpi = 300, width = 6, height = 3, units = "cm", scale = 5
-        )
+        
+        t_list <- list(t)
+        names(t_list) <-  "year"
+        res <- c(res, t_list)
+        
       }
     }) # suppresswarning
 
+    if (save_figures){
     message("Check figures in ", here::here("Output", "Figures"))
+      
+      for (i in seq_along(res)){
+        column_to_map <- names(res)[i]
+        ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
+                              column_to_map, "_", "BAR", ".png",
+                              sep = ""
+        ),
+        res[[i]],
+        dpi = 300,
+        width = 6,
+        height = 3,
+        units = "cm",
+        scale = 5
+        )
+      }
+    }
+    
+    return(res)
   }
