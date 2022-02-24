@@ -48,11 +48,12 @@ records within the buffer but in other countries are flagged as invalid
 (FALSE).
 }
 \examples{
-\dontrun{
-decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
-decimalLatitude <- c(19.9358, -13.016667, NA, "")
-x <- data.frame(decimalLongitude, decimalLatitude)
-
+\donttest{
+x <- data.frame(
+  decimalLongitude = c(-40.6003, -39.6, -20.5243, NA),
+  decimalLatitude = c(19.9358, -13.016667, NA, "")
+  )
+  
 bdc_coordinates_country_inconsistent(
   data = x,
   country_name = "Brazil",

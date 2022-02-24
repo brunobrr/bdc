@@ -30,17 +30,17 @@ This function identifies records with out-of-range coordinates (not between
 -90 and 90 for latitude; between -180 and 180 for longitude).
 }
 \examples{
-\dontrun{
-decimalLatitude <- c(-185.111, -43.34, "", -21.8069444)
-decimalLongitude <- c(-45.4, -39.6, -20.5243, -440.9055555)
-x <- data.frame(decimalLatitude, decimalLongitude)
+x <- data.frame(
+  decimalLatitude = c(-185.111, -43.34, "", -21.8069444),
+  decimalLongitude = c(-45.4, -39.6, -20.5243, -440.9055555)
+)
 
 bdc_coordinates_outOfRange(
   data = x,
   lat = "decimalLatitude",
   lon = "decimalLongitude"
 )
-}
+
 }
 \seealso{
 Other prefilter: 

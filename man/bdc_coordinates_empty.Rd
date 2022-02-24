@@ -27,17 +27,17 @@ This test identifies records missing geographic coordinates (i.e.,
 empty or not applicable \link{NA} longitude or latitude)
 }
 \examples{
-\dontrun{
-decimalLatitude <- c(19.9358, -13.016667, NA, "")
-decimalLongitude <- c(-40.6003, -39.6, -20.5243, NA)
-x <- data.frame(decimalLatitude, decimalLongitude)
+x <- data.frame(
+  decimalLatitude = c(19.9358, -13.016667, NA, ""),
+  decimalLongitude = c(-40.6003, -39.6, -20.5243, NA)
+)
 
 bdc_coordinates_empty(
   data = x,
   lat = "decimalLatitude",
   lon = "decimalLongitude"
 )
-}
+
 }
 \seealso{
 Other prefilter: 

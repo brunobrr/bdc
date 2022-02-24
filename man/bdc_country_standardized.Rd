@@ -28,7 +28,7 @@ names remain,  a fuzzy matching algorithm is used to find potential
 candidates for each misspelled countries names.
 }
 \examples{
-\dontrun{
+\donttest{
 country <- c("BOLIVIA", "bolivia", "Brasil", "Brazil", "BREZIL")
 x <- data.frame(country)
 

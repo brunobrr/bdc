@@ -162,6 +162,7 @@ describing different species, have more than one accepted name and cannot be
 resolved. Such cases are flagged and left to be determined by the user.
 }
 \examples{
+\donttest{
 if (interactive()) {
   sci_name <- c(
     "Polystachya estrellensis",
@@ -187,6 +188,7 @@ if (interactive()) {
       ncores = 2,
       export_accepted = FALSE
     )
+}
 }
 }
 \seealso{

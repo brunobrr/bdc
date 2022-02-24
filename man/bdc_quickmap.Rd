@@ -37,7 +37,7 @@ Only records with valid coordinates can be plotted. Records missing
 or containing invalid coordinates are removed prior creating the map.
 }
 \examples{
-\dontrun{
+\donttest{
 decimalLatitude <- c(19.9358, -13.016667, -19.935800)
 decimalLongitude <- c(-40.6003, -39.6, -40.60030)
 .coordinates_out_country <- c(FALSE, TRUE, TRUE)

@@ -24,11 +24,10 @@ If existing, the column ".summary" will be removed and then updated
 considering all test names available in the supplied database.
 }
 \examples{
-\dontrun{
 .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
 .missing_coordinates <- c(TRUE, FALSE, FALSE, TRUE, FALSE)
 x <- data.frame(.missing_names, .missing_coordinates)
 
 bdc_summary_col(data = x)
-}
+
 }

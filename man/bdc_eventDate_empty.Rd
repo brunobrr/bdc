@@ -24,7 +24,6 @@ This test identifies records missing event date information (i.e.,
 empty or not applicable \link{NA}).
 }
 \examples{
-\dontrun{
 collection_date <- c(
   NA, "31/12/2015", "2013-06-13T00:00:00Z", "2013-06-20",
   "", "2013", "0001-01-00"
@@ -32,7 +31,7 @@ collection_date <- c(
 x <- data.frame(collection_date)
 
 bdc_eventDate_empty(data = x, eventDate = "collection_date")
-}
+
 }
 \seealso{
 Other time: 

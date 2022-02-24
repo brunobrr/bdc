@@ -20,25 +20,26 @@ WGS84. Default = "decimalLatitude".}
 \item{lon}{character string. The column with longitude in decimal degrees and
 WGS84. Default = "decimalLongitude".}
 
-\item{ndec}{numeric. The minimum number of decimal places that the coordinates should
+\item{ndec}{numeric. The minimum number of decimal places that the
+coordinates should
 have to be considered valid. Default = 2.}
 }
 \value{
-A data.frame with logical values indicating whether values are
-equal or higher than the specified minimum decimal number (ndec). Coordinates flagged as
-FALSE in .rou column are considered imprecise.
+A data.frame with logical values indicating whether values are equal
+or higher than the specified minimum decimal number (ndec). Coordinates
+flagged as FALSE in .rou column are considered imprecise.
 }
 \description{
-This function is used to flag records with a coordinate precision below a
+This function flags records with a coordinate precision below a
 specified number of decimal places. Coordinates with one, two, or three
 decimal places present a precision of~11.1 km, ~1.1 km, and ~111 m at the
 equator, respectively.
 }
 \examples{
-\dontrun{
-lat <- c(-21.34, 23.567, 16.798, -10.468)
-lon <- c(-55.38, -13.897, 30.8, 90.675)
-x <- data.frame(lat, lon)
+x <- data.frame(
+  lat = c(-21.34, 23.567, 16.798, -10.468),
+  lon = c(-55.38, -13.897, 30.8, 90.675)
+)
 
 bdc_coordinates_precision(
   data = x,
@@ -46,6 +47,6 @@ bdc_coordinates_precision(
   lon = "lon",
   ndec = 3
 )
-}
+
 }
 \concept{space}

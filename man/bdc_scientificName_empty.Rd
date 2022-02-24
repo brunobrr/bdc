@@ -24,10 +24,9 @@ This test identifies records missing scientific names (i.e., empty
 or not applicable \link{NA} names)
 }
 \examples{
-\dontrun{
 x <- data.frame(scientificName = c("Ocotea odorifera", NA, "Panthera onca", ""))
 bdc_scientificName_empty(data = x, sci_names = "scientificName")
-}
+
 }
 \seealso{
 Other prefilter: 

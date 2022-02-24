@@ -44,7 +44,6 @@ customize the list of taxonomic notes to be kept in the argument
 different from names listed in 'taxonomic_status' are returned.
 }
 \examples{
-\dontrun{
 df_notes <-
   data.frame(
     notes = c(
@@ -62,7 +61,7 @@ bdc_filter_out_names(
   col_name = "notes",
   opposite = F
 )
-}
+
 }
 \seealso{
 Other taxonomy: 

@@ -32,7 +32,7 @@ quality assessment.
 Create a report summarizing the results of data quality tests
 }
 \examples{
-\dontrun{
+\donttest{
 database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
 .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
 .missing_coordinates <- c(TRUE, FALSE, FALSE, TRUE, FALSE)
@@ -47,6 +47,7 @@ x <- data.frame(
   .summary
 )
 
+report <- 
 bdc_create_report(
   data = x,
   database_id = "database_id",
