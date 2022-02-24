@@ -2,7 +2,7 @@
 #'
 #' This function searches for a potential match candidate within an orthographic
 #' distance of each misspelled names. Only names within an orthographic distance
-#' specified in 'max_distance' are returned. This function was built based on
+#' specified in 'max_distance' are returned. It was built based on
 #' the 'suggest.name' function of the flora package.
 #'
 #' @param sci_name character string. Scientific name to match a taxonomic
@@ -12,8 +12,7 @@
 #' matching. Values close to 1 indicate that only a few differences between
 #' scientific names and name suggested are allowed. Default = 0.9.
 #' @param provider character string. A database where the valid will be
-#' searched. The options are those provided by the 'taxadb' package. Only "col", "itis",
-#'  "ncbi" and "ott" are currently working.
+#' searched. The options are those provided by the 'taxadb' package.
 #' @param db_version numeric string. A database version (eg. 2002).
 #' @param rank_name character string. Taxonomic rank name (e.g. "Plantae",
 #' "Animalia", "Aves", "Carnivora". Default = NULL.
@@ -52,7 +51,7 @@
 #' @noRd
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' x <- c("Cebus apela", "Puma concolar")
 #' bdc_suggest_names_taxadb(
 #'   x,

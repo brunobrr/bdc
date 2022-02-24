@@ -17,12 +17,13 @@
 #' @details Only records with valid coordinates can be plotted. Records missing
 #' or containing invalid coordinates are removed prior creating the map.
 #'
-#' @importFrom ggplot2 theme_void theme element_blank ggplot labs aes coord_quickmap scale_color_manual
+#' @importFrom ggplot2 theme_void theme element_blank ggplot labs aes
+#' coord_quickmap scale_color_manual
 #' @importFrom dplyr mutate filter select
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' decimalLatitude <- c(19.9358, -13.016667, -19.935800)
 #' decimalLongitude <- c(-40.6003, -39.6, -40.60030)
 #' .coordinates_out_country <- c(FALSE, TRUE, TRUE)

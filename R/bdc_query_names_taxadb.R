@@ -147,6 +147,7 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' if (interactive()) {
 #'   sci_name <- c(
 #'     "Polystachya estrellensis",
@@ -172,6 +173,7 @@
 #'       ncores = 2,
 #'       export_accepted = FALSE
 #'     )
+#' }
 #' }
 bdc_query_names_taxadb <-
   function(sci_name,

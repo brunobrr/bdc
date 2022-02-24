@@ -23,33 +23,44 @@
 #' @return A data.frame containing the column ".year_outOfRange". Compliant
 #' (TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".
 #'
-#' @importFrom dplyr if_else
+#' @importFrom dplyr if_else select rename pull
 #' @importFrom stringr str_extract
 #'
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' collection_date <- c(
-#'   NA, "31/12/2015", "2013-06-13T00:00:00Z", "2013-06-20",
-#'   "", "2013", "0001-01-00"
+#'   NA, "31/12/2029", "2013-06-13T00:00:00Z", "2013-06-20",
+#'   "", "2013", 1650, "0001-01-00"
 #' )
 #' x <- data.frame(collection_date)
 #'
-#' bdc_year_outOfRange(data = x, eventDate = "collection_date")
-#' }
+#' bdc_year_outOfRange(
+#' data = x, 
+#' eventDate = "collection_date", 
+#' year_threshold = 1900)
+#'
 bdc_year_outOfRange <-
   function(data,
            eventDate,
            year_threshold = 1900) {
+    
     current_year <- format(Sys.Date(), "%Y")
     col <- data[[eventDate]]
     nDigits <- function(x) nchar(trunc(abs(x)))
-
+    
+    suppressMessages({
+    y <- 
+      bdc_year_from_eventDate(data.frame(col), eventDate = "col") %>% 
+      dplyr::select(year) %>% 
+      dplyr::rename(.year_outOfRange = year) %>% 
+      dplyr::pull()
+    })
+    
     if (is.null(year_threshold)) {
       .year_outOfRange <-
         dplyr::if_else(
-          col %in% 1600:current_year,
+          y %in% 1600:current_year,
           TRUE,
           FALSE
         )
@@ -62,11 +73,11 @@ bdc_year_outOfRange <-
         stop("'year_threshold' does not have four digits")
       }
 
-      w <- which(is.na(col))
+      w <- which(is.na(y))
 
       .year_outOfRange <-
         ifelse(
-          col %in% 1600:current_year & col > year_threshold,
+          y %in% 1600:current_year & y > year_threshold,
           TRUE,
           FALSE
         )

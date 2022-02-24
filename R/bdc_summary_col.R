@@ -17,13 +17,12 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
 #' .missing_coordinates <- c(TRUE, FALSE, FALSE, TRUE, FALSE)
 #' x <- data.frame(.missing_names, .missing_coordinates)
 #'
 #' bdc_summary_col(data = x)
-#' }
+#' 
 bdc_summary_col <- function(data) {
   if (any(names(data) == ".summary")) {
     .summary <- . <- NULL

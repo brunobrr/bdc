@@ -16,10 +16,9 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' x <- data.frame(scientificName = c("Ocotea odorifera", NA, "Panthera onca", ""))
 #' bdc_scientificName_empty(data = x, sci_names = "scientificName")
-#' }
+#'
 bdc_scientificName_empty <-
   function(data,
            sci_names = "scientificName") {

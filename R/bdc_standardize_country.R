@@ -1,4 +1,5 @@
-#' Internal function. Corrects, standardizes, and assigns a ISO code to country names.
+#' Internal function. Corrects, standardizes, and assigns a ISO code to country
+#' names.
 #'
 #' @param data data.frame. Containing a column with country names.
 #' @param country character string. A column name with country names.
