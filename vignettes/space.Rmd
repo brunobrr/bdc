@@ -234,7 +234,8 @@ Here we create figures (bar plots and maps) to make the interpretation of the re
 ```{r, eval=FALSE}
 bdc_create_figures(data = check_space,
                    database_id = "database_id",
-                   workflow_step = "space")
+                   workflow_step = "space",
+                   save_figures = FALSE)
 
 #> Check figures in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Figures
 ```

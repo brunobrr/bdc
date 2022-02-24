@@ -142,7 +142,8 @@ Here we create figures (bar plots and histrogram) to make the interpretation of 
 ```{r eval=FALSE}
 bdc_create_figures(data = check_time,
                    database_id = "database_id",
-                   workflow_step = "time")
+                   workflow_step = "time",
+                   save_figures = FALSE)
 
 #> Check figures in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Figures
 ```
