@@ -117,7 +117,7 @@ bdc_standardize_datasets <-
         save_in_filename <-
           paste0(save_in_dir, "standard_", dataset_name, ".", format)
         
-        if (!file.exists(save_in_filename)) {
+        if (!file.exists(save_in_filename) | overwrite == TRUE) {
           base_names <-
             metadata %>%
             dplyr::filter(fileName == input_file[file_index]) %>%
@@ -191,7 +191,7 @@ bdc_standardize_datasets <-
                 dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
                 dplyr::select(database_id, dplyr::everything())
               
-              message(paste("Creating", save_in_filename))
+              message(paste("Standardizing", base_names$datasetName, "file"))
               
               standard_dataset <-
                 standard_dataset %>%
@@ -263,19 +263,19 @@ bdc_standardize_datasets <-
           any(!is.na(x))))
       
       # should the database be saved?
-      if (format == "qs" &
-          save_database == TRUE & overwrite == TRUE) {
+      if (format == "qs" & save_database == TRUE & overwrite == TRUE) {
         bdc_create_dir()
         qs::qsave(merged_database, merged_filename)
+        message(paste("Standardized database was saved in",merged_filename))
+        
       }
       
-      if (format == "csv" &
-          save_database == TRUE & overwrite == TRUE) {
+      if (format == "csv" & save_database == TRUE & overwrite == TRUE) {
         bdc_create_dir()
         readr::write_csv(merged_database, merged_filename)
+        message(paste(merged_filename, "was created"))
+        
       }
-      
-      message(paste(merged_filename, "was created"))
       
       return(merged_database)
       

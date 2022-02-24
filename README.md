@@ -94,7 +94,7 @@ multiple taxonomic references.
 
 -   `bdc_clean_names()` Name-checking routines to clean and split a
     taxonomic name into its binomial and authority components
--   `bdc_query_names_taxadb()` Standardization of scientific names by
+-   `bdc_query_names_taxadb()` Harmonization of scientific names by
     correcting spelling errors and converting nomenclatural synonyms to
     currently accepted names.
 -   `bdc_filter_out_names()` Function used to filter out records
@@ -157,7 +157,7 @@ ii) figures, and iii) data-quality reports.
 #### **Installation**
 
 You can install the released version of *bdc* from
-[github](https://github.com/brunobrr/bdc) with:
+[GitHub](https://github.com/brunobrr/bdc) using:
 
 ``` r
 install.packages("remotes")

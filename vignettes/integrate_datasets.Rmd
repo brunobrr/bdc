@@ -32,7 +32,7 @@ Once standardized, datasets are then integrated into a standardized database hav
 
 <br/>
 
-**IMPORTANT**:
+⚠️**IMPORTANT:**
 
 -   Original datasets must be formatted in comma-separated format (**.csv**);
 -   When filling out the configuration table, please provide the **exact** name of a column of the original dataset and the **full path** of each original dataset;
@@ -109,15 +109,26 @@ DT::datatable(
 
 #### **Standardization and integration of datasets**
 
-Note that the standardized database integrating all dataset is saved in the folder **"Output/Intermediate" as "00_merged_database"**. The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package
+Note that the standardized database integrating all dataset can be saved in the folder **"Output/Intermediate" as "00_merged_database"** if `save_database = TRUE` . The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-bdc_standardize_datasets(metadata = metadata, format = "csv", overwrite = TRUE)
-```
+database <- 
+bdc_standardize_datasets(metadata = metadata,
+                         format = "csv",
+                         overwrite = TRUE, 
+                         save_database = TRUE)
 
-```{r message=FALSE, warning=FALSE, echo=TRUE, eval=FALSE}
-database <-
-  readr::read_csv(here::here("Output", "Intermediate", "00_merged_database.csv"))
+#>  0sStandardizing AT_EPIPHYTES file                  
+#>  0s 0sStandardizing BIEN file              
+#>  0s 0sStandardizing DRYFLOR file                                                         
+#>  0s 0sStandardizing GBIF file       
+#>  0s 0sStandardizing ICMBIO file           
+#>  0s 0sStandardizing IDIGBIO file              
+#>  0s 0sStandardizing NEOTROPTREE file              
+#>  0s 0sStandardizing SIBBR file               
+#>  0s 0sStandardizing SPECIESLINK file
+#>  
+#> C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Intermediate/00_merged_database.csv was created
 ```
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}

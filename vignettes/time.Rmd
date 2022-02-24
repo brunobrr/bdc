@@ -58,7 +58,7 @@ DT::datatable(
 )
 ```
 
-**IMPORTANT**:
+⚠️**IMPORTANT:**
 
 The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (✅ ok) or FALSE (❌check carefully).
 
@@ -99,7 +99,7 @@ Here we create a column named **.summary** summing up the results of all **VALID
 check_time <- bdc_summary_col(data = check_time)
 ```
 
-Creating a report summarizing the results of all tests of the `bdc` package.
+Creating a report summarizing the results of all tests of the *bdc* package. The report can be automatically saved if `save_report = TRUE.`
 
 ```{r eval=FALSE}
 report <-
@@ -107,10 +107,6 @@ report <-
                     database_id = "database_id",
                     workflow_step = "time",
                     save_report = FALSE)
-
-#> bdc_create_report:
-#> Check the report summarizing the results of the time in:
-#> Output/Report
 
 report
 ```
@@ -137,7 +133,7 @@ DT::datatable(
 
 #### **Figures**
 
-Here we create figures (bar plots and histrogram) to make the interpretation of the results of data quality tests easier.
+Here we create figures (bar plots and histrogram) to make the interpretation of the results of data quality tests easier. See some examples below. Figures can be automatically saved if `save_figures = TRUE.`
 
 ```{r eval=FALSE}
 bdc_create_figures(data = check_time,
@@ -145,7 +141,8 @@ bdc_create_figures(data = check_time,
                    workflow_step = "time",
                    save_figures = FALSE)
 
-#> Check figures in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Figures
+# Check figures using
+figures$time_year_BAR
 ```
 
 <br/>
@@ -164,7 +161,7 @@ bdc_create_figures(data = check_time,
 
 #### **Saving a "raw" database**
 
-Save the original database containing the results of all data quality tests appended in separate columns.
+Save the original database containing the results of all data quality tests appended in separate columns. You can use `qs::qread()` instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 check_time %>%
@@ -184,6 +181,8 @@ output <-
 ```
 
 #### **Saving a clean "fitness-for-use" database**
+
+You can use `qs::qread()` instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 output %>%

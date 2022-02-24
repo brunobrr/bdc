@@ -96,6 +96,9 @@ bdc_coordinates_from_locality <-
       message(
         paste(
           "\nbdc_coordinates_from_locality",
+          "\nFound",
+          nrow(df),
+          "records missing or with invalid coordinates but with potentially useful information on locality.\n",
           "\nCheck database in:",
           "Output/Check/01_coordinates_from_locality.csv"
         )
@@ -107,9 +110,7 @@ bdc_coordinates_from_locality <-
         "\nbdc_coordinates_from_locality",
         "\nFound",
         nrow(df),
-        "records missing or with invalid coordinates but with potentially useful information on locality.\n",
-        "\nCheck database in:",
-        "Output/Check/01_coordinates_from_locality.csv"
+        "records missing or with invalid coordinates but with potentially useful information on locality.\n"
       )
     )
 

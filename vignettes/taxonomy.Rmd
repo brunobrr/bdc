@@ -28,7 +28,7 @@ library(bdc)
 
 The combination of large datasets from several sources requires careful harmonization of taxon names. Non-standardized, incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The *bdc* package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic dataases**. The taxonomic harmonization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
 
-The functions used to harmonize names (*bdc_clean_name* and *bdc_query_names_taxadb*) **contain additions to the *taxadb* package**, including tools for:
+The functions used to harmonize names (*bdc_clean_name* and *bdc_query_names_taxadb*) **contain several additions to the *taxadb* package**, including tools for:
 
 1.  Cleaning and parsing scientific names;
 2.  Resolving misspelled names or variant spellings using a fuzzy matching application;
@@ -38,31 +38,31 @@ The functions used to harmonize names (*bdc_clean_name* and *bdc_query_names_tax
 
 The taxonomic harmonization is based on one taxonomic database chosen by the user. *taxadb* makes available the following taxonomic sources:
 
-+---------------+-----------------------------------------------------------+
-| Abbreviation  | Taxonomic database                                        |
-+===============+===========================================================+
-| col           | Catalogue of Life                                         |
-+---------------+-----------------------------------------------------------+
-| fb            | FishBase                                                  |
-+---------------+-----------------------------------------------------------+
-| itis          | Integrated Taxonomic Information System                   |
-+---------------+-----------------------------------------------------------+
-| iucn          | International Union for Conservation of Nature's Red List |
-+---------------+-----------------------------------------------------------+
-| gbif          | Global Biodiversity Information Facility                  |
-+---------------+-----------------------------------------------------------+
-| ncbi          | National Center for Biotechnology Information             |
-+---------------+-----------------------------------------------------------+
-| ott           | OpenTree Taxonomy                                         |
-+---------------+-----------------------------------------------------------+
-| tpl           | The Plant List                                            |
-+---------------+-----------------------------------------------------------+
-| slb           | SeaLifeBase                                               |
-+---------------+-----------------------------------------------------------+
-| wd            | Wikidata                                                  |
-+---------------+-----------------------------------------------------------+
++--------------+-----------------------------------------------------------+
+| Abbreviation | Taxonomic database                                        |
++==============+===========================================================+
+| col          | Catalogue of Life                                         |
++--------------+-----------------------------------------------------------+
+| fb           | FishBase                                                  |
++--------------+-----------------------------------------------------------+
+| itis         | Integrated Taxonomic Information System                   |
++--------------+-----------------------------------------------------------+
+| iucn         | International Union for Conservation of Nature's Red List |
++--------------+-----------------------------------------------------------+
+| gbif         | Global Biodiversity Information Facility                  |
++--------------+-----------------------------------------------------------+
+| ncbi         | National Center for Biotechnology Information             |
++--------------+-----------------------------------------------------------+
+| ott          | OpenTree Taxonomy                                         |
++--------------+-----------------------------------------------------------+
+| tpl          | The Plant List                                            |
++--------------+-----------------------------------------------------------+
+| slb          | SeaLifeBase                                               |
++--------------+-----------------------------------------------------------+
+| wd           | Wikidata                                                  |
++--------------+-----------------------------------------------------------+
 
-**IMPORTANT:**
+⚠️**IMPORTANT:**
 
 Note that some taxonomic databases may be *momentarily unavailable* in taxadb. Check ?bdc_query_names_taxadb for a list of available taxonomic databases.
 
@@ -92,7 +92,7 @@ database <-
 
 #### **Clean and parse species names**
 
-Scientific names improperly formatted usually cannot be matched with valid names. To solve this issue, we developed the *bdc_clean_name* containing functionalities to **optimize the taxonomic queries** by increasing the probability of finding matching names. This tool is used to:
+Scientific names improperly formatted usually cannot be matched with valid names. To solve this issue, we developed the *bdc_clean_name* containing functionalities to **unify writing style of scientific names**. This optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to:
 
 1.  Flag and remove family names pre-pended to species names;
 2.  Flag and remove qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);
@@ -110,7 +110,6 @@ parse_names <-
 #> >> Infraspecific terms were flagged and removed from 1 records.
 #> 
 #> >> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.
-
 ```
 
 ```{r echo=FALSE, eval=TRUE}
@@ -154,7 +153,7 @@ database <- dplyr::bind_cols(database, parse_names)
 
 The taxonomic harmonization is based upon **one** of those taxonomic authorities previously mentioned. It starts with creating a local database by downloading, extracting, and importing the taxonomic database informed by users using the *taxadb* package. The download may take some time, depending on the internet connection.
 
-If will have a problem downloading databases, please consider removing the previous versions of taxonomic databases using `fs::dir_delete(taxadb:::taxadb_dir())`
+⚠️**IMPORTANT:** If will have a problem downloading databases, please consider removing the previous versions of taxonomic databases using `fs::dir_delete(taxadb:::taxadb_dir())`
 
 ```{r eval=F}
 query_names <- bdc_query_names_taxadb(
@@ -207,7 +206,7 @@ database <-
 
 #### **Report**
 
-The report is based on the **column notes** containing the results of the name harmonization process. The notes can be grouped into two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as "valid" in the column "Description".
+The report is based on the **column notes** containing the results of the name harmonization process. The notes can be grouped into two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as "valid" in the column "Description". The report can be automatically saved if `save_report = TRUE.`
 
 ```{r eval = FALSE}
 report <-
@@ -215,10 +214,6 @@ report <-
                     database_id = "database_id",
                     workflow_step = "taxonomy",
                     save_report = FALSE)
-
-#> bdc_create_report:
-#> Check the report summarizing the results of the taxonomy in:
-#> Output/Report
 
 report
 ```
@@ -277,8 +272,9 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 
 #### **Saving the database**
 
+You can use `qs::qread()` instead of write_csv to save a large database in a compressed format.
+
 ```{r eval=FALSE}
-# use qs::qread() to save the database in a compressed format
 database %>%
   readr::write_csv(.,
             here::here("Output", "Intermediate", "02_taxonomy_database.csv"))

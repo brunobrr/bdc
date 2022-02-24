@@ -30,7 +30,7 @@ To avoid reinventing the wheel, the proposed data-cleaning workflow uses functio
 
 Note that we do not use the "seas" test to remove records in the ocean because such records we previously removed in the pre-filter module of the package (more details [here](https://brunobrr.github.io/bdc/articles/prefilter.html)).
 
-**IMPORTANT**:
+⚠️**IMPORTANT:**
 
 The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (✅ ok) or FALSE (❌check carefully).
 
@@ -191,18 +191,14 @@ check_space %>%
 
 #### **Report**
 
-Creating a report summarizing the results of all tests.
+Creating a report summarizing the results of all tests. The report can be automatically saved if `save_report = TRUE.`
 
 ```{r eval=FALSE}
 report <-
   bdc_create_report(data = check_space,
                     database_id = "database_id",
                     workflow_step = "space",
-                    save_report)
-
-#> bdc_create_report:
-#> Check the report summarizing the results of the space in:
-#> Output/Report
+                    save_report = FALSE)
 
 report
 ```
@@ -229,7 +225,7 @@ DT::datatable(
 
 #### **Figures**
 
-Here we create figures (bar plots and maps) to make the interpretation of the results of data quality tests easier.
+Here we create figures (bar plots, maps, and histograms) to make the interpretation of the results of data quality tests easier. Figures can be automatically saved if `save_figures = TRUE.`
 
 ```{r, eval=FALSE}
 bdc_create_figures(data = check_space,
@@ -237,7 +233,8 @@ bdc_create_figures(data = check_space,
                    workflow_step = "space",
                    save_figures = FALSE)
 
-#> Check figures in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Figures
+# Check figures using
+figures$.rou
 ```
 
 ![Rounded coordinates](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/space_.rou_BAR.png)
@@ -258,6 +255,8 @@ It is possible to remove flagged records (potentially problematic ones) to get a
 ```
 
 #### **Saving the database**
+
+You can use `qs::qread()` instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 # use qs::qread() to save the database in a compressed format
