@@ -48,7 +48,7 @@ parse process can be found in
 \href{https://github.com/gnames/gnparser}{gnparser}.
 }
 \examples{
-\donttest{
+\dontrun{
 scientificName <- c(
   "Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann",
   "Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby",

@@ -30,6 +30,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' x <- data.frame(
 #'   decimalLatitude = c(-22.9834, -39.857030, -17.06811, -46.69778),
 #'   decimalLongitude = c(-69.095, -68.443588, 37.438108, -13.82444),
@@ -41,7 +42,7 @@
 #'   lon = "decimalLongitude",
 #'   country = "country"
 #' )
-#'
+#' }
 bdc_country_from_coordinates <-
   function(data,
            lat = "decimalLatitude",

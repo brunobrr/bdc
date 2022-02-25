@@ -59,7 +59,7 @@ bdc_filter_out_names(
   data = df_notes,
   taxonomic_status = "accepted",
   col_name = "notes",
-  opposite = F
+  opposite = FALSE
 )
 
 }

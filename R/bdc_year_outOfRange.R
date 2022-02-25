@@ -44,6 +44,7 @@ bdc_year_outOfRange <-
   function(data,
            eventDate,
            year_threshold = 1900) {
+    year <- NULL
     
     current_year <- format(Sys.Date(), "%Y")
     col <- data[[eventDate]]
