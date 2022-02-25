@@ -16,6 +16,9 @@
 #' @param save_database logical. Should the standardized database be locally
 #' saved? Default = FALSE.
 #'
+#' @return A merged data.frame with column names following Darwin Core
+#' terminology.
+#' 
 #' @importFrom readr read_csv
 #' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
 #' all_of
