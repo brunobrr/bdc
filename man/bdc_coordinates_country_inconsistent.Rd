@@ -48,7 +48,7 @@ records within the buffer but in other countries are flagged as invalid
 (FALSE).
 }
 \examples{
-\donttest{
+\dontrun{
 x <- data.frame(
   decimalLongitude = c(-40.6003, -39.6, -20.5243, NA),
   decimalLatitude = c(19.9358, -13.016667, NA, "")

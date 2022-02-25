@@ -139,7 +139,7 @@ parse process can be found in
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="va">scientificName</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span class="r-in">  <span class="st">"Fridericia bahiensis (Schauer ex. DC.) L.G.Lohmann"</span>,</span>
 <span class="r-in">  <span class="st">"Peltophorum dubium (Spreng.) Taub. (Griseb.) Barneby"</span>,</span>
@@ -148,19 +148,7 @@ parse process can be found in
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">bdc_clean_names</span><span class="op">(</span><span class="va">scientificName</span>, save_outputs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Family names prepended to scientific names were flagged and removed from 1 records.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Terms denoting taxonomic uncertainty were flagged and removed from 1 records.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Other issues, capitalizing the first letter of the generic name, replacing empty names by NA, and removing extra spaces, were flagged and corrected or removed from 1 records.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> &gt;&gt; Infraspecific terms were flagged and removed from 0 records.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 x 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   scientificName                .uncer_terms .infraesp_names names_clean quality</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Fridericia bahiensis (Schaue~ TRUE         TRUE            Fridericia~       4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Peltophorum dubium (Spreng.)~ TRUE         TRUE            Peltophoru~       4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Gymnanthes edwalliana (Pax &amp;~ TRUE         TRUE            Gymnanthes~       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> LEGUMINOSAE Senna aff. organ~ FALSE        TRUE            Senna orga~       2</span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </div>
