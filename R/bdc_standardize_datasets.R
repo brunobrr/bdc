@@ -22,7 +22,7 @@
 #' @importFrom fs dir_exists dir_create
 #' @importFrom here here
 #' @importFrom purrr set_names
-#' @importFrom qs qsave
+#' @importFrom qs qsave qread
 #' @importFrom readr read_csv cols
 #'
 #' @details
@@ -289,7 +289,7 @@ bdc_standardize_datasets <-
       }
       
       if (overwrite == FALSE & format == "qs"){
-        merged_database <- qs::read(merged_filename)
+        merged_database <- qs::qread(merged_filename)
       }
       
     }
