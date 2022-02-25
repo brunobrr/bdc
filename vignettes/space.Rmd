@@ -256,7 +256,7 @@ It is possible to remove flagged records (potentially problematic ones) to get a
 
 #### **Saving the database**
 
-You can use `qs::qread()` instead of write_csv to save a large database in a compressed format.
+You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 # use qs::qread() to save the database in a compressed format

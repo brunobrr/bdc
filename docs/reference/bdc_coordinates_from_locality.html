@@ -89,7 +89,8 @@ extracted from locality information.</p>
   <span class="va">data</span>,
   lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
   lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
-  locality <span class="op">=</span> <span class="st">"locality"</span>
+  locality <span class="op">=</span> <span class="st">"locality"</span>,
+  save_outputs <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -107,12 +108,15 @@ WGS84. Default = "decimalLongitude".</p></dd>
 <dt>locality</dt>
 <dd><p>character string. The column name with locality information.
 Default = "locality".</p></dd>
+<dt>save_outputs</dt>
+<dd><p>logical. Should a table containing transposed coordenates
+saved for further inspection? Default = FALSE.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data.frame containing records missing or with invalid coordinates
-but with potentially useful locality information is saved in
-Output/Check/01_coordinates_from_locality.csv.</p>
+but with potentially useful locality information. When save_outputs = FALSE
+the data.frame is saved in Output/Check/01_coordinates_from_locality.csv</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -133,12 +137,27 @@ specific description of the place" where an organism was recorded.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">""</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>lat <span class="op">=</span> <span class="va">lat</span>, lon <span class="op">=</span> <span class="va">lon</span>, locality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Argentina"</span>, <span class="st">"Chile"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">bdc_coordinates_from_locality</span><span class="op">(</span>data <span class="op">=</span> <span class="va">x</span>, lat <span class="op">=</span> <span class="st">"lat"</span>, lon <span class="op">=</span> <span class="st">"lon"</span>, locality <span class="op">=</span> <span class="st">"locality"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span class="r-in">  lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">""</span><span class="op">)</span>, </span>
+<span class="r-in">  lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span>, </span>
+<span class="r-in">  locality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE"</span>, </span>
+<span class="r-in">               <span class="st">"Parque Estadual da Serra de Caldas Novas, Goias, Brazil"</span>, </span>
+<span class="r-in">               <span class="st">"Parque Nacional Iguazu"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu">bdc_coordinates_from_locality</span><span class="op">(</span></span>
+<span class="r-in">data <span class="op">=</span> <span class="va">x</span>, </span>
+<span class="r-in">lat <span class="op">=</span> <span class="st">"lat"</span>, </span>
+<span class="r-in">lon <span class="op">=</span> <span class="st">"lon"</span>, </span>
+<span class="r-in">locality <span class="op">=</span> <span class="st">"locality"</span>, </span>
+<span class="r-in">save_outputs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> bdc_coordinates_from_locality </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found 3 records missing or with invalid coordinates but with potentially useful information on locality.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    lat  lon                                                locality</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 &lt;NA&gt;           PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 &lt;NA&gt; &lt;NA&gt; Parque Estadual da Serra de Caldas Novas, Goias, Brazil</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      &lt;NA&gt;                                  Parque Nacional Iguazu</span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>

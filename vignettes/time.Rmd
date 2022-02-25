@@ -114,7 +114,8 @@ report
 ```{r echo=FALSE, eval=TRUE}
 report <-
   readr::read_csv(
-    system.file("extdata/outpus_vignettes/04_Report_time.csv", package = "bdc"),
+    system.file("extdata/outpus_vignettes/04_Report_time.csv",
+                package = "bdc"),
     show_col_types = FALSE
   )
 ```
@@ -161,7 +162,7 @@ figures$time_year_BAR
 
 #### **Saving a "raw" database**
 
-Save the original database containing the results of all data quality tests appended in separate columns. You can use `qs::qread()` instead of write_csv to save a large database in a compressed format.
+Save the original database containing the results of all data quality tests appended in separate columns. You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 check_time %>%
@@ -171,7 +172,7 @@ check_time %>%
 
 #### **Filtering the database**
 
-Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all modules of the *bdc* package to get a "clean", "fitness-for-use" database. Note that **29%** (2,631 out of 9.000 records) of original records were considered "fitness-for-use" after the data-cleaning process.
+Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all modules of the *bdc* package to get a "clean", "fitness-for-use" database. Note that **25%** (45 out of 180 records) of original records were considered "fitness-for-use" after the data-cleaning process.
 
 ```{r}
 output <-
@@ -182,7 +183,7 @@ output <-
 
 #### **Saving a clean "fitness-for-use" database**
 
-You can use `qs::qread()` instead of write_csv to save a large database in a compressed format.
+You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 output %>%

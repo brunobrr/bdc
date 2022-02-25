@@ -120,7 +120,7 @@ candidates for each misspelled countries names.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="va">country</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BOLIVIA"</span>, <span class="st">"bolivia"</span>, <span class="st">"Brasil"</span>, <span class="st">"Brazil"</span>, <span class="st">"BREZIL"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -128,7 +128,22 @@ candidates for each misspelled countries names.</p>
 <span class="r-in">  data <span class="op">=</span> <span class="va">x</span>,</span>
 <span class="r-in">  country <span class="op">=</span> <span class="st">"country"</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading auxiliary data: country names from wikipedia</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading auxiliary data: world map and country iso</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Standardizing country names</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> country found: Bolivia</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> country found: Brazil</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> bdc_country_standardized:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The country names of 4 records were standardized.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Two columns ('country_suggested' and 'countryCode') were added to the database.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   country country_suggested countryCode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 BOLIVIA           Bolivia          BO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 bolivia           Bolivia          BO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  Brasil            Brazil          BR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Brazil            Brazil          BR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  BREZIL            Brazil          BR</span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

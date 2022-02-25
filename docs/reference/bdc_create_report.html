@@ -80,7 +80,12 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bdc_create_report</span><span class="op">(</span><span class="va">data</span>, database_id <span class="op">=</span> <span class="st">"database_id"</span>, <span class="va">workflow_step</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bdc_create_report</span><span class="op">(</span>
+  <span class="va">data</span>,
+  database_id <span class="op">=</span> <span class="st">"database_id"</span>,
+  <span class="va">workflow_step</span>,
+  save_report <span class="op">=</span> <span class="cn">FALSE</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,6 +99,9 @@ identifier.Default = "database_id".</p></dd>
 <dt>workflow_step</dt>
 <dd><p>character string containing the following
 options("prefilter", "taxonomy", "space" or "time").</p></dd>
+<dt>save_report</dt>
+<dd><p>logical. Should the report be saved for further
+inspection? Default = FALSE.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -103,7 +111,7 @@ quality assessment.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="va">database_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"test_1"</span>, <span class="st">"test_2"</span>, <span class="st">"test_3"</span>, <span class="st">"test_4"</span>, <span class="st">"test_5"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">.missing_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">.missing_coordinates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -118,12 +126,19 @@ quality assessment.</p>
 <span class="r-in">  <span class="va">.summary</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="va">report</span> <span class="op">&lt;-</span> </span>
 <span class="r-in"><span class="fu">bdc_create_report</span><span class="op">(</span></span>
 <span class="r-in">  data <span class="op">=</span> <span class="va">x</span>,</span>
 <span class="r-in">  database_id <span class="op">=</span> <span class="st">"database_id"</span>,</span>
-<span class="r-in">  workflow_step <span class="op">=</span> <span class="st">"prefilter"</span></span>
+<span class="r-in">  workflow_step <span class="op">=</span> <span class="st">"prefilter"</span>,</span>
+<span class="r-in">  save_report <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: DT</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> bdc_create_report:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Check the report summarizing the results of the prefilter in:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Output/Report</span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

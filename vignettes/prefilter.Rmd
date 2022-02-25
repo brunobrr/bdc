@@ -209,7 +209,7 @@ check_pf <- bdc_summary_col(data = check_pf)
 
 Creating a report summarizing the results of all tests. The report can be automatically saved if `save_report = TRUE.`
 
-```{r}
+```{r eval=FALSE}
 report <-
   bdc_create_report(data = check_pf,
                     database_id = "database_id",
@@ -217,6 +217,15 @@ report <-
                     save_report = FALSE)
 
 report
+```
+
+```{r eval=TRUE, echo=FALSE}
+report <-
+  readr::read_csv(
+    system.file("extdata/outpus_vignettes/01_Report_Prefilter.csv", 
+                package = "bdc"),
+    show_col_types = FALSE
+  )
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
@@ -267,7 +276,7 @@ output <-
 
 #### **Saving the database**
 
-You can use `qs::qread()` instead of write_csv to save a large database in a compressed format
+You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format
 
 ```{r eval=FALSE}
 output %>%

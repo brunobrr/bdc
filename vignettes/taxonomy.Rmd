@@ -38,29 +38,18 @@ The functions used to harmonize names (*bdc_clean_name* and *bdc_query_names_tax
 
 The taxonomic harmonization is based on one taxonomic database chosen by the user. *taxadb* makes available the following taxonomic sources:
 
-+--------------+-----------------------------------------------------------+
 | Abbreviation | Taxonomic database                                        |
-+==============+===========================================================+
+|--------------|-----------------------------------------------------------|
 | col          | Catalogue of Life                                         |
-+--------------+-----------------------------------------------------------+
 | fb           | FishBase                                                  |
-+--------------+-----------------------------------------------------------+
 | itis         | Integrated Taxonomic Information System                   |
-+--------------+-----------------------------------------------------------+
 | iucn         | International Union for Conservation of Nature's Red List |
-+--------------+-----------------------------------------------------------+
 | gbif         | Global Biodiversity Information Facility                  |
-+--------------+-----------------------------------------------------------+
 | ncbi         | National Center for Biotechnology Information             |
-+--------------+-----------------------------------------------------------+
 | ott          | OpenTree Taxonomy                                         |
-+--------------+-----------------------------------------------------------+
 | tpl          | The Plant List                                            |
-+--------------+-----------------------------------------------------------+
 | slb          | SeaLifeBase                                               |
-+--------------+-----------------------------------------------------------+
 | wd           | Wikidata                                                  |
-+--------------+-----------------------------------------------------------+
 
 ⚠️**IMPORTANT:**
 
@@ -272,7 +261,7 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 
 #### **Saving the database**
 
-You can use `qs::qread()` instead of write_csv to save a large database in a compressed format.
+You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 database %>%

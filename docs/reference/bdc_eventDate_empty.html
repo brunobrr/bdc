@@ -111,15 +111,26 @@ empty or not applicable <a href="https://rdrr.io/r/base/NA.html" class="external
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">collection_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">collection_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span class="r-in">  <span class="cn">NA</span>, <span class="st">"31/12/2015"</span>, <span class="st">"2013-06-13T00:00:00Z"</span>, <span class="st">"2013-06-20"</span>,</span>
 <span class="r-in">  <span class="st">""</span>, <span class="st">"2013"</span>, <span class="st">"0001-01-00"</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">collection_date</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">bdc_eventDate_empty</span><span class="op">(</span>data <span class="op">=</span> <span class="va">x</span>, eventDate <span class="op">=</span> <span class="st">"collection_date"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> bdc_eventDate_empty:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 2 records.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> One column was added to the database.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        collection_date .eventDate_empty</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                 &lt;NA&gt;            FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2           31/12/2015             TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2013-06-13T00:00:00Z             TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4           2013-06-20             TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                 2013             TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7           0001-01-00             TRUE</span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>
