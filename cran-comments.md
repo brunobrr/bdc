@@ -5,18 +5,25 @@ editor_options:
 ---
 ## Resubmission
 
-Dear CRAN Maintainers,
+Dear CRAN Maintainers, Dear Dr. Julia Haider,
 
-We are pleased to resubmit the bdc package to CRAN. In this new version we fix all problems, specifically:
+We are thankful for your comments and suggestion. 
 
-* Remove the need to load the package "rnaturalearthhires" for creating vignettes.
+We are pleased to resubmit the bdc package to CRAN. In this new version we fix all issues, specifically:
 
-* Avoid functions to create folder/directory in the user' filespace.
+* Add one paragraph describing in more detail the package;
+
+* Add \value to bdc_quickmap and bdc_standardize_datasets functions;
+
+* Change, whenever, possible, \dontrun{} to \donttest{} and unwrap the examples that can be executed in <5 seconds
+
+* Avoid functions to create folder/directory in the user's filespace.
+
+* The manuscript describing the methods of the package is under review. We will add a reference in the DESCRIPTION when the manuscript is accepted for publication.
 
 Below we copy the results of hrub and GitHub actions checks. There were no ERRORs or WARNINGs. 
 
 Cheers,
-
 Bruno R. Ribeiro
 
 ## HRUB CHECK

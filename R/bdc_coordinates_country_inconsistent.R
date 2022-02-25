@@ -47,15 +47,7 @@
 #'   country_name = "Brazil",
 #'   lon = "decimalLongitude",
 #'   lat = "decimalLatitude",
-#'   dist = 0.1 # in decimal degrees
-#' )
-#'
-#' bdc_coordinates_country_inconsistent(
-#'   data = x,
-#'   country_name = c("Argentina", "Brazil"),
-#'   lon = "decimalLongitude",
-#'   lat = "decimalLatitude",
-#'   dist = 0.2 # in decimal degrees
+#'   dist = 0.1 
 #' )
 #' }
 bdc_coordinates_country_inconsistent <-
