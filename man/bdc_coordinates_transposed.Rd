@@ -70,7 +70,7 @@ columns "country" and "countryCode" can be retrieved by using the function
 \code{\link{bdc_country_standardized}}.
 }
 \examples{
-\donttest{
+\dontrun{
 id <- c(1, 2, 3, 4)
 scientificName <- c(
   "Rhinella major", "Scinax ruber",
