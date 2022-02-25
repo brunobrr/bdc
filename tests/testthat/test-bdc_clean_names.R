@@ -12,13 +12,13 @@ scientificName <- c(
 
 
 testthat::test_that("test with function example", {
-  r <- bdc_clean_names(sci_names = scientificName)
-  expect_equal(class(bdc_clean_names(sci_names = scientificName)), c("tbl_df", "tbl", "data.frame"))
+  r <- bdc_clean_names(sci_names = scientificName, save_outputs = FALSE)
+  expect_equal(class(bdc_clean_names(sci_names = scientificName, save_outputs = FALSE)), c("tbl_df", "tbl", "data.frame"))
   expect_equal(names(r), c("scientificName", ".uncer_terms", ".infraesp_names", "names_clean", "quality"))
 })
 
 testthat::test_that("test names with accent", {
-  r <- bdc_clean_names(sci_names = scientificName)
+  r <- bdc_clean_names(sci_names = scientificName, save_outputs = FALSE)
   expect_equal(nrow(r), length(scientificName))
 })
 
