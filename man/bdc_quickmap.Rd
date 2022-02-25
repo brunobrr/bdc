@@ -28,6 +28,9 @@ It can be a color name (e.g., "red") or the name of a column of data. Default
 
 \item{size}{numeric. The size of the points.}
 }
+\value{
+A map of points created using ggplot2.
+}
 \description{
 Creates a map of points using ggplot2 useful for inspecting the results of
 tests implemented in the bdc package.

@@ -25,6 +25,10 @@ should be overwritten. The default is FALSE.}
 \item{save_database}{logical. Should the standardized database be locally
 saved? Default = FALSE.}
 }
+\value{
+A merged data.frame with column names following Darwin Core
+terminology.
+}
 \description{
 This function's main goal is to merge and standardize different
 datasets into a new dataset with column names following the Darwin
