@@ -19,7 +19,7 @@ sci_names <-
   )
 
 
-test <- bdc_query_names_taxadb(sci_names, suggestion_distance = 0.9, db = "gbif")
+test <- bdc_query_names_taxadb(sci_names, suggestion_distance = 0.9, db = "gbif", export_accepted = FALSE)
 
 test_that("bdc_query_names_taxadb", {
   expect_equal(length(test$scientificName), length(sci_names))
@@ -35,7 +35,8 @@ test <- bdc_query_names_taxadb(c("Puma concola", "Cebus apela"),
   db = "gbif",
   suggest_names = FALSE,
   rank_name = "Mammalia",
-  rank = "class"
+  rank = "class", 
+  export_accepted = FALSE
 )
 
 

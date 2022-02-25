@@ -24,7 +24,8 @@ test_that("test based on function example dataset", {
     lon = "decimalLongitude",
     country = "country_suggested",
     countryCode = "countryCode",
-    border_buffer = 0.2
+    border_buffer = 0.2, 
+    save_outputs = FALSE
   ) # in decimal degrees
 
   expect_equal(df$coordinates_transposed, c(FALSE, TRUE, FALSE, FALSE))
@@ -41,7 +42,8 @@ test_that("Misuse of arguments", {
     lon = "decimalLongitude",
     country = "country_suggested",
     countryCode = "countryCode",
-    border_buffer = 0.2
+    border_buffer = 0.2, 
+    save_outputs = FALSE
   ))
 })
 
@@ -54,7 +56,8 @@ test_that("Misuse of column names", {
     lon = "decimalLongit",
     country = "country_suggested",
     countryCode = "countryCode",
-    border_buffer = 0.2
+    border_buffer = 0.2, 
+    save_outputs = FALSE
   ))
 })
 
@@ -105,7 +108,8 @@ test_that("test one country without coordinate correction", {
     lon = "decimalLongitude",
     country = "country_suggested",
     countryCode = "countryCode",
-    border_buffer = 0.2
+    border_buffer = 0.2, 
+    save_outputs = FALSE
   ) # in decimal degrees
   
   expect_equal(dim(res), dim(check_pf))

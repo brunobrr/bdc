@@ -79,7 +79,7 @@ wrong_metadata <- tibble::tribble(
   "datafake3", "datafake3.csv", NA, "nome_das_especies", "y", "x", "missing"
 )
 
-bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs")
+bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs", save_database = FALSE)
 
 test_that("bdc_standardize_datasets can create qs files", {
   created_qs_files <-
@@ -127,7 +127,7 @@ unlink(here::here("Output"), recursive = TRUE)
 csv <- fs::dir_ls(glob = "*.qs")
 unlink(csv)
 
-bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "csv")
+bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "csv", save_database = FALSE)
 
 test_that("bdc_standardize_datasets can create qs files", {
   created_qs_files <-
@@ -171,13 +171,13 @@ test_that("bdc_standardize_datasets can create 00_merged_datasets.csv", {
 })
 
 test_that("bdc_standardize_datasets missing required column", {
-  result <- testthat::capture_error(bdc_standardize_datasets(metadata = metadata_missing_column, overwrite = TRUE, format = "csv"))
+  result <- testthat::capture_error(bdc_standardize_datasets(metadata = metadata_missing_column, overwrite = TRUE, format = "csv", save_database = FALSE))
 
   expect_equal(any(class(result) %in% "error"), TRUE)
 })
 
 test_that("bdc_standardize_datasets already exist", {
-  result_message <- testthat::capture_message(bdc_standardize_datasets(metadata = metadata, overwrite = FALSE, format = "csv"))
+  result_message <- testthat::capture_message(bdc_standardize_datasets(metadata = metadata, overwrite = FALSE, format = "csv", save_database = FALSE))
 
   expect_equal(any(class(result_message) %in% "condition"), TRUE)
 })
