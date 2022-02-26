@@ -162,7 +162,7 @@ columns "country" and "countryCode" can be retrieved by using the function
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">scientificName</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span class="r-in">  <span class="st">"Rhinella major"</span>, <span class="st">"Scinax ruber"</span>,</span>
@@ -179,15 +179,6 @@ columns "country" and "countryCode" can be retrieved by using the function
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Get country code</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="bdc_country_standardized.html">bdc_country_standardized</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">x</span>, country <span class="op">=</span> <span class="st">"country"</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading auxiliary data: country names from wikipedia</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading auxiliary data: world map and country iso</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Standardizing country names</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> country found: Bolivia</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> country found: Brazil</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> bdc_country_standardized:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The country names of 3 records were standardized.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Two columns ('country_suggested' and 'countryCode') were added to the database.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">bdc_coordinates_transposed</span><span class="op">(</span></span>
 <span class="r-in">  data <span class="op">=</span> <span class="va">x</span>,</span>
@@ -200,25 +191,7 @@ columns "country" and "countryCode" can be retrieved by using the function
 <span class="r-in">  border_buffer <span class="op">=</span> <span class="fl">0.2</span>,</span>
 <span class="r-in">  save_outputs <span class="op">=</span> <span class="cn">FALSE</span> </span>
 <span class="r-in"><span class="op">)</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: readr</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Correcting latitude and longitude transposed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 3 ocurrences will be tested</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing occurrences from: BO (1)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Processing occurrences from: BR (2)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> bdc_coordinates_transposed:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Corrected 3 records.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> One columns were added to the database.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 x 8</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   database_id scientificName        decimalLatitude decimalLongitude country</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>           1 Rhinella major                  -<span style="color: #BB0000;">17.9</span>            -<span style="color: #BB0000;">63.4</span> BOLIVIA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>           2 Scinax ruber                    -<span style="color: #BB0000;">14.4</span>            -<span style="color: #BB0000;">67.9</span> bolivia</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>           3 Siparuna guianensis             -<span style="color: #BB0000;">13.2</span>            -<span style="color: #BB0000;">41.9</span> Brasil </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>           4 Psychotria vellosiana           -<span style="color: #BB0000;">13.8</span>            -<span style="color: #BB0000;">46.7</span> Brazil </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ... with 3 more variables: country_suggested &lt;chr&gt;, countryCode &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   coordinates_transposed &lt;lgl&gt;</span></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

@@ -121,7 +121,7 @@ saved in "Output/Figures" if save_figures == TRUE.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="va">database_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GBIF_01"</span>, <span class="st">"GBIF_02"</span>, <span class="st">"GBIF_03"</span>, <span class="st">"FISH_04"</span>, <span class="st">"FISH_05"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">19.93580</span>, <span class="op">-</span><span class="fl">13.01667</span>, <span class="op">-</span><span class="fl">22.34161</span>, <span class="op">-</span><span class="fl">6.75000</span>, <span class="op">-</span><span class="fl">15.15806</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40.60030</span>, <span class="op">-</span><span class="fl">39.60000</span>, <span class="op">-</span><span class="fl">49.61017</span>, <span class="op">-</span><span class="fl">35.63330</span>, <span class="op">-</span><span class="fl">39.52861</span><span class="op">)</span></span>
@@ -147,17 +147,7 @@ saved in "Output/Figures" if save_figures == TRUE.</p>
 <span class="r-in">  workflow_step <span class="op">=</span> <span class="st">"prefilter"</span>,</span>
 <span class="r-in">  save_figures <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span class="r-in"><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: cowplot</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: rworldmap</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: sp</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ### Welcome to rworldmap ###</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> For a short introduction type : 	 vignette('rworldmap')</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: ggplot2</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `x` argument of `as_tibble.matrix()` must have unique column names if `.name_repair` is omitted as of tibble 2.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Using compatibility `.name_repair`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </div>
