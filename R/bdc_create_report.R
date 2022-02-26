@@ -24,7 +24,7 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
 #' .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
 #' .missing_coordinates <- c(TRUE, FALSE, FALSE, TRUE, FALSE)
