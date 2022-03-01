@@ -137,6 +137,7 @@ DT::datatable(
 Here we create figures (bar plots and histrogram) to make the interpretation of the results of data quality tests easier. See some examples below. Figures can be automatically saved if `save_figures = TRUE.`
 
 ```{r eval=FALSE}
+figures <- 
 bdc_create_figures(data = check_time,
                    database_id = "database_id",
                    workflow_step = "time",
