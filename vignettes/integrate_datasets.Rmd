@@ -123,7 +123,7 @@ An example of a standardized database containing the required field to run the *
 DT::datatable(
   database, class = 'stripe', extensions = 'FixedColumns',
   options = list(
-    pageLength = 7,
+    pageLength = 5,
     dom = 'Bfrtip',
     scrollX = TRUE,
     fixedColumns = list(leftColumns = 2)
