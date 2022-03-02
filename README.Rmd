@@ -98,17 +98,34 @@ Aim to facilitate the **documentation, visualization, and interpretation** of re
 
 #### **Installation**
 
-You can install the released version of *bdc* from [GitHub](https://github.com/brunobrr/bdc) using:
+:warning:**IMPORTANT:**
+
+*bdc* function for taxonomic names harmonization dependent upon the *taxadb* package, which is momentarily out of CRAN. **Please, manually install the development version of *taxadb* directly from GitHub using**
+
+```{r eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("ropensci/taxadb")
+```
+
+You can install *bdc* from CRAN
+
+```{r eval=FALSE}
+install.packages("bdc")
+library(taxadb)
+```
+
+or the development version from [GitHub](https://github.com/brunobrr/bdc) using:
 
 ```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=FALSE}
 install.packages("remotes")
 remotes::install_github("brunobrr/bdc")
 ```
 
-And load the package with:
+Load the packages with:
 
 ```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
 library(bdc)
+library(taxadb)
 ```
 
 #### **Package website**

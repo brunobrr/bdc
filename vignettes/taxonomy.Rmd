@@ -59,6 +59,16 @@ Note that some taxonomic databases may be *momentarily unavailable* in taxadb. C
 
 Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
 
+⚠️**IMPORTANT:**
+
+*taxadb* package is momentarily out of CRAN. **Please, manually install the development version of *taxadb* directly from GitHub using**
+
+```{r eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("ropensci/taxadb")
+library(taxadb)
+```
+
 #### **Reading the database**
 
 Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/prefilter.html) module of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)).
