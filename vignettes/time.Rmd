@@ -24,15 +24,15 @@ knitr::opts_chunk$set(
 library(bdc)
 ```
 
-# **Introduction**
+#### **Introduction**
 
 This module of the *bdc* package extracts the collection year whenever possible from complete and legitimate date information and flags dubious (e.g., 07/07/10), illegitimate (e.g., 1300, 2100), or not supplied (e.g., 0 or NA) collecting year.
 
-# **Installation**
+#### **Installation**
 
 Check [**here**](https://brunobrr.github.io/bdc/#installation) how to install the bdc package.
 
-# **Reading the database**
+#### **Reading the database**
 
 Read the database created in the [**Space**](https://brunobrr.github.io/bdc/articles/space.html) module of the *bdc* package. It is also possible to read any datasets containing the \*\*required\*\* fields to run the function (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)).
 
@@ -62,7 +62,7 @@ DT::datatable(
 
 The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (✅ ok) or FALSE (❌check carefully).
 
-# **1 - Records lacking event date information**
+#### **1 - Records lacking event date information**
 
 *VALIDATION*. This function flags records lacking event date information (e.g., empty or NA).
 
@@ -71,7 +71,7 @@ check_time <-
   bdc_eventDate_empty(data = database, eventDate = "verbatimEventDate")
 ```
 
-# **2 - Extract year from event date**
+#### **2 - Extract year from event date**
 
 *ENRICHMENT*. This function extracts four-digit years from unambiguously interpretable collecting dates.
 
@@ -80,7 +80,7 @@ check_time <-
   bdc_year_from_eventDate(data = check_time, eventDate = "verbatimEventDate")
 ```
 
-# **3 - Records with out-of-range collecting year**
+#### **3 - Records with out-of-range collecting year**
 
 *VALIDATION*. This function identifies records with illegitimate or potentially imprecise collecting years. The year provided can be out-of-range (e.g., in the future) or collected before a specified year supplied by the user (e.g., 1900). Older records are more likely to be imprecise due to the locality-derived geo-referencing process.
 
@@ -91,7 +91,7 @@ check_time <-
                       year_threshold = 1900)
 ```
 
-# **Report**
+#### **Report**
 
 Here we create a column named **.summary** summing up the results of all **VALIDATION** tests. This column is **FALSE** when a record is flagged as FALSE in any data quality test (❌check carefully. potentially invalid or suspect record).
 
@@ -132,7 +132,7 @@ DT::datatable(
 )
 ```
 
-# **Figures**
+#### **Figures**
 
 Here we create figures (bar plots and histrogram) to make the interpretation of the results of data quality tests easier. See some examples below. Figures can be automatically saved if `save_figures = TRUE.`
 
@@ -161,9 +161,9 @@ figures$time_year_BAR
 
 <br/>
 
-# **Saving a "raw" database**
+#### **Saving a "raw" database**
 
-Save the original database containing the results of all data quality tests appended in separate columns. You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format.
+Save the original database containing the results of all data quality tests appended in separate columns. You can use [qs::qread()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 check_time %>%
@@ -171,7 +171,7 @@ check_time %>%
             here::here("Output", "Intermediate", "04_time_raw_database.csv"))
 ```
 
-# **Filtering the database**
+#### **Filtering the database**
 
 Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all modules of the *bdc* package to get a "clean", "fitness-for-use" database. Note that **25%** (45 out of 180 records) of original records were considered "fitness-for-use" after the data-cleaning process.
 
@@ -182,9 +182,9 @@ output <-
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 ```
 
-# **Saving a clean "fitness-for-use" database**
+#### **Saving a clean "fitness-for-use" database**
 
-You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format.
+You can use [qs::qread()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 output %>%

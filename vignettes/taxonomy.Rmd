@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 library(bdc)
 ```
 
-# **Introduction**
+#### **Introduction**
 
 The combination of large datasets from several sources requires careful harmonization of taxon names. Non-standardized, incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The *bdc* package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic dataases**. The taxonomic harmonization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
 
@@ -55,21 +55,11 @@ The taxonomic harmonization is based on one taxonomic database chosen by the use
 
 Note that some taxonomic databases may be *momentarily unavailable* in taxadb. Check ?bdc_query_names_taxadb for a list of available taxonomic databases.
 
-# **Installation**
+#### **Installation**
 
 Check [**here**](https://brunobrr.github.io/bdc/#installation) how to install the bdc package.
 
-⚠️**IMPORTANT:**
-
-*taxadb* package is momentarily out of CRAN. **Please, manually install the development version of *taxadb* directly from GitHub using**
-
-```{r eval=FALSE}
-# install.packages("devtools")
-devtools::install_github("ropensci/taxadb")
-library(taxadb)
-```
-
-# **Reading the database**
+#### **Reading the database**
 
 Read the database created in the [**Pre-filter**](https://brunobrr.github.io/bdc/articles/prefilter.html) module of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the package (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)).
 
@@ -89,7 +79,7 @@ database <-
   )
 ```
 
-# **Clean and parse species names**
+#### **Clean and parse species names**
 
 Scientific names improperly formatted usually cannot be matched with valid names. To solve this issue, we developed the *bdc_clean_name* containing functionalities to **unify writing style of scientific names**. This optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to:
 
@@ -148,7 +138,7 @@ parse_names <-
 database <- dplyr::bind_cols(database, parse_names)
 ```
 
-# **Names harmonization**
+#### **Names harmonization**
 
 The taxonomic harmonization is based upon **one** of those taxonomic authorities previously mentioned. It starts with creating a local database by downloading, extracting, and importing the taxonomic database informed by users using the *taxadb* package. The download may take some time, depending on the internet connection.
 
@@ -203,7 +193,7 @@ database <-
   dplyr::bind_cols(., query_names)
 ```
 
-# **Report**
+#### **Report**
 
 The report is based on the **column notes** containing the results of the name harmonization process. The notes can be grouped into two categories: accepted names and those with a taxonomic issue or warning, needing further inspections. Accepted names are returned as "valid" in the column "Description". The report can be automatically saved if `save_report = TRUE.`
 
@@ -237,7 +227,7 @@ DT::datatable(
 )
 ```
 
-# **Unresolved names**
+#### **Unresolved names**
 
 It is also possible to filter out records with taxonomic status different from "accepted". Such records may be potentially resolved manually.
 
@@ -256,7 +246,7 @@ unresolved_names %>%
   readr::write_csv(., here::here("Output/Check/02_unresolved_names.csv"))
 ```
 
-# **Filtering the database**
+#### **Filtering the database**
 
 It is possible to remove records with unresolved or invalid names to get a 'clean' database. However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal modules of the package), potentially erroneous or suspect records will be removed in the final module of the package.
 
@@ -269,9 +259,9 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 #   )
 ```
 
-# **Saving the database**
+#### **Saving the database**
 
-You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format.
+You can use [qs::qread()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 database %>%

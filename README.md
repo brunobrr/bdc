@@ -3,7 +3,7 @@
 
 # ***bdc*** <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" width="155"/></a>
 
-## **An R toolkit for standardizing, integrating, and cleaning biodiversity data**
+## **A toolkit for standardizing, integrating, and cleaning biodiversity data**
 
 <!-- badges: start -->
 
@@ -11,6 +11,7 @@
 [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/bdc)](https://CRAN.R-project.org/package=bdc)
+
 <!-- badges: end -->
 
 #### **Overview**
@@ -68,7 +69,7 @@ standardize country names).
 -   `bdc_coordinates_empty()` Identification of records lacking
     information on latitude or longitude
 -   `bdc_coordinates_outOfRange()` Identification of records with
-    out-of-range coordinates (latitude > 90 or -90; longitude >180 or
+    out-of-range coordinates (latitude \> 90 or -90; longitude \>180 or
     -180)
 -   `bdc_basisOfRecords_notStandard()` Identification of records from
     doubtful sources (e.g., fossil or machine observation) impossible to
@@ -170,11 +171,10 @@ install.packages("remotes")
 remotes::install_github("brunobrr/bdc")
 ```
 
-Load the packages with:
+Load the package with:
 
 ``` r
 library(bdc)
-library(taxadb)
 ```
 
 #### **Package website**

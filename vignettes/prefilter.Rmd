@@ -26,15 +26,15 @@ library(bdc)
 #   remotes::install_github("ropensci/rnaturalearthhires")
 ```
 
-# **Introduction**
+#### **Introduction**
 
 Large and heterogeneous datasets may contain thousands of records missing spatial or taxonomic information (partially or entirely) as well as several records outside a region of interest or from doubtful sources. Such lower quality data are not fit for use in many research applications without prior amendments. The 'Pre-filter' module contains a series of **tests to detect, remove, and, whenever, possible, correct such erroneous or suspect records**.
 
-# **Installation**
+#### **Installation**
 
 Check [**here**](https://brunobrr.github.io/bdc/#installation) how to install the bdc package.
 
-# **Reading the database**
+#### **Reading the database**
 
 Read the merged database created in the module **Standardization and integration of different datasets** of the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the functions (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)).
 
@@ -67,7 +67,7 @@ DT::datatable(
 
 The results of the **VALIDATION** test used to flag data quality are appended in separate fields in this database and retrieved as TRUE ( ✅ ok ) or **FALSE** (❌check carefully ).
 
-# **1 - Records missing species names**
+#### **1 - Records missing species names**
 
 *VALIDATION*. Flag records missing species names.
 
@@ -82,7 +82,7 @@ check_pf <-
 #> One column was added to the database.
 ```
 
-# **2 - Records lacking information on geographic coordinates**
+#### **2 - Records lacking information on geographic coordinates**
 
 *VALIDATION*. Flag records missing partial or complete information on geographic coordinates.
 
@@ -97,7 +97,7 @@ check_pf <- bdc_coordinates_empty(
 #> One column was added to the database.
 ```
 
-# **3 - Records with out-of-range coordinates**
+#### **3 - Records with out-of-range coordinates**
 
 *VALIDATION*. This test flags records with out-of-range coordinates: latitude \> 90 or -90; longitude \>180 or -180.
 
@@ -112,7 +112,7 @@ check_pf <- bdc_coordinates_outOfRange(
 #> One column was added to the database.
 ```
 
-# **4 - Records from doubtful sources**
+#### **4 - Records from doubtful sources**
 
 *VALIDATION*. This test flags records from doubtful source. For example, records from drawings, photographs, or multimedia objects, fossil records, among others.
 
@@ -133,7 +133,7 @@ check_pf <- bdc_basisOfRecords_notStandard(
 #> One column was added to the database.
 ```
 
-# **5 - Getting country names from valid coordinates**
+#### **5 - Getting country names from valid coordinates**
 
 *ENRICHMENT*. Deriving country names for records missing country names.
 
@@ -148,7 +148,7 @@ check_pf <- bdc_country_from_coordinates(
 #> Country names were added to 27 records.
 ```
 
-# **6 - Standardizing country names and getting country code information**
+#### **6 - Standardizing country names and getting country code information**
 
 *ENRICHMENT*. Country names are standardized against a list of country names in several languages retrieved from Wikipedia.
 
@@ -171,7 +171,7 @@ check_pf <- bdc_country_standardized(
 #> Two columns ('country_suggested' and 'countryCode') were added to the database.
 ```
 
-# **7 - Correcting latitude and longitude transposed**
+#### **7 - Correcting latitude and longitude transposed**
 
 *AMENDMENT*. The mismatch between informed country and coordinates can be the result of negative or transposed coordinates. Once detected a mismatch, different coordinate transformations are made to correct the country and coordinates mismatch. Verbatim coordinates are then replaced by the rectified ones in the returned database (a database containing verbatim and corrected coordinates can be created in the "Output" folder if `save_outputs = TRUE`). Records near countries coastline are not tested to avoid incur in false positives.
 
@@ -196,7 +196,7 @@ check_pf <-
 #> No latitude and longitude were transposed
 ```
 
-# **8 - Records outside a region of interest**
+#### **8 - Records outside a region of interest**
 
 *VALIDATION*. Records outside one or multiple reference countries; i.e., records in other countries or at an informed distance from the coast (e.g., in the ocean). This last step avoids flagging as invalid records close to country limits (e.g., records of coast or marshland species).
 
@@ -218,7 +218,7 @@ check_pf <-
 #> One column was added to the database.
 ```
 
-# **9 - Identifying records not geo-referenced but containing locality information**
+#### **9 - Identifying records not geo-referenced but containing locality information**
 
 *ENRICHMENT*. Coordinates can be derived from a detailed description of the locality associated with records in a process called retrospective geo-referencing.
 
@@ -235,7 +235,7 @@ xyFromLocality <- bdc_coordinates_from_locality(
 #> Found 38 records missing or with invalid coordinates but with potentially useful information on locality
 ```
 
-# **Report**
+#### **Report**
 
 Here we create a column named ".summary" summing up the results of all **VALIDATION** tests (those starting with "."). This column is **FALSE** when a record is flagged as FALSE in any data quality test (i.e. potentially invalid or suspect record).
 
@@ -292,7 +292,7 @@ DT::datatable(
 )
 ```
 
-# **Figures**
+#### **Figures**
 
 Here we create figures (bar plots and maps) to make the interpretation of the results of data quality tests easier. See some examples below. Figures can be automatically saved if `save_figures = TRUE.`
 
@@ -315,7 +315,7 @@ figures$.coordinates_country_inconsistent
 
 <br/>
 
-# **Filtering the database**
+#### **Filtering the database**
 
 We can remove records flagged as erroneous or suspect to obtain a "clean" database. Records missing names or coordinates, outside a region of interest or from distrustful sources are rarely suitable for biodiversity analyses. We can use the column **.summary** to filter valid records passing in all tests (i.e., flagged as "TRUE"). Next, we use the *bdc_filter_out_falgs* function to remove all tests' columns (that is, those starting with ".").
 
@@ -330,9 +330,9 @@ output <-
 #> .scientificName_empty, .coordinates_empty, .coordinates_outOfRange, .basisOfRecords_notStandard, .coordinates_country_inconsistent, .summary
 ```
 
-# **Saving the database**
+#### **Saving the database**
 
-You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format
+You can use [qs::qread()]{.underline} instead of write_csv to save a large database in a compressed format
 
 ```{r eval=FALSE}
 output %>%

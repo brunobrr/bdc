@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 library(bdc)
 ```
 
-# **Introduction**
+#### **Introduction**
 
 To avoid reinventing the wheel, the proposed data-cleaning workflow uses functions for other existing packages. In this module, we used one test of the *bdc* and other tests of the *R* package [CoordinateCleaner](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152) **to flag potentially erroneous, suspect, or imprecise geographical coordinates** based on geographic gazetteers and metadata. It includes a series of tests for identifying records assigned to capitals, provinces, and country centroids, coordinates in urban areas, around biodiversity institutions, or GBIF headquarters. It also contains tests to flag coordinates below a determined precision (e.g., 100 km), zero or equal coordinates, and duplicated records (i.e., equal taxa name and coordinates).
 
@@ -34,11 +34,11 @@ Note that we do not use the "seas" test to remove records in the ocean because s
 
 The results of the VALIDATION test used to flag data quality are appended in separate fields in this database and retrieved as TRUE (✅ ok) or FALSE (❌check carefully).
 
-# **Installation**
+#### **Installation**
 
 Check [**here**](https://brunobrr.github.io/bdc/#installation) how to install the bdc package.
 
-# Reading the database
+#### Reading the database
 
 Reading the database created in the [**taxonomy**](https://brunobrr.github.io/bdc/articles/taxonomy.html) module the *bdc* package. It is also possible to read any datasets containing the **required** fields to run the function (more details [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)).
 
@@ -52,7 +52,7 @@ database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/02_taxonomy_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-# **Flagging common spatial issues**
+#### **Flagging common spatial issues**
 
 This function identifyes records with a coordinate precision below a specified number of decimal places. For example, the precision of a coordinate with 1 decimal place is 11.132 km at the equator, i.e., the scale of a large city.
 
@@ -171,7 +171,7 @@ DT::datatable(
 )
 ```
 
-# **Mapping spatial errors**
+#### **Mapping spatial errors**
 
 It is possible to map a column containing the results of **one spatial test each time**, for example records in country centroids (column ".cen"). Besides, we can use the column **".summary"** to map all records flagged as potentially problematic (i.e., FALSE).
 
@@ -189,7 +189,7 @@ check_space %>%
 
 ![Records flagged as potentially problematic](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/map_summary_space_vignette.png)
 
-# **Report**
+#### **Report**
 
 Creating a report summarizing the results of all tests. The report can be automatically saved if `save_report = TRUE.`
 
@@ -223,7 +223,7 @@ DT::datatable(
 )
 ```
 
-# **Figures**
+#### **Figures**
 
 Here we create figures (bar plots, maps, and histograms) to make the interpretation of the results of data quality tests easier. Figures can be automatically saved if `save_figures = TRUE.`
 
@@ -244,7 +244,7 @@ figures$.rou
 
 ![Summary of all tests](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/space_summary_all_tests_BAR.png)
 
-# **Filtering the database**
+#### **Filtering the database**
 
 It is possible to remove flagged records (potentially problematic ones) to get a 'clean' database (i.e., without test columns starting with "."). However, to ensure that all records will be evaluated in all the data quality tests (i.e., tests of the taxonomic, spatial, and temporal module of the package), potentially erroneous or suspect records will be removed in the final module of the package.
 
@@ -255,9 +255,9 @@ It is possible to remove flagged records (potentially problematic ones) to get a
 #   bdc_filter_out_flags(data = ., col_to_remove = "all")
 ```
 
-# **Saving the database**
+#### **Saving the database**
 
-You can use [qs::qread()]{.ul} instead of write_csv to save a large database in a compressed format.
+You can use [qs::qread()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 # use qs::qread() to save the database in a compressed format

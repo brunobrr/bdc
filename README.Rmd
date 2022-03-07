@@ -15,11 +15,12 @@ knitr::opts_chunk$set(
 
 # ***bdc*** <a href='https://github.com/brunobrr/bdc'><img src="https://raw.githubusercontent.com/brunobrr/bdc/master/man/figures/logo.png" align="right" width="155"/></a>
 
-## **An R toolkit for standardizing, integrating, and cleaning biodiversity data**
+## **A toolkit for standardizing, integrating, and cleaning biodiversity data**
 
 <!-- badges: start -->
-[![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html) [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
-[![CRAN status](https://www.r-pkg.org/badges/version/bdc)](https://CRAN.R-project.org/package=bdc)
+
+[![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html) [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml) [![CRAN status](https://www.r-pkg.org/badges/version/bdc)](https://CRAN.R-project.org/package=bdc)
+
 <!-- badges: end -->
 
 #### **Overview**
@@ -111,11 +112,10 @@ install.packages("remotes")
 remotes::install_github("brunobrr/bdc")
 ```
 
-Load the packages with:
+Load the package with:
 
 ```{r, message=FALSE, warning=FALSE,echo=TRUE,eval=TRUE}
 library(bdc)
-library(taxadb)
 ```
 
 #### **Package website**
