@@ -9,7 +9,8 @@
 
 [![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
-
+[![CRAN
+status](https://www.r-pkg.org/badges/version/bdc)](https://CRAN.R-project.org/package=bdc)
 <!-- badges: end -->
 
 #### **Overview**
@@ -67,8 +68,8 @@ standardize country names).
 -   `bdc_coordinates_empty()` Identification of records lacking
     information on latitude or longitude
 -   `bdc_coordinates_outOfRange()` Identification of records with
-    out-of-range coordinates (latitude &gt; 90 or -90; longitude &gt;180
-    or -180)
+    out-of-range coordinates (latitude > 90 or -90; longitude >180 or
+    -180)
 -   `bdc_basisOfRecords_notStandard()` Identification of records from
     doubtful sources (e.g., fossil or machine observation) impossible to
     interpret and not compatible with Darwin Core recommended vocabulary
@@ -153,17 +154,6 @@ ii) figures, and iii) data-quality reports.
     “.summary”)
 
 #### **Installation**
-
-:warning:**IMPORTANT:**
-
-*bdc* function for taxonomic names harmonization dependent upon the
-*taxadb* package, which is momentarily out of CRAN. **Please, manually
-install the development version of *taxadb* directly from GitHub using**
-
-``` r
-# install.packages("devtools")
-devtools::install_github("ropensci/taxadb")
-```
 
 You can install *bdc* from CRAN
 
