@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 library(bdc)
 ```
 
-#### **Introduction**
+# **Introduction**
 
 The first step of the *bdc* package handles the harmonization of heterogeneous datasets in a standard format simply and efficiently. How is this accomplished? Basically, by replacing the headers of original datasets with standardized terms. To do so, you have to fill out a **configuration table** to indicate which field names (i.e., column headers) of each original dataset match a list of **Darwin Core standard terms**.
 
@@ -45,11 +45,11 @@ Next, copy the path in our computer where the datasets were saved. This path wil
 -   Names of original datasets without a corresponding DarwinCore term must be filled as **NA** (not available);
 -   The function is **adjustable** so that you can insert other fields in the configuration table according to your needs. In such cases, we strongly recommend that the added terms follow the Darwin Core standards.
 
-#### **Installation**
+# **Installation**
 
-Check [**here**](https://brunobrr.github.io/bdc/) how to install the bdc package
+Check [**here**](https://brunobrr.github.io/bdc/#installation) how to install the bdc package.
 
-#### **Read the configuration table**
+# **Read the configuration table**
 
 Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. Next, indicate the path to the folder containg the example datasets in the configuration table.
 
@@ -88,27 +88,27 @@ DT::datatable(
 )
 ```
 
-#### **Standardization and integration of datasets**
+# **Standardization and integration of datasets**
 
 Now, let's merge the different datasets into a standardized database. Note that the standardized database integrating all dataset can be saved in the folder **"Output/Intermediate" as "00_merged_database"** if `save_database = TRUE` . The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-database <- 
+database <-
 bdc_standardize_datasets(metadata = metadata,
                          format = "csv",
-                         overwrite = TRUE, 
+                         overwrite = TRUE,
                          save_database = TRUE)
 
-#>  0sStandardizing AT_EPIPHYTES file                  
-#>  0s 0sStandardizing BIEN file              
-#>  0s 0sStandardizing DRYFLOR file                                                         
-#>  0s 0sStandardizing GBIF file       
-#>  0s 0sStandardizing ICMBIO file           
-#>  0s 0sStandardizing IDIGBIO file              
-#>  0s 0sStandardizing NEOTROPTREE file              
-#>  0s 0sStandardizing SIBBR file               
+#>  0sStandardizing AT_EPIPHYTES file
+#>  0s 0sStandardizing BIEN file
+#>  0s 0sStandardizing DRYFLOR file
+#>  0s 0sStandardizing GBIF file
+#>  0s 0sStandardizing ICMBIO file
+#>  0s 0sStandardizing IDIGBIO file
+#>  0s 0sStandardizing NEOTROPTREE file
+#>  0s 0sStandardizing SIBBR file
 #>  0s 0sStandardizing SPECIESLINK file
-#>  
+#>
 #> C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Intermediate/00_merged_database.csv was created
 ```
 
