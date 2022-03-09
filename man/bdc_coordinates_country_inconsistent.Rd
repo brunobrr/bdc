@@ -7,6 +7,7 @@
 bdc_coordinates_country_inconsistent(
   data,
   country_name,
+  country = "country_suggested",
   lat = "decimalLatitude",
   lon = "decimalLongitude",
   dist = 0.1
@@ -16,7 +17,10 @@ bdc_coordinates_country_inconsistent(
 \item{data}{data.frame. Containing longitude and latitude. Coordinates must
 be expressed in decimal degrees and WGS84.}
 
-\item{country_name}{character string. Name of the country to considered.}
+\item{country_name}{character string. Name of the country or countries to be considered.}
+
+\item{country}{character string. The column name with the country assignment of each record. It is
+recommended use a column with corrected and homogenized country names. Default = "country_suggested".}
 
 \item{lat}{character string. The column name with the latitude coordinates.
 Default = “decimallatitude”.}
@@ -50,6 +54,7 @@ records within the buffer but in other countries are flagged as invalid
 \examples{
 \dontrun{
 x <- data.frame(
+  country = "Brazil",
   decimalLongitude = c(-40.6003, -39.6, -20.5243, NA),
   decimalLatitude = c(19.9358, -13.016667, NA, "")
   )
@@ -57,6 +62,7 @@ x <- data.frame(
 bdc_coordinates_country_inconsistent(
   data = x,
   country_name = "Brazil",
+  country = "country",
   lon = "decimalLongitude",
   lat = "decimalLatitude",
   dist = 0.1 
