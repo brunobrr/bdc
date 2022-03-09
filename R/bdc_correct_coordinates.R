@@ -88,8 +88,7 @@ bdc_correct_coordinates <-
       })
     })
 
-    summary(occ_country)
-
+    
     # Separate those records outside their countries
     occ_country <-
       occ_country %>%
@@ -98,8 +97,13 @@ bdc_correct_coordinates <-
 
     # now this database have all those records with potential error that be
     # corrected
-    message(occ_country %>% nrow(), " ocurrences will be tested")
-
+    message(occ_country %>% nrow(), " occurrences will be tested")
+    
+    # If occ_country have no data 
+    if(nrow(occ_country)==0){
+      return(NULL)
+    }
+    
     # Split database
     occ_country <-
       split(occ_country, occ_country[cntr_iso2])
@@ -129,6 +133,7 @@ bdc_correct_coordinates <-
 
     # elimination from the list those countries without correction
     filt <- sapply(coord_test, function(x) nrow(x) > 0)
+    
     if(any(filt)){
     coord_test <- coord_test[filt]
 
@@ -177,6 +182,6 @@ bdc_correct_coordinates <-
 
     return(coord_test)
     }else{
-      NULL
+      return(NULL)
     }
   }
