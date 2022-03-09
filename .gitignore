@@ -18,9 +18,9 @@ README.html
 tests/testthat/Rplots.pdf
 /doc/
 /Meta/
-check.out
-testthat.out
-gp.out
+out-check.txt
+out-testthat.txt
+out-gp.txt
 .DS_Store
 .Rhistory
 .Rapp.history
