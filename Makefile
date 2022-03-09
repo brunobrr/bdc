@@ -14,13 +14,13 @@ build: document ## build package
 	$(R) "devtools::build(vignettes = FALSE)"
 
 check: ## check package
-	$(R) "devtools::check(cran = TRUE, vignettes = FALSE)" &> check.out
+	$(R) "devtools::check(cran = TRUE, vignettes = FALSE)" &> out-check.txt
 
 styler: ## styler package
 	$(R) "styler::style_dir('.')"
 
 tests: ## run test
-	$(R) "Sys.setenv('TESTTHAT_MAX_FAILS' = Inf); devtools::test()" &> testthat.out
+	$(R) "Sys.setenv('TESTTHAT_MAX_FAILS' = Inf); devtools::test()" &> out-testthat.txt
 
 build_site: ## build pkgdown site
 	$(R) "pkgdown::build_site()"
@@ -56,7 +56,7 @@ eg:     ## run examples
 	$(R) "devtools::run_examples(run_dontrun = TRUE)"
 
 gp:     ## get goodpractice' suggestions
-	$(R) "goodpractice::gp()" &> gp.out
+	$(R) "goodpractice::gp()" &> out-gp.txt
 
 all: install tests check ## run install_deps, build, install, tests, and check
 

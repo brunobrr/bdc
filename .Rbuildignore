@@ -20,8 +20,8 @@ pkgdown
 ^doc$
 ^Meta$
 lastMiKTeXException
-check.out
-testthat.out
-gp.out
+out-check.txt
+out-testthat.txt
+out-gp.txt
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$

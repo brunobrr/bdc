@@ -23,7 +23,7 @@
 #' information.
 #'
 #' @importFrom CoordinateCleaner cc_val cc_sea
-#' @importFrom dplyr mutate filter select
+#' @importFrom dplyr mutate filter select rename full_join
 #' @importFrom rnaturalearth ne_countries
 #' @importFrom sf st_as_sf st_set_crs st_crs st_intersection
 #'
@@ -35,7 +35,7 @@
 #'   decimalLatitude = c(-22.9834, -39.857030, -17.06811, -46.69778),
 #'   decimalLongitude = c(-69.095, -68.443588, 37.438108, -13.82444),
 #'   country = c("", NA, NA, "Brazil"))
-#' 
+#'
 #' bdc_country_from_coordinates(
 #'   data = x,
 #'   lat = "decimalLatitude",
@@ -48,15 +48,15 @@ bdc_country_from_coordinates <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            country = "country") {
-    .data <- . <- name_long <- id <- geometry <- NULL
+    .data <- . <- name_long <- id_temp <- geometry <- NULL
 
     suppressWarnings({
       check_require_cran("rnaturalearth")
       check_require_github("ropensci/rnaturalearthdata")
     })
 
-    # create an id
-    data$id <- 1:nrow(data)
+    # create an id_temp
+    data$id_temp <- 1:nrow(data)
 
     minimum_colnames <- c(lat, lon)
 
@@ -123,18 +123,22 @@ bdc_country_from_coordinates <-
         suppressMessages({
           ext_country <-
             data_sp %>%
-            dplyr::select(id, geometry) %>%
+            dplyr::select(id_temp, geometry) %>%
             sf::st_intersection(., worldmap)
         })
       })
 
       ext_country$geometry <- NULL
-      w <- which(data$id %in% ext_country$id)
+      w <- which(data$id_temp %in% ext_country$id_temp)
 
-      data[w, "country"] <- ext_country$name_long
+      data <-
+        dplyr::full_join(data, ext_country, by = "id_temp") %>%
+        dplyr::select(-country, -id_temp) %>%
+        dplyr::rename(country = name_long)
+
     }
 
-    data <- data %>% dplyr::select(-id)
+    data <- data %>% dplyr::select(-id_temp)
 
     if (has_country) {
       message(
