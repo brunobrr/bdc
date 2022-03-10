@@ -7,6 +7,8 @@
 #' @param sci_names character string. The column name with the species
 #' scientific name. Default = "scientificName".
 #'
+#' @importFrom dplyr as_tibble
+#' 
 #' @details This test identifies records missing scientific names (i.e., empty
 #' or not applicable [NA] names)
 #'
@@ -43,5 +45,5 @@ bdc_scientificName_empty <-
       )
     )
 
-    return(df)
+    return(dplyr::as_tibble(df))
   }

@@ -27,7 +27,7 @@ of each record. Default = "country". If no column name is provided a new
 column "country" is created.}
 }
 \value{
-A data.frame containing country names for records missing such
+A tibble containing country names for records missing such
 information.
 }
 \description{
