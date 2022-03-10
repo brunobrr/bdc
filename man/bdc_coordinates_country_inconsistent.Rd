@@ -17,10 +17,13 @@ bdc_coordinates_country_inconsistent(
 \item{data}{data.frame. Containing longitude and latitude. Coordinates must
 be expressed in decimal degrees and WGS84.}
 
-\item{country_name}{character string. Name of the country or countries to be considered.}
+\item{country_name}{character string. Name of the country or countries to be
+considered.}
 
-\item{country}{character string. The column name with the country assignment of each record. It is
-recommended use a column with corrected and homogenized country names. Default = "country_suggested".}
+\item{country}{character string. The column name with the country assignment
+of each record. It is
+recommended use a column with corrected and homogenized country names.
+Default = "country_suggested".}
 
 \item{lat}{character string. The column name with the latitude coordinates.
 Default = “decimallatitude”.}
@@ -44,24 +47,26 @@ records in mangroves, marshes, estuaries, and records with low
 coordinate precision are not flagged as invalid.
 }
 \details{
-The distance informed in the argument 'dist' is used to create a
+Multiple countries can be informed, but they are tested separately.
+The distance reported in the argument 'dist' is used to create a
 buffer around the reference country. Records within the reference country
 or at a specified distance from the coastline of the reference country
 (i.e., records within the buffer) are flagged as valid (TRUE). Note that
 records within the buffer but in other countries are flagged as invalid
-(FALSE).
+(FALSE). Records with invalid (e.g., NA or empty) and out-of-range
+coordinates are not tested and returned as TRUE.
 }
 \examples{
 \dontrun{
 x <- data.frame(
-  country = "Brazil",
-  decimalLongitude = c(-40.6003, -39.6, -20.5243, NA),
-  decimalLatitude = c(19.9358, -13.016667, NA, "")
-  )
-  
+  country = c("Brazil", "Brazil", "Bolivia", "Argentina", "Peru"),
+  decimalLongitude = c(-40.6003, -39.6, -77.689288, NA, -76.352930),
+  decimalLatitude = c(-19.9358, -13.016667, -20.5243, -35.345940, -11.851872)
+)
+
 bdc_coordinates_country_inconsistent(
   data = x,
-  country_name = "Brazil",
+  country_name = c("Brazil", "Peru", "Argentina"),
   country = "country",
   lon = "decimalLongitude",
   lat = "decimalLatitude",

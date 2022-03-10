@@ -191,7 +191,7 @@ check_pf <-
 
 #> Correcting latitude and longitude transposed
 #>
-#> 15 ocurrences will be tested
+#> 15 occurrences will be tested
 #> Processing occurrences from: BR (15)
 #> No latitude and longitude were transposed
 ```
