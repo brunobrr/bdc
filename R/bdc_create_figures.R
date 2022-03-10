@@ -84,6 +84,18 @@ bdc_create_figures <-
       choices = c("prefilter", "space", "time")
     )
 
+    temp <- data %>% dplyr::select(tidyselect::starts_with("."))
+    
+    if (all((colSums(temp, na.rm = TRUE) - nrow(temp)) == 0)) {
+      message("Figures were not created.\nNo records flagged as 'FALSE' in columns starting with '.'")
+    }
+    
+    if (ncol(temp) == 0) {
+      message(
+        "Figures were not created.\nAt least one column 'starting with '.' containing results of data-quality tests must be provided"
+      )
+    }
+    
     bdc_create_dir()
 
     # Formatting y axis of ggplot bar
@@ -312,7 +324,7 @@ bdc_create_figures <-
       }
 
       if (length(w_bar) != 0) {
-        w <- which(colSums(!data[{{ w_bar }}]) == 0)
+        w <- which(colSums(!data[{{ w_bar }}], na.rm = TRUE) == 0)
 
         if (length(w) != 0) {
           message(
@@ -322,7 +334,7 @@ bdc_create_figures <-
           w_bar <- w_bar[-w]
         }
 
-        if (nrow(n_record_database) != 1) {
+        if (nrow(n_record_database) != 1 & length(w_bar) != 0) {
           for (i in 1:length(w_bar)) {
             bp <- 
             create_barplot_database(
@@ -338,17 +350,17 @@ bdc_create_figures <-
         }
         
         # summary of all tests
-        
-        bp_all <- 
-        create_barplot_all_tests(
-          data = data,
-          column_to_map = "summary_all_tests",
-          workflow_step = workflow_step
-        )
-        
-        bp_all_list <- list(bp_all)
-        names(bp_all_list) <- "summary_all_tests"
-        res <- c(res, bp_all_list)
+        if (nrow(n_record_database) != 1 & length(w_bar) != 0) {
+          bp_all <-
+            create_barplot_all_tests(
+              data = data,
+              column_to_map = "summary_all_tests",
+              workflow_step = workflow_step)
+          
+          bp_all_list <- list(bp_all)
+          names(bp_all_list) <- "summary_all_tests"
+          res <- c(res, bp_all_list)
+        }
         
       }
 
@@ -423,7 +435,7 @@ bdc_create_figures <-
 
       # Create maps of transposed and corrected coordinates
       if (length(w_tranposed) == 0 & workflow_step == "prefilter") {
-        message("file 'Output/Check/01_coordinates_transposed.csv' not found")
+        message("file 'Output/Check/01_coordinates_transposed.csv' not found. Maps showing the results of bdc_coordinates_transposed test will not be created")
       }
 
       if (length(w_tranposed) != 0) {

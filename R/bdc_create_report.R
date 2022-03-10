@@ -65,6 +65,18 @@ bdc_create_report <-
     match.arg(arg = workflow_step,
               choices = c("prefilter", "taxonomy", "space", "time"))
     
+    temp <- data %>% dplyr::select(tidyselect::starts_with("."))
+    
+    if (all((colSums(temp, na.rm = TRUE) - nrow(temp)) == 0)) {
+      message("Figures were not created.\nNo records flagged as 'FALSE' in columns starting with '.'")
+    }
+    
+    if (ncol(temp) == 0) {
+      message(
+        "Figures were not created.\nAt least one column 'starting with '.' containing results of data-quality tests must be provided"
+      )
+    }
+    
     # prefilter
     if (workflow_step == "prefilter") {
       tests <-
