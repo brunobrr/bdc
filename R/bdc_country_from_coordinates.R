@@ -19,11 +19,11 @@
 #' using a high-quality map of the world (rnaturalearth package). No
 #' country name is added to records whose coordinates are in the sea.
 #'
-#' @return A data.frame containing country names for records missing such
+#' @return A tibble containing country names for records missing such
 #' information.
 #'
 #' @importFrom CoordinateCleaner cc_val cc_sea
-#' @importFrom dplyr mutate filter select rename full_join
+#' @importFrom dplyr mutate filter select left_join as_tibble 
 #' @importFrom rnaturalearth ne_countries
 #' @importFrom sf st_as_sf st_set_crs st_crs st_intersection
 #'
@@ -94,7 +94,7 @@ bdc_country_from_coordinates <-
     if (nrow(data_no_country) > 0) {
       # converts coordinates columns to spatial points
       suppressWarnings({
-        data_sp <-
+        data_no_country <-
           CoordinateCleaner::cc_val(
             x = data_no_country,
             lon = lon,
@@ -122,29 +122,26 @@ bdc_country_from_coordinates <-
       suppressWarnings({
         suppressMessages({
           ext_country <-
-            data_sp %>%
+            data_no_country %>%
             dplyr::select(id_temp, geometry) %>%
             sf::st_intersection(., worldmap)
         })
       })
 
       ext_country$geometry <- NULL
-      w <- which(data$id_temp %in% ext_country$id_temp)
-
-      data <-
-        dplyr::full_join(data, ext_country, by = "id_temp") %>%
-        dplyr::select(-country, -id_temp) %>%
-        dplyr::rename(country = name_long)
-
-    }
-
-    data <- data %>% dplyr::select(-id_temp)
+      
+      res <- 
+        dplyr::left_join(data_no_country, ext_country, by = "id_temp")
+      
+      id_replace <- res$id_temp
+      data[id_replace, "country"] <- res$name_long
+      data <- data %>% dplyr::select(-id_temp)
 
     if (has_country) {
       message(
         paste(
           "\nbdc_country_from_coordinates:\nCountry names were added to",
-          length(w),
+          nrow(data_no_country),
           "records.\n"
         )
       )
@@ -152,11 +149,12 @@ bdc_country_from_coordinates <-
       message(
         paste(
           "\nbdc_country_from_coordinates:\nCountry names were added to",
-          length(w),
+          nrow(data_no_country),
           "records in a new collumn named 'country'.\n"
         )
       )
     }
 
-    return(data)
+    return(dplyr::as_tibble(data))
+    }
   }

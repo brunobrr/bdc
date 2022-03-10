@@ -11,7 +11,7 @@ test_that("it can return country names", {
     country = "country"
   )
 
-  expect_equal(r$country, c("Bolivia", NA, "Brazil", NA, NA))
+  expect_equal(r$country, c("Bolivia", NA, "Brazil", "Brazil", ""))
 
   expect_error(bdc_country_from_coordinates(
     data = x,
@@ -40,16 +40,22 @@ Country names were added to 4 records in a new collumn named 'country'."
   )
 })
 
+decimalLatitude <- c(62.587273591263624, 66.62443625769812, 60.91266175537055, 59.166132649248496)
+decimalLongitude <- c(30.81351622904529, 21.219645421093123, 10.65224213789756, 25.883878594365648)
+country <- c("","","","")
+data <- data.frame(decimalLatitude, decimalLongitude, country)
+
+result <- bdc_country_from_coordinates(data)
+
 test_that("bdc_country_from_coordinates keeps rows order", {
-
-  decimalLatitude <- c(62.587273591263624, 66.62443625769812, 60.91266175537055, 59.166132649248496)
-  decimalLongitude <- c(30.81351622904529, 21.219645421093123, 10.65224213789756, 25.883878594365648)
-  country <- c("","","","")
-  data <- data.frame(decimalLatitude, decimalLongitude, country)
-
-  result <- bdc_country_from_coordinates(data)
 
   expect_equal(result$decimalLatitude, decimalLatitude)
   expect_equal(result$decimalLongitude, decimalLongitude)
+  
+})
 
+test_that("bdc_country_from_coordinates correctly assigns country names", {
+  
+  expect_equal(result$country, c("Finland", "Sweden", "Norway", "Estonia"))
+  
 })
