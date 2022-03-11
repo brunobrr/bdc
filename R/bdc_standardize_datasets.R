@@ -18,7 +18,7 @@
 #'
 #' @return A merged data.frame with column names following Darwin Core
 #' terminology.
-#' 
+#'
 #' @importFrom readr read_csv
 #' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
 #' all_of
@@ -62,12 +62,12 @@
 #' \dontrun{
 #' metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv",
 #'             package = "bdc"))
-#'             
-#' db_standardized <- 
+#'
+#' db_standardized <-
 #' bdc_standardize_datasets(
-#'   metadata = metadata, 
-#'   format = "csv", 
-#'   overwrite = TRUE, 
+#'   metadata = metadata,
+#'   format = "csv",
+#'   overwrite = TRUE,
 #'   save_database = FALSE)
 #' }
 bdc_standardize_datasets <-
@@ -76,7 +76,7 @@ bdc_standardize_datasets <-
            overwrite = FALSE,
            save_database = FALSE) {
     fileName <- datasetName <- . <- database_id <- NULL
-    
+
     switch(EXPR = format,
            qs = {
              merged_filename <-
@@ -86,50 +86,50 @@ bdc_standardize_datasets <-
              merged_filename <-
                here::here("Output", "Intermediate", "00_merged_database.csv")
            })
-    
+
     # fs::dir_create(here::here("Output", "Intermediate"))
-    
+
     if (file.exists(merged_filename) & overwrite) {
       unlink(merged_filename)
     }
-    
+
     if (!file.exists(merged_filename)) {
       # save_in_dir <- here::here("data", "temp_datasets", "/")
       save_in_dir <- file.path(tempdir(), "data/temp_datasets", "/")
-      
+
       if (!fs::dir_exists(save_in_dir)) {
         fs::dir_create(save_in_dir)
       }
-      
+
       input_file <-
         metadata %>%
         dplyr::pull(fileName)
-      
+
       for (file_index in seq_along(input_file)) {
         input_filename <-
           metadata %>%
           dplyr::filter(fileName == input_file[file_index]) %>%
           dplyr::pull(fileName)
-        
+
         dataset_name <-
           metadata %>%
           dplyr::filter(fileName == input_file[file_index]) %>%
           dplyr::select(datasetName) %>%
           dplyr::pull()
-        
+
         save_in_filename <-
           paste0(save_in_dir, "standard_", dataset_name, ".", format)
-        
+
         if (!file.exists(save_in_filename) | overwrite == TRUE) {
           base_names <-
             metadata %>%
             dplyr::filter(fileName == input_file[file_index]) %>%
             dplyr::select_if( ~ !is.na(.))
-          
+
           standard_names <-
             base_names %>%
             names(.)
-          
+
           required <- c(
             "datasetName",
             "fileName",
@@ -137,7 +137,7 @@ bdc_standardize_datasets <-
             "decimalLatitude",
             "decimalLongitude"
           )
-          
+
           if (!(required %in% standard_names %>% all())) {
             stop(
               paste(
@@ -148,14 +148,14 @@ bdc_standardize_datasets <-
               )
             )
           }
-          
+
           basename_names <- base_names %>%
             dplyr::select(-datasetName, -fileName)
-          
+
           standard_names <-
             basename_names %>%
             names(.)
-          
+
           vector_for_recode <-
             basename_names %>%
             purrr::set_names(standard_names) %>%
@@ -163,7 +163,7 @@ bdc_standardize_datasets <-
               c(.)
             } %>%
             unlist()
-          
+
           imported_raw_dataset <-
             input_file[file_index] %>%
             readr::read_csv(
@@ -172,18 +172,31 @@ bdc_standardize_datasets <-
               n_max = 1,
               show_col_types = F
             )
-          
+
           skip_to_next <- FALSE
-          
+
           error_message <-
             paste(
               "[ERROR]: Column names defined in the metadata do not match column names in the",
               dataset_name,
               "file"
             )
-          
+
           tryCatch(
             if (sum(!vector_for_recode %in% names(imported_raw_dataset)) != 0) {
+              cols_not_in_input <- setdiff(vector_for_recode, names(imported_raw_dataset))
+              if (length(cols_not_in_input) != 0) {
+                message(
+                  "[INFO]: Column(s) ",
+                  knitr::combine_words(paste0("`", cols_not_in_input, "`"), sep = ", ", and = " and ", oxford_comma = FALSE),
+                  " defined in the metadata not present in the ",
+                  dataset_name
+                )
+              }
+              ## cols_not_in_metadata <- setdiff(names(imported_raw_dataset), vector_for_recode)
+              ## if (length(cols_not_in_metadata) != 0) {
+              ##   message("[INFO]: Column(s) ", paste0("`", cols_not_in_metadata, "`", collapse = ", "), " not present in the metadata file.")
+              ## }
               stop(error_message)
             } else {
               standard_dataset <-
@@ -193,13 +206,13 @@ bdc_standardize_datasets <-
                 purrr::set_names(names(vector_for_recode)) %>%
                 dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
                 dplyr::select(database_id, dplyr::everything())
-              
+
               message(paste("Standardizing", base_names$datasetName, "file"))
-              
+
               standard_dataset <-
                 standard_dataset %>%
                 dplyr::mutate_if(is.numeric, as.character)
-              
+
               if (format == "qs") {
                 qs::qsave(
                   standard_dataset,
@@ -229,7 +242,7 @@ bdc_standardize_datasets <-
               skip_to_next <<- TRUE
             }
           )
-          
+
           if (skip_to_next) {
             next
           }
@@ -237,9 +250,9 @@ bdc_standardize_datasets <-
           message(paste(save_in_filename, "already exists!"))
         }
       }
-      
+
       # Concatenate all the resulting standardized databases
-      
+
       if (format == "qs") {
         merged_database <-
           # here::here("data", "temp_datasets") %>%
@@ -253,48 +266,48 @@ bdc_standardize_datasets <-
           fs::dir_ls(regexp = "*.csv") %>%
           purrr::map_dfr( ~ readr::read_csv(.x, col_types = readr::cols(.default = "c")))
       }
-      
+
       merged_database <-
         merged_database %>%
         select_if((function(x)
           any(!is.na(x))))
-      
-      
+
+
       merged_database <-
         merged_database %>%
         select_if((function(x)
           any(!is.na(x))))
-      
+
       # should the database be saved?
       if (format == "qs" & save_database == TRUE & overwrite == TRUE) {
         bdc_create_dir()
         qs::qsave(merged_database, merged_filename)
         message(paste("Standardized database was saved in",merged_filename))
-        
+
       }
-      
+
       if (format == "csv" & save_database == TRUE & overwrite == TRUE) {
         bdc_create_dir()
         readr::write_csv(merged_database, merged_filename)
         message(paste(merged_filename, "was created"))
-        
+
       }
-      
+
       return(merged_database)
-      
+
     } else {
       message(paste(merged_filename, "already exists!"))
-      
+
       # Load an existing database
       if (overwrite == FALSE & format == "csv"){
-        merged_database <- readr::read_csv(merged_filename, 
+        merged_database <- readr::read_csv(merged_filename,
                                            show_col_types = FALSE)
       }
-      
+
       if (overwrite == FALSE & format == "qs"){
         merged_database <- qs::qread(merged_filename)
       }
-      
+
     }
-    
+
   }
