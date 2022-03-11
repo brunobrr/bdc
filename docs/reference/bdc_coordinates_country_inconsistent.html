@@ -89,6 +89,7 @@ coordinate precision are not flagged as invalid.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bdc_coordinates_country_inconsistent</span><span class="op">(</span>
   <span class="va">data</span>,
   <span class="va">country_name</span>,
+  country <span class="op">=</span> <span class="st">"country_suggested"</span>,
   lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
   lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
   dist <span class="op">=</span> <span class="fl">0.1</span>
@@ -101,7 +102,13 @@ coordinate precision are not flagged as invalid.</p>
 <dd><p>data.frame. Containing longitude and latitude. Coordinates must
 be expressed in decimal degrees and WGS84.</p></dd>
 <dt>country_name</dt>
-<dd><p>character string. Name of the country to considered.</p></dd>
+<dd><p>character string. Name of the country or countries to be
+considered.</p></dd>
+<dt>country</dt>
+<dd><p>character string. The column name with the country assignment
+of each record. It is
+recommended use a column with corrected and homogenized country names.
+Default = "country_suggested".</p></dd>
 <dt>lat</dt>
 <dd><p>character string. The column name with the latitude coordinates.
 Default = “decimallatitude”.</p></dd>
@@ -121,12 +128,14 @@ within the boundaries plus a specified distance (if 'dist' is supplied) of
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>The distance informed in the argument 'dist' is used to create a
+    <p>Multiple countries can be informed, but they are tested separately.
+The distance reported in the argument 'dist' is used to create a
 buffer around the reference country. Records within the reference country
 or at a specified distance from the coastline of the reference country
 (i.e., records within the buffer) are flagged as valid (TRUE). Note that
 records within the buffer but in other countries are flagged as invalid
-(FALSE).</p>
+(FALSE). Records with invalid (e.g., NA or empty) and out-of-range
+coordinates are not tested and returned as TRUE.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -144,13 +153,15 @@ records within the buffer but in other countries are flagged as invalid
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">  decimalLongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40.6003</span>, <span class="op">-</span><span class="fl">39.6</span>, <span class="op">-</span><span class="fl">20.5243</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
-<span class="r-in">  decimalLatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">19.9358</span>, <span class="op">-</span><span class="fl">13.016667</span>, <span class="cn">NA</span>, <span class="st">""</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  </span>
+<span class="r-in">  country <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Brazil"</span>, <span class="st">"Bolivia"</span>, <span class="st">"Argentina"</span>, <span class="st">"Peru"</span><span class="op">)</span>,</span>
+<span class="r-in">  decimalLongitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40.6003</span>, <span class="op">-</span><span class="fl">39.6</span>, <span class="op">-</span><span class="fl">77.689288</span>, <span class="cn">NA</span>, <span class="op">-</span><span class="fl">76.352930</span><span class="op">)</span>,</span>
+<span class="r-in">  decimalLatitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">19.9358</span>, <span class="op">-</span><span class="fl">13.016667</span>, <span class="op">-</span><span class="fl">20.5243</span>, <span class="op">-</span><span class="fl">35.345940</span>, <span class="op">-</span><span class="fl">11.851872</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="fu">bdc_coordinates_country_inconsistent</span><span class="op">(</span></span>
 <span class="r-in">  data <span class="op">=</span> <span class="va">x</span>,</span>
-<span class="r-in">  country_name <span class="op">=</span> <span class="st">"Brazil"</span>,</span>
+<span class="r-in">  country_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Brazil"</span>, <span class="st">"Peru"</span>, <span class="st">"Argentina"</span><span class="op">)</span>,</span>
+<span class="r-in">  country <span class="op">=</span> <span class="st">"country"</span>,</span>
 <span class="r-in">  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
 <span class="r-in">  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
 <span class="r-in">  dist <span class="op">=</span> <span class="fl">0.1</span> </span>
