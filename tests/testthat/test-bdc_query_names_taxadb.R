@@ -1,5 +1,3 @@
-context("bdc_query_names_taxadb")
-
 ## skip("dont run")
 skip_on_cran()
 skip_if_not_installed("curl")
@@ -35,7 +33,7 @@ test <- bdc_query_names_taxadb(c("Puma concola", "Cebus apela"),
   db = "gbif",
   suggest_names = FALSE,
   rank_name = "Mammalia",
-  rank = "class", 
+  rank = "class",
   export_accepted = FALSE
 )
 
