@@ -11,6 +11,8 @@
 [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/bdc)](https://CRAN.R-project.org/package=bdc)
+[![Codecov test
+coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg?token=9AUF86G9LJ)](https://codecov.io/gh/brunobrr/bdc)
 
 <!-- badges: end -->
 
