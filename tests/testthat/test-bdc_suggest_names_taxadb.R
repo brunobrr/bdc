@@ -2,28 +2,55 @@
 skip_on_cran()
 skip_if_not_installed("curl")
 
-sci_names <- c("Janusia occhioni", "Janusia", "Xilosma ciliatifolium", "Crataeva benthamii", "Oxalis rhombeo ovata", "Cebus apella", "Puma concolar")
+sci_names <-
+  c(
+    "Janusia occhioni",
+    "Janusia",
+    "Xilosma ciliatifolium",
+    "Crataeva benthamii",
+    "Oxalis rhombeo ovata",
+    "Cebus apella",
+    "Puma concolar"
+  )
+
+res <-
+  suppressWarnings(
+    bdc_suggest_names_taxadb(
+      sci_name = sci_names,
+      max_distance = 0.75,
+      provider = "gbif",
+      db_version = 2022
+    )
+  )
 
 test_that("gbif - bdc_suggest_names_taxadb suggest valid names", {
-  res <- suppressWarnings(bdc_suggest_names_taxadb(sci_name = sci_names, max_distance = 0.75, provider = "gbif", db_version = 2022))
-
   expect_equal(res, data.frame(
-    original = sci_names, suggested = c(
+    original = sci_names, 
+    suggested = c(
       "Janusia occhionii",
       "Janusia",
       "Xylosma ciliatifolium",
-      "Catha benthamii",
+      "Crateva benthamii",
       "Oxalis rhombeoovata",
-      NA,
+      "Cebus apella",
       "Puma concolor"
     ),
-    distance = c(0.94, 1.00, 0.95, 0.78, 0.95, 0.67, 0.92)
+    distance = c(0.94, 1.00, 0.95, 0.94, 0.95, 1.00, 0.92)
   ))
 })
 
-test_that("itis - bdc_suggest_names_taxadb suggest valid names", {
-  res <- suppressWarnings(bdc_suggest_names_taxadb(sci_name = sci_names, max_distance = 0.75, provider = "itis", db_version = 2022, parallel = FALSE))
+res <-
+  suppressWarnings(
+    bdc_suggest_names_taxadb(
+      sci_name = sci_names,
+      max_distance = 0.75,
+      provider = "itis",
+      db_version = 2022,
+      parallel = FALSE
+    )
+  )
 
+test_that("itis - bdc_suggest_names_taxadb suggest valid names", {
   expect_equal(res, data.frame(
     original = sci_names, suggested = c(
       NA,
@@ -38,9 +65,18 @@ test_that("itis - bdc_suggest_names_taxadb suggest valid names", {
   ))
 })
 
-test_that("ncbi - bdc_suggest_names_taxadb suggest valid names", {
-  res <- suppressWarnings(bdc_suggest_names_taxadb(sci_name = sci_names, max_distance = 0.75, provider = "ncbi", db_version = 2022, parallel = FALSE))
+res <-
+  suppressWarnings(
+    bdc_suggest_names_taxadb(
+      sci_name = sci_names,
+      max_distance = 0.75,
+      provider = "ncbi",
+      db_version = 2022,
+      parallel = FALSE
+    )
+  )
 
+test_that("ncbi - bdc_suggest_names_taxadb suggest valid names", {
   expect_equal(res, data.frame(
     original = sci_names, suggested = c(
       NA,
@@ -55,9 +91,19 @@ test_that("ncbi - bdc_suggest_names_taxadb suggest valid names", {
   ))
 })
 
-test_that("col - bdc_suggest_names_taxadb suggest valid names", {
-  res <- suppressWarnings(bdc_suggest_names_taxadb(sci_name = sci_names, max_distance = 0.75, provider = "col", db_version = 2022, parallel = FALSE))
+res <-
+  suppressWarnings(
+    bdc_suggest_names_taxadb(
+      sci_name = sci_names,
+      max_distance = 0.75,
+      provider = "col",
+      db_version = 2022,
+      parallel = FALSE
+    )
+  )
 
+
+test_that("col - bdc_suggest_names_taxadb suggest valid names", {
   expect_equal(res, data.frame(
     original = sci_names, suggested = c(
       "Janusia occhionii",
@@ -72,9 +118,19 @@ test_that("col - bdc_suggest_names_taxadb suggest valid names", {
   ))
 })
 
-test_that("ott - bdc_suggest_names_taxadb suggest valid names", {
-  res <- suppressWarnings(bdc_suggest_names_taxadb(sci_name = sci_names, max_distance = 0.75, provider = "ott", db_version = 2021, parallel = FALSE))
+res <-
+  suppressWarnings(
+    bdc_suggest_names_taxadb(
+      sci_name = sci_names,
+      max_distance = 0.75,
+      provider = "ott",
+      db_version = 2021,
+      parallel = FALSE
+    )
+  )
 
+
+test_that("ott - bdc_suggest_names_taxadb suggest valid names", {
   expect_equal(res, data.frame(
     original = sci_names, suggested = c(
       "janusia occhionii",
@@ -89,10 +145,18 @@ test_that("ott - bdc_suggest_names_taxadb suggest valid names", {
   ))
 })
 
+res <-
+  suppressWarnings(
+    bdc_suggest_names_taxadb(
+      sci_name = sci_names,
+      max_distance = 0.75,
+      provider = "itis",
+      db_version = 2022,
+      parallel = TRUE
+    )
+  )
 
 test_that("testing parallelization", {
-  res <- suppressWarnings(bdc_suggest_names_taxadb(sci_name = sci_names, max_distance = 0.75, provider = "itis", db_version = 2022, parallel = TRUE))
-
   expect_equal(res, data.frame(
     original = sci_names, suggested = c(
       NA,
@@ -107,12 +171,19 @@ test_that("testing parallelization", {
   ))
 })
 
-test_that("testing ranks", {
-  res <- suppressWarnings(bdc_suggest_names_taxadb(
-    sci_name = sci_names, rank_name = "Plantae", rank = "kingdom",
-    max_distance = 0.75, provider = "itis", db_version = 2022, parallel = FALSE
-  ))
+res <- suppressWarnings(
+  bdc_suggest_names_taxadb(
+    sci_name = sci_names,
+    rank_name = "Plantae",
+    rank = "kingdom",
+    max_distance = 0.75,
+    provider = "itis",
+    db_version = 2022,
+    parallel = FALSE
+  )
+)
 
+test_that("testing ranks", {
   expect_equal(res, data.frame(
     original = sci_names, suggested = c(
       NA,
@@ -127,20 +198,37 @@ test_that("testing ranks", {
   ))
 })
 
-test_that("testing null rank", {
-  res <- testthat::capture_message(suppressWarnings(bdc_suggest_names_taxadb(
-    sci_name = sci_names, rank_name = "plantae", rank = NULL,
-    max_distance = 0.75, provider = "ott", db_version = 2021, parallel = FALSE
-  )))
+res <-
+  testthat::capture_message(suppressWarnings(
+    bdc_suggest_names_taxadb(
+      sci_name = sci_names,
+      rank_name = "plantae",
+      rank = NULL,
+      max_distance = 0.75,
+      provider = "ott",
+      db_version = 2021,
+      parallel = FALSE
+    )
+  ))
 
-  expect_equal(res$message, "Please, provide both 'rank_name' and 'rank' arguments\n")
+test_that("testing null rank", {
+  expect_equal(res$message,
+               "Please, provide both 'rank_name' and 'rank' arguments\n")
 })
 
-test_that("testing null rank_name", {
-  res <- testthat::capture_message(suppressWarnings(bdc_suggest_names_taxadb(
-    sci_name = sci_names, rank = "kingdom",
-    max_distance = 0.75, provider = "ott", db_version = 2021, parallel = FALSE
-  )))
+res <-
+  testthat::capture_message(suppressWarnings(
+    bdc_suggest_names_taxadb(
+      sci_name = sci_names,
+      rank = "kingdom",
+      max_distance = 0.75,
+      provider = "ott",
+      db_version = 2021,
+      parallel = FALSE
+    )
+  ))
 
-  expect_equal(res$message, "Please, provide both 'rank_name' and 'rank' arguments\n")
+test_that("testing null rank_name", {
+  expect_equal(res$message,
+               "Please, provide both 'rank_name' and 'rank' arguments\n")
 })

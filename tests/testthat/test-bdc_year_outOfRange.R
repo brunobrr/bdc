@@ -17,6 +17,6 @@ test_that("bdc_year_outOfRange detect years out of range", {
 
   expect_equal(
     resultant$.year_outOfRange,
-    c(TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE)
+    c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE)
   )
 })

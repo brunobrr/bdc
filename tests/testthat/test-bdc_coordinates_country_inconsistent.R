@@ -33,12 +33,7 @@ test_that("test different values of dist", {
                c(FALSE, TRUE, TRUE, TRUE, FALSE))
 })
 
-test_that("invalid coordinates returned as TRUE", {
-  expect_equal(x2$.coordinates_country_inconsistent, 
-               c(FALSE, TRUE, TRUE, TRUE, FALSE))
-})
-
-x <- data.frame(
+x0 <- data.frame(
   country = c("Brazil", "Brazil", "Bolivia", "Argentina", "Peru"),
   decimalLongitude = c(-40.6003, -39.6, -77.689288, -69.269926, -76.352930),
   decimalLatitude = c(-19.9358, -13.016667, -20.5243, -35.345940, -11.851872)
@@ -46,7 +41,7 @@ x <- data.frame(
 
 x1 <- 
   bdc_coordinates_country_inconsistent(
-  data = x,
+  data = x0,
   country_name = c("Brazil", "Argentina"),
   country = "country",
   lon = "decimalLongitude",
@@ -62,7 +57,7 @@ test_that("multiple countries", {
 
 x2 <- 
   bdc_coordinates_country_inconsistent(
-    data = x,
+    data = x0,
     country_name = c("Brazil", "Argentina", "Peru"),
     country = "country",
     lon = "decimalLongitude",
@@ -74,5 +69,3 @@ test_that("multiple countries II", {
   expect_equal(x2$.coordinates_country_inconsistent, 
                c(TRUE, TRUE, FALSE, TRUE, TRUE))
 })
-
-
