@@ -64,12 +64,12 @@ the geographic longitude in decimal degrees (e.g., -3.25500)
 \dontrun{
 metadata <- readr::read_csv(system.file("extdata/Config/DatabaseInfo.csv",
             package = "bdc"))
-            
-db_standardized <- 
+
+db_standardized <-
 bdc_standardize_datasets(
-  metadata = metadata, 
-  format = "csv", 
-  overwrite = TRUE, 
+  metadata = metadata,
+  format = "csv",
+  overwrite = TRUE,
   save_database = FALSE)
 }
 }
