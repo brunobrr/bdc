@@ -28,14 +28,14 @@
 #' database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
 #' .missing_names <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
 #' .missing_coordinates <- c(TRUE, FALSE, FALSE, TRUE, FALSE)
-#' .invalid_basis_of_records <- c(TRUE, TRUE, TRUE, TRUE, TRUE)
+#' .basisOfRecords_notStandard <- c(TRUE, TRUE, FALSE, TRUE, TRUE)
 #' .summary <- c(TRUE, FALSE, FALSE, FALSE, FALSE)
 #'
 #' x <- data.frame(
 #'   database_id,
 #'   .missing_names,
 #'   .missing_coordinates,
-#'   .invalid_basis_of_records,
+#'   .basisOfRecords_notStandard,
 #'   .summary
 #' )
 #'
@@ -84,7 +84,7 @@ bdc_create_report <-
           ".scientificName_empty",
           ".coordinates_empty",
           ".coordinates_outOfRange",
-          ".invalid_basis_of_records",
+          ".basisOfRecords_notStandard",
           ".coordinates_country_inconsistent",
           ".summary"
         )
