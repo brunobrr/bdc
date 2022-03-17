@@ -60,17 +60,6 @@ metadata <-
                   show_col_types = FALSE)
 ```
 
-```{r eval=FALSE}
-# Path to the folder containing the example datasets. For instance:
-path <- "C:/Users/myname/Documents/myproject/input_files/"
-
-# Change in the Configuration table the path to the folder in your computer containing the example datasets
-metadata$fileName <-
-  gsub(pattern = "https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/",
-       replacement = path,
-       x = metadata$fileName)
-```
-
 <br/>
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
@@ -87,6 +76,20 @@ DT::datatable(
  )
 )
 ```
+
+**Changing the path containing the datasets.**
+```{r eval=FALSE}
+# Path to the folder containing the example datasets. For instance:
+path <- "C:/Users/myname/Documents/myproject/input_files/"
+
+# Change in the Configuration table the path to the folder in your computer containing the example datasets
+metadata$fileName <-
+  gsub(pattern = "https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/",
+       replacement = path,
+       x = metadata$fileName)
+```
+
+<br/>
 
 # **Standardization and integration of datasets**
 
