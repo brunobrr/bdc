@@ -124,7 +124,7 @@ An example of a standardized database containing the required field to run the *
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 DT::datatable(
-  database, class = 'stripe', extensions = 'FixedColumns',
+  database[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
     pageLength = 5,
     dom = 'Bfrtip',

@@ -161,7 +161,7 @@ check_space <-
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 DT::datatable(
-  check_space, class = 'stripe', extensions = 'FixedColumns',
+  check_space[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
     pageLength = 7,
     dom = 'Bfrtip',

@@ -79,6 +79,18 @@ database <-
   )
 ```
 
+```{r echo=F, message=FALSE, warning=FALSE}
+DT::datatable(
+  database[1:15,], class = 'stripe', extensions = 'FixedColumns',
+  options = list(
+    pageLength = 3,
+    dom = 'Bfrtip',
+    scrollX = TRUE,
+    fixedColumns = list(leftColumns = 2)
+  )
+)
+```
+
 #### **Clean and parse species names**
 
 Scientific names improperly formatted usually cannot be matched with valid names. To solve this issue, we developed the *bdc_clean_name* containing functionalities to **unify writing style of scientific names**. This optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to:
@@ -173,7 +185,7 @@ query_names <-
   )
 
 DT::datatable(
-  query_names[1:30,], class = 'stripe', extensions = 'FixedColumns',
+  query_names[1:20,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
     pageLength = 5,
     dom = 'Bfrtip',
