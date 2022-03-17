@@ -122,7 +122,7 @@ database <-
 
 An example of a standardized database containing the required field to run the *bdc* package.
 
-```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   database[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
