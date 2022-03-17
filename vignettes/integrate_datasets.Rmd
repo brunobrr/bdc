@@ -62,7 +62,7 @@ metadata <-
 
 <br/>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
  metadata, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
  options = list(
@@ -95,7 +95,7 @@ metadata$fileName <-
 
 Now, let's merge the different datasets into a standardized database. Note that the standardized database integrating all dataset can be saved in the folder **"Output/Intermediate" as "00_merged_database"** if `save_database = TRUE` . The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package.
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE, eval=TRUE}
 database <-
 bdc_standardize_datasets(metadata = metadata,
                          format = "csv",
