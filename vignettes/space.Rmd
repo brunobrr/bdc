@@ -159,7 +159,7 @@ check_space <-
   readr::read_csv(system.file("extdata/outpus_vignettes/03_space_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 DT::datatable(
   check_space[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
@@ -211,7 +211,7 @@ report <-
   )
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 DT::datatable(
   report, class = 'stripe', extensions = 'FixedColumns',
   options = list(

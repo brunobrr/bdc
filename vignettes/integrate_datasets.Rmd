@@ -62,7 +62,7 @@ metadata <-
 
 <br/>
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 DT::datatable(
  metadata, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
  options = list(
@@ -122,7 +122,7 @@ database <-
 
 An example of a standardized database containing the required field to run the *bdc* package.
 
-```{r echo=F, message=FALSE, warning=FALSE}
+```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
 DT::datatable(
   database[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(

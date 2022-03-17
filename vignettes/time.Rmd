@@ -46,7 +46,7 @@ database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/03_space_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-```{r echo=F, message=FALSE, warning=FALSE}
+```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
 DT::datatable(
   database[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
@@ -120,7 +120,7 @@ report <-
   )
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 DT::datatable(
   report, class = 'stripe', extensions = 'FixedColumns',
   options = list(
@@ -204,7 +204,7 @@ output <-
   )
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
 DT::datatable(
   output[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
