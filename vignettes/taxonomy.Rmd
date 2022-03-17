@@ -261,9 +261,10 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 
 #### **Saving the database**
 
-You can use [qs::qread()]{.underline} instead of write_csv to save a large database in a compressed format.
+You can use [qs::qsave()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
+# use qs::qsave() to save the database in a compressed format and then qs:qread() to load the database
 database %>%
   readr::write_csv(.,
             here::here("Output", "Intermediate", "02_taxonomy_database.csv"))

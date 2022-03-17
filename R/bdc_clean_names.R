@@ -49,7 +49,7 @@ setup_gnparser <- function() {
 #' \href{https://github.com/gnames/gnparser}{gnparser}.
 #'
 #' @return A five-column data.frame including 
-#' * scientificName: original names supplied)
+#' * scientificName: original names supplied
 #' * .uncer_terms: indicates the presence of taxonomic uncertainty terms
 #' * .infraesp_names: indicates the presence of infraspecific terms
 #' * name_clean: scientific names resulting from the cleaning and parsing

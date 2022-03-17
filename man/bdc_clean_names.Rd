@@ -14,7 +14,7 @@ bdc_clean_names(sci_names, save_outputs = FALSE)
 \value{
 A five-column data.frame including
 \itemize{
-\item scientificName: original names supplied)
+\item scientificName: original names supplied
 \item .uncer_terms: indicates the presence of taxonomic uncertainty terms
 \item .infraesp_names: indicates the presence of infraspecific terms
 \item name_clean: scientific names resulting from the cleaning and parsing

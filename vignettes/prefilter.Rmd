@@ -332,9 +332,10 @@ output <-
 
 #### **Saving the database**
 
-You can use [qs::qread()]{.underline} instead of write_csv to save a large database in a compressed format
+You can use [qs::qsave()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
+# use qs::qsave() to save the database in a compressed format and then qs:qread() to load the database
 output %>%
   readr::write_csv(.,
             here::here("Output", "Intermediate", "01_prefilter_database.csv"))
