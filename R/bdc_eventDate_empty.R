@@ -38,7 +38,8 @@ bdc_eventDate_empty <-
 
     .eventDate_empty <- ifelse(is.na(col) == FALSE, TRUE, FALSE)
 
-    df <- data.frame(data, .eventDate_empty)
+    df <- data.frame(data, .eventDate_empty) %>% 
+      dplyr::as_tibble()
 
     message(
       paste(
