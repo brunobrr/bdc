@@ -1,5 +1,5 @@
 pandoc: 2.17.1.1
-pkgdown: 2.0.0
+pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   integrate_datasets: integrate_datasets.html
@@ -7,7 +7,7 @@ articles:
   space: space.html
   taxonomy: taxonomy.html
   time: time.html
-last_built: 2022-03-17T20:48Z
+last_built: 2022-03-18T00:42Z
 urls:
   reference: https://brunobrr.github.io/bdc/reference
   article: https://brunobrr.github.io/bdc/articles
