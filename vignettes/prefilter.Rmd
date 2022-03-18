@@ -51,7 +51,7 @@ database <-
   )
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   database[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
@@ -247,7 +247,7 @@ check_pf <- bdc_summary_col(data = check_pf)
 #> One column was added to the database.
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 # DT::datatable(
 #   check_pf, class = 'stripe', extensions = 'FixedColumns',
 #   options = list(
@@ -280,7 +280,7 @@ report <-
   )
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   report, class = 'stripe', extensions = 'FixedColumns',
   options = list(

@@ -46,7 +46,7 @@ database <-
   readr::read_csv(system.file("extdata/outpus_vignettes/03_space_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
-```{r echo=F, message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   database[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
@@ -120,7 +120,7 @@ report <-
   )
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   report, class = 'stripe', extensions = 'FixedColumns',
   options = list(
@@ -168,7 +168,7 @@ Save the original database containing the results of all data quality tests appe
 ```{r eval=FALSE}
 check_time %>%
   readr::write_csv(.,
-            here::here("Output", "Intermediate", "04_time_raw_database.csv"))
+            here::here("Output", "Intermediate", "04_time_database.csv"))
 ```
 
 #### **Filtering the database**
@@ -190,21 +190,21 @@ You can use [qs::qsave()]{.underline} instead of write_csv to save a large datab
 # use qs::qsave() to save the database in a compressed format and then qs:qread() to load the database
 output %>%
   readr::write_csv(.,
-            here::here("Output", "Intermediate", "04_time_clean_database.csv"))
+            here::here("Output", "Intermediate", "05_cleaned_database.csv"))
 ```
 
 ```{r echo=FALSE, eval=TRUE}
 output <-
   readr::read_csv(
     system.file(
-      "extdata/outpus_vignettes/04_time_clean_database.csv",
+      "extdata/outpus_vignettes/05_cleaned_database.csv",
       package = "bdc"
     ),
     show_col_types = FALSE
   )
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   output[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
