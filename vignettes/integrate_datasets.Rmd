@@ -63,21 +63,33 @@ metadata <-
 <br/>
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
-DT::datatable(
- metadata, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
- options = list(
-   #dom = 't',
-   dom = 'Bfrtip',
-   scrollX = TRUE,
-   pageLength = 9,
-   buttons = c('copy', 'csv', 'print'),
-   fixedColumns = list(leftColumns = 2),
-   editable = 'cell'
- )
+reactable::reactable(
+  metadata,
+  paginationType = "simple",
+  defaultPageSize = 5,
+  bordered = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  compact = TRUE,
+  # height = 270,
+  resizable = TRUE, 
+  wrap = TRUE,
+  theme = reactable::reactableTheme(
+    highlightColor = "#f3fafb",
+    borderColor = "hsl(0, 0%, 93%)",
+    headerStyle = list(borderColor = "hsl(0, 0%, 90%)"),
+    # Vertically center cells
+    cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")
+  ),
+  columns = list(
+    fileName = reactable::colDef(minWidth = 700),   # 50% width, 200px minimum
+    datasetName = reactable::colDef(minWidth = 130)   # 25% width, 100px minimum
+  ),
 )
 ```
 
 **Changing the path containing the datasets.**
+
 ```{r eval=FALSE}
 # Path to the folder containing the example datasets. For instance:
 path <- "C:/Users/myname/Documents/myproject/input_files/"
@@ -123,13 +135,23 @@ database <-
 An example of a standardized database containing the required field to run the *bdc* package.
 
 ```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
-DT::datatable(
-  database[1:15,], class = 'stripe', extensions = 'FixedColumns',
-  options = list(
-    pageLength = 5,
-    dom = 'Bfrtip',
-    scrollX = TRUE,
-    fixedColumns = list(leftColumns = 2)
+reactable::reactable(
+  database,
+  paginationType = "simple",
+  defaultPageSize = 5,
+  bordered = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  compact = TRUE,
+  # height = 270,
+  resizable = TRUE, 
+  wrap = TRUE,
+  theme = reactable::reactableTheme(
+    highlightColor = "#f3fafb",
+    borderColor = "hsl(0, 0%, 93%)",
+    headerStyle = list(borderColor = "hsl(0, 0%, 90%)"),
+    # Vertically center cells
+    cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")
   )
 )
 ```
@@ -156,16 +178,24 @@ config_description <-
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
-DT::datatable(
- config_description, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
- options = list(
-   #dom = 't',
-   dom = 'Bfrtip',
-   scrollX = TRUE,
-   pageLength = 5,
-   buttons = c('copy', 'csv', 'print'),
-   fixedColumns = list(leftColumns = 2),
-   editable = 'cell'
- )
+reactable::reactable(
+  config_description,
+  paginationType = "simple",
+  defaultPageSize = 5,
+  bordered = TRUE,
+  striped = TRUE,
+  highlight = TRUE,
+  compact = TRUE,
+  # height = 270,
+  resizable = TRUE, 
+  wrap = TRUE,
+  theme = reactable::reactableTheme(
+    highlightColor = "#f3fafb",
+    borderColor = "hsl(0, 0%, 93%)",
+    headerStyle = list(borderColor = "hsl(0, 0%, 90%)"),
+    # Vertically center cells
+    cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")
+  )
 )
+
 ```
