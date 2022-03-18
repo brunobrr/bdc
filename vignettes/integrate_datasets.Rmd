@@ -63,29 +63,31 @@ metadata <-
 <br/>
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
-reactable::reactable(
-  metadata,
-  paginationType = "simple",
-  defaultPageSize = 5,
-  bordered = TRUE,
-  striped = TRUE,
-  highlight = TRUE,
-  compact = TRUE,
-  # height = 270,
-  resizable = TRUE, 
-  wrap = TRUE,
-  theme = reactable::reactableTheme(
-    highlightColor = "#f3fafb",
-    borderColor = "hsl(0, 0%, 93%)",
-    headerStyle = list(borderColor = "hsl(0, 0%, 90%)"),
-    # Vertically center cells
-    cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")
-  ),
-  columns = list(
-    fileName = reactable::colDef(minWidth = 700),   # 50% width, 200px minimum
-    datasetName = reactable::colDef(minWidth = 130)   # 25% width, 100px minimum
-  ),
-)
+# reactable::reactable(
+#   metadata,
+#   paginationType = "simple",
+#   defaultPageSize = 5,
+#   bordered = TRUE,
+#   striped = TRUE,
+#   highlight = TRUE,
+#   compact = TRUE,
+#   # height = 270,
+#   resizable = TRUE, 
+#   wrap = TRUE,
+#   theme = reactable::reactableTheme(
+#     highlightColor = "#f3fafb",
+#     borderColor = "hsl(0, 0%, 93%)",
+#     headerStyle = list(borderColor = "hsl(0, 0%, 90%)"),
+#     # Vertically center cells
+#     cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")
+#   ),
+#   columns = list(
+#     fileName = reactable::colDef(minWidth = 700),   # 50% width, 200px minimum
+#     datasetName = reactable::colDef(minWidth = 130)   # 25% width, 100px minimum
+#   ),
+# )
+
+knitr::kable(metadata)
 ```
 
 **Changing the path containing the datasets.**
@@ -135,25 +137,27 @@ database <-
 An example of a standardized database containing the required field to run the *bdc* package.
 
 ```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
-reactable::reactable(
-  database,
-  paginationType = "simple",
-  defaultPageSize = 5,
-  bordered = TRUE,
-  striped = TRUE,
-  highlight = TRUE,
-  compact = TRUE,
-  # height = 270,
-  resizable = TRUE, 
-  wrap = TRUE,
-  theme = reactable::reactableTheme(
-    highlightColor = "#f3fafb",
-    borderColor = "hsl(0, 0%, 93%)",
-    headerStyle = list(borderColor = "hsl(0, 0%, 90%)"),
-    # Vertically center cells
-    cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")
-  )
-)
+# reactable::reactable(
+#   database,
+#   paginationType = "simple",
+#   defaultPageSize = 5,
+#   bordered = TRUE,
+#   striped = TRUE,
+#   highlight = TRUE,
+#   compact = TRUE,
+#   # height = 270,
+#   resizable = TRUE, 
+#   wrap = TRUE,
+#   theme = reactable::reactableTheme(
+#     highlightColor = "#f3fafb",
+#     borderColor = "hsl(0, 0%, 93%)",
+#     headerStyle = list(borderColor = "hsl(0, 0%, 90%)"),
+#     # Vertically center cells
+#     cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")
+#   )
+# )
+
+knitr::kable(database[1:10,])
 ```
 
 <br/>
@@ -178,24 +182,26 @@ config_description <-
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
-reactable::reactable(
-  config_description,
-  paginationType = "simple",
-  defaultPageSize = 5,
-  bordered = TRUE,
-  striped = TRUE,
-  highlight = TRUE,
-  compact = TRUE,
-  # height = 270,
-  resizable = TRUE, 
-  wrap = TRUE,
-  theme = reactable::reactableTheme(
-    highlightColor = "#f3fafb",
-    borderColor = "hsl(0, 0%, 93%)",
-    headerStyle = list(borderColor = "hsl(0, 0%, 90%)"),
-    # Vertically center cells
-    cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")
-  )
-)
+# reactable::reactable(
+#   config_description,
+#   paginationType = "simple",
+#   defaultPageSize = 5,
+#   bordered = TRUE,
+#   striped = TRUE,
+#   highlight = TRUE,
+#   compact = TRUE,
+#   # height = 270,
+#   resizable = TRUE, 
+#   wrap = TRUE,
+#   theme = reactable::reactableTheme(
+#     highlightColor = "#f3fafb",
+#     borderColor = "hsl(0, 0%, 93%)",
+#     headerStyle = list(borderColor = "hsl(0, 0%, 90%)"),
+#     # Vertically center cells
+#     cellStyle = list(display = "flex", flexDirection = "column", justifyContent = "center")
+#   )
+# )
+
+knitr::kable(config_description)
 
 ```
