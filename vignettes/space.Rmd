@@ -163,7 +163,7 @@ check_space <-
 DT::datatable(
   check_space[1:15,], class = 'stripe', extensions = 'FixedColumns',
   options = list(
-    pageLength = 7,
+    pageLength = 5,
     dom = 'Bfrtip',
     scrollX = TRUE,
     fixedColumns = list(leftColumns = 2)
