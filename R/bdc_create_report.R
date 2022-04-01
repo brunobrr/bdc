@@ -67,15 +67,18 @@ bdc_create_report <-
     
     temp <- data %>% dplyr::select(tidyselect::starts_with("."))
     
-    if (all((colSums(temp, na.rm = TRUE) - nrow(temp)) == 0)) {
-      message("Figures were not created.\nNo records flagged as 'FALSE' in columns starting with '.'")
+    if (workflow_step %in% c("prefilter", "space", "time")) {
+      if (all((colSums(temp, na.rm = TRUE) - nrow(temp)) == 0)) {
+        stop("Report was not created.\nNo records flagged as 'FALSE' in test columns starting with '.'")
+      }
+      
+      if (ncol(temp) == 0) {
+        stop(
+          "Report was not created.\nAt least one column 'starting with '.' containing results of data-quality tests must be provided"
+        )
+      }
     }
-    
-    if (ncol(temp) == 0) {
-      message(
-        "Figures were not created.\nAt least one column 'starting with '.' containing results of data-quality tests must be provided"
-      )
-    }
+
     
     # prefilter
     if (workflow_step == "prefilter") {
@@ -274,7 +277,10 @@ bdc_create_report <-
               dplyr::mutate(notes = ifelse(notes == "FALSE", "taxo_uncer", notes))
           }
           
-          names <- dplyr::bind_rows(names, taxo_unc)
+          if(nrow(taxo_unc > 0)){
+            names <- dplyr::bind_rows(names, taxo_unc)
+          }
+
           names$notes <- stringr::str_squish(names$notes)
           
           names <-

@@ -258,7 +258,7 @@ bdc_standardize_datasets <-
           # here::here("data", "temp_datasets") %>%
           save_in_dir %>%
           fs::dir_ls(regexp = "*.qs") %>%
-          purrr::map_dfr(~ qs::qread(.x),
+          purrr::map_dfr(~ qs::qread(.x) %>% 
                          dplyr::mutate(dplyr::across(
                            .cols = dplyr::everything(), ~ as.character(.x)
                          )))
