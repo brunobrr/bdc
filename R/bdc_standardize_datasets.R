@@ -21,7 +21,7 @@
 #'
 #' @importFrom readr read_csv
 #' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
-#' all_of
+#' all_of across
 #' @importFrom fs dir_exists dir_create
 #' @importFrom here here
 #' @importFrom purrr set_names
@@ -258,7 +258,10 @@ bdc_standardize_datasets <-
           # here::here("data", "temp_datasets") %>%
           save_in_dir %>%
           fs::dir_ls(regexp = "*.qs") %>%
-          purrr::map_dfr( ~ qs::qread(.x))
+          purrr::map_dfr(~ qs::qread(.x),
+                         dplyr::mutate(dplyr::across(
+                           .cols = dplyr::everything(), ~ as.character(.x)
+                         )))
       } else {
         merged_database <-
           # here::here("data", "temp_datasets") %>%

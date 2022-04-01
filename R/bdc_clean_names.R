@@ -925,6 +925,7 @@ bdc_gnparser <- function(data, sci_names) {
   colnames(data_temp)[w] <- "temp"
   data_temp$id <- 1:nrow(data_temp)
   data_temp$temp <- stringi::stri_trans_general(str = data_temp$temp, id = "Latin-ASCII")
+  data_temp$temp <- gsub("´", "", data_temp$temp)
 
   # Parse names using rgnparser
   suppressWarnings({

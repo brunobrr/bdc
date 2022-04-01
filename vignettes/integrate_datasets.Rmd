@@ -64,7 +64,9 @@ metadata <-
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
- metadata, class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
+metadata, 
+class = 'stripe', extensions = c('FixedColumns', 'Buttons'),
+rownames = FALSE,
  options = list(
    #dom = 't',
    dom = 'Bfrtip',
@@ -126,6 +128,7 @@ An example of a standardized database containing the required field to run the *
 ```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   database[1:15,], class = 'stripe', extensions = 'FixedColumns',
+  rownames = FALSE,
   options = list(
     pageLength = 5,
     dom = 'Bfrtip',
@@ -159,6 +162,7 @@ config_description <-
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   config_description,
+  rownames = FALSE,
   class = 'stripe',
   extensions = c('FixedColumns', 'Buttons'),
   options = list(

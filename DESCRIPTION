@@ -76,7 +76,8 @@ Suggests:
     rvest,
     sp,
     testthat (>= 3.0.0),
-    xml2
+    xml2,
+    rlang (>= 1.0.1)
 VignetteBuilder:
     knitr
 Config/testthat/edition: 3

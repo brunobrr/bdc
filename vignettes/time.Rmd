@@ -49,6 +49,7 @@ database <-
 ```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   database[1:15,], class = 'stripe', extensions = 'FixedColumns',
+  rownames = FALSE,
   options = list(
     pageLength = 3,
     dom = 'Bfrtip',
@@ -123,6 +124,7 @@ report <-
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   report, class = 'stripe', extensions = 'FixedColumns',
+  rownames = FALSE,
   options = list(
     # pageLength = 5,
     dom = 'Bfrtip',
@@ -207,6 +209,7 @@ output <-
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   output[1:15,], class = 'stripe', extensions = 'FixedColumns',
+  rownames = FALSE,
   options = list(
     pageLength = 3,
     dom = 'Bfrtip',

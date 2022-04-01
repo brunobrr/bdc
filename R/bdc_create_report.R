@@ -92,7 +92,10 @@ bdc_create_report <-
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
       
-      if (file.exists("Output/Check/01_coordinates_transposed.csv")) {
+      has_file <- file.exists("Output/Check/01_coordinates_transposed.csv")
+      has_column <- "coordinates_transposed" %in% names(data)
+      
+      if (has_file & has_column) {
         col_to_tests <- c(col_to_tests, "coordinates_transposed")
       }
     }
@@ -184,8 +187,8 @@ bdc_create_report <-
         if ("prefilter" %in% workflow_step) {
           pf <-
             data %>%
-            dplyr::select(tidyselect::starts_with(".")) %>%
             dplyr::select(col_to_tests) %>%
+            # dplyr::select(tidyselect::starts_with(".")) %>%
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%
@@ -228,6 +231,11 @@ bdc_create_report <-
               Description = dplyr::if_else(
                 Description == ".summary",
                 "Summary of all tests",
+                Description
+              ),
+              Description = dplyr::if_else(
+                Description == "coordinates_transposed",
+                "Records with transposed geographic coordinates",
                 Description
               )
             )
@@ -372,7 +380,7 @@ bdc_create_report <-
         if ("space" %in% workflow_step) {
           space <-
             data %>%
-            dplyr::select(tidyselect::starts_with(".")) %>%
+            # dplyr::select(tidyselect::starts_with(".")) %>%
             dplyr::select(col_to_tests) %>%
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
@@ -459,7 +467,7 @@ bdc_create_report <-
         if ("time" %in% workflow_step) {
           date <-
             data %>%
-            dplyr::select(tidyselect::starts_with(".")) %>%
+            # dplyr::select(tidyselect::starts_with(".")) %>%
             dplyr::select(col_to_tests) %>%
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
@@ -506,13 +514,15 @@ bdc_create_report <-
       })
     })
     
-    message(
-      paste(
-        "\nbdc_create_report:\nCheck the report summarizing the results of the",
-        workflow_step,
-        "in:\nOutput/Report\n"
+    if (save_report) {
+      message(
+        paste(
+          "\nbdc_create_report:\nCheck the report summarizing the results of the",
+          workflow_step,
+          "in:\n",here::here("Output", "Report")
+        )
       )
-    )
+    }
     
     return(data)
   }

@@ -594,7 +594,8 @@ bdc_query_names_taxadb <-
                          here::here("Output/Check/02_names_multiple_accepted_names.csv"))
       
       message(
-        "\nCheck names with more than one valid name in 'Output/Check/02_names_multiple_accepted_names.csv'\n"
+        "\nCheck names with more than one valid name in:\n",
+        here::here('Output/Check/02_names_multiple_accepted_names.csv')
       )
     }
     

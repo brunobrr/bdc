@@ -162,6 +162,7 @@ check_space <-
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   check_space[1:15,], class = 'stripe', extensions = 'FixedColumns',
+  rownames = FALSE,
   options = list(
     pageLength = 5,
     dom = 'Bfrtip',
@@ -214,6 +215,7 @@ report <-
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   report, class = 'stripe', extensions = 'FixedColumns',
+  rownames = FALSE,
   options = list(
     # pageLength = 5,
     dom = 'Bfrtip',

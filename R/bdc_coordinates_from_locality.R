@@ -53,6 +53,11 @@ bdc_coordinates_from_locality <-
            save_outputs = FALSE) {
     .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
 
+    if (!"locality" %in% colnames(data)) {
+      stop(
+        "Locality column was not found in your database")
+    }
+    
     suppressMessages({
       if (!any(".coordinates_empty" == names(data))) {
         data <-
@@ -90,7 +95,8 @@ bdc_coordinates_from_locality <-
     if (save_outputs) {
       bdc_create_dir()
 
-      df %>% readr::write_csv("Output/Check/01_coordinates_from_locality.csv")
+      df %>% readr::write_csv(
+        here::here("Output/Check/01_coordinates_from_locality.csv"))
       
       message(
         paste(
