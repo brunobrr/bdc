@@ -116,6 +116,12 @@ bdc_coordinates_transposed <-
       )
     }
 
+    # Temporarily change names of the collumn .summary to avoid error of duplicated coordinates
+    if(".summary" %in% names(data)){
+      w <- which(names(data) == ".summary")
+      names(data)[w] <- "temp_summary"
+    }
+    
     # Standardizing columns names
     data <-
       data %>%
@@ -184,6 +190,12 @@ bdc_coordinates_transposed <-
       data$coordinates_transposed <- TRUE
       data[w, "coordinates_transposed"] <- FALSE
       
+      # Return collumn .summary
+      if("temp_summary" %in% names(data)){
+        w <- which(names(data) == "temp_summary")
+        names(data)[w] <- ".summary"
+      }
+      
       message(
         paste(
           "\nbdc_coordinates_transposed:\nCorrected",
@@ -194,6 +206,13 @@ bdc_coordinates_transposed <-
       
       return(data)
     } else{
+      
+      # Return collumn .summary
+      if("temp_summary" %in% names(data)){
+        w <- which(names(data) == "temp_summary")
+        names(data)[w] <- ".summary"
+      }
+      
       message("No latitude and longitude were transposed\n")
       return(data)
     }

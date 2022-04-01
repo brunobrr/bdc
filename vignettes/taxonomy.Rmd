@@ -82,6 +82,7 @@ database <-
 ```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   database[1:15,], class = 'stripe', extensions = 'FixedColumns',
+  rownames = FALSE,
   options = list(
     pageLength = 3,
     dom = 'Bfrtip',
@@ -129,6 +130,7 @@ An example of *bdc_clean_names* output.
 ```{r echo=F, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   parse_names[60:75,],
+  rownames = FALSE,
   class = 'stripe',
   extensions = 'FixedColumns',
   options = list(
@@ -186,6 +188,7 @@ query_names <-
 
 DT::datatable(
   query_names[1:20,], class = 'stripe', extensions = 'FixedColumns',
+  rownames = FALSE,
   options = list(
     pageLength = 5,
     dom = 'Bfrtip',
@@ -230,6 +233,7 @@ report <-
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
 DT::datatable(
   report, class = 'stripe', extensions = 'FixedColumns',
+  rownames = FALSE,
   options = list(
     # pageLength = 5,
     dom = 'Bfrtip',

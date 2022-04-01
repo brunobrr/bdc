@@ -49,49 +49,49 @@ bdc_country_from_coordinates <-
            lon = "decimalLongitude",
            country = "country") {
     .data <- . <- name_long <- id_temp <- geometry <- NULL
-
+    
     suppressWarnings({
       check_require_cran("rnaturalearth")
       check_require_github("ropensci/rnaturalearthdata")
     })
-
+    
     # create an id_temp
     data$id_temp <- 1:nrow(data)
-
+    
     minimum_colnames <- c(lat, lon)
-
+    
     if (!all(minimum_colnames %in% colnames(data))) {
       stop(
         "These columns names were not found in your database: ",
         paste(minimum_colnames[!minimum_colnames %in% colnames(data)],
-          collapse = ", "
-        ),
+              collapse = ", "),
         call. = FALSE
       )
     }
-
+    
     # check if data has a country column
     has_country <- any(colnames(data) == country)
-
+    
     if (!has_country) {
       data$country <- NA
     }
-
+    
     # converts coordinates columns to numeric
     data <-
       data %>%
-      dplyr::mutate(
-        decimalLatitude = as.numeric(.data[[lat]]),
-        decimalLongitude = as.numeric(.data[[lon]])
-      )
-
+      dplyr::mutate(decimalLatitude = as.numeric(.data[[lat]]),
+                    decimalLongitude = as.numeric(.data[[lon]]))
+    
     worldmap <- rnaturalearth::ne_countries(scale = "large")
-
+    
     data_no_country <-
       data %>%
       dplyr::filter(is.na(country) | country == "")
-
-    if (nrow(data_no_country) > 0) {
+    
+    if (nrow(data_no_country) == 0) {
+      data <- data %>% dplyr::select(-id_temp)
+      message("All records already had country information. Nothing was done!")
+    } else{
       # converts coordinates columns to spatial points
       suppressWarnings({
         data_no_country <-
@@ -109,15 +109,17 @@ bdc_country_from_coordinates <-
             speedup = TRUE,
             ref = worldmap
           ) %>%
-          sf::st_as_sf(.,
+          sf::st_as_sf(
+            .,
             coords = c("decimalLongitude", "decimalLatitude"),
             remove = FALSE
           ) %>%
           sf::st_set_crs(., sf::st_crs(worldmap))
       })
-
-      worldmap <- sf::st_as_sf(worldmap) %>% dplyr::select(name_long)
-
+      
+      worldmap <-
+        sf::st_as_sf(worldmap) %>% dplyr::select(name_long)
+      
       # Extract country names from coordinates
       suppressWarnings({
         suppressMessages({
@@ -127,34 +129,35 @@ bdc_country_from_coordinates <-
             sf::st_intersection(., worldmap)
         })
       })
-
+      
       ext_country$geometry <- NULL
       
-      res <- 
+      res <-
         dplyr::left_join(data_no_country, ext_country, by = "id_temp")
       
       id_replace <- res$id_temp
       data[id_replace, "country"] <- res$name_long
       data <- data %>% dplyr::select(-id_temp)
-
-    if (has_country) {
-      message(
-        paste(
-          "\nbdc_country_from_coordinates:\nCountry names were added to",
-          nrow(data_no_country),
-          "records.\n"
+      
+      if (has_country) {
+        message(
+          paste(
+            "\nbdc_country_from_coordinates:\nCountry names were added to",
+            nrow(data_no_country),
+            "records.\n"
+          )
         )
-      )
-    } else {
-      message(
-        paste(
-          "\nbdc_country_from_coordinates:\nCountry names were added to",
-          nrow(data_no_country),
-          "records in a new collumn named 'country'.\n"
+      } else {
+        message(
+          paste(
+            "\nbdc_country_from_coordinates:\nCountry names were added to",
+            nrow(data_no_country),
+            "records in a new collumn named 'country'.\n"
+          )
         )
-      )
+      }
+      
     }
-
     return(dplyr::as_tibble(data))
-    }
+    
   }
