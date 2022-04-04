@@ -924,8 +924,15 @@ bdc_gnparser <- function(data, sci_names) {
   w <- which(colnames(data_temp) == sci_names)
   colnames(data_temp)[w] <- "temp"
   data_temp$id <- 1:nrow(data_temp)
-  data_temp$temp <- stringi::stri_trans_general(str = data_temp$temp, id = "Latin-ASCII")
-  data_temp$temp <- gsub("´", "", data_temp$temp)
+  data_temp$temp <-
+    stringi::stri_trans_general(str = data_temp$temp, id = "Latin-ASCII") %>%
+    stringr::str_squish()
+  
+  data_temp$temp <- gsub("²?", "", data_temp$temp)
+  data_temp$temp <- gsub("²", "", data_temp$temp)
+  data_temp$temp <- gsub("?", "", data_temp$temp)
+  data_temp$temp <- gsub("´", " ", data_temp$temp)
+  data_temp$temp <- gsub("'", " ", data_temp$temp)
 
   # Parse names using rgnparser
   suppressWarnings({
@@ -944,9 +951,25 @@ bdc_gnparser <- function(data, sci_names) {
 
   # Add names parsed to the full database
   df <-
-    dplyr::full_join(data_temp, gnparser, by = "temp") %>%
-    dplyr::distinct(id, .keep_all = T) %>%
+    dplyr::left_join(data_temp, gnparser, by = "temp") %>%
+    dplyr::distinct(id, .keep_all = T) 
+  
+  s <- sum(is.na(df$scientificName))
+  if (s > 0) {
+    w <- df %>% dplyr::filter(is.na(scientificName))
+    message(
+      paste(
+        "Names were not correctly parsed. Please, manually remove strange caracteres (accents, for example) from the following scientific names:\n"
+      ),
+      w$temp
+    )
+    
+  }
+    
+  df <- 
+    df %>%
     dplyr::select(-c(id, temp))
 
   return(df)
+  
 }
