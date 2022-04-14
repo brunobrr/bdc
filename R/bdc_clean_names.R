@@ -48,7 +48,7 @@ setup_gnparser <- function() {
 #' parse process can be found in
 #' \href{https://github.com/gnames/gnparser}{gnparser}.
 #'
-#' @return A five-column data.frame including 
+#' @return A five-column data.frame including
 #' * scientificName: original names supplied
 #' * .uncer_terms: indicates the presence of taxonomic uncertainty terms
 #' * .infraesp_names: indicates the presence of infraspecific terms
@@ -67,7 +67,7 @@ setup_gnparser <- function() {
 #' bind_cols full_join
 #' @importFrom here here
 #' @importFrom rgnparser gn_parse_tidy
-#' @importFrom stringr str_squish str_count str_remove_all regex str_detect 
+#' @importFrom stringr str_squish str_count str_remove_all regex str_detect
 #' str_which str_replace_all str_to_lower
 #' @importFrom tibble as_tibble
 #' @importFrom stringi stri_trans_general
@@ -125,18 +125,18 @@ bdc_clean_names <- function(sci_names, save_outputs = FALSE) {
 
   if (save_outputs == TRUE) {
     bdc_create_dir()
-    
+
     # Save the results of the parsing names process
-    readr::write_csv(df_join, 
+    readr::write_csv(df_join,
                      here::here("Output", "Check", "02_parsed_names.csv"))
-    
+
     message(
       paste(
         ">> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.\n"
       )
     )
   }
-  
+
   # Return a "clean" database
   df_join <-
     df_join %>%
@@ -919,7 +919,7 @@ bdc_rem_infaesp_names <- function(data, sci_names) {
 # Parse scientific names using rgnparser package. For more details,
 # see https://ropensci.org/technotes/2020/08/25/scientific-name-parsing/
 bdc_gnparser <- function(data, sci_names) {
-  temp <- canonicalfull <- cardinality <- quality <- verbatim <- id <- NULL
+  temp <- canonicalfull <- cardinality <- quality <- verbatim <- id <- scientificName <- NULL
   data_temp <- data
   w <- which(colnames(data_temp) == sci_names)
   colnames(data_temp)[w] <- "temp"
@@ -927,11 +927,11 @@ bdc_gnparser <- function(data, sci_names) {
   data_temp$temp <-
     stringi::stri_trans_general(str = data_temp$temp, id = "Latin-ASCII") %>%
     stringr::str_squish()
-  
-  data_temp$temp <- gsub("²?", "", data_temp$temp)
-  data_temp$temp <- gsub("²", "", data_temp$temp)
+
+  data_temp$temp <- gsub("\u00B2?", "", data_temp$temp) # get ²?
+  data_temp$temp <- gsub("\u00B2", "", data_temp$temp) # get ²
   data_temp$temp <- gsub("?", "", data_temp$temp)
-  data_temp$temp <- gsub("´", " ", data_temp$temp)
+  data_temp$temp <- gsub("\u00B4", " ", data_temp$temp) # get ´
   data_temp$temp <- gsub("'", " ", data_temp$temp)
 
   # Parse names using rgnparser
@@ -952,8 +952,8 @@ bdc_gnparser <- function(data, sci_names) {
   # Add names parsed to the full database
   df <-
     dplyr::left_join(data_temp, gnparser, by = "temp") %>%
-    dplyr::distinct(id, .keep_all = T) 
-  
+    dplyr::distinct(id, .keep_all = T)
+
   s <- sum(is.na(df$scientificName))
   if (s > 0) {
     w <- df %>% dplyr::filter(is.na(scientificName))
@@ -963,13 +963,13 @@ bdc_gnparser <- function(data, sci_names) {
       ),
       w$temp
     )
-    
+
   }
-    
-  df <- 
+
+  df <-
     df %>%
     dplyr::select(-c(id, temp))
 
   return(df)
-  
+
 }
