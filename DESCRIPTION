@@ -13,9 +13,9 @@ Authors@R: c(
     person("Lucas", "Jardim", , "lucas.ljardim9@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0003-2602-5575")),
     person("Steven", "Bachman", , "S.Bachman@kew.org ", role = "ctb",
-           comment = c(ORCID = "0000-0003-1085-6075"))
+           comment = c(ORCID = "0000-0003-1085-6075")),
     person("Rafael", "Loyola", , "rdiasloyola@gmail.com", role = "ctb",
-           comment = c(ORCID = "0000-0001-5323-2735")),
+           comment = c(ORCID = "0000-0001-5323-2735"))
   )
 Description: The bdc package brings together several aspects of
     biodiversity data-cleaning in one place. It is organized in thematic
