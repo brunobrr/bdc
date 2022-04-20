@@ -206,6 +206,7 @@ check_pf <-
   bdc_coordinates_country_inconsistent(
     data = check_pf,
     country_name = "Brazil",
+    country = "country_suggested",
     lon = "decimalLongitude",
     lat = "decimalLatitude",
     dist = 0.1 # in decimal degrees (~11 km at the equator)

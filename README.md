@@ -193,3 +193,11 @@ detailed explanation on each module.
 > If you encounter a clear bug, please file an issue
 > [**here**](https://github.com/brunobrr/bdc/issues). For questions or
 > suggestion, please send us a email (ribeiro.brr@gmail.com).
+
+#### **Citation**
+
+Ribeiro, BR; Velazco, SJE; Guidoni-Martins, K; Tessarolo, G; Jardim,
+Lucas; Bachman, SP; Loyola, R (2022). bdc: A toolkit for standardizing,
+integrating, and cleaning biodiversity data. Methods in Ecology and
+Evolution.
+[doi.org/10.1111/2041-210X.13868](https://doi.org/10.1111/2041-210X.13868)
