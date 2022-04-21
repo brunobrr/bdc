@@ -234,7 +234,7 @@ figures <-
 bdc_create_figures(data = check_space,
                    database_id = "database_id",
                    workflow_step = "space",
-                   save_figures = FALSE)
+                   save_figures = TRUE)
 
 # Check figures using
 figures$.rou

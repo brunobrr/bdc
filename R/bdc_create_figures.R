@@ -77,6 +77,8 @@ bdc_create_figures <-
       check_require_cran("readr")
       check_require_cran("rworldmap")
       check_require_cran("ggplot2")
+      check_require_cran("hexbin")
+      
     })
 
     match.arg(
@@ -500,23 +502,32 @@ bdc_create_figures <-
       }
     }) # suppresswarning
 
-    if (save_figures){
-    message("Check figures in ", here::here("Output", "Figures"))
-      
-      for (i in seq_along(res)){
+    if (save_figures == TRUE){
+   
+      for (i in seq_along(res)) {
         column_to_map <- names(res)[i]
-        ggplot2::ggsave(paste("Output/", "Figures/", workflow_step, "_",
-                              column_to_map, "_", "BAR", ".png",
-                              sep = ""
-        ),
-        res[[i]],
-        dpi = 300,
-        width = 6,
-        height = 3,
-        units = "cm",
-        scale = 5
+        ggplot2::ggsave(
+          paste(
+            here::here("Output", "Figures"),
+            "/",
+            workflow_step,
+            "_",
+            column_to_map,
+            "_",
+            "BAR",
+            ".png",
+            sep = ""
+          ),
+          res[[i]],
+          dpi = 300,
+          width = 6,
+          height = 3,
+          units = "cm",
+          scale = 5
         )
       }
+      
+      message("Check figures in ", here::here("Output", "Figures"))
     }
     
     return(res)
