@@ -14,7 +14,7 @@ status](https://www.r-pkg.org/badges/version/bdc)](https://CRAN.R-project.org/pa
 downloads](https://cranlogs.r-pkg.org/badges/bdc)](https://cranlogs.r-pkg.org:443/badges/bdc)
 [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg?token=9AUF86G9LJ)](https://codecov.io/gh/brunobrr/bdc)
+coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg?token=9AUF86G9LJ)](https://app.codecov.io/gh/brunobrr/bdc)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6450390.svg)](https://doi.org/10.5281/zenodo.6450390)
 [![License](https://img.shields.io/badge/license-GPL%20(%3E=%203)-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 
