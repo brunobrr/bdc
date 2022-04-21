@@ -23,15 +23,33 @@ Cheers, Bruno R. Ribeiro
     Ribeiro
     [ribeiro.brr\@gmail.com](mailto:ribeiro.brr@gmail.com){.email}'
 
-Found the following (possibly) invalid URLs: URL:
-<https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152>
-From: inst/doc/space.html Status: 503 Message: Service Unavailable URL:
-<https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440>
-From: inst/doc/taxonomy.html Status: 503 Message: Service Unavailable
-URL: <https://codecov.io/gh/brunobrr/bdc> (moved to
-<https://app.codecov.io/gh/brunobrr/bdc>) From: README.md Status: 200
-Message: OK URL: <https://doi.org/10.1111/2041-210X.13868> From:
-README.md Status: 503 Message: Service Unavailable
+-   Found the following (possibly) invalid URLs:
+
+    URL:
+    <https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13152>
+
+    From: inst/doc/space.html
+
+    Status: 503
+
+    Message: Service Unavailable
+
+-   URL:
+    <https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440>
+
+    From: inst/doc/taxonomy.html
+
+    Status: 503
+
+    Message: Service Unavailable
+
+-   URL: <https://doi.org/10.1111/2041-210X.13868>
+
+    From: README.md
+
+    Status: 503
+
+    Message: Service Unavailable
 
 **COMMENTS**: we double-checked this and the urls are working
 
