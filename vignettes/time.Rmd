@@ -211,5 +211,4 @@ DT::datatable(
     fixedColumns = list(leftColumns = 2)
   )
 )
-
 ```
