@@ -88,8 +88,7 @@ bdc_create_report <-
           ".coordinates_empty",
           ".coordinates_outOfRange",
           ".basisOfRecords_notStandard",
-          ".coordinates_country_inconsistent",
-          ".summary"
+          ".coordinates_country_inconsistent"
         )
       
       names_tab <- names(data)
@@ -116,8 +115,7 @@ bdc_create_report <-
           ".inst",
           ".dpl",
           ".rou",
-          ".urb",
-          ".summary"
+          ".urb"
         )
       
       names_tab <- names(data)
@@ -128,8 +126,7 @@ bdc_create_report <-
     if (workflow_step == "time") {
       tests <-
         c(".eventDate_empty",
-          ".year_outOfRange",
-          ".summary")
+          ".year_outOfRange")
       
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
@@ -190,8 +187,9 @@ bdc_create_report <-
         if ("prefilter" %in% workflow_step) {
           pf <-
             data %>%
-            dplyr::select(col_to_tests) %>%
             # dplyr::select(tidyselect::starts_with(".")) %>%
+            dplyr::select(all_of(col_to_tests)) %>%
+            bdc::bdc_summary_col() %>% 
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%
@@ -474,7 +472,8 @@ bdc_create_report <-
           date <-
             data %>%
             # dplyr::select(tidyselect::starts_with(".")) %>%
-            dplyr::select(col_to_tests) %>%
+            dplyr::select(all_of(col_to_tests)) %>%
+            bdc::bdc_summary_col() %>% 
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%

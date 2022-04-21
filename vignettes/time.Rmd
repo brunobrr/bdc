@@ -197,13 +197,7 @@ output %>%
 
 ```{r echo=FALSE, eval=TRUE}
 output <-
-  readr::read_csv(
-    system.file(
-      "extdata/outpus_vignettes/05_cleaned_database.csv",
-      package = "bdc"
-    ),
-    show_col_types = FALSE
-  )
+    readr::read_csv(system.file("extdata/outpus_vignettes/05_cleaned_database.csv", package = "bdc"), show_col_types = FALSE)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
