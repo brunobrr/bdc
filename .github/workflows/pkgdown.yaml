@@ -33,6 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          install.packages("rgdal")
           remotes::install_deps(dependencies = TRUE)
           install.packages("pkgdown", type = "binary")
         shell: Rscript {0}
