@@ -46,6 +46,16 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(pak::local_system_requirements("ubuntu", "20.04"))')
           
+      - name: Install system dependencies for pkgdown
+        if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(remotes::system_requirements(os="ubuntu", os_release="20.04", package="pkgdown"))')
+          
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
