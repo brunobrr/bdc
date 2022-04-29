@@ -82,19 +82,19 @@
 <li>Improve tests</li>
 <li>Add messages when no data is available to create figures and report</li>
 <li>
-<code>bdc_coordinates_from_locality</code>: adding error message when there is no column named locality</li>
+<code>bdc_coordinates_from_locality</code>: adding an error message when there is no column named locality</li>
 <li>
-<code>bdc_country_from_coordinates</code>: adding message when there is no record missing country names. Avoiding returning a NULL object.</li>
+<code>bdc_country_from_coordinates</code>: adding a message when there are no records missing country names. Avoiding returning a NULL object.</li>
 <li>
 <code>bdc_create_report</code>: adding coordinates transposed to the report; improve test and the message returned</li>
 <li>
-<code>bdc_clean_names</code>: adding code to remove strange characters (e.g., accents) from names and return a message when these character were not automatically removed.</li>
-<li>Remove first column (id) of interactive tables in vignettes</li>
+<code>bdc_clean_names</code>: adding code to remove strange characters (e.g., accents) from names, and returning a message when these characters were not automatically removed.</li>
+<li>Remove the first column (id) of interactive tables in vignettes</li>
 <li>Add rlang (&gt;= 1.0.1) to suggestion in the DESCRIPTION file</li>
 <li>
 <code>bdc_coordinates_transposed</code>: avoid error when a column “.summary” is already present in the provided dataset</li>
 <li>
-<code>bdc_standardize_datasets</code>: convert all columns to character before merging datasets</li>
+<code>bdc_standardize_datasets</code>: convert all columns to characters before merging datasets. Added a message to indicate which column names of the dataset were not founded in the configuration table (metadata).</li>
 </ul></div>
     <div class="section level2"><h2 class="page-header" data-toc-text="1.0.0" id="bdc-100">bdc 1.0.0<small>2022-03-01</small><a class="anchor" aria-label="anchor" href="#bdc-100"></a></h2></div>
   </div>
