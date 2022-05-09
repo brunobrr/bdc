@@ -1,6 +1,7 @@
 # bdc 1.1.1
 
 - `bdc_country_from_coordinates` now filter out countries with no data (`NA`).
+- fix a minor issue of `bdc_clean_names` character encoding on debian-clang CRAN server.
 
 # bdc 1.1.0
 
