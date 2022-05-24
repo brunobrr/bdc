@@ -17,7 +17,7 @@ Authors@R: c(
     person("Rafael", "Loyola", , "rdiasloyola@gmail.com", role = "ctb",
            comment = c(ORCID = "0000-0001-5323-2735"))
   )
-Description: The bdc brings together several aspects of biodiversity
+Description: bdc brings together several aspects of biodiversity
     data-cleaning in one place. It is organized in thematic modules
     related to different biodiversity dimensions, including 1) Merge
     datasets: standardization and integration of different datasets; 2)

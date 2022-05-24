@@ -25,7 +25,7 @@ coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg?token
 Handle biodiversity data from several different sources is not an easy
 task. Here, we present the **B**iodiversity **D**ata **C**leaning
 (*bdc*), an R package to address quality issues and improve the
-fitness-for-use of biodiversiy datasets. *bdc* contains functions to
+fitness-for-use of biodiversity datasets. *bdc* contains functions to
 harmonize and integrate data from different sources following common
 standards and protocols, and implements various tests and tools to flag,
 document, clean, and correct taxonomic, spatial, and temporal data.

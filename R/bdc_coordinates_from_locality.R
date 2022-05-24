@@ -13,7 +13,7 @@
 #' WGS84. Default = "decimalLongitude".
 #' @param locality character string. The column name with locality information.
 #' Default = "locality".
-#' @param save_outputs logical. Should a table containing transposed coordenates
+#' @param save_outputs logical. Should a table containing transposed coordinates
 #' saved for further inspection? Default = FALSE.
 #'
 #' @details According to DarwinCore terminology, locality refers to "the
