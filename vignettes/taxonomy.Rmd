@@ -26,7 +26,7 @@ library(bdc)
 
 #### **Introduction**
 
-The combination of large datasets from several sources requires careful harmonization of taxon names. Non-standardized, incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The *bdc* package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic dataases**. The taxonomic harmonization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
+The combination of large datasets from several sources requires careful harmonization of taxon names. Non-standardized, incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The *bdc* package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic databases**. The taxonomic harmonization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
 
 The functions used to harmonize names (*bdc_clean_name* and *bdc_query_names_taxadb*) **contain several additions to the *taxadb* package**, including tools for:
 
