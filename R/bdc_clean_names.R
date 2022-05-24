@@ -928,10 +928,10 @@ bdc_gnparser <- function(data, sci_names) {
     stringi::stri_trans_general(str = data_temp$temp, id = "Latin-ASCII") %>%
     stringr::str_squish()
 
-  data_temp$temp <- gsub("\u00B2?", "", data_temp$temp) # get ²?
-  data_temp$temp <- gsub("\u00B2", "", data_temp$temp) # get ²
+  data_temp$temp <- gsub("\u00b2?", "", data_temp$temp) # get ²?
+  data_temp$temp <- gsub("\u00b2", "", data_temp$temp) # get ²
   data_temp$temp <- gsub("?", "", data_temp$temp)
-  data_temp$temp <- gsub("\u00B4", " ", data_temp$temp) # get ´
+  data_temp$temp <- gsub("\u00b4", " ", data_temp$temp) # get ´
   data_temp$temp <- gsub("'", " ", data_temp$temp)
 
   # Parse names using rgnparser

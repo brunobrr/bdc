@@ -17,6 +17,7 @@ Authors@R: c(
     person("Rafael", "Loyola", , "rdiasloyola@gmail.com", role = "ctb",
            comment = c(ORCID = "0000-0001-5323-2735"))
   )
+=======
 Description: bdc brings together several aspects of biodiversity
     data-cleaning in one place. It is organized in thematic modules
     related to different biodiversity dimensions, including 1) Merge
@@ -28,11 +29,11 @@ Description: bdc brings together several aspects of biodiversity
     application of exact and partial matching algorithms; 4) Space:
     flagging of erroneous, suspect, and low-precision geographic
     coordinates; and 5) Time: flagging and, whenever possible, correction
-    of inconsistent collection date. In addition, the package contains
+    of inconsistent collection date. In addition, it contains
     features to visualize, document, and report data quality – which is
     essential for making data quality assessment transparent and
     reproducible. The reference for the methodology is Bruno et al. (2022)
-    <doi:10.1111/2041-210X.13868>
+    <doi:10.1111/2041-210X.13868>.
 License: GPL (>= 3)
 URL: https://brunobrr.github.io/bdc/ (website)
     https://github.com/brunobrr/bdc

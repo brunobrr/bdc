@@ -88,6 +88,9 @@ bdc_country_from_coordinates <-
       data %>%
       dplyr::filter(is.na(country) | country == "")
     
+    data_no_country <- data_no_country %>% 
+      dplyr::filter(!is.na(data_no_country[[lat]]), !is.na(data_no_country[[lon]]))
+    
     if (nrow(data_no_country) == 0) {
       data <- data %>% dplyr::select(-id_temp)
       message("All records already had country information. Nothing was done!")

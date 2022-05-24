@@ -1,3 +1,8 @@
+# bdc 1.1.1
+
+- `bdc_country_from_coordinates` now filter out countries with no data (`NA`).
+- fix a minor issue of `bdc_clean_names` character encoding on debian-clang CRAN server.
+
 # bdc 1.1.0
 
 -   bugfix in `bdc_country_from_coordinates()` reported in #209.
@@ -12,3 +17,6 @@
 -   Add rlang (\>= 1.0.1) to suggestion in the DESCRIPTION file
 -   `bdc_coordinates_transposed`: avoid error when a column ".summary" is already present in the provided dataset
 -   `bdc_clean_names`: change unicode escaping characters to lower case in #224
+-   `bdc_standardize_datasets`: convert all columns to characters before merging datasets. Added a message to indicate which column names of the dataset were not founded in the configuration table (metadata).
+
+# bdc 1.0.0
