@@ -34,7 +34,7 @@ Once standardized, datasets are then integrated into a standardized database hav
 
 We demonstrate the package's usefulness using records on terrestrial plant species occurring in Brazil obtained from nine data aggregators (e.g., GIF, SpeciesLink, SiBBr, iDigBio, among others). The **example datasets** are available at <https://doi.org/10.6084/m9.figshare.19260962> Please, click on "Download all" to obtain all datasets.
 
-Next, copy the path in our computer where the datasets were saved. This path will be used in the Configuration Table (e.g., metadata) to read the datasets and create an i**ntegrated and standardized database.**
+Next, copy the path in our computer where the datasets were saved. This path will be used in the Configuration Table (e.g., metadata) to read the datasets and create an **integrated and standardized database.**
 
 <br/>
 
@@ -51,7 +51,7 @@ Check [**here**](https://brunobrr.github.io/bdc/#installation) how to install th
 
 #### **Read the configuration table**
 
-Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. Next, indicate the path to the folder containg the example datasets in the configuration table.
+Read an example of the **configuration table**. You can download the table by clicking on the "CSV" button. Next, indicate the path to the folder containing the example datasets in the configuration table.
 
 ```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
 metadata <-

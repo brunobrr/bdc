@@ -11,6 +11,4 @@
 -   Remove the first column (id) of interactive tables in vignettes
 -   Add rlang (\>= 1.0.1) to suggestion in the DESCRIPTION file
 -   `bdc_coordinates_transposed`: avoid error when a column ".summary" is already present in the provided dataset
--   `bdc_standardize_datasets`: convert all columns to characters before merging datasets. Added a message to indicate which column names of the dataset were not founded in the configuration table (metadata).
-
-# bdc 1.0.0
+-   `bdc_clean_names`: change unicode escaping characters to lower case in #224
