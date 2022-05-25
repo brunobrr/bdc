@@ -1,6 +1,6 @@
 Package: bdc
 Title: Biodiversity Data Cleaning
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person("Bruno", "Ribeiro", , "ribeiro.brr@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7755-6715")),

@@ -26,7 +26,7 @@ WGS84. Default = "decimalLongitude".}
 \item{locality}{character string. The column name with locality information.
 Default = "locality".}
 
-\item{save_outputs}{logical. Should a table containing transposed coordenates
+\item{save_outputs}{logical. Should a table containing transposed coordinates
 saved for further inspection? Default = FALSE.}
 }
 \value{

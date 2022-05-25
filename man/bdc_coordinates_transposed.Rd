@@ -44,7 +44,7 @@ created a buffer around the country. Records within a given country and at
 a specified distance from the border will be not be corrected.
 Default = 0.2 (~22 km at the equator).}
 
-\item{save_outputs}{logical. Should a table containing transposed coordenates
+\item{save_outputs}{logical. Should a table containing transposed coordinates
 saved for further inspection? Default = FALSE.}
 }
 \value{
