@@ -25,8 +25,8 @@ knitr::opts_chunk$set(
 [![CRAN
 status](https://www.r-pkg.org/badges/version/bdc)](https://CRAN.R-project.org/package=bdc)
 [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/bdc)](https://cranlogs.r-pkg.org:443/badges/grand-total/bdc)
-[![rstudio mirror
-downloads](https://cranlogs.r-pkg.org/badges/bdc)](https://cranlogs.r-pkg.org:443/badges/bdc)
+<!-- [![rstudio mirror -->
+<!-- downloads](https://cranlogs.r-pkg.org/badges/bdc)](https://cranlogs.r-pkg.org:443/badges/bdc) -->
 [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg?token=9AUF86G9LJ)](https://app.codecov.io/gh/brunobrr/bdc)

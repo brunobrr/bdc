@@ -18,7 +18,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-5323-2735"))
   )
 Description: It brings together several aspects of biodiversity
-    data-cleaning in one place. bdc is organized in thematic modules
+    data-cleaning in one place. 'bdc' is organized in thematic modules
     related to different biodiversity dimensions, including 1) Merge
     datasets: standardization and integration of different datasets; 2)
     Pre-filter: flagging and removal of invalid or non-interpretable
