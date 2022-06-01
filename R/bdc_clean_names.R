@@ -95,9 +95,6 @@ bdc_clean_names <- function(sci_names, save_outputs = FALSE) {
   # https://github.com/ropensci/rgnparser)
   setup_gnparser()
 
-  # create a directory to salve the output
-  bdc_create_dir()
-
   # names raw
   names_raw <-
     sci_names %>%
