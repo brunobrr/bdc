@@ -75,7 +75,7 @@ momentary unavailable in taxadb.
 \item \strong{slb}: SeaLifeBase (unavailable)
 \item \strong{wd}: Wikidata (unavailable)
 \item \strong{ott}: OpenTree Taxonomy (v. 2021)
-\item \strong{iucn}: International Union for Conservation of Nature (v. 2022)
+\item \strong{iucn}: International Union for Conservation of Nature (v. 2019)
 }
 
 The bdc_query_names_taxadb processes as this:

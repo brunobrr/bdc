@@ -1,3 +1,7 @@
+# bdc 1.1.2
+
+- fix database version in `taxadb::td_create` inside the `bdc_query_names_taxadb`.
+
 # bdc 1.1.1
 
 - `bdc_country_from_coordinates` now filter out countries with no data (`NA`).

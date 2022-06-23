@@ -46,7 +46,7 @@
 #' * **slb**: SeaLifeBase (unavailable)
 #' * **wd**: Wikidata (unavailable)
 #' * **ott**: OpenTree Taxonomy (v. 2021)
-#' * **iucn**: International Union for Conservation of Nature (v. 2022)
+#' * **iucn**: International Union for Conservation of Nature (v. 2019)
 #'
 #' The bdc_query_names_taxadb processes as this:
 #'
@@ -223,7 +223,8 @@ bdc_query_names_taxadb <-
         db_version <- 2022
       },
       iucn = {
-        db_version <- 2019 ### TODO: Change to 2022
+        ## FIXME 2022-06-23: taxadb cannot parse the 2022 version yet (taxadb issue 88).
+        db_version <- 2019
       },
       ott = {
         db_version <- 2021
@@ -254,9 +255,12 @@ bdc_query_names_taxadb <-
     db_name <- paste0(db_version, "_", "dwc", "_", db)
     
     if (!has_table(db_name, taxadb::td_connect(bdc_taxadb_dir()))) {
-      taxadb::td_create(provider = db,
-                        schema = "dwc",
-                        overwrite = FALSE)
+      taxadb::td_create(
+        provider = db,
+        schema = "dwc",
+        version = db_version,
+        overwrite = FALSE
+      )
     }
     
     # Raw taxa names
