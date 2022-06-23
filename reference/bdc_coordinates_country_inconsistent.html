@@ -20,7 +20,7 @@ coordinate precision are not flagged as invalid."><meta property="og:image" cont
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
       </span>
     </div>
 
@@ -101,27 +101,40 @@ coordinate precision are not flagged as invalid.</p>
     <dl><dt>data</dt>
 <dd><p>data.frame. Containing longitude and latitude. Coordinates must
 be expressed in decimal degrees and WGS84.</p></dd>
+
+
 <dt>country_name</dt>
 <dd><p>character string. Name of the country or countries to be
 considered.</p></dd>
+
+
 <dt>country</dt>
 <dd><p>character string. The column name with the country assignment
 of each record. It is
 recommended use a column with corrected and homogenized country names.
 Default = "country_suggested".</p></dd>
+
+
 <dt>lat</dt>
 <dd><p>character string. The column name with the latitude coordinates.
 Default = “decimallatitude”.</p></dd>
+
+
 <dt>lon</dt>
 <dd><p>character string. The column name with the longitude coordinates.
 Default = “decimallongitude”.</p></dd>
+
+
 <dt>dist</dt>
 <dd><p>numeric. The distance in decimal degrees used to created a buffer
 around the country. Default = 0.1 (~11 km at the equator).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame containing the column
+    
+
+<p>A data.frame containing the column
 '.coordinates_country_inconsistent'. Compliant (TRUE) if coordinates fall
 within the boundaries plus a specified distance (if 'dist' is supplied) of
 'country_name'; otherwise "FALSE".</p>
@@ -181,7 +194,7 @@ coordinates are not tested and returned as TRUE.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

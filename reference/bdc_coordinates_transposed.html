@@ -18,7 +18,7 @@ to be transposed."><meta property="og:image" content="https://brunobrr.github.io
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
       </span>
     </div>
 
@@ -101,36 +101,55 @@ to be transposed.</p>
 <dd><p>data.frame. Containing a unique identifier for each record,
 geographical coordinates, and country names. Coordinates must be expressed
 in decimal degrees and WGS84.</p></dd>
+
+
 <dt>id</dt>
 <dd><p>character string. The column name with a unique record identifier.
 Default = "database_id".</p></dd>
+
+
 <dt>sci_names</dt>
 <dd><p>character string. The column name with species scientific
 name. Default = "scientificName".</p></dd>
+
+
 <dt>lat</dt>
 <dd><p>character string. The column name with latitude. Coordinates must
 be expressed in decimal degrees and WGS84. Default = "decimalLatitude".</p></dd>
+
+
 <dt>lon</dt>
 <dd><p>character string. The column with longitude. Coordinates must be
 expressed in decimal degrees and WGS84. Default = "decimalLongitude".</p></dd>
+
+
 <dt>country</dt>
 <dd><p>character string. The column name with the country
 assignment of each record. Default = "country".</p></dd>
+
+
 <dt>countryCode</dt>
 <dd><p>character string. The column name with an ISO-2 country
 code.</p></dd>
+
+
 <dt>border_buffer</dt>
 <dd><p>numeric &gt;= 0. A distance in decimal degrees used to
 created a buffer around the country. Records within a given country and at
 a specified distance from the border will be not be corrected.
 Default = 0.2 (~22 km at the equator).</p></dd>
+
+
 <dt>save_outputs</dt>
 <dd><p>logical. Should a table containing transposed coordinates
 saved for further inspection? Default = FALSE.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame containing the column "coordinates_transposed"
+    
+
+<p>A data.frame containing the column "coordinates_transposed"
 indicating if verbatim coordinates were not transposed (TRUE). Otherwise
 records are flagged as (FALSE) and, in this case, verbatim coordinates are
 replaced by corrected coordinates.</p>
@@ -207,7 +226,7 @@ columns "country" and "countryCode" can be retrieved by using the function
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
       </span>
     </div>
 
@@ -98,41 +98,62 @@
     <h2>Arguments</h2>
     <dl><dt>sci_name</dt>
 <dd><p>character string. Containing scientific names to be queried.</p></dd>
+
+
 <dt>replace_synonyms</dt>
 <dd><p>logical. Should synonyms be replaced by accepted
 names? Default = TRUE.</p></dd>
+
+
 <dt>suggest_names</dt>
 <dd><p>logical. Tries to find potential candidate names for
 misspelled names not resolved by an exact match. Default = TRUE.</p></dd>
+
+
 <dt>suggestion_distance</dt>
 <dd><p>numeric. A threshold value determining the
 acceptable orthographical distance between searched and candidate names.
 Names with matching distance value lower threshold informed are returned as
 NA. Default = 0.9.</p></dd>
+
+
 <dt>db</dt>
 <dd><p>character string. The name of the taxonomic database to
 be used in harmonizing taxon names. Default = "gbif".
 Use "all" to install all available taxonomic databases automatically.</p></dd>
+
+
 <dt>rank_name</dt>
 <dd><p>character string. Taxonomic rank name (e.g. "Plantae",
 "Animalia", "Aves", "Carnivora". Default = NULL.</p></dd>
+
+
 <dt>rank</dt>
 <dd><p>character string. A taxonomic rank used to filter the
 taxonomic database. Options available are: "kingdom", "phylum", "class",
 "order", "family", and "genus".</p></dd>
+
+
 <dt>parallel</dt>
 <dd><p>logical. Should a parallelization process be used?
 Default=FALSE</p></dd>
+
+
 <dt>ncores</dt>
 <dd><p>numeric. The number of cores to run in parallel.</p></dd>
+
+
 <dt>export_accepted</dt>
 <dd><p>logical. Should a table containing records
 with names linked to multiple accepted names saved for further
 inspection. Default = FALSE.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>This function returns data.frame containing the results of the
+    
+
+<p>This function returns data.frame containing the results of the
 taxonomic harmonization process. The database is returned in the same order
 of sci_name.</p>
     </div>
@@ -151,7 +172,7 @@ momentary unavailable in taxadb.</p><ul><li><p><strong>itis</strong>: Integrated
 <li><p><strong>slb</strong>: SeaLifeBase (unavailable)</p></li>
 <li><p><strong>wd</strong>: Wikidata (unavailable)</p></li>
 <li><p><strong>ott</strong>: OpenTree Taxonomy (v. 2021)</p></li>
-<li><p><strong>iucn</strong>: International Union for Conservation of Nature (v. 2022)</p></li>
+<li><p><strong>iucn</strong>: International Union for Conservation of Nature (v. 2019)</p></li>
 </ul><p>The bdc_query_names_taxadb processes as this:</p>
 <p><strong>Creation of a local taxonomic database</strong></p>
 <p>This is a one-time setup used to download, extract, and import the taxonomic
@@ -274,7 +295,7 @@ resolved. Such cases are flagged and left to be determined by the user.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

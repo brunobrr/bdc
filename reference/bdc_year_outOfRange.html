@@ -18,7 +18,7 @@ future) or old records collected before a year informed in 'year_threshold'."><m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
       </span>
     </div>
 
@@ -89,16 +89,23 @@ future) or old records collected before a year informed in 'year_threshold'.</p>
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>A data frame containing a column with event date information.</p></dd>
+
+
 <dt>eventDate</dt>
 <dd><p>numeric or date. The column containing event date
 information.</p></dd>
+
+
 <dt>year_threshold</dt>
 <dd><p>numeric. A four-digit year threshold used to flag old
 (potentially invalid) records. Default = 1900</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame containing the column ".year_outOfRange". Compliant
+    
+
+<p>A data.frame containing the column ".year_outOfRange". Compliant
 (TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".</p>
     </div>
     <div id="details">
@@ -160,7 +167,7 @@ Records with empty or NA 'eventDate' are not tested and returned as NA.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

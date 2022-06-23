@@ -20,7 +20,7 @@ vocabulary, or unreliable or unsuitable for specific analyses."><meta property="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
       </span>
     </div>
 
@@ -97,19 +97,26 @@ vocabulary, or unreliable or unsuitable for specific analyses.</p>
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>data.frame. Containing information about the basis of records.</p></dd>
+
+
 <dt>basisOfRecord</dt>
 <dd><p>character string. The column name with information about
 basis of records. Default = "basisOfRecord".</p></dd>
+
+
 <dt>names_to_keep</dt>
 <dd><p>character string. Elements of the column BasisOfRecords
 to keep. Default is "all", which considers a selected list of recommended
 standard Darwin Core classes (and their spelling variations, see details).
 By default, records missing (i.e., NA) or with "unknown" information about
 basis of records are kept.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame containing the column ".basisOfRecords_notStandard"
+    
+
+<p>A data.frame containing the column ".basisOfRecords_notStandard"
 .Compliant (TRUE) if 'basisOfRecord' is standard; otherwise "FALSE".</p>
     </div>
     <div id="details">
@@ -173,7 +180,7 @@ to keep. Default = c("Event","HUMAN_OBSERVATION", "HumanObservation",
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>
