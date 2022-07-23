@@ -86,12 +86,12 @@ equator, respectively.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bdc_coordinates_precision</span><span class="op">(</span>
-  <span class="va">data</span>,
-  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
-  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
-  ndec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bdc_coordinates_precision</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  ndec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -127,17 +127,17 @@ flagged as FALSE in .rou column are considered imprecise.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">  lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">21.34</span>, <span class="fl">23.567</span>, <span class="fl">16.798</span>, <span class="op">-</span><span class="fl">10.468</span><span class="op">)</span>,</span>
-<span class="r-in">  lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">55.38</span>, <span class="op">-</span><span class="fl">13.897</span>, <span class="fl">30.8</span>, <span class="fl">90.675</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">bdc_coordinates_precision</span><span class="op">(</span></span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">x</span>,</span>
-<span class="r-in">  lat <span class="op">=</span> <span class="st">"lat"</span>,</span>
-<span class="r-in">  lon <span class="op">=</span> <span class="st">"lon"</span>,</span>
-<span class="r-in">  ndec <span class="op">=</span> <span class="fl">3</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">21.34</span>, <span class="fl">23.567</span>, <span class="fl">16.798</span>, <span class="op">-</span><span class="fl">10.468</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">55.38</span>, <span class="op">-</span><span class="fl">13.897</span>, <span class="fl">30.8</span>, <span class="fl">90.675</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">bdc_coordinates_precision</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">x</span>,</span></span>
+<span class="r-in"><span>  lat <span class="op">=</span> <span class="st">"lat"</span>,</span></span>
+<span class="r-in"><span>  lon <span class="op">=</span> <span class="st">"lon"</span>,</span></span>
+<span class="r-in"><span>  ndec <span class="op">=</span> <span class="fl">3</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> bdc_coordinates_precision:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 2 records</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> One column was added to the database.</span>
@@ -146,7 +146,7 @@ flagged as FALSE in .rou column are considered imprecise.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  23.567 -13.897  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  16.798  30.800 FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 -10.468  90.675  TRUE</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -161,7 +161,7 @@ flagged as FALSE in .rou column are considered imprecise.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

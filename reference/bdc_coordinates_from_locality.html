@@ -85,13 +85,13 @@ extracted from locality information.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bdc_coordinates_from_locality</span><span class="op">(</span>
-  <span class="va">data</span>,
-  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,
-  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,
-  locality <span class="op">=</span> <span class="st">"locality"</span>,
-  save_outputs <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bdc_coordinates_from_locality</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  lat <span class="op">=</span> <span class="st">"decimalLatitude"</span>,</span>
+<span>  lon <span class="op">=</span> <span class="st">"decimalLongitude"</span>,</span>
+<span>  locality <span class="op">=</span> <span class="st">"locality"</span>,</span>
+<span>  save_outputs <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -148,19 +148,19 @@ specific description of the place" where an organism was recorded.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">  lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">""</span><span class="op">)</span>, </span>
-<span class="r-in">  lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span>, </span>
-<span class="r-in">  locality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE"</span>, </span>
-<span class="r-in">               <span class="st">"Parque Estadual da Serra de Caldas Novas, Goias, Brazil"</span>, </span>
-<span class="r-in">               <span class="st">"Parque Nacional Iguazu"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">bdc_coordinates_from_locality</span><span class="op">(</span></span>
-<span class="r-in">data <span class="op">=</span> <span class="va">x</span>, </span>
-<span class="r-in">lat <span class="op">=</span> <span class="st">"lat"</span>, </span>
-<span class="r-in">lon <span class="op">=</span> <span class="st">"lon"</span>, </span>
-<span class="r-in">locality <span class="op">=</span> <span class="st">"locality"</span>, </span>
-<span class="r-in">save_outputs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  lat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">""</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>  lon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">""</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>  locality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE"</span>, </span></span>
+<span class="r-in"><span>               <span class="st">"Parque Estadual da Serra de Caldas Novas, Goias, Brazil"</span>, </span></span>
+<span class="r-in"><span>               <span class="st">"Parque Nacional Iguazu"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">bdc_coordinates_from_locality</span><span class="op">(</span></span></span>
+<span class="r-in"><span>data <span class="op">=</span> <span class="va">x</span>, </span></span>
+<span class="r-in"><span>lat <span class="op">=</span> <span class="st">"lat"</span>, </span></span>
+<span class="r-in"><span>lon <span class="op">=</span> <span class="st">"lon"</span>, </span></span>
+<span class="r-in"><span>locality <span class="op">=</span> <span class="st">"locality"</span>, </span></span>
+<span class="r-in"><span>save_outputs <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> bdc_coordinates_from_locality </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found 3 records missing or with invalid coordinates but with potentially useful information on locality.</span>
@@ -168,7 +168,7 @@ specific description of the place" where an organism was recorded.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 &lt;NA&gt;           PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 &lt;NA&gt; &lt;NA&gt; Parque Estadual da Serra de Caldas Novas, Goias, Brazil</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      &lt;NA&gt;                                  Parque Nacional Iguazu</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -183,7 +183,7 @@ specific description of the place" where an organism was recorded.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -76,17 +76,20 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.2" id="bdc-112">bdc 1.1.2<a class="anchor" aria-label="anchor" href="#bdc-112"></a></h2>
-<ul><li>fix database version in <code><a href="https://rdrr.io/pkg/taxadb/man/td_create.html" class="external-link">taxadb::td_create</a></code> inside the <code>bdc_query_names_taxadb</code>.</li></ul></div>
+<ul><li>Fix database version in <code><a href="https://rdrr.io/pkg/taxadb/man/td_create.html" class="external-link">taxadb::td_create</a></code> inside the <code>bdc_query_names_taxadb</code>.</li>
+<li>Remove deprecated <code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">dplyr::mutate_all</a></code> by <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">dplyr::across</a></code> in the <code>bdc_coordinates_empty</code>.</li>
+<li>Improve tests for <code>bdc_coordinates_empty</code>.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.1" id="bdc-111">bdc 1.1.1<small>2022-05-27</small><a class="anchor" aria-label="anchor" href="#bdc-111"></a></h2>
 <ul><li>
 <code>bdc_country_from_coordinates</code> now filter out countries with no data (<code>NA</code>).</li>
-<li>fix a minor issue of <code>bdc_clean_names</code> character encoding on debian-clang CRAN server.</li>
+<li>Fix a minor issue of <code>bdc_clean_names</code> character encoding on debian-clang CRAN server.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.0" id="bdc-110">bdc 1.1.0<small>2022-04-22</small><a class="anchor" aria-label="anchor" href="#bdc-110"></a></h2>
-<ul><li>bugfix in <code><a href="../reference/bdc_country_from_coordinates.html">bdc_country_from_coordinates()</a></code> reported in <a href="https://github.com/brunobrr/bdc/issues/209" class="external-link">#209</a>.</li>
-<li>new argument added to function <code>bdc_coordinates_country_inconsistent</code>
+<ul><li>Bugfix in <code><a href="../reference/bdc_country_from_coordinates.html">bdc_country_from_coordinates()</a></code> reported in <a href="https://github.com/brunobrr/bdc/issues/209" class="external-link">#209</a>.</li>
+<li>New argument added to function <code>bdc_coordinates_country_inconsistent</code>
 </li>
 <li>Improve tests</li>
 <li>Add messages when no data is available to create figures and report</li>
@@ -120,7 +123,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

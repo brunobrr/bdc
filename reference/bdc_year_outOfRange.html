@@ -82,7 +82,7 @@ future) or old records collected before a year informed in 'year_threshold'.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bdc_year_outOfRange</span><span class="op">(</span><span class="va">data</span>, <span class="va">eventDate</span>, year_threshold <span class="op">=</span> <span class="fl">1900</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bdc_year_outOfRange</span><span class="op">(</span><span class="va">data</span>, <span class="va">eventDate</span>, year_threshold <span class="op">=</span> <span class="fl">1900</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -129,16 +129,16 @@ Records with empty or NA 'eventDate' are not tested and returned as NA.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">collection_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="cn">NA</span>, <span class="st">"31/12/2029"</span>, <span class="st">"2013-06-13T00:00:00Z"</span>, <span class="st">"2013-06-20"</span>,</span>
-<span class="r-in">  <span class="st">""</span>, <span class="st">"2013"</span>, <span class="fl">1650</span>, <span class="st">"0001-01-00"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">collection_date</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">bdc_year_outOfRange</span><span class="op">(</span></span>
-<span class="r-in">data <span class="op">=</span> <span class="va">x</span>, </span>
-<span class="r-in">eventDate <span class="op">=</span> <span class="st">"collection_date"</span>, </span>
-<span class="r-in">year_threshold <span class="op">=</span> <span class="fl">1900</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">collection_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="cn">NA</span>, <span class="st">"31/12/2029"</span>, <span class="st">"2013-06-13T00:00:00Z"</span>, <span class="st">"2013-06-20"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">""</span>, <span class="st">"2013"</span>, <span class="fl">1650</span>, <span class="st">"0001-01-00"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">collection_date</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">bdc_year_outOfRange</span><span class="op">(</span></span></span>
+<span class="r-in"><span>data <span class="op">=</span> <span class="va">x</span>, </span></span>
+<span class="r-in"><span>eventDate <span class="op">=</span> <span class="st">"collection_date"</span>, </span></span>
+<span class="r-in"><span>year_threshold <span class="op">=</span> <span class="fl">1900</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> bdc_year_outOfRange:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Flagged 3 records.</span>
@@ -152,7 +152,7 @@ Records with empty or NA 'eventDate' are not tested and returned as NA.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6                 2013             TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7                 1650            FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8           0001-01-00            FALSE</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -167,7 +167,7 @@ Records with empty or NA 'eventDate' are not tested and returned as NA.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

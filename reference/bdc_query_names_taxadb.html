@@ -80,18 +80,18 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bdc_query_names_taxadb</span><span class="op">(</span>
-  <span class="va">sci_name</span>,
-  replace_synonyms <span class="op">=</span> <span class="cn">TRUE</span>,
-  suggest_names <span class="op">=</span> <span class="cn">TRUE</span>,
-  suggestion_distance <span class="op">=</span> <span class="fl">0.9</span>,
-  db <span class="op">=</span> <span class="st">"gbif"</span>,
-  rank_name <span class="op">=</span> <span class="cn">NULL</span>,
-  rank <span class="op">=</span> <span class="cn">NULL</span>,
-  parallel <span class="op">=</span> <span class="cn">FALSE</span>,
-  ncores <span class="op">=</span> <span class="fl">2</span>,
-  export_accepted <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bdc_query_names_taxadb</span><span class="op">(</span></span>
+<span>  <span class="va">sci_name</span>,</span>
+<span>  replace_synonyms <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  suggest_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  suggestion_distance <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<span>  db <span class="op">=</span> <span class="st">"gbif"</span>,</span>
+<span>  rank_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rank <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ncores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  export_accepted <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -253,34 +253,34 @@ resolved. Such cases are flagged and left to be determined by the user.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">sci_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"Polystachya estrellensis"</span>,</span>
-<span class="r-in">    <span class="st">"Tachigali rubiginosa"</span>,</span>
-<span class="r-in">    <span class="st">"Oxalis rhombeo ovata"</span>,</span>
-<span class="r-in">    <span class="st">"Axonopus canescens"</span>,</span>
-<span class="r-in">    <span class="st">"Prosopis"</span>,</span>
-<span class="r-in">    <span class="st">"Haematococcus salinus"</span>,</span>
-<span class="r-in">    <span class="st">"Monas pulvisculus"</span>,</span>
-<span class="r-in">    <span class="st">"Cryptomonas lenticulari"</span>,</span>
-<span class="r-in">    <span class="st">"Poincianella pyramidalis"</span>,</span>
-<span class="r-in">    <span class="st">"Hymenophyllum polyanthos"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">names_harmonization</span> <span class="op">&lt;-</span></span>
-<span class="r-in">    <span class="fu">bdc_query_names_taxadb</span><span class="op">(</span></span>
-<span class="r-in">      <span class="va">sci_name</span>,</span>
-<span class="r-in">      replace_synonyms <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">      suggest_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">      suggestion_distance <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span class="r-in">      db <span class="op">=</span> <span class="st">"gbif"</span>,</span>
-<span class="r-in">      parallel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">      ncores <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">      export_accepted <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="co"># }</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">sci_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Polystachya estrellensis"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Tachigali rubiginosa"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Oxalis rhombeo ovata"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Axonopus canescens"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Prosopis"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Haematococcus salinus"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Monas pulvisculus"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Cryptomonas lenticulari"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Poincianella pyramidalis"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Hymenophyllum polyanthos"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">names_harmonization</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>    <span class="fu">bdc_query_names_taxadb</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="va">sci_name</span>,</span></span>
+<span class="r-in"><span>      replace_synonyms <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>      suggest_names <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>      suggestion_distance <span class="op">=</span> <span class="fl">0.9</span>,</span></span>
+<span class="r-in"><span>      db <span class="op">=</span> <span class="st">"gbif"</span>,</span></span>
+<span class="r-in"><span>      parallel <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>      ncores <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>      export_accepted <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -295,7 +295,7 @@ resolved. Such cases are flagged and left to be determined by the user.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

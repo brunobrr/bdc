@@ -84,12 +84,12 @@ returned.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bdc_filter_out_names</span><span class="op">(</span>
-  <span class="va">data</span>,
-  col_name <span class="op">=</span> <span class="st">"notes"</span>,
-  taxonomic_status <span class="op">=</span> <span class="st">"accepted"</span>,
-  opposite <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bdc_filter_out_names</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  col_name <span class="op">=</span> <span class="st">"notes"</span>,</span>
+<span>  taxonomic_status <span class="op">=</span> <span class="st">"accepted"</span>,</span>
+<span>  opposite <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -141,29 +141,29 @@ different from names listed in 'taxonomic_status' are returned.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">df_notes</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">    notes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="st">"notFound"</span>, <span class="st">"accepted"</span>, <span class="st">"accepted | replaceSynonym"</span>,</span>
-<span class="r-in">      <span class="st">"accepted | wasMisspelled"</span>,</span>
-<span class="r-in">      <span class="st">"accepted | wasMisspelled | replaceSynonym"</span>,</span>
-<span class="r-in">      <span class="st">"multipleAccepted"</span>,</span>
-<span class="r-in">      <span class="st">"heterotypic synonym"</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">bdc_filter_out_names</span><span class="op">(</span></span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">df_notes</span>,</span>
-<span class="r-in">  taxonomic_status <span class="op">=</span> <span class="st">"accepted"</span>,</span>
-<span class="r-in">  col_name <span class="op">=</span> <span class="st">"notes"</span>,</span>
-<span class="r-in">  opposite <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df_notes</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    notes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"notFound"</span>, <span class="st">"accepted"</span>, <span class="st">"accepted | replaceSynonym"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"accepted | wasMisspelled"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"accepted | wasMisspelled | replaceSynonym"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"multipleAccepted"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"heterotypic synonym"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">bdc_filter_out_names</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">df_notes</span>,</span></span>
+<span class="r-in"><span>  taxonomic_status <span class="op">=</span> <span class="st">"accepted"</span>,</span></span>
+<span class="r-in"><span>  col_name <span class="op">=</span> <span class="st">"notes"</span>,</span></span>
+<span class="r-in"><span>  opposite <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                       notes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                                  accepted</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                 accepted | replaceSynonym</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3                  accepted | wasMisspelled</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 accepted | wasMisspelled | replaceSynonym</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -178,7 +178,7 @@ different from names listed in 'taxonomic_status' are returned.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
