@@ -1,16 +1,20 @@
 # bdc 1.1.2
 
-- fix database version in `taxadb::td_create` inside the `bdc_query_names_taxadb`.
+- Fix database version in `taxadb::td_create` inside the
+  `bdc_query_names_taxadb`.
+- Remove deprecated `dplyr::mutate_all` by `dplyr::across` in the
+  `bdc_coordinates_empty`.
+- Improve tests for `bdc_coordinates_empty`.
 
 # bdc 1.1.1
 
 - `bdc_country_from_coordinates` now filter out countries with no data (`NA`).
-- fix a minor issue of `bdc_clean_names` character encoding on debian-clang CRAN server.
+- Fix a minor issue of `bdc_clean_names` character encoding on debian-clang CRAN server.
 
 # bdc 1.1.0
 
-- bugfix in `bdc_country_from_coordinates()` reported in #209.
-- new argument added to function
+- Bugfix in `bdc_country_from_coordinates()` reported in #209.
+- New argument added to function
   `bdc_coordinates_country_inconsistent`
 - Improve tests
 - Add messages when no data is available to create figures and report

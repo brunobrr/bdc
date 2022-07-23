@@ -15,7 +15,7 @@
 #' @return A data.frame containing the column ".coordinates_empty". Compliant
 #' (TRUE) if 'lat' and 'lon' are not empty; otherwise "FALSE".
 #'
-#' @importFrom dplyr mutate_all mutate case_when select bind_cols
+#' @importFrom dplyr across mutate case_when select bind_cols
 #'
 #' @export
 #'
@@ -30,23 +30,23 @@
 #'   lat = "decimalLatitude",
 #'   lon = "decimalLongitude"
 #' )
-#' 
+#'
 bdc_coordinates_empty <-
   function(data,
            lat = "decimalLatitude",
            lon = "decimalLongitude") {
     .coordinates_empt <- .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
 
-    df <- data
+    if (!is.data.frame(data)) {
+      stop(deparse(substitute(data)), " is not a data.frame", call. = FALSE)
+    }
 
-    suppressWarnings({
-      df <-
-        df %>%
-        dplyr::mutate_all(as.numeric)
-    })
+    check_col(data, c(lat, lon))
 
     df <-
-      df %>%
+      data %>%
+      dplyr::select(.data[[lat]], .data[[lon]]) %>%
+      dplyr::mutate(dplyr::across(c(.data[[lat]], .data[[lon]]), ~ as.numeric(.x))) %>%
       dplyr::mutate(
         .coordinates_empty = dplyr::case_when(
           is.na(.data[[lat]]) | is.na(.data[[lon]]) ~ FALSE,
