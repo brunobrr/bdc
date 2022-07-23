@@ -43,3 +43,4 @@ docs/
 po/*~
 rsconnect/
 /*_files/
+.dir-locals.el

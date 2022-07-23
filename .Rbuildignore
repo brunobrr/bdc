@@ -25,3 +25,5 @@ out-testthat.txt
 out-gp.txt
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^\.scratch$
+^\.dir-locals.el$

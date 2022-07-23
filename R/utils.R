@@ -29,3 +29,11 @@ has_table <- function(table = NULL, db = td_connect()) {
 bdc_taxadb_dir <- function() {
   Sys.getenv("TAXADB_HOME", rappdirs::user_data_dir("taxadb"))
 }
+
+check_col <- function(data, col) {
+  for (i in seq_along(col)) {
+    if (!col[i] %in% colnames(data)) {
+      stop("Column `", col[i], "` is not present in the data", call. = FALSE)
+    }
+  }
+}
