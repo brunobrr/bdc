@@ -5,6 +5,9 @@
 - Remove deprecated `dplyr::mutate_all` by `dplyr::across` in the
   `bdc_coordinates_empty`.
 - Improve tests for `bdc_coordinates_empty`.
+- Little refactor in `bdc_clean_names` fixing CRAN issues with
+  encoding characters (hiding characters into a file and reading them
+  when needed).
 
 # bdc 1.1.1
 
