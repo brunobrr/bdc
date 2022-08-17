@@ -79,6 +79,7 @@
 <ul><li>Fix database version in <code><a href="https://rdrr.io/pkg/taxadb/man/td_create.html" class="external-link">taxadb::td_create</a></code> inside the <code>bdc_query_names_taxadb</code>.</li>
 <li>Remove deprecated <code><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">dplyr::mutate_all</a></code> by <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">dplyr::across</a></code> in the <code>bdc_coordinates_empty</code>.</li>
 <li>Improve tests for <code>bdc_coordinates_empty</code>.</li>
+<li>Little refactor in <code>bdc_clean_names</code> fixing CRAN issues with encoding characters (hiding characters into a file and reading them when needed).</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.1" id="bdc-111">bdc 1.1.1<small>2022-05-27</small><a class="anchor" aria-label="anchor" href="#bdc-111"></a></h2>
