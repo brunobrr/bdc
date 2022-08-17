@@ -925,11 +925,14 @@ bdc_gnparser <- function(data, sci_names) {
     stringi::stri_trans_general(str = data_temp$temp, id = "Latin-ASCII") %>%
     stringr::str_squish()
 
-  data_temp$temp <- gsub("\u00b2?", "", data_temp$temp) # get ²?
-  data_temp$temp <- gsub("\u00b2", "", data_temp$temp) # get ²
-  data_temp$temp <- gsub("?", "", data_temp$temp)
-  data_temp$temp <- gsub("\u00b4", " ", data_temp$temp) # get ´
-  data_temp$temp <- gsub("'", " ", data_temp$temp)
+  encod_chars <-
+    readLines(system.file("extdata/encoding-chars.txt", package = "bdc"))
+
+  first_group <- paste0("(", paste0(encod_chars[1:3], collapse = "|"), ")")
+  second_group <- paste0("(", paste0(encod_chars[4:5], collapse = "|"), ")")
+
+  data_temp$temp <- gsub(first_group, "", data_temp$temp)
+  data_temp$temp <- gsub(second_group, " ", data_temp$temp)
 
   # Parse names using rgnparser
   suppressWarnings({
