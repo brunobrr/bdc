@@ -181,7 +181,7 @@ bdc_coordinates_country_inconsistent <-
     rm(flt)
     
     # Assign TRUE to those lines without country information
-    data_to_join$.coordinates_country_inconsistent[is.na(data_to_join[[country]])] <- TRUE
+    data_to_join$.coordinates_country_inconsistent[is.na(data_to_join[[country]])] <- FALSE
     
     data_to_join <-
       data_to_join %>%
