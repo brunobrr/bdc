@@ -1,3 +1,7 @@
+# bdc 1.1.3
+
+- Fix minor bug in `bdc_coordinates_country_inconsistent()` (see: 5c4e0aa).
+
 # bdc 1.1.2
 
 - Fix database version in `taxadb::td_create` inside the
