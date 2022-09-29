@@ -25,7 +25,6 @@
 #' distance from its coast will be not be corrected. Default = 0.2 (~20 km at
 #' the equator).
 #'
-#' @return
 #'
 #' @importFrom CoordinateCleaner cc_val clean_coordinates
 #' @importFrom dplyr filter mutate as_tibble select all_of pull bind_rows distinct relocate left_join
