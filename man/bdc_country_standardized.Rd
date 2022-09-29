@@ -15,7 +15,7 @@ of each record. Default = "country".}
 \value{
 A data.frame containing two columns: country_suggested (standardized
 country names) and country_code (two-letter country codes; more details in
-\href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2}{Wikipedia}).
+\href{https://github.com/stefangabos/world_countries/}{World Countries, International Organization for Standardization}).
 }
 \description{
 This function standardizes country names and adds a new column to the
@@ -23,7 +23,7 @@ database containing two-letter country codes (ISO 3166-1 alpha-2).
 }
 \details{
 Country names are standardized using an exact matching against a
-list of country names in several languages from Wikipedia. If any unmatched
+list of country names in several languages from International Organization for Standardization. If any unmatched
 names remain,  a fuzzy matching algorithm is used to find potential
 candidates for each misspelled countries names.
 }

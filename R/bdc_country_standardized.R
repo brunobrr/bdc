@@ -9,13 +9,13 @@
 #' of each record. Default = "country".
 #'
 #' @details Country names are standardized using an exact matching against a
-#' list of country names in several languages from Wikipedia. If any unmatched
+#' list of country names in several languages from International Organization for Standardization. If any unmatched
 #' names remain,  a fuzzy matching algorithm is used to find potential
 #' candidates for each misspelled countries names.
 #'
 #' @return A data.frame containing two columns: country_suggested (standardized
 #' country names) and country_code (two-letter country codes; more details in
-#' \href{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2}{Wikipedia}).
+#' \href{https://github.com/stefangabos/world_countries/}{World Countries, International Organization for Standardization}).
 #'
 #' @importFrom dplyr left_join rename
 #' @importFrom readr read_delim
@@ -55,17 +55,14 @@ bdc_country_standardized <-
     })
 
     # load auxiliary data
-    message("Loading auxiliary data: country names from wikipedia\n")
+    message("Loading auxiliary data: country names\n")
     suppressMessages({
       suppressWarnings({
         wiki_cntr <-
-          system.file("extdata/countries_names/wiki_country_names.txt", package = "bdc") %>%
+          system.file("extdata/countries_names/country_names.txt", package = "bdc") %>%
           readr::read_delim(delim = "\t") # get country names from Wikipedia
       })
     })
-
-    message("Loading auxiliary data: world map and country iso\n")
-    worldmap <- bdc_get_world_map() # get world map and country iso
 
     # standardize the name of countries
     message("Standardizing country names\n")

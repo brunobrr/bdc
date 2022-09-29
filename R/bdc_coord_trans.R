@@ -18,7 +18,6 @@
 #' @param worldmap_cntr_code charterer sting. Iso2 code column of country
 #' polygon database.
 #'
-#' @return
 #'
 #' @importFrom dplyr select bind_rows
 #'
