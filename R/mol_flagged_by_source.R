@@ -1,8 +1,6 @@
 #' Flag records that have prexisting quality control attributes
 #'
-#' This function flags records with quality control attributes provided by the
-#' source (eg GBIF 'issues'). The flag is applied my matching a vector of
-#' user-specified strings to a given column.
+#' This function flags records with quality control attributes provided by the source (eg GBIF 'issues'). The flag is applied my matching a vector of user-specified strings to one or more columns.
 #'
 #' @family prefilter
 #' @param data data.frame. Containing quality control attributes.
@@ -19,8 +17,10 @@
 #' .Compliant (TRUE) for observations that match one or more flagStrings;
 #' otherwise "FALSE".
 #'
-#' @importFrom dplyr if_any
+#' @importFrom dplyr if_any all_of
 #' @importFrom stringr str_c str_detect
+#' 
+#' @author Matthew S. Rogan
 #'
 #' @export
 #'
@@ -35,7 +35,7 @@
 #'   flagStrings = c("ABSENT", "TAXON_MATCH_FUZZY"),
 #'   flagCols = c("issue", "occurrenceStatus")
 #' )
-mol_flagged_by_source(
+bdc_flagged_by_source <- function(
   data,
   flagStrings,
   flagCols
@@ -43,11 +43,11 @@ mol_flagged_by_source(
   
   check_col(data, flagCols)
   
-  terms <- str_c(flagStrings, collapse = "|")
+  terms <- stringr::str_c(flagStrings, collapse = "|")
   
   data <- data %>%
-    mutate(.flagged_by_source = if_any(dplyr::all_of(flagCols),
-                                       ~str_detect(.x, terms)))
+    dplyr::mutate(.flagged_by_source = dplyr::if_any(tidyselect::all_of(flagCols),
+                                       ~stringr::str_detect(.x, terms)))
   
   message(
     paste(

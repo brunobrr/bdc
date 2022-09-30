@@ -8,7 +8,7 @@
 #' @param data data.frame. Containing geographical coordinates.
 #' @param roi spatial region of interest. Can be provided as an sf, sfc,
 #' SpatialPolygons, SpatialPolygonsDataFrame, rasterLayer, spatRaster,
-#' or as a file path with extension #' ".shp", ".gpkg", or ".tif".
+#' or as a file path with extension ".shp", ".gpkg", or ".tif".
 #' @param lat character string. The column name with latitude in decimal degrees
 #' and WGS84. Default = "decimalLatitude".
 #' @param lon character string. The column with longitude in decimal degrees and
@@ -24,6 +24,8 @@
 #'
 #' @return A data.frame containing the column ".outside_roi". Compliant
 #' (TRUE) if coordinate is outside user defined roi; otherwise "FALSE".
+#' 
+#' @author Matthew S. Rogan
 #'
 #' @importFrom sf st_bbox st_as_sf st_as_sfc st_within
 #' @importFrom stringr str_detect
@@ -47,7 +49,7 @@
 #' )
 #'
 
-mol_roi <- 
+bdc_roi <- 
   function(data,
            roi,
            lat = "decimalLatitude",
@@ -94,23 +96,31 @@ mol_roi <-
       if(!file.exists(roi)) stop("The ROI filepath is invalid.")
       
       # check proper format
-      if(!any(str_detect(roi,
-                     c("\\.shp$", "\\.gpkg$", "\\.tif$")))){
+      if(!any(stringr::str_detect(roi,
+                                  c("\\.shp$", "\\.gpkg$", "\\.tif$")))){
         stop("ROI input files must have '.shp', '.gpkg' or '.tif' file extensions.")
       }
       
       # load roi
-      if(str_detect(roi, "\\.tif")){
+      if(stringr::str_detect(roi, "\\.tif")){
+        suppressWarnings({
+          check_require_cran("terra")
+        })
         roi <- terra::rast(roi)
       } else{
-        roi <- st_read(roi)
+        roi <- sf::st_read(roi)
       }
       
     }
     
     ### Convert to sf/terra
-    if("SpatialPolygons" %in% .class2(roi)) roi <- st_as_sfc(roi)
-    if(class(roi) == "RasterLayer") roi <- rast(roi)
+    if("SpatialPolygons" %in% .class2(roi)) roi <- sf::st_as_sfc(roi)
+    if(class(roi) == "RasterLayer"){
+      suppressWarnings({
+        check_require_cran("terra")
+      })
+      roi <- terra::rast(roi)
+    } 
     
     ### Run appropriate check
     if(any(c("sf", "sfc") %in% class(roi))){
@@ -133,7 +143,7 @@ mol_roi <-
     ### Update data frame
     data$.outside_roi[data$id_temp %in% unflagged] <- FALSE
     out <- data %>% 
-      select(-id_temp)
+      dplyr::select(-id_temp)
     
     if(sum(out$.outside_roi) == 0){
       message("No coordinates were located outside the region of interest.")
@@ -155,13 +165,13 @@ roi_sf <-
            byExtentOnly){
     
     ### Check CRS
-    if(st_crs(roi) != st_crs(4326)){
+    if(sf::st_crs(roi) != sf::st_crs(4326)){
       message("Reprojecting ROI to WGS84.")
-      roi <- roi %>% st_transform(4326)
+      roi <- roi %>% sf::st_transform(4326)
     }
     
     ### Filter by extent
-    ext <- st_bbox(roi)
+    ext <- sf::st_bbox(roi)
     
     crpd <- dataCoords %>% 
       dplyr::filter(dplyr::between(.data[[lat]], ext["ymin"], ext["ymax"]),
@@ -188,9 +198,10 @@ roi_sf <-
       
       
       unflgd <- crpd %>%
-        dplyr::mutate(within = st_within(.,
-                                         roi,
-                                         sparse = F)[,1]) %>%
+        dplyr::mutate(within = sf::st_within(.,
+                                             roi,
+                                             sparse = F)[,1]) %>%
+        sf::st_drop_geometry() %>%
         dplyr::filter(within) %>%
         dplyr::pull(id_temp)
     }
@@ -207,7 +218,7 @@ roi_rast <-
            maskValue){
     
     ### Reproject to raster CRS
-    dataCoords[, c("tempX", "tempY")] <- geom(project(vect(dataCoords,
+    dataCoords[, c("tempX", "tempY")] <- terra::geom(project(vect(dataCoords,
                                                    geom = c(lon, lat),
                                                    crs = "EPSG:4326"),
                                               crs(roi)),
