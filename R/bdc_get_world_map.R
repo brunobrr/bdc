@@ -10,7 +10,7 @@
 #' worldmap <- bdc_get_world_map()
 #' }
 bdc_get_world_map <- function() {
-  name_long <- NULL
+  name_long <- english_name <- english_name <- iso2c <- cntr_original2 <- NULL
 
   check_require_cran("rnaturalearth")
   check_require_github("ropensci/rnaturalearthdata")
@@ -44,35 +44,25 @@ bdc_get_world_map <- function() {
     
     
     # Add some iso code to some countries polygons
-    iso2c <- countrycode::countrycode(worldmap$name_long,
-      origin = "country.name.en",
-      destination = "iso2c"
-    )
-
-    iso3c <- countrycode::countrycode(worldmap$name_long,
-      origin = "country.name.en",
-      destination = "iso3c"
-    )
-
-    iso <- data.frame(
-      worldmap@data %>%
-        dplyr::select(name_long, tidyselect::starts_with("iso")),
-      iso2c,
-      iso3c
-    )
+    cntr_names <-
+      system.file("extdata/countries_names/country_names.txt", package = "bdc") %>%
+      readr::read_delim(delim = "\t", col_types = readr::cols()) %>% 
+      dplyr::select(english_name, iso2c=alpha2) %>% 
+      unique()
+    
+    iso <- dplyr::left_join(worldmap@data[c("name_long", "iso_a2")], cntr_names, by=c("name_long"="english_name"))
 
     filt <- !is.na(iso$iso_a2) & is.na(iso$iso2c)
     iso$iso2c[filt] <- iso$iso_a2[filt]
 
-    filt <- !is.na(iso$iso_a3) & is.na(iso$iso3c)
-    iso$iso3c[filt] <- iso$iso_a3[filt]
+    # filt <- !is.na(iso$iso_a3) & is.na(iso$iso3c)
+    # iso$iso3c[filt] <- iso$iso_a3[filt]
 
     worldmap@data <- iso
-    is.na(iso) %>% colSums() # number of polygons without isocode
 
     worldmap@data <-
       worldmap@data %>%
-      dplyr::select(iso2c, iso3c)
+      dplyr::select(iso2c)
   })
   return(worldmap)
 }
