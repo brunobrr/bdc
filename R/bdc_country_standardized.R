@@ -19,7 +19,6 @@
 #'
 #' @importFrom dplyr left_join rename
 #' @importFrom readr read_delim
-#' @importFrom stringr str_to_sentence
 #'
 #' @export
 #'
@@ -49,8 +48,6 @@ bdc_country_standardized <-
       suppressMessages({
         check_require_cran("rnaturalearth")
         check_require_github("ropensci/rnaturalearthdata")
-        check_require_cran("countrycode")
-        check_require_cran("rangeBuilder")
       })
     })
 
@@ -58,9 +55,9 @@ bdc_country_standardized <-
     message("Loading auxiliary data: country names\n")
     suppressMessages({
       suppressWarnings({
-        wiki_cntr <-
+        cntr_names <-
           system.file("extdata/countries_names/country_names.txt", package = "bdc") %>%
-          readr::read_delim(delim = "\t") # get country names from Wikipedia
+          readr::read_delim(delim = "\t") # get country names
       })
     })
 
@@ -70,7 +67,7 @@ bdc_country_standardized <-
       bdc_standardize_country(
         data = data,
         country = country,
-        country_names_db = wiki_cntr
+        country_names_db = cntr_names
       )
 
     cntr <- "cntr_original"
@@ -84,11 +81,7 @@ bdc_country_standardized <-
       dplyr::rename(
         country_suggested = cntr_suggested,
         countryCode = cntr_iso2c
-      ) %>%
-      dplyr::mutate(
-        country_suggested =
-          stringr::str_to_sentence(country_suggested)
-      )
+      ) 
 
     w <- which(data$country != data$country_suggested)
 
