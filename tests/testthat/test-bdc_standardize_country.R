@@ -1,3 +1,4 @@
+## TODO 2022-10-06 @kguidonimartins: Change file path after fix bdc_get_world_map.
 wiki_cntr <- system.file("extdata/countries_names/wiki_country_names.txt", package = "bdc") %>%
   readr::read_delim(delim = "\t")
 worldmap <- bdc_get_world_map()

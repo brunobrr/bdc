@@ -111,33 +111,8 @@ bdc_coordinates_country_inconsistent <-
         country = country_name,
         scale = "large",
         returnclass = "sf"
-      )
-    country_shp$name_long[grep("eSwatini", country_shp$name_long)] <-
-      "Eswatini"
-    country_shp$name_long[grep("Faeroe Islands", country_shp$name_long)] <-
-      "Faroe Islands"
-    country_shp$name_long[grep("Heard I. and McDonald Islands", country_shp$name_long)] <-
-      "Heard Island and McDonald Islands"
-    country_shp$name_long[grep("Indian Ocean Territories", country_shp$name_long)] <-
-      "Australian Indian Ocean Territories"
-    country_shp$name_long[grep("Lao", country_shp$name_long)] <-
-      "Lao People's Democratic Republic"
-    country_shp$name_long[grep("Pitcairn Island", country_shp$name_long)] <-
-      "Pitcairn"
-    country_shp$name_long[grep("Saint-Barthélemy", country_shp$name_long)] <-
-      "Saint Barthélemy"
-    country_shp$name_long[grep("Saint-Martin", country_shp$name_long)] <-
-      "Saint Martin"
-    country_shp$name_long[grep("South Georgia and the Islands", country_shp$name_long)] <-
-      "South Georgia and the South Sandwich Islands"
-    country_shp$name_long[grep("Gambia", country_shp$name_long)] <-
-      "Gambia"
-    country_shp$name_long[grep("Minor", country_shp$name_long)] <-
-      "United States"
-    country_shp$name_long[grep("Wallis and Futuna Islands", country_shp$name_long)] <-
-      "Wallis and Futuna"
-    
-
+      ) %>%
+      bdc_reword_countries()
 
     # Spatial points
     data_sp <-
@@ -171,34 +146,8 @@ bdc_coordinates_country_inconsistent <-
     # Points in other countries
     worldmap <-
       rnaturalearth::ne_countries(returnclass = "sf", scale = "large") %>%
-      dplyr::select(name_long)
-    worldmap$name_long[grep("eSwatini", worldmap$name_long)] <-
-      "Eswatini"
-    worldmap$name_long[grep("Faeroe Islands", worldmap$name_long)] <-
-      "Faroe Islands"
-    worldmap$name_long[grep("Heard I. and McDonald Islands", worldmap$name_long)] <-
-      "Heard Island and McDonald Islands"
-    worldmap$name_long[grep("Indian Ocean Territories", worldmap$name_long)] <-
-      "Australian Indian Ocean Territories"
-    worldmap$name_long[grep("Lao", worldmap$name_long)] <-
-      "Lao People's Democratic Republic"
-    worldmap$name_long[grep("Pitcairn Island", worldmap$name_long)] <-
-      "Pitcairn"
-    worldmap$name_long[grep("Saint-Barthélemy", worldmap$name_long)] <-
-      "Saint Barthélemy"
-    worldmap$name_long[grep("Saint-Martin", worldmap$name_long)] <-
-      "Saint Martin"
-    worldmap$name_long[grep("South Georgia and the Islands", worldmap$name_long)] <-
-      "South Georgia and the South Sandwich Islands"
-    worldmap$name_long[grep("Gambia", worldmap$name_long)] <-
-      "Gambia"
-    worldmap$name_long[grep("Minor", worldmap$name_long)] <-
-      "United States"
-    worldmap$name_long[grep("Wallis and Futuna Islands", worldmap$name_long)] <-
-      "Wallis and Futuna"
-    
-    
-    
+      dplyr::select(name_long) %>%
+      bdc_reword_countries()
 
     # Extract country names from points
     suppressWarnings({
