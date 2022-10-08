@@ -16,53 +16,29 @@ bdc_get_world_map <- function() {
   check_require_github("ropensci/rnaturalearthdata")
 
   suppressWarnings({
-    worldmap <- rnaturalearth::ne_countries(scale = "large")
-    worldmap$name_long[grep("eSwatini", worldmap$name_long)] <-
-      "Eswatini"
-    worldmap$name_long[grep("Faeroe Islands", worldmap$name_long)] <-
-      "Faroe Islands"
-    worldmap$name_long[grep("Heard I. and McDonald Islands", worldmap$name_long)] <-
-      "Heard Island and McDonald Islands"
-    worldmap$name_long[grep("Indian Ocean Territories", worldmap$name_long)] <-
-      "Australian Indian Ocean Territories"
-    worldmap$name_long[grep("Lao", worldmap$name_long)] <-
-      "Lao People's Democratic Republic"
-    worldmap$name_long[grep("Pitcairn Island", worldmap$name_long)] <-
-      "Pitcairn"
-    worldmap$name_long[grep("Saint-Barthélemy", worldmap$name_long)] <-
-      "Saint Barthélemy"
-    worldmap$name_long[grep("Saint-Martin", worldmap$name_long)] <-
-      "Saint Martin"
-    worldmap$name_long[grep("South Georgia and the Islands", worldmap$name_long)] <-
-      "South Georgia and the South Sandwich Islands"
-    worldmap$name_long[grep("Gambia", worldmap$name_long)] <-
-      "Gambia"
-    worldmap$name_long[grep("Minor", worldmap$name_long)] <-
-      "United States"
-    worldmap$name_long[grep("Wallis and Futuna Islands", worldmap$name_long)] <-
-      "Wallis and Futuna"
-    
-    
-    # Add some iso code to some countries polygons
+
     cntr_names <-
       system.file("extdata/countries_names/country_names.txt", package = "bdc") %>%
-      readr::read_delim(delim = "\t", col_types = readr::cols()) %>% 
-      dplyr::select(english_name, iso2c=alpha2) %>% 
+      readr::read_delim(delim = "\t", col_types = readr::cols()) %>%
+      ## FIXME 2022-10-08: There are two cases as "United States".
+      dplyr::mutate(english_name = dplyr::if_else(alpha3 == "USA", "United States of America", english_name)) %>%
+      dplyr::select(english_name, iso2c = alpha2) %>%
       unique()
-    
-    iso <- dplyr::left_join(worldmap@data[c("name_long", "iso_a2")], cntr_names, by=c("name_long"="english_name"))
 
-    filt <- !is.na(iso$iso_a2) & is.na(iso$iso2c)
-    iso$iso2c[filt] <- iso$iso_a2[filt]
+    worldmap <-
+      rnaturalearth::ne_countries(scale = "large", returnclass = "sf") %>%
+      ## correct country names to match our database `cntr_names`
+      bdc_reword_countries() %>%
+      dplyr::left_join(cntr_names, by = c("name_long" = "english_name")) %>%
+      ## replace NA on our database with iso names on rnaturalearth (two cases: Namibia and Kosovo).
+      ## NOTE: the iso2c for Namibia is the string "NA".
+      dplyr::mutate(iso2c = if_else(!is.na(iso_a2) & is.na(iso2c), iso_a2, iso2c)) %>%
+      dplyr::select(name_long, iso2c, geometry) %>%
+      ## return SpatialPolygonDataFrame
+      sf::as_Spatial()
 
-    # filt <- !is.na(iso$iso_a3) & is.na(iso$iso3c)
-    # iso$iso3c[filt] <- iso$iso_a3[filt]
-
-    worldmap@data <- iso
-
-    worldmap@data <-
-      worldmap@data %>%
-      dplyr::select(iso2c)
   })
+
   return(worldmap)
+
 }
