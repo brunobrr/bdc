@@ -5,5 +5,5 @@ test_that("returning  a polygon data frame", {
 })
 
 test_that("checking variables", {
-  testthat::expect_equal(names(x), c("iso2c", "iso3c"))
+  testthat::expect_equal(names(x), c("name_long", "iso2c"))
 })

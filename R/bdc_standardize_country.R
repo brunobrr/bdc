@@ -22,7 +22,7 @@ bdc_standardize_country <-
            country,
            country_names_db) {
     .data <- names_in_different_languages <- english_name <- lower_case <- NULL
-    cntr_suggested2 <- cntr_suggested <- cntr_iso2c <- alpha2 <- NULL
+    cntr_suggested2 <- cntr_suggested <- cntr_iso2c <- alpha2 <- cntr_original2 <- NULL
 
     # Create a country database based on occ database
     cntr_db <-

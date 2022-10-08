@@ -17,7 +17,7 @@
 #' country names) and country_code (two-letter country codes; more details in
 #' \href{https://github.com/stefangabos/world_countries/}{World Countries, International Organization for Standardization}).
 #'
-#' @importFrom dplyr left_join rename
+#' @importFrom dplyr left_join rename mutate if_else
 #' @importFrom readr read_delim
 #'
 #' @export
@@ -36,7 +36,7 @@
 bdc_country_standardized <-
   function(data,
            country = "country") {
-    cntr_suggested <- cntr_iso2c <- country_suggested <- NULL
+    cntr_suggested <- cntr_iso2c <- country_suggested <- alpha3 <- english_name <- NULL
 
     if (all(colnames(data) != country)) {
       stop(
@@ -57,7 +57,9 @@ bdc_country_standardized <-
       suppressWarnings({
         cntr_names <-
           system.file("extdata/countries_names/country_names.txt", package = "bdc") %>%
-          readr::read_delim(delim = "\t") # get country names
+          readr::read_delim(delim = "\t") %>% # get country names
+          ## FIXME 2022-10-08: There are two cases as "United States".
+          dplyr::mutate(english_name = dplyr::if_else(alpha3 == "USA", "United States of America", english_name))
       })
     })
 

@@ -1,6 +1,16 @@
 # bdc 1.1.3
 
 - Fix minor bug in `bdc_coordinates_country_inconsistent()` (see: 5c4e0aa).
+- `{countrycode}` and `{rangeBuilder}` dependencies were
+  removed. Country names now are derived from [Stefan Gabos](https://github.com/stefangabos/world_countries/) repository
+  following the [ISO 3166-1](https://www.iso.org/iso-3166-country-codes.html) standard.
+
+- `{bdc}` wins the Ebbe Nielsen Challenge GBIF 2022 (see links below)!
+  - https://www.gbif.org/news/6J94JrRZtDCPhUZMMiTALq/gridder-and-bdc-share-top-honors-in-2022-gbif-ebbe-nielsen-challenge
+  - https://www.sibbr.gov.br/noticia/gridder-e-bdc-propostas-vencedoras-do-desafio-ebbe-nielsen-2022.html?lang=pt_BR
+  - https://ecoevol.ufg.br/n/160758-ferramenta-biodiversity-data-cleaning-bdc-agraciada-com-o-primeiro-lugar-do-desafio-ebbe-nielsen-2022-do-gbif
+  - http://www.ueg.br/noticia/59726_trabalhos_de_professores_da_ueg_sao_premiados_em_eventos
+  - https://jhortal.com/geiziane-tessarolo-and-colleagues-win-gbifs-ebbe-nielsen-challenge/
 
 # bdc 1.1.2
 

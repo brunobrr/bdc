@@ -80,3 +80,34 @@ bdc_stdz_cntr <- function (cntry_n, country_names_db, fuzzy_d = 1)
   return(result)
 }
 
+#' Internal function to reword some country names
+#'
+#' @importFrom dplyr pull mutate recode
+#' @importFrom purrr set_names
+#' @importFrom readr read_csv
+#'
+#' @noRd
+#' @return Return a tibble/sf object
+#'
+#' #' @examples
+#' \dontrun{
+#' }
+bdc_reword_countries <- function(data) {
+
+  after <- name_long <- NULL
+
+  file_reword <-
+    system.file("extdata/countries_names/reword-countries.csv", package = "bdc")
+
+  reword <-
+    readr::read_csv(file_reword, show_col_types = FALSE)
+
+  vec_reword <-
+    reword %>%
+    dplyr::pull(after) %>%
+    purrr::set_names(reword$before)
+
+  data %>%
+    dplyr::mutate(name_long = dplyr::recode(name_long, !!!vec_reword))
+
+}

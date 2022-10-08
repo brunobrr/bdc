@@ -66,6 +66,9 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran(c("rcmdcheck", "curl", "devtools"))
+          install.packages("rnaturalearthhires", repos = "http://packages.ropensci.org", type = "source")
+          install.packages("rworldmap", repos = "https://cloud.r-project.org")
+          install.packages("hexbin", repos = "https://cloud.r-project.org")
         shell: Rscript {0}
 
       - name: Session info
