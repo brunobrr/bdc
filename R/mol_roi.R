@@ -22,14 +22,13 @@
 #' @details This test identifies records outside a particular region of interest
 #' defined by a raster or vector layer
 #'
-#' @return A data.frame containing the column ".outside_roi". Compliant
+#' @return A tibble containing the column ".outside_roi". Compliant
 #' (TRUE) if coordinate is outside user defined roi; otherwise "FALSE".
 #' 
 #' @author Matthew S. Rogan
 #'
 #' @importFrom sf st_bbox st_as_sf st_as_sfc st_within
 #' @importFrom stringr str_detect
-#' @importFrom terra crs rast geom vect
 #'
 #' @export mol_roi
 #'
@@ -41,7 +40,7 @@
 #'
 #' roi <- sf::st_as_sfc(sf::st_bbox(c(xmin = 0, xmax = 4, ymax = 4, ymin = 0), crs = 4326))
 #' 
-#' mol_roi(
+#' bdc_roi(
 #'   data = x,
 #'   roi  = roi,
 #'   lat = "decimalLatitude",
@@ -55,7 +54,7 @@ bdc_roi <-
            lat = "decimalLatitude",
            lon = "decimalLongitude",
            byExtOnly = FALSE,
-           maskValue = NA){
+           maskValue = NULL){
     
     ### Run checks
     if (!is.data.frame(data)) {
@@ -69,20 +68,21 @@ bdc_roi <-
               "sfc",
               "SpatialPolygons",
               "RasterLayer",
-              "SpatRaster")) %in% class(roi)){
+              "SpatRaster") %in% class(roi))){
       stop("The region of interest is not in a valid format.")
     }
     
     ### converts coordinates columns to numeric
     data <-
       data %>%
-      dplyr::rowid_to_column("id_temp") %>%
+      tibble::as_tibble() %>%
+      tibble::rowid_to_column("id_temp") %>%
       dplyr::mutate(decimalLatitude = as.numeric(.data[[lat]]),
                     decimalLongitude = as.numeric(.data[[lon]]),
                     .outside_roi = TRUE) 
     
     ### Screen NAs
-    dataCoords %>% 
+    dataCoords <- data %>% 
       dplyr::select(dplyr::all_of(c("id_temp", lon, lat))) %>%
       dplyr::filter(!is.na(.data[[lat]]), 
                     !is.na(.data[[lon]]))
@@ -93,11 +93,14 @@ bdc_roi <-
     if(is.character(roi)){
       
       # check file exists
-      if(!file.exists(roi)) stop("The ROI filepath is invalid.")
+      if(!file.exists(roi)) stop("The ROI filepath does not exist.")
       
       # check proper format
       if(!any(stringr::str_detect(roi,
-                                  c("\\.shp$", "\\.gpkg$", "\\.tif$")))){
+                                  c("\\.shp$", 
+                                    "\\.gpkg$", 
+                                    "\\.tif$", 
+                                    "\\.tiff$")))){
         stop("ROI input files must have '.shp', '.gpkg' or '.tif' file extensions.")
       }
       
@@ -108,14 +111,14 @@ bdc_roi <-
         })
         roi <- terra::rast(roi)
       } else{
-        roi <- sf::st_read(roi)
+        roi <- sf::read_sf(roi)
       }
       
     }
     
     ### Convert to sf/terra
     if("SpatialPolygons" %in% .class2(roi)) roi <- sf::st_as_sfc(roi)
-    if(class(roi) == "RasterLayer"){
+    if("RasterLayer" %in% class(roi)){
       suppressWarnings({
         check_require_cran("terra")
       })
@@ -132,13 +135,16 @@ bdc_roi <-
       unflagged <- roi_sf(dataCoords,
                           roi,
                           lat,
-                          lon)
-    } else(
+                          lon,
+                          byExtOnly = byExtOnly)
+    } else{
       unflagged <- roi_rast(dataCoords,
                             roi,
                             lat,
-                            lon)
-    )
+                            lon,
+                            byExtOnly = byExtOnly,
+                            maskValue = maskValue)
+    }
     
     ### Update data frame
     data$.outside_roi[data$id_temp %in% unflagged] <- FALSE
@@ -147,11 +153,11 @@ bdc_roi <-
     
     if(sum(out$.outside_roi) == 0){
       message("No coordinates were located outside the region of interest.")
-    } else(
+    } else{
       message(paste(sum(out$.outside_roi),
                     "occurrences were flagged as outside the region of interest.",
                     "One column was added to the database."))
-    )
+    }
     
     return(out)
   
@@ -162,7 +168,7 @@ roi_sf <-
            roi,
            lat,
            lon,
-           byExtentOnly){
+           byExtOnly = FALSE){
     
     ### Check CRS
     if(sf::st_crs(roi) != sf::st_crs(4326)){
@@ -184,26 +190,26 @@ roi_sf <-
     } else{
       
       ### Consolidate roi
-      suppressWarnings({
-        s2_status <- sf_use_s2()
-        sf_use_s2(FALSE)
+      suppressMessages({
+        s2_status <- sf::sf_use_s2()
+        sf::sf_use_s2(FALSE)
           
         roi <- roi %>%
           sf::st_union() %>%
           sf::st_combine()
           
-        if(s2_status) sf_use_s2(TRUE)
-      })
+        if(s2_status) sf::sf_use_s2(TRUE)
         
-      
-      
       unflgd <- crpd %>%
+        sf::st_as_sf(coords = c(lon, lat),
+                     crs = 4326) %>%
         dplyr::mutate(within = sf::st_within(.,
                                              roi,
                                              sparse = F)[,1]) %>%
         sf::st_drop_geometry() %>%
         dplyr::filter(within) %>%
         dplyr::pull(id_temp)
+      })
     }
     
     return(unflgd)
@@ -214,8 +220,8 @@ roi_rast <-
            roi,
            lat,
            lon,
-           byExtentOnly,
-           maskValue){
+           byExtOnly = FALSE,
+           maskValue = NA){
     
     ### Reproject to raster CRS
     dataCoords[, c("tempX", "tempY")] <- terra::geom(project(vect(dataCoords,
@@ -244,13 +250,13 @@ roi_rast <-
       }
       smpld <- crpd %>%
         dplyr::mutate(value = terra::extract(roi,
-                                              crpd[,c("tempX", "tempY")],
-                                              method = "simple")[,2]) %>%
-        filter(!is.na(value))
+                                             crpd[,c("tempX", "tempY")],
+                                             method = "simple")[,2]) %>%
+        dplyr::filter(!is.na(value))
       
       if(!is.na(maskValue)){
         smpld <- smpld %>%
-          filter(value != maskValue) 
+          dplyr::filter(value != maskValue) 
       }
       
       unflgd <- smpld$id_temp
