@@ -81,6 +81,13 @@ wrong_metadata <- tibble::tribble(
   "datafake4", df4_path, NA, "nome_das_especies", "y", "x", NA, "notes"
 )
 
+metadata_repeated_datasetName <- tibble::tribble(
+  ~datasetName, ~fileName, ~occurrenceID, ~scientificName, ~decimalLatitude, ~decimalLongitude,
+  "datafake1", df1_path, "id", "species", "latitude", "longitude",
+  "datafake2", df2_path, "id_number", "spp", "lat", "lon",
+  "datafake1", df1_path, "id", "species", "latitude", "longitude"
+)
+
 bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs", save_database = FALSE)
 
 test_that("bdc_standardize_datasets can create qs files", {
@@ -191,4 +198,22 @@ test_that("bdc_standardize_datasets can create 00_merged_datasets.qs", {
   expect_true(file.exists(merged))
 
   unlink(here::here("Output"), recursive = TRUE)
+})
+
+test_that("bdc_standardize_datasets throw an error when dataset names are not unique", {
+
+  res <-
+    capture_message(
+      bdc_standardize_datasets(
+        metadata = metadata_repeated_datasetName,
+        overwrite = TRUE,
+        format = "csv",
+        save_database = FALSE
+      )
+    )
+
+  expect_equal(res$message, "[ERROR]: Dataset names defined in the `datasetName` column must be unique.")
+
+  unlink(here::here("Output"), recursive = TRUE)
+
 })
