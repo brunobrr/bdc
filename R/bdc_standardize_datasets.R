@@ -105,6 +105,10 @@ bdc_standardize_datasets <-
         metadata %>%
         dplyr::pull(fileName)
 
+      if (length(unique(metadata$datasetName)) != nrow(metadata)) {
+        stop("[ERROR]: Dataset names defined in the `datasetName` column must be unique.")
+      }
+
       for (file_index in seq_along(input_file)) {
         input_filename <-
           metadata %>%
@@ -258,7 +262,7 @@ bdc_standardize_datasets <-
           # here::here("data", "temp_datasets") %>%
           save_in_dir %>%
           fs::dir_ls(regexp = "*.qs") %>%
-          purrr::map_dfr(~ qs::qread(.x) %>% 
+          purrr::map_dfr(~ qs::qread(.x) %>%
                          dplyr::mutate(dplyr::across(
                            .cols = dplyr::everything(), ~ as.character(.x)
                          )))

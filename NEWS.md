@@ -1,5 +1,6 @@
 # bdc 1.1.3
 
+- `bdc_standardize_datasets` now throws an error when dataset names defined in the metadata file are not unique.
 - Fix minor bug in `bdc_coordinates_country_inconsistent()` (see: 5c4e0aa).
 - `{countrycode}` and `{rangeBuilder}` dependencies were
   removed. Country names now are derived from [Stefan Gabos](https://github.com/stefangabos/world_countries/) repository
