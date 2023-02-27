@@ -4,7 +4,9 @@
   (0.2.0), temporarily discontinuing the `tpl`, `fb` and `iucn`
   databases (see [here](https://github.com/ropensci/taxadb/commit/593c7856a603c802762829d60acb2a313ad7a6dd)).
 
-- `bdc_query_names_taxadb()` now informs the database provider and its version.
+- `bdc_query_names_taxadb()` now informs the database provider and its
+  version and does not create Output directory when
+  `export_accepted=FALSE`.
 
 # bdc 1.1.3
 
