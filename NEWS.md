@@ -1,3 +1,11 @@
+# bdc 1.1.4
+
+- Adaptation of the databases to the latest version of `{taxadb}`
+  (0.2.0), temporarily discontinuing the `tpl`, `fb` and `iucn`
+  databases (see [here](https://github.com/ropensci/taxadb/commit/593c7856a603c802762829d60acb2a313ad7a6dd)).
+
+- `bdc_query_names_taxadb()` now informs the database provider and its version.
+
 # bdc 1.1.3
 
 - `bdc_standardize_datasets` now throws an error when dataset names defined in the metadata file are not unique.
