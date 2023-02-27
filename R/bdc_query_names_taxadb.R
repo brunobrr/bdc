@@ -243,11 +243,6 @@ bdc_query_names_taxadb <-
     # Create a directory to save the result
     bdc_create_dir()
     
-    # FIXME: set a env var for now
-    # REVIEW: https://github.com/ropensci/taxadb/issues/91
-    # Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
-    # Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
-    
     # Measuring the execution time
     start <- Sys.time()
     
