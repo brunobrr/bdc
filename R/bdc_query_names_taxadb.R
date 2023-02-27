@@ -240,9 +240,6 @@ bdc_query_names_taxadb <-
 
     message("\nQuerying using ", db, " database version ", db_version, "\n")
 
-    # Create a directory to save the result
-    bdc_create_dir()
-    
     # Measuring the execution time
     start <- Sys.time()
     
