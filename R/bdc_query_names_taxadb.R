@@ -249,15 +249,12 @@ bdc_query_names_taxadb <-
     
     db_name <- paste0(db_version, "_", "dwc", "_", db)
     
-    if (!has_table(db_name, taxadb::td_connect(bdc_taxadb_dir()))) {
-      taxadb::td_create(
-        provider = db,
-        schema = "dwc",
-        version = db_version,
-        overwrite = FALSE
-      )
-    }
-    
+    taxadb::td_create(
+      provider = db,
+      schema = "dwc",
+      version = db_version
+    )
+
     # Raw taxa names
     raw_sci_name <-
       sci_name %>%
