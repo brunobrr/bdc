@@ -8,14 +8,16 @@ editor_options:
 
 Dear CRAN Maintainers,
 
-We are pleased to submit a version version of bdc.
+I am delighted to submit the latest version of bdc for your consideration.
 
-Below we copy the results of hrub and GitHub actions checks. There were
-no ERRORs or WARNINGs.
+Please find the results of hrub and GitHub actions checks copied below. I am pleased to report that there were no errors or warnings detected during these tests.
 
-Cheers,
+I also want to inform that have thoroughly reviewed any NOTES that arose and confirmed that all the URLs are functional.
 
+Thank you for your time and consideration.
+Best regards,
 Bruno R. Ribeiro
+
 
 ## HRUB CHECK
 
@@ -40,9 +42,11 @@ Bruno R. Ribeiro
     doc       3.6Mb
     extdata   1.2Mb
     
--  checking for detritus in the temp directory ... NOTE
-   Found the following files/directories:
-   'lastMiKTeXException'
+-  Found the following (possibly) invalid DOIs:
+  DOI: 10.1111/2041-210X.13868
+    From: DESCRIPTION
+    Status: Forbidden
+    Message: 403
 
 **COMMENTS**: we double-checked this and the urls are working
 
