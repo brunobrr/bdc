@@ -31,7 +31,7 @@
 bdc_filter_name <-
   function(sci_name,
            db,
-           db_version = taxadb:::latest_version()) {
+           db_version = "22.12") {
     taxonID <- NULL
     # x <- tolower(sci_name)
     x <- sci_name
@@ -84,7 +84,7 @@ bdc_filter_name <-
 #'
 #' }
 bdc_filter_id <-
-  function(id, db, db_version = taxadb:::latest_version()) {
+  function(id, db, db_version = "22.12") {
     taxonID <- NULL
     db_tbl <-
       dplyr::mutate(
