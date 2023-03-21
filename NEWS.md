@@ -1,3 +1,7 @@
+# bdc 1.1.5
+
+- Move `{doParallel}` from Suggests to Imports (Thanks, @black-snow; PR #251).
+
 # bdc 1.1.4
 
 - Adaptation of the databases to the latest version of `{taxadb}`
