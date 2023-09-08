@@ -25,7 +25,7 @@
 #' @importFrom CoordinateCleaner cc_val cc_sea
 #' @importFrom dplyr mutate filter select left_join as_tibble 
 #' @importFrom rnaturalearth ne_countries
-#' @importFrom sf st_as_sf st_set_crs st_crs st_intersection as_Spatial
+#' @importFrom sf st_as_sf st_set_crs st_crs st_intersection as_Spatial sf_use_s2
 #'
 #' @export
 #'
@@ -125,6 +125,7 @@ bdc_country_from_coordinates <-
       # Extract country names from coordinates
       suppressWarnings({
         suppressMessages({
+          sf::sf_use_s2(FALSE)
           ext_country <-
             data_no_country %>%
             dplyr::select(id_temp, geometry) %>%
@@ -160,6 +161,8 @@ bdc_country_from_coordinates <-
       }
       
     }
+    data[,country][data[,country]%in%c("", "NA")] <- NA
+  
     return(dplyr::as_tibble(data))
     
   }

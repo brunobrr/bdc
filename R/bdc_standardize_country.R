@@ -28,7 +28,6 @@ bdc_standardize_country <-
     cntr_db <-
       data %>%
       dplyr::distinct(.data[[country]], .keep_all = FALSE) %>%
-      dplyr::arrange(.data[[country]]) %>%
       dplyr::rename(cntr_original = .data[[country]])
 
     cntr_db$cntr_original2 <-
@@ -119,6 +118,8 @@ bdc_standardize_country <-
       cntr_db %>%
       dplyr::select(-cntr_original2, -cntr_suggested) %>%
       dplyr::rename(cntr_suggested = cntr_suggested2)
-
+    
+    cntr_db <- cntr_db %>%
+      dplyr::arrange(cntr_suggested)
     return(cntr_db)
   }

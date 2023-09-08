@@ -87,27 +87,28 @@ bdc_suggest_names_taxadb <-
       USE.NAMES = FALSE
       ))
 
-    name_to_case_check <- taxadb::taxa_tbl(provider, version = db_version) %>%
+    name_to_case_check <- taxadb::taxa_tbl(provider
+                                           # , version = getOption("taxadb_default_provider", db_version)
+                                           ) %>%
       dplyr::filter(!is.na(scientificName)) %>%
       utils::head(1) %>%
       pull(scientificName) %>%
       stringr::str_split(., "")
 
-    lower_case <- str_detect(name_to_case_check[[1]][1], "[[:lower:]]")
 
 
-    if (lower_case) {
-      first_letter <- tolower(first_letter)
-    } else {
+    # if (lower_case) {
+    #   first_letter <- tolower(first_letter)
+    # } else {
       first_letter <- toupper(first_letter)
-    }
+    # }
 
 
 
     # Should taxonomic database be filtered according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
       species_first_letter <-
-        taxadb::taxa_tbl(provider, version = db_version) %>%
+        taxadb::taxa_tbl(provider) %>%
         dplyr::filter(., .data[[rank]] == rank_name | is.na(.data[[rank]])) %>%
         dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
@@ -117,7 +118,7 @@ bdc_suggest_names_taxadb <-
       message("Please, provide both 'rank_name' and 'rank' arguments")
     } else {
       species_first_letter <-
-        taxadb::taxa_tbl(provider, version = db_version) %>%
+        taxadb::taxa_tbl(provider) %>%
         dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
     }

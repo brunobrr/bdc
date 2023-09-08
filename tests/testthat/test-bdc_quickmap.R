@@ -6,7 +6,7 @@ data <- data.frame(group, polygon.x, polygon.y)
 bdc_coordinates_empty(data, lat = "polygon.y", lon = "polygon.x")
 
 test_that("plot_quick_map", {
-  plot_test <- bdc_quickmap(data, lon = "polygon.x", lat = "polygon.y")
+  plot_test <- bdc_quickmap(data = data, lon = "polygon.x", lat = "polygon.y")
 
   x <- try(print(plot_test))
 

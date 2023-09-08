@@ -151,7 +151,7 @@ check_pf <- bdc_country_from_coordinates(
 
 #### **6 - Standardizing country names and getting country code information**
 
-*ENRICHMENT*. Country names are standardized against a list of country names in several languages retrieved from Wikipedia.
+*ENRICHMENT*. Country names are standardized against a list of country names in several languages retrieved from International Organization for Standardization <https://stefangabos.github.io/world_countries/>.
 
 ```{r eval=FALSE}
 check_pf <- bdc_country_standardized(
