@@ -19,7 +19,6 @@ res <-
       sci_name = sci_names,
       max_distance = 0.75,
       provider = "gbif",
-      db_version = 2022
     )
   )
 
@@ -71,7 +70,6 @@ res <-
       sci_name = sci_names,
       max_distance = 0.75,
       provider = "ncbi",
-      db_version = 2022,
       parallel = FALSE
     )
   )
@@ -97,7 +95,6 @@ res <-
       sci_name = sci_names,
       max_distance = 0.75,
       provider = "col",
-      db_version = 2022,
       parallel = FALSE
     )
   )

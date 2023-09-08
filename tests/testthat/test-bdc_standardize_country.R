@@ -17,7 +17,7 @@ x <- bdc_standardize_country(
 test_that("bdc_standardize_country standardize country names", {
   expect_equal(
     x$cntr_suggested,
-    c("Bolivia", "Brazil", "United States of America", "Vietnam")
+    c("Bolivia", "Brazil", "United States of America",   "Vietnam")
   )
 })
 
@@ -34,3 +34,4 @@ test_that("bdc_standardize_country iso", {
     c("BO", "BR", "US", "VN")
   )
 })
+

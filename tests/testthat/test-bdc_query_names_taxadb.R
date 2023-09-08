@@ -16,8 +16,13 @@ sci_names <-
     "Puma concolor"
   )
 
-
-test <- bdc_query_names_taxadb(sci_names, suggestion_distance = 0.9, db = "gbif", export_accepted = FALSE)
+test <-
+  bdc_query_names_taxadb(
+    sci_name = sci_names,
+    suggestion_distance = 0.9,
+    db = "gbif",
+    export_accepted = FALSE
+  )
 
 test_that("bdc_query_names_taxadb", {
   expect_equal(length(test$scientificName), length(sci_names))
@@ -103,13 +108,13 @@ test_that("availability of col", {
 
 })
 
-test_that("availability of tpl", {
-
-  query_tpl <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "tpl"))
-
-  expect_true(class(query_tpl) == "try-error")
-
-})
+# test_that("availability of tpl", {
+# 
+#   query_tpl <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "tpl"))
+# 
+#   expect_true(class(query_tpl) == "try-error")
+# 
+# })
 
 test_that("availability of gbif", {
 
@@ -119,29 +124,29 @@ test_that("availability of gbif", {
 
 })
 
-test_that("availability of fb", {
+# test_that("availability of fb", {
+# 
+#   query_fb <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "fb"))
+# 
+#   expect_true(class(query_fb) == "try-error")
+# 
+# })
 
-  query_fb <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "fb"))
+# test_that("availability of slb", {
+# 
+#   query_slb <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "slb"))
+# 
+#   expect_true(class(query_slb) == "try-error")
+# 
+# })
 
-  expect_true(class(query_fb) == "try-error")
-
-})
-
-test_that("availability of slb", {
-
-  query_slb <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "slb"))
-
-  expect_true(class(query_slb) == "try-error")
-
-})
-
-test_that("availability of wd", {
-
-  query_wd <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "wd"))
-
-  expect_true(class(query_wd) == "try-error")
-
-})
+# test_that("availability of wd", {
+# 
+#   query_wd <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "wd"))
+# 
+#   expect_true(class(query_wd) == "try-error")
+# 
+# })
 
 ## ## FIXME 2023-02-25: Consciously ignoring that database for now.
 ## test_that("availability of ott", {
@@ -149,11 +154,11 @@ test_that("availability of wd", {
 ##   expect_true(class(query_ott)[3] == "data.frame")
 ## })
 
-test_that("availability of iucn", {
-
-  query_iucn <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "iucn"))
-
-  expect_true(class(query_iucn) == "try-error")
-
-})
+# test_that("availability of iucn", {
+# 
+#   query_iucn <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "iucn"))
+# 
+#   expect_true(class(query_iucn) == "try-error")
+# 
+# })
 

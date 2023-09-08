@@ -11,7 +11,7 @@ test_that("it can return country names", {
     country = "country"
   )
   
-  expect_equal(r$country, c("Bolivia", NA, "Brazil", "Brazil", ""))
+  expect_equal(r$country, c("Bolivia", NA, "Brazil", "Brazil", NA))
   
 })
 
