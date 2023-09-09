@@ -50,7 +50,7 @@ bdc_correct_coordinates <-
     x_mod <- paste0(x, "_modified")
     y_mod <- paste0(y, "_modified")
 
-    occ_country <- data %>% dplyr::filter(!is.na(data[cntr_iso2]))
+    occ_country <- data %>% dplyr::filter(c(!is.na(data[,cntr_iso2])))
 
     # Filter occurrences database to avoid error in clean_coordinates errors
     suppressWarnings({
@@ -92,7 +92,7 @@ bdc_correct_coordinates <-
     occ_country <-
       occ_country %>%
       dplyr::as_tibble() %>%
-      dplyr::filter(!.summary, !is.na(occ_country[cntr_iso2]))
+      dplyr::filter(!.summary, c(!is.na(occ_country[cntr_iso2])))
 
     # now this database have all those records with potential error that be
     # corrected
