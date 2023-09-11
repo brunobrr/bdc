@@ -88,7 +88,7 @@ bdc_basisOfRecords_notStandard <-
     removed <-
       data %>%
       dplyr::filter(.basisOfRecords_notStandard == FALSE) %>%
-      dplyr::select(.data[[basisOfRecord]]) %>%
+      dplyr::select(basisOfRecord) %>%
       dplyr::distinct()
 
     message(
