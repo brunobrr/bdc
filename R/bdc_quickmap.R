@@ -101,7 +101,7 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
   if (all(col_to_map %in% names(data))) {
     # lon <- df[, lon] 
     # lat <- df[, lat] 
-    col_to_map <- df[, col_to_map]
+    # col_to_map <- df[, col_to_map]
     our_map <-
       df %>%
       ggplot2::ggplot() +
@@ -115,7 +115,7 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
       ggplot2::geom_point(ggplot2::aes(
         x = .data[[lon]],
         y = .data[[lat]],
-        col = col_to_map, # Map the column
+        col = .data[[col_to_map]], # Map the column
       ),
       alpha = 1,
       size = size
