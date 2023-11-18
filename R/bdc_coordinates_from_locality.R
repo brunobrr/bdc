@@ -53,7 +53,7 @@ bdc_coordinates_from_locality <-
            save_outputs = FALSE) {
     .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
 
-    if (!"locality" %in% colnames(data)) {
+    if (!locality %in% colnames(data)) {
       stop(
         "Locality column was not found in your database")
     }
