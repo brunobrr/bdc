@@ -65,10 +65,68 @@ bdc_standardize_country <-
       }
     }
 
+    # Check alpha2 ISO names
+    cn <-
+      country_names_db %>%
+      dplyr::distinct(alpha2) %>%
+      dplyr::pull(1) %>% na.omit()
+    
+    if(any(cn %in% cntr_db$cntr_original)){
+      for (i in 1:length(cn)) {
+        country_names_db_name <-
+          country_names_db %>%
+          dplyr::filter(alpha2 == cn[i]) %>%
+          dplyr::pull(alpha2)
+        
+        filt <-
+          which(tolower(cntr_db$cntr_original2) %in% tolower(country_names_db_name))
+        
+        
+        if (length(filt) > 0) {
+          cnnn <- country_names_db %>%
+            dplyr::filter(alpha2 == cn[i]) %>%
+            dplyr::pull(english_name)
+          cnnn <- cnnn[1]
+          message("country found based on iso2: ", cnnn)
+          cntr_db$cntr_suggested[filt] <- cnnn
+        }
+      }
+    }
+    
+    
+    # Check alpha3 ISO names
+    cn <-
+      country_names_db %>%
+      dplyr::distinct(alpha3) %>%
+      dplyr::pull(1) %>% na.omit()
+    if(any(cn %in% cntr_db$cntr_original)){
+      for (i in 1:length(cn)) {
+        country_names_db_name <-
+          country_names_db %>%
+          dplyr::filter(alpha3 == cn[i]) %>%
+          dplyr::pull(alpha3)
+        
+        filt <-
+          which(tolower(cntr_db$cntr_original2) %in% tolower(country_names_db_name))
+        
+        
+        if (length(filt) > 0) {
+          cnnn <- country_names_db %>%
+            dplyr::filter(alpha3 == cn[i]) %>%
+            dplyr::pull(english_name)
+          cnnn <- cnnn[1]
+          message("country found based on iso3: ", cnnn)
+          cntr_db$cntr_suggested[filt] <- cnnn
+        }
+      }
+    }
+    
+    
     # Standardization of all names founds in cntr_suggested2 fuzzy_d 1
     cntr_db$cntr_suggested[is.na(cntr_db$cntr_suggested)] <-
       bdc_stdz_cntr(cntry_n = cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested)], 
                     country_names_db=country_names_db, fuzzy_d = 1) #NEW version
+    
     # Standardization of all names founds in cntr_suggested2 fuzzy_d 2
     cntr_db$cntr_suggested[is.na(cntr_db$cntr_suggested)] <-
       bdc_stdz_cntr(cntry_n = cntr_db$cntr_original2[is.na(cntr_db$cntr_suggested)], 
