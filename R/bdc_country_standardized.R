@@ -60,6 +60,7 @@ bdc_country_standardized <-
           readr::read_delim(delim = "\t") %>% # get country names
           ## FIXME 2022-10-08: There are two cases as "United States".
           dplyr::mutate(english_name = dplyr::if_else(alpha3 == "USA", "United States of America", english_name))
+        cntr_names$english_name[cntr_names$english_name=="United States"] <- "United States of America"
         
         # add English names
         cntr_names2 <- cntr_names %>% 
@@ -69,9 +70,19 @@ bdc_country_standardized <-
           dplyr::relocate(c("english_name", "names_in_different_languages", 
                             "alpha2", "alpha3"))
         cntr_names <- dplyr::bind_rows(cntr_names2, cntr_names)
+        
         cntr_names2 <- dplyr::filter(cntr_names, english_name == "Guyana")[1, ]
         cntr_names2$names_in_different_languages <- "British guiana"
         cntr_names <- dplyr::bind_rows(cntr_names2, cntr_names)
+        
+        cntr_names2 <- dplyr::filter(cntr_names, english_name == "Taiwan")[1, ]
+        cntr_names2$names_in_different_languages <- "Chinese Taipei"
+        cntr_names <- dplyr::bind_rows(cntr_names2, cntr_names)
+        
+        cntr_names2 <- dplyr::filter(cntr_names, english_name == "United States Virgin Islands")[1:4, ]
+        cntr_names2$names_in_different_languages <- c("U.S. Virgin Islands", "virgin islands, u.s.", "Virgin Islands (U.S.)", "Virgin Islands, U.S.")
+        cntr_names <- dplyr::bind_rows(cntr_names2, cntr_names)
+        
         rm(cntr_names2)
       })
     })
