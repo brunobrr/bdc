@@ -113,9 +113,9 @@ bdc_suggest_names_taxadb <-
         dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
     } else if (is.null(rank_name) & !is.null(rank)) {
-      message("Please, provide both 'rank_name' and 'rank' arguments")
+      stop("Please, provide both 'rank_name' and 'rank' arguments")
     } else if (!is.null(rank_name) & is.null(rank)) {
-      message("Please, provide both 'rank_name' and 'rank' arguments")
+      stop("Please, provide both 'rank_name' and 'rank' arguments")
     } else {
       species_first_letter <-
         suppressMessages(taxadb::taxa_tbl(provider)) %>%

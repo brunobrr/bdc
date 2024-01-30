@@ -196,7 +196,7 @@ test_that("testing ranks", {
 })
 
 res <-
-  testthat::capture_message(suppressWarnings(
+  testthat::capture_error(suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
       rank_name = "plantae",
@@ -210,11 +210,11 @@ res <-
 
 test_that("testing null rank", {
   expect_equal(res$message,
-               "Please, provide both 'rank_name' and 'rank' arguments\n")
+               "Please, provide both 'rank_name' and 'rank' arguments")
 })
 
 res <-
-  testthat::capture_message(suppressWarnings(
+  testthat::capture_error(suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
       rank = "kingdom",
@@ -227,5 +227,5 @@ res <-
 
 test_that("testing null rank_name", {
   expect_equal(res$message,
-               "Please, provide both 'rank_name' and 'rank' arguments\n")
+               "Please, provide both 'rank_name' and 'rank' arguments")
 })
