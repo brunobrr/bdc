@@ -28,7 +28,7 @@ is_linux <- function() unname(Sys.info()["sysname"] == "Linux")
 
 test_gnparser_setup <- function(bin_full_path){
   
-  if (!exec_exists(bin_full_path)) stop("GNparser is not installed in your machine. Please follow the instalation guidelines (https://github.com/gnames/gnparser#installation)")
+  if (!exec_exists(bin_full_path)) message("GNparser is not installed in your machine. Please follow the instalation guidelines (https://github.com/gnames/gnparser#installation)")
 }
 
 check_gnparser_setup <- function(){
@@ -107,12 +107,13 @@ check_gnparser_setup <- function(){
 #'
 #' bdc_clean_names(scientificName, save_outputs = FALSE)
 #' }
+#' 
 bdc_clean_names <- function(sci_names, save_outputs = FALSE) {
   value <- scientificName <- X1 <- value <- . <- temp <- canonicalfull <- NULL
   cardinality <- quality <- verbatim <- id <- . <- .uncer_terms <- . <- NULL
   .infraesp_names <- names_clean <- NULL
 
-  # Chech if gnparser is installed. Otherwise, guide user about instalation.
+  # Chech if gnparser is installed. Otherwise, guide user about installation.
   check_gnparser_setup()
   # names raw
   names_raw <-

@@ -59,6 +59,7 @@ scientificName <- c(
 
 bdc_clean_names(scientificName, save_outputs = FALSE)
 }
+
 }
 \seealso{
 Other taxonomy: 
