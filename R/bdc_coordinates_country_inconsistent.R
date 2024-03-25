@@ -74,7 +74,7 @@ bdc_coordinates_country_inconsistent <-
 
     df <-
       data %>%
-      dplyr::select(.data[[lon]], .data[[lat]], .data[[country]]) %>%
+      dplyr::select(dplyr::all_of(c(lon, lat, country))) %>%
       dplyr::mutate(id = 1:nrow(data))
 
     # identifying empty or out-of-range coordinates

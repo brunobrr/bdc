@@ -1,4 +1,4 @@
-metadata <- readr::read_csv(system.file("extdata", "input_files/gbif.csv", package = "bdc"))
+metadata <- readr::read_csv(system.file("extdata", "input_files/gbif.csv", package = "bdc"), show_col_types = FALSE)
 metadata$countryCode <- "Brazil"
 df <- bdc_coordinates_country_inconsistent(
   data = metadata,
