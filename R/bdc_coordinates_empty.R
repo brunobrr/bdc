@@ -15,7 +15,7 @@
 #' @return A data.frame containing the column ".coordinates_empty". Compliant
 #' (TRUE) if 'lat' and 'lon' are not empty; otherwise "FALSE".
 #'
-#' @importFrom dplyr across mutate case_when select bind_cols
+#' @importFrom dplyr across mutate case_when select bind_cols all_of if_any
 #'
 #' @export
 #'
@@ -35,7 +35,7 @@ bdc_coordinates_empty <-
   function(data,
            lat = "decimalLatitude",
            lon = "decimalLongitude") {
-    .coordinates_empt <- .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
+    .coordinates_empt <- .data <- .coordinates_empty <- .coordinates_outOfRange <- isna_ <- NULL
 
     if (!is.data.frame(data)) {
       stop(deparse(substitute(data)), " is not a data.frame", call. = FALSE)
@@ -45,20 +45,11 @@ bdc_coordinates_empty <-
 
     df <-
       data %>%
-      dplyr::select(.data[[lat]], .data[[lon]]) %>%
-      dplyr::mutate(dplyr::across(c(.data[[lat]], .data[[lon]]), ~ as.numeric(.x))) %>%
+      dplyr::select(dplyr::all_of(c(lat, lon))) %>%
+      dplyr::mutate(dplyr::across(dplyr::all_of(c(lat, lon)), ~ as.numeric(.x))) %>%
       dplyr::mutate(
-        .coordinates_empty = dplyr::case_when(
-          is.na(.data[[lat]]) | is.na(.data[[lon]]) ~ FALSE,
-          # flag empty coordinates
-          nzchar(.data[[lat]]) == FALSE |
-            nzchar(.data[[lon]]) == FALSE ~ FALSE,
-          # flag empty coordinates
-          is.numeric(.data[[lat]]) == FALSE |
-            is.numeric(.data[[lon]]) == FALSE ~ FALSE,
-          # opposite cases are flagged as TRUE
-          TRUE ~ TRUE
-        )
+        isna_ = dplyr::if_any(dplyr::all_of(c(lat, lon)), ~ is.na(.x)),
+        .coordinates_empty = ifelse(isna_, FALSE, TRUE)
       ) %>%
       dplyr::select(.coordinates_empty)
 
