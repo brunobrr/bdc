@@ -80,7 +80,7 @@ bdc_coordinates_from_locality <-
 
     df <-
       data %>%
-      dplyr::mutate(locality = stringr::str_squish(.data[[locality]])) %>%
+      dplyr::mutate(locality = stringr::str_squish(locality)) %>%
       dplyr::filter(
         locality != "" & !is.na(locality),
         stringr::str_detect(locality, "^(\\. )", negate = T),
@@ -90,7 +90,7 @@ bdc_coordinates_from_locality <-
 
     df <-
       df %>%
-      dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange))
+      dplyr::select(-all_of(c(.coordinates_empty, .coordinates_outOfRange)))
 
     if (save_outputs) {
       bdc_create_dir()
