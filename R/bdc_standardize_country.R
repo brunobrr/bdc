@@ -9,6 +9,7 @@
 #' @importFrom dplyr distinct arrange rename mutate pull filter select left_join
 #' @importFrom stringi stri_trans_general
 #' @importFrom stringr str_replace_all str_trim
+#' @importFrom stats na.omit
 #' 
 #' @noRd
 #' @return Return a data.frame with original country names, suggested names and
@@ -22,13 +23,13 @@ bdc_standardize_country <-
            country,
            country_names_db) {
     .data <- names_in_different_languages <- english_name <- lower_case <- NULL
-    cntr_suggested2 <- cntr_suggested <- cntr_iso2c <- alpha2 <- cntr_original2 <- NULL
+    cntr_suggested2 <- cntr_suggested <- cntr_iso2c <- alpha2 <- alpha3 <- cntr_original2 <- NULL
 
     # Create a country database based on occ database
     cntr_db <-
       data %>%
-      dplyr::distinct(.data[[country]], .keep_all = FALSE) %>%
-      dplyr::rename(cntr_original = .data[[country]])
+      dplyr::distinct(country, .keep_all = FALSE) %>%
+      dplyr::rename(cntr_original = country)
 
     cntr_db$cntr_original2 <-
       stringr::str_replace_all(cntr_db$cntr_original, "[[:punct:]]", " ") %>%
@@ -69,7 +70,7 @@ bdc_standardize_country <-
     cn <-
       country_names_db %>%
       dplyr::distinct(alpha2) %>%
-      dplyr::pull(1) %>% na.omit()
+      dplyr::pull(1) %>% stats::na.omit()
     
     if(any(cn %in% cntr_db$cntr_original)){
       for (i in 1:length(cn)) {
@@ -98,7 +99,7 @@ bdc_standardize_country <-
     cn <-
       country_names_db %>%
       dplyr::distinct(alpha3) %>%
-      dplyr::pull(1) %>% na.omit()
+      dplyr::pull(1) %>% stats::na.omit()
     if(any(cn %in% cntr_db$cntr_original)){
       for (i in 1:length(cn)) {
         country_names_db_name <-

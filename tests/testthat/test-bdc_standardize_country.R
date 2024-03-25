@@ -1,5 +1,5 @@
 wiki_cntr <- system.file("extdata/countries_names/country_names.txt", package = "bdc") %>%
-  readr::read_delim(delim = "\t") %>%
+  readr::read_delim(delim = "\t", show_col_types = FALSE) %>%
   ## FIXME 2022-10-08: There are two cases as "United States".
   mutate(english_name = if_else(alpha3 == "USA", "United States of America", english_name))
 
