@@ -27,3 +27,4 @@ out-gp.txt
 ^CRAN-SUBMISSION$
 ^\.scratch$
 ^\.dir-locals.el$
+^\.latest-actions.log$

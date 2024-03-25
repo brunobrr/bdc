@@ -14,13 +14,13 @@ build: document ## build package
 	$(R) "devtools::build(vignettes = FALSE)"
 
 check: ## check package
-	$(R) "devtools::check(cran = TRUE, vignettes = FALSE)" &> out-check.txt
+	$(R) "devtools::check(cran = TRUE, vignettes = FALSE)" 2>&1 | tee out-check.txt
 
 styler: ## styler package
 	$(R) "styler::style_dir('.')"
 
 tests: ## run test
-	$(R) "Sys.setenv('TESTTHAT_MAX_FAILS' = Inf); devtools::test()" &> out-testthat.txt
+	$(R) "Sys.setenv('TESTTHAT_MAX_FAILS' = Inf); devtools::test()" 2>&1 | tee out-testthat.txt
 
 build_site: ## build pkgdown site
 	$(R) "pkgdown::build_site()"
