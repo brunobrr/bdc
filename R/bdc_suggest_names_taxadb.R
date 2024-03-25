@@ -87,9 +87,9 @@ bdc_suggest_names_taxadb <-
       USE.NAMES = FALSE
       ))
 
-    name_to_case_check <- taxadb::taxa_tbl(provider
+    name_to_case_check <- suppressMessages(taxadb::taxa_tbl(provider
                                            # , version = getOption("taxadb_default_provider", db_version)
-                                           ) %>%
+                                           )) %>%
       dplyr::filter(!is.na(scientificName)) %>%
       utils::head(1) %>%
       pull(scientificName) %>%
@@ -108,17 +108,17 @@ bdc_suggest_names_taxadb <-
     # Should taxonomic database be filtered according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
       species_first_letter <-
-        taxadb::taxa_tbl(provider) %>%
+        suppressMessages(taxadb::taxa_tbl(provider)) %>%
         dplyr::filter(., .data[[rank]] == rank_name | is.na(.data[[rank]])) %>%
         dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
     } else if (is.null(rank_name) & !is.null(rank)) {
-      message("Please, provide both 'rank_name' and 'rank' arguments")
+      stop("Please, provide both 'rank_name' and 'rank' arguments")
     } else if (!is.null(rank_name) & is.null(rank)) {
-      message("Please, provide both 'rank_name' and 'rank' arguments")
+      stop("Please, provide both 'rank_name' and 'rank' arguments")
     } else {
       species_first_letter <-
-        taxadb::taxa_tbl(provider) %>%
+        suppressMessages(taxadb::taxa_tbl(provider)) %>%
         dplyr::pull(scientificName) %>%
         grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
     }

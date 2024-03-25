@@ -1,5 +1,6 @@
 ## skip("dont run")
 skip_on_cran()
+skip_on_ci()
 skip_if_not_installed("curl")
 
 scientificName <- c(
@@ -82,3 +83,4 @@ testthat::test_that("invalid suffix dae ", {
 
   expect_equal(r$clean_family_names, "Taccaceae Solanum")
 })
+

@@ -5,25 +5,46 @@ is_windows <- function() .Platform$OS.type == "windows"
 is_macos <- function() unname(Sys.info()["sysname"] == "Darwin")
 is_linux <- function() unname(Sys.info()["sysname"] == "Linux")
 
-ensure_config <- function(bin_full_path, sep, user_path) {
-  gnparser_path <- dirname(bin_full_path)
+#ensure_config <- function(bin_full_path, sep, user_path) {
+#  gnparser_path <- dirname(bin_full_path)
 
-  if (!exec_exists(bin_full_path)) rgnparser::install_gnparser()
+#  if (!exec_exists(bin_full_path)) rgnparser::install_gnparser()
 
-  Sys.setenv(PATH = paste0(user_path, sep, gnparser_path))
+#  Sys.setenv(PATH = paste0(user_path, sep, gnparser_path))
+#}
+
+#setup_gnparser <- function() {
+#  user_path <- Sys.getenv("PATH")
+  
+#  if (is_windows() && !bin_on_path() && !bin_exec()) {
+#    ensure_config(paste0(Sys.getenv("APPDATA"), "\\gnparser\\gnparser.exe"), ";", user_path)
+#  } else if (is_macos() && !bin_on_path() && !bin_exec()) {
+#    ensure_config(normalizePath("~/Library/Application Support/gnparser"), ":", user_path)
+#  } else if (is_linux() && !bin_on_path() && !bin_exec()) {
+#    ensure_config(normalizePath("~/bin/gnparser"), ":", user_path)
+#  }
+#}
+
+
+test_gnparser_setup <- function(bin_full_path){
+  
+  if (!exec_exists(bin_full_path)) message("GNparser is not installed in your machine. Please follow the instalation guidelines (https://github.com/gnames/gnparser#installation)")
 }
 
-setup_gnparser <- function() {
-  user_path <- Sys.getenv("PATH")
-
+check_gnparser_setup <- function(){
+  
   if (is_windows() && !bin_on_path() && !bin_exec()) {
-    ensure_config(paste0(Sys.getenv("APPDATA"), "\\gnparser\\gnparser.exe"), ";", user_path)
-  } else if (is_macos() && !bin_on_path() && !bin_exec()) {
-    ensure_config(normalizePath("~/Library/Application Support/gnparser"), ":", user_path)
-  } else if (is_linux() && !bin_on_path() && !bin_exec()) {
-    ensure_config(normalizePath("~/bin/gnparser"), ":", user_path)
-  }
+      test_gnparser_setup(paste0(Sys.getenv("APPDATA"), "\\gnparser\\gnparser.exe"))
+    } else if (is_macos() && !bin_on_path() && !bin_exec()) {
+      test_gnparser_setup(normalizePath("~/Library/Application Support/gnparser"))
+    } else if (is_linux() && !bin_on_path() && !bin_exec()) {
+      test_gnparser_setup(normalizePath("~/bin/gnparser"))
+    }
+  
 }
+
+
+
 
 #' Clean and parse scientific names
 #'
@@ -46,7 +67,8 @@ setup_gnparser <- function() {
 #' identification as well as infraspecific terms were obtained from Sigoviniet
 #' al. (2016; doi: 10.1111/2041-210X.12594). More details about the names
 #' parse process can be found in
-#' \href{https://github.com/gnames/gnparser}{gnparser}.
+#' \href{https://github.com/gnames/gnparser}{gnparser}. 
+#' \bold{Note: GNparser is not automatically installed. Please see \href{https://github.com/gnames/gnparser#installation}{guidelines} to install gnparser.}
 #'
 #' @return A five-column data.frame including
 #' * scientificName: original names supplied
@@ -85,16 +107,14 @@ setup_gnparser <- function() {
 #'
 #' bdc_clean_names(scientificName, save_outputs = FALSE)
 #' }
+#' 
 bdc_clean_names <- function(sci_names, save_outputs = FALSE) {
   value <- scientificName <- X1 <- value <- . <- temp <- canonicalfull <- NULL
   cardinality <- quality <- verbatim <- id <- . <- .uncer_terms <- . <- NULL
   .infraesp_names <- names_clean <- NULL
 
-  # one-time setup to download and install rgnparser, which is used to parse
-  # scientific name (for more details, see
-  # https://github.com/ropensci/rgnparser)
-  setup_gnparser()
-
+  # Chech if gnparser is installed. Otherwise, guide user about installation.
+  check_gnparser_setup()
   # names raw
   names_raw <-
     sci_names %>%

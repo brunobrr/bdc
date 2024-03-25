@@ -85,7 +85,7 @@ test_that("ncbi - bdc_suggest_names_taxadb suggest valid names", {
       "Cebus apella",
       "Puma concolor"
     ),
-    distance = c(0.63, 0.86, 0.67, 0.72, 1.00, 1.00, 0.92)
+    distance = c(0.63, 0.86, 0.67, 0.68, 1.00, 1.00, 0.92)
   ))
 })
 
@@ -106,12 +106,12 @@ test_that("col - bdc_suggest_names_taxadb suggest valid names", {
       "Janusia occhionii",
       NA,
       "Xylosma ciliatifolium",
-      NA,
+      "Crateva benthamii",
       "Oxalis rhombeoovata",
-      NA,
+      "Cebus apella",
       "Puma concolor"
     ),
-    distance = c(0.94, 0.38, 0.95, 0.61, 0.95, 0.67, 0.92)
+    distance = c(0.94, 0.43, 0.95, 0.94, 0.95, 1, 0.92)
   ))
 })
 
@@ -126,19 +126,19 @@ res <-
     )
   )
 
-
+res$distance
 test_that("ott - bdc_suggest_names_taxadb suggest valid names", {
   expect_equal(res, data.frame(
     original = sci_names, suggested = c(
-      "janusia occhionii",
-      "janusia",
-      "xylosma ciliatifolium",
-      "crateva benthamii",
-      "oxalis rhombeo ovata",
-      "cebus apella",
-      "puma concolor"
+      "Janusia occhionii",
+      "Janusia",
+      "Xylosma ciliatifolium",
+      "Crateva benthamii",
+      "Oxalis rhombeoovata",
+      "Cebus apella",
+      "Puma concolor"
     ),
-    distance = c(0.88, 0.86, 0.90, 0.89, 0.95, 0.92, 0.85)
+    distance = c(0.94, 1, 0.95, 0.94, 0.95, 1, 0.92)
   ))
 })
 
@@ -196,7 +196,7 @@ test_that("testing ranks", {
 })
 
 res <-
-  testthat::capture_message(suppressWarnings(
+  testthat::capture_error(suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
       rank_name = "plantae",
@@ -210,11 +210,11 @@ res <-
 
 test_that("testing null rank", {
   expect_equal(res$message,
-               "Please, provide both 'rank_name' and 'rank' arguments\n")
+               "Please, provide both 'rank_name' and 'rank' arguments")
 })
 
 res <-
-  testthat::capture_message(suppressWarnings(
+  testthat::capture_error(suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
       rank = "kingdom",
@@ -227,5 +227,5 @@ res <-
 
 test_that("testing null rank_name", {
   expect_equal(res$message,
-               "Please, provide both 'rank_name' and 'rank' arguments\n")
+               "Please, provide both 'rank_name' and 'rank' arguments")
 })

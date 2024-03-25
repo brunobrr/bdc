@@ -187,6 +187,11 @@ Load the package with:
 library(bdc)
 ```
 
+
+#### **GN parser installation**
+
+*bdc* requires gnparser to clean taxonomic names. Follow the instruction to install [gnparser](https://github.com/gnames/gnparser#installation).
+
 #### **Package website**
 
 See *bdc* package website (<https://brunobrr.github.io/bdc/>) for detailed
