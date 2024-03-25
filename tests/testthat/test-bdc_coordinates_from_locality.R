@@ -7,5 +7,5 @@ test_that("test based on function example", {
 
   r <- bdc_coordinates_from_locality(data = x, lat = "lat", lon = "lon", locality = "locality", save_outputs = FALSE)
 
-  expect_equal(dim(r), c(3, 3))
+  expect_equal(dim(r), c(3, 5))
 })
