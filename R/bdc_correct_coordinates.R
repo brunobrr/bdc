@@ -165,7 +165,7 @@ bdc_correct_coordinates <-
 
     # Elimination of those records with more than two possible correction
     coord_test <-
-      dplyr::bind_rows(dplyr::all_of(coord_test)) %>%
+      dplyr::bind_rows(coord_test) %>%
       dplyr::as_tibble() # binding dataframes allocated in the list in a single one
 
     coord_test <-
