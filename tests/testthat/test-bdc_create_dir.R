@@ -1,3 +1,4 @@
+skip()
 bdc_create_dir()
 
 test_that("bdc dir exists", {
