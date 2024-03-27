@@ -10,8 +10,8 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/bdc)](https://CRAN.R-project.org/package=bdc)
 [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/bdc)](https://cranlogs.r-pkg.org:443/badges/grand-total/bdc)
-[![rstudio mirror
-downloads](https://cranlogs.r-pkg.org/badges/bdc)](https://cranlogs.r-pkg.org:443/badges/bdc)
+<!-- [![rstudio mirror -->
+<!-- downloads](https://cranlogs.r-pkg.org/badges/bdc)](https://cranlogs.r-pkg.org:443/badges/bdc) -->
 [![R-CMD-check](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg?token=9AUF86G9LJ)](https://app.codecov.io/gh/brunobrr/bdc)
@@ -60,9 +60,9 @@ biodiversity dimensions.
 Standardization and integration of different datasets into a standard
 database.
 
--   `bdc_standardize_datasets()` Standardization and integration of
-    different datasets into a new dataset with column names following
-    Darwin Core terminology
+- `bdc_standardize_datasets()` Standardization and integration of
+  different datasets into a new dataset with column names following
+  Darwin Core terminology
 
 #### 2. [**Pre-filter**](https://brunobrr.github.io/bdc/articles/prefilter.html)
 
@@ -70,73 +70,71 @@ Flagging and removal of invalid or non-interpretable information,
 followed by data amendments (e.g., correct transposed coordinates and
 standardize country names).
 
--   `bdc_scientificName_empty()` Identification of records lacking names
-    or with names not interpretable
--   `bdc_coordinates_empty()` Identification of records lacking
-    information on latitude or longitude
--   `bdc_coordinates_outOfRange()` Identification of records with
-    out-of-range coordinates (latitude \> 90 or -90; longitude \>180 or
-    -180)
--   `bdc_basisOfRecords_notStandard()` Identification of records from
-    doubtful sources (e.g., fossil or machine observation) impossible to
-    interpret and not compatible with Darwin Core recommended vocabulary
--   `bdc_country_from_coordinates()` Derive country name from valid
-    geographic coordinates
--   `bdc_country_standardized()` Standardization of country names and
-    retrieve country code
--   `bdc_coordinates_transposed()` Identification of records with
-    potentially transposed latitude and longitude
--   `bdc_coordinates_country_inconsistent()` Identification of
-    coordinates in other countries or far from a specified distance from
-    the coast of a reference country (i.e., in the ocean)
--   `bdc_coordinates_from_locality()` Identification of records lacking
-    coordinates but with a detailed description of the locality
-    associate with records from which coordinates can be derived
+- `bdc_scientificName_empty()` Identification of records lacking names
+  or with names not interpretable
+- `bdc_coordinates_empty()` Identification of records lacking
+  information on latitude or longitude
+- `bdc_coordinates_outOfRange()` Identification of records with
+  out-of-range coordinates (latitude \> 90 or -90; longitude \>180 or
+  -180)
+- `bdc_basisOfRecords_notStandard()` Identification of records from
+  doubtful sources (e.g., fossil or machine observation) impossible to
+  interpret and not compatible with Darwin Core recommended vocabulary
+- `bdc_country_from_coordinates()` Derive country name from valid
+  geographic coordinates
+- `bdc_country_standardized()` Standardization of country names and
+  retrieve country code
+- `bdc_coordinates_transposed()` Identification of records with
+  potentially transposed latitude and longitude
+- `bdc_coordinates_country_inconsistent()` Identification of coordinates
+  in other countries or far from a specified distance from the coast of
+  a reference country (i.e., in the ocean)
+- `bdc_coordinates_from_locality()` Identification of records lacking
+  coordinates but with a detailed description of the locality associate
+  with records from which coordinates can be derived
 
 #### 3. [**Taxonomy**](https://brunobrr.github.io/bdc/articles/taxonomy.html)
 
 Cleaning, parsing, and harmonization of scientific names against
 multiple taxonomic references.
 
--   `bdc_clean_names()` Name-checking routines to clean and split a
-    taxonomic name into its binomial and authority components
--   `bdc_query_names_taxadb()` Harmonization of scientific names by
-    correcting spelling errors and converting nomenclatural synonyms to
-    currently accepted names.
--   `bdc_filter_out_names()` Function used to filter out records
-    according to their taxonomic status present in the column “notes”.
-    For example, to filter only valid accepted names categorized as
-    “accepted”
+- `bdc_clean_names()` Name-checking routines to clean and split a
+  taxonomic name into its binomial and authority components
+- `bdc_query_names_taxadb()` Harmonization of scientific names by
+  correcting spelling errors and converting nomenclatural synonyms to
+  currently accepted names.
+- `bdc_filter_out_names()` Function used to filter out records according
+  to their taxonomic status present in the column “notes”. For example,
+  to filter only valid accepted names categorized as “accepted”
 
 #### 4. [**Space**](https://brunobrr.github.io/bdc/articles/space.html)
 
 Flagging of erroneous, suspicious, and low-precision geographic
 coordinates.
 
--   `bdc_coordinates_precision()` Identification of records with a
-    coordinate precision below a specified number of decimal places
--   `clean_coordinates()` (From *CoordinateCleaner* package and part of
-    the data-cleaning workflow). Identification of potentially
-    problematic geographic coordinates based on geographic gazetteers
-    and metadata. Include tests for flagging records: around country
-    capitals or country or province centroids, duplicated, with equal
-    coordinates, around biodiversity institutions, within urban areas,
-    plain zeros in the coordinates, and suspect geographic outliers
+- `bdc_coordinates_precision()` Identification of records with a
+  coordinate precision below a specified number of decimal places
+- `clean_coordinates()` (From *CoordinateCleaner* package and part of
+  the data-cleaning workflow). Identification of potentially problematic
+  geographic coordinates based on geographic gazetteers and metadata.
+  Include tests for flagging records: around country capitals or country
+  or province centroids, duplicated, with equal coordinates, around
+  biodiversity institutions, within urban areas, plain zeros in the
+  coordinates, and suspect geographic outliers
 
 #### 5. [**Time**](https://brunobrr.github.io/bdc/articles/time.html)
 
 Flagging and, whenever possible, correction of inconsistent collection
 date.
 
--   `bdc_eventDate_empty()` Identification of records lacking
-    information on event date (i.e., when a record was collected or
-    observed)
--   `bdc_year_outOfRange()` Identification of records with illegitimate
-    or potentially imprecise collecting year. The year provided can be
-    out-of-range (e.g., in the future) or collected before a specified
-    year supplied by the user (e.g., 1900)
--   `bdc_year_from_eventDate()` This function extracts four-digit year
-    from unambiguously interpretable collecting dates
+- `bdc_eventDate_empty()` Identification of records lacking information
+  on event date (i.e., when a record was collected or observed)
+- `bdc_year_outOfRange()` Identification of records with illegitimate or
+  potentially imprecise collecting year. The year provided can be
+  out-of-range (e.g., in the future) or collected before a specified
+  year supplied by the user (e.g., 1900)
+- `bdc_year_from_eventDate()` This function extracts four-digit year
+  from unambiguously interpretable collecting dates
 
 #### [**Other functions**](https://brunobrr.github.io/bdc/reference/index.html)
 
@@ -146,23 +144,90 @@ functions for documenting the results of the data-cleaning tests,
 including functions for saving i) records needing further inspection,
 ii) figures, and iii) data-quality reports.
 
--   `bdc_create_report()` Creation of data-quality reports documenting
-    the results of data-quality tests and the taxonomic harmonization
-    process
--   `bdc_create_figures()` Creation of figures (i.e., bar plots and
-    maps) reporting the results of data-quality tests
--   `bdc_filter_out_flags()` Removal of columns containing the results
-    of data quality tests (i.e., column starting with “.”) or other
-    columns specified
--   `bdc_quickmap()` Creation of a map of points using ggplot2. Helpful
-    in inspecting the results of data-cleaning tests
--   `bdc_summary_col()` This function creates or updates the column
-    summarizing the results of data quality tests (i.e., the column
-    “.summary”)
+- `bdc_create_report()` Creation of data-quality reports documenting the
+  results of data-quality tests and the taxonomic harmonization process
+- `bdc_create_figures()` Creation of figures (i.e., bar plots and maps)
+  reporting the results of data-quality tests
+- `bdc_filter_out_flags()` Removal of columns containing the results of
+  data quality tests (i.e., column starting with “.”) or other columns
+  specified
+- `bdc_quickmap()` Creation of a map of points using ggplot2. Helpful in
+  inspecting the results of data-cleaning tests
+- `bdc_summary_col()` This function creates or updates the column
+  summarizing the results of data quality tests (i.e., the column
+  “.summary”)
 
 #### **Installation**
 
-You can install *bdc* from CRAN
+### Gnparser installation
+
+Previously to bdc installation is necessary to install
+[GNparser](https://github.com/gnames/gnparser#installation). First,
+download the [binary
+file](https://github.com/gnames/gnparser/releases/tag/v1.9.1) of
+`gnparser` for your operational system. For example, download the file
+using R as follow:
+
+``` r
+
+download.file(url = "file_link", 
+              destfile = "destination_path")
+```
+
+The downloaded file has extensions `.zip` or `.gz`.
+
+## Mac OS
+
+Extract the binary file `gnparser` from `.zip` or `.gz` files and move
+it to the folder `~/Library/Application Support/`. Move the file
+manually or using R:
+
+``` r
+
+# Extract gnparser file
+untar("~/Downloads/gnparser-v1.9.1-linux.tar.gz")
+
+# Move to the path
+file.copy("./gnparser", "~/Library/Application Support/")
+```
+
+## Linux
+
+Extract the binary file `gnparser` from `.zip` or `.gz` files and move
+it to the folder `~/bin`. Move the file manually or using the command
+line:
+
+``` r
+
+# Extract gnparser file
+untar("~/Downloads/gnparser-v1.9.1-linux.tar.gz")
+
+# Move to the path
+file.copy("./gnparser",  "~/bin")
+```
+
+## Windows
+
+In Windows, extract the binary file `gnparser` from `.zip`. Then, move
+gnparser file to the folder `Appdata`. To find the `Appdata` path, run
+this in R:
+
+``` r
+
+# Unzip the downloaded file
+unzip(gnparser.zip, exdir = "destination_path/gnparser")
+
+# Find the AppData path
+AppData_path <- Sys.getenv("AppData")
+
+# Copy gnparser to AppData
+
+file.copy("destination_path/gnparser", AppData_path, recursive = TRUE)
+```
+
+### bdc installation
+
+After installing Gnparser, you can install *bdc* from CRAN:
 
 ``` r
 install.packages("bdc")
@@ -182,6 +247,11 @@ Load the package with:
 ``` r
 library(bdc)
 ```
+
+#### **GN parser installation**
+
+*bdc* requires gnparser to clean taxonomic names. Follow the instruction
+to install [gnparser](https://github.com/gnames/gnparser#installation).
 
 #### **Package website**
 

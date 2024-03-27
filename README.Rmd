@@ -171,7 +171,7 @@ needing further inspection, ii) figures, and iii) data-quality reports.
 
 Previously to bdc installation is necessary to install [GNparser](https://github.com/gnames/gnparser#installation). First, download the [binary file](https://github.com/gnames/gnparser/releases/tag/v1.9.1) of `gnparser` for your operational system. For example, download the file using R as follow:
 
-```{r}
+```{r, eval = FALSE}
 
 download.file(url = "file_link", 
               destfile = "destination_path")
@@ -183,7 +183,7 @@ The downloaded file has extensions `.zip` or `.gz`.
 
 Extract the binary file `gnparser` from `.zip` or `.gz` files and move it to the folder `~/Library/Application Support/`. Move the file manually or using R:
 
-```{r}
+```{r, eval = FALSE}
 
 # Extract gnparser file
 untar("~/Downloads/gnparser-v1.9.1-linux.tar.gz")
@@ -197,7 +197,7 @@ file.copy("./gnparser", "~/Library/Application Support/")
 
 Extract the binary file `gnparser` from `.zip` or `.gz` files and move it to the folder `~/bin`. Move the file manually or using the command line:  
 
-```{r}
+```{r, eval = FALSE}
 
 # Extract gnparser file
 untar("~/Downloads/gnparser-v1.9.1-linux.tar.gz")
@@ -211,7 +211,7 @@ file.copy("./gnparser",  "~/bin")
 
 In Windows, extract the binary file `gnparser` from `.zip`. Then, move gnparser file to the folder `Appdata`. To find the `Appdata` path, run this in R:
 
-```{r}
+```{r, eval = FALSE}
 
 # Unzip the downloaded file
 unzip(gnparser.zip, exdir = "destination_path/gnparser")
