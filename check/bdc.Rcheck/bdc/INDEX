@@ -1,0 +1,45 @@
+bdc_basisOfRecords_notStandard
+                        Identify records from doubtful source (e.g.,
+                        'fossil', MachineObservation')
+bdc_clean_names         Clean and parse scientific names
+bdc_coordinates_country_inconsistent
+                        Identify records within a reference country
+bdc_coordinates_empty   Identify records with empty geographic
+                        coordinates
+bdc_coordinates_from_locality
+                        Identify records lacking or with invalid
+                        coordinates but containing locality information
+bdc_coordinates_outOfRange
+                        Identify records with out-of-range geographic
+                        coordinates
+bdc_coordinates_precision
+                        Flag low-precise geographic coordinates
+bdc_coordinates_transposed
+                        Identify transposed geographic coordinates
+bdc_country_from_coordinates
+                        Get country names from coordinates
+bdc_country_standardized
+                        Standardizes country names and gets country
+                        code
+bdc_create_figures      Create figures reporting the results of the bdc
+                        package
+bdc_create_report       Create a report summarizing the results of data
+                        quality tests
+bdc_eventDate_empty     Identify records with empty event date
+bdc_filter_out_flags    Remove columns with the results of data quality
+                        tests
+bdc_filter_out_names    Filter out records according to their taxonomic
+                        status
+bdc_query_names_taxadb
+                        Harmonizing taxon names against local stored
+                        taxonomic databases
+bdc_quickmap            Create a map of points using ggplot2
+bdc_scientificName_empty
+                        Identify records with empty scientific names
+bdc_standardize_datasets
+                        Standardize datasets columns based on metadata
+bdc_summary_col         Create or update the column summarizing the
+                        results of data quality tests
+bdc_year_from_eventDate
+                        Extract year from eventDate
+bdc_year_outOfRange     Identify records with year out-of-range

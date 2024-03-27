@@ -1,0 +1,116 @@
+database_id,scientificName,decimalLatitude,decimalLongitude,occurrenceID,verbatimEventDate,country,stateProvince,county,locality,coordinatePrecision,basisOfRecord,identifiedBy,coordinateUncertaintyInMeters,recordedBy,country_suggested,countryCode
+AT_EPIPHYTES_1,Tillandsia tenuifolia,-25.521863,-51.416667,E8802,2003,Brazil,PARANA,GUARAPUAVA,Rio Sao Jeronimo,Forest fragment,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_2,Peperomia obtusifolia,-14.65972,-39.14972,635992,2015,Brazil,BAHIA,ILHEUS,NA,Coordinates given in the herbarium record,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_3,Tillandsia recurvata,-21.746667,-43.354722,E1617,2016,Brazil,MATO GROSSO DO SUL,JUIZ DE FORA,Praca Mariano Procopio,50,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_4,Vriesea flammea,-23.35,-44.858333,E0272,2011,Brazil,SAO PAULO,UBATUBA,Parque Estadual da Serra do Mar-Nucleo Picinguaba,Forest fragment,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_5,Lankesterella ceracifolia,-28.1667,-49.4,17541,2009,Brazil,SANTA CATARINA,ORLEANS,Rio Minador,Municipality,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_7,Nidularium innocentii,-26.1833,-49.0333,20521,2009,Brazil,SANTA CATARINA,JOINVILLE,Serra Dona Francisca,Municipality,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_8,Acianthera serpentula,-25.5839,-49.6356,E23503,NA,Brazil,PARANA,BALSA NOVA,Base da Serra de Sao Luiz do Puruna,Coordinates given in the herbarium record,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_9,Peperomia quadrifolia,-26.46,-49.41,E18657,NA,Brazil,SANTA CATARINA,CORUPA,Palmeiras II,Coordinates given in the herbarium record,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_10,Peperomia circinnata,-23.7869,-54.2836,E16998,NA,Brazil,MATO GROSSO DO SUL,ELDORADO,NA,Coordinates given in the herbarium record,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_11,Microgramma squamulosa,-25.666271,-49.269229,E7552,2017,Brazil,PARANA,FAZENDA RIO GRANDE,Fazenda Experimental Gralha Azul 2,Forest fragment,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_12,Vriesea gigantea,-29.6411,-50.4525,E0829,NA,Brazil,RIO GRANDE DO SUL,RIOZINHO,NA,Municipality,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_13,Aechmea leptantha,-8.0022,-35.0183,E1518,NA,Brazil,PERNAMBUCO,SAO LOURENCO DA MATA,Sao Bento,Coordinates given in the herbarium record,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_14,Vriesea tijucana,-15.158634,-39.057151,359,2000,Brazil,BAHIA,UNA,Reserva Biologica de Una,20,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_15,Rhodospatha oblongata,-14.49,-39.1,E25916,NA,Brazil,BAHIA,URUCUCA,"Mun>. Urucuca, 9.4 KM. Serra do Conduru vertente E.",Coordinates given in the herbarium record,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_16,Anthurium gaudichaudianum,-29.342087,-49.68663,E0057,1992,Brazil,RIO GRANDE DO SUL,TORRES,Torres,Forest fragment,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_17,Maxillaria caparaoensis,-20.4333,-41.8683,E11997,NA,Brazil,MATO GROSSO DO SUL,ALTO CAPARAO,Serra do Caparao.,Coordinates given in the herbarium record,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_18,Acianthera langeana,-28.47165,-49.981568,E2724,2014,Brazil,RIO GRANDE DO SUL,SAO JOSE DOS AUSENTES,Rio Pelotas,Forest fragment,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_19,Pleopeltis monoides,-22.43083,-42.74306,540781,2010,Brazil,RIO DE JANEIRO,CACHOEIRAS DE MACACU,NA,Coordinates given in the herbarium record,NA,NA,NA,NA,Brazil,BR
+AT_EPIPHYTES_20,Hymenophyllum fragile,-25.05,-49.8,444521,2003,Brazil,PARANA,CASTRO,NA,Coordinates given in the herbarium record,NA,NA,NA,NA,Brazil,BR
+BIEN_1,Solanum paniculatum,-7.135306,-38.601472,786,2010-08-25,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_2,Tetrapterys crispa,-0.95,-49.8,1758,1987-11-04,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_3,Clusia microstemon,0.283333,-68.466667,2075,NA,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_5,Machaerium fulvovenosum,-20.848889,-41.1125,1307,2008-10-10,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_7,Byrsonima sericea,-15.181944,-45.769722,3012,1997-12-05,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_9,Cordia nodosa,-9.95,-57.1,2979,1985-09-30,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_10,Dorstenia turnerifolia,-15.158056,-39.528611,2724,NA,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_11,Phoradendron crassifolium,-23.62028,-45.40972,104,1961-05-20,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+BIEN_12,Pagamea plicata,-10.605278,-46.285,3801,2007-09-21,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_14,Galactia striata,-22.4947,-48.5581,1365,NA,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_15,Achyrocline alata,-20.448028,-52.906222,2258,2005-04-22,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_16,Coccocypselum lanceolatum,-10.8339,-52.8731,3567,NA,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_18,Oldenlandia filicaulis,-14.266667,-42.526111,2756,2006-01-10,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_19,Bauhinia brevipes,-12.871667,-46.97,1928,2009-06-29,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+BIEN_20,Paspalum guttatum,-11.688056,-47.7025,3120,2014-11-20,Brazil,NA,NA,NA,NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_1,Miconia minutiflora (Bonpl.) DC.,-20.844999313354,-44.91609954834,NA,NA,Brazil,NA,NA,"Santo Antônio do Amparo, floresta semidecidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_2,Zanthoxylum rhoifolium Lam.,-8.1581001281738,-35.753898620605,NA,NA,Brazil,NA,NA,"Bezerros, floresta semidecidual de brejo",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_3,Ocotea velutina (Nees) Rohwer,-21.132499694824,-44.709400177002,NA,NA,Brazil,NA,NA,"Ibituruna, floresta semidecidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_4,Sweetia fruticosa Spreng.,-18.089000701904,-45.182998657227,NA,NA,Brazil,NA,NA,"Três Marias, floresta decidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_5,Bauhinia cheilantha (Bong.) Steud.,-15.003100395203,-43.900299072266,NA,NA,Brazil,NA,NA,"Matias Cardoso, Cajueiro, caatinga arbórea",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_6,Senna pendula (Willd.) H.S.Irwin & Barneby,-21.568899154663,-50.739700317383,NA,NA,Brazil,NA,NA,"Salmourão, floresta semidecidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_7,Cecropia hololeuca Miq.,-17.83219909668,-40.280799865723,NA,NA,Brazil,NA,NA,"Nanuque, floresta semidecidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_8,Cordia glabrata (Mart.) A.DC.,-14.982199668884,-43.52140045166,NA,NA,Brazil,NA,NA,"Matias Cardoso, Gado Bravo, caatinga arbórea",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_9,Cynophalla flexuosa (L.) J.Presl,-22.783100128174,-53.530300140381,NA,NA,Brazil,NA,NA,"Anaurilândia, floresta semidecidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_10,Manihot caerulescens Pohl,-10.185799598694,-40.259201049805,NA,NA,Brazil,NA,NA,"Jaguarari, floresta areno-rupícola",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_11,Vitex polygama Cham.,-14.285300254822,-44.111099243164,NA,NA,Brazil,NA,NA,"Juvenília, caatinga arbórea",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_12,Trichilia pallens C.DC.,-22.807500839233,-51.379199981689,NA,NA,Brazil,NA,NA,"Primeiro de Maio, floresta semidecidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_13,Myrcia tomentosa (Aubl.) DC.,-11.218299865723,-45.402801513672,NA,NA,Brazil,NA,NA,"Formosa do Rio Preto, caatinga arbórea",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_14,Zanthoxylum riedelianum Engl.,-18.879400253296,-41.479698181152,NA,NA,Brazil,NA,NA,"São Geraldo do Baixio, floresta semidecidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_15,Handroanthus serratifolius (Vahl) S.O.Grose,-17.93390083313,-44.568298339844,NA,NA,Brazil,NA,NA,"Lassance, floresta ripícola",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_16,Croton floribundus Spreng.,-22.500799179077,-46.642799377441,NA,NA,Brazil,NA,NA,"Lindóia, floresta semidecidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_17,Protium spruceanum (Benth.) Engl.,-21.155300140381,-45.472801208496,NA,NA,Brazil,NA,NA,"Coqueiral, floresta semidecidual",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_18,Cestrum schlechtendalii G.Don,-14.148300170898,-47.531898498535,NA,NA,Brazil,NA,NA,"Ipameri, cerrado",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_19,Salvertia convallariodora A.St.-Hil.,-5.3179998397827,-41.51900100708,NA,NA,Brazil,NA,NA,"Castelo do Piaui, cerradao mesotrofico",NA,NA,NA,NA,NA,Brazil,BR
+DRYFLOR_20,Machaerium villosum Vogel,-15.964200019836,-47.94580078125,NA,NA,Brazil,NA,NA,"Fazenda Água Limpa, floresta ripícola",NA,NA,NA,NA,NA,Brazil,BR
+GBIF_1,Iryanthera sagotiana Warb.,-10.8339,-52.8731,1228373235,NA,Brazil,NA,NA,NA,NA,PRESERVED_SPECIMEN,NA,NA,NA,Brazil,BR
+GBIF_4,Erythroxylum cuspidifolium Mart.,-13.936944,-39.424444,1944976406,2013-03-28T00:00:00Z,Brazil,Bahia,NA,"Fazenda Paineiras, BR 116, KM 390",NA,PRESERVED_SPECIMEN,Sem Informação,NA,T. Araújo,Brazil,BR
+GBIF_5,Ocotea lanceolata Nees,-13.48333,-41.81667,439130715,1977-02-24T00:00:00Z,Brazil,Bahia,NA,NA,NA,PRESERVED_SPECIMEN,NA,NA,"Harley, R.M.|Santos, T.S.|Pinheiro, R.S.|Mayo, S.J.|Storr, R.M.",Brazil,BR
+GBIF_9,Croton nepetifolius Baill.,-8.507242,-37.355059,1302836168,NA,Brazil,NA,NA,catimbau,NA,HUMAN_OBSERVATION,NA,NA,NA,Brazil,BR
+GBIF_11,Dalechampia stipulacea Müll.Arg.,-23.0297,-46.9753,1090557438,1994-11-23T00:00:00Z,Brazil,São Paulo,NA,NA,NA,PRESERVED_SPECIMEN,R.A. Pereira-Silva,NA,S.L. Jung-Mendaçolli; C.A.F. Pinto-Maglio; P.R.P. Andrade & A.M.C. Silva,Brazil,BR
+GBIF_14,Hillia parasitica Jacq.,-13.07,-41.37,912236353,2002-02-15T00:00:00Z,Brazil,NA,NA,"Bahia, Mucage: Serra do Gobira. Mata do Grotao no alto do Gobira.",NA,PRESERVED_SPECIMEN,NA,NA,"Harley, R. M. et al.",Brazil,BR
+GBIF_16,"Chresta pacourinoides (Mart. ex DC.) Loeuille, Siniscalchi & Pirani",-5.640583,-42.608306,1090954960,2000-05-16T00:00:00Z,Brazil,Piauí,NA,Fazenda Saquinho,NA,PRESERVED_SPECIMEN,B. Leonille,NA,R. Barros; R.R. Farias,Brazil,BR
+ICMBIO_1,Chamaecrista incana (Vogel) H.S.Irwin & Barneby,-25.3830556,-51.5111111,RB01034852,10/12/2013,Brasil,Paraná,Guarapuava,"Rodovia BR-277, Campo em frente a concessionária Valtra-Shark.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_2,Tridax procumbens L.,-12.2630556,-38.0416666,RB01357838,09/03/2016,Brasil,Bahia,Itanagra,Conglomerado BA__E-1-1-HE,NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_3,Peperomia tetraphylla (G.Forst.) Hook. & Arn.,-20.9386111,-41.5444444,RB00821048,08/08/2013,Brasil,Espírito Santo,Mimoso do Sul,"Córrego do Jardim. Floresta de Pseudobombax, Nyctaginaceae, bromélias e aráceas, com tapete de musgos, sobre afloramento rochoso.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_4,Oxalis psoraleoides ssp. insipida (A.St.-Hil.) Lourteig,-9.6783334,-36.9844444,RB00534750,14/11/2000,Brasil,Alagoas,Jaramataia,"Serra das Mãos, próximo à Vila Campestre e ao riacho Ribeira.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_5,Xyris mucujensis Kral & L.B.Sm.,-13,-41.4,RB00636898,25/07/1979,Brasil,Bahia,Mucugê,"3km ao S de Mucugê, na estrada para Jussiape.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_6,Groenbladia,-15.733889,-47.928611,43135,31/05/2009,Brasil,DF,Brasilia,Parque Nacional De Brasília,NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_7,Byrsonima crispa,-16.504,-39.255,604662,14/10/2009,Brasil,BA,NA,Parque Nacional Do Pau Brasil,NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_8,Paspalum multicaule Poir.,-12.9,-51.8666667,RB00525311,26/06/1968,Brasil,Mato Grosso,NA,"Base Camp of the Expedition, ca. 270 km N of Xavantina on the Xavantina - São Félix road.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_9,Solanum megalochiton Mart.,-19.3513889,-40.5480555,RB00780705,19/04/2013,Brasil,Espírito Santo,Marilândia,"Localidade de Alto Liberdade. Pedra do Cruzeiro, Floresta alterada ao longo da escadaria para o topo do inselbergue.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_10,Leiothrix curvifolia (Bong.) Ruhland,-18.9625,-43.7419444,RB00604869,24/11/2009,Brasil,Minas Gerais,Santana de Pirapama,"Serra do Cipó, Capela de São José, Trilha da Senhorinha, caminho a Congonhas do Norte.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_11,Chrysophyllum inornatum Mart.,-27.3344444,-49.9422222,RB01138574,10/11/2008,Brasil,Santa Catarina,Pouso Redondo,Corruchel.,NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_12,Mimosa paludosa Benth.,-13.6,-41.8333333,RB00164077,27/03/1977,Brasil,Bahia,NA,"Between 2,5 and 5km S. of the Vila do Rio de Contas on side road to W. of the road to livramento, leading to the Rio Brumado.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_14,Myrsine umbellata,-22.456917,-44.609611,909060,25/11/2014,Brasil,RJ,NA,Parque Nacional De Itatiaia,NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_15,Swartzia simplex var. continentalis Urb.,-20.2425,-42.0197223,RB00521071,10/12/2007,Brasil,Espírito Santo,Santa Leopoldina,"Cachoeira do Mochafongo, Sítio Mochafongo. Arbusto 5m, tronco castanho-escuro, beira da cachoeira, solo rochoso, local com alta incidência de sol.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_16,Tephrosia,-9.8497222,-52.4047222,RB00622100,11/03/2011,Brasil,Mato Grosso,São José do Xingu,"Fazenda Santa Filipina, a 20-40 km da Faz. Najá, zona de amortecimento do Parque Estadual do Xingu.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_18,Marcetia latifolia Naudin,-11.6333333,-41.0333333,RB00238744,30/05/1980,Brasil,Piauí,Morro do Chapéu do Piauí,"Rio do Ferro Doido, 19,5 km S.E. of Morro do Chapéu on the BA 052 highway to Mundo Novo, with water-worn.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_19,Clusia nemorosa G.Mey.,-8.28,-34.9541667,RB00574427,24/08/2007,Brasil,Pernambuco,Cabo de Santo Agostinho,"Itapuama, engenho Camaçari.",NA,NA,NA,NA,NA,Brazil,BR
+ICMBIO_20,Bertholletia excelsa,-10.855507,-68.700395,458788,31/03/2013,Brasil,AC,NA,Reserva Extrativista Chico Mendes,NA,NA,NA,NA,NA,Brazil,BR
+IDIGBIO_5,Coussarea acrensis C.M. Taylor,-10.0666667,-67.5666667,7e4df881-f532-4818-8d26-37984e804c5d,NA,Brazil,Acre,NA,"Senador Guiomard; Fazenda Experimental Catauba, 27km from RIo Branco on road BR-364 to Porto Velho",NA,PreservedSpecimen,"C.M. Taylor, Paratype",NA,Piero G. Delprete|M. Oliveira,Brazil,BR
+IDIGBIO_11,Crotalaria,-23.416667,-51.95,01bdd102-de56-4b29-9631-57dbf0eb4df4,NA,Brasil,Paraná,NA,"distrito de Iguatemi, Campus UEM, Fazenda Experime",NA,PreservedSpecimen,NA,NA,G.C.Mantovanelli; F.A.Rios,Brazil,BR
+IDIGBIO_15,Ocotea laxa (Nees) Mez,-25.4769,-48.8342,775655fa-be84-4db2-b9f1-ab1b93afed07,1971-01-19,Brazil,Paraná,Morretes,"Serra Marumbi, picada ao Olimpo",NA,PreservedSpecimen,NA,30514,G. G. Hatschbach,Brazil,BR
+IDIGBIO_16,Solanum paniculatum L.,-11,-42,dcba12d7-0f73-46b1-8edd-21e72c0182e9,1980-04-19,Brazil,Bahia,NA,NA,NA,PreservedSpecimen,RRC ID Flag,NA,R. Harley,Brazil,BR
+IDIGBIO_19,Clidemia epiphytica (Triana) Cogn.,-4.696879,-69.5048332,d41300b6-eb71-4a99-bdfe-717c093616b1,1936-09-11/1936-10-26,Brazil,Amazonas,São Paulo de Olivença,Near Palmares. Basin of Rio Solimoes.,NA,PreservedSpecimen,F. A. Michelangeli,201650,B. A. Krukoff,Brazil,BR
+NEOTROPTREE_1,Amaioua guianensis,-8.72444444444444,-35.1752777777778,AtlPE022,NA,Brasil,NA,NA,"Tamandaré, Saltinho, floresta pluvial",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_2,Matayba intermedia,-22.9294444444444,-42.9794444444444,AtlRJ033,NA,Brasil,NA,NA,"Niterói, Serra da Tiririca, floresta pluvial",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_3,Pagamea coriacea,-0.145833333333333,-66.9733333333333,AmzAM103,NA,Brasil,NA,NA,"Itacoatiara-Mirim, nanofloresta de areias brancas",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_4,Senna velutina,-13.405,-55.5744444444444,CerMT027,NA,Brasil,NA,NA,"Lucas do Rio Verde, cerrado",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_5,Myrsine umbellata,-23.8686111111111,-53.8466666666667,AtlPR129,NA,Brasil,NA,NA,"Altônia, floresta semidecídua",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_6,Compsoneura ulei,-8.13777777777778,-63.6194444444444,AmzRO032,NA,Brasil,NA,NA,"Porto Velho, Calama, savana arborizada brejosa",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_7,Cyathea corcovadensis,-23.8136111111111,-45.4675,AtlSP016,NA,Brasil,NA,NA,"São Sebastião, floresta pluvial",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_8,Myrciaria dubia,-3.28388888888889,-59.4844444444444,AmzAM223,NA,Brasil,NA,NA,"Careiro da Várzea, Paraná do Autaz-Mirim, floresta inundável de água negra",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_9,Alchornea triplinervia,-24.5705555555556,-48.6163888888889,AtlSP032,NA,Brasil,NA,NA,"Iporanga, floresta pluvial",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_10,Dahlstedtia muehlbergiana,-21.07,-47.4361111111111,AtlSP161,NA,Brasil,NA,NA,"Gruta do Itambé, floresta semidecídua",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_11,Copaifera coriacea,-10.1322222222222,-44.7119444444444,CerPI033,NA,Brasil,NA,NA,"Parnaguá, cerradão mesotrófico",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_12,Miconia gratissima,-4.22111111111111,-63.1722222222222,AmzAM163,NA,Brasil,NA,NA,"Coari, floresta pluvial de terra firme",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_13,Cabralea canjerana,-17.6558333333333,-46.3122222222222,CerMG068,NA,Brasil,NA,NA,"João Pinheiro, floresta ripícola",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_14,Solanum megalochiton,-14.835,-40.5547222222222,AtlBA099,NA,Brasil,NA,NA,"Barra do Choça, floresta semidecídua",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_15,Machaerium acutifolium,-19.2183333333333,-49.1463888888889,CerMG240,NA,Brasil,NA,NA,"Prata, cerrado",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_16,Agonandra brasiliensis,-20.1538888888889,-54.5611111111111,CerMS034,NA,Brasil,NA,NA,"Jaraguari, cerradão mesotrófico",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_17,Iriartea deltoidea,-2.82833333333333,-67.7961111111111,AmzAM285,NA,Brasil,NA,NA,"Tonantins, floresta pluvial de terra firme",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_18,Cordia trichotoma,-17.0736111111111,-43.7672222222222,CerMG114,NA,Brasil,NA,NA,"Bocaiúva, floresta decídua",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_19,Nectandra amazonum,-3.13305555555556,-60.8969444444444,AmzAM220,NA,Brasil,NA,NA,"Lago Manacapuru, floresta inundável de água negra",NA,NA,NA,NA,NA,Brazil,BR
+NEOTROPTREE_20,Byrsonima blanchetiana,-10.1394444444444,-39.83,CaaBA019,NA,Brasil,NA,NA,"Andorinha, caatinga quartzítica",NA,NA,NA,NA,NA,Brazil,BR
+SIBBR_10,Plantae,-23.213774,-46.361428,ad73d33b-4f47-445a-bc84-bcc8397552d6,2013,Brazil,NA,NA,NA,NA,HumanObservation,NA,NA,NA,Brazil,BR
+SIBBR_12,Matayba elaeagnoides,-24.10056,-50.70694,587d1247-b4e8-4a13-b121-6717f7f86273,2011,Brazil,NA,NA,H|_x0005_,NA,PreservedSpecimen,"Bonaldi, R.A.",NA,NA,Brazil,BR
+SIBBR_16,Conocliniopsis prasiifolia,-8.631128,-41.057183,066c5217-6e3b-4769-a1c4-eae3e7409798,NA,Brazil,NA,NA,NA,NA,NA,Rita Pereira,NA,NA,Brazil,BR
+SPECIESLINK_1,Randia armata,-19.696944,-39.931944,46966,NA,Brasil,Espírito Santo,NA,"Reserva de Comboios, próximo à reserva indígena. Ponto de amostragem 8.",NA,S,NA,NA,"Firmino, A.D.; Valadares, R.T.",Brazil,BR
+SPECIESLINK_4,Baccharis polyphylla,-13.55,-41.95,2851678,NA,Brazil,Bahia,NA,Brazil: Estado da Bahia. Serra das Almas. Middle and upper N.E. slopes of the Pico das Almas ca. 25km. W.N.W. of the Vila do Rio de Contas,NA,PreservedSpecimen,NA,NA,"R. M. Harley, S. Mayo, R. M. Storr, T. S. Santos & R. S. Pinheiro",Brazil,BR
+SPECIESLINK_5,Undesignated undesignated,-15.26472,-40.57472,3395923,NA,Brazil,Bahia,NA,"""Itambé: 37.5 west of itapetinga on BR 415 to Itambé. Semi-deciduous \""vine\"" forst (Mata de Cipó) with arborescent cacti.""",NA,PreservedSpecimen,NA,NA,Thomas,Brazil,BR
+SPECIESLINK_9,Sematophyllum galipense,-13.279722,-41.903889,84295,NA,Brasil,Bahia,NA,Serra do Barbado. Catolés,NA,PreservedSpecimen,NA,NA,"Bastos, C",Brazil,BR
+SPECIESLINK_10,Parthenium hysterophorus,-21.7944,-48.1756,20032,NA,Brasil,São Paulo,NA,NA,NA,S,NA,NA,H.F. Leitão Filho & C. Aranha,Brazil,BR
+SPECIESLINK_12,Jacaranda simplicifolia,-13.9584,-47.3578,748798,NA,Brazil,Goiás,NA,"Chapada dos Veadeiros, ca. 25 km by road N of Alto Paraíso",NA,PreservedSpecimen,NA,NA,W. R. Anderson,Brazil,BR
+SPECIESLINK_13,Chamaesyce,-14.4525,-43.7533333,1195853,NA,Brazil,Bahia,NA,"Rod. para o Distr. de Cana Brava, 18 km S da sede municipal, 1.6 km do povoado de Serra de João Alves.",NA,PreservedSpecimen,NA,NA,J. G. Jardim,Brazil,BR
+SPECIESLINK_19,Justicia brasiliana,-26.361184,-49.273742,468,NA,Brasil,Santa Catarina,NA,"Rio Natal - Beira de estrada, sentido Corupá",NA,MachineObservation,NA,NA,"Schwirkowski, P.",Brazil,BR
