@@ -194,8 +194,7 @@ file.copy("./gnparser", "~/Library/Application Support/")
 ## Linux
 
 Extract the binary file `gnparser` from `.zip` or `.gz` files and move
-it to the folder `~/bin`. Move the file manually or using the command
-line:
+it to the folder `~/bin`. Move the file manually or using R:
 
 ``` r
 
