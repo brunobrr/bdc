@@ -231,7 +231,7 @@ After installing Gnparser, you can install *bdc* from CRAN:
 
 ```{r eval=FALSE}
 install.packages("bdc")
-library(taxadb)
+library(bdc)
 ```
 
 or the development version from [GitHub](https://github.com/brunobrr/bdc) using:
