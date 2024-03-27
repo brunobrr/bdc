@@ -1,0 +1,5255 @@
+english_name	names_in_different_languages	alpha2	alpha3
+Afghanistan	أفغانستان	AF	AFG
+Afghanistan	Афганистан	AF	AFG
+Afghanistan	Afghánistán	AF	AFG
+Afghanistan	Afghanistan	AF	AFG
+Afghanistan	Αφγανιστάν	AF	AFG
+Afghanistan	Afganio	AF	AFG
+Afghanistan	Afganistán	AF	AFG
+Afghanistan	Afganistan	AF	AFG
+Afghanistan	Afganisztán	AF	AFG
+Afghanistan	Աֆղանստան	AF	AFG
+Afghanistan	アフガニスタン	AF	AFG
+Afghanistan	아프가니스탄	AF	AFG
+Afghanistan	Afganistanas	AF	AFG
+Afghanistan	Afeganistão	AF	AFG
+Afghanistan	อัฟกานิสถาน	AF	AFG
+Afghanistan	Афганістан	AF	AFG
+Afghanistan	阿富汗	AF	AFG
+Åland Islands	جزر أولاند	AX	ALA
+Åland Islands	Оландски острови	AX	ALA
+Åland Islands	Alandy	AX	ALA
+Åland Islands	Ålandsøerne	AX	ALA
+Åland Islands	Åland	AX	ALA
+Åland Islands	Ώλαντ	AX	ALA
+Åland Islands	Alando	AX	ALA
+Åland Islands	Ahvenamaa	AX	ALA
+Åland Islands	Aland	AX	ALA
+Åland Islands	Ahvenanmaa	AX	ALA
+Åland Islands	Îles Åland	AX	ALA
+Åland Islands	Ալանդյան կղզիներ	AX	ALA
+Åland Islands	Isole Åland	AX	ALA
+Åland Islands	オーランド諸島	AX	ALA
+Åland Islands	올란드 제도	AX	ALA
+Åland Islands	Alandų salos	AX	ALA
+Åland Islands	Wyspy Alandzkie	AX	ALA
+Åland Islands	Ilhas Åland	AX	ALA
+Åland Islands	Insulele Åland	AX	ALA
+Åland Islands	Аландские острова	AX	ALA
+Åland Islands	หมู่เกาะโอลันด์	AX	ALA
+Åland Islands	Аландські острови	AX	ALA
+Åland Islands	奥兰	AX	ALA
+Åland Islands	奧蘭	AX	ALA
+Åland Islands	Åland Islands	AX	ALA
+Albania	ألبانيا	AL	ALB
+Albania	Албания	AL	ALB
+Albania	Albánie	AL	ALB
+Albania	Albanien	AL	ALB
+Albania	Αλβανία	AL	ALB
+Albania	Albanio	AL	ALB
+Albania	Albania	AL	ALB
+Albania	Albaania	AL	ALB
+Albania	Albanie	AL	ALB
+Albania	Albánia	AL	ALB
+Albania	Ալբանիա	AL	ALB
+Albania	アルバニア	AL	ALB
+Albania	알바니아	AL	ALB
+Albania	Albanija	AL	ALB
+Albania	Albanië	AL	ALB
+Albania	Albânia	AL	ALB
+Albania	Albánsko	AL	ALB
+Albania	แอลเบเนีย	AL	ALB
+Albania	Албанія	AL	ALB
+Albania	阿尔巴尼亚	AL	ALB
+Albania	阿爾巴尼亞	AL	ALB
+Algeria	الجزائر	DZ	DZA
+Algeria	Алжир	DZ	DZA
+Algeria	Alžírsko	DZ	DZA
+Algeria	Algeriet	DZ	DZA
+Algeria	Algerien	DZ	DZA
+Algeria	Αλγερία	DZ	DZA
+Algeria	Alĝerio	DZ	DZA
+Algeria	Argelia	DZ	DZA
+Algeria	Alžeeria	DZ	DZA
+Algeria	Aljeria	DZ	DZA
+Algeria	Algeria	DZ	DZA
+Algeria	Algérie	DZ	DZA
+Algeria	Algéria	DZ	DZA
+Algeria	Ալժիր	DZ	DZA
+Algeria	アルジェリア	DZ	DZA
+Algeria	알제리	DZ	DZA
+Algeria	Alžyras	DZ	DZA
+Algeria	Algerije	DZ	DZA
+Algeria	Algerie	DZ	DZA
+Algeria	Algieria	DZ	DZA
+Algeria	Argélia	DZ	DZA
+Algeria	แอลจีเรีย	DZ	DZA
+Algeria	阿尔及利亚	DZ	DZA
+Algeria	阿爾及利亞	DZ	DZA
+American Samoa	ساموا الأمريكية	AS	ASM
+American Samoa	Американска Самоа	AS	ASM
+American Samoa	Americká Samoa	AS	ASM
+American Samoa	Amerikansk Samoa	AS	ASM
+American Samoa	Amerikanisch-Samoa	AS	ASM
+American Samoa	Αμερικανική Σαμόα	AS	ASM
+American Samoa	Usona Samoo	AS	ASM
+American Samoa	Samoa Americana	AS	ASM
+American Samoa	Ameerika Samoa	AS	ASM
+American Samoa	Samoa Estatubatuarra	AS	ASM
+American Samoa	Amerikan Samoa	AS	ASM
+American Samoa	Samoa américaines	AS	ASM
+American Samoa	Amerikai Szamoa	AS	ASM
+American Samoa	Ամերիկյան Սամոա	AS	ASM
+American Samoa	Samoa Americane	AS	ASM
+American Samoa	アメリカ領サモア	AS	ASM
+American Samoa	아메리칸사모아	AS	ASM
+American Samoa	Amerikos Samoa	AS	ASM
+American Samoa	Amerikaans-Samoa	AS	ASM
+American Samoa	Samoa Amerykańskie	AS	ASM
+American Samoa	Samoa americană	AS	ASM
+American Samoa	Американское Самоа	AS	ASM
+American Samoa	Amerikanska Samoa	AS	ASM
+American Samoa	อเมริกันซามัว	AS	ASM
+American Samoa	Американське Самоа	AS	ASM
+American Samoa	美属萨摩亚	AS	ASM
+American Samoa	美屬薩摩亞	AS	ASM
+American Samoa	American Samoa	AS	ASM
+Andorra	أندورا	AD	AND
+Andorra	Андора	AD	AND
+Andorra	Andorra	AD	AND
+Andorra	Ανδόρρα	AD	AND
+Andorra	Andoro	AD	AND
+Andorra	Andorre	AD	AND
+Andorra	Անդորրա	AD	AND
+Andorra	アンドラ	AD	AND
+Andorra	안도라	AD	AND
+Andorra	Andora	AD	AND
+Andorra	Андорра	AD	AND
+Andorra	อันดอร์รา	AD	AND
+Andorra	安道尔	AD	AND
+Andorra	安道爾	AD	AND
+Angola	أنغولا	AO	AGO
+Angola	Ангола	AO	AGO
+Angola	Angola	AO	AGO
+Angola	Ανγκόλα	AO	AGO
+Angola	Angolo	AO	AGO
+Angola	Անգոլա	AO	AGO
+Angola	アンゴラ	AO	AGO
+Angola	앙골라	AO	AGO
+Angola	แองโกลา	AO	AGO
+Angola	安哥拉	AO	AGO
+Anguilla	أنغويلا	AI	AIA
+Anguilla	Ангила	AI	AIA
+Anguilla	Anguilla	AI	AIA
+Anguilla	Ανγκουίλα	AI	AIA
+Anguilla	Angvilo	AI	AIA
+Anguilla	Anguila	AI	AIA
+Anguilla	Aingira	AI	AIA
+Anguilla	Անգիլիա	AI	AIA
+Anguilla	アンギラ	AI	AIA
+Anguilla	앵귈라	AI	AIA
+Anguilla	Angilija	AI	AIA
+Anguilla	Ангилья	AI	AIA
+Anguilla	แองกวิลลา	AI	AIA
+Anguilla	Ангілья	AI	AIA
+Anguilla	安圭拉	AI	AIA
+Antarctica	القارة القطبية الجنوبية	AQ	ATA
+Antarctica	Антарктида	AQ	ATA
+Antarctica	Antarktida	AQ	ATA
+Antarctica	Antarktika (Antarktis)	AQ	ATA
+Antarctica	Antarktis (Sonderstatus durch Antarktisvertrag)	AQ	ATA
+Antarctica	Ανταρκτική	AQ	ATA
+Antarctica	Antarktio	AQ	ATA
+Antarctica	Antártida	AQ	ATA
+Antarctica	Antarktis	AQ	ATA
+Antarctica	Antartika	AQ	ATA
+Antarctica	Antarctique	AQ	ATA
+Antarctica	Antarktisz	AQ	ATA
+Antarctica	Անտարկտիդա	AQ	ATA
+Antarctica	Antartide	AQ	ATA
+Antarctica	南極	AQ	ATA
+Antarctica	남극	AQ	ATA
+Antarctica	Antarctica	AQ	ATA
+Antarctica	Antarktika	AQ	ATA
+Antarctica	Antarktyka	AQ	ATA
+Antarctica	Антарктика	AQ	ATA
+Antarctica	Antarktída	AQ	ATA
+Antarctica	แอนตาร์กติกา	AQ	ATA
+Antarctica	南极洲	AQ	ATA
+Antarctica	南極洲	AQ	ATA
+Antigua and Barbuda	أنتيغوا وباربودا	AG	ATG
+Antigua and Barbuda	Антигуа и Барбуда	AG	ATG
+Antigua and Barbuda	Antigua a Barbuda	AG	ATG
+Antigua and Barbuda	Antigua og Barbuda	AG	ATG
+Antigua and Barbuda	Antigua und Barbuda	AG	ATG
+Antigua and Barbuda	Αντίγκουα και Μπαρμπούντα	AG	ATG
+Antigua and Barbuda	Antigvo kaj Barbudo	AG	ATG
+Antigua and Barbuda	Antigua y Barbuda	AG	ATG
+Antigua and Barbuda	Antigua ja Barbuda	AG	ATG
+Antigua and Barbuda	Antigua eta Barbuda	AG	ATG
+Antigua and Barbuda	Antigua-et-Barbuda	AG	ATG
+Antigua and Barbuda	Antigua és Barbuda	AG	ATG
+Antigua and Barbuda	Անտիգուա և Բարբուդա	AG	ATG
+Antigua and Barbuda	Antigua e Barbuda	AG	ATG
+Antigua and Barbuda	アンティグア・バーブーダ	AG	ATG
+Antigua and Barbuda	앤티가 바부다	AG	ATG
+Antigua and Barbuda	Antigva ir Barbuda	AG	ATG
+Antigua and Barbuda	Antigua en Barbuda	AG	ATG
+Antigua and Barbuda	Antigua i Barbuda	AG	ATG
+Antigua and Barbuda	Antígua e Barbuda	AG	ATG
+Antigua and Barbuda	Antigua și Barbuda	AG	ATG
+Antigua and Barbuda	Antigua och Barbuda	AG	ATG
+Antigua and Barbuda	แอนติกาและบาร์บูดา	AG	ATG
+Antigua and Barbuda	Антигуа і Барбуда	AG	ATG
+Antigua and Barbuda	安提瓜和巴布达	AG	ATG
+Antigua and Barbuda	安地卡及巴布達	AG	ATG
+Antigua and Barbuda	Antigua and Barbuda	AG	ATG
+Argentina	الأرجنتين	AR	ARG
+Argentina	Аржентина	AR	ARG
+Argentina	Argentina	AR	ARG
+Argentina	Argentinien	AR	ARG
+Argentina	Αργεντινή	AR	ARG
+Argentina	Argentino	AR	ARG
+Argentina	Argentiina	AR	ARG
+Argentina	Argentine	AR	ARG
+Argentina	Argentína	AR	ARG
+Argentina	Արգենտինա	AR	ARG
+Argentina	アルゼンチン	AR	ARG
+Argentina	아르헨티나	AR	ARG
+Argentina	Argentinië	AR	ARG
+Argentina	Argentyna	AR	ARG
+Argentina	Аргентина	AR	ARG
+Argentina	อาร์เจนตินา	AR	ARG
+Argentina	阿根廷	AR	ARG
+Armenia	أرمينيا	AM	ARM
+Armenia	Армения	AM	ARM
+Armenia	Arménie	AM	ARM
+Armenia	Armenien	AM	ARM
+Armenia	Αρμενία	AM	ARM
+Armenia	Armenio	AM	ARM
+Armenia	Armenia	AM	ARM
+Armenia	Armeenia	AM	ARM
+Armenia	Örményország	AM	ARM
+Armenia	Հայաստան	AM	ARM
+Armenia	アルメニア	AM	ARM
+Armenia	아르메니아	AM	ARM
+Armenia	Armėnija	AM	ARM
+Armenia	Armenië	AM	ARM
+Armenia	Armênia	AM	ARM
+Armenia	Arménsko	AM	ARM
+Armenia	อาร์มีเนีย	AM	ARM
+Armenia	Вірменія	AM	ARM
+Armenia	亚美尼亚	AM	ARM
+Armenia	亞美尼亞	AM	ARM
+Aruba	أروبا	AW	ABW
+Aruba	Аруба	AW	ABW
+Aruba	Aruba	AW	ABW
+Aruba	Αρούμπα	AW	ABW
+Aruba	Arubo	AW	ABW
+Aruba	Արուբա	AW	ABW
+Aruba	アルバ	AW	ABW
+Aruba	아루바	AW	ABW
+Aruba	อารูบา	AW	ABW
+Aruba	阿鲁巴	AW	ABW
+Aruba	阿魯巴	AW	ABW
+Australia	أستراليا	AU	AUS
+Australia	Австралия	AU	AUS
+Australia	Austrálie	AU	AUS
+Australia	Australien	AU	AUS
+Australia	Αυστραλία	AU	AUS
+Australia	Aŭstralio	AU	AUS
+Australia	Australia	AU	AUS
+Australia	Austraalia	AU	AUS
+Australia	Australie	AU	AUS
+Australia	Ausztrália	AU	AUS
+Australia	Ավստրալիա	AU	AUS
+Australia	オーストラリア	AU	AUS
+Australia	오스트레일리아	AU	AUS
+Australia	Australija	AU	AUS
+Australia	Australië	AU	AUS
+Australia	Austrália	AU	AUS
+Australia	ออสเตรเลีย	AU	AUS
+Australia	Австралія	AU	AUS
+Australia	澳大利亚	AU	AUS
+Australia	澳大利亞	AU	AUS
+Austria	النمسا	AT	AUT
+Austria	Австрия	AT	AUT
+Austria	Rakousko	AT	AUT
+Austria	Østrig	AT	AUT
+Austria	Österreich	AT	AUT
+Austria	Αυστρία	AT	AUT
+Austria	Aŭstrio	AT	AUT
+Austria	Austria	AT	AUT
+Austria	Itävalta	AT	AUT
+Austria	Autriche	AT	AUT
+Austria	Ausztria	AT	AUT
+Austria	Ավստրիա	AT	AUT
+Austria	オーストリア	AT	AUT
+Austria	오스트리아	AT	AUT
+Austria	Austrija	AT	AUT
+Austria	Oostenrijk	AT	AUT
+Austria	Østerrike	AT	AUT
+Austria	Áustria	AT	AUT
+Austria	Rakúsko	AT	AUT
+Austria	Österrike	AT	AUT
+Austria	ออสเตรีย	AT	AUT
+Austria	Австрія	AT	AUT
+Austria	奥地利	AT	AUT
+Austria	奧地利	AT	AUT
+Azerbaijan	أذربيجان	AZ	AZE
+Azerbaijan	Азербайджан	AZ	AZE
+Azerbaijan	Ázerbájdžán	AZ	AZE
+Azerbaijan	Aserbajdsjan	AZ	AZE
+Azerbaijan	Aserbaidschan	AZ	AZE
+Azerbaijan	Αζερμπαϊτζάν	AZ	AZE
+Azerbaijan	Azerbajĝano	AZ	AZE
+Azerbaijan	Azerbaiyán	AZ	AZE
+Azerbaijan	Aserbaidžaan	AZ	AZE
+Azerbaijan	Azerbaijan	AZ	AZE
+Azerbaijan	Azerbaidžan	AZ	AZE
+Azerbaijan	Azerbaïdjan	AZ	AZE
+Azerbaijan	Azerbajdzsán	AZ	AZE
+Azerbaijan	Ադրբեջան	AZ	AZE
+Azerbaijan	Azerbaigian	AZ	AZE
+Azerbaijan	アゼルバイジャン	AZ	AZE
+Azerbaijan	아제르바이잔	AZ	AZE
+Azerbaijan	Azerbaidžanas	AZ	AZE
+Azerbaijan	Azerbeidzjan	AZ	AZE
+Azerbaijan	Azerbejdżan	AZ	AZE
+Azerbaijan	Azerbaijão	AZ	AZE
+Azerbaijan	Azerbaidjan	AZ	AZE
+Azerbaijan	Azerbajdžan	AZ	AZE
+Azerbaijan	Azerbajdzjan	AZ	AZE
+Azerbaijan	อาเซอร์ไบจาน	AZ	AZE
+Azerbaijan	阿塞拜疆	AZ	AZE
+Azerbaijan	亞塞拜然	AZ	AZE
+Bahamas	باهاماس	BS	BHS
+Bahamas	Бахамски острови	BS	BHS
+Bahamas	Bahamy	BS	BHS
+Bahamas	Bahamas	BS	BHS
+Bahamas	Μπαχάμες	BS	BHS
+Bahamas	Bahamoj	BS	BHS
+Bahamas	Bahama	BS	BHS
+Bahamas	Bahamak	BS	BHS
+Bahamas	Bahama-szigetek	BS	BHS
+Bahamas	Բահամներ	BS	BHS
+Bahamas	バハマ	BS	BHS
+Bahamas	바하마	BS	BHS
+Bahamas	Bahamos	BS	BHS
+Bahamas	Bahama's	BS	BHS
+Bahamas	Багамские Острова	BS	BHS
+Bahamas	บาฮามาส	BS	BHS
+Bahamas	Багамські Острови	BS	BHS
+Bahamas	巴哈马	BS	BHS
+Bahamas	巴哈馬	BS	BHS
+Bahrain	البحرين	BH	BHR
+Bahrain	Бахрейн	BH	BHR
+Bahrain	Bahrajn	BH	BHR
+Bahrain	Bahrain	BH	BHR
+Bahrain	Μπαχρέιν	BH	BHR
+Bahrain	Barejno	BH	BHR
+Bahrain	Baréin	BH	BHR
+Bahrain	Bahrein	BH	BHR
+Bahrain	Bahreïn	BH	BHR
+Bahrain	Բահրեյն	BH	BHR
+Bahrain	バーレーン	BH	BHR
+Bahrain	바레인	BH	BHR
+Bahrain	Bahreinas	BH	BHR
+Bahrain	Barém	BH	BHR
+Bahrain	บาห์เรน	BH	BHR
+Bahrain	巴林	BH	BHR
+Bangladesh	بنغلاديش	BD	BGD
+Bangladesh	Бангладеш	BD	BGD
+Bangladesh	Bangladéš	BD	BGD
+Bangladesh	Bangladesh	BD	BGD
+Bangladesh	Bangladesch	BD	BGD
+Bangladesh	Μπανγκλαντές	BD	BGD
+Bangladesh	Bangladeŝo	BD	BGD
+Bangladesh	Bangladés	BD	BGD
+Bangladesh	Banglades	BD	BGD
+Bangladesh	Բանգլադեշ	BD	BGD
+Bangladesh	バングラデシュ	BD	BGD
+Bangladesh	방글라데시	BD	BGD
+Bangladesh	Bangladešas	BD	BGD
+Bangladesh	Bangladesz	BD	BGD
+Bangladesh	Bangladexe	BD	BGD
+Bangladesh	บังกลาเทศ	BD	BGD
+Bangladesh	孟加拉国	BD	BGD
+Bangladesh	孟加拉	BD	BGD
+Barbados	باربادوس	BB	BRB
+Barbados	Барбадос	BB	BRB
+Barbados	Barbados	BB	BRB
+Barbados	Μπαρμπάντος	BB	BRB
+Barbados	Barbado	BB	BRB
+Barbados	Barbade	BB	BRB
+Barbados	Բարբադոս	BB	BRB
+Barbados	バルバドス	BB	BRB
+Barbados	바베이도스	BB	BRB
+Barbados	Barbadosas	BB	BRB
+Barbados	บาร์เบโดส	BB	BRB
+Barbados	巴巴多斯	BB	BRB
+Barbados	巴貝多	BB	BRB
+Belarus	بيلاروس	BY	BLR
+Belarus	Беларус	BY	BLR
+Belarus	Bělorusko	BY	BLR
+Belarus	Hviderusland	BY	BLR
+Belarus	Belarus	BY	BLR
+Belarus	Λευκορωσία	BY	BLR
+Belarus	Belorusio	BY	BLR
+Belarus	Bielorrusia	BY	BLR
+Belarus	Valgevene	BY	BLR
+Belarus	Valko-Venäjä	BY	BLR
+Belarus	Biélorussie	BY	BLR
+Belarus	Fehéroroszország	BY	BLR
+Belarus	Բելառուս	BY	BLR
+Belarus	Bielorussia	BY	BLR
+Belarus	ベラルーシ	BY	BLR
+Belarus	벨라루스	BY	BLR
+Belarus	Baltarusija	BY	BLR
+Belarus	Wit-Rusland	BY	BLR
+Belarus	Białoruś	BY	BLR
+Belarus	Bielorrússia	BY	BLR
+Belarus	Белоруссия	BY	BLR
+Belarus	Bielorusko	BY	BLR
+Belarus	เบลารุส	BY	BLR
+Belarus	Білорусь	BY	BLR
+Belarus	白俄罗斯	BY	BLR
+Belarus	白俄羅斯	BY	BLR
+Belgium	بلجيكا	BE	BEL
+Belgium	Белгия	BE	BEL
+Belgium	Belgie	BE	BEL
+Belgium	Belgien	BE	BEL
+Belgium	Βέλγιο	BE	BEL
+Belgium	Belgio	BE	BEL
+Belgium	Bélgica	BE	BEL
+Belgium	Belgia	BE	BEL
+Belgium	Belgika	BE	BEL
+Belgium	Belgique	BE	BEL
+Belgium	Belgium	BE	BEL
+Belgium	Բելգիա	BE	BEL
+Belgium	ベルギー	BE	BEL
+Belgium	벨기에	BE	BEL
+Belgium	Belgija	BE	BEL
+Belgium	België	BE	BEL
+Belgium	Бельгия	BE	BEL
+Belgium	Belgicko	BE	BEL
+Belgium	เบลเยียม	BE	BEL
+Belgium	Бельгія	BE	BEL
+Belgium	比利时	BE	BEL
+Belgium	比利時	BE	BEL
+Belize	بليز	BZ	BLZ
+Belize	Белиз	BZ	BLZ
+Belize	Belize	BZ	BLZ
+Belize	Μπελίζ	BZ	BLZ
+Belize	Belizo	BZ	BLZ
+Belize	Belice	BZ	BLZ
+Belize	Բելիզ	BZ	BLZ
+Belize	ベリーズ	BZ	BLZ
+Belize	벨리즈	BZ	BLZ
+Belize	Belizas	BZ	BLZ
+Belize	เบลีซ	BZ	BLZ
+Belize	Беліз	BZ	BLZ
+Belize	伯利兹	BZ	BLZ
+Belize	貝里斯	BZ	BLZ
+Benin	بنين	BJ	BEN
+Benin	Бенин	BJ	BEN
+Benin	Benin	BJ	BEN
+Benin	Μπενίν	BJ	BEN
+Benin	Benino	BJ	BEN
+Benin	Benín	BJ	BEN
+Benin	Bénin	BJ	BEN
+Benin	Բենին	BJ	BEN
+Benin	ベナン	BJ	BEN
+Benin	베냉	BJ	BEN
+Benin	Beninas	BJ	BEN
+Benin	Benim	BJ	BEN
+Benin	เบนิน	BJ	BEN
+Benin	Бенін	BJ	BEN
+Benin	贝宁	BJ	BEN
+Benin	貝南	BJ	BEN
+Bermuda	برمودا	BM	BMU
+Bermuda	Бермудски острови	BM	BMU
+Bermuda	Bermudy	BM	BMU
+Bermuda	Bermuda	BM	BMU
+Bermuda	Βερμούδες	BM	BMU
+Bermuda	Bermudo	BM	BMU
+Bermuda	Bermudas	BM	BMU
+Bermuda	Bermudes	BM	BMU
+Bermuda	Բերմուդա	BM	BMU
+Bermuda	バミューダ	BM	BMU
+Bermuda	버뮤다	BM	BMU
+Bermuda	Bermude	BM	BMU
+Bermuda	Бермуды	BM	BMU
+Bermuda	เบอร์มิวดา	BM	BMU
+Bermuda	Бермудські Острови	BM	BMU
+Bermuda	百慕大	BM	BMU
+Bermuda	百慕達	BM	BMU
+Bhutan	بوتان	BT	BTN
+Bhutan	Бутан	BT	BTN
+Bhutan	Bhútán	BT	BTN
+Bhutan	Bhutan	BT	BTN
+Bhutan	Μπουτάν	BT	BTN
+Bhutan	Butano	BT	BTN
+Bhutan	Bután	BT	BTN
+Bhutan	Bhoutan	BT	BTN
+Bhutan	Bhután	BT	BTN
+Bhutan	Բութան	BT	BTN
+Bhutan	ブータン	BT	BTN
+Bhutan	부탄	BT	BTN
+Bhutan	Butanas	BT	BTN
+Bhutan	Butão	BT	BTN
+Bhutan	ภูฏาน	BT	BTN
+Bhutan	不丹	BT	BTN
+Bolivia	بوليفيا	BO	BOL
+Bolivia	Боливия	BO	BOL
+Bolivia	Bolívie	BO	BOL
+Bolivia	Bolivia	BO	BOL
+Bolivia	Bolivien	BO	BOL
+Bolivia	Βολιβία	BO	BOL
+Bolivia	Bolivio	BO	BOL
+Bolivia	Boliivia	BO	BOL
+Bolivia	Bolivie	BO	BOL
+Bolivia	Bolívia	BO	BOL
+Bolivia	Բոլիվիա	BO	BOL
+Bolivia	ボリビア多民族国	BO	BOL
+Bolivia	볼리비아	BO	BOL
+Bolivia	Bolivija	BO	BOL
+Bolivia	Boliwia	BO	BOL
+Bolivia	โบลิเวีย	BO	BOL
+Bolivia	Болівія	BO	BOL
+Bolivia	玻利维亚	BO	BOL
+Bolivia	玻利維亞	BO	BOL
+Bolivia	Bolivia (Plurinational State of)	BO	BOL
+Bonaire, Sint Eustatius and Saba	الجزر الكاريبية الهولندية	BQ	BES
+Bonaire, Sint Eustatius and Saba	Карибска Нидерландия	BQ	BES
+Bonaire, Sint Eustatius and Saba	Bonaire, Svatý Eustach a Saba	BQ	BES
+Bonaire, Sint Eustatius and Saba	Nederlandske Antiller	BQ	BES
+Bonaire, Sint Eustatius and Saba	Bonaire, Saba, Sint Eustatius	BQ	BES
+Bonaire, Sint Eustatius and Saba	Μποναίρ, Άγιος Ευστάθιος και Σάμπα	BQ	BES
+Bonaire, Sint Eustatius and Saba	Kariba Nederlando	BQ	BES
+Bonaire, Sint Eustatius and Saba	Bonaire, San Eustaquio y Saba	BQ	BES
+Bonaire, Sint Eustatius and Saba	Bonaire, Sint Eustatius ja Saba	BQ	BES
+Bonaire, Sint Eustatius and Saba	Karibeko Herbehereak	BQ	BES
+Bonaire, Sint Eustatius and Saba	Alankomaiden Karibia	BQ	BES
+Bonaire, Sint Eustatius and Saba	Pays-Bas caribéens	BQ	BES
+Bonaire, Sint Eustatius and Saba	Karibi Hollandia (Bonaire, Saba, Sint Eustatius)	BQ	BES
+Bonaire, Sint Eustatius and Saba	Կարիբյան Նիդերլանդներ	BQ	BES
+Bonaire, Sint Eustatius and Saba	Isole BES	BQ	BES
+Bonaire, Sint Eustatius and Saba	ボネール、シント・ユースタティウスおよびサバ	BQ	BES
+Bonaire, Sint Eustatius and Saba	보네르섬	BQ	BES
+Bonaire, Sint Eustatius and Saba	Boneras, Sint Eustatijus ir Saba (BES salos)	BQ	BES
+Bonaire, Sint Eustatius and Saba	Caribisch Nederland	BQ	BES
+Bonaire, Sint Eustatius and Saba	Bonaire, Sint Eustatius og Saba	BQ	BES
+Bonaire, Sint Eustatius and Saba	Bonaire, Sint Eustatius i Saba	BQ	BES
+Bonaire, Sint Eustatius and Saba	Países Baixos Caribenhos	BQ	BES
+Bonaire, Sint Eustatius and Saba	Insulele Bonaire, Sint Eustatius și Saba	BQ	BES
+Bonaire, Sint Eustatius and Saba	Бонайре, Синт-Эстатиус и Саба	BQ	BES
+Bonaire, Sint Eustatius and Saba	Bonaire, Svätý Eustach a Saba	BQ	BES
+Bonaire, Sint Eustatius and Saba	Bonaire, Sint Eustatius and Saba	BQ	BES
+Bonaire, Sint Eustatius and Saba	เนเธอร์แลนด์แอนทิลลีส	BQ	BES
+Bonaire, Sint Eustatius and Saba	Карибські Нідерланди	BQ	BES
+Bonaire, Sint Eustatius and Saba	荷兰加勒比区	BQ	BES
+Bonaire, Sint Eustatius and Saba	荷蘭加勒比區	BQ	BES
+Bosnia and Herzegovina	البوسنة والهرسك	BA	BIH
+Bosnia and Herzegovina	Босна и Херцеговина	BA	BIH
+Bosnia and Herzegovina	Bosna a Hercegovina	BA	BIH
+Bosnia and Herzegovina	Bosnien-Hercegovina	BA	BIH
+Bosnia and Herzegovina	Bosnien und Herzegowina	BA	BIH
+Bosnia and Herzegovina	Βοσνία-Ερζεγοβίνη	BA	BIH
+Bosnia and Herzegovina	Bosnio kaj Hercegovino	BA	BIH
+Bosnia and Herzegovina	Bosnia y Herzegovina	BA	BIH
+Bosnia and Herzegovina	Bosnia ja Hertsegoviina	BA	BIH
+Bosnia and Herzegovina	Bosnia-Herzegovina	BA	BIH
+Bosnia and Herzegovina	Bosnia ja Hertsegovina	BA	BIH
+Bosnia and Herzegovina	Bosnie-Herzégovine	BA	BIH
+Bosnia and Herzegovina	Bosznia-Hercegovina	BA	BIH
+Bosnia and Herzegovina	Բոսնիա և Հերցեգովինա	BA	BIH
+Bosnia and Herzegovina	Bosnia ed Erzegovina	BA	BIH
+Bosnia and Herzegovina	ボスニア・ヘルツェゴビナ	BA	BIH
+Bosnia and Herzegovina	보스니아 헤르체고비나	BA	BIH
+Bosnia and Herzegovina	Bosnija ir Hercegovina	BA	BIH
+Bosnia and Herzegovina	Bosnië en Herzegovina	BA	BIH
+Bosnia and Herzegovina	Bosnia-Hercegovina	BA	BIH
+Bosnia and Herzegovina	Bośnia i Hercegowina	BA	BIH
+Bosnia and Herzegovina	Bósnia e Herzegovina	BA	BIH
+Bosnia and Herzegovina	Bosnia și Herțegovina	BA	BIH
+Bosnia and Herzegovina	Босния и Герцеговина	BA	BIH
+Bosnia and Herzegovina	Bosnien och Hercegovina	BA	BIH
+Bosnia and Herzegovina	บอสเนียและเฮอร์เซโกวีนา	BA	BIH
+Bosnia and Herzegovina	Боснія і Герцеговина	BA	BIH
+Bosnia and Herzegovina	波黑	BA	BIH
+Bosnia and Herzegovina	波士尼亞與赫塞哥維納	BA	BIH
+Bosnia and Herzegovina	Bosnia and Herzegovina	BA	BIH
+Botswana	بوتسوانا	BW	BWA
+Botswana	Ботсвана	BW	BWA
+Botswana	Botswana	BW	BWA
+Botswana	Μποτσουάνα	BW	BWA
+Botswana	Bocvano	BW	BWA
+Botswana	Botsuana	BW	BWA
+Botswana	Բոտսվանա	BW	BWA
+Botswana	ボツワナ	BW	BWA
+Botswana	보츠와나	BW	BWA
+Botswana	Botsvana	BW	BWA
+Botswana	บอตสวานา	BW	BWA
+Botswana	博茨瓦纳	BW	BWA
+Botswana	波札那	BW	BWA
+Bouvet Island	جزيرة بوفيه	BV	BVT
+Bouvet Island	Буве	BV	BVT
+Bouvet Island	Bouvetův ostrov	BV	BVT
+Bouvet Island	Bouvetøen	BV	BVT
+Bouvet Island	Bouvetinsel	BV	BVT
+Bouvet Island	Μπουβέ	BV	BVT
+Bouvet Island	Buvetinsulo	BV	BVT
+Bouvet Island	Isla Bouvet	BV	BVT
+Bouvet Island	Bouvet	BV	BVT
+Bouvet Island	Bouvet Uhartea	BV	BVT
+Bouvet Island	Bouvet’nsaari	BV	BVT
+Bouvet Island	Île Bouvet	BV	BVT
+Bouvet Island	Bouvet-sziget	BV	BVT
+Bouvet Island	Բուվետյան Կղզիներ	BV	BVT
+Bouvet Island	Isola Bouvet	BV	BVT
+Bouvet Island	ブーベ島	BV	BVT
+Bouvet Island	부베섬	BV	BVT
+Bouvet Island	Buvė sala	BV	BVT
+Bouvet Island	Bouvetøya	BV	BVT
+Bouvet Island	Wyspa Bouveta	BV	BVT
+Bouvet Island	Ilha Bouvet	BV	BVT
+Bouvet Island	Insula Bouvet	BV	BVT
+Bouvet Island	Остров Буве	BV	BVT
+Bouvet Island	Bouvetov ostrov	BV	BVT
+Bouvet Island	Bouvetön	BV	BVT
+Bouvet Island	เกาะบูเว	BV	BVT
+Bouvet Island	Острів Буве	BV	BVT
+Bouvet Island	布韦岛	BV	BVT
+Bouvet Island	布韋島	BV	BVT
+Bouvet Island	Bouvet Island	BV	BVT
+Brazil	البرازيل	BR	BRA
+Brazil	Бразилия	BR	BRA
+Brazil	Brazílie	BR	BRA
+Brazil	Brasilien	BR	BRA
+Brazil	Βραζιλία	BR	BRA
+Brazil	Brazilo	BR	BRA
+Brazil	Brasil	BR	BRA
+Brazil	Brasiilia	BR	BRA
+Brazil	Brasilia	BR	BRA
+Brazil	Brésil	BR	BRA
+Brazil	Brazília	BR	BRA
+Brazil	Բրազիլիա	BR	BRA
+Brazil	Brasile	BR	BRA
+Brazil	ブラジル	BR	BRA
+Brazil	브라질	BR	BRA
+Brazil	Brazilija	BR	BRA
+Brazil	Brazilië	BR	BRA
+Brazil	Brazylia	BR	BRA
+Brazil	Brazilia	BR	BRA
+Brazil	บราซิล	BR	BRA
+Brazil	Бразилія	BR	BRA
+Brazil	巴西	BR	BRA
+Brazil	Brazil	BR	BRA
+British Indian Ocean Territory	إقليم المحيط الهندي البريطاني	IO	IOT
+British Indian Ocean Territory	Британска индоокеанска територия	IO	IOT
+British Indian Ocean Territory	Britské indickooceánské území	IO	IOT
+British Indian Ocean Territory	British Indian Ocean Territory	IO	IOT
+British Indian Ocean Territory	Britisches Territorium im Indischen Ozean	IO	IOT
+British Indian Ocean Territory	Βρετανικό Έδαφος Ινδικού Ωκεανού	IO	IOT
+British Indian Ocean Territory	Brita Hindoceana Teritorio	IO	IOT
+British Indian Ocean Territory	Territorio Británico del Océano Índico	IO	IOT
+British Indian Ocean Territory	Briti India ookeani ala	IO	IOT
+British Indian Ocean Territory	Indiako Ozeanoko Britainiar Lurraldea	IO	IOT
+British Indian Ocean Territory	Brittiläinen Intian valtameren alue	IO	IOT
+British Indian Ocean Territory	Territoire britannique de l'océan Indien	IO	IOT
+British Indian Ocean Territory	Brit Indiai-óceáni Terület	IO	IOT
+British Indian Ocean Territory	Բրիտանիայի Հնդկական Օվկիանոսի Տարածք	IO	IOT
+British Indian Ocean Territory	Territorio britannico dell'Oceano Indiano	IO	IOT
+British Indian Ocean Territory	イギリス領インド洋地域	IO	IOT
+British Indian Ocean Territory	영국령 인도양 지역	IO	IOT
+British Indian Ocean Territory	Indijos Vandenyno Britų Sritis	IO	IOT
+British Indian Ocean Territory	Brits Indische Oceaanterritorium	IO	IOT
+British Indian Ocean Territory	Det britiske territoriet i Indiahavet	IO	IOT
+British Indian Ocean Territory	Brytyjskie Terytorium Oceanu Indyjskiego	IO	IOT
+British Indian Ocean Territory	Território Britânico do Oceano Índico	IO	IOT
+British Indian Ocean Territory	Teritoriul Britanic din Oceanul Indian	IO	IOT
+British Indian Ocean Territory	Британская территория в Индийском океане	IO	IOT
+British Indian Ocean Territory	Britské indickooceánske územie	IO	IOT
+British Indian Ocean Territory	Brittiska territoriet i Indiska Oceanen	IO	IOT
+British Indian Ocean Territory	บริติชอินเดียนโอเชียนเทร์ริทอรี	IO	IOT
+British Indian Ocean Territory	Британська Територія в Індійському Океані	IO	IOT
+British Indian Ocean Territory	英属印度洋领地	IO	IOT
+British Indian Ocean Territory	英屬印度洋領地	IO	IOT
+Brunei Darussalam	بروناي	BN	BRN
+Brunei Darussalam	Бруней	BN	BRN
+Brunei Darussalam	Brunej	BN	BRN
+Brunei Darussalam	Brunei	BN	BRN
+Brunei Darussalam	Μπρουνέι	BN	BRN
+Brunei Darussalam	Brunejo	BN	BRN
+Brunei Darussalam	Brunéi	BN	BRN
+Brunei Darussalam	Բրունեյ	BN	BRN
+Brunei Darussalam	ブルネイ・ダルサラーム	BN	BRN
+Brunei Darussalam	브루나이	BN	BRN
+Brunei Darussalam	Brunėjus	BN	BRN
+Brunei Darussalam	บรูไน	BN	BRN
+Brunei Darussalam	文莱	BN	BRN
+Brunei Darussalam	汶萊	BN	BRN
+Brunei Darussalam	Brunei Darussalam	BN	BRN
+Bulgaria	بلغاريا	BG	BGR
+Bulgaria	България	BG	BGR
+Bulgaria	Bulharsko	BG	BGR
+Bulgaria	Bulgarien	BG	BGR
+Bulgaria	Βουλγαρία	BG	BGR
+Bulgaria	Bulgario	BG	BGR
+Bulgaria	Bulgaria	BG	BGR
+Bulgaria	Bulgaaria	BG	BGR
+Bulgaria	Bulgarie	BG	BGR
+Bulgaria	Bulgária	BG	BGR
+Bulgaria	Բուլղարիա	BG	BGR
+Bulgaria	ブルガリア	BG	BGR
+Bulgaria	불가리아	BG	BGR
+Bulgaria	Bulgarija	BG	BGR
+Bulgaria	Bulgarije	BG	BGR
+Bulgaria	Bułgaria	BG	BGR
+Bulgaria	Болгария	BG	BGR
+Bulgaria	บัลแกเรีย	BG	BGR
+Bulgaria	Болгарія	BG	BGR
+Bulgaria	保加利亚	BG	BGR
+Bulgaria	保加利亞	BG	BGR
+Burkina Faso	بوركينا فاسو	BF	BFA
+Burkina Faso	Буркина Фасо	BF	BFA
+Burkina Faso	Burkina Faso	BF	BFA
+Burkina Faso	Μπουρκίνα Φάσο	BF	BFA
+Burkina Faso	Burkino	BF	BFA
+Burkina Faso	Բուրկինա Ֆասո	BF	BFA
+Burkina Faso	ブルキナファソ	BF	BFA
+Burkina Faso	부르키나파소	BF	BFA
+Burkina Faso	Burquina Fasso	BF	BFA
+Burkina Faso	Буркина-Фасо	BF	BFA
+Burkina Faso	Burkina	BF	BFA
+Burkina Faso	บูร์กินาฟาโซ	BF	BFA
+Burkina Faso	Буркіна-Фасо	BF	BFA
+Burkina Faso	布基纳法索	BF	BFA
+Burkina Faso	布吉納法索	BF	BFA
+Burundi	بوروندي	BI	BDI
+Burundi	Бурунди	BI	BDI
+Burundi	Burundi	BI	BDI
+Burundi	Μπουρούντι	BI	BDI
+Burundi	Burundo	BI	BDI
+Burundi	Բուրունդի	BI	BDI
+Burundi	ブルンジ	BI	BDI
+Burundi	부룬디	BI	BDI
+Burundi	Burundis	BI	BDI
+Burundi	บุรุนดี	BI	BDI
+Burundi	Бурунді	BI	BDI
+Burundi	布隆迪	BI	BDI
+Burundi	蒲隆地	BI	BDI
+Republic of Cabo Verde	الرأس الأخضر	CV	CPV
+Republic of Cabo Verde	Кабо Верде	CV	CPV
+Republic of Cabo Verde	Kapverdy	CV	CPV
+Republic of Cabo Verde	Kap Verde	CV	CPV
+Republic of Cabo Verde	Πράσινο Ακρωτήρι	CV	CPV
+Republic of Cabo Verde	Kaboverdo	CV	CPV
+Republic of Cabo Verde	Cabo Verde	CV	CPV
+Republic of Cabo Verde	Roheneemesaared	CV	CPV
+Republic of Cabo Verde	Cap-Vert	CV	CPV
+Republic of Cabo Verde	Zöld-foki Köztársaság	CV	CPV
+Republic of Cabo Verde	Կաբո Վերդե	CV	CPV
+Republic of Cabo Verde	Capo Verde	CV	CPV
+Republic of Cabo Verde	カーボベルデ	CV	CPV
+Republic of Cabo Verde	카보베르데	CV	CPV
+Republic of Cabo Verde	Žaliasis Kyšulys	CV	CPV
+Republic of Cabo Verde	Kaapverdië	CV	CPV
+Republic of Cabo Verde	Kapp Verde	CV	CPV
+Republic of Cabo Verde	Republika Zielonego Przylądka	CV	CPV
+Republic of Cabo Verde	Republica Capului Verde	CV	CPV
+Republic of Cabo Verde	Кабо-Верде	CV	CPV
+Republic of Cabo Verde	กาบูเวร์ดี	CV	CPV
+Republic of Cabo Verde	佛得角	CV	CPV
+Republic of Cabo Verde	維德角	CV	CPV
+Cambodia	كمبوديا	KH	KHM
+Cambodia	Камбоджа	KH	KHM
+Cambodia	Kambodža	KH	KHM
+Cambodia	Cambodja	KH	KHM
+Cambodia	Kambodscha	KH	KHM
+Cambodia	Καμπότζη	KH	KHM
+Cambodia	Kamboĝo	KH	KHM
+Cambodia	Camboya	KH	KHM
+Cambodia	Kanbodia	KH	KHM
+Cambodia	Cambodge	KH	KHM
+Cambodia	Kambodzsa	KH	KHM
+Cambodia	Կամբոջա	KH	KHM
+Cambodia	Cambogia	KH	KHM
+Cambodia	カンボジア	KH	KHM
+Cambodia	캄보디아	KH	KHM
+Cambodia	Kambodsja	KH	KHM
+Cambodia	Kambodża	KH	KHM
+Cambodia	Camboja	KH	KHM
+Cambodia	Cambodgia	KH	KHM
+Cambodia	Kambodja	KH	KHM
+Cambodia	กัมพูชา	KH	KHM
+Cambodia	柬埔寨	KH	KHM
+Cambodia	Cambodia	KH	KHM
+Cameroon	الكاميرون	CM	CMR
+Cameroon	Камерун	CM	CMR
+Cameroon	Kamerun	CM	CMR
+Cameroon	Cameroun	CM	CMR
+Cameroon	Καμερούν	CM	CMR
+Cameroon	Kameruno	CM	CMR
+Cameroon	Camerún	CM	CMR
+Cameroon	Կամերուն	CM	CMR
+Cameroon	Camerun	CM	CMR
+Cameroon	カメルーン	CM	CMR
+Cameroon	카메룬	CM	CMR
+Cameroon	Kamerūnas	CM	CMR
+Cameroon	Kameroen	CM	CMR
+Cameroon	Camarões	CM	CMR
+Cameroon	แคเมอรูน	CM	CMR
+Cameroon	喀麦隆	CM	CMR
+Cameroon	喀麥隆	CM	CMR
+Cameroon	Cameroon	CM	CMR
+Canada	كندا	CA	CAN
+Canada	Канада	CA	CAN
+Canada	Kanada	CA	CAN
+Canada	Canada	CA	CAN
+Canada	Καναδάς	CA	CAN
+Canada	Kanado	CA	CAN
+Canada	Canadá	CA	CAN
+Canada	Կանադա	CA	CAN
+Canada	カナダ	CA	CAN
+Canada	캐나다	CA	CAN
+Canada	แคนาดา	CA	CAN
+Canada	加拿大	CA	CAN
+Cayman Islands	جزر كايمان	KY	CYM
+Cayman Islands	Кайманови острови	KY	CYM
+Cayman Islands	Kajmanské ostrovy	KY	CYM
+Cayman Islands	Caymanøerne	KY	CYM
+Cayman Islands	Kaimaninseln	KY	CYM
+Cayman Islands	Κέιμαν Νήσοι	KY	CYM
+Cayman Islands	Kajmana Insularo	KY	CYM
+Cayman Islands	Islas Caimán	KY	CYM
+Cayman Islands	Kaimanisaared	KY	CYM
+Cayman Islands	Kaiman uharteak	KY	CYM
+Cayman Islands	Caymansaaret	KY	CYM
+Cayman Islands	Îles Caïmans	KY	CYM
+Cayman Islands	Kajmán-szigetek	KY	CYM
+Cayman Islands	Կայմանյան կղզիներ	KY	CYM
+Cayman Islands	Isole Cayman	KY	CYM
+Cayman Islands	ケイマン諸島	KY	CYM
+Cayman Islands	케이맨 제도	KY	CYM
+Cayman Islands	Kaimanų salos	KY	CYM
+Cayman Islands	Kaaimaneilanden	KY	CYM
+Cayman Islands	Caymanøyene	KY	CYM
+Cayman Islands	Kajmany	KY	CYM
+Cayman Islands	Ilhas Caimã	KY	CYM
+Cayman Islands	Insulele Cayman	KY	CYM
+Cayman Islands	Острова Кайман	KY	CYM
+Cayman Islands	Kajmanie ostrovy	KY	CYM
+Cayman Islands	Caymanöarna	KY	CYM
+Cayman Islands	หมู่เกาะเคย์แมน	KY	CYM
+Cayman Islands	Кайманові Острови	KY	CYM
+Cayman Islands	开曼群岛	KY	CYM
+Cayman Islands	開曼群島	KY	CYM
+Cayman Islands	Cayman Islands	KY	CYM
+Central African Republic	جمهورية أفريقيا الوسطى	CF	CAF
+Central African Republic	Централноафриканска република	CF	CAF
+Central African Republic	Středoafrická republika	CF	CAF
+Central African Republic	Centralafrikanske Republik	CF	CAF
+Central African Republic	Zentralafrikanische Republik	CF	CAF
+Central African Republic	Κεντροαφρικανική Δημοκρατία	CF	CAF
+Central African Republic	Centr-Afrika Respubliko	CF	CAF
+Central African Republic	República Centroafricana	CF	CAF
+Central African Republic	Kesk-Aafrika Vabariik	CF	CAF
+Central African Republic	Afrika Erdiko Errepublika	CF	CAF
+Central African Republic	Keski-Afrikan tasavalta	CF	CAF
+Central African Republic	République centrafricaine	CF	CAF
+Central African Republic	Közép-Afrika	CF	CAF
+Central African Republic	Կենտրոնաաֆրիկյան Հանրապետություն	CF	CAF
+Central African Republic	Rep. Centrafricana	CF	CAF
+Central African Republic	中央アフリカ共和国	CF	CAF
+Central African Republic	중앙아프리카 공화국	CF	CAF
+Central African Republic	Centrinės Afrikos Respublika	CF	CAF
+Central African Republic	Centraal-Afrikaanse Republiek	CF	CAF
+Central African Republic	Den sentralafrikanske republikk	CF	CAF
+Central African Republic	Republika Środkowoafrykańska	CF	CAF
+Central African Republic	República Centro-Africana	CF	CAF
+Central African Republic	Republica Centrafricană	CF	CAF
+Central African Republic	ЦАР	CF	CAF
+Central African Republic	Stredoafrická republika	CF	CAF
+Central African Republic	Centralafrikanska republiken	CF	CAF
+Central African Republic	สาธารณรัฐแอฟริกากลาง	CF	CAF
+Central African Republic	Центральноафриканська Республіка	CF	CAF
+Central African Republic	中非	CF	CAF
+Central African Republic	Central African Republic	CF	CAF
+Chad	تشاد	TD	TCD
+Chad	Чад	TD	TCD
+Chad	Čad	TD	TCD
+Chad	Tchad	TD	TCD
+Chad	Tschad	TD	TCD
+Chad	Τσαντ	TD	TCD
+Chad	Ĉado	TD	TCD
+Chad	Chad	TD	TCD
+Chad	Tšaad	TD	TCD
+Chad	Txad	TD	TCD
+Chad	Tšad	TD	TCD
+Chad	Csád	TD	TCD
+Chad	Չադ	TD	TCD
+Chad	Ciad	TD	TCD
+Chad	チャド	TD	TCD
+Chad	차드	TD	TCD
+Chad	Čadas	TD	TCD
+Chad	Tsjaad	TD	TCD
+Chad	Tsjad	TD	TCD
+Chad	Czad	TD	TCD
+Chad	Chade	TD	TCD
+Chad	ชาด	TD	TCD
+Chad	乍得	TD	TCD
+Chad	查德	TD	TCD
+Chile	تشيلي	CL	CHL
+Chile	Чили	CL	CHL
+Chile	Chile	CL	CHL
+Chile	Χιλή	CL	CHL
+Chile	Ĉilio	CL	CHL
+Chile	Tšiili	CL	CHL
+Chile	Txile	CL	CHL
+Chile	Chili	CL	CHL
+Chile	Չիլի	CL	CHL
+Chile	Cile	CL	CHL
+Chile	チリ	CL	CHL
+Chile	칠레	CL	CHL
+Chile	Čilė	CL	CHL
+Chile	Čile	CL	CHL
+Chile	ชิลี	CL	CHL
+Chile	Чилі	CL	CHL
+Chile	智利	CL	CHL
+China	الصين	CN	CHN
+China	Китай	CN	CHN
+China	Čína	CN	CHN
+China	Kina	CN	CHN
+China	Volksrepublik China	CN	CHN
+China	Κίνα	CN	CHN
+China	Ĉinio	CN	CHN
+China	China	CN	CHN
+China	Hiina	CN	CHN
+China	Txina	CN	CHN
+China	Kiina	CN	CHN
+China	Chine	CN	CHN
+China	Kína	CN	CHN
+China	Չինաստան	CN	CHN
+China	Cina	CN	CHN
+China	中華人民共和国	CN	CHN
+China	중국	CN	CHN
+China	Kinija	CN	CHN
+China	Chiny	CN	CHN
+China	Republica Populară Chineză	CN	CHN
+China	Китай (Китайская Народная Республика)	CN	CHN
+China	จีน	CN	CHN
+China	Китайська Народна Республіка	CN	CHN
+China	中国	CN	CHN
+China	中國	CN	CHN
+Christmas Island	جزيرة كريسماس	CX	CXR
+Christmas Island	Коледен остров	CX	CXR
+Christmas Island	Vánoční ostrov	CX	CXR
+Christmas Island	Juleøen	CX	CXR
+Christmas Island	Weihnachtsinsel	CX	CXR
+Christmas Island	Νήσος των Χριστουγέννων	CX	CXR
+Christmas Island	Kristnaskinsulo	CX	CXR
+Christmas Island	Isla de Navidad	CX	CXR
+Christmas Island	Jõulusaar	CX	CXR
+Christmas Island	Christmas uhartea	CX	CXR
+Christmas Island	Joulusaari	CX	CXR
+Christmas Island	Île Christmas	CX	CXR
+Christmas Island	Karácsony-sziget	CX	CXR
+Christmas Island	Ծննդյան կղզիներ	CX	CXR
+Christmas Island	Isola di Natale	CX	CXR
+Christmas Island	クリスマス島	CX	CXR
+Christmas Island	크리스마스섬	CX	CXR
+Christmas Island	Kalėdų sala	CX	CXR
+Christmas Island	Christmaseiland	CX	CXR
+Christmas Island	Christmasøya	CX	CXR
+Christmas Island	Wyspa Bożego Narodzenia	CX	CXR
+Christmas Island	Ilha do Natal	CX	CXR
+Christmas Island	Insula Crăciunului	CX	CXR
+Christmas Island	Остров Рождества	CX	CXR
+Christmas Island	Vianočný ostrov	CX	CXR
+Christmas Island	Julön	CX	CXR
+Christmas Island	เกาะคริสต์มาส	CX	CXR
+Christmas Island	Острів Різдва	CX	CXR
+Christmas Island	圣诞岛	CX	CXR
+Christmas Island	聖誕島	CX	CXR
+Christmas Island	Christmas Island	CX	CXR
+Cocos (Keeling) Islands	جزر كوكوس	CC	CCK
+Cocos (Keeling) Islands	Кокосови острови	CC	CCK
+Cocos (Keeling) Islands	Kokosové ostrovy	CC	CCK
+Cocos (Keeling) Islands	Cocosøerne	CC	CCK
+Cocos (Keeling) Islands	Kokosinseln	CC	CCK
+Cocos (Keeling) Islands	Νησιά Κόκος (Keeling)	CC	CCK
+Cocos (Keeling) Islands	Kokosinsuloj	CC	CCK
+Cocos (Keeling) Islands	Islas Cocos	CC	CCK
+Cocos (Keeling) Islands	Kookossaared	CC	CCK
+Cocos (Keeling) Islands	Cocosak	CC	CCK
+Cocos (Keeling) Islands	Kookossaaret	CC	CCK
+Cocos (Keeling) Islands	Îles Cocos	CC	CCK
+Cocos (Keeling) Islands	Kókusz (Keeling)-szigetek	CC	CCK
+Cocos (Keeling) Islands	Կոկոսյան Կղզիներ	CC	CCK
+Cocos (Keeling) Islands	Isole Cocos (Keeling)	CC	CCK
+Cocos (Keeling) Islands	ココス（キーリング）諸島	CC	CCK
+Cocos (Keeling) Islands	코코스 제도	CC	CCK
+Cocos (Keeling) Islands	Kokosų (Kilingo) Salos	CC	CCK
+Cocos (Keeling) Islands	Cocoseilanden	CC	CCK
+Cocos (Keeling) Islands	Kokosøyene	CC	CCK
+Cocos (Keeling) Islands	Wyspy Kokosowe	CC	CCK
+Cocos (Keeling) Islands	Ilhas Cocos (Keeling)	CC	CCK
+Cocos (Keeling) Islands	Insulele Cocos	CC	CCK
+Cocos (Keeling) Islands	Кокосовые острова	CC	CCK
+Cocos (Keeling) Islands	Kokosöarna	CC	CCK
+Cocos (Keeling) Islands	หมู่เกาะโคโคส	CC	CCK
+Cocos (Keeling) Islands	Кокосові острови	CC	CCK
+Cocos (Keeling) Islands	科科斯（基林）群岛	CC	CCK
+Cocos (Keeling) Islands	科科斯（基林）群島	CC	CCK
+Cocos (Keeling) Islands	Cocos (Keeling) Islands	CC	CCK
+Colombia	كولومبيا	CO	COL
+Colombia	Колумбия	CO	COL
+Colombia	Kolumbie	CO	COL
+Colombia	Colombia	CO	COL
+Colombia	Kolumbien	CO	COL
+Colombia	Κολομβία	CO	COL
+Colombia	Kolombio	CO	COL
+Colombia	Kolonbia	CO	COL
+Colombia	Kolumbia	CO	COL
+Colombia	Colombie	CO	COL
+Colombia	Կոլումբիա	CO	COL
+Colombia	コロンビア	CO	COL
+Colombia	콜롬비아	CO	COL
+Colombia	Kolumbija	CO	COL
+Colombia	Colômbia	CO	COL
+Colombia	Columbia	CO	COL
+Colombia	โคลอมเบีย	CO	COL
+Colombia	Колумбія	CO	COL
+Colombia	哥伦比亚	CO	COL
+Colombia	哥倫比亞	CO	COL
+Comoros	جزر القمر	KM	COM
+Comoros	Коморски острови	KM	COM
+Comoros	Komory	KM	COM
+Comoros	Comorerne	KM	COM
+Comoros	Komoren	KM	COM
+Comoros	Κομόρες	KM	COM
+Comoros	Komoroj	KM	COM
+Comoros	Comoras	KM	COM
+Comoros	Komoorid	KM	COM
+Comoros	Komoreak	KM	COM
+Comoros	Komorit	KM	COM
+Comoros	Comores	KM	COM
+Comoros	Comore-szigetek	KM	COM
+Comoros	Կոմորներ	KM	COM
+Comoros	Comore	KM	COM
+Comoros	コモロ	KM	COM
+Comoros	코모로	KM	COM
+Comoros	Komorai	KM	COM
+Comoros	Comoren	KM	COM
+Comoros	Komorene	KM	COM
+Comoros	Коморы	KM	COM
+Comoros	Komorerna	KM	COM
+Comoros	คอโมโรส	KM	COM
+Comoros	Коморські Острови	KM	COM
+Comoros	科摩罗	KM	COM
+Comoros	葛摩	KM	COM
+Comoros	Comoros	KM	COM
+Republic of the Congo	جمهورية الكونغو	CG	COG
+Republic of the Congo	Република Конго	CG	COG
+Republic of the Congo	Kongo	CG	COG
+Republic of the Congo	Congo	CG	COG
+Republic of the Congo	Kongo, Republik	CG	COG
+Republic of the Congo	Κογκό	CG	COG
+Republic of the Congo	Respubliko Kongo	CG	COG
+Republic of the Congo	República del Congo	CG	COG
+Republic of the Congo	Kongo Vabariik	CG	COG
+Republic of the Congo	Kongoko Errepublika	CG	COG
+Republic of the Congo	Kongon tasavalta	CG	COG
+Republic of the Congo	République du Congo	CG	COG
+Republic of the Congo	Kongói Köztársaság (Kongó)	CG	COG
+Republic of the Congo	Կոնգոյի Հանրապետություն	CG	COG
+Republic of the Congo	Rep. del Congo	CG	COG
+Republic of the Congo	コンゴ共和国	CG	COG
+Republic of the Congo	콩고 공화국	CG	COG
+Republic of the Congo	Kongo Respublika	CG	COG
+Republic of the Congo	Congo-Brazzaville	CG	COG
+Republic of the Congo	Kongo, Republikken	CG	COG
+Republic of the Congo	República do Congo	CG	COG
+Republic of the Congo	Республика Конго	CG	COG
+Republic of the Congo	Kongo-Brazzaville	CG	COG
+Republic of the Congo	สาธารณรัฐคองโก	CG	COG
+Republic of the Congo	Республіка Конго	CG	COG
+Republic of the Congo	刚果共和国	CG	COG
+Republic of the Congo	剛果共和國	CG	COG
+Democratic Republic of the Congo	جمهورية الكونغو الديمقراطية	CD	COD
+Democratic Republic of the Congo	Демократична република Конго	CD	COD
+Democratic Republic of the Congo	Konžská demokratická republika	CD	COD
+Democratic Republic of the Congo	Demokratiske Republik Congo	CD	COD
+Democratic Republic of the Congo	Kongo, Demokratische Republik	CD	COD
+Democratic Republic of the Congo	Λαϊκή Δημοκρατία του Κογκό	CD	COD
+Democratic Republic of the Congo	Demokratia Respubliko Kongo	CD	COD
+Democratic Republic of the Congo	República Democrática del Congo	CD	COD
+Democratic Republic of the Congo	Kongo Demokraatlik Vabariik	CD	COD
+Democratic Republic of the Congo	Kongoko Errepublika Demokratikoa	CD	COD
+Democratic Republic of the Congo	Kongon demokraattinen tasavalta	CD	COD
+Democratic Republic of the Congo	République démocratique du Congo	CD	COD
+Democratic Republic of the Congo	Kongói Demokratikus Köztársaság (Zaire)	CD	COD
+Democratic Republic of the Congo	Կոնգոյի Դեմոկրատական Հանրապետություն	CD	COD
+Democratic Republic of the Congo	RD del Congo	CD	COD
+Democratic Republic of the Congo	コンゴ民主共和国	CD	COD
+Democratic Republic of the Congo	콩고 민주 공화국	CD	COD
+Democratic Republic of the Congo	Kongo Demokratinė Respublika	CD	COD
+Democratic Republic of the Congo	Congo-Kinshasa	CD	COD
+Democratic Republic of the Congo	Kongo, Den demokratiske republikken	CD	COD
+Democratic Republic of the Congo	Demokratyczna Republika Konga	CD	COD
+Democratic Republic of the Congo	República Democrática do Congo	CD	COD
+Democratic Republic of the Congo	Republica Democrată Congo	CD	COD
+Democratic Republic of the Congo	ДР Конго	CD	COD
+Democratic Republic of the Congo	Kongo-Kinshasa	CD	COD
+Democratic Republic of the Congo	สาธารณรัฐประชาธิปไตยคองโก	CD	COD
+Democratic Republic of the Congo	刚果民主共和国	CD	COD
+Democratic Republic of the Congo	剛果民主共和國	CD	COD
+Democratic Republic of the Congo	Congo, Democratic Republic of the	CD	COD
+Cook Islands	جزر كوك	CK	COK
+Cook Islands	Острови Кук	CK	COK
+Cook Islands	Cookovy ostrovy	CK	COK
+Cook Islands	Cookøerne	CK	COK
+Cook Islands	Cookinseln	CK	COK
+Cook Islands	Νήσοι Κουκ	CK	COK
+Cook Islands	Kukinsuloj	CK	COK
+Cook Islands	Islas Cook	CK	COK
+Cook Islands	Cooki saared	CK	COK
+Cook Islands	Cook uharteak	CK	COK
+Cook Islands	Cookinsaaret	CK	COK
+Cook Islands	Îles Cook	CK	COK
+Cook Islands	Cook-szigetek	CK	COK
+Cook Islands	Կուկի կղզիներ	CK	COK
+Cook Islands	Isole Cook	CK	COK
+Cook Islands	クック諸島	CK	COK
+Cook Islands	쿡 제도	CK	COK
+Cook Islands	Kuko Salos	CK	COK
+Cook Islands	Cookeilanden	CK	COK
+Cook Islands	Cookøyene	CK	COK
+Cook Islands	Wyspy Cooka	CK	COK
+Cook Islands	Ilhas Cook	CK	COK
+Cook Islands	Insulele Cook	CK	COK
+Cook Islands	Острова Кука	CK	COK
+Cook Islands	Cookove ostrovy	CK	COK
+Cook Islands	Cooköarna	CK	COK
+Cook Islands	หมู่เกาะคุก	CK	COK
+Cook Islands	Острови Кука	CK	COK
+Cook Islands	库克群岛	CK	COK
+Cook Islands	庫克群島	CK	COK
+Cook Islands	Cook Islands	CK	COK
+Costa Rica	كوستاريكا	CR	CRI
+Costa Rica	Коста Рика	CR	CRI
+Costa Rica	Kostarika	CR	CRI
+Costa Rica	Costa Rica	CR	CRI
+Costa Rica	Κόστα Ρίκα	CR	CRI
+Costa Rica	Kostariko	CR	CRI
+Costa Rica	Կոստա Ռիկա	CR	CRI
+Costa Rica	コスタリカ	CR	CRI
+Costa Rica	코스타리카	CR	CRI
+Costa Rica	Kosta Rika	CR	CRI
+Costa Rica	Kostaryka	CR	CRI
+Costa Rica	Коста-Рика	CR	CRI
+Costa Rica	คอสตาริกา	CR	CRI
+Costa Rica	哥斯达黎加	CR	CRI
+Costa Rica	哥斯大黎加	CR	CRI
+Côte d'Ivoire	ساحل العاج	CI	CIV
+Côte d'Ivoire	Кот д'Ивоар	CI	CIV
+Côte d'Ivoire	Pobřeží slonoviny	CI	CIV
+Côte d'Ivoire	Elfenbenskysten	CI	CIV
+Côte d'Ivoire	Elfenbeinküste	CI	CIV
+Côte d'Ivoire	Ακτή Ελεφαντοστού	CI	CIV
+Côte d'Ivoire	Ebura Bordo	CI	CIV
+Côte d'Ivoire	Costa de Marfil	CI	CIV
+Côte d'Ivoire	Elevandiluurannik	CI	CIV
+Côte d'Ivoire	Boli Kosta	CI	CIV
+Côte d'Ivoire	Norsunluurannikko	CI	CIV
+Côte d'Ivoire	Côte d'Ivoire	CI	CIV
+Côte d'Ivoire	Elefántcsontpart	CI	CIV
+Côte d'Ivoire	Կոտ դ'Իվուար	CI	CIV
+Côte d'Ivoire	Costa d'Avorio	CI	CIV
+Côte d'Ivoire	コートジボワール	CI	CIV
+Côte d'Ivoire	코트디부아르	CI	CIV
+Côte d'Ivoire	Dramblio Kaulo Krantas	CI	CIV
+Côte d'Ivoire	Ivoorkust	CI	CIV
+Côte d'Ivoire	Wybrzeże Kości Słoniowej	CI	CIV
+Côte d'Ivoire	Costa do Marfim	CI	CIV
+Côte d'Ivoire	Coasta de Fildeș	CI	CIV
+Côte d'Ivoire	Кот-д’Ивуар	CI	CIV
+Côte d'Ivoire	Pobrežie Slonoviny	CI	CIV
+Côte d'Ivoire	Elfenbenskusten	CI	CIV
+Côte d'Ivoire	โกตดิวัวร์	CI	CIV
+Côte d'Ivoire	Кот-д'Івуар	CI	CIV
+Côte d'Ivoire	科特迪瓦	CI	CIV
+Côte d'Ivoire	象牙海岸	CI	CIV
+Croatia	كرواتيا	HR	HRV
+Croatia	Хърватия	HR	HRV
+Croatia	Chorvatsko	HR	HRV
+Croatia	Kroatien	HR	HRV
+Croatia	Κροατία	HR	HRV
+Croatia	Kroatio	HR	HRV
+Croatia	Croacia	HR	HRV
+Croatia	Horvaatia	HR	HRV
+Croatia	Kroazia	HR	HRV
+Croatia	Kroatia	HR	HRV
+Croatia	Croatie	HR	HRV
+Croatia	Horvátország	HR	HRV
+Croatia	Խորվաթիա	HR	HRV
+Croatia	Croazia	HR	HRV
+Croatia	クロアチア	HR	HRV
+Croatia	크로아티아	HR	HRV
+Croatia	Kroatija	HR	HRV
+Croatia	Kroatië	HR	HRV
+Croatia	Chorwacja	HR	HRV
+Croatia	Croácia	HR	HRV
+Croatia	Croația	HR	HRV
+Croatia	Хорватия	HR	HRV
+Croatia	Chorvátsko	HR	HRV
+Croatia	โครเอเชีย	HR	HRV
+Croatia	Хорватія	HR	HRV
+Croatia	克罗地亚	HR	HRV
+Croatia	克羅埃西亞	HR	HRV
+Croatia	Croatia	HR	HRV
+Cuba	كوبا	CU	CUB
+Cuba	Куба	CU	CUB
+Cuba	Kuba	CU	CUB
+Cuba	Cuba	CU	CUB
+Cuba	Κούβα	CU	CUB
+Cuba	Kubo	CU	CUB
+Cuba	Kuuba	CU	CUB
+Cuba	Կուբա	CU	CUB
+Cuba	キューバ	CU	CUB
+Cuba	쿠바	CU	CUB
+Cuba	คิวบา	CU	CUB
+Cuba	古巴	CU	CUB
+Curaçao	كوراساو	CW	CUW
+Curaçao	Кюрасао	CW	CUW
+Curaçao	Curaçao	CW	CUW
+Curaçao	Κουρασάο	CW	CUW
+Curaçao	Kuracao	CW	CUW
+Curaçao	Curazao	CW	CUW
+Curaçao	Կյուրասաո	CW	CUW
+Curaçao	キュラソー	CW	CUW
+Curaçao	퀴라소	CW	CUW
+Curaçao	Kiurasao	CW	CUW
+Curaçao	Curaçau	CW	CUW
+Curaçao	กือราเซา	CW	CUW
+Curaçao	库拉索	CW	CUW
+Curaçao	古拉索	CW	CUW
+Cyprus	قبرص	CY	CYP
+Cyprus	Кипър	CY	CYP
+Cyprus	Kypr	CY	CYP
+Cyprus	Cypern	CY	CYP
+Cyprus	Zypern	CY	CYP
+Cyprus	Κύπρος	CY	CYP
+Cyprus	Kipro	CY	CYP
+Cyprus	Chipre	CY	CYP
+Cyprus	Küpros	CY	CYP
+Cyprus	Zipre	CY	CYP
+Cyprus	Kypros	CY	CYP
+Cyprus	Chypre	CY	CYP
+Cyprus	Ciprus	CY	CYP
+Cyprus	Կիպրոս	CY	CYP
+Cyprus	Cipro	CY	CYP
+Cyprus	キプロス	CY	CYP
+Cyprus	키프로스	CY	CYP
+Cyprus	Kipras	CY	CYP
+Cyprus	Cyprus	CY	CYP
+Cyprus	Cypr	CY	CYP
+Cyprus	Cipru	CY	CYP
+Cyprus	Кипр	CY	CYP
+Cyprus	ไซปรัส	CY	CYP
+Cyprus	Кіпр	CY	CYP
+Cyprus	塞浦路斯	CY	CYP
+Cyprus	賽普勒斯	CY	CYP
+Czech Republic	جمهورية التشيك	CZ	CZE
+Czech Republic	Чехия	CZ	CZE
+Czech Republic	Česko	CZ	CZE
+Czech Republic	Tjekkiet	CZ	CZE
+Czech Republic	Tschechien	CZ	CZE
+Czech Republic	Τσεχία	CZ	CZE
+Czech Republic	Ĉeĥio	CZ	CZE
+Czech Republic	República Checa	CZ	CZE
+Czech Republic	Tšehhi	CZ	CZE
+Czech Republic	Txekia	CZ	CZE
+Czech Republic	Tšekki	CZ	CZE
+Czech Republic	Tchéquie	CZ	CZE
+Czech Republic	Csehország	CZ	CZE
+Czech Republic	Չեխիա	CZ	CZE
+Czech Republic	Rep. Ceca	CZ	CZE
+Czech Republic	チェコ	CZ	CZE
+Czech Republic	체코	CZ	CZE
+Czech Republic	Čekija	CZ	CZE
+Czech Republic	Tsjechië	CZ	CZE
+Czech Republic	Tsjekkia	CZ	CZE
+Czech Republic	Czechy	CZ	CZE
+Czech Republic	Chéquia	CZ	CZE
+Czech Republic	Cehia	CZ	CZE
+Czech Republic	Tjeckien	CZ	CZE
+Czech Republic	เช็กเกีย	CZ	CZE
+Czech Republic	Чехія	CZ	CZE
+Czech Republic	捷克	CZ	CZE
+Czech Republic	Czechia	CZ	CZE
+Denmark	الدنمارك	DK	DNK
+Denmark	Дания	DK	DNK
+Denmark	Dánsko	DK	DNK
+Denmark	Danmark	DK	DNK
+Denmark	Dänemark	DK	DNK
+Denmark	Δανία	DK	DNK
+Denmark	Danio	DK	DNK
+Denmark	Dinamarca	DK	DNK
+Denmark	Taani	DK	DNK
+Denmark	Danimarka	DK	DNK
+Denmark	Tanska	DK	DNK
+Denmark	Danemark	DK	DNK
+Denmark	Dánia	DK	DNK
+Denmark	Դանիա	DK	DNK
+Denmark	Danimarca	DK	DNK
+Denmark	デンマーク	DK	DNK
+Denmark	덴마크	DK	DNK
+Denmark	Danija	DK	DNK
+Denmark	Denemarken	DK	DNK
+Denmark	Dania	DK	DNK
+Denmark	Danemarca	DK	DNK
+Denmark	เดนมาร์ก	DK	DNK
+Denmark	Данія	DK	DNK
+Denmark	丹麦	DK	DNK
+Denmark	丹麥	DK	DNK
+Denmark	Denmark	DK	DNK
+Djibouti	جيبوتي	DJ	DJI
+Djibouti	Джибути	DJ	DJI
+Djibouti	Džibutsko	DJ	DJI
+Djibouti	Djibouti	DJ	DJI
+Djibouti	Dschibuti	DJ	DJI
+Djibouti	Τζιμπουτί	DJ	DJI
+Djibouti	Ĝibutio	DJ	DJI
+Djibouti	Yibuti	DJ	DJI
+Djibouti	Djibuti	DJ	DJI
+Djibouti	Dzsibuti	DJ	DJI
+Djibouti	Ջիբութի	DJ	DJI
+Djibouti	Gibuti	DJ	DJI
+Djibouti	ジブチ	DJ	DJI
+Djibouti	지부티	DJ	DJI
+Djibouti	Džibutis	DJ	DJI
+Djibouti	Dżibuti	DJ	DJI
+Djibouti	จิบูตี	DJ	DJI
+Djibouti	Джибуті	DJ	DJI
+Djibouti	吉布提	DJ	DJI
+Djibouti	吉布地	DJ	DJI
+Dominica	دومينيكا	DM	DMA
+Dominica	Доминика	DM	DMA
+Dominica	Dominika	DM	DMA
+Dominica	Dominica	DM	DMA
+Dominica	Δομινίκα	DM	DMA
+Dominica	Dominiko	DM	DMA
+Dominica	Dominique	DM	DMA
+Dominica	Dominikai Közösség	DM	DMA
+Dominica	Դոմինիկա	DM	DMA
+Dominica	ドミニカ国	DM	DMA
+Dominica	도미니카 연방	DM	DMA
+Dominica	ดอมินีกา	DM	DMA
+Dominica	Домініка	DM	DMA
+Dominica	多米尼克	DM	DMA
+Dominican Republic	جمهورية الدومينيكان	DO	DOM
+Dominican Republic	Доминиканска република	DO	DOM
+Dominican Republic	Dominikánská republika	DO	DOM
+Dominican Republic	Dominikanske Republik	DO	DOM
+Dominican Republic	Dominikanische Republik	DO	DOM
+Dominican Republic	Δομινικανή Δημοκρατία	DO	DOM
+Dominican Republic	Dominika Respubliko	DO	DOM
+Dominican Republic	República Dominicana	DO	DOM
+Dominican Republic	Dominikaani Vabariik	DO	DOM
+Dominican Republic	Dominikar Errepublika	DO	DOM
+Dominican Republic	Dominikaaninen tasavalta	DO	DOM
+Dominican Republic	République dominicaine	DO	DOM
+Dominican Republic	Dominikai Köztársaság	DO	DOM
+Dominican Republic	Դոմինիկյան Հանրապետություն	DO	DOM
+Dominican Republic	Rep. Dominicana	DO	DOM
+Dominican Republic	ドミニカ共和国	DO	DOM
+Dominican Republic	도미니카 공화국	DO	DOM
+Dominican Republic	Dominikos Respublika	DO	DOM
+Dominican Republic	Dominicaanse Republiek	DO	DOM
+Dominican Republic	Den dominikanske republikk	DO	DOM
+Dominican Republic	Dominikana	DO	DOM
+Dominican Republic	Republica Dominicană	DO	DOM
+Dominican Republic	Доминиканская Республика	DO	DOM
+Dominican Republic	Dominikánska republika	DO	DOM
+Dominican Republic	Dominikanska republiken	DO	DOM
+Dominican Republic	สาธารณรัฐโดมินิกัน	DO	DOM
+Dominican Republic	Домініканська Республіка	DO	DOM
+Dominican Republic	多米尼加	DO	DOM
+Dominican Republic	多明尼加	DO	DOM
+Dominican Republic	Dominican Republic	DO	DOM
+Ecuador	الإكوادور	EC	ECU
+Ecuador	Еквадор	EC	ECU
+Ecuador	Ekvádor	EC	ECU
+Ecuador	Ecuador	EC	ECU
+Ecuador	Ισημερινός	EC	ECU
+Ecuador	Ekvadoro	EC	ECU
+Ecuador	Ekuador	EC	ECU
+Ecuador	Équateur	EC	ECU
+Ecuador	Էկվադոր	EC	ECU
+Ecuador	エクアドル	EC	ECU
+Ecuador	에콰도르	EC	ECU
+Ecuador	Ekvadoras	EC	ECU
+Ecuador	Ekwador	EC	ECU
+Ecuador	Equador	EC	ECU
+Ecuador	Эквадор	EC	ECU
+Ecuador	เอกวาดอร์	EC	ECU
+Ecuador	厄瓜多尔	EC	ECU
+Ecuador	厄瓜多	EC	ECU
+Egypt	مصر	EG	EGY
+Egypt	Египет	EG	EGY
+Egypt	Egypt	EG	EGY
+Egypt	Egypten	EG	EGY
+Egypt	Ägypten	EG	EGY
+Egypt	Αίγυπτος	EG	EGY
+Egypt	Egiptio	EG	EGY
+Egypt	Egipto	EG	EGY
+Egypt	Egiptus	EG	EGY
+Egypt	Egypti	EG	EGY
+Egypt	Égypte	EG	EGY
+Egypt	Egyiptom	EG	EGY
+Egypt	Եգիպտոս	EG	EGY
+Egypt	Egitto	EG	EGY
+Egypt	エジプト	EG	EGY
+Egypt	이집트	EG	EGY
+Egypt	Egiptas	EG	EGY
+Egypt	Egypte	EG	EGY
+Egypt	Egipt	EG	EGY
+Egypt	Egito	EG	EGY
+Egypt	อียิปต์	EG	EGY
+Egypt	Єгипет	EG	EGY
+Egypt	埃及	EG	EGY
+El Salvador	السلفادور	SV	SLV
+El Salvador	Салвадор	SV	SLV
+El Salvador	Salvador	SV	SLV
+El Salvador	El Salvador	SV	SLV
+El Salvador	Ελ Σαλβαδόρ	SV	SLV
+El Salvador	Salvadoro	SV	SLV
+El Salvador	Սալվադոր	SV	SLV
+El Salvador	エルサルバドル	SV	SLV
+El Salvador	엘살바도르	SV	SLV
+El Salvador	Salvadoras	SV	SLV
+El Salvador	Salwador	SV	SLV
+El Salvador	Сальвадор	SV	SLV
+El Salvador	Salvádor	SV	SLV
+El Salvador	เอลซัลวาดอร์	SV	SLV
+El Salvador	萨尔瓦多	SV	SLV
+El Salvador	薩爾瓦多	SV	SLV
+Equatorial Guinea	غينيا الاستوائية	GQ	GNQ
+Equatorial Guinea	Екваториална Гвинея	GQ	GNQ
+Equatorial Guinea	Rovníková Guinea	GQ	GNQ
+Equatorial Guinea	Ækvatorialguinea	GQ	GNQ
+Equatorial Guinea	Äquatorialguinea	GQ	GNQ
+Equatorial Guinea	Ισημερινή Γουινέα	GQ	GNQ
+Equatorial Guinea	Ekvatora Gvineo	GQ	GNQ
+Equatorial Guinea	Guinea Ecuatorial	GQ	GNQ
+Equatorial Guinea	Ekvatoriaal-Guinea	GQ	GNQ
+Equatorial Guinea	Ekuatore Ginea	GQ	GNQ
+Equatorial Guinea	Päiväntasaajan Guinea	GQ	GNQ
+Equatorial Guinea	Guinée équatoriale	GQ	GNQ
+Equatorial Guinea	Egyenlítői-Guinea	GQ	GNQ
+Equatorial Guinea	Հասարակածային Գվինեա	GQ	GNQ
+Equatorial Guinea	Guinea Equatoriale	GQ	GNQ
+Equatorial Guinea	赤道ギニア	GQ	GNQ
+Equatorial Guinea	적도 기니	GQ	GNQ
+Equatorial Guinea	Pusiaujo Gvinėja	GQ	GNQ
+Equatorial Guinea	Equatoriaal-Guinea	GQ	GNQ
+Equatorial Guinea	Ekvatorial-Guinea	GQ	GNQ
+Equatorial Guinea	Gwinea Równikowa	GQ	GNQ
+Equatorial Guinea	Guiné Equatorial	GQ	GNQ
+Equatorial Guinea	Guineea Ecuatorială	GQ	GNQ
+Equatorial Guinea	Экваториальная Гвинея	GQ	GNQ
+Equatorial Guinea	Ekvatorialguinea	GQ	GNQ
+Equatorial Guinea	อิเควทอเรียลกินี	GQ	GNQ
+Equatorial Guinea	Екваторіальна Гвінея	GQ	GNQ
+Equatorial Guinea	赤道几内亚	GQ	GNQ
+Equatorial Guinea	赤道幾內亞	GQ	GNQ
+Equatorial Guinea	Equatorial Guinea	GQ	GNQ
+Eritrea	إريتريا	ER	ERI
+Eritrea	Еритрея	ER	ERI
+Eritrea	Eritrea	ER	ERI
+Eritrea	Ερυθραία	ER	ERI
+Eritrea	Eritreo	ER	ERI
+Eritrea	Érythrée	ER	ERI
+Eritrea	Էրիտրեա	ER	ERI
+Eritrea	エリトリア	ER	ERI
+Eritrea	에리트레아	ER	ERI
+Eritrea	Eritrėja	ER	ERI
+Eritrea	Erytrea	ER	ERI
+Eritrea	Eritreia	ER	ERI
+Eritrea	Eritreea	ER	ERI
+Eritrea	Эритрея	ER	ERI
+Eritrea	เอริเทรีย	ER	ERI
+Eritrea	厄立特里亚	ER	ERI
+Eritrea	厄利垂亞	ER	ERI
+Estonia	إستونيا	EE	EST
+Estonia	Естония	EE	EST
+Estonia	Estonsko	EE	EST
+Estonia	Estland	EE	EST
+Estonia	Εσθονία	EE	EST
+Estonia	Estonio	EE	EST
+Estonia	Estonia	EE	EST
+Estonia	Eesti	EE	EST
+Estonia	Viro	EE	EST
+Estonia	Estonie	EE	EST
+Estonia	Észtország	EE	EST
+Estonia	Էստոնիա	EE	EST
+Estonia	エストニア	EE	EST
+Estonia	에스토니아	EE	EST
+Estonia	Estija	EE	EST
+Estonia	Estónia	EE	EST
+Estonia	Эстония	EE	EST
+Estonia	Estónsko	EE	EST
+Estonia	เอสโตเนีย	EE	EST
+Estonia	Естонія	EE	EST
+Estonia	爱沙尼亚	EE	EST
+Estonia	愛沙尼亞	EE	EST
+Eswatini	إسواتيني	SZ	SWZ
+Eswatini	Есватини	SZ	SWZ
+Eswatini	Svazijsko	SZ	SWZ
+Eswatini	Swaziland	SZ	SWZ
+Eswatini	Eswatini	SZ	SWZ
+Eswatini	Εσουατίνι	SZ	SWZ
+Eswatini	Svazilando	SZ	SWZ
+Eswatini	Suazilandia	SZ	SWZ
+Eswatini	Svaasimaa	SZ	SWZ
+Eswatini	Swazimaa	SZ	SWZ
+Eswatini	Szváziföld	SZ	SWZ
+Eswatini	Էսվատինի	SZ	SWZ
+Eswatini	eSwatini	SZ	SWZ
+Eswatini	エスワティニ	SZ	SWZ
+Eswatini	에스와티니	SZ	SWZ
+Eswatini	Svazilendas	SZ	SWZ
+Eswatini	Essuatíni	SZ	SWZ
+Eswatini	Эсватини	SZ	SWZ
+Eswatini	เอสวาตีนี	SZ	SWZ
+Eswatini	Есватіні	SZ	SWZ
+Eswatini	斯威士兰	SZ	SWZ
+Eswatini	史瓦帝尼	SZ	SWZ
+Ethiopia	إثيوبيا	ET	ETH
+Ethiopia	Етиопия	ET	ETH
+Ethiopia	Etiopie	ET	ETH
+Ethiopia	Etiopien	ET	ETH
+Ethiopia	Äthiopien	ET	ETH
+Ethiopia	Αιθιοπία	ET	ETH
+Ethiopia	Etiopio	ET	ETH
+Ethiopia	Etiopía	ET	ETH
+Ethiopia	Etioopia	ET	ETH
+Ethiopia	Etiopia	ET	ETH
+Ethiopia	Éthiopie	ET	ETH
+Ethiopia	Etiópia	ET	ETH
+Ethiopia	Եթովպիա	ET	ETH
+Ethiopia	エチオピア	ET	ETH
+Ethiopia	에티오피아	ET	ETH
+Ethiopia	Etiopija	ET	ETH
+Ethiopia	Ethiopië	ET	ETH
+Ethiopia	Эфиопия	ET	ETH
+Ethiopia	เอธิโอเปีย	ET	ETH
+Ethiopia	Ефіопія	ET	ETH
+Ethiopia	埃塞俄比亚	ET	ETH
+Ethiopia	衣索比亞	ET	ETH
+Ethiopia	Ethiopia	ET	ETH
+Falkland Islands	جزر فوكلاند	FK	FLK
+Falkland Islands	Фолкландски острови	FK	FLK
+Falkland Islands	Falklandy (Malvíny)	FK	FLK
+Falkland Islands	Falklandsøerne	FK	FLK
+Falkland Islands	Falklandinseln	FK	FLK
+Falkland Islands	Νήσοι Φώκλαντ	FK	FLK
+Falkland Islands	Insuloj Falklandoj	FK	FLK
+Falkland Islands	Islas Malvinas	FK	FLK
+Falkland Islands	Falklandi saared	FK	FLK
+Falkland Islands	Falklandak	FK	FLK
+Falkland Islands	Falklandinsaaret	FK	FLK
+Falkland Islands	Malouines	FK	FLK
+Falkland Islands	Falkland-szigetek	FK	FLK
+Falkland Islands	Ֆոլքլենդյան կղզիներ	FK	FLK
+Falkland Islands	Isole Falkland	FK	FLK
+Falkland Islands	フォークランド（マルビナス）諸島	FK	FLK
+Falkland Islands	포클랜드 제도	FK	FLK
+Falkland Islands	Folklando (Malvinų) Salos	FK	FLK
+Falkland Islands	Falklandeilanden	FK	FLK
+Falkland Islands	Falklandsøyene	FK	FLK
+Falkland Islands	Falklandy	FK	FLK
+Falkland Islands	Ilhas Malvinas	FK	FLK
+Falkland Islands	Insulele Falkland	FK	FLK
+Falkland Islands	Фолклендские острова	FK	FLK
+Falkland Islands	Falklandsöarna	FK	FLK
+Falkland Islands	หมู่เกาะฟอล์กแลนด์	FK	FLK
+Falkland Islands	Фолклендські Острови	FK	FLK
+Falkland Islands	福克兰群岛	FK	FLK
+Falkland Islands	福克蘭群島	FK	FLK
+Falkland Islands	Falkland Islands (Malvinas)	FK	FLK
+Faroe Islands	جزر فارو	FO	FRO
+Faroe Islands	Фарьорски острови	FO	FRO
+Faroe Islands	Faerské ostrovy	FO	FRO
+Faroe Islands	Færøerne	FO	FRO
+Faroe Islands	Färöer	FO	FRO
+Faroe Islands	Νήσοι Φερόες	FO	FRO
+Faroe Islands	Ferooj	FO	FRO
+Faroe Islands	Islas Feroe	FO	FRO
+Faroe Islands	Fääri saared	FO	FRO
+Faroe Islands	Faroeak	FO	FRO
+Faroe Islands	Färsaaret	FO	FRO
+Faroe Islands	Îles Féroé	FO	FRO
+Faroe Islands	Feröer	FO	FRO
+Faroe Islands	Ֆարերյան կղզիներ	FO	FRO
+Faroe Islands	Fær Øer	FO	FRO
+Faroe Islands	フェロー諸島	FO	FRO
+Faroe Islands	페로 제도	FO	FRO
+Faroe Islands	Farerų Salos	FO	FRO
+Faroe Islands	Faeröer	FO	FRO
+Faroe Islands	Færøyene	FO	FRO
+Faroe Islands	Wyspy Owcze	FO	FRO
+Faroe Islands	Ilhas Feroé	FO	FRO
+Faroe Islands	Insulele Feroe	FO	FRO
+Faroe Islands	Фарерские острова	FO	FRO
+Faroe Islands	Färöarna	FO	FRO
+Faroe Islands	หมู่เกาะแฟโร	FO	FRO
+Faroe Islands	Фарерські острови	FO	FRO
+Faroe Islands	法罗群岛	FO	FRO
+Faroe Islands	法羅群島	FO	FRO
+Faroe Islands	Faroe Islands	FO	FRO
+Fiji	فيجي	FJ	FJI
+Fiji	Фиджи	FJ	FJI
+Fiji	Fidži	FJ	FJI
+Fiji	Fiji	FJ	FJI
+Fiji	Fidschi	FJ	FJI
+Fiji	Φίτζι	FJ	FJI
+Fiji	Fiĝio	FJ	FJI
+Fiji	Fiyi	FJ	FJI
+Fiji	Fidji	FJ	FJI
+Fiji	Fidzsi	FJ	FJI
+Fiji	Ֆիջի	FJ	FJI
+Fiji	Figi	FJ	FJI
+Fiji	フィジー	FJ	FJI
+Fiji	피지	FJ	FJI
+Fiji	Fidžis	FJ	FJI
+Fiji	Fidżi	FJ	FJI
+Fiji	ฟีจี	FJ	FJI
+Fiji	Фіджі	FJ	FJI
+Fiji	斐济	FJ	FJI
+Fiji	斐濟	FJ	FJI
+Finland	فنلندا	FI	FIN
+Finland	Финландия	FI	FIN
+Finland	Finsko	FI	FIN
+Finland	Finland	FI	FIN
+Finland	Finnland	FI	FIN
+Finland	Φινλανδία	FI	FIN
+Finland	Finnlando	FI	FIN
+Finland	Finlandia	FI	FIN
+Finland	Soome	FI	FIN
+Finland	Suomi	FI	FIN
+Finland	Finlande	FI	FIN
+Finland	Finnország	FI	FIN
+Finland	Ֆինլանդիա	FI	FIN
+Finland	フィンランド	FI	FIN
+Finland	핀란드	FI	FIN
+Finland	Suomija	FI	FIN
+Finland	Finlândia	FI	FIN
+Finland	Finlanda	FI	FIN
+Finland	Финляндия	FI	FIN
+Finland	Fínsko	FI	FIN
+Finland	ฟินแลนด์	FI	FIN
+Finland	Фінляндія	FI	FIN
+Finland	芬兰	FI	FIN
+Finland	芬蘭	FI	FIN
+France	فرنسا	FR	FRA
+France	Франция	FR	FRA
+France	Francie	FR	FRA
+France	Frankrig	FR	FRA
+France	Frankreich	FR	FRA
+France	Γαλλία	FR	FRA
+France	Francio	FR	FRA
+France	Francia	FR	FRA
+France	Prantsusmaa	FR	FRA
+France	Frantzia	FR	FRA
+France	Ranska	FR	FRA
+France	France	FR	FRA
+France	Franciaország	FR	FRA
+France	Ֆրանսիա	FR	FRA
+France	フランス	FR	FRA
+France	프랑스	FR	FRA
+France	Prancūzija	FR	FRA
+France	Frankrijk	FR	FRA
+France	Frankrike	FR	FRA
+France	Francja	FR	FRA
+France	França	FR	FRA
+France	Franța	FR	FRA
+France	Francúzsko	FR	FRA
+France	ฝรั่งเศส	FR	FRA
+France	Франція	FR	FRA
+France	法国	FR	FRA
+France	法國	FR	FRA
+French Guiana	غويانا الفرنسية	GF	GUF
+French Guiana	Френска Гвиана	GF	GUF
+French Guiana	Francouzská Guyana	GF	GUF
+French Guiana	Fransk Guiana	GF	GUF
+French Guiana	Französisch-Guayana	GF	GUF
+French Guiana	Γαλλική Γουιάνα	GF	GUF
+French Guiana	Franca Gviano	GF	GUF
+French Guiana	Guayana Francesa	GF	GUF
+French Guiana	Prantsuse Guajaana	GF	GUF
+French Guiana	Guyana Frantsesa	GF	GUF
+French Guiana	Ranskan Guayana	GF	GUF
+French Guiana	Guyane	GF	GUF
+French Guiana	Francia Guyana Francia Guyana	GF	GUF
+French Guiana	Ֆրանսիական Գվիանա	GF	GUF
+French Guiana	Guyana francese	GF	GUF
+French Guiana	フランス領ギアナ	GF	GUF
+French Guiana	프랑스령 기아나	GF	GUF
+French Guiana	Prancūzijos Gviana	GF	GUF
+French Guiana	Frans-Guyana	GF	GUF
+French Guiana	Fransk Guyana	GF	GUF
+French Guiana	Gujana Francuska	GF	GUF
+French Guiana	Guiana Francesa	GF	GUF
+French Guiana	Guiana Franceză	GF	GUF
+French Guiana	Гвиана	GF	GUF
+French Guiana	Francúzska Guyana	GF	GUF
+French Guiana	Franska Guyana	GF	GUF
+French Guiana	เฟรนช์เกียนา	GF	GUF
+French Guiana	Французька Гвіана	GF	GUF
+French Guiana	法属圭亚那	GF	GUF
+French Guiana	法屬圭亞那	GF	GUF
+French Guiana	French Guiana	GF	GUF
+French Polynesia	بولينزيا الفرنسية	PF	PYF
+French Polynesia	Френска Полинезия	PF	PYF
+French Polynesia	Francouzská Polynésie	PF	PYF
+French Polynesia	Fransk Polynesien	PF	PYF
+French Polynesia	Französisch-Polynesien	PF	PYF
+French Polynesia	Γαλλική Πολυνησία	PF	PYF
+French Polynesia	Franca Polinezio	PF	PYF
+French Polynesia	Polinesia Francesa	PF	PYF
+French Polynesia	Prantsuse Polüneesia	PF	PYF
+French Polynesia	Polinesia Frantsesa	PF	PYF
+French Polynesia	Ranskan Polynesia	PF	PYF
+French Polynesia	Polynésie française	PF	PYF
+French Polynesia	Francia Polinézia	PF	PYF
+French Polynesia	Ֆրանսիական Պոլինեզիա	PF	PYF
+French Polynesia	Polinesia francese	PF	PYF
+French Polynesia	フランス領ポリネシア	PF	PYF
+French Polynesia	프랑스령 폴리네시아	PF	PYF
+French Polynesia	Prancūzijos Polinezija	PF	PYF
+French Polynesia	Frans-Polynesië	PF	PYF
+French Polynesia	Fransk Polynesia	PF	PYF
+French Polynesia	Polinezja Francuska	PF	PYF
+French Polynesia	Polinésia Francesa	PF	PYF
+French Polynesia	Polinezia franceză	PF	PYF
+French Polynesia	Французская Полинезия	PF	PYF
+French Polynesia	Francúzska Polynézia	PF	PYF
+French Polynesia	Franska Polynesien	PF	PYF
+French Polynesia	เฟรนช์พอลินีเชีย	PF	PYF
+French Polynesia	Французька Полінезія	PF	PYF
+French Polynesia	法属波利尼西亚	PF	PYF
+French Polynesia	法屬玻里尼西亞	PF	PYF
+French Polynesia	French Polynesia	PF	PYF
+French Southern and Antarctic Lands	أراض فرنسية جنوبية وأنتارتيكية	TF	ATF
+French Southern and Antarctic Lands	Френски южни и антарктически територии	TF	ATF
+French Southern and Antarctic Lands	Francouzská jižní a antarktická území	TF	ATF
+French Southern and Antarctic Lands	Franske Sydterritorier	TF	ATF
+French Southern and Antarctic Lands	Französische Süd- und Antarktisgebiete	TF	ATF
+French Southern and Antarctic Lands	Γαλλικά Νότια και Ανταρκτικά Εδάφη	TF	ATF
+French Southern and Antarctic Lands	Francaj Sudaj Teritorioj	TF	ATF
+French Southern and Antarctic Lands	Tierras Australes y Antárticas Francesas	TF	ATF
+French Southern and Antarctic Lands	Prantsuse Lõunaalad	TF	ATF
+French Southern and Antarctic Lands	Frantziaren lurralde austral eta antartikoak	TF	ATF
+French Southern and Antarctic Lands	Ranskan eteläiset alueet	TF	ATF
+French Southern and Antarctic Lands	Terres australes et antarctiques françaises	TF	ATF
+French Southern and Antarctic Lands	Francia déli és antarktiszi területek	TF	ATF
+French Southern and Antarctic Lands	Ֆրանսիական Հարավային տարածքներ	TF	ATF
+French Southern and Antarctic Lands	Terre australi e antartiche francesi	TF	ATF
+French Southern and Antarctic Lands	フランス領南方・南極地域	TF	ATF
+French Southern and Antarctic Lands	프랑스령 남방 및 남극 지역	TF	ATF
+French Southern and Antarctic Lands	Prancūzijos Pietų Sritys	TF	ATF
+French Southern and Antarctic Lands	Franse Zuidelijke Gebieden	TF	ATF
+French Southern and Antarctic Lands	De franske sørterritorier	TF	ATF
+French Southern and Antarctic Lands	Francuskie Terytoria Południowe i Antarktyczne	TF	ATF
+French Southern and Antarctic Lands	Terras Austrais e Antárticas Francesas	TF	ATF
+French Southern and Antarctic Lands	Teritoriile australe și antarctice franceze	TF	ATF
+French Southern and Antarctic Lands	Французские Южные и Антарктические территории	TF	ATF
+French Southern and Antarctic Lands	Francúzske južné územia	TF	ATF
+French Southern and Antarctic Lands	Franska södra territorierna	TF	ATF
+French Southern and Antarctic Lands	เฟรนช์เซาเทิร์นและแอนตาร์กติกแลนดส์	TF	ATF
+French Southern and Antarctic Lands	Французькі Південні і Антарктичні Території	TF	ATF
+French Southern and Antarctic Lands	法属南部和南极领地	TF	ATF
+French Southern and Antarctic Lands	法屬南部和南極領地	TF	ATF
+French Southern and Antarctic Lands	French Southern Territories	TF	ATF
+Gabon	الغابون	GA	GAB
+Gabon	Габон	GA	GAB
+Gabon	Gabon	GA	GAB
+Gabon	Gabun	GA	GAB
+Gabon	Γκαμπόν	GA	GAB
+Gabon	Gabono	GA	GAB
+Gabon	Gabón	GA	GAB
+Gabon	Գաբոն	GA	GAB
+Gabon	ガボン	GA	GAB
+Gabon	가봉	GA	GAB
+Gabon	Gabonas	GA	GAB
+Gabon	Gabão	GA	GAB
+Gabon	กาบอง	GA	GAB
+Gabon	加蓬	GA	GAB
+Gabon	加彭	GA	GAB
+Gambia	غامبيا	GM	GMB
+Gambia	Гамбия	GM	GMB
+Gambia	Gambie	GM	GMB
+Gambia	Gambia	GM	GMB
+Gambia	Γκάμπια	GM	GMB
+Gambia	Gambio	GM	GMB
+Gambia	Գամբիա	GM	GMB
+Gambia	ガンビア	GM	GMB
+Gambia	감비아	GM	GMB
+Gambia	Gambija	GM	GMB
+Gambia	Gâmbia	GM	GMB
+Gambia	แกมเบีย	GM	GMB
+Gambia	Гамбія	GM	GMB
+Gambia	冈比亚	GM	GMB
+Gambia	甘比亞	GM	GMB
+Georgia	جورجيا	GE	GEO
+Georgia	Грузия	GE	GEO
+Georgia	Gruzie	GE	GEO
+Georgia	Georgien	GE	GEO
+Georgia	Γεωργία	GE	GEO
+Georgia	Kartvelio	GE	GEO
+Georgia	Georgia	GE	GEO
+Georgia	Gruusia	GE	GEO
+Georgia	Géorgie	GE	GEO
+Georgia	Grúzia	GE	GEO
+Georgia	Վրաստան	GE	GEO
+Georgia	ジョージア	GE	GEO
+Georgia	조지아	GE	GEO
+Georgia	Gruzija	GE	GEO
+Georgia	Georgië	GE	GEO
+Georgia	Gruzja	GE	GEO
+Georgia	Geórgia	GE	GEO
+Georgia	Gruzínsko	GE	GEO
+Georgia	จอร์เจีย	GE	GEO
+Georgia	Грузія	GE	GEO
+Georgia	格鲁吉亚	GE	GEO
+Georgia	喬治亞	GE	GEO
+Germany	ألمانيا	DE	DEU
+Germany	Германия	DE	DEU
+Germany	Německo	DE	DEU
+Germany	Tyskland	DE	DEU
+Germany	Deutschland	DE	DEU
+Germany	Γερμανία	DE	DEU
+Germany	Germanio	DE	DEU
+Germany	Alemania	DE	DEU
+Germany	Saksamaa	DE	DEU
+Germany	Saksa	DE	DEU
+Germany	Allemagne	DE	DEU
+Germany	Németország	DE	DEU
+Germany	Գերմանիա	DE	DEU
+Germany	Germania	DE	DEU
+Germany	ドイツ	DE	DEU
+Germany	독일	DE	DEU
+Germany	Vokietija	DE	DEU
+Germany	Duitsland	DE	DEU
+Germany	Niemcy	DE	DEU
+Germany	Alemanha	DE	DEU
+Germany	Nemecko	DE	DEU
+Germany	เยอรมนี	DE	DEU
+Germany	Німеччина	DE	DEU
+Germany	德国	DE	DEU
+Germany	德國	DE	DEU
+Germany	Germany	DE	DEU
+Ghana	غانا	GH	GHA
+Ghana	Гана	GH	GHA
+Ghana	Ghana	GH	GHA
+Ghana	Γκάνα	GH	GHA
+Ghana	Ganao	GH	GHA
+Ghana	Ghána	GH	GHA
+Ghana	Գանա	GH	GHA
+Ghana	ガーナ	GH	GHA
+Ghana	가나	GH	GHA
+Ghana	Gana	GH	GHA
+Ghana	กานา	GH	GHA
+Ghana	加纳	GH	GHA
+Ghana	加納	GH	GHA
+Gibraltar	جبل طارق	GI	GIB
+Gibraltar	Гибралтар	GI	GIB
+Gibraltar	Gibraltar	GI	GIB
+Gibraltar	Γιβραλτάρ	GI	GIB
+Gibraltar	Ĝibraltaro	GI	GIB
+Gibraltar	Gibraltár	GI	GIB
+Gibraltar	Ջիբրալթար	GI	GIB
+Gibraltar	Gibilterra	GI	GIB
+Gibraltar	ジブラルタル	GI	GIB
+Gibraltar	지브롤터	GI	GIB
+Gibraltar	Gibraltaras	GI	GIB
+Gibraltar	ยิบรอลตาร์	GI	GIB
+Gibraltar	Гібралтар	GI	GIB
+Gibraltar	直布罗陀	GI	GIB
+Gibraltar	直布羅陀	GI	GIB
+Greece	اليونان	GR	GRC
+Greece	Гърция	GR	GRC
+Greece	Řecko	GR	GRC
+Greece	Grækenland	GR	GRC
+Greece	Griechenland	GR	GRC
+Greece	Ελλάδα	GR	GRC
+Greece	Grekio	GR	GRC
+Greece	Grecia	GR	GRC
+Greece	Kreeka	GR	GRC
+Greece	Grezia	GR	GRC
+Greece	Kreikka	GR	GRC
+Greece	Grèce	GR	GRC
+Greece	Görögország	GR	GRC
+Greece	Հունաստան	GR	GRC
+Greece	ギリシャ	GR	GRC
+Greece	그리스	GR	GRC
+Greece	Graikija	GR	GRC
+Greece	Griekenland	GR	GRC
+Greece	Hellas	GR	GRC
+Greece	Grecja	GR	GRC
+Greece	Grécia	GR	GRC
+Greece	Греция	GR	GRC
+Greece	Grécko	GR	GRC
+Greece	Grekland	GR	GRC
+Greece	กรีซ	GR	GRC
+Greece	Греція	GR	GRC
+Greece	希腊	GR	GRC
+Greece	希臘	GR	GRC
+Greece	Greece	GR	GRC
+Greenland	جرينلاند	GL	GRL
+Greenland	Гренландия	GL	GRL
+Greenland	Grónsko	GL	GRL
+Greenland	Grønland	GL	GRL
+Greenland	Grönland	GL	GRL
+Greenland	Γροιλανδία	GL	GRL
+Greenland	Gronlando	GL	GRL
+Greenland	Groenlandia	GL	GRL
+Greenland	Gröönimaa	GL	GRL
+Greenland	Grönlanti	GL	GRL
+Greenland	Groenland	GL	GRL
+Greenland	Գրենլանդիա	GL	GRL
+Greenland	グリーンランド	GL	GRL
+Greenland	그린란드	GL	GRL
+Greenland	Grenlandija	GL	GRL
+Greenland	Grenlandia	GL	GRL
+Greenland	Gronelândia	GL	GRL
+Greenland	Groenlanda	GL	GRL
+Greenland	กรีนแลนด์	GL	GRL
+Greenland	Гренландія	GL	GRL
+Greenland	格陵兰	GL	GRL
+Greenland	格陵蘭	GL	GRL
+Greenland	Greenland	GL	GRL
+Grenada	غرينادا	GD	GRD
+Grenada	Гренада	GD	GRD
+Grenada	Grenada	GD	GRD
+Grenada	Γρενάδα	GD	GRD
+Grenada	Grenado	GD	GRD
+Grenada	Granada	GD	GRD
+Grenada	Grenade	GD	GRD
+Grenada	Գրենադա	GD	GRD
+Grenada	グレナダ	GD	GRD
+Grenada	그레나다	GD	GRD
+Grenada	เกรเนดา	GD	GRD
+Grenada	格林纳达	GD	GRD
+Grenada	格瑞那達	GD	GRD
+Guadeloupe	غوادلوب	GP	GLP
+Guadeloupe	Гваделупа	GP	GLP
+Guadeloupe	Guadeloupe	GP	GLP
+Guadeloupe	Γουαδελούπη	GP	GLP
+Guadeloupe	Gvadelupo	GP	GLP
+Guadeloupe	Guadalupe	GP	GLP
+Guadeloupe	Գվադելուպա	GP	GLP
+Guadeloupe	Guadalupa	GP	GLP
+Guadeloupe	グアドループ	GP	GLP
+Guadeloupe	과들루프	GP	GLP
+Guadeloupe	Gvadelupa	GP	GLP
+Guadeloupe	Gwadelupa	GP	GLP
+Guadeloupe	Guadelupa	GP	GLP
+Guadeloupe	กัวเดอลุป	GP	GLP
+Guadeloupe	瓜德罗普	GP	GLP
+Guadeloupe	瓜地洛普	GP	GLP
+Guam	غوام	GU	GUM
+Guam	Гуам	GU	GUM
+Guam	Guam	GU	GUM
+Guam	Γκουάμ	GU	GUM
+Guam	Gvamo	GU	GUM
+Guam	Գուամ	GU	GUM
+Guam	グアム	GU	GUM
+Guam	괌	GU	GUM
+Guam	Guamas	GU	GUM
+Guam	กวม	GU	GUM
+Guam	关岛	GU	GUM
+Guam	關島	GU	GUM
+Guatemala	غواتيمالا	GT	GTM
+Guatemala	Гватемала	GT	GTM
+Guatemala	Guatemala	GT	GTM
+Guatemala	Γουατεμάλα	GT	GTM
+Guatemala	Gvatemalo	GT	GTM
+Guatemala	Գվատեմալա	GT	GTM
+Guatemala	グアテマラ	GT	GTM
+Guatemala	과테말라	GT	GTM
+Guatemala	Gvatemala	GT	GTM
+Guatemala	Gwatemala	GT	GTM
+Guatemala	กัวเตมาลา	GT	GTM
+Guatemala	危地马拉	GT	GTM
+Guatemala	瓜地馬拉	GT	GTM
+Guernsey	غيرنزي	GG	GGY
+Guernsey	Гърнси	GG	GGY
+Guernsey	Guernsey	GG	GGY
+Guernsey	Guernsey (Kanalinsel)	GG	GGY
+Guernsey	Γκέρνσεϊ	GG	GGY
+Guernsey	Gvernsejo	GG	GGY
+Guernsey	Guernesey	GG	GGY
+Guernsey	Guernsey Bailiffség	GG	GGY
+Guernsey	Գերնսի	GG	GGY
+Guernsey	ガーンジー	GG	GGY
+Guernsey	건지섬	GG	GGY
+Guernsey	Gernsis	GG	GGY
+Guernsey	Гернси	GG	GGY
+Guernsey	เกิร์นซีย์	GG	GGY
+Guernsey	Гернсі	GG	GGY
+Guernsey	根西	GG	GGY
+Guinea	غينيا	GN	GIN
+Guinea	Гвинея	GN	GIN
+Guinea	Guinea	GN	GIN
+Guinea	Γουινέα	GN	GIN
+Guinea	Gvineo	GN	GIN
+Guinea	Ginea	GN	GIN
+Guinea	Guinée	GN	GIN
+Guinea	Գվինեա	GN	GIN
+Guinea	ギニア	GN	GIN
+Guinea	기니	GN	GIN
+Guinea	Gvinėja	GN	GIN
+Guinea	Guinee	GN	GIN
+Guinea	Gwinea	GN	GIN
+Guinea	Guiné	GN	GIN
+Guinea	Guineea	GN	GIN
+Guinea	กินี	GN	GIN
+Guinea	Гвінея	GN	GIN
+Guinea	几内亚	GN	GIN
+Guinea	幾內亞	GN	GIN
+Guinea-Bissau	غينيا بيساو	GW	GNB
+Guinea-Bissau	Гвинея-Бисау	GW	GNB
+Guinea-Bissau	Guinea-Bissau	GW	GNB
+Guinea-Bissau	Γουινέα-Μπισσάου	GW	GNB
+Guinea-Bissau	Gvineo Bisaŭa	GW	GNB
+Guinea-Bissau	Guinea-Bisáu	GW	GNB
+Guinea-Bissau	Ginea-Bissau	GW	GNB
+Guinea-Bissau	Guinée-Bissau	GW	GNB
+Guinea-Bissau	Bissau-Guinea	GW	GNB
+Guinea-Bissau	Գվինեա-Բիսաու	GW	GNB
+Guinea-Bissau	ギニアビサウ	GW	GNB
+Guinea-Bissau	기니비사우	GW	GNB
+Guinea-Bissau	Bisau Gvinėja	GW	GNB
+Guinea-Bissau	Guinee-Bissau	GW	GNB
+Guinea-Bissau	Gwinea Bissau	GW	GNB
+Guinea-Bissau	Guiné-Bissau	GW	GNB
+Guinea-Bissau	Guineea-Bissau	GW	GNB
+Guinea-Bissau	กินี-บิสเซา	GW	GNB
+Guinea-Bissau	Гвінея-Бісау	GW	GNB
+Guinea-Bissau	几内亚比绍	GW	GNB
+Guinea-Bissau	幾內亞比索	GW	GNB
+Guyana	غيانا	GY	GUY
+Guyana	Гвиана	GY	GUY
+Guyana	Guyana	GY	GUY
+Guyana	Γουιάνα	GY	GUY
+Guyana	Gujano	GY	GUY
+Guyana	Գայանա	GY	GUY
+Guyana	ガイアナ	GY	GUY
+Guyana	가이아나	GY	GUY
+Guyana	Gajana	GY	GUY
+Guyana	Gujana	GY	GUY
+Guyana	Guiana	GY	GUY
+Guyana	Гайана	GY	GUY
+Guyana	กายอานา	GY	GUY
+Guyana	Гаяна	GY	GUY
+Guyana	圭亚那	GY	GUY
+Guyana	蓋亞那	GY	GUY
+Haiti	هايتي	HT	HTI
+Haiti	Хаити	HT	HTI
+Haiti	Haiti	HT	HTI
+Haiti	Αϊτή	HT	HTI
+Haiti	Haitio	HT	HTI
+Haiti	Haití	HT	HTI
+Haiti	Haïti	HT	HTI
+Haiti	Հայիթի	HT	HTI
+Haiti	ハイチ	HT	HTI
+Haiti	아이티	HT	HTI
+Haiti	Haitis	HT	HTI
+Haiti	Гаити	HT	HTI
+Haiti	เฮติ	HT	HTI
+Haiti	Гаїті	HT	HTI
+Haiti	海地	HT	HTI
+Heard Island and McDonald Islands	جزيرة هيرد وجزر ماكدونالد	HM	HMD
+Heard Island and McDonald Islands	Острови Хърд и Макдоналд	HM	HMD
+Heard Island and McDonald Islands	Heardův ostrov a McDonaldovy ostrovy	HM	HMD
+Heard Island and McDonald Islands	Heard-øen og McDonald-øerne	HM	HMD
+Heard Island and McDonald Islands	Heard und McDonaldinseln	HM	HMD
+Heard Island and McDonald Islands	Νήσοι Χερντ και Μακντόναλντ	HM	HMD
+Heard Island and McDonald Islands	Insulo Herdo kaj insuloj Makdonaldaj	HM	HMD
+Heard Island and McDonald Islands	Islas Heard y McDonald	HM	HMD
+Heard Island and McDonald Islands	Heard ja McDonald	HM	HMD
+Heard Island and McDonald Islands	Heard eta McDonald Uharteak	HM	HMD
+Heard Island and McDonald Islands	Heard ja McDonaldinsaaret	HM	HMD
+Heard Island and McDonald Islands	Îles Heard-et-MacDonald	HM	HMD
+Heard Island and McDonald Islands	Heard-sziget és McDonald-szigetek	HM	HMD
+Heard Island and McDonald Islands	Մքդոնալդի Կղզիներ	HM	HMD
+Heard Island and McDonald Islands	Isole Heard e McDonald	HM	HMD
+Heard Island and McDonald Islands	ハード島とマクドナルド諸島	HM	HMD
+Heard Island and McDonald Islands	허드 맥도널드 제도	HM	HMD
+Heard Island and McDonald Islands	Herdo ir Makdonaldo salos	HM	HMD
+Heard Island and McDonald Islands	Heard en McDonaldeilanden	HM	HMD
+Heard Island and McDonald Islands	Heard- og McDonaldøyene	HM	HMD
+Heard Island and McDonald Islands	Wyspy Heard i McDonalda	HM	HMD
+Heard Island and McDonald Islands	Ilha Heard e Ilhas McDonald	HM	HMD
+Heard Island and McDonald Islands	Insula Heard și Insulele McDonald	HM	HMD
+Heard Island and McDonald Islands	Херд и Макдональд	HM	HMD
+Heard Island and McDonald Islands	Heardov ostrov	HM	HMD
+Heard Island and McDonald Islands	Heard- och McDonaldöarna	HM	HMD
+Heard Island and McDonald Islands	เกาะเฮิร์ดและหมู่เกาะแมกดอนัลด์	HM	HMD
+Heard Island and McDonald Islands	Острів Херд і острови Макдональд	HM	HMD
+Heard Island and McDonald Islands	赫德岛和麦克唐纳群岛	HM	HMD
+Heard Island and McDonald Islands	赫德島和麥克唐納群島	HM	HMD
+Heard Island and McDonald Islands	Heard Island and McDonald Islands	HM	HMD
+Vatican	الفاتيكان	VA	VAT
+Vatican	Ватикан	VA	VAT
+Vatican	Vatikán	VA	VAT
+Vatican	Vatikanstaten	VA	VAT
+Vatican	Vatikanstadt	VA	VAT
+Vatican	Βατικανό	VA	VAT
+Vatican	Vatikanurbo	VA	VAT
+Vatican	Vaticano, Ciudad del	VA	VAT
+Vatican	Vatikan	VA	VAT
+Vatican	Vatikano Hiria	VA	VAT
+Vatican	Vatikaanivaltio (Pyhä istuin)	VA	VAT
+Vatican	Saint-Siège (État de la Cité du Vatican)	VA	VAT
+Vatican	Վատիկան	VA	VAT
+Vatican	Città del Vaticano	VA	VAT
+Vatican	バチカン市国	VA	VAT
+Vatican	바티칸 시국	VA	VAT
+Vatican	Vatikanas	VA	VAT
+Vatican	Vaticaanstad	VA	VAT
+Vatican	Watykan	VA	VAT
+Vatican	Vaticano	VA	VAT
+Vatican	Vatican	VA	VAT
+Vatican	นครรัฐวาติกัน	VA	VAT
+Vatican	梵蒂冈	VA	VAT
+Vatican	梵蒂岡	VA	VAT
+Vatican	Holy See	VA	VAT
+Honduras	هندوراس	HN	HND
+Honduras	Хондурас	HN	HND
+Honduras	Honduras	HN	HND
+Honduras	Ονδούρα	HN	HND
+Honduras	Honduro	HN	HND
+Honduras	Հոնդուրաս	HN	HND
+Honduras	ホンジュラス	HN	HND
+Honduras	온두라스	HN	HND
+Honduras	Hondūras	HN	HND
+Honduras	Гондурас	HN	HND
+Honduras	ฮอนดูรัส	HN	HND
+Honduras	洪都拉斯	HN	HND
+Honduras	宏都拉斯	HN	HND
+Hong Kong	هونغ كونغ	HK	HKG
+Hong Kong	Хонконг	HK	HKG
+Hong Kong	Hongkong	HK	HKG
+Hong Kong	Χονγκ Κονγκ	HK	HKG
+Hong Kong	Honkongo	HK	HKG
+Hong Kong	Hong Kong	HK	HKG
+Hong Kong	Հոնկոնգ	HK	HKG
+Hong Kong	香港	HK	HKG
+Hong Kong	홍콩	HK	HKG
+Hong Kong	Honkongas	HK	HKG
+Hong Kong	Гонконг	HK	HKG
+Hong Kong	ฮ่องกง	HK	HKG
+Hungary	المجر	HU	HUN
+Hungary	Унгария	HU	HUN
+Hungary	Maďarsko	HU	HUN
+Hungary	Ungarn	HU	HUN
+Hungary	Ουγγαρία	HU	HUN
+Hungary	Hungario	HU	HUN
+Hungary	Hungría	HU	HUN
+Hungary	Ungari	HU	HUN
+Hungary	Hungaria	HU	HUN
+Hungary	Unkari	HU	HUN
+Hungary	Hongrie	HU	HUN
+Hungary	Magyarország	HU	HUN
+Hungary	Հունգարիա	HU	HUN
+Hungary	Ungheria	HU	HUN
+Hungary	ハンガリー	HU	HUN
+Hungary	헝가리	HU	HUN
+Hungary	Vengrija	HU	HUN
+Hungary	Hongarije	HU	HUN
+Hungary	Węgry	HU	HUN
+Hungary	Hungria	HU	HUN
+Hungary	Ungaria	HU	HUN
+Hungary	Венгрия	HU	HUN
+Hungary	Ungern	HU	HUN
+Hungary	ฮังการี	HU	HUN
+Hungary	Угорщина	HU	HUN
+Hungary	匈牙利	HU	HUN
+Hungary	Hungary	HU	HUN
+Iceland	آيسلندا	IS	ISL
+Iceland	Исландия	IS	ISL
+Iceland	Island	IS	ISL
+Iceland	Ισλανδία	IS	ISL
+Iceland	Islando	IS	ISL
+Iceland	Islandia	IS	ISL
+Iceland	Islanti	IS	ISL
+Iceland	Islande	IS	ISL
+Iceland	Izland	IS	ISL
+Iceland	Իսլանդիա	IS	ISL
+Iceland	Islanda	IS	ISL
+Iceland	アイスランド	IS	ISL
+Iceland	아이슬란드	IS	ISL
+Iceland	Islandija	IS	ISL
+Iceland	IJsland	IS	ISL
+Iceland	Islândia	IS	ISL
+Iceland	ไอซ์แลนด์	IS	ISL
+Iceland	Ісландія	IS	ISL
+Iceland	冰岛	IS	ISL
+Iceland	冰島	IS	ISL
+Iceland	Iceland	IS	ISL
+India	الهند	IN	IND
+India	Индия	IN	IND
+India	Indie	IN	IND
+India	Indien	IN	IND
+India	Ινδία	IN	IND
+India	Barato	IN	IND
+India	India	IN	IND
+India	Intia	IN	IND
+India	Inde	IN	IND
+India	Հնդկաստան	IN	IND
+India	インド	IN	IND
+India	인도	IN	IND
+India	Indija	IN	IND
+India	Índia	IN	IND
+India	อินเดีย	IN	IND
+India	Індія	IN	IND
+India	印度	IN	IND
+Indonesia	إندونيسيا	ID	IDN
+Indonesia	Индонезия	ID	IDN
+Indonesia	Indonésie	ID	IDN
+Indonesia	Indonesien	ID	IDN
+Indonesia	Ινδονησία	ID	IDN
+Indonesia	Indonezio	ID	IDN
+Indonesia	Indonesia	ID	IDN
+Indonesia	Indoneesia	ID	IDN
+Indonesia	Indonézia	ID	IDN
+Indonesia	Ինդոնեզիա	ID	IDN
+Indonesia	インドネシア	ID	IDN
+Indonesia	인도네시아	ID	IDN
+Indonesia	Indonezija	ID	IDN
+Indonesia	Indonesië	ID	IDN
+Indonesia	Indonezja	ID	IDN
+Indonesia	Indonésia	ID	IDN
+Indonesia	Indonezia	ID	IDN
+Indonesia	อินโดนีเซีย	ID	IDN
+Indonesia	Індонезія	ID	IDN
+Indonesia	印度尼西亚	ID	IDN
+Indonesia	印度尼西亞	ID	IDN
+Iran	إيران	IR	IRN
+Iran	Иран	IR	IRN
+Iran	Írán	IR	IRN
+Iran	Iran	IR	IRN
+Iran	Ιράν	IR	IRN
+Iran	Irano	IR	IRN
+Iran	Irán	IR	IRN
+Iran	Iraan	IR	IRN
+Iran	Իրան	IR	IRN
+Iran	イラン・イスラム共和国	IR	IRN
+Iran	이란	IR	IRN
+Iran	Iranas	IR	IRN
+Iran	Irã	IR	IRN
+Iran	อิหร่าน	IR	IRN
+Iran	Іран	IR	IRN
+Iran	伊朗	IR	IRN
+Iran	Iran (Islamic Republic of)	IR	IRN
+Iraq	العراق	IQ	IRQ
+Iraq	Ирак	IQ	IRQ
+Iraq	Irák	IQ	IRQ
+Iraq	Irak	IQ	IRQ
+Iraq	Ιράκ	IQ	IRQ
+Iraq	Irako	IQ	IRQ
+Iraq	Iraak	IQ	IRQ
+Iraq	Իրաք	IQ	IRQ
+Iraq	Iraq	IQ	IRQ
+Iraq	イラク	IQ	IRQ
+Iraq	이라크	IQ	IRQ
+Iraq	Irakas	IQ	IRQ
+Iraq	Iraque	IQ	IRQ
+Iraq	อิรัก	IQ	IRQ
+Iraq	Ірак	IQ	IRQ
+Iraq	伊拉克	IQ	IRQ
+Ireland	أيرلندا	IE	IRL
+Ireland	Ирландия	IE	IRL
+Ireland	Irsko	IE	IRL
+Ireland	Irland	IE	IRL
+Ireland	Ιρλανδία	IE	IRL
+Ireland	Irlando	IE	IRL
+Ireland	Irlanda	IE	IRL
+Ireland	Iirimaa	IE	IRL
+Ireland	Irlandako Errepublika	IE	IRL
+Ireland	Irlanti	IE	IRL
+Ireland	Irlande	IE	IRL
+Ireland	Írország	IE	IRL
+Ireland	Իռլանդիա	IE	IRL
+Ireland	アイルランド	IE	IRL
+Ireland	아일랜드	IE	IRL
+Ireland	Airija	IE	IRL
+Ireland	Ierland	IE	IRL
+Ireland	Irlandia	IE	IRL
+Ireland	Republica Irlanda	IE	IRL
+Ireland	Írsko	IE	IRL
+Ireland	ไอร์แลนด์	IE	IRL
+Ireland	Ірландія	IE	IRL
+Ireland	爱尔兰	IE	IRL
+Ireland	愛爾蘭	IE	IRL
+Ireland	Ireland	IE	IRL
+Isle of Man	جزيرة مان	IM	IMN
+Isle of Man	Ман	IM	IMN
+Isle of Man	Ostrov Man	IM	IMN
+Isle of Man	Isle of Man	IM	IMN
+Isle of Man	Insel Man	IM	IMN
+Isle of Man	Νήσος Μαν	IM	IMN
+Isle of Man	Mankso	IM	IMN
+Isle of Man	Isla de Man	IM	IMN
+Isle of Man	Man	IM	IMN
+Isle of Man	Mansaari	IM	IMN
+Isle of Man	Île de Man	IM	IMN
+Isle of Man	Man-sziget	IM	IMN
+Isle of Man	Մեն կղզի	IM	IMN
+Isle of Man	Isola di Man	IM	IMN
+Isle of Man	マン島	IM	IMN
+Isle of Man	맨섬	IM	IMN
+Isle of Man	Meno sala	IM	IMN
+Isle of Man	Wyspa Man	IM	IMN
+Isle of Man	Ilha de Man	IM	IMN
+Isle of Man	Insula Man	IM	IMN
+Isle of Man	Остров Мэн	IM	IMN
+Isle of Man	ไอล์ออฟแมน	IM	IMN
+Isle of Man	Острів Мен	IM	IMN
+Isle of Man	马恩岛	IM	IMN
+Isle of Man	曼島	IM	IMN
+Israel	إسرائيل	IL	ISR
+Israel	Израел	IL	ISR
+Israel	Izrael	IL	ISR
+Israel	Israel	IL	ISR
+Israel	Ισραήλ	IL	ISR
+Israel	Israelo	IL	ISR
+Israel	Iisrael	IL	ISR
+Israel	Israël	IL	ISR
+Israel	Իսրայել	IL	ISR
+Israel	Israele	IL	ISR
+Israel	イスラエル	IL	ISR
+Israel	이스라엘	IL	ISR
+Israel	Izraelis	IL	ISR
+Israel	Израиль	IL	ISR
+Israel	อิสราเอล	IL	ISR
+Israel	Ізраїль	IL	ISR
+Israel	以色列	IL	ISR
+Italy	إيطاليا	IT	ITA
+Italy	Италия	IT	ITA
+Italy	Itálie	IT	ITA
+Italy	Italien	IT	ITA
+Italy	Ιταλία	IT	ITA
+Italy	Italio	IT	ITA
+Italy	Italia	IT	ITA
+Italy	Itaalia	IT	ITA
+Italy	Italie	IT	ITA
+Italy	Olaszország	IT	ITA
+Italy	Իտալիա	IT	ITA
+Italy	イタリア	IT	ITA
+Italy	이탈리아	IT	ITA
+Italy	Italija	IT	ITA
+Italy	Italië	IT	ITA
+Italy	Włochy	IT	ITA
+Italy	Itália	IT	ITA
+Italy	Taliansko	IT	ITA
+Italy	อิตาลี	IT	ITA
+Italy	Італія	IT	ITA
+Italy	意大利	IT	ITA
+Italy	義大利	IT	ITA
+Italy	Italy	IT	ITA
+Jamaica	جامايكا	JM	JAM
+Jamaica	Ямайка	JM	JAM
+Jamaica	Jamajka	JM	JAM
+Jamaica	Jamaica	JM	JAM
+Jamaica	Jamaika	JM	JAM
+Jamaica	Τζαμάικα	JM	JAM
+Jamaica	Jamajko	JM	JAM
+Jamaica	Jamaïque	JM	JAM
+Jamaica	Ճամայկա	JM	JAM
+Jamaica	Giamaica	JM	JAM
+Jamaica	ジャマイカ	JM	JAM
+Jamaica	자메이카	JM	JAM
+Jamaica	จาเมกา	JM	JAM
+Jamaica	牙买加	JM	JAM
+Jamaica	牙買加	JM	JAM
+Japan	اليابان	JP	JPN
+Japan	Япония	JP	JPN
+Japan	Japonsko	JP	JPN
+Japan	Japan	JP	JPN
+Japan	Ιαπωνία	JP	JPN
+Japan	Japanio	JP	JPN
+Japan	Japón	JP	JPN
+Japan	Jaapan	JP	JPN
+Japan	Japonia	JP	JPN
+Japan	Japani	JP	JPN
+Japan	Japon	JP	JPN
+Japan	Japán	JP	JPN
+Japan	Ճապոնիա	JP	JPN
+Japan	Giappone	JP	JPN
+Japan	日本	JP	JPN
+Japan	일본	JP	JPN
+Japan	Japonija	JP	JPN
+Japan	Japão	JP	JPN
+Japan	ญี่ปุ่น	JP	JPN
+Japan	Японія	JP	JPN
+Jersey	جيرزي	JE	JEY
+Jersey	Джърси	JE	JEY
+Jersey	Jersey	JE	JEY
+Jersey	Jersey (Kanalinsel)	JE	JEY
+Jersey	Τζέρσεϊ	JE	JEY
+Jersey	Ĵersejo	JE	JEY
+Jersey	Jersey Bailiffség	JE	JEY
+Jersey	Ջերսի	JE	JEY
+Jersey	ジャージー	JE	JEY
+Jersey	저지섬	JE	JEY
+Jersey	Džersis	JE	JEY
+Jersey	Insula Jersey	JE	JEY
+Jersey	Джерси	JE	JEY
+Jersey	เจอร์ซีย์	JE	JEY
+Jersey	Джерсі	JE	JEY
+Jersey	泽西	JE	JEY
+Jersey	澤西	JE	JEY
+Jordan	الأردن	JO	JOR
+Jordan	Йордания	JO	JOR
+Jordan	Jordánsko	JO	JOR
+Jordan	Jordan	JO	JOR
+Jordan	Jordanien	JO	JOR
+Jordan	Ιορδανία	JO	JOR
+Jordan	Jordanio	JO	JOR
+Jordan	Jordania	JO	JOR
+Jordan	Jordaania	JO	JOR
+Jordan	Jordanie	JO	JOR
+Jordan	Jordánia	JO	JOR
+Jordan	Հորդանան	JO	JOR
+Jordan	Giordania	JO	JOR
+Jordan	ヨルダン	JO	JOR
+Jordan	요르단	JO	JOR
+Jordan	Jordanija	JO	JOR
+Jordan	Jordanië	JO	JOR
+Jordan	Jordânia	JO	JOR
+Jordan	Iordania	JO	JOR
+Jordan	Иордания	JO	JOR
+Jordan	จอร์แดน	JO	JOR
+Jordan	Йорданія	JO	JOR
+Jordan	约旦	JO	JOR
+Jordan	約旦	JO	JOR
+Kazakhstan	كازاخستان	KZ	KAZ
+Kazakhstan	Казахстан	KZ	KAZ
+Kazakhstan	Kazachstán	KZ	KAZ
+Kazakhstan	Kasakhstan	KZ	KAZ
+Kazakhstan	Kasachstan	KZ	KAZ
+Kazakhstan	Καζακστάν	KZ	KAZ
+Kazakhstan	Kazaĥio	KZ	KAZ
+Kazakhstan	Kazajistán	KZ	KAZ
+Kazakhstan	Kasahstan	KZ	KAZ
+Kazakhstan	Kazakhstan	KZ	KAZ
+Kazakhstan	Kazakstan	KZ	KAZ
+Kazakhstan	Kazahsztán	KZ	KAZ
+Kazakhstan	Ղազախստան	KZ	KAZ
+Kazakhstan	Kazakistan	KZ	KAZ
+Kazakhstan	カザフスタン	KZ	KAZ
+Kazakhstan	카자흐스탄	KZ	KAZ
+Kazakhstan	Kazachstanas	KZ	KAZ
+Kazakhstan	Kazachstan	KZ	KAZ
+Kazakhstan	Cazaquistão	KZ	KAZ
+Kazakhstan	Kazahstan	KZ	KAZ
+Kazakhstan	คาซัคสถาน	KZ	KAZ
+Kazakhstan	哈萨克斯坦	KZ	KAZ
+Kazakhstan	哈薩克	KZ	KAZ
+Kenya	كينيا	KE	KEN
+Kenya	Кения	KE	KEN
+Kenya	Keňa	KE	KEN
+Kenya	Kenya	KE	KEN
+Kenya	Kenia	KE	KEN
+Kenya	Κένυα	KE	KEN
+Kenya	Kenjo	KE	KEN
+Kenya	Keenia	KE	KEN
+Kenya	Քենիա	KE	KEN
+Kenya	ケニア	KE	KEN
+Kenya	케냐	KE	KEN
+Kenya	Kenija	KE	KEN
+Kenya	Quênia	KE	KEN
+Kenya	เคนยา	KE	KEN
+Kenya	Кенія	KE	KEN
+Kenya	肯尼亚	KE	KEN
+Kenya	肯亞	KE	KEN
+Kiribati	كيريباتي	KI	KIR
+Kiribati	Кирибати	KI	KIR
+Kiribati	Kiribati	KI	KIR
+Kiribati	Κιριμπάτι	KI	KIR
+Kiribati	Kiribato	KI	KIR
+Kiribati	Կիրիբատի	KI	KIR
+Kiribati	キリバス	KI	KIR
+Kiribati	키리바시	KI	KIR
+Kiribati	Kiribatis	KI	KIR
+Kiribati	Quiribáti	KI	KIR
+Kiribati	คิริบาส	KI	KIR
+Kiribati	Кірибаті	KI	KIR
+Kiribati	基里巴斯	KI	KIR
+Kiribati	吉里巴斯	KI	KIR
+Dem. Rep. Korea	كوريا الشمالية	KP	PRK
+Dem. Rep. Korea	Северна Корея	KP	PRK
+Dem. Rep. Korea	Severní Korea	KP	PRK
+Dem. Rep. Korea	Nordkorea	KP	PRK
+Dem. Rep. Korea	Korea, Nord	KP	PRK
+Dem. Rep. Korea	Βόρεια Κορέα	KP	PRK
+Dem. Rep. Korea	Nord-Koreio	KP	PRK
+Dem. Rep. Korea	Corea del Norte	KP	PRK
+Dem. Rep. Korea	Põhja-Korea	KP	PRK
+Dem. Rep. Korea	Ipar Korea	KP	PRK
+Dem. Rep. Korea	Korean demokraattinen kansantasavalta	KP	PRK
+Dem. Rep. Korea	Corée du Nord	KP	PRK
+Dem. Rep. Korea	Észak-Korea (Koreai NDK)	KP	PRK
+Dem. Rep. Korea	Հյուսիսային Կորեա	KP	PRK
+Dem. Rep. Korea	Corea del Nord	KP	PRK
+Dem. Rep. Korea	朝鮮民主主義人民共和国	KP	PRK
+Dem. Rep. Korea	조선민주주의인민공화국	KP	PRK
+Dem. Rep. Korea	Šiaurės Korėja	KP	PRK
+Dem. Rep. Korea	Noord-Korea	KP	PRK
+Dem. Rep. Korea	Nord-Korea	KP	PRK
+Dem. Rep. Korea	Korea Północna	KP	PRK
+Dem. Rep. Korea	Coreia do Norte	KP	PRK
+Dem. Rep. Korea	Coreea de Nord	KP	PRK
+Dem. Rep. Korea	КНДР (Корейская Народно-Демократическая Республика)	KP	PRK
+Dem. Rep. Korea	Kórejská ľudovodemokratická republika	KP	PRK
+Dem. Rep. Korea	เกาหลีเหนือ	KP	PRK
+Dem. Rep. Korea	Північна Корея	KP	PRK
+Dem. Rep. Korea	朝鲜	KP	PRK
+Dem. Rep. Korea	北韓	KP	PRK
+Dem. Rep. Korea	Korea (Democratic People's Republic of)	KP	PRK
+Republic of Korea	كوريا الجنوبية	KR	KOR
+Republic of Korea	Южна Корея	KR	KOR
+Republic of Korea	Jižní Korea	KR	KOR
+Republic of Korea	Sydkorea	KR	KOR
+Republic of Korea	Korea, Süd	KR	KOR
+Republic of Korea	Νότια Κορέα	KR	KOR
+Republic of Korea	Sud-Koreio	KR	KOR
+Republic of Korea	Corea del Sur	KR	KOR
+Republic of Korea	Lõuna-Korea	KR	KOR
+Republic of Korea	Hego Korea	KR	KOR
+Republic of Korea	Korean tasavalta	KR	KOR
+Republic of Korea	Corée du Sud	KR	KOR
+Republic of Korea	Dél-Korea (Koreai Köztársaság)	KR	KOR
+Republic of Korea	Հարավային Կորեա	KR	KOR
+Republic of Korea	Corea del Sud	KR	KOR
+Republic of Korea	大韓民国	KR	KOR
+Republic of Korea	대한민국	KR	KOR
+Republic of Korea	Pietų Korėja	KR	KOR
+Republic of Korea	Zuid-Korea	KR	KOR
+Republic of Korea	Sør-Korea	KR	KOR
+Republic of Korea	Korea Południowa	KR	KOR
+Republic of Korea	Coreia do Sul	KR	KOR
+Republic of Korea	Coreea de Sud	KR	KOR
+Republic of Korea	Республика Корея	KR	KOR
+Republic of Korea	Kórejská republika	KR	KOR
+Republic of Korea	เกาหลีใต้	KR	KOR
+Republic of Korea	Південна Корея	KR	KOR
+Republic of Korea	韩国	KR	KOR
+Republic of Korea	南韓	KR	KOR
+Republic of Korea	Korea, Republic of	KR	KOR
+Kuwait	الكويت	KW	KWT
+Kuwait	Кувейт	KW	KWT
+Kuwait	Kuvajt	KW	KWT
+Kuwait	Kuwait	KW	KWT
+Kuwait	Κουβέιτ	KW	KWT
+Kuwait	Kuvajto	KW	KWT
+Kuwait	Kuveit	KW	KWT
+Kuwait	Koweït	KW	KWT
+Kuwait	Kuvait	KW	KWT
+Kuwait	Քուվեյթ	KW	KWT
+Kuwait	クウェート	KW	KWT
+Kuwait	쿠웨이트	KW	KWT
+Kuwait	Kuveitas	KW	KWT
+Kuwait	Koeweit	KW	KWT
+Kuwait	Kuwejt	KW	KWT
+Kuwait	Kuweit	KW	KWT
+Kuwait	คูเวต	KW	KWT
+Kuwait	科威特	KW	KWT
+Kyrgyzstan	قيرغيزستان	KG	KGZ
+Kyrgyzstan	Киргизстан	KG	KGZ
+Kyrgyzstan	Kyrgyzstán	KG	KGZ
+Kyrgyzstan	Kirgisistan	KG	KGZ
+Kyrgyzstan	Κιργιζία	KG	KGZ
+Kyrgyzstan	Kirgizio	KG	KGZ
+Kyrgyzstan	Kirguistán	KG	KGZ
+Kyrgyzstan	Kõrgõzstan	KG	KGZ
+Kyrgyzstan	Kirgizistan	KG	KGZ
+Kyrgyzstan	Kirgisia	KG	KGZ
+Kyrgyzstan	Kirghizistan	KG	KGZ
+Kyrgyzstan	Kirgizisztán	KG	KGZ
+Kyrgyzstan	Ղրղզստան	KG	KGZ
+Kyrgyzstan	キルギス	KG	KGZ
+Kyrgyzstan	키르기스스탄	KG	KGZ
+Kyrgyzstan	Kirgizija	KG	KGZ
+Kyrgyzstan	Kirgizië	KG	KGZ
+Kyrgyzstan	Kirgistan	KG	KGZ
+Kyrgyzstan	Quirguistão	KG	KGZ
+Kyrgyzstan	Kârgâzstan	KG	KGZ
+Kyrgyzstan	Киргизия	KG	KGZ
+Kyrgyzstan	Kirgizsko	KG	KGZ
+Kyrgyzstan	คีร์กีซสถาน	KG	KGZ
+Kyrgyzstan	吉尔吉斯斯坦	KG	KGZ
+Kyrgyzstan	吉爾吉斯	KG	KGZ
+Kyrgyzstan	Kyrgyzstan	KG	KGZ
+Lao People's Democratic Republic	لاوس	LA	LAO
+Lao People's Democratic Republic	Лаос	LA	LAO
+Lao People's Democratic Republic	Laos	LA	LAO
+Lao People's Democratic Republic	Λάος	LA	LAO
+Lao People's Democratic Republic	Laoso	LA	LAO
+Lao People's Democratic Republic	Laosz	LA	LAO
+Lao People's Democratic Republic	Լաոս	LA	LAO
+Lao People's Democratic Republic	ラオス人民民主共和国	LA	LAO
+Lao People's Democratic Republic	라오스	LA	LAO
+Lao People's Democratic Republic	Laosas	LA	LAO
+Lao People's Democratic Republic	ลาว	LA	LAO
+Lao People's Democratic Republic	老挝	LA	LAO
+Lao People's Democratic Republic	寮國	LA	LAO
+Lao People's Democratic Republic	Lao People's Democratic Republic	LA	LAO
+Latvia	لاتفيا	LV	LVA
+Latvia	Латвия	LV	LVA
+Latvia	Lotyšsko	LV	LVA
+Latvia	Letland	LV	LVA
+Latvia	Lettland	LV	LVA
+Latvia	Λεττονία	LV	LVA
+Latvia	Latvio	LV	LVA
+Latvia	Letonia	LV	LVA
+Latvia	Läti	LV	LVA
+Latvia	Latvia	LV	LVA
+Latvia	Lettonie	LV	LVA
+Latvia	Lettország	LV	LVA
+Latvia	Լատվիա	LV	LVA
+Latvia	Lettonia	LV	LVA
+Latvia	ラトビア	LV	LVA
+Latvia	라트비아	LV	LVA
+Latvia	Latvija	LV	LVA
+Latvia	Łotwa	LV	LVA
+Latvia	Letônia	LV	LVA
+Latvia	ลัตเวีย	LV	LVA
+Latvia	Латвія	LV	LVA
+Latvia	拉脱维亚	LV	LVA
+Latvia	拉脫維亞	LV	LVA
+Lebanon	لبنان	LB	LBN
+Lebanon	Ливан	LB	LBN
+Lebanon	Libanon	LB	LBN
+Lebanon	Λίβανος	LB	LBN
+Lebanon	Libano	LB	LBN
+Lebanon	Líbano	LB	LBN
+Lebanon	Liibanon	LB	LBN
+Lebanon	Liban	LB	LBN
+Lebanon	Լիբանան	LB	LBN
+Lebanon	レバノン	LB	LBN
+Lebanon	레바논	LB	LBN
+Lebanon	Libanas	LB	LBN
+Lebanon	เลบานอน	LB	LBN
+Lebanon	Ліван	LB	LBN
+Lebanon	黎巴嫩	LB	LBN
+Lebanon	Lebanon	LB	LBN
+Lesotho	ليسوتو	LS	LSO
+Lesotho	Лесото	LS	LSO
+Lesotho	Lesotho	LS	LSO
+Lesotho	Λεσότο	LS	LSO
+Lesotho	Lesoto	LS	LSO
+Lesotho	Լեսոթո	LS	LSO
+Lesotho	レソト	LS	LSO
+Lesotho	레소토	LS	LSO
+Lesotho	Lesotas	LS	LSO
+Lesotho	เลโซโท	LS	LSO
+Lesotho	莱索托	LS	LSO
+Lesotho	賴索托	LS	LSO
+Liberia	ليبيريا	LR	LBR
+Liberia	Либерия	LR	LBR
+Liberia	Libérie	LR	LBR
+Liberia	Liberia	LR	LBR
+Liberia	Λιβερία	LR	LBR
+Liberia	Liberio	LR	LBR
+Liberia	Libeeria	LR	LBR
+Liberia	Libéria	LR	LBR
+Liberia	Լիբերիա	LR	LBR
+Liberia	リベリア	LR	LBR
+Liberia	라이베리아	LR	LBR
+Liberia	Liberija	LR	LBR
+Liberia	ไลบีเรีย	LR	LBR
+Liberia	Ліберія	LR	LBR
+Liberia	利比里亚	LR	LBR
+Liberia	賴比瑞亞	LR	LBR
+Libya	ليبيا	LY	LBY
+Libya	Либия	LY	LBY
+Libya	Libye	LY	LBY
+Libya	Libyen	LY	LBY
+Libya	Λιβύη	LY	LBY
+Libya	Libio	LY	LBY
+Libya	Libia	LY	LBY
+Libya	Liibüa	LY	LBY
+Libya	Libya	LY	LBY
+Libya	Líbia	LY	LBY
+Libya	Լիբիա	LY	LBY
+Libya	リビア	LY	LBY
+Libya	리비아	LY	LBY
+Libya	Libija	LY	LBY
+Libya	Libië	LY	LBY
+Libya	Ливия	LY	LBY
+Libya	Líbya	LY	LBY
+Libya	ลิเบีย	LY	LBY
+Libya	Лівія	LY	LBY
+Libya	利比亚	LY	LBY
+Libya	利比亞	LY	LBY
+Liechtenstein	ليختنشتاين	LI	LIE
+Liechtenstein	Лихтенщайн	LI	LIE
+Liechtenstein	Lichtenštejnsko	LI	LIE
+Liechtenstein	Liechtenstein	LI	LIE
+Liechtenstein	Λίχτενσταϊν	LI	LIE
+Liechtenstein	Liĥtenŝtejno	LI	LIE
+Liechtenstein	Լիխտենշտայն	LI	LIE
+Liechtenstein	リヒテンシュタイン	LI	LIE
+Liechtenstein	리히텐슈타인	LI	LIE
+Liechtenstein	Lichtenšteinas	LI	LIE
+Liechtenstein	Listenstaine	LI	LIE
+Liechtenstein	Лихтенштейн	LI	LIE
+Liechtenstein	Lichtenštajnsko	LI	LIE
+Liechtenstein	ลิกเตนสไตน์	LI	LIE
+Liechtenstein	Ліхтенштейн	LI	LIE
+Liechtenstein	列支敦士登	LI	LIE
+Liechtenstein	列支敦斯登	LI	LIE
+Lithuania	ليتوانيا	LT	LTU
+Lithuania	Литва	LT	LTU
+Lithuania	Litva	LT	LTU
+Lithuania	Litauen	LT	LTU
+Lithuania	Λιθουανία	LT	LTU
+Lithuania	Litovio	LT	LTU
+Lithuania	Lituania	LT	LTU
+Lithuania	Leedu	LT	LTU
+Lithuania	Liettua	LT	LTU
+Lithuania	Lituanie	LT	LTU
+Lithuania	Litvánia	LT	LTU
+Lithuania	Լիտվա	LT	LTU
+Lithuania	リトアニア	LT	LTU
+Lithuania	리투아니아	LT	LTU
+Lithuania	Lietuva	LT	LTU
+Lithuania	Litouwen	LT	LTU
+Lithuania	Litwa	LT	LTU
+Lithuania	Lituânia	LT	LTU
+Lithuania	ลิทัวเนีย	LT	LTU
+Lithuania	立陶宛	LT	LTU
+Lithuania	Lithuania	LT	LTU
+Luxembourg	لوكسمبورغ	LU	LUX
+Luxembourg	Люксембург	LU	LUX
+Luxembourg	Lucembursko	LU	LUX
+Luxembourg	Luxembourg	LU	LUX
+Luxembourg	Luxemburg	LU	LUX
+Luxembourg	Λουξεμβούργο	LU	LUX
+Luxembourg	Luksemburgo	LU	LUX
+Luxembourg	Luxemburgo	LU	LUX
+Luxembourg	Luksemburg	LU	LUX
+Luxembourg	Luxenburgo	LU	LUX
+Luxembourg	Լյուքսեմբուրգ	LU	LUX
+Luxembourg	Lussemburgo	LU	LUX
+Luxembourg	ルクセンブルク	LU	LUX
+Luxembourg	룩셈부르크	LU	LUX
+Luxembourg	Liuksemburgas	LU	LUX
+Luxembourg	Luxembursko	LU	LUX
+Luxembourg	ลักเซมเบิร์ก	LU	LUX
+Luxembourg	卢森堡	LU	LUX
+Luxembourg	盧森堡	LU	LUX
+Macao	ماكاو	MO	MAC
+Macao	Макао	MO	MAC
+Macao	Macao	MO	MAC
+Macao	Macau	MO	MAC
+Macao	Μακάο	MO	MAC
+Macao	Makao	MO	MAC
+Macao	Makaó	MO	MAC
+Macao	Մակաու	MO	MAC
+Macao	マカオ	MO	MAC
+Macao	마카오	MO	MAC
+Macao	Makau	MO	MAC
+Macao	มาเก๊า	MO	MAC
+Macao	澳门	MO	MAC
+Macao	澳門	MO	MAC
+Madagascar	مدغشقر	MG	MDG
+Madagascar	Мадагаскар	MG	MDG
+Madagascar	Madagaskar	MG	MDG
+Madagascar	Μαδαγασκάρη	MG	MDG
+Madagascar	Madagaskaro	MG	MDG
+Madagascar	Madagascar	MG	MDG
+Madagascar	Madagaszkár	MG	MDG
+Madagascar	Մադագասկար	MG	MDG
+Madagascar	マダガスカル	MG	MDG
+Madagascar	마다가스카르	MG	MDG
+Madagascar	Madagaskaras	MG	MDG
+Madagascar	Madagáscar	MG	MDG
+Madagascar	มาดากัสการ์	MG	MDG
+Madagascar	马达加斯加	MG	MDG
+Madagascar	馬達加斯加	MG	MDG
+Malawi	مالاوي	MW	MWI
+Malawi	Малави	MW	MWI
+Malawi	Malawi	MW	MWI
+Malawi	Μαλάουι	MW	MWI
+Malawi	Malavio	MW	MWI
+Malawi	Malaui	MW	MWI
+Malawi	Մալավի	MW	MWI
+Malawi	マラウイ	MW	MWI
+Malawi	말라위	MW	MWI
+Malawi	Malavis	MW	MWI
+Malawi	Maláui	MW	MWI
+Malawi	มาลาวี	MW	MWI
+Malawi	Малаві	MW	MWI
+Malawi	马拉维	MW	MWI
+Malawi	馬拉威	MW	MWI
+Malaysia	ماليزيا	MY	MYS
+Malaysia	Малайзия	MY	MYS
+Malaysia	Malajsie	MY	MYS
+Malaysia	Malaysia	MY	MYS
+Malaysia	Μαλαισία	MY	MYS
+Malaysia	Malajzio	MY	MYS
+Malaysia	Malasia	MY	MYS
+Malaysia	Malaisia	MY	MYS
+Malaysia	Malesia	MY	MYS
+Malaysia	Malaisie	MY	MYS
+Malaysia	Malajzia	MY	MYS
+Malaysia	Մալայզիա	MY	MYS
+Malaysia	マレーシア	MY	MYS
+Malaysia	말레이시아	MY	MYS
+Malaysia	Malaizija	MY	MYS
+Malaysia	Maleisië	MY	MYS
+Malaysia	Malezja	MY	MYS
+Malaysia	Malásia	MY	MYS
+Malaysia	Malaezia	MY	MYS
+Malaysia	มาเลเซีย	MY	MYS
+Malaysia	Малайзія	MY	MYS
+Malaysia	马来西亚	MY	MYS
+Malaysia	馬來西亞	MY	MYS
+Maldives	جزر المالديف	MV	MDV
+Maldives	Малдиви	MV	MDV
+Maldives	Maledivy	MV	MDV
+Maldives	Maldiverne	MV	MDV
+Maldives	Malediven	MV	MDV
+Maldives	Μαλδίβες	MV	MDV
+Maldives	Maldivoj	MV	MDV
+Maldives	Maldivas	MV	MDV
+Maldives	Maldiivid	MV	MDV
+Maldives	Maldivak	MV	MDV
+Maldives	Malediivit	MV	MDV
+Maldives	Maldives	MV	MDV
+Maldives	Maldív-szigetek	MV	MDV
+Maldives	Մալդիվներ	MV	MDV
+Maldives	Maldive	MV	MDV
+Maldives	モルディブ	MV	MDV
+Maldives	몰디브	MV	MDV
+Maldives	Maldyvai	MV	MDV
+Maldives	Maldivene	MV	MDV
+Maldives	Malediwy	MV	MDV
+Maldives	Мальдивы	MV	MDV
+Maldives	Maldivy	MV	MDV
+Maldives	Maldiverna	MV	MDV
+Maldives	มัลดีฟส์	MV	MDV
+Maldives	Мальдіви	MV	MDV
+Maldives	马尔代夫	MV	MDV
+Maldives	馬爾地夫	MV	MDV
+Mali	مالي	ML	MLI
+Mali	Мали	ML	MLI
+Mali	Mali	ML	MLI
+Mali	Μάλι	ML	MLI
+Mali	Malio	ML	MLI
+Mali	Malí	ML	MLI
+Mali	Մալի	ML	MLI
+Mali	マリ	ML	MLI
+Mali	말리	ML	MLI
+Mali	Malis	ML	MLI
+Mali	มาลี	ML	MLI
+Mali	Малі	ML	MLI
+Mali	马里	ML	MLI
+Mali	馬利	ML	MLI
+Malta	مالطا	MT	MLT
+Malta	Малта	MT	MLT
+Malta	Malta	MT	MLT
+Malta	Μάλτα	MT	MLT
+Malta	Malto	MT	MLT
+Malta	Malte	MT	MLT
+Malta	Málta	MT	MLT
+Malta	Մալթա	MT	MLT
+Malta	マルタ	MT	MLT
+Malta	몰타	MT	MLT
+Malta	Мальта	MT	MLT
+Malta	มอลตา	MT	MLT
+Malta	马耳他	MT	MLT
+Malta	馬爾他	MT	MLT
+Marshall Islands	جزر مارشال	MH	MHL
+Marshall Islands	Маршалови острови	MH	MHL
+Marshall Islands	Marshallovy ostrovy	MH	MHL
+Marshall Islands	Marshalløerne	MH	MHL
+Marshall Islands	Marshallinseln	MH	MHL
+Marshall Islands	Νήσοι Μάρσαλ	MH	MHL
+Marshall Islands	Marŝala Insularo	MH	MHL
+Marshall Islands	Islas Marshall	MH	MHL
+Marshall Islands	Marshalli Saared	MH	MHL
+Marshall Islands	Marshall Uharteak	MH	MHL
+Marshall Islands	Marshallinsaaret	MH	MHL
+Marshall Islands	Îles Marshall	MH	MHL
+Marshall Islands	Marshall-szigetek	MH	MHL
+Marshall Islands	Մարշալյան կղզիներ	MH	MHL
+Marshall Islands	Isole Marshall	MH	MHL
+Marshall Islands	マーシャル諸島	MH	MHL
+Marshall Islands	마셜 제도	MH	MHL
+Marshall Islands	Maršalo salos	MH	MHL
+Marshall Islands	Marshalleilanden	MH	MHL
+Marshall Islands	Marshalløyene	MH	MHL
+Marshall Islands	Wyspy Marshalla	MH	MHL
+Marshall Islands	Ilhas Marshall	MH	MHL
+Marshall Islands	Insulele Marshall	MH	MHL
+Marshall Islands	Маршалловы Острова	MH	MHL
+Marshall Islands	Marshallove ostrovy	MH	MHL
+Marshall Islands	Marshallöarna	MH	MHL
+Marshall Islands	หมู่เกาะมาร์แชลล์	MH	MHL
+Marshall Islands	Маршаллові Острови	MH	MHL
+Marshall Islands	马绍尔群岛	MH	MHL
+Marshall Islands	馬紹爾群島	MH	MHL
+Marshall Islands	Marshall Islands	MH	MHL
+Martinique	مارتينيك	MQ	MTQ
+Martinique	Мартиника	MQ	MTQ
+Martinique	Martinik	MQ	MTQ
+Martinique	Martinique	MQ	MTQ
+Martinique	Μαρτινίκα	MQ	MTQ
+Martinique	Martiniko	MQ	MTQ
+Martinique	Martinica	MQ	MTQ
+Martinique	Martinika	MQ	MTQ
+Martinique	Մարտինիկա	MQ	MTQ
+Martinique	マルティニーク	MQ	MTQ
+Martinique	마르티니크	MQ	MTQ
+Martinique	Martynika	MQ	MTQ
+Martinique	มาร์ตีนิก	MQ	MTQ
+Martinique	Мартиніка	MQ	MTQ
+Martinique	马提尼克	MQ	MTQ
+Martinique	馬丁尼克	MQ	MTQ
+Mauritania	موريتانيا	MR	MRT
+Mauritania	Мавритания	MR	MRT
+Mauritania	Mauritánie	MR	MRT
+Mauritania	Mauretanien	MR	MRT
+Mauritania	Μαυριτανία	MR	MRT
+Mauritania	Maŭritanio	MR	MRT
+Mauritania	Mauritania	MR	MRT
+Mauritania	Mauritaania	MR	MRT
+Mauritania	Mauritanie	MR	MRT
+Mauritania	Mauritánia	MR	MRT
+Mauritania	Մավրիտանիա	MR	MRT
+Mauritania	モーリタニア	MR	MRT
+Mauritania	모리타니	MR	MRT
+Mauritania	Mauritanija	MR	MRT
+Mauritania	Mauritanië	MR	MRT
+Mauritania	Mauretania	MR	MRT
+Mauritania	Mauritânia	MR	MRT
+Mauritania	มอริเตเนีย	MR	MRT
+Mauritania	Мавританія	MR	MRT
+Mauritania	毛里塔尼亚	MR	MRT
+Mauritania	茅利塔尼亞	MR	MRT
+Mauritius	موريشيوس	MU	MUS
+Mauritius	Мавриций	MU	MUS
+Mauritius	Mauricius	MU	MUS
+Mauritius	Mauritius	MU	MUS
+Mauritius	Μαυρίκιος	MU	MUS
+Mauritius	Maŭricio	MU	MUS
+Mauritius	Mauricio	MU	MUS
+Mauritius	Maurizio	MU	MUS
+Mauritius	Maurice	MU	MUS
+Mauritius	Մավրիկիոս	MU	MUS
+Mauritius	モーリシャス	MU	MUS
+Mauritius	모리셔스	MU	MUS
+Mauritius	Mauricijus	MU	MUS
+Mauritius	Maurícia	MU	MUS
+Mauritius	Маврикий	MU	MUS
+Mauritius	Maurícius	MU	MUS
+Mauritius	มอริเชียส	MU	MUS
+Mauritius	Маврикій	MU	MUS
+Mauritius	毛里求斯	MU	MUS
+Mauritius	模里西斯	MU	MUS
+Mayotte	مايوت	YT	MYT
+Mayotte	Майот	YT	MYT
+Mayotte	Mayotte	YT	MYT
+Mayotte	Μαγιότ	YT	MYT
+Mayotte	Majoto	YT	MYT
+Mayotte	Մայոտա	YT	MYT
+Mayotte	マヨット	YT	MYT
+Mayotte	마요트	YT	MYT
+Mayotte	Majotas	YT	MYT
+Mayotte	Majotta	YT	MYT
+Mayotte	Maiote	YT	MYT
+Mayotte	Майотта	YT	MYT
+Mayotte	มายอต	YT	MYT
+Mayotte	马约特	YT	MYT
+Mayotte	馬約特	YT	MYT
+Mexico	المكسيك	MX	MEX
+Mexico	Мексико	MX	MEX
+Mexico	Mexiko	MX	MEX
+Mexico	Mexico	MX	MEX
+Mexico	Μεξικό	MX	MEX
+Mexico	Meksiko	MX	MEX
+Mexico	México	MX	MEX
+Mexico	Mehhiko	MX	MEX
+Mexico	Mexique	MX	MEX
+Mexico	Mexikó	MX	MEX
+Mexico	Մեքսիկա	MX	MEX
+Mexico	Messico	MX	MEX
+Mexico	メキシコ	MX	MEX
+Mexico	멕시코	MX	MEX
+Mexico	Meksika	MX	MEX
+Mexico	Meksyk	MX	MEX
+Mexico	Mexic	MX	MEX
+Mexico	Мексика	MX	MEX
+Mexico	เม็กซิโก	MX	MEX
+Mexico	墨西哥	MX	MEX
+Federated States of Micronesia	ولايات ميكرونيسيا المتحدة	FM	FSM
+Federated States of Micronesia	Микронезия	FM	FSM
+Federated States of Micronesia	Mikronésie	FM	FSM
+Federated States of Micronesia	Mikronesien	FM	FSM
+Federated States of Micronesia	Ομόσπονδες Πολιτείες της Μικρονησίας	FM	FSM
+Federated States of Micronesia	Federacio de Mikronezio	FM	FSM
+Federated States of Micronesia	Micronesia	FM	FSM
+Federated States of Micronesia	Mikroneesia Liiduriigid	FM	FSM
+Federated States of Micronesia	Mikronesiako Estatu Federatuak	FM	FSM
+Federated States of Micronesia	Mikronesian liittovaltio	FM	FSM
+Federated States of Micronesia	États fédérés de Micronésie	FM	FSM
+Federated States of Micronesia	Mikronézia	FM	FSM
+Federated States of Micronesia	Միկրոնեզիա	FM	FSM
+Federated States of Micronesia	ミクロネシア連邦	FM	FSM
+Federated States of Micronesia	미크로네시아 연방	FM	FSM
+Federated States of Micronesia	Mikronezija	FM	FSM
+Federated States of Micronesia	Micronesië	FM	FSM
+Federated States of Micronesia	Mikronesiaføderasjonen	FM	FSM
+Federated States of Micronesia	Mikronezja	FM	FSM
+Federated States of Micronesia	Estados Federados da Micronésia	FM	FSM
+Federated States of Micronesia	Micronezia	FM	FSM
+Federated States of Micronesia	Mikronesiska federationen	FM	FSM
+Federated States of Micronesia	ไมโครนีเซีย	FM	FSM
+Federated States of Micronesia	Федеративні Штати Мікронезії	FM	FSM
+Federated States of Micronesia	密克罗尼西亚联邦	FM	FSM
+Federated States of Micronesia	密克羅尼西亞聯邦	FM	FSM
+Federated States of Micronesia	Micronesia (Federated States of)	FM	FSM
+Moldova	مولدوفا	MD	MDA
+Moldova	Молдова	MD	MDA
+Moldova	Moldavsko	MD	MDA
+Moldova	Moldova	MD	MDA
+Moldova	Moldau	MD	MDA
+Moldova	Μολδαβία	MD	MDA
+Moldova	Moldavio	MD	MDA
+Moldova	Moldavia	MD	MDA
+Moldova	Moldavie	MD	MDA
+Moldova	Մոլդովա	MD	MDA
+Moldova	モルドバ共和国	MD	MDA
+Moldova	몰도바	MD	MDA
+Moldova	Moldavija	MD	MDA
+Moldova	Moldavië	MD	MDA
+Moldova	Mołdawia	MD	MDA
+Moldova	Moldávia	MD	MDA
+Moldova	Republica Moldova	MD	MDA
+Moldova	Молдавия	MD	MDA
+Moldova	Moldavien	MD	MDA
+Moldova	มอลโดวา	MD	MDA
+Moldova	摩尔多瓦	MD	MDA
+Moldova	摩爾多瓦	MD	MDA
+Moldova	Moldova, Republic of	MD	MDA
+Monaco	موناكو	MC	MCO
+Monaco	Монако	MC	MCO
+Monaco	Monako	MC	MCO
+Monaco	Monaco	MC	MCO
+Monaco	Μονακό	MC	MCO
+Monaco	Mónaco	MC	MCO
+Monaco	Մոնակո	MC	MCO
+Monaco	モナコ	MC	MCO
+Monaco	모나코	MC	MCO
+Monaco	Monakas	MC	MCO
+Monaco	โมนาโก	MC	MCO
+Monaco	摩纳哥	MC	MCO
+Monaco	摩納哥	MC	MCO
+Mongolia	منغوليا	MN	MNG
+Mongolia	Монголия	MN	MNG
+Mongolia	Mongolsko	MN	MNG
+Mongolia	Mongoliet	MN	MNG
+Mongolia	Mongolei	MN	MNG
+Mongolia	Μογγολία	MN	MNG
+Mongolia	Mongolio	MN	MNG
+Mongolia	Mongolia	MN	MNG
+Mongolia	Mongoolia	MN	MNG
+Mongolia	Mongolie	MN	MNG
+Mongolia	Mongólia	MN	MNG
+Mongolia	Մոնղոլիա	MN	MNG
+Mongolia	モンゴル	MN	MNG
+Mongolia	몽골	MN	MNG
+Mongolia	Mongolija	MN	MNG
+Mongolia	Mongolië	MN	MNG
+Mongolia	มองโกเลีย	MN	MNG
+Mongolia	Монголія	MN	MNG
+Mongolia	蒙古	MN	MNG
+Montenegro	الجبل الأسود	ME	MNE
+Montenegro	Черна гора	ME	MNE
+Montenegro	Černá Hora	ME	MNE
+Montenegro	Montenegro	ME	MNE
+Montenegro	Μαυροβούνιο	ME	MNE
+Montenegro	Monténégro	ME	MNE
+Montenegro	Montenegró	ME	MNE
+Montenegro	Չեռնոգորիա	ME	MNE
+Montenegro	モンテネグロ	ME	MNE
+Montenegro	몬테네그로	ME	MNE
+Montenegro	Juodkalnija	ME	MNE
+Montenegro	Czarnogóra	ME	MNE
+Montenegro	Muntenegru	ME	MNE
+Montenegro	Черногория	ME	MNE
+Montenegro	Čierna Hora	ME	MNE
+Montenegro	มอนเตเนโกร	ME	MNE
+Montenegro	Чорногорія	ME	MNE
+Montenegro	黑山	ME	MNE
+Montenegro	蒙特內哥羅	ME	MNE
+Montserrat	مونتسرات	MS	MSR
+Montserrat	Монсерат	MS	MSR
+Montserrat	Montserrat	MS	MSR
+Montserrat	Μοντσερράτ	MS	MSR
+Montserrat	Moncerato	MS	MSR
+Montserrat	Մոնտսեռատ	MS	MSR
+Montserrat	モントセラト	MS	MSR
+Montserrat	몬트세랫	MS	MSR
+Montserrat	Montseratas	MS	MSR
+Montserrat	Monserrate	MS	MSR
+Montserrat	Монтсеррат	MS	MSR
+Montserrat	มอนต์เซอร์รัต	MS	MSR
+Montserrat	蒙特塞拉特	MS	MSR
+Morocco	المغرب	MA	MAR
+Morocco	Мароко	MA	MAR
+Morocco	Maroko	MA	MAR
+Morocco	Marokko	MA	MAR
+Morocco	Μαρόκο	MA	MAR
+Morocco	Marruecos	MA	MAR
+Morocco	Maroc	MA	MAR
+Morocco	Marokkó	MA	MAR
+Morocco	Մարոկկո	MA	MAR
+Morocco	Marocco	MA	MAR
+Morocco	モロッコ	MA	MAR
+Morocco	모로코	MA	MAR
+Morocco	Marokas	MA	MAR
+Morocco	Marrocos	MA	MAR
+Morocco	Марокко	MA	MAR
+Morocco	Marocko	MA	MAR
+Morocco	โมร็อกโก	MA	MAR
+Morocco	摩洛哥	MA	MAR
+Morocco	Morocco	MA	MAR
+Mozambique	موزمبيق	MZ	MOZ
+Mozambique	Мозамбик	MZ	MOZ
+Mozambique	Mosambik	MZ	MOZ
+Mozambique	Mozambique	MZ	MOZ
+Mozambique	Μοζαμβίκη	MZ	MOZ
+Mozambique	Mozambiko	MZ	MOZ
+Mozambique	Mosambiik	MZ	MOZ
+Mozambique	Mozambike	MZ	MOZ
+Mozambique	Mozambik	MZ	MOZ
+Mozambique	Մոզամբիկ	MZ	MOZ
+Mozambique	Mozambico	MZ	MOZ
+Mozambique	モザンビーク	MZ	MOZ
+Mozambique	모잠비크	MZ	MOZ
+Mozambique	Mozambikas	MZ	MOZ
+Mozambique	Moçambique	MZ	MOZ
+Mozambique	Mozambic	MZ	MOZ
+Mozambique	โมซัมบิก	MZ	MOZ
+Mozambique	Мозамбік	MZ	MOZ
+Mozambique	莫桑比克	MZ	MOZ
+Mozambique	莫三比克	MZ	MOZ
+Myanmar	ميانمار	MM	MMR
+Myanmar	Мианмар	MM	MMR
+Myanmar	Myanmar	MM	MMR
+Myanmar	Burma	MM	MMR
+Myanmar	Μιανμάρ	MM	MMR
+Myanmar	Birmo	MM	MMR
+Myanmar	Birmania	MM	MMR
+Myanmar	Birma	MM	MMR
+Myanmar	Birmanie	MM	MMR
+Myanmar	Mianmar	MM	MMR
+Myanmar	Մյանմա	MM	MMR
+Myanmar	ミャンマー	MM	MMR
+Myanmar	미얀마	MM	MMR
+Myanmar	Mianmaras	MM	MMR
+Myanmar	Mjanma	MM	MMR
+Myanmar	Мьянма	MM	MMR
+Myanmar	Mjanmarsko	MM	MMR
+Myanmar	พม่า	MM	MMR
+Myanmar	М'янма	MM	MMR
+Myanmar	缅甸	MM	MMR
+Myanmar	緬甸	MM	MMR
+Namibia	ناميبيا	NA	NAM
+Namibia	Намибия	NA	NAM
+Namibia	Namibie	NA	NAM
+Namibia	Namibia	NA	NAM
+Namibia	Ναμίμπια	NA	NAM
+Namibia	Namibio	NA	NAM
+Namibia	Namiibia	NA	NAM
+Namibia	Namíbia	NA	NAM
+Namibia	Նամիբիա	NA	NAM
+Namibia	ナミビア	NA	NAM
+Namibia	나미비아	NA	NAM
+Namibia	Namibija	NA	NAM
+Namibia	Namibië	NA	NAM
+Namibia	นามิเบีย	NA	NAM
+Namibia	Намібія	NA	NAM
+Namibia	纳米比亚	NA	NAM
+Namibia	納米比亞	NA	NAM
+Nauru	ناورو	NR	NRU
+Nauru	Науру	NR	NRU
+Nauru	Nauru	NR	NRU
+Nauru	Ναουρού	NR	NRU
+Nauru	Nauro	NR	NRU
+Nauru	Նաուրու	NR	NRU
+Nauru	ナウル	NR	NRU
+Nauru	나우루	NR	NRU
+Nauru	นาอูรู	NR	NRU
+Nauru	瑙鲁	NR	NRU
+Nauru	諾魯	NR	NRU
+Nepal	نيبال	NP	NPL
+Nepal	Непал	NP	NPL
+Nepal	Nepál	NP	NPL
+Nepal	Nepal	NP	NPL
+Nepal	Νεπάλ	NP	NPL
+Nepal	Nepalo	NP	NPL
+Nepal	Népal	NP	NPL
+Nepal	Նեպալ	NP	NPL
+Nepal	ネパール	NP	NPL
+Nepal	네팔	NP	NPL
+Nepal	Nepalas	NP	NPL
+Nepal	เนปาล	NP	NPL
+Nepal	尼泊尔	NP	NPL
+Nepal	尼泊爾	NP	NPL
+Netherlands	هولندا	NL	NLD
+Netherlands	Нидерландия	NL	NLD
+Netherlands	Nizozemsko	NL	NLD
+Netherlands	Holland	NL	NLD
+Netherlands	Niederlande	NL	NLD
+Netherlands	Ολλανδία (Κάτω Χώρες)	NL	NLD
+Netherlands	Nederlando	NL	NLD
+Netherlands	Países Bajos	NL	NLD
+Netherlands	Herbehereak	NL	NLD
+Netherlands	Alankomaat	NL	NLD
+Netherlands	Pays-Bas	NL	NLD
+Netherlands	Hollandia	NL	NLD
+Netherlands	Նիդերլանդներ	NL	NLD
+Netherlands	Paesi Bassi	NL	NLD
+Netherlands	オランダ	NL	NLD
+Netherlands	네덜란드	NL	NLD
+Netherlands	Nyderlandai	NL	NLD
+Netherlands	Nederland	NL	NLD
+Netherlands	Holandia	NL	NLD
+Netherlands	Países Baixos	NL	NLD
+Netherlands	Țările de Jos	NL	NLD
+Netherlands	Нидерланды	NL	NLD
+Netherlands	Holandsko	NL	NLD
+Netherlands	Nederländerna	NL	NLD
+Netherlands	เนเธอร์แลนด์	NL	NLD
+Netherlands	Нідерланди	NL	NLD
+Netherlands	荷兰	NL	NLD
+Netherlands	荷蘭	NL	NLD
+Netherlands	Netherlands	NL	NLD
+New Caledonia	كاليدونيا الجديدة	NC	NCL
+New Caledonia	Нова Каледония	NC	NCL
+New Caledonia	Nová Kaledonie	NC	NCL
+New Caledonia	Ny Kaledonien	NC	NCL
+New Caledonia	Neukaledonien	NC	NCL
+New Caledonia	Νέα Καληδονία	NC	NCL
+New Caledonia	Nov-Kaledonio	NC	NCL
+New Caledonia	Nueva Caledonia	NC	NCL
+New Caledonia	Uus-Kaledoonia	NC	NCL
+New Caledonia	Kaledonia Berria	NC	NCL
+New Caledonia	Uusi-Kaledonia	NC	NCL
+New Caledonia	Nouvelle-Calédonie	NC	NCL
+New Caledonia	Új-Kaledónia	NC	NCL
+New Caledonia	Նոր Կալեդոնիա	NC	NCL
+New Caledonia	Nuova Caledonia	NC	NCL
+New Caledonia	ニューカレドニア	NC	NCL
+New Caledonia	누벨칼레도니	NC	NCL
+New Caledonia	Naujoji Kaledonija	NC	NCL
+New Caledonia	Nieuw-Caledonië	NC	NCL
+New Caledonia	Ny-Caledonia	NC	NCL
+New Caledonia	Nowa Kaledonia	NC	NCL
+New Caledonia	Nova Caledônia	NC	NCL
+New Caledonia	Noua Caledonie	NC	NCL
+New Caledonia	Новая Каледония	NC	NCL
+New Caledonia	Nová Kaledónia	NC	NCL
+New Caledonia	Nya Kaledonien	NC	NCL
+New Caledonia	นิวแคลิโดเนีย	NC	NCL
+New Caledonia	Нова Каледонія	NC	NCL
+New Caledonia	新喀里多尼亚	NC	NCL
+New Caledonia	新喀里多尼亞	NC	NCL
+New Caledonia	New Caledonia	NC	NCL
+New Zealand	نيوزيلندا	NZ	NZL
+New Zealand	Нова Зеландия	NZ	NZL
+New Zealand	Nový Zéland	NZ	NZL
+New Zealand	New Zealand	NZ	NZL
+New Zealand	Neuseeland	NZ	NZL
+New Zealand	Νέα Ζηλανδία	NZ	NZL
+New Zealand	Nov-Zelando	NZ	NZL
+New Zealand	Nueva Zelanda	NZ	NZL
+New Zealand	Uus-Meremaa	NZ	NZL
+New Zealand	Zeelanda Berria	NZ	NZL
+New Zealand	Uusi-Seelanti	NZ	NZL
+New Zealand	Nouvelle-Zélande	NZ	NZL
+New Zealand	Új-Zéland	NZ	NZL
+New Zealand	Նոր Զելանդիա	NZ	NZL
+New Zealand	Nuova Zelanda	NZ	NZL
+New Zealand	ニュージーランド	NZ	NZL
+New Zealand	뉴질랜드	NZ	NZL
+New Zealand	Naujoji Zelandija	NZ	NZL
+New Zealand	Nieuw-Zeeland	NZ	NZL
+New Zealand	Nowa Zelandia	NZ	NZL
+New Zealand	Nova Zelândia	NZ	NZL
+New Zealand	Noua Zeelandă	NZ	NZL
+New Zealand	Новая Зеландия	NZ	NZL
+New Zealand	Nya Zeeland	NZ	NZL
+New Zealand	นิวซีแลนด์	NZ	NZL
+New Zealand	Нова Зеландія	NZ	NZL
+New Zealand	新西兰	NZ	NZL
+New Zealand	紐西蘭	NZ	NZL
+Nicaragua	نيكاراغوا	NI	NIC
+Nicaragua	Никарагуа	NI	NIC
+Nicaragua	Nikaragua	NI	NIC
+Nicaragua	Nicaragua	NI	NIC
+Nicaragua	Νικαράγουα	NI	NIC
+Nicaragua	Nikaragvo	NI	NIC
+Nicaragua	Նիկարագուա	NI	NIC
+Nicaragua	ニカラグア	NI	NIC
+Nicaragua	니카라과	NI	NIC
+Nicaragua	Nikaragva	NI	NIC
+Nicaragua	Nicarágua	NI	NIC
+Nicaragua	นิการากัว	NI	NIC
+Nicaragua	Нікарагуа	NI	NIC
+Nicaragua	尼加拉瓜	NI	NIC
+Niger	النيجر	NE	NER
+Niger	Нигер	NE	NER
+Niger	Niger	NE	NER
+Niger	Νίγηρας	NE	NER
+Niger	Niĝero	NE	NER
+Niger	Níger	NE	NER
+Niger	Նիգեր	NE	NER
+Niger	ニジェール	NE	NER
+Niger	니제르	NE	NER
+Niger	Nigeris	NE	NER
+Niger	ไนเจอร์	NE	NER
+Niger	Нігер	NE	NER
+Niger	尼日尔	NE	NER
+Niger	尼日	NE	NER
+Nigeria	نيجيريا	NG	NGA
+Nigeria	Нигерия	NG	NGA
+Nigeria	Nigérie	NG	NGA
+Nigeria	Nigeria	NG	NGA
+Nigeria	Νιγηρία	NG	NGA
+Nigeria	Niĝerio	NG	NGA
+Nigeria	Nigeeria	NG	NGA
+Nigeria	Nigéria	NG	NGA
+Nigeria	Նիգերիա	NG	NGA
+Nigeria	ナイジェリア	NG	NGA
+Nigeria	나이지리아	NG	NGA
+Nigeria	Nigerija	NG	NGA
+Nigeria	ไนจีเรีย	NG	NGA
+Nigeria	Нігерія	NG	NGA
+Nigeria	尼日利亚	NG	NGA
+Nigeria	奈及利亞	NG	NGA
+Niue	نييوي	NU	NIU
+Niue	Ниуе	NU	NIU
+Niue	Niue	NU	NIU
+Niue	Νιούε	NU	NIU
+Niue	Niuo	NU	NIU
+Niue	Նիուե	NU	NIU
+Niue	ニウエ	NU	NIU
+Niue	니우에	NU	NIU
+Niue	Niujė	NU	NIU
+Niue	Ниуэ	NU	NIU
+Niue	นีวเว	NU	NIU
+Niue	Ніуе	NU	NIU
+Niue	纽埃	NU	NIU
+Niue	紐埃	NU	NIU
+Norfolk Island	جزيرة نورفولك	NF	NFK
+Norfolk Island	Норфолк	NF	NFK
+Norfolk Island	Norfolk	NF	NFK
+Norfolk Island	Norfolk Island	NF	NFK
+Norfolk Island	Norfolkinsel	NF	NFK
+Norfolk Island	Νησί Νόρφολκ	NF	NFK
+Norfolk Island	Norfolkinsulo	NF	NFK
+Norfolk Island	Isla Norfolk	NF	NFK
+Norfolk Island	Norfolk uhartea	NF	NFK
+Norfolk Island	Norfolkinsaari	NF	NFK
+Norfolk Island	Île Norfolk	NF	NFK
+Norfolk Island	Norfolk-sziget	NF	NFK
+Norfolk Island	Նորֆոլք կղզի	NF	NFK
+Norfolk Island	Isola Norfolk	NF	NFK
+Norfolk Island	ノーフォーク島	NF	NFK
+Norfolk Island	노퍽섬	NF	NFK
+Norfolk Island	Norfolko sala	NF	NFK
+Norfolk Island	Norfolkøya	NF	NFK
+Norfolk Island	Ilha Norfolk	NF	NFK
+Norfolk Island	Insula Norfolk	NF	NFK
+Norfolk Island	Остров Норфолк	NF	NFK
+Norfolk Island	Norfolkön	NF	NFK
+Norfolk Island	เกาะนอร์ฟอล์ก	NF	NFK
+Norfolk Island	Острів Норфолк	NF	NFK
+Norfolk Island	诺福克岛	NF	NFK
+Norfolk Island	諾福克島	NF	NFK
+Macedonia	مقدونيا	MK	MKD
+Macedonia	Северна Македония	MK	MKD
+Macedonia	Severní Makedonie	MK	MKD
+Macedonia	Nordmakedonien	MK	MKD
+Macedonia	Nordmazedonien	MK	MKD
+Macedonia	Βόρεια Μακεδονία	MK	MKD
+Macedonia	Nord-Makedonio	MK	MKD
+Macedonia	Macedonia del Norte	MK	MKD
+Macedonia	Põhja-Makedoonia	MK	MKD
+Macedonia	Ipar Mazedonia	MK	MKD
+Macedonia	Pohjois-Makedonia	MK	MKD
+Macedonia	Macédoine du Nord	MK	MKD
+Macedonia	Észak-Macedónia	MK	MKD
+Macedonia	Հյուսիսային Մակեդոնիա	MK	MKD
+Macedonia	Macedonia del Nord	MK	MKD
+Macedonia	北マケドニア	MK	MKD
+Macedonia	북마케도니아	MK	MKD
+Macedonia	Makedonija	MK	MKD
+Macedonia	Noord-Macedonië	MK	MKD
+Macedonia	Makedonia, Republikken	MK	MKD
+Macedonia	Macedonia Północna	MK	MKD
+Macedonia	Macedônia do Norte	MK	MKD
+Macedonia	Republica Macedonia	MK	MKD
+Macedonia	Северная Македония	MK	MKD
+Macedonia	Severné Macedónsko	MK	MKD
+Macedonia	นอร์ทมาซิโดเนีย	MK	MKD
+Macedonia	Північна Македонія	MK	MKD
+Macedonia	北马其顿	MK	MKD
+Macedonia	北馬其頓	MK	MKD
+Macedonia	North Macedonia	MK	MKD
+Northern Mariana Islands	جزر ماريانا الشمالية	MP	MNP
+Northern Mariana Islands	Северни Мариански острови	MP	MNP
+Northern Mariana Islands	Severní Mariany	MP	MNP
+Northern Mariana Islands	Nordmarianerne	MP	MNP
+Northern Mariana Islands	Nördliche Marianen	MP	MNP
+Northern Mariana Islands	Βόρειες Μαριάνες Νήσοι	MP	MNP
+Northern Mariana Islands	Nord-Marianoj	MP	MNP
+Northern Mariana Islands	Islas Marianas del Norte	MP	MNP
+Northern Mariana Islands	Põhja-Mariaanid	MP	MNP
+Northern Mariana Islands	Ipar Marianak	MP	MNP
+Northern Mariana Islands	Pohjois-Mariaanit	MP	MNP
+Northern Mariana Islands	Îles Mariannes du Nord	MP	MNP
+Northern Mariana Islands	Északi-Mariana-szigetek	MP	MNP
+Northern Mariana Islands	Հյուսիսաին Մարիանյան Կղզիներ	MP	MNP
+Northern Mariana Islands	Isole Marianne Settentrionali	MP	MNP
+Northern Mariana Islands	北マリアナ諸島	MP	MNP
+Northern Mariana Islands	북마리아나 제도	MP	MNP
+Northern Mariana Islands	Marianos Šiaurinės Salos	MP	MNP
+Northern Mariana Islands	Noordelijke Marianen	MP	MNP
+Northern Mariana Islands	Nord-Marianene	MP	MNP
+Northern Mariana Islands	Mariany Północne	MP	MNP
+Northern Mariana Islands	Marianas Setentrionais	MP	MNP
+Northern Mariana Islands	Insulele Mariane de Nord	MP	MNP
+Northern Mariana Islands	Северные Марианские Острова	MP	MNP
+Northern Mariana Islands	Severné Mariány	MP	MNP
+Northern Mariana Islands	Nordmarianerna	MP	MNP
+Northern Mariana Islands	หมู่เกาะนอร์เทิร์นมาเรียนา	MP	MNP
+Northern Mariana Islands	Північні Маріанські Острови	MP	MNP
+Northern Mariana Islands	北马里亚纳群岛	MP	MNP
+Northern Mariana Islands	北馬利安納群島	MP	MNP
+Northern Mariana Islands	Northern Mariana Islands	MP	MNP
+Norway	النرويج	NO	NOR
+Norway	Норвегия	NO	NOR
+Norway	Norsko	NO	NOR
+Norway	Norge	NO	NOR
+Norway	Norwegen	NO	NOR
+Norway	Νορβηγία	NO	NOR
+Norway	Norvegio	NO	NOR
+Norway	Noruega	NO	NOR
+Norway	Norra	NO	NOR
+Norway	Norvegia	NO	NOR
+Norway	Norja	NO	NOR
+Norway	Norvège	NO	NOR
+Norway	Norvégia	NO	NOR
+Norway	Նորվեգիա	NO	NOR
+Norway	ノルウェー	NO	NOR
+Norway	노르웨이	NO	NOR
+Norway	Norvegija	NO	NOR
+Norway	Noorwegen	NO	NOR
+Norway	Norwegia	NO	NOR
+Norway	Nórsko	NO	NOR
+Norway	นอร์เวย์	NO	NOR
+Norway	Норвегія	NO	NOR
+Norway	挪威	NO	NOR
+Norway	Norway	NO	NOR
+Oman	عمان	OM	OMN
+Oman	Оман	OM	OMN
+Oman	Omán	OM	OMN
+Oman	Oman	OM	OMN
+Oman	Ομάν	OM	OMN
+Oman	Omano	OM	OMN
+Oman	Omaan	OM	OMN
+Oman	Օման	OM	OMN
+Oman	オマーン	OM	OMN
+Oman	오만	OM	OMN
+Oman	Omanas	OM	OMN
+Oman	Omã	OM	OMN
+Oman	โอมาน	OM	OMN
+Oman	阿曼	OM	OMN
+Pakistan	باكستان	PK	PAK
+Pakistan	Пакистан	PK	PAK
+Pakistan	Pákistán	PK	PAK
+Pakistan	Pakistan	PK	PAK
+Pakistan	Πακιστάν	PK	PAK
+Pakistan	Pakistano	PK	PAK
+Pakistan	Pakistán	PK	PAK
+Pakistan	Pakisztán	PK	PAK
+Pakistan	Պակիստան	PK	PAK
+Pakistan	パキスタン	PK	PAK
+Pakistan	파키스탄	PK	PAK
+Pakistan	Pakistanas	PK	PAK
+Pakistan	Paquistão	PK	PAK
+Pakistan	ปากีสถาน	PK	PAK
+Pakistan	巴基斯坦	PK	PAK
+Palau	بالاو	PW	PLW
+Palau	Палау	PW	PLW
+Palau	Palau	PW	PLW
+Palau	Παλάου	PW	PLW
+Palau	Palaŭo	PW	PLW
+Palau	Palaos	PW	PLW
+Palau	Belau	PW	PLW
+Palau	Պալաու	PW	PLW
+Palau	パラオ	PW	PLW
+Palau	팔라우	PW	PLW
+Palau	ปาเลา	PW	PLW
+Palau	帕劳	PW	PLW
+Palau	帛琉	PW	PLW
+Palestine	فلسطين	PS	PSE
+Palestine	Палестинска автономия	PS	PSE
+Palestine	Palestinská autonomie	PS	PSE
+Palestine	Palæstina	PS	PSE
+Palestine	Palästina	PS	PSE
+Palestine	Δυτική Όχθη	PS	PSE
+Palestine	Palestino	PS	PSE
+Palestine	Palestina	PS	PSE
+Palestine	Palestiina	PS	PSE
+Palestine	Palestine	PS	PSE
+Palestine	Palesztina	PS	PSE
+Palestine	Պաղեստինյան ազգային վարչություն	PS	PSE
+Palestine	パレスチナ	PS	PSE
+Palestine	팔레스타인	PS	PSE
+Palestine	De palestinske territoriene	PS	PSE
+Palestine	Palestyna	PS	PSE
+Palestine	Teritoriile Palestiniene Ocupate	PS	PSE
+Palestine	Государство Палестина	PS	PSE
+Palestine	Palestína	PS	PSE
+Palestine	ปาเลสไตน์	PS	PSE
+Palestine	Палестина	PS	PSE
+Palestine	巴勒斯坦	PS	PSE
+Palestine	Palestine, State of	PS	PSE
+Panama	بنما	PA	PAN
+Panama	Панама	PA	PAN
+Panama	Panama	PA	PAN
+Panama	Παναμάς	PA	PAN
+Panama	Panamo	PA	PAN
+Panama	Panamá	PA	PAN
+Panama	Պանամա	PA	PAN
+Panama	パナマ	PA	PAN
+Panama	파나마	PA	PAN
+Panama	ปานามา	PA	PAN
+Panama	巴拿马	PA	PAN
+Panama	巴拿馬	PA	PAN
+Papua New Guinea	بابوا غينيا الجديدة	PG	PNG
+Papua New Guinea	Папуа Нова Гвинея	PG	PNG
+Papua New Guinea	Papua Nová Guinea	PG	PNG
+Papua New Guinea	Papua Ny Guinea	PG	PNG
+Papua New Guinea	Papua-Neuguinea	PG	PNG
+Papua New Guinea	Παπούα Νέα Γουινέα	PG	PNG
+Papua New Guinea	Papuo-Nov-Gvineo	PG	PNG
+Papua New Guinea	Papúa Nueva Guinea	PG	PNG
+Papua New Guinea	Paapua Uus-Guinea	PG	PNG
+Papua New Guinea	Papua Ginea Berria	PG	PNG
+Papua New Guinea	Papua-Uusi-Guinea	PG	PNG
+Papua New Guinea	Papouasie-Nouvelle-Guinée	PG	PNG
+Papua New Guinea	Pápua Új-Guinea	PG	PNG
+Papua New Guinea	Պապուա Նոր Գվինեա	PG	PNG
+Papua New Guinea	Papua Nuova Guinea	PG	PNG
+Papua New Guinea	パプアニューギニア	PG	PNG
+Papua New Guinea	파푸아뉴기니	PG	PNG
+Papua New Guinea	Papua Naujoji Gvinėja	PG	PNG
+Papua New Guinea	Papoea-Nieuw-Guinea	PG	PNG
+Papua New Guinea	Papua Ny-Guinea	PG	PNG
+Papua New Guinea	Papua-Nowa Gwinea	PG	PNG
+Papua New Guinea	Papua-Nova Guiné	PG	PNG
+Papua New Guinea	Papua Noua Guinee	PG	PNG
+Papua New Guinea	Папуа — Новая Гвинея	PG	PNG
+Papua New Guinea	Papua-Nová Guinea	PG	PNG
+Papua New Guinea	Papua Nya Guinea	PG	PNG
+Papua New Guinea	ปาปัวนิวกินี	PG	PNG
+Papua New Guinea	Папуа Нова Гвінея	PG	PNG
+Papua New Guinea	巴布亚新几内亚	PG	PNG
+Papua New Guinea	巴布亞紐幾內亞	PG	PNG
+Papua New Guinea	Papua New Guinea	PG	PNG
+Paraguay	باراغواي	PY	PRY
+Paraguay	Парагвай	PY	PRY
+Paraguay	Paraguay	PY	PRY
+Paraguay	Παραγουάη	PY	PRY
+Paraguay	Paragvajo	PY	PRY
+Paraguay	Paraguai	PY	PRY
+Paraguay	Պարագվայ	PY	PRY
+Paraguay	パラグアイ	PY	PRY
+Paraguay	파라과이	PY	PRY
+Paraguay	Paragvajus	PY	PRY
+Paraguay	Paragwaj	PY	PRY
+Paraguay	Paraguaj	PY	PRY
+Paraguay	ปารากวัย	PY	PRY
+Paraguay	巴拉圭	PY	PRY
+Peru	بيرو	PE	PER
+Peru	Перу	PE	PER
+Peru	Peru	PE	PER
+Peru	Περού	PE	PER
+Peru	Peruo	PE	PER
+Peru	Perú	PE	PER
+Peru	Peruu	PE	PER
+Peru	Pérou	PE	PER
+Peru	Պերու	PE	PER
+Peru	Perù	PE	PER
+Peru	ペルー	PE	PER
+Peru	페루	PE	PER
+Peru	เปรู	PE	PER
+Peru	秘鲁	PE	PER
+Peru	秘魯	PE	PER
+Philippines	الفلبين	PH	PHL
+Philippines	Филипини	PH	PHL
+Philippines	Filipíny	PH	PHL
+Philippines	Filippinerne	PH	PHL
+Philippines	Philippinen	PH	PHL
+Philippines	Φιλιππίνες	PH	PHL
+Philippines	Filipinoj	PH	PHL
+Philippines	Filipinas	PH	PHL
+Philippines	Filipiinid	PH	PHL
+Philippines	Filipinak	PH	PHL
+Philippines	Filippiinit	PH	PHL
+Philippines	Philippines	PH	PHL
+Philippines	Fülöp-szigetek	PH	PHL
+Philippines	Ֆիլիպիններ	PH	PHL
+Philippines	Filippine	PH	PHL
+Philippines	フィリピン	PH	PHL
+Philippines	필리핀	PH	PHL
+Philippines	Filipinai	PH	PHL
+Philippines	Filipijnen	PH	PHL
+Philippines	Filippinene	PH	PHL
+Philippines	Filipiny	PH	PHL
+Philippines	Filipine	PH	PHL
+Philippines	Филиппины	PH	PHL
+Philippines	Filippinerna	PH	PHL
+Philippines	ฟิลิปปินส์	PH	PHL
+Philippines	Філіппіни	PH	PHL
+Philippines	菲律宾	PH	PHL
+Philippines	菲律賓	PH	PHL
+Pitcairn	جزر بيتكيرن	PN	PCN
+Pitcairn	Питкерн	PN	PCN
+Pitcairn	Pitcairnovy ostrovy	PN	PCN
+Pitcairn	Pitcairn	PN	PCN
+Pitcairn	Pitcairninseln	PN	PCN
+Pitcairn	Νησιά Πίτκερν	PN	PCN
+Pitcairn	Pitkarna Insularo	PN	PCN
+Pitcairn	Islas Pitcairn	PN	PCN
+Pitcairn	Pitcairn uharteak	PN	PCN
+Pitcairn	Îles Pitcairn	PN	PCN
+Pitcairn	Pitcairn-szigetek	PN	PCN
+Pitcairn	Փիթքերն կղզիներ	PN	PCN
+Pitcairn	Isole Pitcairn	PN	PCN
+Pitcairn	ピトケアン	PN	PCN
+Pitcairn	핏케언 제도	PN	PCN
+Pitcairn	Pitkernas	PN	PCN
+Pitcairn	Pitcairneilanden	PN	PCN
+Pitcairn	Pitcairnøyene	PN	PCN
+Pitcairn	Острова Питкэрн	PN	PCN
+Pitcairn	Pitcairnove ostrovy	PN	PCN
+Pitcairn	Pitcairnöarna	PN	PCN
+Pitcairn	หมู่เกาะพิตแคร์น	PN	PCN
+Pitcairn	Піткерн	PN	PCN
+Pitcairn	皮特凯恩群岛	PN	PCN
+Pitcairn	皮特凱恩群島	PN	PCN
+Poland	بولندا	PL	POL
+Poland	Полша	PL	POL
+Poland	Polsko	PL	POL
+Poland	Polen	PL	POL
+Poland	Πολωνία	PL	POL
+Poland	Pollando	PL	POL
+Poland	Polonia	PL	POL
+Poland	Poola	PL	POL
+Poland	Puola	PL	POL
+Poland	Pologne	PL	POL
+Poland	Lengyelország	PL	POL
+Poland	Լեհաստան	PL	POL
+Poland	ポーランド	PL	POL
+Poland	폴란드	PL	POL
+Poland	Lenkija	PL	POL
+Poland	Polska	PL	POL
+Poland	Polónia	PL	POL
+Poland	Польша	PL	POL
+Poland	Poľsko	PL	POL
+Poland	โปแลนด์	PL	POL
+Poland	Польща	PL	POL
+Poland	波兰	PL	POL
+Poland	波蘭	PL	POL
+Poland	Poland	PL	POL
+Portugal	البرتغال	PT	PRT
+Portugal	Португалия	PT	PRT
+Portugal	Portugalsko	PT	PRT
+Portugal	Portugal	PT	PRT
+Portugal	Πορτογαλία	PT	PRT
+Portugal	Portugalio	PT	PRT
+Portugal	Portugali	PT	PRT
+Portugal	Portugália	PT	PRT
+Portugal	Պորտուգալիա	PT	PRT
+Portugal	Portogallo	PT	PRT
+Portugal	ポルトガル	PT	PRT
+Portugal	포르투갈	PT	PRT
+Portugal	Portugalija	PT	PRT
+Portugal	Portugalia	PT	PRT
+Portugal	โปรตุเกส	PT	PRT
+Portugal	Португалія	PT	PRT
+Portugal	葡萄牙	PT	PRT
+Puerto Rico	بورتوريكو	PR	PRI
+Puerto Rico	Пуерто Рико	PR	PRI
+Puerto Rico	Portoriko	PR	PRI
+Puerto Rico	Puerto Rico	PR	PRI
+Puerto Rico	Πουέρτο Ρίκο	PR	PRI
+Puerto Rico	Porto-Riko	PR	PRI
+Puerto Rico	Porto Rico	PR	PRI
+Puerto Rico	Պուերտո Ռիկո	PR	PRI
+Puerto Rico	プエルトリコ	PR	PRI
+Puerto Rico	푸에르토리코	PR	PRI
+Puerto Rico	Puerto Rikas	PR	PRI
+Puerto Rico	Portoryko	PR	PRI
+Puerto Rico	Пуэрто-Рико	PR	PRI
+Puerto Rico	ปวยร์โตรีโก	PR	PRI
+Puerto Rico	Пуерто-Рико	PR	PRI
+Puerto Rico	波多黎各	PR	PRI
+Qatar	قطر	QA	QAT
+Qatar	Катар	QA	QAT
+Qatar	Katar	QA	QAT
+Qatar	Qatar	QA	QAT
+Qatar	Κατάρ	QA	QAT
+Qatar	Kataro	QA	QAT
+Qatar	Catar	QA	QAT
+Qatar	Կատար	QA	QAT
+Qatar	カタール	QA	QAT
+Qatar	카타르	QA	QAT
+Qatar	Kataras	QA	QAT
+Qatar	กาตาร์	QA	QAT
+Qatar	卡塔尔	QA	QAT
+Qatar	卡達	QA	QAT
+Réunion	لا ريونيون	RE	REU
+Réunion	Реюнион	RE	REU
+Réunion	Réunion	RE	REU
+Réunion	Ρεϊνιόν	RE	REU
+Réunion	Reunio	RE	REU
+Réunion	Reunión	RE	REU
+Réunion	La Réunion	RE	REU
+Réunion	Ռեյունիոն	RE	REU
+Réunion	Riunione	RE	REU
+Réunion	レユニオン	RE	REU
+Réunion	레위니옹	RE	REU
+Réunion	Reunjonas	RE	REU
+Réunion	Reunion	RE	REU
+Réunion	Reunião	RE	REU
+Réunion	Реюньон	RE	REU
+Réunion	เรอูว์นียง	RE	REU
+Réunion	Реюньйон	RE	REU
+Réunion	留尼汪	RE	REU
+Réunion	留尼旺	RE	REU
+Romania	رومانيا	RO	ROU
+Romania	Румъния	RO	ROU
+Romania	Rumunsko	RO	ROU
+Romania	Rumænien	RO	ROU
+Romania	Rumänien	RO	ROU
+Romania	Ρουμανία	RO	ROU
+Romania	Rumanio	RO	ROU
+Romania	Rumania	RO	ROU
+Romania	Rumeenia	RO	ROU
+Romania	Errumania	RO	ROU
+Romania	Romania	RO	ROU
+Romania	Roumanie	RO	ROU
+Romania	Románia	RO	ROU
+Romania	Ռումինիա	RO	ROU
+Romania	ルーマニア	RO	ROU
+Romania	루마니아	RO	ROU
+Romania	Rumunija	RO	ROU
+Romania	Roemenië	RO	ROU
+Romania	Rumunia	RO	ROU
+Romania	Roménia	RO	ROU
+Romania	România	RO	ROU
+Romania	Румыния	RO	ROU
+Romania	โรมาเนีย	RO	ROU
+Romania	Румунія	RO	ROU
+Romania	罗马尼亚	RO	ROU
+Romania	羅馬尼亞	RO	ROU
+Russian Federation	روسيا	RU	RUS
+Russian Federation	Русия	RU	RUS
+Russian Federation	Rusko	RU	RUS
+Russian Federation	Rusland	RU	RUS
+Russian Federation	Russland	RU	RUS
+Russian Federation	Ρωσία	RU	RUS
+Russian Federation	Rusio	RU	RUS
+Russian Federation	Rusia	RU	RUS
+Russian Federation	Venemaa	RU	RUS
+Russian Federation	Errusia	RU	RUS
+Russian Federation	Venäjä	RU	RUS
+Russian Federation	Russie	RU	RUS
+Russian Federation	Oroszország	RU	RUS
+Russian Federation	Ռուսաստան	RU	RUS
+Russian Federation	Russia	RU	RUS
+Russian Federation	ロシア連邦	RU	RUS
+Russian Federation	러시아	RU	RUS
+Russian Federation	Rusija	RU	RUS
+Russian Federation	Rosja	RU	RUS
+Russian Federation	Rússia	RU	RUS
+Russian Federation	Россия	RU	RUS
+Russian Federation	Ryssland	RU	RUS
+Russian Federation	รัสเซีย	RU	RUS
+Russian Federation	Росія	RU	RUS
+Russian Federation	俄罗斯	RU	RUS
+Russian Federation	俄羅斯	RU	RUS
+Russian Federation	Russian Federation	RU	RUS
+Rwanda	رواندا	RW	RWA
+Rwanda	Руанда	RW	RWA
+Rwanda	Rwanda	RW	RWA
+Rwanda	Ruanda	RW	RWA
+Rwanda	Ρουάντα	RW	RWA
+Rwanda	Ruando	RW	RWA
+Rwanda	Ռուանդա	RW	RWA
+Rwanda	ルワンダ	RW	RWA
+Rwanda	르완다	RW	RWA
+Rwanda	รวันดา	RW	RWA
+Rwanda	卢旺达	RW	RWA
+Rwanda	盧安達	RW	RWA
+Saint Barthélemy	سان بارتيلمي	BL	BLM
+Saint Barthélemy	Сен Бартелми	BL	BLM
+Saint Barthélemy	Svatý Bartoloměj	BL	BLM
+Saint Barthélemy	Saint Barthélemy	BL	BLM
+Saint Barthélemy	Saint-Barthélemy	BL	BLM
+Saint Barthélemy	Άγιος Βαρθολομαίος	BL	BLM
+Saint Barthélemy	San Bartolomé	BL	BLM
+Saint Barthélemy	Սուրբ Բարդուղիմեոսի կղզի	BL	BLM
+Saint Barthélemy	サン・バルテルミー	BL	BLM
+Saint Barthélemy	생바르텔레미	BL	BLM
+Saint Barthélemy	Šv. Bartolomėjaus sala	BL	BLM
+Saint Barthélemy	São Bartolomeu	BL	BLM
+Saint Barthélemy	Сен-Бартелеми	BL	BLM
+Saint Barthélemy	Svätý Bartolomej	BL	BLM
+Saint Barthélemy	แซ็ง–บาร์เตเลมี	BL	BLM
+Saint Barthélemy	Сен-Бартельмі	BL	BLM
+Saint Barthélemy	圣巴泰勒米	BL	BLM
+Saint Barthélemy	聖巴瑟米	BL	BLM
+Saint Helena	سانت هيلانة وأسينشين وتريستان دا كونا	SH	SHN
+Saint Helena	Света Елена, Възнесение и Тристан да Куня	SH	SHN
+Saint Helena	Svatá Helena, Ascension a Tristan da Cunha	SH	SHN
+Saint Helena	Sankt Helena	SH	SHN
+Saint Helena	St. Helena, Ascension und Tristan da Cunha	SH	SHN
+Saint Helena	Νήσος Αγίας Ελένης	SH	SHN
+Saint Helena	Sankta Heleno, Ascension kaj Tristan da Cunha	SH	SHN
+Saint Helena	Santa Elena, Ascensión y Tristán de Acuña	SH	SHN
+Saint Helena	Saint Helena	SH	SHN
+Saint Helena	Santa Helena, Ascension eta Tristan da Cunha	SH	SHN
+Saint Helena	Saint Helena, Ascension ja Tristan da Cunha	SH	SHN
+Saint Helena	Sainte-Hélène, Ascension et Tristan da Cunha	SH	SHN
+Saint Helena	Szent Ilona	SH	SHN
+Saint Helena	Սուրբ Հեղինեի կղզի	SH	SHN
+Saint Helena	Sant'Elena, Ascensione e Tristan da Cunha	SH	SHN
+Saint Helena	セントヘレナ・アセンションおよびトリスタンダクーニャ	SH	SHN
+Saint Helena	세인트헬레나	SH	SHN
+Saint Helena	Šv. Elenos, Dangun Žengimo, Tristanas da Kunja salos	SH	SHN
+Saint Helena	Sint-Helena, Ascension en Tristan da Cunha	SH	SHN
+Saint Helena	St. Helena, Ascension og Tristan da Cunha	SH	SHN
+Saint Helena	Wyspa Świętej Heleny, Wyspa Wniebowstąpienia i Tristan da Cunha	SH	SHN
+Saint Helena	Santa Helena, Ascensão e Tristão da Cunha	SH	SHN
+Saint Helena	Sfânta Elena	SH	SHN
+Saint Helena	Острова Святой Елены, Вознесения и Тристан-да-Кунья	SH	SHN
+Saint Helena	Svätá Helena	SH	SHN
+Saint Helena	Sankta Helena	SH	SHN
+Saint Helena	เซนต์เฮเลนา	SH	SHN
+Saint Helena	Острови Святої Єлени, Вознесіння і Тристан-да-Кунья	SH	SHN
+Saint Helena	圣赫勒拿、阿森松和特里斯坦-达库尼亚	SH	SHN
+Saint Helena	聖赫倫那、阿森松和特里斯坦-達庫尼亞	SH	SHN
+Saint Helena	Saint Helena, Ascension and Tristan da Cunha	SH	SHN
+Saint Kitts and Nevis	سانت كيتس ونيفيس	KN	KNA
+Saint Kitts and Nevis	Сейнт Китс и Невис	KN	KNA
+Saint Kitts and Nevis	Svatý Kryštof a Nevis	KN	KNA
+Saint Kitts and Nevis	Saint Kitts og Nevis	KN	KNA
+Saint Kitts and Nevis	St. Kitts und Nevis	KN	KNA
+Saint Kitts and Nevis	Άγιος Χριστόφορος και Νέβις	KN	KNA
+Saint Kitts and Nevis	Sankta-Kito kaj Neviso	KN	KNA
+Saint Kitts and Nevis	San Cristóbal y Nieves	KN	KNA
+Saint Kitts and Nevis	Saint Kitts ja Nevis	KN	KNA
+Saint Kitts and Nevis	Saint Kitts eta Nevis	KN	KNA
+Saint Kitts and Nevis	Saint-Christophe-et-Niévès	KN	KNA
+Saint Kitts and Nevis	Saint Kitts és Nevis	KN	KNA
+Saint Kitts and Nevis	Սենտ Կիտս և Նևիս	KN	KNA
+Saint Kitts and Nevis	Saint Kitts e Nevis	KN	KNA
+Saint Kitts and Nevis	セントクリストファー・ネイビス	KN	KNA
+Saint Kitts and Nevis	세인트키츠 네비스	KN	KNA
+Saint Kitts and Nevis	Sent Kitsas ir Nevis	KN	KNA
+Saint Kitts and Nevis	Saint Kitts en Nevis	KN	KNA
+Saint Kitts and Nevis	Saint Kitts i Nevis	KN	KNA
+Saint Kitts and Nevis	São Cristóvão e Neves	KN	KNA
+Saint Kitts and Nevis	Sfântul Kitts și Nevis	KN	KNA
+Saint Kitts and Nevis	Сент-Китс и Невис	KN	KNA
+Saint Kitts and Nevis	Svätý Krištof a Nevis	KN	KNA
+Saint Kitts and Nevis	Saint Kitts och Nevis	KN	KNA
+Saint Kitts and Nevis	เซนต์คิตส์และเนวิส	KN	KNA
+Saint Kitts and Nevis	Сент-Кіттс і Невіс	KN	KNA
+Saint Kitts and Nevis	圣基茨和尼维斯	KN	KNA
+Saint Kitts and Nevis	聖克里斯多福及尼維斯	KN	KNA
+Saint Kitts and Nevis	Saint Kitts and Nevis	KN	KNA
+Saint Lucia	سانت لوسيا	LC	LCA
+Saint Lucia	Сейнт Лусия	LC	LCA
+Saint Lucia	Svatá Lucie	LC	LCA
+Saint Lucia	Saint Lucia	LC	LCA
+Saint Lucia	St. Lucia	LC	LCA
+Saint Lucia	Αγία Λουκία	LC	LCA
+Saint Lucia	Sankta Lucio	LC	LCA
+Saint Lucia	Santa Lucía	LC	LCA
+Saint Lucia	Santa Luzia	LC	LCA
+Saint Lucia	Sainte-Lucie	LC	LCA
+Saint Lucia	Սենթ Լյուսիա	LC	LCA
+Saint Lucia	セントルシア	LC	LCA
+Saint Lucia	세인트루시아	LC	LCA
+Saint Lucia	Sent Lusija	LC	LCA
+Saint Lucia	Santa Lúcia	LC	LCA
+Saint Lucia	Sfânta Lucia	LC	LCA
+Saint Lucia	Сент-Люсия	LC	LCA
+Saint Lucia	Svätá Lucia	LC	LCA
+Saint Lucia	เซนต์ลูเชีย	LC	LCA
+Saint Lucia	Сент-Люсія	LC	LCA
+Saint Lucia	圣卢西亚	LC	LCA
+Saint Lucia	聖露西亞	LC	LCA
+Saint Martin	تجمع سان مارتين	MF	MAF
+Saint Martin	Сен Мартен	MF	MAF
+Saint Martin	Svatý Martin (francouzská část)	MF	MAF
+Saint Martin	Saint Martin	MF	MAF
+Saint Martin	Saint-Martin (französischer Teil)	MF	MAF
+Saint Martin	Άγιος Μαρτίνος (Γαλλία)	MF	MAF
+Saint Martin	Saint-Martin	MF	MAF
+Saint Martin	San Martín	MF	MAF
+Saint Martin	Saint Martin (Ranska)	MF	MAF
+Saint Martin	Սեն Մարտեն	MF	MAF
+Saint Martin	サン・マルタン（フランス領）	MF	MAF
+Saint Martin	생마르탱	MF	MAF
+Saint Martin	San Martenas	MF	MAF
+Saint Martin	São Martinho	MF	MAF
+Saint Martin	Sint Maarten (partea franceză)	MF	MAF
+Saint Martin	Сен-Мартен	MF	MAF
+Saint Martin	เซนต์มาร์ติน	MF	MAF
+Saint Martin	法属圣马丁	MF	MAF
+Saint Martin	法屬聖馬丁	MF	MAF
+Saint Martin	Saint Martin (French part)	MF	MAF
+Saint Pierre and Miquelon	سان بيير وميكلون	PM	SPM
+Saint Pierre and Miquelon	Сен Пиер и Микелон	PM	SPM
+Saint Pierre and Miquelon	Saint Pierre a Miquelon	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre og Miquelon	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre und Miquelon	PM	SPM
+Saint Pierre and Miquelon	Σαιν Πιερ και Μικελόν	PM	SPM
+Saint Pierre and Miquelon	Sankta-Piero kaj Mikelono	PM	SPM
+Saint Pierre and Miquelon	San Pedro y Miquelón	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre ja Miquelon	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre eta Mikelune	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre-et-Miquelon	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre és Miquelon	PM	SPM
+Saint Pierre and Miquelon	Սեն Պիեռ և Միքելոն	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre e Miquelon	PM	SPM
+Saint Pierre and Miquelon	サンピエール島・ミクロン島	PM	SPM
+Saint Pierre and Miquelon	생피에르 미클롱	PM	SPM
+Saint Pierre and Miquelon	Sen Pjeras ir Mikelonas	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre en Miquelon	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre i Miquelon	PM	SPM
+Saint Pierre and Miquelon	São Pedro e Miquelão	PM	SPM
+Saint Pierre and Miquelon	Sfântul Pierre și Miquelon	PM	SPM
+Saint Pierre and Miquelon	Сен-Пьер и Микелон	PM	SPM
+Saint Pierre and Miquelon	Saint-Pierre och Miquelon	PM	SPM
+Saint Pierre and Miquelon	แซงปีแยร์และมีเกอลง	PM	SPM
+Saint Pierre and Miquelon	Сен-П'єр і Мікелон	PM	SPM
+Saint Pierre and Miquelon	圣皮埃尔和密克隆	PM	SPM
+Saint Pierre and Miquelon	聖皮埃與密克隆群島	PM	SPM
+Saint Pierre and Miquelon	Saint Pierre and Miquelon	PM	SPM
+Saint Vincent and the Grenadines	سانت فينسنت والغرينادين	VC	VCT
+Saint Vincent and the Grenadines	Сейнт Винсент и Гренадини	VC	VCT
+Saint Vincent and the Grenadines	Svatý Vincenc a Grenadiny	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent og Grenadinerne	VC	VCT
+Saint Vincent and the Grenadines	St. Vincent und die Grenadinen	VC	VCT
+Saint Vincent and the Grenadines	Άγιος Βικέντιος και Γρεναδίνες	VC	VCT
+Saint Vincent and the Grenadines	Sankta Vincento kaj la Grenadinoj	VC	VCT
+Saint Vincent and the Grenadines	San Vicente y las Granadinas	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent ja Grenadiinid	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent eta Grenadinak	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent ja Grenadiinit	VC	VCT
+Saint Vincent and the Grenadines	Saint-Vincent-et-les-Grenadines	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent és a Grenadine-szigetek	VC	VCT
+Saint Vincent and the Grenadines	Սենտ Վինսենտ և Գրենադիներ	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent e Grenadine	VC	VCT
+Saint Vincent and the Grenadines	セントビンセントおよびグレナディーン諸島	VC	VCT
+Saint Vincent and the Grenadines	세인트빈센트 그레나딘	VC	VCT
+Saint Vincent and the Grenadines	Sent Vinsentas ir Grenadinai	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent en de Grenadines	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent og Grenadinene	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent i Grenadyny	VC	VCT
+Saint Vincent and the Grenadines	São Vicente e Granadinas	VC	VCT
+Saint Vincent and the Grenadines	Sfântul Vincent și Grenadine	VC	VCT
+Saint Vincent and the Grenadines	Сент-Винсент и Гренадины	VC	VCT
+Saint Vincent and the Grenadines	Svätý Vincent a Grenadíny	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent och Grenadinerna	VC	VCT
+Saint Vincent and the Grenadines	เซนต์วินเซนต์และเกรนาดีนส์	VC	VCT
+Saint Vincent and the Grenadines	Сент-Вінсент і Гренадини	VC	VCT
+Saint Vincent and the Grenadines	圣文森特和格林纳丁斯	VC	VCT
+Saint Vincent and the Grenadines	聖文森及格瑞那丁	VC	VCT
+Saint Vincent and the Grenadines	Saint Vincent and the Grenadines	VC	VCT
+Samoa	ساموا	WS	WSM
+Samoa	Самоа	WS	WSM
+Samoa	Samoa	WS	WSM
+Samoa	Σαμόα	WS	WSM
+Samoa	Samoo	WS	WSM
+Samoa	Szamoa	WS	WSM
+Samoa	Սամոա	WS	WSM
+Samoa	サモア	WS	WSM
+Samoa	사모아	WS	WSM
+Samoa	ซามัว	WS	WSM
+Samoa	萨摩亚	WS	WSM
+Samoa	薩摩亞	WS	WSM
+San Marino	سان مارينو	SM	SMR
+San Marino	Сан Марино	SM	SMR
+San Marino	San Marino	SM	SMR
+San Marino	Άγιος Μαρίνος	SM	SMR
+San Marino	San-Marino	SM	SMR
+San Marino	Saint-Marin	SM	SMR
+San Marino	Սան Մարինո	SM	SMR
+San Marino	サンマリノ	SM	SMR
+San Marino	산마리노	SM	SMR
+San Marino	San Marinas	SM	SMR
+San Marino	Сан-Марино	SM	SMR
+San Marino	San Maríno	SM	SMR
+San Marino	ซานมารีโน	SM	SMR
+San Marino	圣马力诺	SM	SMR
+San Marino	聖馬利諾	SM	SMR
+São Tomé and Principe	ساو تومي وبرينسيب	ST	STP
+São Tomé and Principe	Сао Томе и Принсипи	ST	STP
+São Tomé and Principe	Svatý Tomáš a Princův ostrov	ST	STP
+São Tomé and Principe	São Tomé og Príncipe	ST	STP
+São Tomé and Principe	São Tomé und Príncipe	ST	STP
+São Tomé and Principe	Σάο Τομέ και Πρίνσιπε	ST	STP
+São Tomé and Principe	Santomeo kaj Principeo	ST	STP
+São Tomé and Principe	Santo Tomé y Príncipe	ST	STP
+São Tomé and Principe	São Tomé ja Príncipe	ST	STP
+São Tomé and Principe	Sao Tome eta Principe	ST	STP
+São Tomé and Principe	Sao Tomé-et-Principe	ST	STP
+São Tomé and Principe	São Tomé és Príncipe	ST	STP
+São Tomé and Principe	Սան Տոմե և Պրինսիպի	ST	STP
+São Tomé and Principe	São Tomé e Príncipe	ST	STP
+São Tomé and Principe	サントメ・プリンシペ	ST	STP
+São Tomé and Principe	상투메 프린시페	ST	STP
+São Tomé and Principe	San Tomė ir Prinsipė	ST	STP
+São Tomé and Principe	Sao Tomé en Principe	ST	STP
+São Tomé and Principe	Wyspy Świętego Tomasza i Książęca	ST	STP
+São Tomé and Principe	Sao Tome și Principe	ST	STP
+São Tomé and Principe	Сан-Томе и Принсипи	ST	STP
+São Tomé and Principe	Svätý Tomáš a Princov ostrov	ST	STP
+São Tomé and Principe	São Tomé och Príncipe	ST	STP
+São Tomé and Principe	เซาตูเมและปรินซีปี	ST	STP
+São Tomé and Principe	Сан-Томе і Принсіпі	ST	STP
+São Tomé and Principe	圣多美和普林西比	ST	STP
+São Tomé and Principe	聖多美普林西比	ST	STP
+São Tomé and Principe	Sao Tome and Principe	ST	STP
+Saudi Arabia	السعودية	SA	SAU
+Saudi Arabia	Саудитска Арабия	SA	SAU
+Saudi Arabia	Saúdská Arábie	SA	SAU
+Saudi Arabia	Saudi-Arabien	SA	SAU
+Saudi Arabia	Σαουδική Αραβία	SA	SAU
+Saudi Arabia	Sauda Arabio	SA	SAU
+Saudi Arabia	Arabia Saudita	SA	SAU
+Saudi Arabia	Saudi Araabia	SA	SAU
+Saudi Arabia	Saudi Arabia	SA	SAU
+Saudi Arabia	Saudi-Arabia	SA	SAU
+Saudi Arabia	Arabie saoudite	SA	SAU
+Saudi Arabia	Szaúd-Arábia	SA	SAU
+Saudi Arabia	Սաուդյան Արաբիա	SA	SAU
+Saudi Arabia	サウジアラビア	SA	SAU
+Saudi Arabia	사우디아라비아	SA	SAU
+Saudi Arabia	Saudo Arabija	SA	SAU
+Saudi Arabia	Saoedi-Arabië	SA	SAU
+Saudi Arabia	Arabia Saudyjska	SA	SAU
+Saudi Arabia	Arábia Saudita	SA	SAU
+Saudi Arabia	Arabia Saudită	SA	SAU
+Saudi Arabia	Саудовская Аравия	SA	SAU
+Saudi Arabia	Saudská Arábia	SA	SAU
+Saudi Arabia	Saudiarabien	SA	SAU
+Saudi Arabia	ซาอุดีอาระเบีย	SA	SAU
+Saudi Arabia	Саудівська Аравія	SA	SAU
+Saudi Arabia	沙特阿拉伯	SA	SAU
+Saudi Arabia	沙烏地阿拉伯	SA	SAU
+Senegal	السنغال	SN	SEN
+Senegal	Сенегал	SN	SEN
+Senegal	Senegal	SN	SEN
+Senegal	Σενεγάλη	SN	SEN
+Senegal	Senegalo	SN	SEN
+Senegal	Sénégal	SN	SEN
+Senegal	Szenegál	SN	SEN
+Senegal	Սենեգալ	SN	SEN
+Senegal	セネガル	SN	SEN
+Senegal	세네갈	SN	SEN
+Senegal	Senegalas	SN	SEN
+Senegal	เซเนกัล	SN	SEN
+Senegal	塞内加尔	SN	SEN
+Senegal	塞內加爾	SN	SEN
+Serbia	صربيا	RS	SRB
+Serbia	Сърбия	RS	SRB
+Serbia	Srbsko	RS	SRB
+Serbia	Serbien	RS	SRB
+Serbia	Σερβία	RS	SRB
+Serbia	Serbio	RS	SRB
+Serbia	Serbia	RS	SRB
+Serbia	Serbie	RS	SRB
+Serbia	Szerbia	RS	SRB
+Serbia	Սերբիա	RS	SRB
+Serbia	セルビア	RS	SRB
+Serbia	세르비아	RS	SRB
+Serbia	Serbija	RS	SRB
+Serbia	Servië	RS	SRB
+Serbia	Sérvia	RS	SRB
+Serbia	Сербия	RS	SRB
+Serbia	เซอร์เบีย	RS	SRB
+Serbia	Сербія	RS	SRB
+Serbia	塞尔维亚	RS	SRB
+Serbia	塞爾維亞	RS	SRB
+Seychelles	سيشل	SC	SYC
+Seychelles	Сейшелски острови	SC	SYC
+Seychelles	Seychely	SC	SYC
+Seychelles	Seychellerne	SC	SYC
+Seychelles	Seychellen	SC	SYC
+Seychelles	Σεϋχέλλες	SC	SYC
+Seychelles	Sejŝeloj	SC	SYC
+Seychelles	Seychelles	SC	SYC
+Seychelles	Seišellid	SC	SYC
+Seychelles	Seychelleak	SC	SYC
+Seychelles	Seychellit	SC	SYC
+Seychelles	Seychelle-szigetek	SC	SYC
+Seychelles	Սեյշելներ	SC	SYC
+Seychelles	セーシェル	SC	SYC
+Seychelles	세이셸	SC	SYC
+Seychelles	Seišeliai	SC	SYC
+Seychelles	Seychellene	SC	SYC
+Seychelles	Seszele	SC	SYC
+Seychelles	Seicheles	SC	SYC
+Seychelles	Сейшельские Острова	SC	SYC
+Seychelles	Seychellerna	SC	SYC
+Seychelles	เซเชลส์	SC	SYC
+Seychelles	Сейшельські Острови	SC	SYC
+Seychelles	塞舌尔	SC	SYC
+Seychelles	塞席爾	SC	SYC
+Sierra Leone	سيراليون	SL	SLE
+Sierra Leone	Сиера Леоне	SL	SLE
+Sierra Leone	Sierra Leone	SL	SLE
+Sierra Leone	Σιέρα Λεόνε	SL	SLE
+Sierra Leone	Sieraleono	SL	SLE
+Sierra Leone	Sierra Leona	SL	SLE
+Sierra Leone	Սիեռա Լեոնե	SL	SLE
+Sierra Leone	シエラレオネ	SL	SLE
+Sierra Leone	시에라리온	SL	SLE
+Sierra Leone	Siera Leonė	SL	SLE
+Sierra Leone	Serra Leoa	SL	SLE
+Sierra Leone	Сьерра-Леоне	SL	SLE
+Sierra Leone	เซียร์ราลีโอน	SL	SLE
+Sierra Leone	Сьєрра-Леоне	SL	SLE
+Sierra Leone	塞拉利昂	SL	SLE
+Sierra Leone	獅子山	SL	SLE
+Singapore	سنغافورة	SG	SGP
+Singapore	Сингапур	SG	SGP
+Singapore	Singapur	SG	SGP
+Singapore	Singapore	SG	SGP
+Singapore	Σιγκαπούρη	SG	SGP
+Singapore	Singapuro	SG	SGP
+Singapore	Singapour	SG	SGP
+Singapore	Szingapúr	SG	SGP
+Singapore	Սինգապուր	SG	SGP
+Singapore	シンガポール	SG	SGP
+Singapore	싱가포르	SG	SGP
+Singapore	Singapūras	SG	SGP
+Singapore	Singapura	SG	SGP
+Singapore	สิงคโปร์	SG	SGP
+Singapore	Сінгапур	SG	SGP
+Singapore	新加坡	SG	SGP
+Sint Maarten	سينت مارتن	SX	SXM
+Sint Maarten	Синт Мартен	SX	SXM
+Sint Maarten	Svatý Martin (nizozemská část)	SX	SXM
+Sint Maarten	Sint Maarten	SX	SXM
+Sint Maarten	Άγιος Μαρτίνος (Ολλανδία)	SX	SXM
+Sint Maarten	Sint-Maarten	SX	SXM
+Sint Maarten	San Martín	SX	SXM
+Sint Maarten	Sint Maarten (Alankomaat)	SX	SXM
+Sint Maarten	Saint-Martin	SX	SXM
+Sint Maarten	Սինտ Մաարտեն	SX	SXM
+Sint Maarten	シント・マールテン（オランダ領）	SX	SXM
+Sint Maarten	신트마르턴	SX	SXM
+Sint Maarten	Sint Martenas	SX	SXM
+Sint Maarten	São Martinho	SX	SXM
+Sint Maarten	Sint Maarten (partea olandeză)	SX	SXM
+Sint Maarten	Синт-Мартен	SX	SXM
+Sint Maarten	ซินต์มาร์เติน	SX	SXM
+Sint Maarten	Сінт-Мартен	SX	SXM
+Sint Maarten	荷属圣马丁	SX	SXM
+Sint Maarten	荷屬聖馬丁	SX	SXM
+Sint Maarten	Sint Maarten (Dutch part)	SX	SXM
+Slovakia	سلوفاكيا	SK	SVK
+Slovakia	Словакия	SK	SVK
+Slovakia	Slovensko	SK	SVK
+Slovakia	Slovakiet	SK	SVK
+Slovakia	Slowakei	SK	SVK
+Slovakia	Σλοβακία	SK	SVK
+Slovakia	Slovakio	SK	SVK
+Slovakia	Eslovaquia	SK	SVK
+Slovakia	Slovakkia	SK	SVK
+Slovakia	Eslovakia	SK	SVK
+Slovakia	Slovakia	SK	SVK
+Slovakia	Slovaquie	SK	SVK
+Slovakia	Szlovákia	SK	SVK
+Slovakia	Սլովակիա	SK	SVK
+Slovakia	Slovacchia	SK	SVK
+Slovakia	スロバキア	SK	SVK
+Slovakia	슬로바키아	SK	SVK
+Slovakia	Slovakija	SK	SVK
+Slovakia	Slowakije	SK	SVK
+Slovakia	Słowacja	SK	SVK
+Slovakia	Eslováquia	SK	SVK
+Slovakia	Slovacia	SK	SVK
+Slovakia	Slovakien	SK	SVK
+Slovakia	สโลวาเกีย	SK	SVK
+Slovakia	Словаччина	SK	SVK
+Slovakia	斯洛伐克	SK	SVK
+Slovenia	سلوفينيا	SI	SVN
+Slovenia	Словения	SI	SVN
+Slovenia	Slovinsko	SI	SVN
+Slovenia	Slovenien	SI	SVN
+Slovenia	Slowenien	SI	SVN
+Slovenia	Σλοβενία	SI	SVN
+Slovenia	Slovenio	SI	SVN
+Slovenia	Eslovenia	SI	SVN
+Slovenia	Sloveenia	SI	SVN
+Slovenia	Slovenia	SI	SVN
+Slovenia	Slovénie	SI	SVN
+Slovenia	Szlovénia	SI	SVN
+Slovenia	Սլովենիա	SI	SVN
+Slovenia	スロベニア	SI	SVN
+Slovenia	슬로베니아	SI	SVN
+Slovenia	Slovėnija	SI	SVN
+Slovenia	Slovenië	SI	SVN
+Slovenia	Słowenia	SI	SVN
+Slovenia	Eslovênia	SI	SVN
+Slovenia	สโลวีเนีย	SI	SVN
+Slovenia	Словенія	SI	SVN
+Slovenia	斯洛文尼亚	SI	SVN
+Slovenia	斯洛維尼亞	SI	SVN
+Solomon Islands	جزر سليمان	SB	SLB
+Solomon Islands	Соломонови острови	SB	SLB
+Solomon Islands	Šalomounovy ostrovy	SB	SLB
+Solomon Islands	Salomonøerne	SB	SLB
+Solomon Islands	Salomonen	SB	SLB
+Solomon Islands	Νήσοι Σολομώντα	SB	SLB
+Solomon Islands	Salomonoj	SB	SLB
+Solomon Islands	Islas Salomón	SB	SLB
+Solomon Islands	Saalomoni Saared	SB	SLB
+Solomon Islands	Salomon Uharteak	SB	SLB
+Solomon Islands	Salomonsaaret	SB	SLB
+Solomon Islands	Îles Salomon	SB	SLB
+Solomon Islands	Salamon-szigetek	SB	SLB
+Solomon Islands	Սողոմոնյան Կղզիներ	SB	SLB
+Solomon Islands	Isole Salomone	SB	SLB
+Solomon Islands	ソロモン諸島	SB	SLB
+Solomon Islands	솔로몬 제도	SB	SLB
+Solomon Islands	Saliamono Salos	SB	SLB
+Solomon Islands	Salomonseilanden	SB	SLB
+Solomon Islands	Salomonøyene	SB	SLB
+Solomon Islands	Wyspy Salomona	SB	SLB
+Solomon Islands	Ilhas Salomão	SB	SLB
+Solomon Islands	Insulele Solomon	SB	SLB
+Solomon Islands	Соломоновы Острова	SB	SLB
+Solomon Islands	Šalamúnove ostrovy	SB	SLB
+Solomon Islands	Salomonöarna	SB	SLB
+Solomon Islands	หมู่เกาะโซโลมอน	SB	SLB
+Solomon Islands	Соломонові Острови	SB	SLB
+Solomon Islands	所罗门群岛	SB	SLB
+Solomon Islands	索羅門群島	SB	SLB
+Solomon Islands	Solomon Islands	SB	SLB
+Somalia	الصومال	SO	SOM
+Somalia	Сомалия	SO	SOM
+Somalia	Somálsko	SO	SOM
+Somalia	Somalia	SO	SOM
+Somalia	Σομαλία	SO	SOM
+Somalia	Somalio	SO	SOM
+Somalia	Somaalia	SO	SOM
+Somalia	Somalie	SO	SOM
+Somalia	Szomália	SO	SOM
+Somalia	Սոմալի	SO	SOM
+Somalia	ソマリア	SO	SOM
+Somalia	소말리아	SO	SOM
+Somalia	Somalis	SO	SOM
+Somalia	Somalië	SO	SOM
+Somalia	Somália	SO	SOM
+Somalia	Сомали	SO	SOM
+Somalia	โซมาเลีย	SO	SOM
+Somalia	Сомалі	SO	SOM
+Somalia	索马里	SO	SOM
+Somalia	索馬利亞	SO	SOM
+South Africa	جنوب أفريقيا	ZA	ZAF
+South Africa	ЮАР	ZA	ZAF
+South Africa	Jihoafrická republika	ZA	ZAF
+South Africa	Sydafrika	ZA	ZAF
+South Africa	Südafrika	ZA	ZAF
+South Africa	Νότια Αφρική	ZA	ZAF
+South Africa	Sud-Afriko	ZA	ZAF
+South Africa	Sudáfrica	ZA	ZAF
+South Africa	Lõuna-Aafrika Vabariik	ZA	ZAF
+South Africa	Hegoafrika	ZA	ZAF
+South Africa	Etelä-Afrikka	ZA	ZAF
+South Africa	Afrique du Sud	ZA	ZAF
+South Africa	Dél-afrikai Köztársaság	ZA	ZAF
+South Africa	Հարավաֆրիկյան Հանրապետություն	ZA	ZAF
+South Africa	Sudafrica	ZA	ZAF
+South Africa	南アフリカ	ZA	ZAF
+South Africa	남아프리카 공화국	ZA	ZAF
+South Africa	PAR	ZA	ZAF
+South Africa	Zuid-Afrika	ZA	ZAF
+South Africa	Sør-Afrika	ZA	ZAF
+South Africa	Południowa Afryka	ZA	ZAF
+South Africa	África do Sul	ZA	ZAF
+South Africa	Africa de Sud	ZA	ZAF
+South Africa	Južná Afrika	ZA	ZAF
+South Africa	แอฟริกาใต้	ZA	ZAF
+South Africa	ПАР	ZA	ZAF
+South Africa	南非	ZA	ZAF
+South Africa	South Africa	ZA	ZAF
+South Georgia and the South Sandwich Islands	جورجيا الجنوبية وجزر ساندويتش الجنوبية	GS	SGS
+South Georgia and the South Sandwich Islands	Южна Джорджия и Южни Сандвичеви острови	GS	SGS
+South Georgia and the South Sandwich Islands	Jižní Georgie a Jižní Sandwichovy ostrovy	GS	SGS
+South Georgia and the South Sandwich Islands	South Georgia og South Sandwich Islands	GS	SGS
+South Georgia and the South Sandwich Islands	Südgeorgien und die Südlichen Sandwichinseln	GS	SGS
+South Georgia and the South Sandwich Islands	Νήσοι Νότια Γεωργία και Νότιες Σάντουιτς	GS	SGS
+South Georgia and the South Sandwich Islands	Sud-Georgio kaj Sud-Sandviĉinsuloj	GS	SGS
+South Georgia and the South Sandwich Islands	Islas Georgias del Sur y Sandwich del Sur	GS	SGS
+South Georgia and the South Sandwich Islands	Lõuna-Georgia ja Lõuna-Sandwichi saared	GS	SGS
+South Georgia and the South Sandwich Islands	Hegoaldeko Georgiak eta Hegoaldeko Sandwichak	GS	SGS
+South Georgia and the South Sandwich Islands	Etelä-Georgia ja Eteläiset Sandwichsaaret	GS	SGS
+South Georgia and the South Sandwich Islands	Géorgie du Sud-et-les îles Sandwich du Sud	GS	SGS
+South Georgia and the South Sandwich Islands	Déli-Georgia és Déli-Sandwich-szigetek	GS	SGS
+South Georgia and the South Sandwich Islands	Հարավային Ջորջիա և Հարավային Սանդվիչյան Կղզիներ	GS	SGS
+South Georgia and the South Sandwich Islands	Georgia del Sud e Isole Sandwich Australi	GS	SGS
+South Georgia and the South Sandwich Islands	サウスジョージア・サウスサンドウィッチ諸島	GS	SGS
+South Georgia and the South Sandwich Islands	사우스조지아 사우스샌드위치 제도	GS	SGS
+South Georgia and the South Sandwich Islands	Pietų Džordžijos ir Pietų Sandvičo Salos	GS	SGS
+South Georgia and the South Sandwich Islands	Zuid-Georgia en de Zuidelijke Sandwicheilanden	GS	SGS
+South Georgia and the South Sandwich Islands	Sør-Georgia og Sør-Sandwichøyene	GS	SGS
+South Georgia and the South Sandwich Islands	Georgia Południowa i Sandwich Południowy	GS	SGS
+South Georgia and the South Sandwich Islands	Ilhas Geórgia do Sul e Sandwich do Sul	GS	SGS
+South Georgia and the South Sandwich Islands	Georgia de Sud și Insulele Sandwich de Sud	GS	SGS
+South Georgia and the South Sandwich Islands	Южная Георгия и Южные Сандвичевы Острова	GS	SGS
+South Georgia and the South Sandwich Islands	Južná Georgia a Južné Sandwichove ostrovy	GS	SGS
+South Georgia and the South Sandwich Islands	Sydgeorgien	GS	SGS
+South Georgia and the South Sandwich Islands	เกาะเซาท์จอร์เจียและหมู่เกาะเซาท์แซนด์วิช	GS	SGS
+South Georgia and the South Sandwich Islands	Південна Джорджія та Південні Сандвічеві Острови	GS	SGS
+South Georgia and the South Sandwich Islands	南乔治亚和南桑威奇群岛	GS	SGS
+South Georgia and the South Sandwich Islands	南喬治亞和南桑威奇群島	GS	SGS
+South Georgia and the South Sandwich Islands	South Georgia and the South Sandwich Islands	GS	SGS
+South Sudan	جنوب السودان	SS	SSD
+South Sudan	Южен Судан	SS	SSD
+South Sudan	Jižní Súdán	SS	SSD
+South Sudan	Sydsudan	SS	SSD
+South Sudan	Südsudan	SS	SSD
+South Sudan	Νότιο Σουδάν	SS	SSD
+South Sudan	Sud-Sudano	SS	SSD
+South Sudan	Sudán del Sur	SS	SSD
+South Sudan	Lõuna-Sudaan	SS	SSD
+South Sudan	Hego Sudan	SS	SSD
+South Sudan	Etelä-Sudan	SS	SSD
+South Sudan	Soudan du Sud	SS	SSD
+South Sudan	Dél-Szudán	SS	SSD
+South Sudan	Հարավային Սուդան	SS	SSD
+South Sudan	Sudan del Sud	SS	SSD
+South Sudan	南スーダン	SS	SSD
+South Sudan	남수단	SS	SSD
+South Sudan	Pietų Sudanas	SS	SSD
+South Sudan	Zuid-Soedan	SS	SSD
+South Sudan	Sør-Sudan	SS	SSD
+South Sudan	Sudan Południowy	SS	SSD
+South Sudan	Sudão do Sul	SS	SSD
+South Sudan	Sudanul de Sud	SS	SSD
+South Sudan	Южный Судан	SS	SSD
+South Sudan	Južný Sudán	SS	SSD
+South Sudan	เซาท์ซูดาน	SS	SSD
+South Sudan	Південний Судан	SS	SSD
+South Sudan	南苏丹	SS	SSD
+South Sudan	南蘇丹	SS	SSD
+South Sudan	South Sudan	SS	SSD
+Spain	إسبانيا	ES	ESP
+Spain	Испания	ES	ESP
+Spain	Španělsko	ES	ESP
+Spain	Spanien	ES	ESP
+Spain	Ισπανία	ES	ESP
+Spain	Hispanio	ES	ESP
+Spain	España	ES	ESP
+Spain	Hispaania	ES	ESP
+Spain	Espainia	ES	ESP
+Spain	Espanja	ES	ESP
+Spain	Espagne	ES	ESP
+Spain	Spanyolország	ES	ESP
+Spain	Իսպանիա	ES	ESP
+Spain	Spagna	ES	ESP
+Spain	スペイン	ES	ESP
+Spain	스페인	ES	ESP
+Spain	Ispanija	ES	ESP
+Spain	Spanje	ES	ESP
+Spain	Spania	ES	ESP
+Spain	Hiszpania	ES	ESP
+Spain	Espanha	ES	ESP
+Spain	Španielsko	ES	ESP
+Spain	สเปน	ES	ESP
+Spain	Іспанія	ES	ESP
+Spain	西班牙	ES	ESP
+Spain	Spain	ES	ESP
+Sri Lanka	سريلانكا	LK	LKA
+Sri Lanka	Шри Ланка	LK	LKA
+Sri Lanka	Srí Lanka	LK	LKA
+Sri Lanka	Sri Lanka	LK	LKA
+Sri Lanka	Σρι Λάνκα	LK	LKA
+Sri Lanka	Srilanko	LK	LKA
+Sri Lanka	Շրի Լանկա	LK	LKA
+Sri Lanka	スリランカ	LK	LKA
+Sri Lanka	스리랑카	LK	LKA
+Sri Lanka	Šri Lanka	LK	LKA
+Sri Lanka	Seri Lanca	LK	LKA
+Sri Lanka	Шри-Ланка	LK	LKA
+Sri Lanka	ศรีลังกา	LK	LKA
+Sri Lanka	Шрі-Ланка	LK	LKA
+Sri Lanka	斯里兰卡	LK	LKA
+Sri Lanka	斯里蘭卡	LK	LKA
+Sudan	السودان	SD	SDN
+Sudan	Судан	SD	SDN
+Sudan	Súdán	SD	SDN
+Sudan	Sudan	SD	SDN
+Sudan	Σουδάν	SD	SDN
+Sudan	Sudano	SD	SDN
+Sudan	Sudán	SD	SDN
+Sudan	Sudaan	SD	SDN
+Sudan	Soudan	SD	SDN
+Sudan	Szudán	SD	SDN
+Sudan	Սուդան	SD	SDN
+Sudan	スーダン	SD	SDN
+Sudan	수단	SD	SDN
+Sudan	Sudanas	SD	SDN
+Sudan	Soedan	SD	SDN
+Sudan	Sudão	SD	SDN
+Sudan	ซูดาน	SD	SDN
+Sudan	苏丹	SD	SDN
+Sudan	蘇丹	SD	SDN
+Suriname	سورينام	SR	SUR
+Suriname	Суринам	SR	SUR
+Suriname	Surinam	SR	SUR
+Suriname	Suriname	SR	SUR
+Suriname	Σουρινάμ	SR	SUR
+Suriname	Surinamo	SR	SUR
+Suriname	Սուրինամ	SR	SUR
+Suriname	スリナム	SR	SUR
+Suriname	수리남	SR	SUR
+Suriname	Surinamas	SR	SUR
+Suriname	ซูรินาม	SR	SUR
+Suriname	苏里南	SR	SUR
+Suriname	蘇利南	SR	SUR
+Svalbard and Jan Mayen	سفالبارد ويان ماين	SJ	SJM
+Svalbard and Jan Mayen	Свалбард и Ян Майен	SJ	SJM
+Svalbard and Jan Mayen	Špicberky a Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Svalbard og Jan Mayen (Norge)	SJ	SJM
+Svalbard and Jan Mayen	Spitzbergen und Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Σβάλμπαρντ	SJ	SJM
+Svalbard and Jan Mayen	Svalbardo kaj Jan-Majen-insulo	SJ	SJM
+Svalbard and Jan Mayen	Svalbard y Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Svalbard ja Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Svalbard eta Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Svalbard et ile Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Spitzbergák és Jan Mayen-sziget	SJ	SJM
+Svalbard and Jan Mayen	Սվալբարդ (Սվալբարդ և Ժան Մայեն)	SJ	SJM
+Svalbard and Jan Mayen	Svalbard e Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	スヴァールバル諸島およびヤンマイエン島	SJ	SJM
+Svalbard and Jan Mayen	스발바르 얀마옌	SJ	SJM
+Svalbard and Jan Mayen	Svalbardo ir Jan Majeno salos	SJ	SJM
+Svalbard and Jan Mayen	Spitsbergen en Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Svalbard og Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Svalbard i Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Esvalbarde e Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Svalbard și Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Шпицберген и Ян-Майен	SJ	SJM
+Svalbard and Jan Mayen	Špicbergy a Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	Svalbard och Jan Mayen	SJ	SJM
+Svalbard and Jan Mayen	‎สฟาลบาร์และยานไมเอน	SJ	SJM
+Svalbard and Jan Mayen	Свальбард і Ян-Маєн	SJ	SJM
+Svalbard and Jan Mayen	斯瓦尔巴和扬马延	SJ	SJM
+Svalbard and Jan Mayen	斯瓦爾巴和揚馬延	SJ	SJM
+Svalbard and Jan Mayen	Svalbard and Jan Mayen	SJ	SJM
+Sweden	السويد	SE	SWE
+Sweden	Швеция	SE	SWE
+Sweden	Švédsko	SE	SWE
+Sweden	Sverige	SE	SWE
+Sweden	Schweden	SE	SWE
+Sweden	Σουηδία	SE	SWE
+Sweden	Svedio	SE	SWE
+Sweden	Suecia	SE	SWE
+Sweden	Rootsi	SE	SWE
+Sweden	Suedia	SE	SWE
+Sweden	Ruotsi	SE	SWE
+Sweden	Suède	SE	SWE
+Sweden	Svédország	SE	SWE
+Sweden	Շվեդիա	SE	SWE
+Sweden	Svezia	SE	SWE
+Sweden	スウェーデン	SE	SWE
+Sweden	스웨덴	SE	SWE
+Sweden	Švedija	SE	SWE
+Sweden	Zweden	SE	SWE
+Sweden	Szwecja	SE	SWE
+Sweden	Suécia	SE	SWE
+Sweden	สวีเดน	SE	SWE
+Sweden	Швеція	SE	SWE
+Sweden	瑞典	SE	SWE
+Sweden	Sweden	SE	SWE
+Switzerland	سويسرا	CH	CHE
+Switzerland	Швейцария	CH	CHE
+Switzerland	Švýcarsko	CH	CHE
+Switzerland	Schweiz	CH	CHE
+Switzerland	Ελβετία	CH	CHE
+Switzerland	Svislando	CH	CHE
+Switzerland	Suiza	CH	CHE
+Switzerland	Šveits	CH	CHE
+Switzerland	Suitza	CH	CHE
+Switzerland	Sveitsi	CH	CHE
+Switzerland	Suisse	CH	CHE
+Switzerland	Svájc	CH	CHE
+Switzerland	Շվեյցարիա	CH	CHE
+Switzerland	Svizzera	CH	CHE
+Switzerland	スイス	CH	CHE
+Switzerland	스위스	CH	CHE
+Switzerland	Šveicarija	CH	CHE
+Switzerland	Zwitserland	CH	CHE
+Switzerland	Sveits	CH	CHE
+Switzerland	Szwajcaria	CH	CHE
+Switzerland	Suíça	CH	CHE
+Switzerland	Elveția	CH	CHE
+Switzerland	Švajčiarsko	CH	CHE
+Switzerland	สวิตเซอร์แลนด์	CH	CHE
+Switzerland	Швейцарія	CH	CHE
+Switzerland	瑞士	CH	CHE
+Switzerland	Switzerland	CH	CHE
+Syria	سوريا	SY	SYR
+Syria	Сирия	SY	SYR
+Syria	Sýrie	SY	SYR
+Syria	Syrien	SY	SYR
+Syria	Συρία	SY	SYR
+Syria	Sirio	SY	SYR
+Syria	Siria	SY	SYR
+Syria	Süüria	SY	SYR
+Syria	Syyria	SY	SYR
+Syria	Syrie	SY	SYR
+Syria	Szíria	SY	SYR
+Syria	Սիրիա	SY	SYR
+Syria	シリア・アラブ共和国	SY	SYR
+Syria	시리아	SY	SYR
+Syria	Sirija	SY	SYR
+Syria	Syrië	SY	SYR
+Syria	Syria	SY	SYR
+Syria	Síria	SY	SYR
+Syria	Sýria	SY	SYR
+Syria	ซีเรีย	SY	SYR
+Syria	Сирія	SY	SYR
+Syria	叙利亚	SY	SYR
+Syria	敘利亞	SY	SYR
+Syria	Syrian Arab Republic	SY	SYR
+Taiwan	تايوان	TW	TWN
+Taiwan	Тайван	TW	TWN
+Taiwan	Tchaj-wan	TW	TWN
+Taiwan	Taiwan (Republikken Kina)	TW	TWN
+Taiwan	Republik China	TW	TWN
+Taiwan	Ταϊβάν	TW	TWN
+Taiwan	Tajvano	TW	TWN
+Taiwan	Taiwán (República de China)	TW	TWN
+Taiwan	Taiwan	TW	TWN
+Taiwan	Taïwan / (République de Chine (Taïwan))	TW	TWN
+Taiwan	Tajvan	TW	TWN
+Taiwan	Թայվան	TW	TWN
+Taiwan	台湾（中華民国）	TW	TWN
+Taiwan	타이완	TW	TWN
+Taiwan	Taivanas	TW	TWN
+Taiwan	Tajwan	TW	TWN
+Taiwan	Китайская Республика	TW	TWN
+Taiwan	ไต้หวัน	TW	TWN
+Taiwan	Тайвань	TW	TWN
+Taiwan	中国台湾省	TW	TWN
+Taiwan	台灣	TW	TWN
+Taiwan	Taiwan, Province of China	TW	TWN
+Tajikistan	طاجيكستان	TJ	TJK
+Tajikistan	Таджикистан	TJ	TJK
+Tajikistan	Tádžikistán	TJ	TJK
+Tajikistan	Tadsjikistan	TJ	TJK
+Tajikistan	Tadschikistan	TJ	TJK
+Tajikistan	Τατζικιστάν	TJ	TJK
+Tajikistan	Taĝikio	TJ	TJK
+Tajikistan	Tayikistán	TJ	TJK
+Tajikistan	Tadžikistan	TJ	TJK
+Tajikistan	Tajikistan	TJ	TJK
+Tajikistan	Tadjikistan	TJ	TJK
+Tajikistan	Tádzsikisztán	TJ	TJK
+Tajikistan	Տաջիկստան	TJ	TJK
+Tajikistan	Tagikistan	TJ	TJK
+Tajikistan	タジキスタン	TJ	TJK
+Tajikistan	타지키스탄	TJ	TJK
+Tajikistan	Tadžikija	TJ	TJK
+Tajikistan	Tadzjikistan	TJ	TJK
+Tajikistan	Tadżykistan	TJ	TJK
+Tajikistan	Tajiquistão	TJ	TJK
+Tajikistan	ทาจิกิสถาน	TJ	TJK
+Tajikistan	塔吉克斯坦	TJ	TJK
+Tajikistan	塔吉克	TJ	TJK
+Tanzania	تنزانيا	TZ	TZA
+Tanzania	Танзания	TZ	TZA
+Tanzania	Tanzanie	TZ	TZA
+Tanzania	Tanzania	TZ	TZA
+Tanzania	Tansania	TZ	TZA
+Tanzania	Τανζανία	TZ	TZA
+Tanzania	Tanzanio	TZ	TZA
+Tanzania	Tansaania	TZ	TZA
+Tanzania	Tanzánia	TZ	TZA
+Tanzania	Տանզանիա	TZ	TZA
+Tanzania	タンザニア	TZ	TZA
+Tanzania	탄자니아	TZ	TZA
+Tanzania	Tanzanija	TZ	TZA
+Tanzania	Tanzânia	TZ	TZA
+Tanzania	แทนซาเนีย	TZ	TZA
+Tanzania	Танзанія	TZ	TZA
+Tanzania	坦桑尼亚	TZ	TZA
+Tanzania	坦尚尼亞	TZ	TZA
+Tanzania	Tanzania, United Republic of	TZ	TZA
+Thailand	تايلاند	TH	THA
+Thailand	Тайланд	TH	THA
+Thailand	Thajsko	TH	THA
+Thailand	Thailand	TH	THA
+Thailand	Ταϊλάνδη	TH	THA
+Thailand	Tajlando	TH	THA
+Thailand	Tailandia	TH	THA
+Thailand	Tai	TH	THA
+Thailand	Thailandia	TH	THA
+Thailand	Thaimaa	TH	THA
+Thailand	Thaïlande	TH	THA
+Thailand	Thaiföld	TH	THA
+Thailand	Թաիլանդ	TH	THA
+Thailand	タイ	TH	THA
+Thailand	태국	TH	THA
+Thailand	Tailandas	TH	THA
+Thailand	Tajlandia	TH	THA
+Thailand	Tailândia	TH	THA
+Thailand	Thailanda	TH	THA
+Thailand	Таиланд	TH	THA
+Thailand	ไทย	TH	THA
+Thailand	Таїланд	TH	THA
+Thailand	泰国	TH	THA
+Thailand	泰國	TH	THA
+Timor-Leste	تيمور الشرقية	TL	TLS
+Timor-Leste	Източен Тимор	TL	TLS
+Timor-Leste	Východní Timor	TL	TLS
+Timor-Leste	Østtimor	TL	TLS
+Timor-Leste	Osttimor	TL	TLS
+Timor-Leste	Ανατολικό Τιμόρ	TL	TLS
+Timor-Leste	Orienta Timoro	TL	TLS
+Timor-Leste	Timor Oriental	TL	TLS
+Timor-Leste	Ida-Timor	TL	TLS
+Timor-Leste	Ekialdeko Timor	TL	TLS
+Timor-Leste	Itä-Timor	TL	TLS
+Timor-Leste	Timor oriental	TL	TLS
+Timor-Leste	Kelet-Timor	TL	TLS
+Timor-Leste	Արևելյան Թիմոր	TL	TLS
+Timor-Leste	Timor Est	TL	TLS
+Timor-Leste	東ティモール	TL	TLS
+Timor-Leste	동티모르	TL	TLS
+Timor-Leste	Rytų Timoras	TL	TLS
+Timor-Leste	Oost-Timor	TL	TLS
+Timor-Leste	Øst-Timor	TL	TLS
+Timor-Leste	Timor Wschodni	TL	TLS
+Timor-Leste	Timor-Leste	TL	TLS
+Timor-Leste	Timorul de Est	TL	TLS
+Timor-Leste	Восточный Тимор	TL	TLS
+Timor-Leste	Východný Timor	TL	TLS
+Timor-Leste	Östtimor	TL	TLS
+Timor-Leste	ติมอร์-เลสเต	TL	TLS
+Timor-Leste	Східний Тимор	TL	TLS
+Timor-Leste	东帝汶	TL	TLS
+Timor-Leste	東帝汶	TL	TLS
+Togo	توغو	TG	TGO
+Togo	Того	TG	TGO
+Togo	Togo	TG	TGO
+Togo	Τόγκο	TG	TGO
+Togo	Togolando	TG	TGO
+Togo	Տոգո	TG	TGO
+Togo	トーゴ	TG	TGO
+Togo	토고	TG	TGO
+Togo	Togas	TG	TGO
+Togo	โตโก	TG	TGO
+Togo	多哥	TG	TGO
+Tokelau	توكيلاو	TK	TKL
+Tokelau	Токелау	TK	TKL
+Tokelau	Tokelau	TK	TKL
+Tokelau	Τοκελάου	TK	TKL
+Tokelau	Tokelao	TK	TKL
+Tokelau	Tokelau-szigetek	TK	TKL
+Tokelau	Տոկելաու	TK	TKL
+Tokelau	トケラウ	TK	TKL
+Tokelau	토켈라우	TK	TKL
+Tokelau	Toquelau	TK	TKL
+Tokelau	Tokelauöarna	TK	TKL
+Tokelau	โทเคอเลา	TK	TKL
+Tokelau	托克劳	TK	TKL
+Tokelau	托克勞	TK	TKL
+Tonga	تونغا	TO	TON
+Tonga	Тонга	TO	TON
+Tonga	Tonga	TO	TON
+Tonga	Τόγκα	TO	TON
+Tonga	Tongo	TO	TON
+Tonga	Տոնգա	TO	TON
+Tonga	トンガ	TO	TON
+Tonga	통가	TO	TON
+Tonga	ตองงา	TO	TON
+Tonga	汤加	TO	TON
+Tonga	東加	TO	TON
+Trinidad and Tobago	ترينيداد وتوباغو	TT	TTO
+Trinidad and Tobago	Тринидад и Тобаго	TT	TTO
+Trinidad and Tobago	Trinidad a Tobago	TT	TTO
+Trinidad and Tobago	Trinidad og Tobago	TT	TTO
+Trinidad and Tobago	Trinidad und Tobago	TT	TTO
+Trinidad and Tobago	Τρινιντάντ και Τομπάγκο	TT	TTO
+Trinidad and Tobago	Trinidado kaj Tobago	TT	TTO
+Trinidad and Tobago	Trinidad y Tobago	TT	TTO
+Trinidad and Tobago	Trinidad ja Tobago	TT	TTO
+Trinidad and Tobago	Trinidad eta Tobago	TT	TTO
+Trinidad and Tobago	Trinité-et-Tobago	TT	TTO
+Trinidad and Tobago	Trinidad és Tobago	TT	TTO
+Trinidad and Tobago	Տրինիդադ և Տոբագո	TT	TTO
+Trinidad and Tobago	Trinidad e Tobago	TT	TTO
+Trinidad and Tobago	トリニダード・トバゴ	TT	TTO
+Trinidad and Tobago	트리니다드 토바고	TT	TTO
+Trinidad and Tobago	Trinidadas ir Tobagas	TT	TTO
+Trinidad and Tobago	Trinidad en Tobago	TT	TTO
+Trinidad and Tobago	Trynidad i Tobago	TT	TTO
+Trinidad and Tobago	Trinidad și Tobago	TT	TTO
+Trinidad and Tobago	Trinidad och Tobago	TT	TTO
+Trinidad and Tobago	ตรินิแดดและโตเบโก	TT	TTO
+Trinidad and Tobago	Тринідад і Тобаго	TT	TTO
+Trinidad and Tobago	特立尼达和多巴哥	TT	TTO
+Trinidad and Tobago	千里達及托巴哥	TT	TTO
+Trinidad and Tobago	Trinidad and Tobago	TT	TTO
+Tunisia	تونس	TN	TUN
+Tunisia	Тунис	TN	TUN
+Tunisia	Tunisko	TN	TUN
+Tunisia	Tunesien	TN	TUN
+Tunisia	Τυνησία	TN	TUN
+Tunisia	Tunizio	TN	TUN
+Tunisia	Túnez	TN	TUN
+Tunisia	Tuneesia	TN	TUN
+Tunisia	Tunisia	TN	TUN
+Tunisia	Tunisie	TN	TUN
+Tunisia	Tunézia	TN	TUN
+Tunisia	Թունիս	TN	TUN
+Tunisia	チュニジア	TN	TUN
+Tunisia	튀니지	TN	TUN
+Tunisia	Tunisas	TN	TUN
+Tunisia	Tunesië	TN	TUN
+Tunisia	Tunezja	TN	TUN
+Tunisia	Tunísia	TN	TUN
+Tunisia	Tunisien	TN	TUN
+Tunisia	ตูนิเซีย	TN	TUN
+Tunisia	Туніс	TN	TUN
+Tunisia	突尼斯	TN	TUN
+Tunisia	突尼西亞	TN	TUN
+Turkey	تركيا	TR	TUR
+Turkey	Турция	TR	TUR
+Turkey	Turecko	TR	TUR
+Turkey	Tyrkiet	TR	TUR
+Turkey	Türkei	TR	TUR
+Turkey	Τουρκία	TR	TUR
+Turkey	Turkio	TR	TUR
+Turkey	Turquía	TR	TUR
+Turkey	Türgi	TR	TUR
+Turkey	Turkia	TR	TUR
+Turkey	Turkki	TR	TUR
+Turkey	Turquie	TR	TUR
+Turkey	Törökország	TR	TUR
+Turkey	Թուրքիա	TR	TUR
+Turkey	Turchia	TR	TUR
+Turkey	トルコ	TR	TUR
+Turkey	튀르키예	TR	TUR
+Turkey	Turkija	TR	TUR
+Turkey	Turkije	TR	TUR
+Turkey	Tyrkia	TR	TUR
+Turkey	Turcja	TR	TUR
+Turkey	Turquia	TR	TUR
+Turkey	Turcia	TR	TUR
+Turkey	Turkiet	TR	TUR
+Turkey	ตุรกี	TR	TUR
+Turkey	Туреччина	TR	TUR
+Turkey	土耳其	TR	TUR
+Turkey	Türkiye	TR	TUR
+Turkmenistan	تركمانستان	TM	TKM
+Turkmenistan	Туркменистан	TM	TKM
+Turkmenistan	Turkmenistán	TM	TKM
+Turkmenistan	Turkmenistan	TM	TKM
+Turkmenistan	Τουρκμενιστάν	TM	TKM
+Turkmenistan	Turkmenio	TM	TKM
+Turkmenistan	Türkmenistan	TM	TKM
+Turkmenistan	Turkménistan	TM	TKM
+Turkmenistan	Türkmenisztán	TM	TKM
+Turkmenistan	Թուրքմենստան	TM	TKM
+Turkmenistan	トルクメニスタン	TM	TKM
+Turkmenistan	투르크메니스탄	TM	TKM
+Turkmenistan	Turkmėnija	TM	TKM
+Turkmenistan	Turcomenistão	TM	TKM
+Turkmenistan	Туркмения	TM	TKM
+Turkmenistan	Turkménsko	TM	TKM
+Turkmenistan	เติร์กเมนิสถาน	TM	TKM
+Turkmenistan	Туркменістан	TM	TKM
+Turkmenistan	土库曼斯坦	TM	TKM
+Turkmenistan	土庫曼	TM	TKM
+Turks and Caicos Islands	جزر توركس وكايكوس	TC	TCA
+Turks and Caicos Islands	Търкс и Кайкос	TC	TCA
+Turks and Caicos Islands	Turks a Caicos	TC	TCA
+Turks and Caicos Islands	Turks- og Caicosøerne	TC	TCA
+Turks and Caicos Islands	Turks- und Caicosinseln	TC	TCA
+Turks and Caicos Islands	Τερκς και Κέικος	TC	TCA
+Turks and Caicos Islands	Turkoj kaj Kajkoj	TC	TCA
+Turks and Caicos Islands	Islas Turcas y Caicos	TC	TCA
+Turks and Caicos Islands	Turks ja Caicos	TC	TCA
+Turks and Caicos Islands	Turkak eta Caicoak	TC	TCA
+Turks and Caicos Islands	Turks- ja Caicossaaret	TC	TCA
+Turks and Caicos Islands	Îles Turques-et-Caïques	TC	TCA
+Turks and Caicos Islands	Turks- és Caicos-szigetek	TC	TCA
+Turks and Caicos Islands	Թերքս և Քայքոս կղզիներ	TC	TCA
+Turks and Caicos Islands	Turks e Caicos	TC	TCA
+Turks and Caicos Islands	タークス・カイコス諸島	TC	TCA
+Turks and Caicos Islands	터크스 케이커스 제도	TC	TCA
+Turks and Caicos Islands	Terksas ir Kaikosas	TC	TCA
+Turks and Caicos Islands	Turks- en Caicoseilanden	TC	TCA
+Turks and Caicos Islands	Turks- og Caicosøyene	TC	TCA
+Turks and Caicos Islands	Turks i Caicos	TC	TCA
+Turks and Caicos Islands	Turcas e Caicos	TC	TCA
+Turks and Caicos Islands	Insulele Turks și Caicos	TC	TCA
+Turks and Caicos Islands	Теркс и Кайкос	TC	TCA
+Turks and Caicos Islands	Turks- och Caicosöarna	TC	TCA
+Turks and Caicos Islands	หมู่เกาะเติกส์และเคคอส	TC	TCA
+Turks and Caicos Islands	Острови Теркс і Кайкос	TC	TCA
+Turks and Caicos Islands	特克斯和凯科斯群岛	TC	TCA
+Turks and Caicos Islands	特克斯與凱科斯群島	TC	TCA
+Turks and Caicos Islands	Turks and Caicos Islands	TC	TCA
+Tuvalu	توفالو	TV	TUV
+Tuvalu	Тувалу	TV	TUV
+Tuvalu	Tuvalu	TV	TUV
+Tuvalu	Τουβαλού	TV	TUV
+Tuvalu	Tuvalo	TV	TUV
+Tuvalu	Տուվալու	TV	TUV
+Tuvalu	ツバル	TV	TUV
+Tuvalu	투발루	TV	TUV
+Tuvalu	ตูวาลู	TV	TUV
+Tuvalu	图瓦卢	TV	TUV
+Tuvalu	吐瓦魯	TV	TUV
+Uganda	أوغندا	UG	UGA
+Uganda	Уганда	UG	UGA
+Uganda	Uganda	UG	UGA
+Uganda	Ουγκάντα	UG	UGA
+Uganda	Ugando	UG	UGA
+Uganda	Ouganda	UG	UGA
+Uganda	Ուգանդա	UG	UGA
+Uganda	ウガンダ	UG	UGA
+Uganda	우간다	UG	UGA
+Uganda	Oeganda	UG	UGA
+Uganda	ยูกันดา	UG	UGA
+Uganda	乌干达	UG	UGA
+Uganda	烏干達	UG	UGA
+Ukraine	أوكرانيا	UA	UKR
+Ukraine	Украйна	UA	UKR
+Ukraine	Ukrajina	UA	UKR
+Ukraine	Ukraine	UA	UKR
+Ukraine	Ουκρανία	UA	UKR
+Ukraine	Ukrainio	UA	UKR
+Ukraine	Ucrania	UA	UKR
+Ukraine	Ukraina	UA	UKR
+Ukraine	Ukrajna	UA	UKR
+Ukraine	Ուկրաինա	UA	UKR
+Ukraine	Ucraina	UA	UKR
+Ukraine	ウクライナ	UA	UKR
+Ukraine	우크라이나	UA	UKR
+Ukraine	Oekraïne	UA	UKR
+Ukraine	Ucrânia	UA	UKR
+Ukraine	Украина	UA	UKR
+Ukraine	ยูเครน	UA	UKR
+Ukraine	Україна	UA	UKR
+Ukraine	乌克兰	UA	UKR
+Ukraine	烏克蘭	UA	UKR
+United Arab Emirates	الإمارات العربية المتحدة	AE	ARE
+United Arab Emirates	ОАЕ	AE	ARE
+United Arab Emirates	Spojené arabské emiráty	AE	ARE
+United Arab Emirates	Forenede Arabiske Emirater	AE	ARE
+United Arab Emirates	Vereinigte Arabische Emirate	AE	ARE
+United Arab Emirates	Ηνωμένα Αραβικά Εμιράτα	AE	ARE
+United Arab Emirates	Unuiĝintaj Arabaj Emirlandoj	AE	ARE
+United Arab Emirates	Emiratos Árabes Unidos	AE	ARE
+United Arab Emirates	Araabia Ühendemiraadid	AE	ARE
+United Arab Emirates	Arabiar Emirerri Batuak	AE	ARE
+United Arab Emirates	Arabiemiirikunnat	AE	ARE
+United Arab Emirates	Émirats arabes unis	AE	ARE
+United Arab Emirates	Egyesült Arab Emírségek	AE	ARE
+United Arab Emirates	Արաբական Միացյալ Էմիրություններ	AE	ARE
+United Arab Emirates	Emirati Arabi Uniti	AE	ARE
+United Arab Emirates	アラブ首長国連邦	AE	ARE
+United Arab Emirates	아랍에미리트	AE	ARE
+United Arab Emirates	Jungtiniai Arabų Emyratai	AE	ARE
+United Arab Emirates	Verenigde Arabische Emiraten	AE	ARE
+United Arab Emirates	De forente arabiske emirater	AE	ARE
+United Arab Emirates	Zjednoczone Emiraty Arabskie	AE	ARE
+United Arab Emirates	Emirados Árabes Unidos	AE	ARE
+United Arab Emirates	Emiratele Arabe Unite	AE	ARE
+United Arab Emirates	ОАЭ	AE	ARE
+United Arab Emirates	Förenade Arabemiraten	AE	ARE
+United Arab Emirates	สหรัฐอาหรับเอมิเรตส์	AE	ARE
+United Arab Emirates	阿联酋	AE	ARE
+United Arab Emirates	阿聯	AE	ARE
+United Arab Emirates	United Arab Emirates	AE	ARE
+United Kingdom	المملكة المتحدة	GB	GBR
+United Kingdom	Великобритания	GB	GBR
+United Kingdom	Spojené království Velké Británie a Severního Irska	GB	GBR
+United Kingdom	Storbritannien	GB	GBR
+United Kingdom	Vereinigtes Königreich	GB	GBR
+United Kingdom	Ηνωμένο Βασίλειο	GB	GBR
+United Kingdom	Britio	GB	GBR
+United Kingdom	Reino Unido	GB	GBR
+United Kingdom	Suurbritannia	GB	GBR
+United Kingdom	Erresuma Batua	GB	GBR
+United Kingdom	Yhdistynyt kuningaskunta	GB	GBR
+United Kingdom	Royaume-Uni	GB	GBR
+United Kingdom	Egyesült Királyság	GB	GBR
+United Kingdom	Մեծ Բրիտանիա	GB	GBR
+United Kingdom	Regno Unito	GB	GBR
+United Kingdom	イギリス	GB	GBR
+United Kingdom	영국	GB	GBR
+United Kingdom	Jungtinė Karalystė	GB	GBR
+United Kingdom	Verenigd Koninkrijk	GB	GBR
+United Kingdom	Storbritannia	GB	GBR
+United Kingdom	Wielka Brytania	GB	GBR
+United Kingdom	Regatul Unit	GB	GBR
+United Kingdom	Spojené kráľovstvo	GB	GBR
+United Kingdom	สหราชอาณาจักร	GB	GBR
+United Kingdom	Велика Британія	GB	GBR
+United Kingdom	英国	GB	GBR
+United Kingdom	英國	GB	GBR
+United Kingdom	United Kingdom of Great Britain and Northern Ireland	GB	GBR
+United States	جزر الولايات المتحدة الصغيرة النائية	UM	UMI
+United States	Малки далечни острови на САЩ	UM	UMI
+United States	Menší odlehlé ostrovy USA	UM	UMI
+United States	USA's ydre småøer	UM	UMI
+United States	United States Minor Outlying Islands	UM	UMI
+United States	Απομακρυσμένες Νησίδες των Ηνωμένων Πολιτειών	UM	UMI
+United States	Usonaj Malgrandaj Insuloj	UM	UMI
+United States	Islas Ultramarinas Menores de los Estados Unidos	UM	UMI
+United States	Ühendriikide hajasaared	UM	UMI
+United States	Ameriketako Estatu Batuetako itsasoz haraindiko uharteak	UM	UMI
+United States	Yhdysvaltain pienet erillissaaret	UM	UMI
+United States	Îles mineures éloignées des États-Unis	UM	UMI
+United States	Amerikai Csendes-óceáni szigetek	UM	UMI
+United States	Միացյալ Նահանգների Մինոր Կղզիներ	UM	UMI
+United States	Isole minori esterne degli Stati Uniti	UM	UMI
+United States	合衆国領有小離島	UM	UMI
+United States	미국령 군소 제도	UM	UMI
+United States	JAV užjūrio mažosios salos	UM	UMI
+United States	Kleine afgelegen eilanden van de Verenigde Staten	UM	UMI
+United States	USAs ytre småøyer	UM	UMI
+United States	Dalekie Wyspy Mniejsze Stanów Zjednoczonych	UM	UMI
+United States	Ilhas Menores Distantes dos Estados Unidos	UM	UMI
+United States	Внешние малые острова США	UM	UMI
+United States	Menšie odľahlé ostrovy USA	UM	UMI
+United States	Förenta staternas mindre öar i Oceanien och Västindien	UM	UMI
+United States	เกาะเล็กรอบนอกของสหรัฐอเมริกา	UM	UMI
+United States	Зовнішні малі острови США	UM	UMI
+United States	美国本土外小岛屿	UM	UMI
+United States	美國本土外小島嶼	UM	UMI
+United States	الولايات المتحدة	US	USA
+United States	САЩ	US	USA
+United States	Spojené státy americké	US	USA
+United States	USA	US	USA
+United States	Vereinigte Staaten	US	USA
+United States	Ηνωμένες Πολιτείες Αμερικής	US	USA
+United States	Usono	US	USA
+United States	Estados Unidos	US	USA
+United States	Ameerika Ühendriigid	US	USA
+United States	AEB	US	USA
+United States	Yhdysvallat	US	USA
+United States	États-Unis	US	USA
+United States	Amerikai Egyesült Államok	US	USA
+United States	ԱՄՆ	US	USA
+United States	Stati Uniti	US	USA
+United States	アメリカ合衆国	US	USA
+United States	미국	US	USA
+United States	Jungtinės Valstijos	US	USA
+United States	Verenigde Staten	US	USA
+United States	Stany Zjednoczone	US	USA
+United States	Statele Unite ale Americii	US	USA
+United States	США	US	USA
+United States	Spojené štáty	US	USA
+United States	สหรัฐ	US	USA
+United States	美国	US	USA
+United States	美國	US	USA
+United States	United States of America	US	USA
+Uruguay	الأوروغواي	UY	URY
+Uruguay	Уругвай	UY	URY
+Uruguay	Uruguay	UY	URY
+Uruguay	Ουρουγουάη	UY	URY
+Uruguay	Urugvajo	UY	URY
+Uruguay	Uruguai	UY	URY
+Uruguay	Ուրուգվայ	UY	URY
+Uruguay	ウルグアイ	UY	URY
+Uruguay	우루과이	UY	URY
+Uruguay	Urugvajus	UY	URY
+Uruguay	Urugwaj	UY	URY
+Uruguay	Uruguaj	UY	URY
+Uruguay	อุรุกวัย	UY	URY
+Uruguay	乌拉圭	UY	URY
+Uruguay	烏拉圭	UY	URY
+Uzbekistan	أوزبكستان	UZ	UZB
+Uzbekistan	Узбекистан	UZ	UZB
+Uzbekistan	Uzbekistán	UZ	UZB
+Uzbekistan	Usbekistan	UZ	UZB
+Uzbekistan	Ουζμπεκιστάν	UZ	UZB
+Uzbekistan	Uzbekio	UZ	UZB
+Uzbekistan	Uzbekistan	UZ	UZB
+Uzbekistan	Ouzbékistan	UZ	UZB
+Uzbekistan	Üzbegisztán	UZ	UZB
+Uzbekistan	Ուզբեկստան	UZ	UZB
+Uzbekistan	ウズベキスタン	UZ	UZB
+Uzbekistan	우즈베키스탄	UZ	UZB
+Uzbekistan	Uzbekistanas	UZ	UZB
+Uzbekistan	Oezbekistan	UZ	UZB
+Uzbekistan	Uzbequistão	UZ	UZB
+Uzbekistan	อุซเบกิสถาน	UZ	UZB
+Uzbekistan	乌兹别克斯坦	UZ	UZB
+Uzbekistan	烏茲別克	UZ	UZB
+Vanuatu	فانواتو	VU	VUT
+Vanuatu	Вануату	VU	VUT
+Vanuatu	Vanuatu	VU	VUT
+Vanuatu	Βανουάτου	VU	VUT
+Vanuatu	Vanuatuo	VU	VUT
+Vanuatu	Վանուատու	VU	VUT
+Vanuatu	バヌアツ	VU	VUT
+Vanuatu	바누아투	VU	VUT
+Vanuatu	วานูอาตู	VU	VUT
+Vanuatu	瓦努阿图	VU	VUT
+Vanuatu	萬那杜	VU	VUT
+Venezuela	فنزويلا	VE	VEN
+Venezuela	Венецуела	VE	VEN
+Venezuela	Venezuela	VE	VEN
+Venezuela	Βενεζουέλα	VE	VEN
+Venezuela	Venezuelo	VE	VEN
+Venezuela	Վենեսուելա	VE	VEN
+Venezuela	ベネズエラ・ボリバル共和国	VE	VEN
+Venezuela	베네수엘라	VE	VEN
+Venezuela	Venesuela	VE	VEN
+Venezuela	Wenezuela	VE	VEN
+Venezuela	Венесуэла	VE	VEN
+Venezuela	เวเนซุเอลา	VE	VEN
+Venezuela	Венесуела	VE	VEN
+Venezuela	委内瑞拉	VE	VEN
+Venezuela	委內瑞拉	VE	VEN
+Venezuela	Venezuela (Bolivarian Republic of)	VE	VEN
+Vietnam	فيتنام	VN	VNM
+Vietnam	Виетнам	VN	VNM
+Vietnam	Vietnam	VN	VNM
+Vietnam	Βιετνάμ	VN	VNM
+Vietnam	Vjetnamio	VN	VNM
+Vietnam	Viêt Nam	VN	VNM
+Vietnam	Vietnám	VN	VNM
+Vietnam	Վիետնամ	VN	VNM
+Vietnam	ベトナム	VN	VNM
+Vietnam	베트남	VN	VNM
+Vietnam	Vietnamas	VN	VNM
+Vietnam	Wietnam	VN	VNM
+Vietnam	Vietnã	VN	VNM
+Vietnam	Вьетнам	VN	VNM
+Vietnam	เวียดนาม	VN	VNM
+Vietnam	В'єтнам	VN	VNM
+Vietnam	越南	VN	VNM
+Vietnam	Viet Nam	VN	VNM
+British Virgin Islands	جزر العذراء البريطانية	VG	VGB
+British Virgin Islands	Британски Вирджински острови	VG	VGB
+British Virgin Islands	Britské Panenské ostrovy	VG	VGB
+British Virgin Islands	Britiske Jomfruøer	VG	VGB
+British Virgin Islands	Britische Jungferninseln	VG	VGB
+British Virgin Islands	Βρετανικές Παρθένοι Νήσοι	VG	VGB
+British Virgin Islands	Britaj Virgulininsuloj	VG	VGB
+British Virgin Islands	Islas Vírgenes Británicas	VG	VGB
+British Virgin Islands	Briti Neitsisaared	VG	VGB
+British Virgin Islands	Birjina uharte britainiarrak	VG	VGB
+British Virgin Islands	Brittiläiset Neitsytsaaret	VG	VGB
+British Virgin Islands	Îles Vierges britanniques	VG	VGB
+British Virgin Islands	Brit Virgin-szigetek	VG	VGB
+British Virgin Islands	Բրիտանական Վիրջինյան կղզիներ	VG	VGB
+British Virgin Islands	Isole Vergini britanniche	VG	VGB
+British Virgin Islands	イギリス領ヴァージン諸島	VG	VGB
+British Virgin Islands	영국령 버진아일랜드	VG	VGB
+British Virgin Islands	Mergelių Salos (Didžioji Britanija)	VG	VGB
+British Virgin Islands	Britse Maagdeneilanden	VG	VGB
+British Virgin Islands	Jomfruøyene, De britiske	VG	VGB
+British Virgin Islands	Brytyjskie Wyspy Dziewicze	VG	VGB
+British Virgin Islands	Ilhas Virgens Britânicas	VG	VGB
+British Virgin Islands	Insulele Virgine Britanice	VG	VGB
+British Virgin Islands	Виргинские Острова (Великобритания)	VG	VGB
+British Virgin Islands	Brittiska Jungfruöarna	VG	VGB
+British Virgin Islands	หมู่เกาะบริติชเวอร์จิน	VG	VGB
+British Virgin Islands	Британські Віргінські Острови	VG	VGB
+British Virgin Islands	英属维尔京群岛	VG	VGB
+British Virgin Islands	英屬維京群島	VG	VGB
+British Virgin Islands	Virgin Islands (British)	VG	VGB
+United States Virgin Islands	جزر العذراء الأمريكية	VI	VIR
+United States Virgin Islands	Американски Вирджински острови	VI	VIR
+United States Virgin Islands	Americké Panenské ostrovy	VI	VIR
+United States Virgin Islands	Amerikanske Jomfruøer	VI	VIR
+United States Virgin Islands	Amerikanische Jungferninseln	VI	VIR
+United States Virgin Islands	Αμερικανικές Παρθένοι Νήσοι	VI	VIR
+United States Virgin Islands	Usonaj Virgulininsuloj	VI	VIR
+United States Virgin Islands	Islas Vírgenes de los Estados Unidos	VI	VIR
+United States Virgin Islands	USA Neitsisaared	VI	VIR
+United States Virgin Islands	Birjina uharte amerikarrak	VI	VIR
+United States Virgin Islands	Yhdysvaltain Neitsytsaaret	VI	VIR
+United States Virgin Islands	Îles Vierges des États-Unis	VI	VIR
+United States Virgin Islands	Amerikai Virgin-szigetek	VI	VIR
+United States Virgin Islands	Ամերիկյան Վիրջինյան կղզիներ	VI	VIR
+United States Virgin Islands	Isole Vergini americane	VI	VIR
+United States Virgin Islands	アメリカ領ヴァージン諸島	VI	VIR
+United States Virgin Islands	미국령 버진아일랜드	VI	VIR
+United States Virgin Islands	Mergelių Salos (JAV)	VI	VIR
+United States Virgin Islands	Amerikaanse Maagdeneilanden	VI	VIR
+United States Virgin Islands	Jomfruøyene, De amerikanske	VI	VIR
+United States Virgin Islands	Wyspy Dziewicze Stanów Zjednoczonych	VI	VIR
+United States Virgin Islands	Ilhas Virgens Americanas	VI	VIR
+United States Virgin Islands	Insulele Virgine Americane	VI	VIR
+United States Virgin Islands	Виргинские Острова (США)	VI	VIR
+United States Virgin Islands	Amerikanska Jungfruöarna	VI	VIR
+United States Virgin Islands	หมู่เกาะเวอร์จินของสหรัฐ	VI	VIR
+United States Virgin Islands	Американські Віргінські Острови	VI	VIR
+United States Virgin Islands	美属维尔京群岛	VI	VIR
+United States Virgin Islands	美屬維京群島	VI	VIR
+United States Virgin Islands	Virgin Islands (U.S.)	VI	VIR
+Wallis and Futuna	واليس وفوتونا	WF	WLF
+Wallis and Futuna	Уолис и Футуна	WF	WLF
+Wallis and Futuna	Wallis a Futuna	WF	WLF
+Wallis and Futuna	Wallis og Futuna	WF	WLF
+Wallis and Futuna	Wallis und Futuna	WF	WLF
+Wallis and Futuna	Ουαλίς και Φουτουνά	WF	WLF
+Wallis and Futuna	Valiso kaj Futuno	WF	WLF
+Wallis and Futuna	Wallis y Futuna	WF	WLF
+Wallis and Futuna	Wallis ja Futuna	WF	WLF
+Wallis and Futuna	Wallis eta Futuna	WF	WLF
+Wallis and Futuna	Wallis ja Futunasaaret	WF	WLF
+Wallis and Futuna	Wallis-et-Futuna	WF	WLF
+Wallis and Futuna	Wallis és Futuna	WF	WLF
+Wallis and Futuna	Ուոլիս և Ֆուտունա	WF	WLF
+Wallis and Futuna	Wallis e Futuna	WF	WLF
+Wallis and Futuna	ウォリス・フツナ	WF	WLF
+Wallis and Futuna	왈리스 푸투나	WF	WLF
+Wallis and Futuna	Volisas ir Futūna	WF	WLF
+Wallis and Futuna	Wallis en Futuna	WF	WLF
+Wallis and Futuna	Wallis- og Futunaøyene	WF	WLF
+Wallis and Futuna	Wallis i Futuna	WF	WLF
+Wallis and Futuna	Wallis și Futuna	WF	WLF
+Wallis and Futuna	Уоллис и Футуна	WF	WLF
+Wallis and Futuna	Wallis- och Futunaöarna	WF	WLF
+Wallis and Futuna	วาลิสและฟูตูนา	WF	WLF
+Wallis and Futuna	Волліс і Футуна	WF	WLF
+Wallis and Futuna	瓦利斯和富图纳	WF	WLF
+Wallis and Futuna	瓦利斯和富圖那	WF	WLF
+Wallis and Futuna	Wallis and Futuna	WF	WLF
+Western Sahara	الصحراء الغربية	EH	ESH
+Western Sahara	Западна Сахара	EH	ESH
+Western Sahara	Západní Sahara	EH	ESH
+Western Sahara	Vestsahara	EH	ESH
+Western Sahara	Westsahara	EH	ESH
+Western Sahara	Δυτική Σαχάρα	EH	ESH
+Western Sahara	Okcidenta Saharo	EH	ESH
+Western Sahara	República Árabe Saharaui Democrática	EH	ESH
+Western Sahara	Lääne-Sahara	EH	ESH
+Western Sahara	Mendebaldeko Sahara	EH	ESH
+Western Sahara	Länsi-Sahara	EH	ESH
+Western Sahara	République arabe sahraouie démocratique	EH	ESH
+Western Sahara	Nyugat-Szahara	EH	ESH
+Western Sahara	Սահրավիա	EH	ESH
+Western Sahara	Sahara Occidentale	EH	ESH
+Western Sahara	西サハラ	EH	ESH
+Western Sahara	서사하라	EH	ESH
+Western Sahara	Vakarų Sahara	EH	ESH
+Western Sahara	Westelijke Sahara/SADR	EH	ESH
+Western Sahara	Vest-Sahara	EH	ESH
+Western Sahara	Sahara Zachodnia	EH	ESH
+Western Sahara	Saara Ocidental	EH	ESH
+Western Sahara	Sahara Occidentală	EH	ESH
+Western Sahara	САДР	EH	ESH
+Western Sahara	Západná Sahara	EH	ESH
+Western Sahara	Västsahara	EH	ESH
+Western Sahara	เวสเทิร์นสะฮารา	EH	ESH
+Western Sahara	Західна Сахара	EH	ESH
+Western Sahara	西撒哈拉	EH	ESH
+Western Sahara	Western Sahara	EH	ESH
+Yemen	اليمن	YE	YEM
+Yemen	Йемен	YE	YEM
+Yemen	Jemen	YE	YEM
+Yemen	Yemen	YE	YEM
+Yemen	Υεμένη	YE	YEM
+Yemen	Jemeno	YE	YEM
+Yemen	Jeemen	YE	YEM
+Yemen	Yémen	YE	YEM
+Yemen	Եմեն	YE	YEM
+Yemen	イエメン	YE	YEM
+Yemen	예멘	YE	YEM
+Yemen	Jemenas	YE	YEM
+Yemen	Iêmen	YE	YEM
+Yemen	เยเมน	YE	YEM
+Yemen	Ємен	YE	YEM
+Yemen	也门	YE	YEM
+Yemen	葉門	YE	YEM
+Zambia	زامبيا	ZM	ZMB
+Zambia	Замбия	ZM	ZMB
+Zambia	Zambie	ZM	ZMB
+Zambia	Zambia	ZM	ZMB
+Zambia	Sambia	ZM	ZMB
+Zambia	Ζάμπια	ZM	ZMB
+Zambia	Zambio	ZM	ZMB
+Zambia	Զամբիա	ZM	ZMB
+Zambia	ザンビア	ZM	ZMB
+Zambia	잠비아	ZM	ZMB
+Zambia	Zambija	ZM	ZMB
+Zambia	Zâmbia	ZM	ZMB
+Zambia	แซมเบีย	ZM	ZMB
+Zambia	Замбія	ZM	ZMB
+Zambia	赞比亚	ZM	ZMB
+Zambia	尚比亞	ZM	ZMB
+Zimbabwe	زيمبابوي	ZW	ZWE
+Zimbabwe	Зимбабве	ZW	ZWE
+Zimbabwe	Zimbabwe	ZW	ZWE
+Zimbabwe	Simbabwe	ZW	ZWE
+Zimbabwe	Ζιμπάμπουε	ZW	ZWE
+Zimbabwe	Zimbabvo	ZW	ZWE
+Zimbabwe	Zimbabue	ZW	ZWE
+Zimbabwe	Զիմբաբվե	ZW	ZWE
+Zimbabwe	ジンバブエ	ZW	ZWE
+Zimbabwe	짐바브웨	ZW	ZWE
+Zimbabwe	Zimbabvė	ZW	ZWE
+Zimbabwe	Zimbábue	ZW	ZWE
+Zimbabwe	ซิมบับเว	ZW	ZWE
+Zimbabwe	Зімбабве	ZW	ZWE
+Zimbabwe	津巴布韦	ZW	ZWE
+Zimbabwe	辛巴威	ZW	ZWE
+Pitcairn	Pitcairn Island	PN	PCN
+Republic of Cabo Verde	Republic of Cabo Verde	CV	CPV
+Somaliland	Republic of Somaliland	SO	SOM
+Somaliland	República de Somalilandia	SO	SOM
+Somaliland	Somalilandia	SO	SOM
+Somaliland	Somaliland	SO	SOM
+United States Virgin Islands	Virgin Islands of the United States	VI	VIR
