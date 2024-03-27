@@ -240,21 +240,78 @@
 <code><a href="reference/bdc_summary_col.html">bdc_summary_col()</a></code> This function creates or updates the column summarizing the results of data quality tests (i.e., the column “.summary”)</li>
 </ul>
 </div>
-<div class="section level4">
-<h4 id="installation">
+<div class="section level4"><h4 id="installation">
 <strong>Installation</strong><a class="anchor" aria-label="anchor" href="#installation"></a>
-</h4>
-<p>You can install <em>bdc</em> from CRAN</p>
+</h4></div>
+<div class="section level3">
+<h3 id="gnparser-installation">Gnparser installation<a class="anchor" aria-label="anchor" href="#gnparser-installation"></a>
+</h3>
+<p>Previously to bdc installation is necessary to install <a href="https://github.com/gnames/gnparser#installation" class="external-link">GNparser</a>. First, download the <a href="https://github.com/gnames/gnparser/releases/tag/v1.9.1" class="external-link">binary file</a> of <code>gnparser</code> for your operational system. For example, download the file using R as follow:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span>url <span class="op">=</span> <span class="st">"file_link"</span>, </span>
+<span>              destfile <span class="op">=</span> <span class="st">"destination_path"</span><span class="op">)</span></span></code></pre></div>
+<p>The downloaded file has extensions <code>.zip</code> or <code>.gz</code>.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="mac-os">Mac OS<a class="anchor" aria-label="anchor" href="#mac-os"></a>
+</h2>
+<p>Extract the binary file <code>gnparser</code> from <code>.zip</code> or <code>.gz</code> files and move it to the folder <code>~/Library/Application Support/</code>. Move the file manually or using R:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Extract gnparser file</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/untar.html" class="external-link">untar</a></span><span class="op">(</span><span class="st">"~/Downloads/gnparser-v1.9.1-linux.tar.gz"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Move to the path</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="st">"./gnparser"</span>, <span class="st">"~/Library/Application Support/"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="linux">Linux<a class="anchor" aria-label="anchor" href="#linux"></a>
+</h2>
+<p>Extract the binary file <code>gnparser</code> from <code>.zip</code> or <code>.gz</code> files and move it to the folder <code>~/bin</code>. Move the file manually or using the command line:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Extract gnparser file</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/untar.html" class="external-link">untar</a></span><span class="op">(</span><span class="st">"~/Downloads/gnparser-v1.9.1-linux.tar.gz"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Move to the path</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="st">"./gnparser"</span>,  <span class="st">"~/bin"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="windows">Windows<a class="anchor" aria-label="anchor" href="#windows"></a>
+</h2>
+<p>In Windows, extract the binary file <code>gnparser</code> from <code>.zip</code>. Then, move gnparser file to the folder <code>Appdata</code>. To find the <code>Appdata</code> path, run this in R:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Unzip the downloaded file</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="va">gnparser.zip</span>, exdir <span class="op">=</span> <span class="st">"destination_path/gnparser"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Find the AppData path</span></span>
+<span><span class="va">AppData_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"AppData"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Copy gnparser to AppData</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="st">"destination_path/gnparser"</span>, <span class="va">AppData_path</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="bdc-installation">bdc installation<a class="anchor" aria-label="anchor" href="#bdc-installation"></a>
+</h3>
+<p>After installing Gnparser, you can install <em>bdc</em> from CRAN:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">taxadb</span><span class="op">)</span></span></code></pre></div>
 <p>or the development version from <a href="https://github.com/brunobrr/bdc" class="external-link">GitHub</a> using:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"brunobrr/bdc"</span><span class="op">)</span></span></code></pre></div>
 <p>Load the package with:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://brunobrr.github.io/bdc/">bdc</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="gn-parser-installation">
+<strong>GN parser installation</strong><a class="anchor" aria-label="anchor" href="#gn-parser-installation"></a>
+</h4>
+<p><em>bdc</em> requires gnparser to clean taxonomic names. Follow the instruction to install <a href="https://github.com/gnames/gnparser#installation" class="external-link">gnparser</a>.</p>
 </div>
 <div class="section level4">
 <h4 id="package-website">
@@ -273,6 +330,7 @@
 <strong>Citation</strong><a class="anchor" aria-label="anchor" href="#citation"></a>
 </h4>
 <p>Ribeiro, BR; Velazco, SJE; Guidoni-Martins, K; Tessarolo, G; Jardim, Lucas; Bachman, SP; Loyola, R (2022). bdc: A toolkit for standardizing, integrating, and cleaning biodiversity data. Methods in Ecology and Evolution. <a href="https://doi.org/10.1111/2041-210X.13868" class="external-link">doi.org/10.1111/2041-210X.13868</a></p>
+</div>
 </div>
 </div>
 </div>
@@ -321,7 +379,6 @@
 <ul class="list-unstyled">
 <li><a href="https://CRAN.R-project.org/package=bdc" class="external-link"><img src="https://www.r-pkg.org/badges/version/bdc" alt="CRAN status"></a></li>
 <li><a href="https://cranlogs.r-pkg.org:443/badges/grand-total/bdc" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/bdc" alt="downloads"></a></li>
-<li><a href="https://cranlogs.r-pkg.org:443/badges/bdc" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/bdc" alt="rstudio mirror downloads"></a></li>
 <li><a href="https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/brunobrr/bdc/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/brunobrr/bdc" class="external-link"><img src="https://codecov.io/gh/brunobrr/bdc/branch/master/graph/badge.svg?token=9AUF86G9LJ" alt="Codecov test coverage"></a></li>
 <li><a href="https://doi.org/10.5281/zenodo.6450390" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.6450390.svg" alt="DOI"></a></li>
