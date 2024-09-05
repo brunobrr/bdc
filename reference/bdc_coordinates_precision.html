@@ -6,7 +6,7 @@ equator, respectively."><meta property="og:image" content="https://brunobrr.gith
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -28,7 +28,7 @@ equator, respectively."><meta property="og:image" content="https://brunobrr.gith
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home"></span>
-     
+
   </a>
 </li>
 <li>
@@ -37,9 +37,9 @@ equator, respectively."><meta property="og:image" content="https://brunobrr.gith
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-book"></span>
-     
+
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -61,20 +61,20 @@ equator, respectively."><meta property="og:image" content="https://brunobrr.gith
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/brunobrr/bdc/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Flag low-precise geographic coordinates</h1>
-    <small class="dont-index">Source: <a href="https://github.com/brunobrr/bdc/blob/HEAD/R/bdc_coordinates_precision.R" class="external-link"><code>R/bdc_coordinates_precision.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/brunobrr/bdc/blob/master/R/bdc_coordinates_precision.R" class="external-link"><code>R/bdc_coordinates_precision.R</code></a></small>
     <div class="hidden name"><code>bdc_coordinates_precision.Rd</code></div>
     </div>
 
@@ -96,21 +96,23 @@ equator, respectively.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>data</dt>
+
+
+<dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>data.frame. A data.frame containing geographic coordinates.</p></dd>
 
 
-<dt>lat</dt>
+<dt id="arg-lat">lat<a class="anchor" aria-label="anchor" href="#arg-lat"></a></dt>
 <dd><p>character string. The column with latitude in decimal degrees and
 WGS84. Default = "decimalLatitude".</p></dd>
 
 
-<dt>lon</dt>
+<dt id="arg-lon">lon<a class="anchor" aria-label="anchor" href="#arg-lon"></a></dt>
 <dd><p>character string. The column with longitude in decimal degrees and
 WGS84. Default = "decimalLongitude".</p></dd>
 
 
-<dt>ndec</dt>
+<dt id="arg-ndec">ndec<a class="anchor" aria-label="anchor" href="#arg-ndec"></a></dt>
 <dd><p>numeric. The minimum number of decimal places that the
 coordinates should
 have to be considered valid. Default = 2.</p></dd>
@@ -118,9 +120,7 @@ have to be considered valid. Default = 2.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A data.frame with logical values indicating whether values are equal
+    <p>A data.frame with logical values indicating whether values are equal
 or higher than the specified minimum decimal number (ndec). Coordinates
 flagged as FALSE in .rou column are considered imprecise.</p>
     </div>
@@ -161,15 +161,15 @@ flagged as FALSE in .rou column are considered imprecise.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
