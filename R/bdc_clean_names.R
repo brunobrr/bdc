@@ -184,7 +184,7 @@ bdc_rem_family_names <- function(data, sci_names) {
     system.file("extdata", "family_names/animalia_families.txt",
       package = "bdc"
     ) %>%
-    readr::read_csv(col_names = F) %>%
+    readr::read_csv(col_names = FALSE, show_col_types = FALSE)
     dplyr::tibble() %>%
     dplyr::pull(X1)
 
