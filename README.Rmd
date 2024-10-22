@@ -169,7 +169,7 @@ needing further inspection, ii) figures, and iii) data-quality reports.
 
 ### Gnparser installation
 
-Previously to bdc installation is necessary to install [GNparser](https://github.com/gnames/gnparser#installation). First, download the [binary file](https://github.com/gnames/gnparser/releases/tag/v1.9.1) of `gnparser` for your operational system. For example, download the file using R as follow:
+Prior to installing bdc, it is necessary to install [GNparser](https://github.com/gnames/gnparser#installation). First, download the [binary file](https://github.com/gnames/gnparser/releases/tag/v1.9.1) of `gnparser` for your operating system. For example, download the file using R as follows:
 
 ```{r, eval = FALSE}
 
