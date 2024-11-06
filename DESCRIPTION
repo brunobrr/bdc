@@ -78,8 +78,7 @@ Suggests:
     sp,
     testthat (>= 3.0.0),
     xml2
-VignetteBuilder:
-    knitr
+VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-gb

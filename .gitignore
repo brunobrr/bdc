@@ -46,3 +46,4 @@ rsconnect/
 .dir-locals.el
 check/
 .vscode/settings.json
+inst/doc
