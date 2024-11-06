@@ -30,10 +30,12 @@ bdc_standardize_country <-
       data %>%
       dplyr::distinct(country, .keep_all = FALSE) %>%
       dplyr::rename(cntr_original = country)
-
+    
     cntr_db$cntr_original2 <-
-      stringr::str_replace_all(cntr_db$cntr_original, "[[:punct:]]", " ") %>%
+      gsub("&", "and", cntr_db$cntr_original) %>% 
+      stringr::str_replace_all(., "[[:punct:]]", " ") %>%
       stringr::str_trim() %>%
+      stringr::str_squish() %>%
       stringi::stri_trans_general("Latin-ASCII") %>%
       tolower()
 
@@ -43,7 +45,10 @@ bdc_standardize_country <-
     country_names_db <-
       country_names_db %>%
       dplyr::mutate(lower_case = names_in_different_languages %>%
-        stringi::stri_trans_general("Latin-ASCII") %>%
+                      stringr::str_replace_all(., "[[:punct:]]", " ") %>%
+                      stringr::str_trim() %>%
+                      stringr::str_squish() %>% 
+                      stringi::stri_trans_general("Latin-ASCII") %>%
         tolower())
 
     cn <-
@@ -177,6 +182,8 @@ bdc_standardize_country <-
       cntr_db %>%
       dplyr::select(-cntr_original2, -cntr_suggested) %>%
       dplyr::rename(cntr_suggested = cntr_suggested2)
+    
+    cntr_db[cntr_db$cntr_original %in% 0:9, 2:3] <- NA
     
     cntr_db <- cntr_db %>%
       dplyr::arrange(cntr_suggested)
