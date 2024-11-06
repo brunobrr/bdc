@@ -45,3 +45,4 @@ rsconnect/
 /*_files/
 .dir-locals.el
 check/
+.vscode/settings.json
