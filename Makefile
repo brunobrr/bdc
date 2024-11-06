@@ -14,7 +14,7 @@ build: document ## build package
 	$(R) "devtools::build(vignettes = FALSE)"
 
 check: ## check package
-	$(R) "devtools::check(cran = TRUE, vignettes = FALSE)" 2>&1 | tee out-check.txt
+	$(R) "devtools::check(cran = TRUE, vignettes = TRUE)" 2>&1 | tee out-check.txt
 
 styler: ## styler package
 	$(R) "styler::style_dir('.')"

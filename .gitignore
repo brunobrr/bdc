@@ -44,3 +44,4 @@ po/*~
 rsconnect/
 /*_files/
 .dir-locals.el
+check/
