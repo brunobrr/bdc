@@ -46,7 +46,7 @@ identification as well as infraspecific terms were obtained from Sigoviniet
 al. (2016; doi: 10.1111/2041-210X.12594). More details about the names
 parse process can be found in
 \href{https://github.com/gnames/gnparser}{gnparser}.
-\bold{Note: GNparser is not automatically installed. Please see \href{https://github.com/gnames/gnparser#installation}{guidelines} to install gnparser.}
+\bold{Note: GNparser is not automatically installed. Please use the 'bdc_install_gnparser' function to install the software}
 }
 \examples{
 \dontrun{

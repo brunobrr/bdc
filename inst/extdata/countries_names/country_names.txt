@@ -1,4 +1,260 @@
 english_name	names_in_different_languages	alpha2	alpha3
+United States Virgin Islands	U.S. Virgin Islands	VI	VIR
+United States Virgin Islands	virgin islands, u.s.	VI	VIR
+United States Virgin Islands	Virgin Islands (U.S.)	VI	VIR
+United States Virgin Islands	Virgin Islands, U.S.	VI	VIR
+Taiwan	Chinese Taipei	TW	TWN
+Guyana	British guiana	GY	GUY
+Afghanistan	Afghanistan	AF	AFG
+Åland Islands	Åland Islands	AX	ALA
+Albania	Albania	AL	ALB
+Algeria	Algeria	DZ	DZA
+American Samoa	American Samoa	AS	ASM
+Andorra	Andorra	AD	AND
+Angola	Angola	AO	AGO
+Anguilla	Anguilla	AI	AIA
+Antarctica	Antarctica	AQ	ATA
+Antigua and Barbuda	Antigua and Barbuda	AG	ATG
+Argentina	Argentina	AR	ARG
+Armenia	Armenia	AM	ARM
+Aruba	Aruba	AW	ABW
+Australia	Australia	AU	AUS
+Austria	Austria	AT	AUT
+Azerbaijan	Azerbaijan	AZ	AZE
+Bahamas	Bahamas	BS	BHS
+Bahrain	Bahrain	BH	BHR
+Bangladesh	Bangladesh	BD	BGD
+Barbados	Barbados	BB	BRB
+Belarus	Belarus	BY	BLR
+Belgium	Belgium	BE	BEL
+Belize	Belize	BZ	BLZ
+Benin	Benin	BJ	BEN
+Bermuda	Bermuda	BM	BMU
+Bhutan	Bhutan	BT	BTN
+Bolivia	Bolivia	BO	BOL
+Bonaire, Sint Eustatius and Saba	Bonaire, Sint Eustatius and Saba	BQ	BES
+Bosnia and Herzegovina	Bosnia and Herzegovina	BA	BIH
+Botswana	Botswana	BW	BWA
+Bouvet Island	Bouvet Island	BV	BVT
+Brazil	Brazil	BR	BRA
+British Indian Ocean Territory	British Indian Ocean Territory	IO	IOT
+Brunei Darussalam	Brunei Darussalam	BN	BRN
+Bulgaria	Bulgaria	BG	BGR
+Burkina Faso	Burkina Faso	BF	BFA
+Burundi	Burundi	BI	BDI
+Republic of Cabo Verde	Republic of Cabo Verde	CV	CPV
+Cambodia	Cambodia	KH	KHM
+Cameroon	Cameroon	CM	CMR
+Canada	Canada	CA	CAN
+Cayman Islands	Cayman Islands	KY	CYM
+Central African Republic	Central African Republic	CF	CAF
+Chad	Chad	TD	TCD
+Chile	Chile	CL	CHL
+China	China	CN	CHN
+Christmas Island	Christmas Island	CX	CXR
+Cocos (Keeling) Islands	Cocos (Keeling) Islands	CC	CCK
+Colombia	Colombia	CO	COL
+Comoros	Comoros	KM	COM
+Republic of the Congo	Republic of the Congo	CG	COG
+Democratic Republic of the Congo	Democratic Republic of the Congo	CD	COD
+Cook Islands	Cook Islands	CK	COK
+Costa Rica	Costa Rica	CR	CRI
+Côte d'Ivoire	Côte d'Ivoire	CI	CIV
+Croatia	Croatia	HR	HRV
+Cuba	Cuba	CU	CUB
+Curaçao	Curaçao	CW	CUW
+Cyprus	Cyprus	CY	CYP
+Czech Republic	Czech Republic	CZ	CZE
+Denmark	Denmark	DK	DNK
+Djibouti	Djibouti	DJ	DJI
+Dominica	Dominica	DM	DMA
+Dominican Republic	Dominican Republic	DO	DOM
+Ecuador	Ecuador	EC	ECU
+Egypt	Egypt	EG	EGY
+El Salvador	El Salvador	SV	SLV
+Equatorial Guinea	Equatorial Guinea	GQ	GNQ
+Eritrea	Eritrea	ER	ERI
+Estonia	Estonia	EE	EST
+Eswatini	Eswatini	SZ	SWZ
+Ethiopia	Ethiopia	ET	ETH
+Falkland Islands	Falkland Islands	FK	FLK
+Faroe Islands	Faroe Islands	FO	FRO
+Fiji	Fiji	FJ	FJI
+Finland	Finland	FI	FIN
+France	France	FR	FRA
+French Guiana	French Guiana	GF	GUF
+French Polynesia	French Polynesia	PF	PYF
+French Southern and Antarctic Lands	French Southern and Antarctic Lands	TF	ATF
+Gabon	Gabon	GA	GAB
+Gambia	Gambia	GM	GMB
+Georgia	Georgia	GE	GEO
+Germany	Germany	DE	DEU
+Ghana	Ghana	GH	GHA
+Gibraltar	Gibraltar	GI	GIB
+Greece	Greece	GR	GRC
+Greenland	Greenland	GL	GRL
+Grenada	Grenada	GD	GRD
+Guadeloupe	Guadeloupe	GP	GLP
+Guam	Guam	GU	GUM
+Guatemala	Guatemala	GT	GTM
+Guernsey	Guernsey	GG	GGY
+Guinea	Guinea	GN	GIN
+Guinea-Bissau	Guinea-Bissau	GW	GNB
+Guyana	Guyana	GY	GUY
+Haiti	Haiti	HT	HTI
+Heard Island and McDonald Islands	Heard Island and McDonald Islands	HM	HMD
+Vatican	Vatican	VA	VAT
+Honduras	Honduras	HN	HND
+Hong Kong	Hong Kong	HK	HKG
+Hungary	Hungary	HU	HUN
+Iceland	Iceland	IS	ISL
+India	India	IN	IND
+Indonesia	Indonesia	ID	IDN
+Iran	Iran	IR	IRN
+Iraq	Iraq	IQ	IRQ
+Ireland	Ireland	IE	IRL
+Isle of Man	Isle of Man	IM	IMN
+Israel	Israel	IL	ISR
+Italy	Italy	IT	ITA
+Jamaica	Jamaica	JM	JAM
+Japan	Japan	JP	JPN
+Jersey	Jersey	JE	JEY
+Jordan	Jordan	JO	JOR
+Kazakhstan	Kazakhstan	KZ	KAZ
+Kenya	Kenya	KE	KEN
+Kiribati	Kiribati	KI	KIR
+Dem. Rep. Korea	Dem. Rep. Korea	KP	PRK
+Republic of Korea	Republic of Korea	KR	KOR
+Kuwait	Kuwait	KW	KWT
+Kyrgyzstan	Kyrgyzstan	KG	KGZ
+Lao People's Democratic Republic	Lao People's Democratic Republic	LA	LAO
+Latvia	Latvia	LV	LVA
+Lebanon	Lebanon	LB	LBN
+Lesotho	Lesotho	LS	LSO
+Liberia	Liberia	LR	LBR
+Libya	Libya	LY	LBY
+Liechtenstein	Liechtenstein	LI	LIE
+Lithuania	Lithuania	LT	LTU
+Luxembourg	Luxembourg	LU	LUX
+Macao	Macao	MO	MAC
+Madagascar	Madagascar	MG	MDG
+Malawi	Malawi	MW	MWI
+Malaysia	Malaysia	MY	MYS
+Maldives	Maldives	MV	MDV
+Mali	Mali	ML	MLI
+Malta	Malta	MT	MLT
+Marshall Islands	Marshall Islands	MH	MHL
+Martinique	Martinique	MQ	MTQ
+Mauritania	Mauritania	MR	MRT
+Mauritius	Mauritius	MU	MUS
+Mayotte	Mayotte	YT	MYT
+Mexico	Mexico	MX	MEX
+Federated States of Micronesia	Federated States of Micronesia	FM	FSM
+Moldova	Moldova	MD	MDA
+Monaco	Monaco	MC	MCO
+Mongolia	Mongolia	MN	MNG
+Montenegro	Montenegro	ME	MNE
+Montserrat	Montserrat	MS	MSR
+Morocco	Morocco	MA	MAR
+Mozambique	Mozambique	MZ	MOZ
+Myanmar	Myanmar	MM	MMR
+Namibia	Namibia	NA	NAM
+Nauru	Nauru	NR	NRU
+Nepal	Nepal	NP	NPL
+Netherlands	Netherlands	NL	NLD
+New Caledonia	New Caledonia	NC	NCL
+New Zealand	New Zealand	NZ	NZL
+Nicaragua	Nicaragua	NI	NIC
+Niger	Niger	NE	NER
+Nigeria	Nigeria	NG	NGA
+Niue	Niue	NU	NIU
+Norfolk Island	Norfolk Island	NF	NFK
+Macedonia	Macedonia	MK	MKD
+Northern Mariana Islands	Northern Mariana Islands	MP	MNP
+Norway	Norway	NO	NOR
+Oman	Oman	OM	OMN
+Pakistan	Pakistan	PK	PAK
+Palau	Palau	PW	PLW
+Palestine	Palestine	PS	PSE
+Panama	Panama	PA	PAN
+Papua New Guinea	Papua New Guinea	PG	PNG
+Paraguay	Paraguay	PY	PRY
+Peru	Peru	PE	PER
+Philippines	Philippines	PH	PHL
+Pitcairn	Pitcairn	PN	PCN
+Poland	Poland	PL	POL
+Portugal	Portugal	PT	PRT
+Puerto Rico	Puerto Rico	PR	PRI
+Qatar	Qatar	QA	QAT
+Réunion	Réunion	RE	REU
+Romania	Romania	RO	ROU
+Russian Federation	Russian Federation	RU	RUS
+Rwanda	Rwanda	RW	RWA
+Saint Barthélemy	Saint Barthélemy	BL	BLM
+Saint Helena	Saint Helena	SH	SHN
+Saint Kitts and Nevis	Saint Kitts and Nevis	KN	KNA
+Saint Lucia	Saint Lucia	LC	LCA
+Saint Martin	Saint Martin	MF	MAF
+Saint Pierre and Miquelon	Saint Pierre and Miquelon	PM	SPM
+Saint Vincent and the Grenadines	Saint Vincent and the Grenadines	VC	VCT
+Samoa	Samoa	WS	WSM
+San Marino	San Marino	SM	SMR
+São Tomé and Principe	São Tomé and Principe	ST	STP
+Saudi Arabia	Saudi Arabia	SA	SAU
+Senegal	Senegal	SN	SEN
+Serbia	Serbia	RS	SRB
+Seychelles	Seychelles	SC	SYC
+Sierra Leone	Sierra Leone	SL	SLE
+Singapore	Singapore	SG	SGP
+Sint Maarten	Sint Maarten	SX	SXM
+Slovakia	Slovakia	SK	SVK
+Slovenia	Slovenia	SI	SVN
+Solomon Islands	Solomon Islands	SB	SLB
+Somalia	Somalia	SO	SOM
+South Africa	South Africa	ZA	ZAF
+South Georgia and the South Sandwich Islands	South Georgia and the South Sandwich Islands	GS	SGS
+South Sudan	South Sudan	SS	SSD
+Spain	Spain	ES	ESP
+Sri Lanka	Sri Lanka	LK	LKA
+Sudan	Sudan	SD	SDN
+Suriname	Suriname	SR	SUR
+Svalbard and Jan Mayen	Svalbard and Jan Mayen	SJ	SJM
+Sweden	Sweden	SE	SWE
+Switzerland	Switzerland	CH	CHE
+Syria	Syria	SY	SYR
+Taiwan	Taiwan	TW	TWN
+Tajikistan	Tajikistan	TJ	TJK
+Tanzania	Tanzania	TZ	TZA
+Thailand	Thailand	TH	THA
+Timor-Leste	Timor-Leste	TL	TLS
+Togo	Togo	TG	TGO
+Tokelau	Tokelau	TK	TKL
+Tonga	Tonga	TO	TON
+Trinidad and Tobago	Trinidad and Tobago	TT	TTO
+Tunisia	Tunisia	TN	TUN
+Turkey	Turkey	TR	TUR
+Turkmenistan	Turkmenistan	TM	TKM
+Turks and Caicos Islands	Turks and Caicos Islands	TC	TCA
+Tuvalu	Tuvalu	TV	TUV
+Uganda	Uganda	UG	UGA
+Ukraine	Ukraine	UA	UKR
+United Arab Emirates	United Arab Emirates	AE	ARE
+United Kingdom	United Kingdom	GB	GBR
+United States of America	United States of America	UM	UMI
+United States of America	United States of America	US	USA
+Uruguay	Uruguay	UY	URY
+Uzbekistan	Uzbekistan	UZ	UZB
+Vanuatu	Vanuatu	VU	VUT
+Venezuela	Venezuela	VE	VEN
+Vietnam	Vietnam	VN	VNM
+British Virgin Islands	British Virgin Islands	VG	VGB
+United States Virgin Islands	United States Virgin Islands	VI	VIR
+Wallis and Futuna	Wallis and Futuna	WF	WLF
+Western Sahara	Western Sahara	EH	ESH
+Yemen	Yemen	YE	YEM
+Zambia	Zambia	ZM	ZMB
+Zimbabwe	Zimbabwe	ZW	ZWE
+Somaliland	Somaliland	SO	SOM
 Afghanistan	أفغانستان	AF	AFG
 Afghanistan	Афганистан	AF	AFG
 Afghanistan	Afghánistán	AF	AFG
@@ -1713,6 +1969,7 @@ French Guiana	Французька Гвіана	GF	GUF
 French Guiana	法属圭亚那	GF	GUF
 French Guiana	法屬圭亞那	GF	GUF
 French Guiana	French Guiana	GF	GUF
+French Guiana	Guyane française	GF	GUF
 French Polynesia	بولينزيا الفرنسية	PF	PYF
 French Polynesia	Френска Полинезия	PF	PYF
 French Polynesia	Francouzská Polynésie	PF	PYF
@@ -4742,6 +4999,8 @@ Trinidad and Tobago	Тринідад і Тобаго	TT	TTO
 Trinidad and Tobago	特立尼达和多巴哥	TT	TTO
 Trinidad and Tobago	千里達及托巴哥	TT	TTO
 Trinidad and Tobago	Trinidad and Tobago	TT	TTO
+Trinidad and Tobago	Trinidad	TT	TTO
+Trinidad and Tobago	Tobago	TT	TTO
 Tunisia	تونس	TN	TUN
 Tunisia	Тунис	TN	TUN
 Tunisia	Tunisko	TN	TUN
@@ -4944,62 +5203,66 @@ United Kingdom	Велика Британія	GB	GBR
 United Kingdom	英国	GB	GBR
 United Kingdom	英國	GB	GBR
 United Kingdom	United Kingdom of Great Britain and Northern Ireland	GB	GBR
-United States	جزر الولايات المتحدة الصغيرة النائية	UM	UMI
-United States	Малки далечни острови на САЩ	UM	UMI
-United States	Menší odlehlé ostrovy USA	UM	UMI
-United States	USA's ydre småøer	UM	UMI
-United States	United States Minor Outlying Islands	UM	UMI
-United States	Απομακρυσμένες Νησίδες των Ηνωμένων Πολιτειών	UM	UMI
-United States	Usonaj Malgrandaj Insuloj	UM	UMI
-United States	Islas Ultramarinas Menores de los Estados Unidos	UM	UMI
-United States	Ühendriikide hajasaared	UM	UMI
-United States	Ameriketako Estatu Batuetako itsasoz haraindiko uharteak	UM	UMI
-United States	Yhdysvaltain pienet erillissaaret	UM	UMI
-United States	Îles mineures éloignées des États-Unis	UM	UMI
-United States	Amerikai Csendes-óceáni szigetek	UM	UMI
-United States	Միացյալ Նահանգների Մինոր Կղզիներ	UM	UMI
-United States	Isole minori esterne degli Stati Uniti	UM	UMI
-United States	合衆国領有小離島	UM	UMI
-United States	미국령 군소 제도	UM	UMI
-United States	JAV užjūrio mažosios salos	UM	UMI
-United States	Kleine afgelegen eilanden van de Verenigde Staten	UM	UMI
-United States	USAs ytre småøyer	UM	UMI
-United States	Dalekie Wyspy Mniejsze Stanów Zjednoczonych	UM	UMI
-United States	Ilhas Menores Distantes dos Estados Unidos	UM	UMI
-United States	Внешние малые острова США	UM	UMI
-United States	Menšie odľahlé ostrovy USA	UM	UMI
-United States	Förenta staternas mindre öar i Oceanien och Västindien	UM	UMI
-United States	เกาะเล็กรอบนอกของสหรัฐอเมริกา	UM	UMI
-United States	Зовнішні малі острови США	UM	UMI
-United States	美国本土外小岛屿	UM	UMI
-United States	美國本土外小島嶼	UM	UMI
-United States	الولايات المتحدة	US	USA
-United States	САЩ	US	USA
-United States	Spojené státy americké	US	USA
-United States	USA	US	USA
-United States	Vereinigte Staaten	US	USA
-United States	Ηνωμένες Πολιτείες Αμερικής	US	USA
-United States	Usono	US	USA
-United States	Estados Unidos	US	USA
-United States	Ameerika Ühendriigid	US	USA
-United States	AEB	US	USA
-United States	Yhdysvallat	US	USA
-United States	États-Unis	US	USA
-United States	Amerikai Egyesült Államok	US	USA
-United States	ԱՄՆ	US	USA
-United States	Stati Uniti	US	USA
-United States	アメリカ合衆国	US	USA
-United States	미국	US	USA
-United States	Jungtinės Valstijos	US	USA
-United States	Verenigde Staten	US	USA
-United States	Stany Zjednoczone	US	USA
-United States	Statele Unite ale Americii	US	USA
-United States	США	US	USA
-United States	Spojené štáty	US	USA
-United States	สหรัฐ	US	USA
-United States	美国	US	USA
-United States	美國	US	USA
-United States	United States of America	US	USA
+United States of America	جزر الولايات المتحدة الصغيرة النائية	UM	UMI
+United States of America	Малки далечни острови на САЩ	UM	UMI
+United States of America	Menší odlehlé ostrovy USA	UM	UMI
+United States of America	USA's ydre småøer	UM	UMI
+United States of America	United States Minor Outlying Islands	UM	UMI
+United States of America	Απομακρυσμένες Νησίδες των Ηνωμένων Πολιτειών	UM	UMI
+United States of America	Usonaj Malgrandaj Insuloj	UM	UMI
+United States of America	Islas Ultramarinas Menores de los Estados Unidos	UM	UMI
+United States of America	Ühendriikide hajasaared	UM	UMI
+United States of America	Ameriketako Estatu Batuetako itsasoz haraindiko uharteak	UM	UMI
+United States of America	Yhdysvaltain pienet erillissaaret	UM	UMI
+United States of America	Îles mineures éloignées des États-Unis	UM	UMI
+United States of America	Amerikai Csendes-óceáni szigetek	UM	UMI
+United States of America	Միացյալ Նահանգների Մինոր Կղզիներ	UM	UMI
+United States of America	Isole minori esterne degli Stati Uniti	UM	UMI
+United States of America	合衆国領有小離島	UM	UMI
+United States of America	미국령 군소 제도	UM	UMI
+United States of America	JAV užjūrio mažosios salos	UM	UMI
+United States of America	Kleine afgelegen eilanden van de Verenigde Staten	UM	UMI
+United States of America	USAs ytre småøyer	UM	UMI
+United States of America	Dalekie Wyspy Mniejsze Stanów Zjednoczonych	UM	UMI
+United States of America	Ilhas Menores Distantes dos Estados Unidos	UM	UMI
+United States of America	Внешние малые острова США	UM	UMI
+United States of America	Menšie odľahlé ostrovy USA	UM	UMI
+United States of America	Förenta staternas mindre öar i Oceanien och Västindien	UM	UMI
+United States of America	เกาะเล็กรอบนอกของสหรัฐอเมริกา	UM	UMI
+United States of America	Зовнішні малі острови США	UM	UMI
+United States of America	美国本土外小岛屿	UM	UMI
+United States of America	美國本土外小島嶼	UM	UMI
+United States of America	الولايات المتحدة	US	USA
+United States of America	САЩ	US	USA
+United States of America	Spojené státy americké	US	USA
+United States of America	USA	US	USA
+United States of America	Vereinigte Staaten	US	USA
+United States of America	Ηνωμένες Πολιτείες Αμερικής	US	USA
+United States of America	Usono	US	USA
+United States of America	Estados Unidos	US	USA
+United States of America	Estados Unidos de America	US	USA
+United States of America	Ameerika Ühendriigid	US	USA
+United States of America	AEB	US	USA
+United States of America	Yhdysvallat	US	USA
+United States of America	États-Unis	US	USA
+United States of America	Amerikai Egyesült Államok	US	USA
+United States of America	ԱՄՆ	US	USA
+United States of America	Stati Uniti	US	USA
+United States of America	アメリカ合衆国	US	USA
+United States of America	미국	US	USA
+United States of America	Jungtinės Valstijos	US	USA
+United States of America	Verenigde Staten	US	USA
+United States of America	Stany Zjednoczone	US	USA
+United States of America	Statele Unite ale Americii	US	USA
+United States of America	США	US	USA
+United States of America	Spojené štáty	US	USA
+United States of America	สหรัฐ	US	USA
+United States of America	美国	US	USA
+United States of America	美國	US	USA
+United States of America	United States of America	US	USA
+United States of America	USA	US	USA
+United States of America	U S A	US	USA
+United States of America	United States	US	USA
 Uruguay	الأوروغواي	UY	URY
 Uruguay	Уругвай	UY	URY
 Uruguay	Uruguay	UY	URY

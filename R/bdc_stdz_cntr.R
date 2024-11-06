@@ -21,6 +21,7 @@ bdc_stdz_cntr <- function (cntry_n, country_names_db, fuzzy_d = 1)
   }
   cntry_n <- stringr::str_replace_all(cntry_n, "[[:punct:]]", " ") %>%
     stringr::str_trim() %>%
+    stringr::str_squish() %>%
     stringi::stri_trans_general("Latin-ASCII")
   
   f0 <- function(val0, cntr_names, fuzzy_d = fuzzy_d) {
@@ -50,6 +51,10 @@ bdc_stdz_cntr <- function (cntry_n, country_names_db, fuzzy_d = 1)
       }
     }
     
+    if(length(nms)>1){
+      nms=NA
+      return(nms)
+    }
     # if (length(nms) == 0) {
     #   val <- val0
     #   d <- adist(val, cntr_names %>% dplyr::pull(names_in_different_languages ))
