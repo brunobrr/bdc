@@ -8,6 +8,7 @@ bdc_create_figures(
   data,
   database_id = "database_id",
   workflow_step = NULL,
+  bins_maps = 15,
   save_figures = FALSE
 )
 }
@@ -20,6 +21,8 @@ identifier. Default = "database_id".}
 
 \item{workflow_step}{character string. Name of the workflow step. Options
 available are "prefilter", "space", and "time".}
+
+\item{bins_maps}{character. Number of bins used to create the map.}
 
 \item{save_figures}{logical. Should the figures be saved for further
 inspection? Default = FALSE.}
