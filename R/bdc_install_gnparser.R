@@ -39,7 +39,8 @@ bdc_install_gnparser <- function() {
   # Sets the target directory path and the executable file for each operating system
   target_dir <- switch(os,
                        linux = "~/bin",
-                       darwin = "~/Library/Application Support",
+                       # darwin = "/usr/local/bin",
+                       darwin = "/opt/homebrew/bin",
                        windows = Sys.getenv("AppData"))
   
   exec_file <- ifelse(os == "windows", "gnparser.exe", "gnparser")
@@ -51,7 +52,7 @@ bdc_install_gnparser <- function() {
     return(invisible(NULL)) # Exits the function if the latest version is already installed
   }
   
-
+  
   # Defines download URLs for each operating system
   link <- "https://github.com/gnames/gnparser/releases/download/"
   gnparser_urls <- list(
@@ -63,7 +64,7 @@ bdc_install_gnparser <- function() {
                      latest_version, "-win-arm.zip")
   )
   
-
+  
   # Checks if the operating system is supported
   if (!os %in% names(gnparser_urls)) {
     stop("Unsupported operating system.")
@@ -73,12 +74,9 @@ bdc_install_gnparser <- function() {
   destfile <-
     switch(
       os,
-      linux = file.path(tempdir(), paste0("gnparser-v", latest_version, 
-                                          ".tar.gz")),
-      darwin = file.path(tempdir(), paste0("gnparser-v", latest_version, 
-                                           ".tar.gz")),
-      windows = file.path(tempdir(), paste0("gnparser-v", latest_version, 
-                                            ".zip"))
+      linux = file.path(tempdir(), "gnparser.tar.gz"),
+      darwin = file.path(tempdir(), "gnparser.tar.gz"),
+      windows = file.path(tempdir(), "gnparser.zip")
     )
   
   # Downloads the appropriate file
