@@ -240,7 +240,7 @@ Uganda	Uganda	UG	UGA
 Ukraine	Ukraine	UA	UKR
 United Arab Emirates	United Arab Emirates	AE	ARE
 United Kingdom	United Kingdom	GB	GBR
-United States of America	United States of America	UM	UMI
+United States of America	United States of America	US	USA
 United States of America	United States of America	US	USA
 Uruguay	Uruguay	UY	URY
 Uzbekistan	Uzbekistan	UZ	UZB
@@ -5203,35 +5203,35 @@ United Kingdom	Велика Британія	GB	GBR
 United Kingdom	英国	GB	GBR
 United Kingdom	英國	GB	GBR
 United Kingdom	United Kingdom of Great Britain and Northern Ireland	GB	GBR
-United States of America	جزر الولايات المتحدة الصغيرة النائية	UM	UMI
-United States of America	Малки далечни острови на САЩ	UM	UMI
-United States of America	Menší odlehlé ostrovy USA	UM	UMI
-United States of America	USA's ydre småøer	UM	UMI
-United States of America	United States Minor Outlying Islands	UM	UMI
-United States of America	Απομακρυσμένες Νησίδες των Ηνωμένων Πολιτειών	UM	UMI
-United States of America	Usonaj Malgrandaj Insuloj	UM	UMI
-United States of America	Islas Ultramarinas Menores de los Estados Unidos	UM	UMI
-United States of America	Ühendriikide hajasaared	UM	UMI
-United States of America	Ameriketako Estatu Batuetako itsasoz haraindiko uharteak	UM	UMI
-United States of America	Yhdysvaltain pienet erillissaaret	UM	UMI
-United States of America	Îles mineures éloignées des États-Unis	UM	UMI
-United States of America	Amerikai Csendes-óceáni szigetek	UM	UMI
-United States of America	Միացյալ Նահանգների Մինոր Կղզիներ	UM	UMI
-United States of America	Isole minori esterne degli Stati Uniti	UM	UMI
-United States of America	合衆国領有小離島	UM	UMI
-United States of America	미국령 군소 제도	UM	UMI
-United States of America	JAV užjūrio mažosios salos	UM	UMI
-United States of America	Kleine afgelegen eilanden van de Verenigde Staten	UM	UMI
-United States of America	USAs ytre småøyer	UM	UMI
-United States of America	Dalekie Wyspy Mniejsze Stanów Zjednoczonych	UM	UMI
-United States of America	Ilhas Menores Distantes dos Estados Unidos	UM	UMI
-United States of America	Внешние малые острова США	UM	UMI
-United States of America	Menšie odľahlé ostrovy USA	UM	UMI
-United States of America	Förenta staternas mindre öar i Oceanien och Västindien	UM	UMI
-United States of America	เกาะเล็กรอบนอกของสหรัฐอเมริกา	UM	UMI
-United States of America	Зовнішні малі острови США	UM	UMI
-United States of America	美国本土外小岛屿	UM	UMI
-United States of America	美國本土外小島嶼	UM	UMI
+United States of America	جزر الولايات المتحدة الصغيرة النائية	US	USA
+United States of America	Малки далечни острови на САЩ	US	USA
+United States of America	Menší odlehlé ostrovy USA	US	USA
+United States of America	USA's ydre småøer	US	USA
+United States of America	United States Minor Outlying Islands	US	USA
+United States of America	Απομακρυσμένες Νησίδες των Ηνωμένων Πολιτειών	US	USA
+United States of America	Usonaj Malgrandaj Insuloj	US	USA
+United States of America	Islas Ultramarinas Menores de los Estados Unidos	US	USA
+United States of America	Ühendriikide hajasaared	US	USA
+United States of America	Ameriketako Estatu Batuetako itsasoz haraindiko uharteak	US	USA
+United States of America	Yhdysvaltain pienet erillissaaret	US	USA
+United States of America	Îles mineures éloignées des États-Unis	US	USA
+United States of America	Amerikai Csendes-óceáni szigetek	US	USA
+United States of America	Միացյալ Նահանգների Մինոր Կղզիներ	US	USA
+United States of America	Isole minori esterne degli Stati Uniti	US	USA
+United States of America	合衆国領有小離島	US	USA
+United States of America	미국령 군소 제도	US	USA
+United States of America	JAV užjūrio mažosios salos	US	USA
+United States of America	Kleine afgelegen eilanden van de Verenigde Staten	US	USA
+United States of America	USAs ytre småøyer	US	USA
+United States of America	Dalekie Wyspy Mniejsze Stanów Zjednoczonych	US	USA
+United States of America	Ilhas Menores Distantes dos Estados Unidos	US	USA
+United States of America	Внешние малые острова США	US	USA
+United States of America	Menšie odľahlé ostrovy USA	US	USA
+United States of America	Förenta staternas mindre öar i Oceanien och Västindien	US	USA
+United States of America	เกาะเล็กรอบนอกของสหรัฐอเมริกา	US	USA
+United States of America	Зовнішні малі острови США	US	USA
+United States of America	美国本土外小岛屿	US	USA
+United States of America	美國本土外小島嶼	US	USA
 United States of America	الولايات المتحدة	US	USA
 United States of America	САЩ	US	USA
 United States of America	Spojené státy americké	US	USA
