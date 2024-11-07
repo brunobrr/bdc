@@ -51,17 +51,19 @@ bdc_install_gnparser <- function() {
     return(invisible(NULL)) # Exits the function if the latest version is already installed
   }
   
+
   # Defines download URLs for each operating system
   link <- "https://github.com/gnames/gnparser/releases/download/"
   gnparser_urls <- list(
     linux = paste0(link, "v", latest_version, "/gnparser-v", 
-                   latest_version, "-linux.tar.gz"),
+                   latest_version, "-linux-arm.tar.gz"),
     darwin = paste0(link, "v", latest_version, "/gnparser-v", 
-                    latest_version, "-mac.tar.gz"),
+                    latest_version, "-mac-arm.tar.gz"),
     windows = paste0(link, "v", latest_version, "/gnparser-v", 
-                     latest_version, "-win-64.zip")
+                     latest_version, "-win-arm.zip")
   )
   
+
   # Checks if the operating system is supported
   if (!os %in% names(gnparser_urls)) {
     stop("Unsupported operating system.")
