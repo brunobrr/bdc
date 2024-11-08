@@ -25,5 +25,9 @@ navbar:
          href: articles/space.html
       -  text: "Time"
          href: articles/time.html
+    - icon: fas fa-question-circle
+      text: "Help"
+      href: articles/help/installing_gnparser.html  
   components:
     home: ~
+    
