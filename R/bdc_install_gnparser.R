@@ -1,4 +1,4 @@
-#' Install gnparser software
+#' Internal function: Install gnparser software
 #'
 #' Installs the latest version of the gnparser software, compatible with Windows, macOS, and Linux.
 #'
@@ -7,6 +7,7 @@
 #' @importFrom xml2 read_html
 #'
 #' @return None
+#' @noRd
 #' @examples
 #' \dontrun{
 #' bdc_install_gnparser()
