@@ -94,13 +94,17 @@ DT::datatable(
 
 #### **Clean and parse species names**
 
+⚠️**IMPORTANT:**
+
+Before running the `bdc_clean_names` function, please, install the `gnparser` software by [**following this tutorial**](https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html)**.** More information on gnparser is available on the [software's GitHub](https://github.com/gnames/gnparser).
+
 Scientific names improperly formatted usually cannot be matched with valid names. To solve this issue, we developed the *bdc_clean_name* containing functionalities to **unify writing style of scientific names**. This optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to:
 
 1.  Flag and remove family names pre-pended to species names;
 2.  Flag and remove qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);
 3.  Flag and remove infraspecific terms (e.g., variety [var.], subspecies [subsp], forma [f.], and their spelling variations);
 4.  Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);
-5.  Parse names, i.e., separate author, date, annotations from taxon name.
+5.  Parse names, i.e., separate author, date, annotations from taxon name using gnpaser.
 
 ```{r eval=F, echo=T}
 parse_names <-

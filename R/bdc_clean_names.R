@@ -35,6 +35,8 @@ check_gnparser_setup <- function(){
 #' capitalize only the first letter of the genus name and remove extra
 #' whitespaces), and 5) parse names, i.e., separate author, date, annotations
 #' from taxon name.
+#' 
+#' The execution of these functions depends on the gnparser software, which is not installed automatically. Please follow [this tutorial](https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html) to install gnparser.
 #'
 #' @family taxonomy
 #' @param sci_names character string. Containing scientific names.
@@ -45,7 +47,7 @@ check_gnparser_setup <- function(){
 #' al. (2016; doi: 10.1111/2041-210X.12594). More details about the names
 #' parse process can be found in
 #' \href{https://github.com/gnames/gnparser}{gnparser}. 
-#' \bold{Note: GNparser is not automatically installed. Please use the 'bdc_install_gnparser' function to install the software}
+#' \bold{Note: GNparser is not automatically installed. Please follow this [tutorial] (https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html) to install gnpaser}
 #'
 #' @return A five-column data.frame including
 #' * scientificName: original names supplied
