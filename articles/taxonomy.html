@@ -210,13 +210,15 @@
 <h4 id="clean-and-parse-species-names">
 <strong>Clean and parse species names</strong><a class="anchor" aria-label="anchor" href="#clean-and-parse-species-names"></a>
 </h4>
+<p>⚠️<strong>IMPORTANT:</strong></p>
+<p>Before running the <code>bdc_clean_names</code> function, please, install the <code>gnparser</code> software by <a href="https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html"><strong>following this tutorial</strong></a><strong>.</strong> More information on gnparser is available on the <a href="https://github.com/gnames/gnparser" class="external-link">software’s GitHub</a>.</p>
 <p>Scientific names improperly formatted usually cannot be matched with valid names. To solve this issue, we developed the <em>bdc_clean_name</em> containing functionalities to <strong>unify writing style of scientific names</strong>. This optimize the taxonomic queries by increasing the probability of finding matching names. This tool is used to:</p>
 <ol style="list-style-type: decimal">
 <li>Flag and remove family names pre-pended to species names;</li>
 <li>Flag and remove qualifiers denoting uncertain or provisional status of taxonomic identification (e.g., confer, species, affinis, and among others);</li>
 <li>Flag and remove infraspecific terms (e.g., variety [var.], subspecies [subsp], forma [f.], and their spelling variations);</li>
 <li>Standardize names, i.e., capitalize only the first letter of the genus name and remove extra whitespaces);</li>
-<li>Parse names, i.e., separate author, date, annotations from taxon name.</li>
+<li>Parse names, i.e., separate author, date, annotations from taxon name using gnpaser.</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">parse_names</span> <span class="op">&lt;-</span></span>
