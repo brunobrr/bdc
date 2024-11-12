@@ -7,7 +7,7 @@ is_linux <- function() unname(Sys.info()["sysname"] == "Linux")
 
 test_gnparser_setup <- function(bin_full_path){
   
-  if (!exec_exists(bin_full_path)) message("GNparser is not installed in your machine. Please use 'bdc_install_gnparser' to install the programm")
+  if (!exec_exists(bin_full_path)) message("GNparser is not installed in your machine. Please follow [this tutorial](https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html) to install gnparser")
 }
 
 check_gnparser_setup <- function(){
