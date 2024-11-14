@@ -83,7 +83,15 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.5" id="bdc-115">bdc 1.1.5<a class="anchor" aria-label="anchor" href="#bdc-115"></a></h2>
-<ul><li>Move <a href="https://github.com/RevolutionAnalytics/doparallel" class="external-link">doParallel</a> from Suggests to Imports (Thanks, <a href="https://github.com/black-snow" class="external-link">@black-snow</a>; PR <a href="https://github.com/brunobrr/bdc/issues/251" class="external-link">#251</a>).</li></ul></div>
+<ul><li>Move <a href="https://github.com/RevolutionAnalytics/doparallel" class="external-link">doParallel</a> from Suggests to Imports (Thanks, <a href="https://github.com/black-snow" class="external-link">@black-snow</a>; PR <a href="https://github.com/brunobrr/bdc/issues/251" class="external-link">#251</a>).</li>
+<li>Minor adjustments in <code>bdc_correct_coordinates</code> for improved functionality.</li>
+<li>Debugged <code>bdc_quick_map</code>: updated dependency handling for the dplyr package.</li>
+<li>Enhanced <code>bdc_country_standardize</code> function: added an internal function to improve country name checking and standardization.</li>
+<li>Deprecated rgnarspser lifecycle. Added a tutorial on the bdc website (<a href="https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html" class="uri">https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html</a>) with installation instructions for gnparser on macOS, Windows, and Linux.</li>
+<li>Updated <code>bdc_parse_names</code> documentation for clarity.</li>
+<li>Updated <code>bdc_create_figures</code>: removed outdated dependencies (sp, rgeos), debugged functionality, and added a new “hex” argument.</li>
+<li>Updated README file.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.4" id="bdc-114">bdc 1.1.4<small>2023-03-13</small><a class="anchor" aria-label="anchor" href="#bdc-114"></a></h2>
 <ul><li><p>Adaptation of the databases to the latest version of <code>{taxadb}</code> (0.2.0), temporarily discontinuing the <code>tpl</code>, <code>fb</code> and <code>iucn</code> databases (see <a href="https://github.com/ropensci/taxadb/commit/593c7856a603c802762829d60acb2a313ad7a6dd" class="external-link">here</a>).</p></li>
