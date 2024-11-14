@@ -1,6 +1,14 @@
 # bdc 1.1.5
 
 - Move `{doParallel}` from Suggests to Imports (Thanks, @black-snow; PR #251).
+- Minor adjustments in `bdc_correct_coordinates` for improved functionality.
+- Debugged `bdc_quick_map`: updated dependency handling for the dplyr package.
+- Enhanced `bdc_country_standardize` function: added an internal function to improve country name checking and standardization.
+- Deprecated rgnarspser lifecycle. Added a tutorial on the bdc website (https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html) with installation instructions for gnparser on macOS, Windows, and Linux.
+- Updated `bdc_parse_names` documentation for clarity.
+- Updated `bdc_create_figures`: removed outdated dependencies (sp, rgeos), debugged functionality, and added a new "hex" argument.
+- Updated README file.
+
 
 # bdc 1.1.4
 
