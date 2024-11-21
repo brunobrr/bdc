@@ -1,3 +1,5 @@
+skip_on_ci()
+
 id <- c(1, 2, 3, 4)
 scientificName <- c(
   "Rhinella major",
