@@ -19,8 +19,8 @@ Bruno R. Ribeiro
 
 ## GITHUB ACTIONS CHECK
 
-── R CMD check results ────────────────────────── bdc 1.1.5 ────
-Duration: 4m 38.6s
+── R CMD check results ──── bdc 1.1.5 ────
+Duration: 4m 38.9s
 
 ❯ checking files in ‘vignettes’ ... WARNING
 Files in the 'vignettes' directory but no files in 'inst/doc':
@@ -41,14 +41,11 @@ Importing from so many packages makes the package vulnerable to any of
 them becoming unavailable.  Move as many as possible to Suggests and
 use conditionally.
 
-❯ checking for future file timestamps ... NOTE
-unable to verify current time
-
-0 errors ✔ | 1 warning ✖ | 2 notes ✖
+0 errors ✔ | 1 warning ✖ | 1 note ✖
 
 ## RHUB CHECK
 ── R CMD check results ────────────────────────────────────────── bdc 1.1.5 ────
-Duration: 2m 8.7s
+Duration: 2m 3.1s
 
 ❯ checking files in ‘vignettes’ ... WARNING
   Files in the 'vignettes' directory but no files in 'inst/doc':
