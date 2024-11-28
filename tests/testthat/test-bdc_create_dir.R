@@ -1,4 +1,7 @@
 ## skip("dont run")
+skip_on_cran()
+skip_on_ci()
+
 bdc_create_dir()
 
 test_that("bdc dir exists", {
