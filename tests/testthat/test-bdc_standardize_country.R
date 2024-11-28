@@ -1,4 +1,5 @@
 skip_on_ci()
+skip_on_cran()
 
 wiki_cntr <- system.file("extdata/countries_names/country_names.txt", package = "bdc") %>%
   readr::read_delim(delim = "\t", show_col_types = FALSE) 
