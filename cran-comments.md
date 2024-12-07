@@ -19,8 +19,8 @@ Bruno R. Ribeiro
 
 ## GITHUB ACTIONS CHECK
 
-── R CMD check results ──── bdc 1.1.5 ────
-Duration: 4m 38.9s
+R CMD check results  bd
+Duration: 4m 43.1s
 
 ❯ checking files in ‘vignettes’ ... WARNING
 Files in the 'vignettes' directory but no files in 'inst/doc':
@@ -45,7 +45,7 @@ use conditionally.
 
 ## RHUB CHECK
 ── R CMD check results ────────────────────────────────────────── bdc 1.1.5 ────
-Duration: 2m 3.1s
+Duration: 1m 59.9s
 
 ❯ checking files in ‘vignettes’ ... WARNING
   Files in the 'vignettes' directory but no files in 'inst/doc':

@@ -78,7 +78,8 @@ Suggests:
     rvest,
     xml2,
     testthat (>= 3.0.0)
-VignetteBuilder: knitr
+BuildVignettes: true
+VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-gb
