@@ -1,14 +1,8 @@
 pandoc: 2.7.3
 pkgdown: 2.1.1
 pkgdown_sha: ~
-articles:
-  help/installing_gnparser: help/installing_gnparser.html
-  articles/integrate_datasets: integrate_datasets.html
-  articles/prefilter: prefilter.html
-  articles/space: space.html
-  articles/taxonomy: taxonomy.html
-  articles/time: time.html
-last_built: 2024-12-07T20:42Z
+articles: {}
+last_built: 2024-12-12T17:58Z
 urls:
   reference: https://brunobrr.github.io/bdc/reference
   article: https://brunobrr.github.io/bdc/articles
