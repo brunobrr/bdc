@@ -19,11 +19,17 @@ Bruno R. Ribeiro
 
 ## GITHUB ACTIONS CHECK
 
+ R CMD check results  bd
+Duration: 4m 44.2s
+
 ❯ checking package dependencies ... NOTE
   Imports includes 21 non-default packages.
   Importing from so many packages makes the package vulnerable to any of
   them becoming unavailable.  Move as many as possible to Suggests and
   use conditionally.
 
-0 errors ✔ | 0 warnings ✔ | 1 note ✖
+❯ checking for future file timestamps ... NOTE
+  unable to verify current time
+
+0 errors ✔ | 0 warnings ✔ | 2 notes ✖
 
