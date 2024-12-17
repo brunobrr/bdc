@@ -7,7 +7,7 @@ is_linux <- function() unname(Sys.info()["sysname"] == "Linux")
 
 test_gnparser_setup <- function(bin_full_path){
   
-  if (!exec_exists(bin_full_path)) message("GNparser is not installed in your machine. Please acess https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html to get help to install gnparser")
+  if (!exec_exists(bin_full_path)) message("GNparser is not installed in your machine.")
 }
 
 check_gnparser_setup <- function(){
@@ -36,7 +36,7 @@ check_gnparser_setup <- function(){
 #' whitespaces), and 5) parse names, i.e., separate author, date, annotations
 #' from taxon name.
 #' 
-#' The execution of these functions depends on the gnparser software, which is not installed automatically. Please follow this tutorial \url{https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html} to install gnparser.
+
 #'
 #' @family taxonomy
 #' @param sci_names character string. Containing scientific names.
@@ -44,10 +44,7 @@ check_gnparser_setup <- function(){
 #'
 #' @details Terms denoting uncertainty or provisional status of taxonomic
 #' identification as well as infraspecific terms were obtained from Sigoviniet
-#' al. (2016; doi: 10.1111/2041-210X.12594). More details about the names
-#' parse process can be found in
-#' \href{https://github.com/gnames/gnparser}{gnparser}. 
-#' \bold{Note: GNparser is not automatically installed. Please follow this tutorial \url{https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html} to install gnpaser}
+#' al. (2016; doi: 10.1111/2041-210X.12594).
 #'
 #' @return A five-column data.frame including
 #' * scientificName: original names supplied

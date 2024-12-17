@@ -41,14 +41,9 @@ whitespaces), and 5) parse names, i.e., separate author, date, annotations
 from taxon name.
 }
 \details{
-The execution of these functions depends on the gnparser software, which is not installed automatically. Please follow this tutorial \url{https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html} to install gnparser.
-
 Terms denoting uncertainty or provisional status of taxonomic
 identification as well as infraspecific terms were obtained from Sigoviniet
-al. (2016; doi: 10.1111/2041-210X.12594). More details about the names
-parse process can be found in
-\href{https://github.com/gnames/gnparser}{gnparser}.
-\bold{Note: GNparser is not automatically installed. Please follow this tutorial \url{https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html} to install gnpaser}
+al. (2016; doi: 10.1111/2041-210X.12594).
 }
 \examples{
 \dontrun{

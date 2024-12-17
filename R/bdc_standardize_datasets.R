@@ -38,9 +38,7 @@
 #' into R. Regardless of the method chosen, the data frame with metadata needs
 #' to contain the following column names (this is a list of required column
 #' names; for a comprehensive list of column names following Darwin Core
-#' terminology, see
-#' [here](https://brunobrr.github.io/bdc/articles/integrate_datasets.html)
-#'
+#' terminology
 #' - `datasetName`: A short name identifying the dataset (e.g., GBIF)
 #'
 #' - `fileName`: The relative path containing the name of the input dataset
