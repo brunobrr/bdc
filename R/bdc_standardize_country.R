@@ -29,8 +29,8 @@ bdc_standardize_country <-
     # Create a country database based on occ database
     cntr_db <-
       data %>%
-      dplyr::distinct(country, .keep_all = FALSE) %>%
-      dplyr::rename(cntr_original = country)
+      dplyr::distinct(.data[[country]], .keep_all = FALSE) %>%
+      dplyr::rename(cntr_original = .data[[country]])
     
     cntr_db$cntr_original2 <-
       gsub("&", "and", cntr_db$cntr_original) %>% 
