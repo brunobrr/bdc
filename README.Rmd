@@ -167,6 +167,9 @@ needing further inspection, ii) figures, and iii) data-quality reports.
 
 #### **Installation**
 
+First, make sure you have [GNparser](https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html) installed.  
+Then go ahead and install `bdc` itself:
+
 ```{r eval=FALSE}
 install.packages("bdc")
 library(bdc)
