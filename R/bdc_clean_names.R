@@ -735,8 +735,9 @@ bdc_rem_other_issues <- function(data, sci_names) {
   sci_names_raw <- data[[sci_names]] %>% stringr::str_squish()
 
   res <- data[[sci_names]] %>% stringr::str_squish()
-
-  # count the number of words
+  res <- stringr::str_to_lower(res) #### add here
+  
+  # count the number of res# count the number of words
   word_count <- stringr::str_count(res, "\\w+")
 
   # Convert to lower case and capitalize the only first letter of the generic
@@ -749,17 +750,18 @@ bdc_rem_other_issues <- function(data, sci_names) {
     gsub("^$", NA, res) %>% # substitute empty records by NA
     firstup(.) # Capitalize first letter
 
-  all_capitalize <- NULL
-  for (i in 1:length(res)) {
-    all_capitalize[i] <- !stringr::str_detect(res[i], "[[:lower:]]")
-  }
-
-  cap_words <- which(all_capitalize == TRUE)
-  for (i in 1:length(cap_words)) {
-    res[i] <-
-      stringr::str_to_lower(res[i]) %>%
-      firstup(.)
-  }
+  # all_capitalize <- NULL
+  # for (i in 1:length(res)) {
+  #   all_capitalize[i] <- !stringr::str_detect(res[i], "[[:lower:]]")
+  # }
+  # 
+  # # cap_words <- which(all_capitalize == TRUE)
+  # # #  for (i in 1:length(cap_words)) {
+  # # for (i in cap_words) {
+  #   res[i] <-
+  #     stringr::str_to_lower(res[i]) %>%
+  #     firstup(.)
+  # # }
 
   clean_other_issues <- res
   .other_issues <- sci_names_raw == clean_other_issues
