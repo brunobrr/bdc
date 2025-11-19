@@ -214,7 +214,7 @@ bdc_create_figures <-
             ggplot2::labs(x = "Dataset", y = "% of records flagged") +
             ggplot2::geom_hline(
               yintercept = 0,
-              size = 1,
+              linewidth = 1,
               colour = "#333333"
             ) +
             ggplot2::scale_y_continuous(expand = c(0, 0), 
@@ -232,16 +232,25 @@ bdc_create_figures <-
             dplyr::select(tidyselect::starts_with(".")) %>%
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
-            t() %>%
-            tibble::as_tibble(rownames = "NA") %>%
-            dplyr::mutate(V1 = nrow(data) - V1) %>%
+            t()
+
+          if (length(temp) == 0) {
+            return(NULL)
+          }
+
+          colnames(temp) <- "flagged"
+
+          temp <-
+            temp %>%
+            tibble::as_tibble(rownames = "test_name", .name_repair = "minimal") %>%
+            dplyr::mutate(flagged = nrow(data) - flagged) %>%
             dplyr::mutate(
               freq =
-                round((V1 / n_records * 100), 2)
+                round((flagged / n_records * 100), 2)
             ) %>%
             dplyr::rename(
-              Name = `NA`,
-              n_flagged = V1
+              Name = test_name,
+              n_flagged = flagged
             )
           
           temp[is.na(temp)] <- 0
@@ -264,7 +273,7 @@ bdc_create_figures <-
             ggplot2::labs(x = "Tests", y = "% of records flagged") +
             ggplot2::geom_hline(
               yintercept = 0,
-              size = 1,
+              linewidth = 1,
               colour = "#333333"
             ) +
             ggplot2::scale_y_continuous(expand = c(0, 0), 
@@ -361,9 +370,11 @@ bdc_create_figures <-
               column_to_map = "summary_all_tests",
               workflow_step = workflow_step)
           
-          bp_all_list <- list(bp_all)
-          names(bp_all_list) <- "summary_all_tests"
-          res <- c(res, bp_all_list)
+          if (!is.null(bp_all)) {
+            bp_all_list <- list(bp_all)
+            names(bp_all_list) <- "summary_all_tests"
+            res <- c(res, bp_all_list)
+          }
         }
         
       }
