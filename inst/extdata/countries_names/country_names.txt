@@ -86,6 +86,7 @@ French Guiana	French Guiana	GF	GUF
 French Polynesia	French Polynesia	PF	PYF
 French Southern and Antarctic Lands	French Southern and Antarctic Lands	TF	ATF
 Gabon	Gabon	GA	GAB
+Gambia	The Gambia	GM	GMB
 Gambia	Gambia	GM	GMB
 Georgia	Georgia	GE	GEO
 Germany	Germany	DE	DEU
@@ -128,6 +129,7 @@ Republic of Korea	Republic of Korea	KR	KOR
 Kuwait	Kuwait	KW	KWT
 Kyrgyzstan	Kyrgyzstan	KG	KGZ
 Lao People's Democratic Republic	Lao People's Democratic Republic	LA	LAO
+Lao People's Democratic Republic	Lao PDR	LA	LAO
 Latvia	Latvia	LV	LVA
 Lebanon	Lebanon	LB	LBN
 Lesotho	Lesotho	LS	LSO
@@ -1815,6 +1817,7 @@ Falkland Islands	Falklandinseln	FK	FLK
 Falkland Islands	Νήσοι Φώκλαντ	FK	FLK
 Falkland Islands	Insuloj Falklandoj	FK	FLK
 Falkland Islands	Islas Malvinas	FK	FLK
+Falkland Islands	Malvinas	FK	FLK
 Falkland Islands	Falklandi saared	FK	FLK
 Falkland Islands	Falklandak	FK	FLK
 Falkland Islands	Falklandinsaaret	FK	FLK
@@ -5516,3 +5519,30 @@ Somaliland	República de Somalilandia	SO	SOM
 Somaliland	Somalilandia	SO	SOM
 Somaliland	Somaliland	SO	SOM
 United States Virgin Islands	Virgin Islands of the United States	VI	VIR
+Cuba	US Naval Base Guantanamo Bay	CU	CUB
+Eswatini	Kingdom of eSwatini	SZ	SWZ
+Cyprus	Dhekelia	CY	CYP
+Macedonia	North Macedonia	MK	MKD
+Republic of Kosovo	Kosovo	XK	XKX
+Brazil	Brazilian Island	BR	BRA
+Cyprus	Northern Cyprus	CY	CYP
+Cyprus	Cyprus U.N. Buffer Zone	CY	CYP
+India	Siachen Glacier	IN	IND
+Kazakhstan	Baikonur Cosmodrome	KZ	KAZ
+Greece	Akrotiri	GR	GRC
+Argentina	Southern Patagonian Ice Field	AR	ARG
+Pitcairn	Pitcairn	PN	PCN
+Pitcairn	Pitcairn Islands	PN	PCN
+United States of America	United States Minor Outlying Islands	US	USA
+Saint Barthélemy	Saint-Barthélemy	BL	BLM
+Australia	Australian Indian Ocean Territories	AU	AUS
+Australia	Cocos (Keeling) Islands	AU	AUS
+Australia	Cocos Islands	AU	AUS
+Australia	Christmas Island	AU	AUS
+Australia	Coral Sea Islands	AU	AUS
+France	Clipperton Island	FR	FRA
+Australia	Ashmore and Cartier Islands	AU	AUS
+Colombia	Bajo Nuevo Bank	CO	COL
+Colombia	Petrel Islands	CO	COL
+Colombia	Serranilla Bank	CO	COL
+Australia	Australian Indian Ocean Territories	AU	AUS
