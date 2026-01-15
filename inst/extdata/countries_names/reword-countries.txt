@@ -1,0 +1,38 @@
+before	after
+eSwatini	Eswatini
+Faeroe Islands	Faroe Islands
+Heard I. and McDonald Islands	Heard Island and McDonald Islands
+Indian Ocean Territories	Australian Indian Ocean Territories
+Lao	Lao People's Democratic Republic
+Pitcairn Island	Pitcairn
+Saint-Barthélemy	Saint Barthélemy
+Saint-Martin	Saint Martin
+South Georgia and the Islands	South Georgia and the South Sandwich Islands
+Gambia	Gambia
+Minor	United States of America
+Wallis and Futuna Islands	Wallis and Futuna
+United States	United States of America
+US Naval Base Guantanamo Bay	Cuba
+Kingdom of eSwatini	Eswatini
+Dhekelia	Cyprus
+North Macedonia	Macedonia
+Kosovo	Republic of Kosovo
+Brazilian Island	Brazil
+The Gambia	Gambia
+Lao PDR	Lao People's Democratic Republic
+Northern Cyprus	Cyprus
+Cyprus U.N. Buffer Zone	Cyprus
+Siachen Glacier	India
+Baikonur Cosmodrome	Kazakhstan
+Akrotiri	Greece
+Southern Patagonian Ice Field	Argentina
+Pitcairn Islands	Pitcairn
+United States Minor Outlying Islands	United States of America
+Saint-Barthélemy	Saint Barthélemy
+Falkland Islands / Malvinas	Falkland Islands
+Australian Indian Ocean Territories	Australia
+Coral Sea Islands	Australia
+Clipperton Island	France
+Ashmore and Cartier Islands	Australia
+Bajo Nuevo Bank (Petrel Islands)	Colombia
+Serranilla Bank	Colombia

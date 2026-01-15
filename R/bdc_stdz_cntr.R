@@ -89,7 +89,7 @@ bdc_stdz_cntr <- function (cntry_n, country_names_db, fuzzy_d = 1)
 #'
 #' @importFrom dplyr pull mutate recode
 #' @importFrom purrr set_names
-#' @importFrom readr read_csv
+#' @importFrom readr read_delim
 #'
 #' @noRd
 #' @return Return a tibble/sf object
@@ -101,11 +101,8 @@ bdc_reword_countries <- function(data) {
 
   after <- name_long <- NULL
 
-  file_reword <-
-    system.file("extdata/countries_names/reword-countries.csv", package = "bdc")
-
   reword <-
-    readr::read_csv(file_reword, show_col_types = FALSE)
+    readr::read_delim(system.file("extdata/countries_names/reword-countries.txt", package = "bdc"), delim = "\t")
 
   vec_reword <-
     reword %>%
