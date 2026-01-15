@@ -1,3 +1,5 @@
+- `reword-countries.txt` and `country_names.txt` were updated and fixec (by @sjevelazco; [274](https://github.com/brunobrr/bdc/pull/274)).
+
 # bdc 1.1.5
 
 - Move `{doParallel}` from Suggests to Imports (Thanks, @black-snow; PR #251).
