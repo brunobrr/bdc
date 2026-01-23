@@ -1,4 +1,7 @@
-- `reword-countries.txt` and `country_names.txt` were updated and fixec (by @sjevelazco; [274](https://github.com/brunobrr/bdc/pull/274)).
+# bdc 1.1.6
+
+- `reword-countries.txt` and `country_names.txt` were updated and fixed (by @sjevelazco; [274](https://github.com/brunobrr/bdc/pull/274)).
+- Migrated from `{qs}` to `{qs2}` package. Updated `bdc_standardize_datasets()` to use `qs2::qs_save()` and `qs2::qs_read()` instead of `qs::qsave()` and `qs::qread()`. The format option has been changed from `"qs"` to `"qs2"` and file extensions from `.qs` to `.qs2`.
 
 # bdc 1.1.5
 

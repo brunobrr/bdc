@@ -88,25 +88,25 @@ metadata_repeated_datasetName <- tibble::tribble(
   "datafake1", df1_path, "id", "species", "latitude", "longitude"
 )
 
-bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs", save_database = FALSE)
+bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs2", save_database = FALSE)
 
-test_that("bdc_standardize_datasets can create qs files", {
+test_that("bdc_standardize_datasets can create qs2 files", {
   created_qs_files <-
-    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*qs") %>%
+    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*qs2") %>%
     basename()
 
   expected_qs_files <-
-    c("standard_datafake1.qs", "standard_datafake2.qs", "standard_datafake3.qs")
+    c("standard_datafake1.qs2", "standard_datafake2.qs2", "standard_datafake3.qs2")
 
   expect_equal(created_qs_files, expected_qs_files)
 })
 
 test_that("datafake1 has the default column names", {
   created_qs_files <-
-    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*qs")
+    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*qs2")
 
   df1 <-
-    qs::qread(created_qs_files[1]) %>%
+    qs2::qs_read(created_qs_files[1]) %>%
     names()
 
   expect_equal(df1, c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"))
@@ -114,10 +114,10 @@ test_that("datafake1 has the default column names", {
 
 test_that("datafake3 has the default column names", {
   created_qs_files <-
-    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*qs")
+    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*qs2")
 
   df3 <-
-    qs::qread(created_qs_files[3]) %>%
+    qs2::qs_read(created_qs_files[3]) %>%
     names()
 
   expect_equal(df3, c("database_id", "scientificName", "decimalLatitude", "decimalLongitude"))
@@ -181,6 +181,7 @@ skip_on_cran()
 skip_on_ci()
 
 test_that("bdc_standardize_datasets can create 00_merged_datasets.csv", {
+
   bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "csv", save_database = TRUE)
 
   merged <- here::here("Output/Intermediate/00_merged_database.csv")
@@ -188,16 +189,19 @@ test_that("bdc_standardize_datasets can create 00_merged_datasets.csv", {
   expect_true(file.exists(merged))
 
   unlink(here::here("Output"), recursive = TRUE)
+
 })
 
-test_that("bdc_standardize_datasets can create 00_merged_datasets.qs", {
-  bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs", save_database = TRUE)
+test_that("bdc_standardize_datasets can create 00_merged_datasets.qs2", {
 
-  merged <- here::here("Output/Intermediate/00_merged_database.qs")
+  bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs2", save_database = TRUE)
+
+  merged <- here::here("Output/Intermediate/00_merged_database.qs2")
 
   expect_true(file.exists(merged))
 
   unlink(here::here("Output"), recursive = TRUE)
+
 })
 
 test_that("bdc_standardize_datasets throw an error when dataset names are not unique", {
@@ -214,6 +218,6 @@ test_that("bdc_standardize_datasets throw an error when dataset names are not un
 
   expect_equal(res$message, "[ERROR]: Dataset names defined in the `datasetName` column must be unique.")
 
-  unlink(here::here("Output"), recursive = TRUE)
-
 })
+
+unlink(here::here("Output"), recursive = TRUE)

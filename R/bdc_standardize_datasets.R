@@ -12,7 +12,7 @@
 #' @param overwrite A logical vector indicating whether the final merged dataset
 #' should be overwritten. The default is FALSE.
 #' @param format a character setting the output file type. Option available are
-#' "csv" and "qs" (recommenced to save large datasets). Default == "csv".
+#' "csv" and "qs2" (recommenced to save large datasets). Default == "csv".
 #' @param save_database logical. Should the standardized database be locally
 #' saved? Default = FALSE.
 #'
@@ -25,7 +25,7 @@
 #' @importFrom fs dir_exists dir_create
 #' @importFrom here here
 #' @importFrom purrr set_names
-#' @importFrom qs qsave qread
+#' @importFrom qs2 qs_save qs_read
 #' @importFrom readr read_csv cols
 #'
 #' @details
@@ -78,9 +78,9 @@ bdc_standardize_datasets <-
     fileName <- datasetName <- . <- database_id <- NULL
 
     switch(EXPR = format,
-           qs = {
+           qs2 = {
              merged_filename <-
-               here::here("Output", "Intermediate", "00_merged_database.qs")
+               here::here("Output", "Intermediate", "00_merged_database.qs2")
            },
            csv = {
              merged_filename <-
@@ -217,8 +217,8 @@ bdc_standardize_datasets <-
                 standard_dataset %>%
                 dplyr::mutate_if(is.numeric, as.character)
 
-              if (format == "qs") {
-                qs::qsave(
+              if (format == "qs2") {
+                qs2::qs_save(
                   standard_dataset,
                   paste0(
                     save_in_dir,
@@ -257,12 +257,12 @@ bdc_standardize_datasets <-
 
       # Concatenate all the resulting standardized databases
 
-      if (format == "qs") {
+      if (format == "qs2") {
         merged_database <-
           # here::here("data", "temp_datasets") %>%
           save_in_dir %>%
-          fs::dir_ls(regexp = "*.qs") %>%
-          purrr::map_dfr(~ qs::qread(.x) %>%
+          fs::dir_ls(regexp = "*.qs2") %>%
+          purrr::map_dfr(~ qs2::qs_read(.x) %>%
                          dplyr::mutate(dplyr::across(
                            .cols = dplyr::everything(), ~ as.character(.x)
                          )))
@@ -286,9 +286,9 @@ bdc_standardize_datasets <-
           any(!is.na(x))))
 
       # should the database be saved?
-      if (format == "qs" & save_database == TRUE & overwrite == TRUE) {
+      if (format == "qs2" & save_database == TRUE & overwrite == TRUE) {
         bdc_create_dir()
-        qs::qsave(merged_database, merged_filename)
+        qs2::qs_save(merged_database, merged_filename)
         message(paste("Standardized database was saved in",merged_filename))
 
       }
@@ -311,8 +311,8 @@ bdc_standardize_datasets <-
                                            show_col_types = FALSE)
       }
 
-      if (overwrite == FALSE & format == "qs"){
-        merged_database <- qs::qread(merged_filename)
+      if (overwrite == FALSE & format == "qs2"){
+        merged_database <- qs2::qs_read(merged_filename)
       }
 
     }

@@ -17,7 +17,7 @@ name, path, and columns of the original data set which need to be
 renamed. See @details.}
 
 \item{format}{a character setting the output file type. Option available are
-"csv" and "qs" (recommenced to save large datasets). Default == "csv".}
+"csv" and "qs2" (recommenced to save large datasets). Default == "csv".}
 
 \item{overwrite}{A logical vector indicating whether the final merged dataset
 should be overwritten. The default is FALSE.}

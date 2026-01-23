@@ -1,6 +1,6 @@
 Package: bdc
 Title: Biodiversity Data Cleaning
-Version: 1.1.5
+Version: 1.1.6
 Authors@R: c(
     person("Bruno", "Ribeiro", , "ribeiro.brr@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7755-6715")),
@@ -48,7 +48,7 @@ Imports:
     here,
     magrittr,
     purrr,
-    qs,
+    qs2,
     readr,
     rgnparser,
     rnaturalearth,

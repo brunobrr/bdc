@@ -165,7 +165,7 @@ figures$time_year_BAR
 
 #### **Saving a "raw" database**
 
-Save the original database containing the results of all data quality tests appended in separate columns. You can use [qs::qread()]{.underline} instead of write_csv to save a large database in a compressed format.
+Save the original database containing the results of all data quality tests appended in separate columns. You can use [qs2::qs_read()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
 check_time %>%
@@ -186,10 +186,10 @@ output <-
 
 #### **Saving a clean "fitness-for-use" database**
 
-You can use [qs::qsave()]{.underline} instead of write_csv to save a large database in a compressed format.
+You can use [qs2::qs_save()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
-# use qs::qsave() to save the database in a compressed format and then qs:qread() to load the database
+# use qs2::qs_save() to save the database in a compressed format and then qs:qread() to load the database
 output %>%
   readr::write_csv(.,
             here::here("Output", "Intermediate", "05_cleaned_database.csv"))
