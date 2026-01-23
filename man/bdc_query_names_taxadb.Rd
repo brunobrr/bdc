@@ -32,8 +32,7 @@ Names with matching distance value lower threshold informed are returned as
 NA. Default = 0.9.}
 
 \item{db}{character string. The name of the taxonomic database to
-be used in harmonizing taxon names. Default = "gbif".
-Use "all" to install all available taxonomic databases automatically.}
+be used in harmonizing taxon names. Default = "gbif".}
 
 \item{rank_name}{character string. Taxonomic rank name (e.g. "Plantae",
 "Animalia", "Aves", "Carnivora". Default = NULL.}

@@ -17,7 +17,6 @@
 #' NA. Default = 0.9.
 #' @param db character string. The name of the taxonomic database to
 #' be used in harmonizing taxon names. Default = "gbif".
-#' Use "all" to install all available taxonomic databases automatically.
 #' @param rank_name character string. Taxonomic rank name (e.g. "Plantae",
 #' "Animalia", "Aves", "Carnivora". Default = NULL.
 #' @param rank character string. A taxonomic rank used to filter the
