@@ -19,11 +19,8 @@ Bruno R. Ribeiro
 
 ## GITHUB ACTIONS CHECK
 
-── R CMD check results ─────────────────────────────────── bdc 1.1.6 ────
-Duration: 4m 19.3s
-
-❯ checking for future file timestamps ... NOTE
-  unable to verify current time
+── R CMD check results ─── bdc 1.1.6 ────
+Duration: 3m 24.6s
 
 ❯ checking R code for possible problems ... NOTE
   bdc_create_figures : create_barplot_all_tests: no visible binding for
@@ -33,4 +30,4 @@ Duration: 4m 19.3s
   Undefined global functions or variables:
     flagged test_name
 
-0 errors ✔ | 0 warnings ✔ | 2 notes ✖
+0 errors ✔ | 0 warnings ✔ | 1 note ✖

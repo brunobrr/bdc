@@ -46,7 +46,7 @@ into R. Regardless of the method chosen, the data frame with metadata needs
 to contain the following column names (this is a list of required column
 names; for a comprehensive list of column names following Darwin Core
 terminology, see
-\href{https://brunobrr.github.io/bdc/articles/integrate_datasets.html}{here}
+\link[here:here]{here::here} xx4
 \itemize{
 \item \code{datasetName}: A short name identifying the dataset (e.g., GBIF)
 \item \code{fileName}: The relative path containing the name of the input dataset
