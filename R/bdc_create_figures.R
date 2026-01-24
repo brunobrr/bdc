@@ -70,7 +70,7 @@ bdc_create_figures <-
            workflow_step = NULL,
            bins_maps = 15,
            save_figures = FALSE) {
-    . <- .data <- n_flagged <- n_total <- freq <- NULL
+    . <- .data <- n_flagged <- n_total <- freq <- flagged <- test_name <- NULL
     . <- V1 <- Name <- freq <- year <- decimalLongitude <- NULL
     decimalLatitude <- . <- long <- lat <- group <- `NA` <- .summary <- NULL
     
