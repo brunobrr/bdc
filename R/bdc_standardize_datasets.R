@@ -39,7 +39,7 @@
 #' to contain the following column names (this is a list of required column
 #' names; for a comprehensive list of column names following Darwin Core
 #' terminology, see
-#' [here] xx4
+#' [here] (https://brunobrr.github.io/bdc/articles/integrate_datasets.html)
 #'
 #' - `datasetName`: A short name identifying the dataset (e.g., GBIF)
 #'
