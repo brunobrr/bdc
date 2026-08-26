@@ -86,7 +86,19 @@
 <ul><li>
 <code>reword-countries.txt</code> and <code>country_names.txt</code> were updated and fixed (by <a href="https://github.com/sjevelazco" class="external-link">@sjevelazco</a>; <a href="https://github.com/brunobrr/bdc/pull/274" class="external-link">274</a>).</li>
 <li>Migrated from <code>{qs}</code> to <a href="https://github.com/qsbase/qs2" class="external-link">qs2</a> package. Updated <code><a href="../reference/bdc_standardize_datasets.html">bdc_standardize_datasets()</a></code> to use <code><a href="https://rdrr.io/pkg/qs2/man/qs_save.html" class="external-link">qs2::qs_save()</a></code> and <code><a href="https://rdrr.io/pkg/qs2/man/qs_read.html" class="external-link">qs2::qs_read()</a></code> instead of <code>qs::qsave()</code> and <code>qs::qread()</code>. The format option has been changed from <code>"qs"</code> to <code>"qs2"</code> and file extensions from <code>.qs</code> to <code>.qs2</code>.</li>
+</ul><div class="section level3">
+<h3 id="taxadb-compatibility-1-1-6">taxadb 0.3.0 compatibility (<a href="https://github.com/brunobrr/bdc/issues/278" class="external-link">#278</a>)<a class="anchor" aria-label="anchor" href="#taxadb-compatibility-1-1-6"></a></h3>
+<ul><li>
+<code><a href="../reference/bdc_query_names_taxadb.html">bdc_query_names_taxadb()</a></code> and <code>bdc_filter_name()</code> / <code>bdc_filter_id()</code> pin <code>db_version = "22.12"</code>, which remains available and byte-identical at the new data location (source.coop Parquet). No change needed for existing scripts.</li>
+<li>
+<code>fb</code> (FishBase) and <code>slb</code> (SeaLifeBase) are republished in taxadb 0.3.0 in version 2026 (CC-BY-NC), but remain blocked in <code><a href="../reference/bdc_query_names_taxadb.html">bdc_query_names_taxadb()</a></code> because bdc pins <code>db_version = "22.12"</code>, which does not include them. The error message now directs users to <code>taxadb::available_providers("2026")</code>.</li>
+<li>
+<code>iucn</code>, <code>tpl</code>, and <code>wd</code> remain blocked with an updated error message: iucn cannot be redistributed under Red List terms, TPL was retired upstream in 2013, and wd was never published. Use <code>rredlist</code> for Red List data.</li>
+<li>Removed the <code>## FIXME</code> note referencing ropensci/taxadb#88, which is closed.</li>
+<li>Removed dead <code>contentid</code> / <code>TAXADB_DRIVER</code> environment-variable code in <code>bdc_suggest_names_taxadb()</code>, superseded by the Parquet-on-source.coop reading layer.</li>
+<li>Bumped <code>taxadb</code> dependency from <code>&gt;= 0.1.3</code> to <code>&gt;= 0.3.0</code>; removed <code>contentid</code> from Suggests.</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.5" id="bdc-115">bdc 1.1.5<small>2024-12-17</small><a class="anchor" aria-label="anchor" href="#bdc-115"></a></h2>
 <ul><li>Move <a href="https://github.com/RevolutionAnalytics/doparallel" class="external-link">doParallel</a> from Suggests to Imports (Thanks, <a href="https://github.com/black-snow" class="external-link">@black-snow</a>; PR <a href="https://github.com/brunobrr/bdc/issues/251" class="external-link">#251</a>).</li>
@@ -167,7 +179,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>

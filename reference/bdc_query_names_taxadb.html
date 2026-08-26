@@ -169,16 +169,17 @@ of sci_name.</p>
 The lastest version of each database is used to perform queries, but
 note that only older versions are available for some taxonomic databases. The
 database version is shown in parenthesis. Note that some databases are
-momentary unavailable in taxadb.</p><ul><li><p><strong>itis</strong>: Integrated Taxonomic Information System (v. 2022)</p></li>
+unavailable in taxadb.</p><ul><li><p><strong>itis</strong>: Integrated Taxonomic Information System (v. 2022)</p></li>
 <li><p><strong>ncbi</strong>: National Center for Biotechnology Information (v. 2022)</p></li>
 <li><p><strong>col</strong>: Catalogue of Life (v. 2022)</p></li>
-<li><p><strong>tpl</strong>: The Plant List (v. 2019)</p></li>
 <li><p><strong>gbif</strong>: Global Biodiversity Information Facility (v. 2022)</p></li>
-<li><p><strong>fb</strong>: FishBase (v. 2019)</p></li>
-<li><p><strong>slb</strong>: SeaLifeBase (unavailable)</p></li>
-<li><p><strong>wd</strong>: Wikidata (unavailable)</p></li>
 <li><p><strong>ott</strong>: OpenTree Taxonomy (v. 2021)</p></li>
-<li><p><strong>iucn</strong>: International Union for Conservation of Nature (v. 2019)</p></li>
+<li><p><strong>fb</strong>: FishBase (CC-BY-NC; available in taxadb 2026, not in pinned 22.12)</p></li>
+<li><p><strong>slb</strong>: SeaLifeBase (CC-BY-NC; available in taxadb 2026, not in pinned 22.12)</p></li>
+<li><p><strong>tpl</strong>: The Plant List (retired upstream in 2013; unavailable)</p></li>
+<li><p><strong>wd</strong>: Wikidata (never published; unavailable)</p></li>
+<li><p><strong>iucn</strong>: International Union for the Conservation of Nature (Red List
+terms prohibit redistribution; unavailable; use <span class="pkg">rredlist</span> instead)</p></li>
 </ul><p>The bdc_query_names_taxadb processes as this:</p>
 <p><strong>Creation of a local taxonomic database</strong></p>
 <p>This is a one-time setup used to download, extract, and import the taxonomic
@@ -301,7 +302,7 @@ resolved. Such cases are flagged and left to be determined by the user.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>
