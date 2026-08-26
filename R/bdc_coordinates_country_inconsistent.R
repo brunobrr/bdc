@@ -11,7 +11,7 @@
 #' @param country_name character string. Name of the country or countries to be
 #' considered.
 #' @param country character string. The column name with the country assignment
-#' of each record. It is 
+#' of each record. It is
 #' recommended use a column with corrected and homogenized country names.
 #' Default = "country_suggested".
 #' @param lat character string. The column name with the latitude coordinates.
@@ -21,7 +21,7 @@
 #' @param dist numeric. The distance in decimal degrees used to created a buffer
 #' around the country. Default = 0.1 (~11 km at the equator).
 #'
-#' @details Multiple countries can be informed, but they are tested separately. 
+#' @details Multiple countries can be informed, but they are tested separately.
 #' The distance reported in the argument 'dist' is used to create a
 #' buffer around the reference country. Records within the reference country
 #' or at a specified distance from the coastline of the reference country
@@ -29,7 +29,7 @@
 #' records within the buffer but in other countries are flagged as invalid
 #' (FALSE). Records with invalid (e.g., NA or empty) and out-of-range
 #' coordinates are not tested and returned as TRUE.
-#' 
+#'
 #' @return A data.frame containing the column
 #' '.coordinates_country_inconsistent'. Compliant (TRUE) if coordinates fall
 #' within the boundaries plus a specified distance (if 'dist' is supplied) of
@@ -49,14 +49,14 @@
 #'   decimalLongitude = c(-40.6003, -39.6, -77.689288, NA, -76.352930),
 #'   decimalLatitude = c(-19.9358, -13.016667, -20.5243, -35.345940, -11.851872)
 #' )
-#' 
+#'
 #' bdc_coordinates_country_inconsistent(
 #'   data = x,
 #'   country_name = c("Brazil", "Peru", "Argentina"),
 #'   country = "country",
 #'   lon = "decimalLongitude",
 #'   lat = "decimalLatitude",
-#'   dist = 0.1 
+#'   dist = 0.1
 #' )
 #' }
 bdc_coordinates_country_inconsistent <-
@@ -105,14 +105,32 @@ bdc_coordinates_country_inconsistent <-
       dplyr::select(-c(.coordinates_empty, .coordinates_outOfRange, .summary))
 
 
+    # get a full world map (reworded name_long), keeping the original name_long
+    # so identifiers such as "United States" can be resolved to the canonical
+    # name "United States of America".
+    worldmap <-
+      rnaturalearth::ne_countries(returnclass = "sf", scale = "large") %>%
+      dplyr::mutate(name_long_raw = name_long) %>%
+      bdc_reword_countries()
+
+    # Resolve the requested country names and the claimed-country column to a
+    # single canonical vocabulary (the reworded name_long). This makes the
+    # function resilient to full names, common names, and ISO alpha-2/3 codes.
+    canon_name <- bdc_canonical_country_name(worldmap, as.character(country_name))
+
+    if (anyNA(canon_name)) {
+      warning(
+        "bdc_coordinates_country_inconsistent: could not resolve country name(s) ",
+        paste(country_name[is.na(canon_name)], collapse = ", "),
+        "\nThese countries were not considered.",
+        call. = FALSE
+      )
+    }
+
     # get country limits
     country_shp <-
-      rnaturalearth::ne_countries(
-        country = country_name,
-        scale = "large",
-        returnclass = "sf"
-      ) %>%
-      bdc_reword_countries()
+      worldmap %>%
+      dplyr::filter(name_long %in% canon_name)
 
     # Spatial points
     data_sp <-
@@ -121,7 +139,7 @@ bdc_coordinates_country_inconsistent <-
         coords = c("decimalLongitude", "decimalLatitude"),
         remove = FALSE
       ) %>%
-      sf::st_set_crs(., sf::st_crs(country_shp))
+      sf::st_set_crs(., sf::st_crs(worldmap))
 
 
     # buffer
@@ -137,21 +155,16 @@ bdc_coordinates_country_inconsistent <-
     })
 
 
-    # Remove additional columns within 'points_in_buf' object
-    if (length(country_name) > 1) {
-      data_sp$points_in_buf <- apply(data_sp$points_in_buf, 1, any)
-    }
+    # Collapse the buffer-intersection matrix (one column per reference country)
+    # to a single logical vector: does any reference-country buffer contain the
+    # point? For a single reference country the matrix is n x 1 and must still be
+    # collapsed so down-stream case_when() receives a vector, not a matrix.
+    data_sp$points_in_buf <- apply(data_sp$points_in_buf, 1, any)
 
-
-    # Points in other countries
-    worldmap <-
-      rnaturalearth::ne_countries(returnclass = "sf", scale = "large") %>%
-      dplyr::select(name_long) %>%
-      bdc_reword_countries()
 
     # Extract country names from points
     suppressWarnings({
-      ext_country <- sf::st_intersection(data_sp, worldmap)
+      ext_country <- sf::st_intersection(data_sp, worldmap %>% dplyr::select(name_long))
     })
     data_sp$geometry <- NULL
     ext_country$geometry <- NULL
@@ -159,31 +172,35 @@ bdc_coordinates_country_inconsistent <-
     names_to_join <-
       ext_country %>%
       dplyr::select(id, name_long)
-    
+
     data_to_join <- dplyr::full_join(data_sp, names_to_join, by = "id")
-    
+
+    # Resolve each record's claimed country to the canonical name vocabulary.
+    data_to_join$claimed_canon <-
+      bdc_canonical_country_name(worldmap, as.character(data_to_join[[country]]))
+
     data_to_join$.coordinates_country_inconsistent <- FALSE
 
-    for(i in 1:length(country_name)){
-      flt <- which(data_to_join[[country]]==country_name[[i]])
-      data_to_join[flt, ".coordinates_country_inconsistent"] <- data_to_join[flt, ] %>% 
+    for (i in 1:length(country_name)) {
+      flt <- which(data_to_join$claimed_canon == canon_name[[i]])
+      data_to_join[flt, ".coordinates_country_inconsistent"] <- data_to_join[flt, ] %>%
         dplyr::mutate(
           .coordinates_country_inconsistent =
             dplyr::case_when(
               (points_in_buf == TRUE & is.na(name_long)) ~ TRUE,
               (points_in_buf == FALSE) ~ FALSE,
               (points_in_buf == TRUE &
-                 tolower(name_long) != tolower(country_name[i])) ~ FALSE,
-              (points_in_buf == TRUE & name_long == country_name[i]) ~ TRUE
+                tolower(name_long) != tolower(canon_name[i])) ~ FALSE,
+              (points_in_buf == TRUE & name_long == canon_name[i]) ~ TRUE
             )
-        ) %>% 
+        ) %>%
         dplyr::pull(.coordinates_country_inconsistent)
     }
     rm(flt)
-    
+
     # Assign FALSE to those lines without country information
     data_to_join$.coordinates_country_inconsistent[is.na(data_to_join[[country]])] <- FALSE
-    
+
     data_to_join <-
       data_to_join %>%
       dplyr::select(id, .coordinates_country_inconsistent)

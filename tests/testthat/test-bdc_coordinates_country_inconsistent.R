@@ -68,7 +68,56 @@ x2 <-
     dist = 0.1
   )
 
-test_that("multiple countries II", {
-  expect_equal(x2$.coordinates_country_inconsistent, 
-               c(TRUE, TRUE, FALSE, TRUE, TRUE))
+# Regression test: countries whose Natural Earth `name` differs from `name_long`
+# (e.g. Russia, the United States) must flag in-country records as TRUE even when
+# the country column and country_name are given as ISO codes or common names.
+# Previously they were flagged FALSE because the function compared `name_long`
+# to `country_name` directly.
+x3 <- data.frame(
+  country = c("US", "RU", "BR", "JP", "NZ"),
+  decimalLongitude = c(-77.0369, 37.6173, -46.6333, 139.6917, 174.7633),
+  decimalLatitude = c(38.9072, 55.7558, -23.5505, 35.6895, -36.8485)
+)
+
+x3 <-
+  bdc_coordinates_country_inconsistent(
+    data = x3,
+    country_name = c("US", "RU", "BR", "JP", "NZ"),
+    country = "country",
+    lon = "decimalLongitude",
+    lat = "decimalLatitude",
+    dist = 0.1
+  )
+
+test_that("ISO codes and name variants (US/Russia) are resolved", {
+  expect_equal(
+    x3$.coordinates_country_inconsistent,
+    c(TRUE, TRUE, TRUE, TRUE, TRUE)
+  )
+})
+
+
+# Same points, with common country names that differ from the reworded Natural
+# Earth name_long ("United States", "Russia").
+x4 <- data.frame(
+  country = c("United States", "Russia", "Brazil", "Japan", "New Zealand"),
+  decimalLongitude = c(-77.0369, 37.6173, -46.6333, 139.6917, 174.7633),
+  decimalLatitude = c(38.9072, 55.7558, -23.5505, 35.6895, -36.8485)
+)
+
+x4 <-
+  bdc_coordinates_country_inconsistent(
+    data = x4,
+    country_name = c("United States", "Russia", "Brazil", "Japan", "New Zealand"),
+    country = "country",
+    lon = "decimalLongitude",
+    lat = "decimalLatitude",
+    dist = 0.1
+  )
+
+test_that("common country names are resolved", {
+  expect_equal(
+    x4$.coordinates_country_inconsistent,
+    c(TRUE, TRUE, TRUE, TRUE, TRUE)
+  )
 })

@@ -1,5 +1,6 @@
 # bdc 1.1.6
 
+- `bdc_coordinates_country_inconsistent()` now resolves the `country_name` and the country column to a single canonical vocabulary before comparing names. Previously, records `in` the United States and Russia were wrongly flagged as inconsistent when the country was given by a common name ("United States", "Russia") or an ISO code ("US", "RU"), because the function compared Natural Earth's `name_long` (e.g. "Russian Federation", "United States of America") directly to `country_name`. Full names, common names, and ISO alpha-2/alpha-3 codes are now all accepted.
 - `reword-countries.txt` and `country_names.txt` were updated and fixed (by @sjevelazco; [274](https://github.com/brunobrr/bdc/pull/274)).
 - Migrated from `{qs}` to `{qs2}` package. Updated `bdc_standardize_datasets()` to use `qs2::qs_save()` and `qs2::qs_read()` instead of `qs::qsave()` and `qs::qread()`. The format option has been changed from `"qs"` to `"qs2"` and file extensions from `.qs` to `.qs2`.
 
