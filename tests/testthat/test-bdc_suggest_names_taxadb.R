@@ -44,7 +44,7 @@ res <-
       sci_name = sci_names,
       max_distance = 0.75,
       provider = "itis",
-      db_version = 2022,
+      db_version = "22.12",
       parallel = FALSE
     )
   )
@@ -121,7 +121,7 @@ res <-
       sci_name = sci_names,
       max_distance = 0.75,
       provider = "ott",
-      db_version = 2021,
+      db_version = "22.12",
       parallel = FALSE
     )
   )
@@ -148,7 +148,7 @@ res <-
       sci_name = sci_names,
       max_distance = 0.75,
       provider = "itis",
-      db_version = 2022,
+      db_version = "22.12",
       parallel = TRUE
     )
   )
@@ -175,7 +175,7 @@ res <- suppressWarnings(
     rank = "kingdom",
     max_distance = 0.75,
     provider = "itis",
-    db_version = 2022,
+      db_version = "22.12",
     parallel = FALSE
   )
 )
@@ -203,7 +203,7 @@ res <-
       rank = NULL,
       max_distance = 0.75,
       provider = "ott",
-      db_version = 2021,
+      db_version = "22.12",
       parallel = FALSE
     )
   ))
@@ -220,7 +220,7 @@ res <-
       rank = "kingdom",
       max_distance = 0.75,
       provider = "ott",
-      db_version = 2021,
+      db_version = "22.12",
       parallel = FALSE
     )
   ))

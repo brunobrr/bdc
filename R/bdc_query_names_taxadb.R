@@ -34,18 +34,19 @@
 #' The lastest version of each database is used to perform queries, but
 #' note that only older versions are available for some taxonomic databases. The
 #' database version is shown in parenthesis. Note that some databases are
-#' momentary unavailable in taxadb.
+#' unavailable in taxadb.
 #'
 #' * **itis**: Integrated Taxonomic Information System (v. 2022)
 #' * **ncbi**: National Center for Biotechnology Information (v. 2022)
 #' * **col**: Catalogue of Life (v. 2022)
-#' * **tpl**: The Plant List (v. 2019)
 #' * **gbif**: Global Biodiversity Information Facility (v. 2022)
-#' * **fb**: FishBase (v. 2019)
-#' * **slb**: SeaLifeBase (unavailable)
-#' * **wd**: Wikidata (unavailable)
 #' * **ott**: OpenTree Taxonomy (v. 2021)
-#' * **iucn**: International Union for Conservation of Nature (v. 2019)
+#' * **fb**: FishBase (CC-BY-NC; available in taxadb 2026, not in pinned 22.12)
+#' * **slb**: SeaLifeBase (CC-BY-NC; available in taxadb 2026, not in pinned 22.12)
+#' * **tpl**: The Plant List (retired upstream in 2013; unavailable)
+#' * **wd**: Wikidata (never published; unavailable)
+#' * **iucn**: International Union for the Conservation of Nature (Red List
+#'   terms prohibit redistribution; unavailable; use \pkg{rredlist} instead)
 #'
 #' The bdc_query_names_taxadb processes as this:
 #'
@@ -201,10 +202,17 @@ bdc_query_names_taxadb <-
                    "iucn")) {
       stop(db, " provided is not a valid name")
     }
-    ## NOTE 2023-02-25: This modification is based on latest release of `{taxadb}` 0.2.0.
-    ## CHECK 2023-02-25: https://github.com/ropensci/taxadb/commit/593c7856a603c802762829d60acb2a313ad7a6dd
-    if (db %in% c("slb", "wd", "tpl", "fb", "iucn")) {
-      stop(db, " database is momentarily unavailable in taxadb package")
+    ## NOTE 2026-08-26: taxadb 0.3.0 republishes fb and slb in version 2026,
+    ## but bdc pins 22.12 for reproducibility and that version does not
+    ## include fb or slb. iucn, tpl, and wd are formally removed
+    ## (ropensci/taxadb#124): iucn cannot be redistributed under Red List
+    ## terms; TPL was retired upstream in 2013; wd was never published.
+    if (db %in% c("fb", "slb")) {
+      stop(db, " database is not available in taxadb version 22.12; ",
+           "published in 2026 (see taxadb::available_providers(\"2026\"))")
+    }
+    if (db %in% c("tpl", "wd", "iucn")) {
+      stop(db, " database is unavailable in taxadb package")
     }
     
     # Currently available databases and versions
@@ -223,7 +231,6 @@ bdc_query_names_taxadb <-
         db_version <- "22.12"
       },
       iucn = {
-        ## FIXME 2022-06-23: taxadb cannot parse the 2022 version yet (taxadb issue 88).
         db_version <- "22.12"
       },
       ott = {
