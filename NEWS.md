@@ -3,6 +3,15 @@
 - `reword-countries.txt` and `country_names.txt` were updated and fixed (by @sjevelazco; [274](https://github.com/brunobrr/bdc/pull/274)).
 - Migrated from `{qs}` to `{qs2}` package. Updated `bdc_standardize_datasets()` to use `qs2::qs_save()` and `qs2::qs_read()` instead of `qs::qsave()` and `qs::qread()`. The format option has been changed from `"qs"` to `"qs2"` and file extensions from `.qs` to `.qs2`.
 
+## taxadb 0.3.0 compatibility (#278)
+
+- `bdc_query_names_taxadb()` and `bdc_filter_name()` / `bdc_filter_id()` pin `db_version = "22.12"`, which remains available and byte-identical at the new data location (source.coop Parquet). No change needed for existing scripts.
+- `fb` (FishBase) and `slb` (SeaLifeBase) are republished in taxadb 0.3.0 in version 2026 (CC-BY-NC), but remain blocked in `bdc_query_names_taxadb()` because bdc pins `db_version = "22.12"`, which does not include them. The error message now directs users to `taxadb::available_providers("2026")`.
+- `iucn`, `tpl`, and `wd` remain blocked with an updated error message: iucn cannot be redistributed under Red List terms, TPL was retired upstream in 2013, and wd was never published. Use `rredlist` for Red List data.
+- Removed the `## FIXME` note referencing ropensci/taxadb#88, which is closed.
+- Removed dead `contentid` / `TAXADB_DRIVER` environment-variable code in `bdc_suggest_names_taxadb()`, superseded by the Parquet-on-source.coop reading layer.
+- Bumped `taxadb` dependency from `>= 0.1.3` to `>= 0.3.0`; removed `contentid` from Suggests.
+
 # bdc 1.1.5
 
 - Move `{doParallel}` from Suggests to Imports (Thanks, @black-snow; PR #251).

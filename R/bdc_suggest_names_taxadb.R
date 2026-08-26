@@ -74,11 +74,6 @@ bdc_suggest_names_taxadb <-
            ncores = 2) {
     suggestion_distance <- db <- . <- .data <- scientificName <- NULL
 
-    # FIXME: set a env var for now
-    # REVIEW: https://github.com/ropensci/taxadb/issues/91
-    # Sys.setenv("CONTENTID_REGISTRIES" = "https://hash-archive.carlboettiger.info")
-    # Sys.setenv("TAXADB_DRIVER"="MonetDBLite")
-
     # Get first letter of all scientific names
     first_letter <-
       unique(sapply(sci_name, function(i) {
@@ -87,9 +82,7 @@ bdc_suggest_names_taxadb <-
       USE.NAMES = FALSE
       ))
 
-    name_to_case_check <- suppressMessages(taxadb::taxa_tbl(provider
-                                           # , version = getOption("taxadb_default_provider", db_version)
-                                           )) %>%
+    name_to_case_check <- suppressMessages(taxadb::taxa_tbl(provider)) %>%
       dplyr::filter(!is.na(scientificName)) %>%
       utils::head(1) %>%
       pull(scientificName) %>%

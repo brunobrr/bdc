@@ -81,8 +81,9 @@ test_that("suggest_name FALSE", {
 })
 
 
-## NOTE 2023-02-25: This modification is based on latest release of `{taxadb}` 0.2.0.
-## CHECK 2023-02-25: https://github.com/ropensci/taxadb/commit/593c7856a603c802762829d60acb2a313ad7a6dd
+## NOTE 2026-08-26: fb and slb are republished in taxadb 0.3.0. ncbi and ott
+## remain commented because the pinned 22.12 snapshot has known defects (NCBI
+## accepted names had no taxonID). tpl, wd, and iucn are formally removed.
 
 ## Testing database availability
 
@@ -124,20 +125,22 @@ test_that("availability of gbif", {
 
 })
 
+# fb and slb are republished in taxadb 0.3.0 (version 2026 only, CC-BY-NC).
+# bdc pins 22.12, which does not include fb or slb, so they remain blocked.
 # test_that("availability of fb", {
-# 
+#
 #   query_fb <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "fb"))
-# 
+#
 #   expect_true(class(query_fb) == "try-error")
-# 
+#
 # })
-
+#
 # test_that("availability of slb", {
-# 
+#
 #   query_slb <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "slb"))
-# 
+#
 #   expect_true(class(query_slb) == "try-error")
-# 
+#
 # })
 
 # test_that("availability of wd", {
@@ -148,17 +151,18 @@ test_that("availability of gbif", {
 # 
 # })
 
-## ## FIXME 2023-02-25: Consciously ignoring that database for now.
+## FIXME 2026-08-26: ott 22.12 snapshot has known defects (synonyms had no
+## taxonomicStatus); left commented until bdc moves to a newer db_version.
 ## test_that("availability of ott", {
 ##   query_ott <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "ott"))
 ##   expect_true(class(query_ott)[3] == "data.frame")
 ## })
 
 # test_that("availability of iucn", {
-# 
+#
 #   query_iucn <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "iucn"))
-# 
+#
 #   expect_true(class(query_iucn) == "try-error")
-# 
+#
 # })
 

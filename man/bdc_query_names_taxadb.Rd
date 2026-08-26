@@ -63,18 +63,19 @@ The taxonomic harmonization is based upon one taxonomic authority database.
 The lastest version of each database is used to perform queries, but
 note that only older versions are available for some taxonomic databases. The
 database version is shown in parenthesis. Note that some databases are
-momentary unavailable in taxadb.
+unavailable in taxadb.
 \itemize{
 \item \strong{itis}: Integrated Taxonomic Information System (v. 2022)
 \item \strong{ncbi}: National Center for Biotechnology Information (v. 2022)
 \item \strong{col}: Catalogue of Life (v. 2022)
-\item \strong{tpl}: The Plant List (v. 2019)
 \item \strong{gbif}: Global Biodiversity Information Facility (v. 2022)
-\item \strong{fb}: FishBase (v. 2019)
-\item \strong{slb}: SeaLifeBase (unavailable)
-\item \strong{wd}: Wikidata (unavailable)
 \item \strong{ott}: OpenTree Taxonomy (v. 2021)
-\item \strong{iucn}: International Union for Conservation of Nature (v. 2019)
+\item \strong{fb}: FishBase (CC-BY-NC; available in taxadb 2026, not in pinned 22.12)
+\item \strong{slb}: SeaLifeBase (CC-BY-NC; available in taxadb 2026, not in pinned 22.12)
+\item \strong{tpl}: The Plant List (retired upstream in 2013; unavailable)
+\item \strong{wd}: Wikidata (never published; unavailable)
+\item \strong{iucn}: International Union for the Conservation of Nature (Red List
+terms prohibit redistribution; unavailable; use \pkg{rredlist} instead)
 }
 
 The bdc_query_names_taxadb processes as this:
@@ -191,8 +192,8 @@ if (interactive()) {
 }
 }
 \seealso{
-Other taxonomy: 
-\code{\link{bdc_clean_names}()},
-\code{\link{bdc_filter_out_names}()}
+Other taxonomy:
+\code{\link[=bdc_clean_names]{bdc_clean_names()}},
+\code{\link[=bdc_filter_out_names]{bdc_filter_out_names()}}
 }
 \concept{taxonomy}
