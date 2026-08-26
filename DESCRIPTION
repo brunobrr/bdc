@@ -79,6 +79,8 @@ Suggests:
     testthat (>= 3.0.0)
 BuildVignettes: true
 VignetteBuilder: knitr, rmarkdown
+Remotes:
+    github::ropensci/taxadb@master
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-gb
