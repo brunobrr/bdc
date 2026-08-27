@@ -45,7 +45,7 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
   check_require_cran("ggplot2")
 
   world_borders <-
-    ggplot2::borders(
+    ggplot2::annotation_borders(
       database = "world",
       fill = "gray75",
       colour = "gray88",

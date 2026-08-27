@@ -30,7 +30,7 @@ bdc_standardize_country <-
     cntr_db <-
       data %>%
       dplyr::distinct(.data[[country]], .keep_all = FALSE) %>%
-      dplyr::rename(cntr_original = .data[[country]])
+      dplyr::rename(cntr_original = dplyr::all_of(country))
     
     cntr_db$cntr_original2 <-
       gsub("&", "and", cntr_db$cntr_original) %>% 
