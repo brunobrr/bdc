@@ -345,7 +345,6 @@ test_that("bdc_create_report() refuses to report when nothing was flagged", {
 })
 
 test_that("bdc_create_report() requires test columns starting with '.'", {
-  skip("'no test columns' error is unreachable (#315)")
   local_temp_project()
   no_tests <- data.frame(database_id = "gbif_1", scientificName = "Puma")
 
