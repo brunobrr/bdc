@@ -1,6 +1,6 @@
 Package: bdc
 Title: Biodiversity Data Cleaning
-Version: 1.1.6
+Version: 1.1.6.9000
 Authors@R: c(
     person("Bruno", "Ribeiro", , "ribeiro.brr@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7755-6715")),
@@ -80,8 +80,6 @@ Suggests:
     withr
 BuildVignettes: true
 VignetteBuilder: knitr, rmarkdown
-Remotes:
-    github::ropensci/taxadb@master
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-gb
