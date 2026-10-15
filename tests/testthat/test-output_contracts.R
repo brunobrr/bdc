@@ -109,8 +109,7 @@ contract_table <- list(
     expected = list(
       .coordinates_empty = c(FALSE, TRUE),
       .coordinates_outOfRange = c(TRUE, FALSE)
-    ),
-    gaps = list(custom_names = "ignores a custom `locality` column (#326)")
+    )
   ),
   contract_row(
     fun = "bdc_country_standardized",
