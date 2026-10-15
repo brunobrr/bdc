@@ -1,4 +1,3 @@
-skip_on_cran()
 skip_if_no_natural_earth()
 
 id <- c(1, 2, 3, 4)
@@ -215,4 +214,64 @@ test_that("bdc_create_report() and bdc_create_figures() detect coordinates_trans
     )
   ))
   expect_true("coordinates_transposed" %in% names(figures))
+})
+
+
+# Save to disk ------------------------------------------------------------------
+
+test_that("save_outputs = TRUE writes verbatim and corrected coordinates to Output/Check", {
+  pkg_file <- file.path(
+    testthat::test_path("..", ".."),
+    "Output", "Check", "01_coordinates_transposed.csv"
+  )
+  pkg_file <- normalizePath(pkg_file, winslash = "/", mustWork = FALSE)
+  pkg_file_before <- file.info(pkg_file)$mtime
+
+  root <- local_temp_project()
+  x_dwc <- data.frame(
+    database_id = paste0("rec_", id),
+    scientificName, decimalLatitude, decimalLongitude,
+    country = country_suggested, countryCode
+  )
+
+  res <- suppressMessages(
+    bdc_coordinates_transposed(data = x_dwc, save_outputs = TRUE)
+  )
+
+  check_file <- file.path(root, "Output", "Check", "01_coordinates_transposed.csv")
+  expect_true(file.exists(check_file))
+  saved <- readr::read_csv(check_file, show_col_types = FALSE)
+  expect_setequal(
+    names(saved),
+    c(
+      "database_id", "scientificName",
+      "decimalLatitude", "decimalLongitude",
+      "decimalLatitude_modified", "decimalLongitude_modified"
+    )
+  )
+
+  # One row per corrected record: verbatim coordinates as given, corrected
+  # coordinates as returned.
+  corrected <- res$database_id[!res$coordinates_transposed]
+  expect_equal(saved$database_id, corrected)
+  verbatim <- x_dwc[match(saved$database_id, x_dwc$database_id), ]
+  expect_equal(saved$decimalLatitude, verbatim$decimalLatitude)
+  expect_equal(saved$decimalLongitude, verbatim$decimalLongitude)
+  returned <- res[match(saved$database_id, res$database_id), ]
+  expect_equal(saved$decimalLatitude_modified, returned$decimalLatitude)
+  expect_equal(saved$decimalLongitude_modified, returned$decimalLongitude)
+
+  expect_identical(file.info(pkg_file)$mtime, pkg_file_before)
+})
+
+test_that("save_outputs = FALSE writes nothing", {
+  root <- local_temp_project()
+
+  suppressMessages(
+    bdc_coordinates_transposed(
+      data = x, id = "id", country = "country_suggested", save_outputs = FALSE
+    )
+  )
+
+  expect_false(dir.exists(file.path(root, "Output")))
 })

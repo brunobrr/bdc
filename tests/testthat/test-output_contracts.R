@@ -143,8 +143,7 @@ contract_table <- list(
     args = list(country_name = "Brazil"),
     added = ".coordinates_country_inconsistent",
     expected = list(.coordinates_country_inconsistent = c(TRUE, FALSE)),
-    requires = skip_if_no_natural_earth,
-    skip = "spatial row, enabled by #305 (fixes #292, #293)"
+    requires = skip_if_no_natural_earth
   ),
   contract_row(
     fun = "bdc_country_from_coordinates",
@@ -159,8 +158,7 @@ contract_table <- list(
     added = character(),
     modifies = "country",
     expected = list(country = c("Brazil", "Argentina")),
-    requires = skip_if_no_natural_earth,
-    skip = "spatial row, enabled by #305 (fixes #292, #293)"
+    requires = skip_if_no_natural_earth
   ),
   contract_row(
     fun = "bdc_coordinates_transposed",
@@ -187,8 +185,7 @@ contract_table <- list(
     modifies = c("lat", "lon"),
     expected = list(coordinates_transposed = c(TRUE, FALSE, FALSE, FALSE)),
     args = list(save_outputs = FALSE),
-    requires = skip_if_no_natural_earth,
-    skip = "spatial row, enabled by #305 (fixes #292, #293)"
+    requires = skip_if_no_natural_earth
   )
 )
 
