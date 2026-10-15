@@ -1,7 +1,7 @@
 # Output contracts for exported flag functions ---------------------------------
 #
 # Every exported data-quality (flag) function promises the same things to the
-# user. `expect_output_contracts()` checks one function against all of them:
+# user. `test_output_contracts()` checks one function against all of them:
 #
 #   1. rows:         output row count and row order equal the input;
 #   2. columns:      input columns come back unchanged in name, order and
@@ -17,17 +17,6 @@
 # suite means adding one row to the table in `test-output_contracts.R`. Every
 # contract is its own test, named after the function and the contract, so a
 # failure says which function broke which contract.
-
-contract_names <- c(
-  rows = "contract 1 (rows): row count and order equal the input",
-  columns = "contract 2 (columns): input columns kept, only flags appended",
-  columns_non_syntactic =
-    "contract 2 (columns): non-syntactic input column names kept",
-  custom_names = "contract 3 (custom names): column-name arguments honoured",
-  session = "contract 4 (session): search() and sf_use_s2() unchanged",
-  flags = "contract 5 (flags): logical, TRUE = compliant",
-  edge_cases = "contract 6 (edge cases): one row, NA, \"\" and non-ASCII"
-)
 
 #' Describe one exported flag function for the contract suite
 #'
@@ -48,22 +37,19 @@ contract_names <- c(
 #' @param args Other arguments passed to `fun`.
 #' @param requires Function called before each contract, to skip for a
 #'   concrete reason (e.g. a missing Suggests package).
-#' @param skip If not `NULL`, the reason (with issue number) the whole row is
-#'   skipped.
-#' @param gaps Named list: contract (a name of `contract_names`) -> reason,
-#'   with issue number, to skip that one contract.
+#' @param gaps Named list: contract (a name of `contracts`) -> reason, with
+#'   issue number, to skip that one contract.
 #' @noRd
 contract_row <- function(fun, cols, build, added, flags = added,
                          expected = list(), keep = NULL,
                          modifies = character(), args = list(),
-                         requires = \() invisible(), skip = NULL,
-                         gaps = list()) {
-  unknown <- setdiff(names(gaps), names(contract_names))
+                         requires = \() invisible(), gaps = list()) {
+  unknown <- setdiff(names(gaps), names(contracts))
   if (length(unknown) > 0) stop("Unknown contract: ", unknown)
   list(
     fun = fun, cols = cols, build = build, added = added, flags = flags,
     expected = expected, keep = keep, modifies = modifies, args = args,
-    requires = requires, skip = skip, gaps = gaps
+    requires = requires, gaps = gaps
   )
 }
 
@@ -157,126 +143,150 @@ expect_contract_flags <- function(out, flags, expected = list(),
   }
 }
 
-contract_checks <- list(
-  rows = function(row, who) {
-    data <- contract_input(row)
-    expect_contract_rows(contract_call(row, data), data, row$keep, who)
-  },
-  columns = function(row, who) {
-    data <- contract_input(row)
-    out <- contract_call(row, data)
-    expect_contract_columns(
-      out, data, row$added, unname(row$cols[row$modifies]),
-      what = who
-    )
-  },
-  columns_non_syntactic = function(row, who) {
-    data <- contract_input(row)
-    names(data)[names(data) == "collector_name"] <- "collector name"
-    out <- contract_call(row, data)
-    expect_contract_columns(
-      out, data, row$added, unname(row$cols[row$modifies]),
-      what = who
-    )
-  },
-  custom_names = function(row, who) {
-    custom <- contract_custom_cols(row)
-    data <- contract_input(row, custom)
-    out <- contract_call(row, data, custom)
-    expect_contract_columns(
-      out, data, row$added, unname(custom[row$modifies]),
-      what = who
-    )
-
-    # Same result as with the default names, column for column.
-    reference <- contract_call(row, contract_input(row))
-    renamed <- as.data.frame(out)
-    hit <- match(custom, names(renamed))
-    names(renamed)[hit[!is.na(hit)]] <- row$cols[!is.na(hit)]
-    expect_equal(
-      renamed, as.data.frame(reference),
-      ignore_attr = TRUE,
-      label = paste(who, "output renamed back to default names")
-    )
-  },
-  session = function(row, who) {
-    data <- contract_input(row)
-    original <- suppressMessages(sf::sf_use_s2())
-    withr::defer(suppressMessages(sf::sf_use_s2(original)))
-    for (s2 in c(TRUE, FALSE)) {
-      suppressMessages(sf::sf_use_s2(s2))
-      before <- search()
-      contract_call(row, data)
-      expect_identical(
-        search(), before,
-        label = paste(who, "search() after the call")
-      )
-      expect_identical(
-        suppressMessages(sf::sf_use_s2()), s2,
-        label = paste0(who, " sf_use_s2() after the call (was ", s2, ")")
+# The contracts, in order: name -> test label and the check that runs it.
+contracts <- list(
+  rows = list(
+    label = "contract 1 (rows): row count and order equal the input",
+    check = function(row, label_prefix) {
+      data <- contract_input(row)
+      expect_contract_rows(
+        contract_call(row, data), data, row$keep, label_prefix
       )
     }
-  },
-  flags = function(row, who) {
-    out <- contract_call(row, contract_input(row))
-    expect_contract_flags(out, row$flags, row$expected, what = who)
-  },
-  edge_cases = function(row, who) {
-    data <- contract_input(row)
-    first <- if (is.null(row$keep)) 1 else row$keep[[1]]
-    cases <- list("a single row" = data[first, , drop = FALSE])
-    values <- list(
-      "NA" = NA,
-      '""' = "",
-      "non-ASCII text" = "São José Ñandú Åçø"
-    )
-    for (arg in names(row$cols)) {
-      col <- row$cols[[arg]]
-      for (label in names(values)) {
-        value <- values[[label]]
-        case <- data
-        if (!is.na(value)) case[[col]] <- as.character(case[[col]])
-        case[[col]][[1]] <- value
-        cases[[paste0(label, " in `", col, "`")]] <- case
-      }
-    }
-
-    keep <- if (is.null(row$keep)) NULL else "subset"
-    for (name in names(cases)) {
-      case <- cases[[name]]
-      what <- paste0(who, " [", name, "]")
-      out <- tryCatch(contract_call(row, case), error = identity)
-      if (inherits(out, "error")) {
-        fail(paste0(what, " errored: ", conditionMessage(out)))
-        next
-      }
-      expect_contract_rows(out, case, keep, what = what)
+  ),
+  columns = list(
+    label = "contract 2 (columns): input columns kept, only flags appended",
+    check = function(row, label_prefix) {
+      data <- contract_input(row)
+      out <- contract_call(row, data)
       expect_contract_columns(
-        out, case, row$added, unname(row$cols[row$modifies]),
-        exact = FALSE, what = what
+        out, data, row$added, unname(row$cols[row$modifies]),
+        what = label_prefix
       )
-      expect_contract_flags(out, intersect(row$flags, names(out)), what = what)
     }
-  }
+  ),
+  columns_non_syntactic = list(
+    label = "contract 2 (columns): non-syntactic input column names kept",
+    check = function(row, label_prefix) {
+      data <- contract_input(row)
+      names(data)[names(data) == "collector_name"] <- "collector name"
+      out <- contract_call(row, data)
+      expect_contract_columns(
+        out, data, row$added, unname(row$cols[row$modifies]),
+        what = label_prefix
+      )
+    }
+  ),
+  custom_names = list(
+    label = "contract 3 (custom names): column-name arguments honoured",
+    check = function(row, label_prefix) {
+      custom <- contract_custom_cols(row)
+      data <- contract_input(row, custom)
+      out <- contract_call(row, data, custom)
+      expect_contract_columns(
+        out, data, row$added, unname(custom[row$modifies]),
+        what = label_prefix
+      )
+
+      # Same result as with the default names, column for column.
+      reference <- contract_call(row, contract_input(row))
+      renamed <- as.data.frame(out)
+      hit <- match(custom, names(renamed))
+      names(renamed)[hit[!is.na(hit)]] <- row$cols[!is.na(hit)]
+      expect_equal(
+        renamed, as.data.frame(reference),
+        ignore_attr = TRUE,
+        label = paste(label_prefix, "output renamed back to default names")
+      )
+    }
+  ),
+  session = list(
+    label = "contract 4 (session): search() and sf_use_s2() unchanged",
+    check = function(row, label_prefix) {
+      data <- contract_input(row)
+      original <- suppressMessages(sf::sf_use_s2())
+      withr::defer(suppressMessages(sf::sf_use_s2(original)))
+      for (s2 in c(TRUE, FALSE)) {
+        suppressMessages(sf::sf_use_s2(s2))
+        before <- search()
+        contract_call(row, data)
+        expect_identical(
+          search(), before,
+          label = paste(label_prefix, "search() after the call")
+        )
+        expect_identical(
+          suppressMessages(sf::sf_use_s2()), s2,
+          label = paste0(
+            label_prefix, " sf_use_s2() after the call (was ", s2, ")"
+          )
+        )
+      }
+    }
+  ),
+  flags = list(
+    label = "contract 5 (flags): logical, TRUE = compliant",
+    check = function(row, label_prefix) {
+      out <- contract_call(row, contract_input(row))
+      expect_contract_flags(out, row$flags, row$expected, what = label_prefix)
+    }
+  ),
+  edge_cases = list(
+    label = "contract 6 (edge cases): one row, NA, \"\" and non-ASCII",
+    check = function(row, label_prefix) {
+      data <- contract_input(row)
+      first <- if (is.null(row$keep)) 1 else row$keep[[1]]
+      cases <- list("a single row" = data[first, , drop = FALSE])
+      values <- list(
+        "NA" = NA,
+        '""' = "",
+        "non-ASCII text" = "São José Ñandú Åçø"
+      )
+      for (arg in names(row$cols)) {
+        col <- row$cols[[arg]]
+        for (label in names(values)) {
+          value <- values[[label]]
+          case <- data
+          if (!is.na(value)) case[[col]] <- as.character(case[[col]])
+          case[[col]][[1]] <- value
+          cases[[paste0(label, " in `", col, "`")]] <- case
+        }
+      }
+
+      keep <- if (is.null(row$keep)) NULL else "subset"
+      for (name in names(cases)) {
+        case <- cases[[name]]
+        what <- paste0(label_prefix, " [", name, "]")
+        out <- tryCatch(contract_call(row, case), error = identity)
+        if (inherits(out, "error")) {
+          fail(paste0(what, " errored: ", conditionMessage(out)))
+          next
+        }
+        expect_contract_rows(out, case, keep, what = what)
+        expect_contract_columns(
+          out, case, row$added, unname(row$cols[row$modifies]),
+          exact = FALSE, what = what
+        )
+        expect_contract_flags(
+          out, intersect(row$flags, names(out)),
+          what = what
+        )
+      }
+    }
+  )
 )
 
 #' Run one function through every output contract
 #'
-#' Registers one test per contract, named "<fun>() <contract>". A skipped row
-#' registers a single skipped test that shows the reason.
+#' Registers one test per contract, named "<fun>() <contract label>".
 #' @noRd
-expect_output_contracts <- function(row) {
-  if (!is.null(row$skip)) {
-    test_that(paste0(row$fun, "() output contracts"), skip(row$skip))
-    return(invisible())
-  }
-  for (contract in names(contract_names)) {
-    who <- paste0(row$fun, "() ", contract_names[[contract]])
-    test_that(who, {
+test_output_contracts <- function(row) {
+  for (contract in names(contracts)) {
+    test_name <- paste0(row$fun, "() ", contracts[[contract]]$label)
+    test_that(test_name, {
       row$requires()
       gap <- row$gaps[[contract]]
       if (!is.null(gap)) skip(gap)
-      contract_checks[[contract]](row, paste0(who, ":"))
+      contracts[[contract]]$check(row, label_prefix = paste0(test_name, ":"))
     })
   }
   invisible()

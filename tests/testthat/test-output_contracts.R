@@ -222,4 +222,4 @@ contract_table <- list(
   )
 )
 
-for (row in contract_table) expect_output_contracts(row)
+for (row in contract_table) test_output_contracts(row)
