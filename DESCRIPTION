@@ -77,7 +77,8 @@ Suggests:
     sp,
     rvest,
     xml2,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 BuildVignettes: true
 VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3

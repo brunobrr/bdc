@@ -5,8 +5,8 @@
 #'
 #' @param data data.frame. Containing the results of data quality tests; that
 #' is, columns starting wit ".".
-#' @param workflow_step character string. Name of the workflow step. Options
-#' available are "prefilter", "space", and "time".
+#' @param workflow_step character string. Name of the workflow step. Required;
+#' one of "prefilter", "space", or "time".
 #' @param bins_maps character. Number of bins used to create the map.
 #' @param database_id character string. The column name with a unique record
 #' identifier. Default = "database_id".
@@ -77,10 +77,16 @@ bdc_create_figures <-
     check_require_cran("cowplot")
     check_require_cran("hexbin")
     
-    match.arg(
-      arg = workflow_step,
-      choices = c("prefilter", "space", "time")
-    )
+    valid_steps <- c("prefilter", "space", "time")
+    if (!is.character(workflow_step) || length(workflow_step) != 1 ||
+        !workflow_step %in% valid_steps) {
+      stop(
+        "`workflow_step` must be one of ",
+        paste0("'", valid_steps, "'", collapse = ", "),
+        ".",
+        call. = FALSE
+      )
+    }
     
     temp <- data %>% dplyr::select(tidyselect::starts_with("."))
     
@@ -95,6 +101,8 @@ bdc_create_figures <-
     }
     
     bdc_create_dir()
+    transposed_file <-
+      here::here("Output", "Check", "01_coordinates_transposed.csv")
     
     # Formatting y axis of ggplot bar
     fancy_scientific <- function(l) {
@@ -143,7 +151,7 @@ bdc_create_figures <-
         names_tab <- names(data)
         col_to_tests <- dplyr::intersect(tests, names_tab)
         
-        if (file.exists("Output/Check/01_coordinates_transposed.csv")) {
+        if (file.exists(transposed_file)) {
           col_to_tests <- c(col_to_tests, "coordinates_transposed")
         }
       }
@@ -461,11 +469,11 @@ bdc_create_figures <-
       
       # Create maps of transposed and corrected coordinates
       if (length(w_tranposed) == 0 & workflow_step == "prefilter") {
-        message("file 'Output/Check/01_coordinates_transposed.csv' not found. Maps showing the results of bdc_coordinates_transposed test will not be created")
+        message("file '", transposed_file, "' not found. Maps showing the results of bdc_coordinates_transposed test will not be created")
       }
       
       if (length(w_tranposed) != 0) {
-        temp <- readr::read_csv("Output/Check/01_coordinates_transposed.csv")
+        temp <- readr::read_csv(transposed_file)
         
         p1 <-
           bdc_quickmap(

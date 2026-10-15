@@ -46,7 +46,6 @@
 #' @importFrom parallel makeCluster stopCluster
 #' @importFrom taxadb taxa_tbl
 #' @importFrom foreach %dopar%
-#' @importFrom utils head
 #'
 #' @noRd
 #'
@@ -82,21 +81,7 @@ bdc_suggest_names_taxadb <-
       USE.NAMES = FALSE
       ))
 
-    name_to_case_check <- suppressMessages(taxadb::taxa_tbl(provider, version = db_version)) %>%
-      dplyr::filter(!is.na(scientificName)) %>%
-      utils::head(1) %>%
-      pull(scientificName) %>%
-      stringr::str_split(., "")
-
-
-
-    # if (lower_case) {
-    #   first_letter <- tolower(first_letter)
-    # } else {
-      first_letter <- toupper(first_letter)
-    # }
-
-
+    first_letter <- toupper(first_letter)
 
     # Should taxonomic database be filtered according to a taxonomic rank name?
     if (!is.null(rank_name) & !is.null(rank)) {
@@ -120,6 +105,14 @@ bdc_suggest_names_taxadb <-
     if (parallel == TRUE) {
       # setup parallel backend to use many processors
       cl <- parallel::makeCluster(ncores) # not to overload your computer
+      # Stop the workers and reset the foreach backend even if matching fails
+      on.exit(
+        {
+          parallel::stopCluster(cl)
+          foreach::registerDoSEQ()
+        },
+        add = TRUE
+      )
       doParallel::registerDoParallel(cl)
 
       sug_dat <-
@@ -129,7 +122,6 @@ bdc_suggest_names_taxadb <-
         ) %dopar% {
           bdc_return_names(i, max_distance, species_first_letter)
         } # end foreach
-      parallel::stopCluster(cl) # stop cluster
     } else {
       sug_dat <-
         data.frame(

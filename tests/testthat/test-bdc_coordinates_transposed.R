@@ -118,3 +118,101 @@ test_that("test one country without coordinate correction", {
   expect_equal(dim(res), dim(check_pf))
 })
 
+
+# Custom (non Darwin Core) column names ---------------------------------------
+
+x_custom <- data.frame(
+  idx = id,
+  sp = scientificName,
+  la = decimalLatitude,
+  lo = decimalLongitude,
+  pais = country_suggested,
+  cc = countryCode
+)
+
+run_transposed_custom <- function(data) {
+  suppressMessages(
+    bdc_coordinates_transposed(
+      data = data,
+      id = "idx",
+      sci_names = "sp",
+      lat = "la",
+      lon = "lo",
+      country = "pais",
+      countryCode = "cc",
+      border_buffer = 0.2,
+      save_outputs = FALSE
+    )
+  )
+}
+
+test_that("bdc_coordinates_transposed() keeps custom column names", {
+  res <- run_transposed_custom(x_custom)
+
+  expect_named(res, c(names(x_custom), "coordinates_transposed"))
+  expect_equal(res$coordinates_transposed, c(FALSE, TRUE, FALSE, FALSE))
+})
+
+test_that("bdc_coordinates_transposed() corrects coordinates in custom columns", {
+  res_default <- suppressMessages(
+    bdc_coordinates_transposed(
+      data = x,
+      id = "id",
+      country = "country_suggested",
+      save_outputs = FALSE
+    )
+  )
+  res <- run_transposed_custom(x_custom)
+
+  expect_equal(res$la, res_default$decimalLatitude)
+  expect_equal(res$lo, res_default$decimalLongitude)
+})
+
+test_that("bdc_coordinates_transposed() keeps custom names when nothing is corrected", {
+  res <- run_transposed_custom(x_custom[2, ])
+
+  expect_named(res, names(x_custom))
+})
+
+test_that("coordinates_transposed is informational and stays out of .summary", {
+  res <- run_transposed_custom(x_custom)
+  res$.coordinates_empty <- TRUE
+  res <- suppressMessages(bdc_summary_col(res))
+
+  expect_false(".coordinates_transposed" %in% names(res))
+  expect_equal(res$.summary, rep(TRUE, nrow(x_custom)))
+})
+
+test_that("bdc_create_report() and bdc_create_figures() detect coordinates_transposed", {
+  local_temp_project()
+
+  res <- suppressMessages(
+    bdc_coordinates_transposed(
+      data = x,
+      id = "id",
+      country = "country_suggested",
+      save_outputs = TRUE
+    )
+  )
+  res$.coordinates_empty <- c(TRUE, TRUE, TRUE, FALSE)
+
+  report <- suppressMessages(
+    bdc_create_report(
+      data = res,
+      database_id = "id",
+      workflow_step = "prefilter",
+      save_report = FALSE
+    )
+  )
+  expect_true("coordinates_transposed" %in% report$x$data$Test_name)
+
+  figures <- suppressMessages(suppressWarnings(
+    bdc_create_figures(
+      data = res,
+      database_id = "id",
+      workflow_step = "prefilter",
+      save_figures = FALSE
+    )
+  ))
+  expect_true("coordinates_transposed" %in% names(figures))
+})

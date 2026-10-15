@@ -48,10 +48,15 @@ Default = 0.2 (~22 km at the equator).}
 saved for further inspection? Default = FALSE.}
 }
 \value{
-A data.frame containing the column "coordinates_transposed"
-indicating if verbatim coordinates were not transposed (TRUE). Otherwise
-records are flagged as (FALSE) and, in this case, verbatim coordinates are
-replaced by corrected coordinates.
+The input data, as a tibble with the original column names, plus
+the column "coordinates_transposed" when at least one record was corrected.
+The column indicates if verbatim coordinates were not transposed (TRUE).
+Otherwise records are flagged as (FALSE) and, in this case, verbatim
+coordinates are replaced by corrected coordinates in the columns named by
+\code{lat} and \code{lon}. "coordinates_transposed" is informational: transposed
+records are corrected, not invalidated, so the column has no leading dot
+and is not considered by \code{\link{bdc_summary_col}} or
+\code{\link{bdc_filter_out_flags}}.
 }
 \description{
 This function flags and corrects records when latitude and longitude appear

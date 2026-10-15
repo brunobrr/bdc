@@ -15,9 +15,9 @@
 #' recommended use a column with corrected and homogenized country names.
 #' Default = "country_suggested".
 #' @param lat character string. The column name with the latitude coordinates.
-#' Default = “decimallatitude”.
+#' Default = "decimalLatitude".
 #' @param lon character string. The column name with the longitude coordinates.
-#' Default = “decimallongitude”.
+#' Default = "decimalLongitude".
 #' @param dist numeric. The distance in decimal degrees used to created a buffer
 #' around the country. Default = 0.1 (~11 km at the equator).
 #'
@@ -139,7 +139,7 @@ bdc_coordinates_country_inconsistent <-
     data_sp <-
       sf::st_as_sf(
         df,
-        coords = c("decimalLongitude", "decimalLatitude"),
+        coords = c(lon, lat),
         remove = FALSE
       ) %>%
       sf::st_set_crs(., sf::st_crs(worldmap))

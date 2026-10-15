@@ -8,7 +8,8 @@
 #' @param eventDate numeric or date. The column containing event date
 #' information.
 #' @param year_threshold numeric. A four-digit year threshold used to flag old
-#' (potentially invalid) records. Default = 1900
+#' (potentially invalid) records. Records collected in the threshold year
+#' itself are compliant. Default = 1900
 #'
 #' @details Following the "VALIDATION:YEAR_OUTOFRANGE"
 #' \href{https://github.com/tdwg/bdq/projects/2}{Biodiversity data quality
@@ -18,7 +19,13 @@
 #' imprecise, records. For example, records collected before GPS advent
 #' (1980). If 'year_threshold' is not provided, the lower limit to the year is
 #' by default 1600, a lower limit for collecting dates of biological specimens.
-#' Records with empty or NA 'eventDate' are not tested and returned as NA.
+#' The lower limit is inclusive: a record collected in 'year_threshold' (or in
+#' 1600 when 'year_threshold' is NULL) is compliant. Records collected after
+#' the current year are flagged.
+#'
+#' Records with empty or NA 'eventDate' are not tested and returned as TRUE
+#' (compliant), whether or not 'year_threshold' is provided. Use
+#' \code{\link{bdc_eventDate_empty}} to flag records with missing dates.
 #'
 #' @return A data.frame containing the column ".year_outOfRange". Compliant
 #' (TRUE) if 'eventDate' is not out-of-range; otherwise "FALSE".
@@ -36,36 +43,32 @@
 #' x <- data.frame(collection_date)
 #'
 #' bdc_year_outOfRange(
-#' data = x, 
-#' eventDate = "collection_date", 
-#' year_threshold = 1900)
+#'   data = x,
+#'   eventDate = "collection_date",
+#'   year_threshold = 1900
+#' )
 #'
 bdc_year_outOfRange <-
   function(data,
            eventDate,
            year_threshold = 1900) {
     year <- NULL
-    
+
     current_year <- format(Sys.Date(), "%Y")
     col <- data[[eventDate]]
     nDigits <- function(x) nchar(trunc(abs(x)))
-    
+
     suppressMessages({
-    y <- 
-      bdc_year_from_eventDate(data.frame(col), eventDate = "col") %>% 
-      dplyr::select(year) %>% 
-      dplyr::rename(.year_outOfRange = year) %>% 
-      dplyr::pull()
+      y <-
+        bdc_year_from_eventDate(data.frame(col), eventDate = "col") %>%
+        dplyr::select(year) %>%
+        dplyr::rename(.year_outOfRange = year) %>%
+        dplyr::pull()
     })
-    
-    if (is.null(year_threshold)) {
-      .year_outOfRange <-
-        dplyr::if_else(
-          y %in% 1600:current_year,
-          TRUE,
-          FALSE
-        )
-    } else {
+
+    lower_limit <- 1600
+
+    if (!is.null(year_threshold)) {
       if (!is.numeric(year_threshold)) {
         stop("'year_threshold' is not numeric")
       }
@@ -74,16 +77,11 @@ bdc_year_outOfRange <-
         stop("'year_threshold' does not have four digits")
       }
 
-      w <- which(is.na(y))
-
-      .year_outOfRange <-
-        ifelse(
-          y %in% 1600:current_year & y > year_threshold,
-          TRUE,
-          FALSE
-        )
-      .year_outOfRange[w] <- TRUE
+      lower_limit <- max(lower_limit, year_threshold)
     }
+
+    .year_outOfRange <-
+      is.na(y) | (y >= lower_limit & y <= as.numeric(current_year))
 
     res <- cbind(data, .year_outOfRange)
 
