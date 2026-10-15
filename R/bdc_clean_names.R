@@ -735,19 +735,21 @@ bdc_rem_other_issues <- function(data, sci_names) {
     stringr::str_squish() %>%
     gsub("^$", NA, .) # substitute empty records by NA
 
-  # Names written entirely in capitals (MYRCIA SPLENDENS) are lowercased
-  # whole. Other names keep their casing, so authorship reaches gnparser as
-  # written (#311).
-  all_caps <- !is.na(res) & !stringr::str_detect(res, "[[:lower:]]")
-  res[all_caps] <- stringr::str_to_lower(res[all_caps])
-
-  # Re-case only the generic name: lower case with the first letter
-  # capitalized (POLYGONACEAE to Polygonaceae; myrcia to Myrcia)
-  genus <- stringr::str_extract(res, "^\\S+")
-  res <- stringr::str_c(
-    firstup(stringr::str_to_lower(genus)),
-    stringr::str_remove(res, "^\\S+")
-  )
+  # Re-case the generic name (POLYGONACEAE to Polygonaceae; myrcia to Myrcia)
+  # and lowercase later words written entirely in capitals without a period
+  # (SPLENDENS, VAR). Other words keep their casing, so authors such as
+  # "Link", "DC." or "L." reach gnparser as written (#311).
+  recase_words <- function(words) {
+    if (anyNA(words)) {
+      return(NA_character_)
+    }
+    all_caps <- stringr::str_detect(words, "^[[:upper:]]+$")
+    all_caps[1] <- TRUE
+    words[all_caps] <- stringr::str_to_lower(words[all_caps])
+    words[1] <- firstup(words[1])
+    paste(words, collapse = " ")
+  }
+  res <- vapply(strsplit(res, " "), recase_words, character(1))
 
   clean_other_issues <- res
   .other_issues <- sci_names_raw == clean_other_issues

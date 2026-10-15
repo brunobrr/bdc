@@ -249,6 +249,27 @@ test_that("bdc_clean_names() fixes all-caps names and accented characters", {
   expect_equal(res$out$quality, c(1, 1, 1, 1, 1))
 })
 
+test_that("bdc_clean_names() lowercases all-caps epithets but not authors", {
+  x <- c(
+    "Myrcia SPLENDENS",
+    "Myrcia SPLENDENS DC.",
+    "MYRCIA SPLENDENS DC.",
+    "Inga vera VAR affinis"
+  )
+  res <- clean_names_and_check(x)
+
+  expect_equal(res$out$scientificName, x)
+  expect_equal(
+    res$out$names_clean,
+    c(
+      "Myrcia splendens", "Myrcia splendens", "Myrcia splendens",
+      "Inga vera affinis"
+    )
+  )
+  expect_equal(res$out$.infraesp_names, c(TRUE, TRUE, TRUE, FALSE))
+  expect_equal(res$out$quality, c(1, 1, 1, 1))
+})
+
 testthat::test_that("bdc_clean_names() saves and reports 02_parsed_names.csv", {
   root <- local_temp_project(subdir = "reports")
 
