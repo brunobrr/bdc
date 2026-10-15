@@ -69,6 +69,8 @@ jobs:
           install.packages("rnaturalearthhires", repos = "http://packages.ropensci.org", type = "source")
           install.packages("rworldmap", repos = "https://cloud.r-project.org")
           install.packages("hexbin", repos = "https://cloud.r-project.org")
+          # gnparser binary, needed by bdc_clean_names() tests
+          rgnparser::install_gnparser()
         shell: Rscript {0}
 
       - name: Session info

@@ -1,6 +1,6 @@
 ## skip("dont run")
 skip_on_cran()
-skip_if_not_installed("curl")
+skip_if_offline()
 
 sci_names <- c(
   "Polystachya estrellensis", "Tachigali rubiginosa", "Oxalis rhombeo ovata", "Axonopus canescens",

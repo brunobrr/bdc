@@ -1,4 +1,7 @@
 skip_on_cran()
+skip_if_not_installed("cowplot")
+skip_if_not_installed("hexbin")
+skip_if_no_natural_earth()
 
 # bdc functions must leave the user's session as they found it: no packages
 # attached to the search path and the spherical geometry (s2) setting unchanged.
