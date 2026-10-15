@@ -56,7 +56,7 @@ contract_names <- c(
 contract_row <- function(fun, cols, build, added, flags = added,
                          expected = list(), keep = NULL,
                          modifies = character(), args = list(),
-                         requires = function() invisible(), skip = NULL,
+                         requires = \() invisible(), skip = NULL,
                          gaps = list()) {
   unknown <- setdiff(names(gaps), names(contract_names))
   if (length(unknown) > 0) stop("Unknown contract: ", unknown)
