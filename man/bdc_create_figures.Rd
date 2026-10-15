@@ -19,8 +19,8 @@ is, columns starting wit ".".}
 \item{database_id}{character string. The column name with a unique record
 identifier. Default = "database_id".}
 
-\item{workflow_step}{character string. Name of the workflow step. Options
-available are "prefilter", "space", and "time".}
+\item{workflow_step}{character string. Name of the workflow step. Required;
+one of "prefilter", "space", or "time".}
 
 \item{bins_maps}{character. Number of bins used to create the map.}
 

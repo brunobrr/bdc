@@ -84,3 +84,15 @@ testthat::test_that("invalid suffix dae ", {
   expect_equal(r$clean_family_names, "Taccaceae Solanum")
 })
 
+
+testthat::test_that("bdc_clean_names() saves and reports 02_parsed_names.csv", {
+  local_temp_project(subdir = "reports")
+
+  expect_message(
+    bdc_clean_names(sci_names = scientificName, save_outputs = TRUE),
+    "02_parsed_names\\.csv"
+  )
+  expect_true(
+    file.exists(here::here("Output", "Check", "02_parsed_names.csv"))
+  )
+})
