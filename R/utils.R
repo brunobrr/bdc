@@ -1,9 +1,8 @@
 check_require_cran <- function(pkg) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     stop(paste0("Package `", pkg, "` needed for this function to work! Please, install it with: `install.packages(\"", pkg, "\")`"), call. = FALSE)
-  } else {
-    require(pkg, character.only = TRUE)
   }
+  invisible(TRUE)
 }
 
 check_require_github <- function(pkg) {
@@ -11,9 +10,8 @@ check_require_github <- function(pkg) {
   pkg <- basename(pkg)
   if (!requireNamespace(pkg, quietly = TRUE)) {
     stop(paste0("Package `", pkg, "` needed for this function to work! Please, install it with: remotes::install_github(\"", userpkg, "\")"), call. = FALSE)
-  } else {
-    require(pkg, character.only = TRUE)
   }
+  invisible(TRUE)
 }
 
 has_table <- function(table = NULL, db = td_connect()) {

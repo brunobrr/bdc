@@ -64,6 +64,7 @@ Suggests:
     cowplot,
     DBI,
     duckdb (>= 0.3.2),
+    hexbin,
     knitr (>= 1.31),
     maps,
     markdown,

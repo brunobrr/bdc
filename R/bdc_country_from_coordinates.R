@@ -50,10 +50,11 @@ bdc_country_from_coordinates <-
            country = "country") {
     .data <- . <- name_long <- id_temp <- geometry <- NULL
     
-    suppressWarnings({
-      check_require_cran("rnaturalearth")
-      check_require_github("ropensci/rnaturalearthdata")
-    })
+    check_require_cran("rnaturalearthdata")
+
+    # spherical geometry (s2) is turned off below; restore it on exit
+    old_s2 <- sf::sf_use_s2()
+    on.exit(suppressMessages(sf::sf_use_s2(old_s2)), add = TRUE)
     
     # create an id_temp
     data$id_temp <- 1:nrow(data)

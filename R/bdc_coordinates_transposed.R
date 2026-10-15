@@ -92,11 +92,7 @@ bdc_coordinates_transposed <-
            save_outputs = FALSE) {
     decimalLatitude <- decimalLongitude <- database_id <- scientificName <- NULL
 
-    suppressWarnings({
-      check_require_cran("rnaturalearth")
-      check_require_cran("readr")
-      check_require_github("ropensci/rnaturalearthdata")
-    })
+    check_require_cran("rnaturalearthdata")
 
     data <- dplyr::tibble(data)
     minimum_colnames <-

@@ -69,8 +69,11 @@ bdc_coordinates_country_inconsistent <-
     .data <- .summary <- .coordinates_empty <- .coordinates_outOfRange <- . <- NULL
     points_in_buf <- name_long <- id <- .coordinates_country_inconsistent <- NULL
 
-    check_require_cran("rnaturalearth")
-    sf::sf_use_s2(FALSE)
+    check_require_cran("rnaturalearthdata")
+
+    # turn off spherical geometry, restoring the user's setting on exit
+    old_s2 <- suppressMessages(sf::sf_use_s2(FALSE))
+    on.exit(suppressMessages(sf::sf_use_s2(old_s2)), add = TRUE)
 
     df <-
       data %>%

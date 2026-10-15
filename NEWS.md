@@ -1,5 +1,6 @@
 # bdc (development version)
 
+- `bdc_create_figures()`, `bdc_create_report()`, `bdc_coordinates_transposed()`, `bdc_country_from_coordinates()`, `bdc_coordinates_country_inconsistent()` and other functions no longer attach packages to the search path when checking optional dependencies. `bdc_country_from_coordinates()` and `bdc_coordinates_country_inconsistent()` now restore the previous spherical geometry (`sf::sf_use_s2()`) setting on exit, even on error. `hexbin` is now listed in Suggests, and `bdc_create_figures()` no longer requires `rworldmap`. The `rnaturalearthdata` hint now suggests the CRAN install (#292).
 - `bdc_coordinates_country_inconsistent()` now resolves the `country_name` and the country column to a single canonical vocabulary before comparing names. Previously, records in the United States and Russia were wrongly flagged as inconsistent when the country was given by a common name ("United States", "Russia") or an ISO code ("US", "RU"), because the function compared Natural Earth's `name_long` (e.g. "Russian Federation", "United States of America") directly to `country_name`. Full names, common names, and ISO alpha-2/alpha-3 codes are now all accepted (#280).
 - Fixed deprecation warnings in `bdc_standardize_country()` (tidyselect `.data[[var]]` -> `all_of()`) and `bdc_quickmap()` (ggplot2 `borders()` -> `annotation_borders()`) (#281).
 

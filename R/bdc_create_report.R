@@ -57,11 +57,6 @@ bdc_create_report <-
     . <- V1 <- Test_name <- Description <- notes <- NULL
     number_of_records <- .uncer_terms <- `NA` <- NULL
     
-    suppressWarnings({
-      check_require_cran("readr")
-      check_require_cran("DT")
-    })
-    
     match.arg(arg = workflow_step,
               choices = c("prefilter", "taxonomy", "space", "time"))
     

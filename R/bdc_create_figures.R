@@ -74,14 +74,8 @@ bdc_create_figures <-
     . <- V1 <- Name <- freq <- year <- decimalLongitude <- NULL
     decimalLatitude <- . <- long <- lat <- group <- `NA` <- .summary <- NULL
     
-    suppressWarnings({
-      check_require_cran("cowplot")
-      check_require_cran("readr")
-      check_require_cran("rworldmap")
-      check_require_cran("ggplot2")
-      check_require_cran("hexbin")
-      
-    })
+    check_require_cran("cowplot")
+    check_require_cran("hexbin")
     
     match.arg(
       arg = workflow_step,
