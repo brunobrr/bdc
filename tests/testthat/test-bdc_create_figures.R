@@ -72,8 +72,11 @@ test_that("bdc_create_figures() maps prefilter country inconsistencies", {
   # One bar plot, the summary of all tests, and one map.
   expect_length(figures, 3)
   expect_setequal(
-    unique(names(figures)),
-    c(".coordinates_country_inconsistent", "summary_all_tests")
+    names(figures),
+    c(
+      ".coordinates_country_inconsistent", "summary_all_tests",
+      ".coordinates_country_inconsistent_map"
+    )
   )
   expect_all_ggplots(figures)
 })
@@ -213,14 +216,16 @@ test_that("bdc_create_figures() maps flagged space records", {
   # plot and the summary of all tests.
   expect_length(figures, 8)
   expect_setequal(
-    unique(names(figures)),
-    c(".equ", ".cen", ".rou", ".summary", "summary_all_tests")
+    names(figures),
+    c(
+      ".equ", ".cen", ".rou", ".summary", "summary_all_tests",
+      ".equ_map", ".cen_map", ".rou_map"
+    )
   )
   expect_all_ggplots(figures)
 })
 
 test_that("bdc_create_figures() saves each space map to its own file", {
-  skip("maps reuse their bar plot's name and overwrite its file (#312)")
   skip_if_not_installed("rnaturalearthdata")
   skip_if_not_installed("maps")
   root <- local_temp_project()
@@ -229,6 +234,16 @@ test_that("bdc_create_figures() saves each space map to its own file", {
 
   expect_equal(anyDuplicated(names(figures)), 0)
   expect_length(saved_figures(root), length(figures))
+  expect_setequal(
+    saved_figures(root),
+    c(
+      paste0("space_", c(".equ", ".cen", ".rou"), "_MAP.png"),
+      paste0(
+        "space_", c(".equ", ".cen", ".rou", ".summary", "summary_all_tests"),
+        "_BAR.png"
+      )
+    )
+  )
 })
 
 # time ------------------------------------------------------------------------
