@@ -94,7 +94,9 @@ bdc_create_report <-
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
       
-      has_file <- file.exists("Output/Check/01_coordinates_transposed.csv")
+      has_file <- file.exists(
+        here::here("Output", "Check", "01_coordinates_transposed.csv")
+      )
       has_column <- "coordinates_transposed" %in% names(data)
       
       if (has_file & has_column) {
