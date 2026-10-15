@@ -37,6 +37,7 @@ datafake3 <- tibble::tribble(
   "Mikania officinalis", -48.801389, -17.024167
 )
 
+# Lacks the `y` column that the metadata maps to decimalLatitude.
 datafake4 <- tibble::tribble(
   ~nome_das_especies, ~x,
   "Eragrostis maypurensis", -47.824956,
@@ -50,174 +51,166 @@ datafake4 <- tibble::tribble(
   "Mikania officinalis", -48.801389
 )
 
-tdir <- tempdir()
+# Run the calling test in a temporary project holding the four input CSVs.
+# Returns the input paths, named by dataset.
+local_fake_inputs <- function(.local_envir = parent.frame()) {
+  root <- local_temp_project(.local_envir = .local_envir)
+  input_dir <- file.path(root, "Input")
+  dir.create(input_dir)
 
-df1_path <- paste0(tdir, "/datafake1.csv")
-df2_path <- paste0(tdir, "/datafake2.csv")
-df3_path <- paste0(tdir, "/datafake3.csv")
-df4_path <- paste0(tdir, "/datafake4.csv")
+  inputs <- list(
+    datafake1 = datafake1,
+    datafake2 = datafake2,
+    datafake3 = datafake3,
+    datafake4 = datafake4
+  )
+  paths <- file.path(input_dir, paste0(names(inputs), ".csv"))
+  names(paths) <- names(inputs)
+  for (i in seq_along(inputs)) {
+    readr::write_csv(inputs[[i]], paths[[i]])
+  }
+  paths
+}
 
-write_csv(datafake1, df1_path)
-write_csv(datafake2, df2_path)
-write_csv(datafake3, df3_path)
-write_csv(datafake4, df4_path)
+fake_metadata <- function(paths) {
+  tibble::tribble(
+    ~datasetName, ~fileName, ~occurrenceID, ~scientificName, ~decimalLatitude, ~decimalLongitude,
+    "datafake1", paths[["datafake1"]], "id", "species", "latitude", "longitude",
+    "datafake2", paths[["datafake2"]], "id_number", "spp", "lat", "lon",
+    "datafake3", paths[["datafake3"]], NA, "nome_das_especies", "y", "x"
+  )
+}
 
-metadata <- tibble::tribble(
-  ~datasetName, ~fileName, ~occurrenceID, ~scientificName, ~decimalLatitude, ~decimalLongitude,
-  "datafake1", df1_path, "id", "species", "latitude", "longitude",
-  "datafake2", df2_path, "id_number", "spp", "lat", "lon",
-  "datafake3", df3_path, NA, "nome_das_especies", "y", "x"
-)
+id_prefixes <- function(x) {
+  sort(unique(sub("_[0-9]+$", "", x$database_id)))
+}
 
-metadata_missing_column <- tibble::tribble(
-  ~datasetName, ~fileName, ~occurrenceID, ~scientificName, ~decimalLatitude,
-  "datafake1", df1_path, "id", "species", "latitude",
-  "datafake2", df2_path, "id_number", "spp", "lat",
-  "datafake4", df3_path, NA, "nome_das_especies", "y"
-)
+test_that("each call returns only the datasets in its own metadata", {
+  paths <- local_fake_inputs()
+  metadata <- fake_metadata(paths)
 
-wrong_metadata <- tibble::tribble(
-  ~datasetName, ~fileName, ~occurrenceID, ~scientificName, ~decimalLatitude, ~decimalLongitude, ~missing_column, ~notes,
-  "datafake4", df4_path, NA, "nome_das_especies", "y", "x", NA, "notes"
-)
+  first <- suppressMessages(
+    bdc_standardize_datasets(metadata[1:2, ], format = "csv")
+  )
+  second <- suppressMessages(
+    bdc_standardize_datasets(metadata[3, ], format = "csv")
+  )
 
-metadata_repeated_datasetName <- tibble::tribble(
-  ~datasetName, ~fileName, ~occurrenceID, ~scientificName, ~decimalLatitude, ~decimalLongitude,
-  "datafake1", df1_path, "id", "species", "latitude", "longitude",
-  "datafake2", df2_path, "id_number", "spp", "lat", "lon",
-  "datafake1", df1_path, "id", "species", "latitude", "longitude"
-)
-
-bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs2", save_database = FALSE)
-
-test_that("bdc_standardize_datasets can create qs2 files", {
-  created_qs_files <-
-    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*qs2") %>%
-    basename()
-
-  expected_qs_files <-
-    c("standard_datafake1.qs2", "standard_datafake2.qs2", "standard_datafake3.qs2")
-
-  expect_equal(created_qs_files, expected_qs_files)
+  expect_equal(id_prefixes(first), c("datafake1", "datafake2"))
+  expect_equal(id_prefixes(second), "datafake3")
+  expect_equal(nrow(second), 9)
 })
 
-test_that("datafake1 has the default column names", {
-  created_qs_files <-
-    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*qs2")
+test_that("a dataset with mismatched columns is excluded and named, never replaced by a stale copy", {
+  paths <- local_fake_inputs()
+  metadata <- fake_metadata(paths)
 
-  df1 <-
-    qs2::qs_read(created_qs_files[1]) %>%
-    names()
+  # A successful run of `datafake3` leaves its standardized copy behind.
+  suppressMessages(bdc_standardize_datasets(metadata, format = "csv"))
 
-  expect_equal(df1, c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"))
+  # Now `datafake3` points at a file without the `y` column.
+  broken <- metadata
+  broken$fileName[3] <- paths[["datafake4"]]
+
+  msgs <- capture_messages(
+    result <- bdc_standardize_datasets(broken, format = "csv")
+  )
+  expect_match(msgs, "\\[ERROR\\].*datafake3", all = FALSE)
+  expect_equal(id_prefixes(result), c("datafake1", "datafake2"))
 })
 
-test_that("datafake3 has the default column names", {
-  created_qs_files <-
-    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*qs2")
+test_that("an existing merged file is returned when overwrite = FALSE", {
+  paths <- local_fake_inputs()
+  metadata <- fake_metadata(paths)
 
-  df3 <-
-    qs2::qs_read(created_qs_files[3]) %>%
-    names()
+  for (format in c("csv", "qs2")) {
+    saved <- suppressMessages(bdc_standardize_datasets(
+      metadata,
+      format = format, overwrite = TRUE, save_database = TRUE
+    ))
+    merged_file <- here::here(
+      "Output", "Intermediate", paste0("00_merged_database.", format)
+    )
+    expect_true(file.exists(merged_file))
 
-  expect_equal(df3, c("database_id", "scientificName", "decimalLatitude", "decimalLongitude"))
+    expect_message(
+      reloaded <- bdc_standardize_datasets(
+        metadata,
+        format = format, overwrite = FALSE
+      ),
+      "already exists"
+    )
+    expect_false(is.null(reloaded), label = format)
+    expect_equal(reloaded, saved, ignore_attr = TRUE, label = format)
+  }
 })
 
-bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "csv", save_database = FALSE)
+test_that("a metadata row missing a required field errors with the dataset and field names", {
+  paths <- local_fake_inputs()
+  metadata <- fake_metadata(paths)
+  metadata$decimalLongitude[2] <- NA
 
-test_that("bdc_standardize_datasets can create csv files", {
-  created_csv_files <-
-    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*csv") %>%
-    basename()
-
-  expected_qs_files <-
-    c("standard_datafake1.csv", "standard_datafake2.csv", "standard_datafake3.csv")
-
-  expect_equal(created_csv_files, expected_qs_files)
+  expect_error(
+    suppressMessages(bdc_standardize_datasets(metadata, format = "csv")),
+    "datafake2.*decimalLongitude"
+  )
 })
 
-test_that("datafake1 has the default column names", {
-  created_csv_files <-
-    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*")
+test_that("standardized datasets are renamed to Darwin Core in both formats", {
+  paths <- local_fake_inputs()
+  metadata <- fake_metadata(paths)
 
-  df1 <-
-    readr::read_csv(created_csv_files[1], show_col_types = FALSE) %>%
-    names()
-
-  expect_equal(df1, c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"))
-})
-
-
-test_that("datafake3 has the default column names", {
-  created_csv_files <-
-    fs::dir_ls(path = here::here(tdir, "data", "temp_datasets"), glob = "*datafake*csv")
-
-  df3 <-
-    readr::read_csv(created_csv_files[3], show_col_types = FALSE) %>%
-    names()
-
-  expect_equal(df3, c("database_id", "scientificName", "decimalLatitude", "decimalLongitude"))
-})
-
-test_that("bdc_standardize_datasets missing required column", {
-  result <- testthat::capture_error(bdc_standardize_datasets(metadata = metadata_missing_column, overwrite = TRUE, format = "csv", save_database = FALSE))
-
-  expect_equal(any(class(result) %in% "error"), TRUE)
-})
-
-test_that("bdc_standardize_datasets already exist", {
-  result_message <- testthat::capture_message(bdc_standardize_datasets(metadata = metadata, overwrite = FALSE, format = "csv", save_database = FALSE))
-
-  expect_equal(any(class(result_message) %in% "condition"), TRUE)
-})
-
-test_that("bdc_standardize_datasets inform missing columns in the input file", {
-  expect_message(bdc_standardize_datasets(metadata = wrong_metadata, overwrite = FALSE, format = "csv", save_database = FALSE), "defined in the metadata not present in the datafake4")
-
-  expect_message(bdc_standardize_datasets(metadata = wrong_metadata, overwrite = FALSE, format = "csv", save_database = FALSE), "defined in the metadata do not match column names in the datafake4 file")
-})
-
-skip_on_cran()
-skip_on_ci()
-
-test_that("bdc_standardize_datasets can create 00_merged_datasets.csv", {
-
-  bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "csv", save_database = TRUE)
-
-  merged <- here::here("Output/Intermediate/00_merged_database.csv")
-
-  expect_true(file.exists(merged))
-
-  unlink(here::here("Output"), recursive = TRUE)
-
-})
-
-test_that("bdc_standardize_datasets can create 00_merged_datasets.qs2", {
-
-  bdc_standardize_datasets(metadata = metadata, overwrite = TRUE, format = "qs2", save_database = TRUE)
-
-  merged <- here::here("Output/Intermediate/00_merged_database.qs2")
-
-  expect_true(file.exists(merged))
-
-  unlink(here::here("Output"), recursive = TRUE)
-
-})
-
-test_that("bdc_standardize_datasets throw an error when dataset names are not unique", {
-
-  res <-
-    capture_message(
-      bdc_standardize_datasets(
-        metadata = metadata_repeated_datasetName,
-        overwrite = TRUE,
-        format = "csv",
-        save_database = FALSE
-      )
+  for (format in c("csv", "qs2")) {
+    result <- suppressMessages(
+      bdc_standardize_datasets(metadata, format = format)
     )
 
-  expect_equal(res$message, "[ERROR]: Dataset names defined in the `datasetName` column must be unique.")
-
+    expect_equal(
+      names(result),
+      c("database_id", "occurrenceID", "scientificName", "decimalLatitude", "decimalLongitude"),
+      label = format
+    )
+    expect_equal(nrow(result), 27, label = format)
+    expect_equal(result$occurrenceID[1:2], c("3120", "2756"), label = format)
+    expect_true(all(is.na(result$occurrenceID[19:27])), label = format)
+    expect_equal(result$decimalLatitude[1], "-13.17078", label = format)
+  }
 })
 
-unlink(here::here("Output"), recursive = TRUE)
+test_that("the missing-column message lists the columns absent from the file", {
+  paths <- local_fake_inputs()
+  metadata <- fake_metadata(paths)
+  metadata$fileName[3] <- paths[["datafake4"]]
+
+  msgs <- capture_messages(
+    bdc_standardize_datasets(metadata[3, ], format = "csv")
+  )
+  expect_match(
+    msgs,
+    "Column\\(s\\) `y` defined in the metadata not present in the datafake3",
+    all = FALSE
+  )
+})
+
+test_that("dataset names must be unique", {
+  paths <- local_fake_inputs()
+  metadata <- fake_metadata(paths)
+  metadata$datasetName[3] <- "datafake1"
+
+  expect_error(
+    bdc_standardize_datasets(metadata, format = "csv"),
+    "must be unique"
+  )
+})
+
+test_that("a dataset whose file cannot be read is excluded and named", {
+  paths <- local_fake_inputs()
+  metadata <- fake_metadata(paths)
+  metadata$fileName[2] <- file.path(dirname(paths[[1]]), "missing.csv")
+
+  msgs <- capture_messages(
+    result <- bdc_standardize_datasets(metadata, format = "csv")
+  )
+  expect_match(msgs, "\\[ERROR\\].*datafake2", all = FALSE)
+  expect_equal(id_prefixes(result), c("datafake1", "datafake3"))
+})

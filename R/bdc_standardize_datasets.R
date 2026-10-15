@@ -10,14 +10,19 @@
 #' renamed. See @details.
 #'
 #' @param overwrite A logical vector indicating whether the final merged dataset
-#' should be overwritten. The default is FALSE.
+#' should be overwritten. The default is FALSE. When FALSE and the merged file
+#' (`Output/Intermediate/00_merged_database.<format>`) already exists, that
+#' file is read and returned without processing `metadata`.
 #' @param format a character setting the output file type. Option available are
 #' "csv" and "qs2" (recommenced to save large datasets). Default == "csv".
 #' @param save_database logical. Should the standardized database be locally
 #' saved? Default = FALSE.
 #'
 #' @return A merged data.frame with column names following Darwin Core
-#' terminology.
+#' terminology and all columns stored as character. It contains only the
+#' datasets described in `metadata`; a dataset whose file lacks a column named
+#' in the metadata, or that fails to be read, is excluded and named in a
+#' message.
 #'
 #' @importFrom readr read_csv
 #' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
@@ -75,246 +80,222 @@ bdc_standardize_datasets <-
            format = "csv",
            overwrite = FALSE,
            save_database = FALSE) {
-    fileName <- datasetName <- . <- database_id <- NULL
+    database_id <- NULL
 
-    switch(EXPR = format,
-           qs2 = {
-             merged_filename <-
-               here::here("Output", "Intermediate", "00_merged_database.qs2")
-           },
-           csv = {
-             merged_filename <-
-               here::here("Output", "Intermediate", "00_merged_database.csv")
-           })
+    format <- match.arg(format, c("csv", "qs2"))
 
-    # fs::dir_create(here::here("Output", "Intermediate"))
+    merged_filename <-
+      here::here(
+        "Output", "Intermediate", paste0("00_merged_database.", format)
+      )
 
-    if (file.exists(merged_filename) & overwrite) {
+    if (file.exists(merged_filename) && overwrite) {
       unlink(merged_filename)
     }
 
-    if (!file.exists(merged_filename)) {
-      # save_in_dir <- here::here("data", "temp_datasets", "/")
-      save_in_dir <- file.path(tempdir(), "data/temp_datasets", "/")
-
-      if (!fs::dir_exists(save_in_dir)) {
-        fs::dir_create(save_in_dir)
-      }
-
-      input_file <-
-        metadata %>%
-        dplyr::pull(fileName)
-
-      if (length(unique(metadata$datasetName)) != nrow(metadata)) {
-        stop("[ERROR]: Dataset names defined in the `datasetName` column must be unique.")
-      }
-
-      for (file_index in seq_along(input_file)) {
-        input_filename <-
-          metadata %>%
-          dplyr::filter(fileName == input_file[file_index]) %>%
-          dplyr::pull(fileName)
-
-        dataset_name <-
-          metadata %>%
-          dplyr::filter(fileName == input_file[file_index]) %>%
-          dplyr::select(datasetName) %>%
-          dplyr::pull()
-
-        save_in_filename <-
-          paste0(save_in_dir, "standard_", dataset_name, ".", format)
-
-        if (!file.exists(save_in_filename) | overwrite == TRUE) {
-          base_names <-
-            metadata %>%
-            dplyr::filter(fileName == input_file[file_index]) %>%
-            dplyr::select_if( ~ !is.na(.))
-
-          standard_names <-
-            base_names %>%
-            names(.)
-
-          required <- c(
-            "datasetName",
-            "fileName",
-            "scientificName",
-            "decimalLatitude",
-            "decimalLongitude"
-          )
-
-          if (!(required %in% standard_names %>% all())) {
-            stop(
-              paste(
-                "Required field is missing. Please check the columns of the",
-                dataset_name,
-                "in our",
-                metadata
-              )
-            )
-          }
-
-          basename_names <- base_names %>%
-            dplyr::select(-datasetName, -fileName)
-
-          standard_names <-
-            basename_names %>%
-            names(.)
-
-          vector_for_recode <-
-            basename_names %>%
-            purrr::set_names(standard_names) %>%
-            {
-              c(.)
-            } %>%
-            unlist()
-
-          imported_raw_dataset <-
-            input_file[file_index] %>%
-            readr::read_csv(
-              guess_max = 10 ^ 6,
-              col_types = readr::cols(.default = "c"),
-              n_max = 1,
-              show_col_types = F
-            )
-
-          skip_to_next <- FALSE
-
-          error_message <-
-            paste(
-              "[ERROR]: Column names defined in the metadata do not match column names in the",
-              dataset_name,
-              "file"
-            )
-
-          tryCatch(
-            if (sum(!vector_for_recode %in% names(imported_raw_dataset)) != 0) {
-              cols_not_in_input <- setdiff(vector_for_recode, names(imported_raw_dataset))
-              if (length(cols_not_in_input) != 0) {
-                message(
-                  "[INFO]: Column(s) ",
-                  knitr::combine_words(paste0("`", cols_not_in_input, "`"), sep = ", ", and = " and ", oxford_comma = FALSE),
-                  " defined in the metadata not present in the ",
-                  dataset_name
-                )
-              }
-              ## cols_not_in_metadata <- setdiff(names(imported_raw_dataset), vector_for_recode)
-              ## if (length(cols_not_in_metadata) != 0) {
-              ##   message("[INFO]: Column(s) ", paste0("`", cols_not_in_metadata, "`", collapse = ", "), " not present in the metadata file.")
-              ## }
-              stop(error_message)
-            } else {
-              standard_dataset <-
-                input_file[file_index] %>%
-                readr::read_csv(trim_ws = F, show_col_types = F) %>%
-                dplyr::select(dplyr::all_of(vector_for_recode)) %>%
-                purrr::set_names(names(vector_for_recode)) %>%
-                dplyr::mutate(database_id = paste0(dataset_name, "_", 1:dplyr::n())) %>%
-                dplyr::select(database_id, dplyr::everything())
-
-              message(paste("Standardizing", base_names$datasetName, "file"))
-
-              standard_dataset <-
-                standard_dataset %>%
-                dplyr::mutate_if(is.numeric, as.character)
-
-              if (format == "qs2") {
-                qs2::qs_save(
-                  standard_dataset,
-                  paste0(
-                    save_in_dir,
-                    "standard_",
-                    dataset_name,
-                    ".",
-                    format
-                  )
-                )
-              } else {
-                readr::write_csv(
-                  standard_dataset,
-                  paste0(
-                    save_in_dir,
-                    "standard_",
-                    dataset_name,
-                    ".",
-                    format
-                  )
-                )
-              }
-            },
-            error = function(e) {
-              message(error_message)
-              skip_to_next <<- TRUE
-            }
-          )
-
-          if (skip_to_next) {
-            next
-          }
-        } else {
-          message(paste(save_in_filename, "already exists!"))
-        }
-      }
-
-      # Concatenate all the resulting standardized databases
+    if (file.exists(merged_filename)) {
+      message(paste(merged_filename, "already exists!"))
 
       if (format == "qs2") {
-        merged_database <-
-          # here::here("data", "temp_datasets") %>%
-          save_in_dir %>%
-          fs::dir_ls(regexp = "*.qs2") %>%
-          purrr::map_dfr(~ qs2::qs_read(.x) %>%
-                         dplyr::mutate(dplyr::across(
-                           .cols = dplyr::everything(), ~ as.character(.x)
-                         )))
+        merged_database <- qs2::qs_read(merged_filename)
       } else {
         merged_database <-
-          # here::here("data", "temp_datasets") %>%
-          save_in_dir %>%
-          fs::dir_ls(regexp = "*.csv") %>%
-          purrr::map_dfr( ~ readr::read_csv(.x, col_types = readr::cols(.default = "c")))
-      }
-
-      merged_database <-
-        merged_database %>%
-        select_if((function(x)
-          any(!is.na(x))))
-
-
-      merged_database <-
-        merged_database %>%
-        select_if((function(x)
-          any(!is.na(x))))
-
-      # should the database be saved?
-      if (format == "qs2" & save_database == TRUE & overwrite == TRUE) {
-        bdc_create_dir()
-        qs2::qs_save(merged_database, merged_filename)
-        message(paste("Standardized database was saved in",merged_filename))
-
-      }
-
-      if (format == "csv" & save_database == TRUE & overwrite == TRUE) {
-        bdc_create_dir()
-        readr::write_csv(merged_database, merged_filename)
-        message(paste(merged_filename, "was created"))
-
+          readr::read_csv(
+            merged_filename,
+            col_types = readr::cols(.default = "c"),
+            show_col_types = FALSE
+          )
       }
 
       return(merged_database)
-
-    } else {
-      message(paste(merged_filename, "already exists!"))
-
-      # Load an existing database
-      if (overwrite == FALSE & format == "csv"){
-        merged_database <- readr::read_csv(merged_filename,
-                                           show_col_types = FALSE)
-      }
-
-      if (overwrite == FALSE & format == "qs2"){
-        merged_database <- qs2::qs_read(merged_filename)
-      }
-
     }
 
+    if (length(unique(metadata$datasetName)) != nrow(metadata)) {
+      stop("[ERROR]: Dataset names defined in the `datasetName` column must be unique.")
+    }
+
+    bdc_check_required_metadata(metadata)
+
+    # Each call writes its intermediate files to its own directory and merges
+    # only the files it wrote, so datasets from earlier calls never leak in.
+    save_in_dir <- tempfile("bdc_standardize_")
+    fs::dir_create(save_in_dir)
+    on.exit(unlink(save_in_dir, recursive = TRUE), add = TRUE)
+    written_files <- character(0)
+
+    # A dataset that fails to be read or written is left out of the merge.
+    exclude_dataset <- function(dataset_name, e) {
+      message(
+        "[ERROR]: Could not standardize the ", dataset_name,
+        " file, which is excluded from the merged database: ",
+        conditionMessage(e)
+      )
+      FALSE
+    }
+
+    for (row_index in seq_len(nrow(metadata))) {
+      dataset_metadata <-
+        metadata[row_index, , drop = FALSE] %>%
+        dplyr::select_if(\(x) !is.na(x))
+
+      dataset_name <- dataset_metadata$datasetName
+      input_filename <- dataset_metadata$fileName
+
+      # Named vector: Darwin Core name -> column name in the input file.
+      vector_for_recode <-
+        dataset_metadata %>%
+        dplyr::select(-"datasetName", -"fileName") %>%
+        unlist()
+
+      imported_raw_dataset <- tryCatch(
+        readr::read_csv(
+          input_filename,
+          col_types = readr::cols(.default = "c"),
+          n_max = 1,
+          show_col_types = FALSE
+        ),
+        error = \(e) exclude_dataset(dataset_name, e)
+      )
+
+      if (isFALSE(imported_raw_dataset)) {
+        next
+      }
+
+      cols_not_in_input <-
+        setdiff(vector_for_recode, names(imported_raw_dataset))
+
+      if (length(cols_not_in_input) != 0) {
+        message(
+          "[INFO]: Column(s) ",
+          paste0("`", cols_not_in_input, "`", collapse = ", "),
+          " defined in the metadata not present in the ",
+          dataset_name
+        )
+        message(
+          paste(
+            "[ERROR]: Column names defined in the metadata do not match",
+            "column names in the", dataset_name, "file"
+          )
+        )
+        next
+      }
+
+      save_in_filename <-
+        file.path(save_in_dir, paste0("standard_", dataset_name, ".", format))
+
+      standardized <- tryCatch(
+        {
+          standard_dataset <-
+            readr::read_csv(
+              input_filename,
+              trim_ws = FALSE,
+              show_col_types = FALSE
+            ) %>%
+            dplyr::select(dplyr::all_of(vector_for_recode)) %>%
+            dplyr::mutate(database_id = paste0(dataset_name, "_", seq_len(dplyr::n()))) %>%
+            dplyr::select(database_id, dplyr::everything()) %>%
+            dplyr::mutate_if(is.numeric, as.character)
+
+          message(paste("Standardizing", dataset_name, "file"))
+
+          if (format == "qs2") {
+            qs2::qs_save(standard_dataset, save_in_filename)
+          } else {
+            readr::write_csv(standard_dataset, save_in_filename)
+          }
+          TRUE
+        },
+        error = \(e) exclude_dataset(dataset_name, e)
+      )
+
+      if (standardized) {
+        written_files <- c(written_files, save_in_filename)
+      }
+    }
+
+    # Concatenate the standardized datasets written by this call
+    if (format == "qs2") {
+      merged_database <-
+        written_files %>%
+        purrr::map_dfr(
+          \(x) qs2::qs_read(x) %>%
+            dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
+        )
+    } else {
+      merged_database <-
+        written_files %>%
+        purrr::map_dfr(
+          \(x) readr::read_csv(x, col_types = readr::cols(.default = "c"))
+        )
+    }
+
+    merged_database <-
+      merged_database %>%
+      dplyr::select_if(\(x) any(!is.na(x)))
+
+    if (save_database) {
+      bdc_create_dir()
+      if (format == "qs2") {
+        qs2::qs_save(merged_database, merged_filename)
+      } else {
+        readr::write_csv(merged_database, merged_filename)
+      }
+      message(paste("Standardized database was saved in", merged_filename))
+    }
+
+    return(merged_database)
   }
+
+#' Check that every metadata row fills the required fields
+#'
+#' @param metadata The metadata data frame passed to
+#'   `bdc_standardize_datasets()`.
+#'
+#' @return `metadata`, invisibly. Errors naming each dataset with missing
+#'   (absent or `NA`) required fields and the fields it misses.
+#' @noRd
+bdc_check_required_metadata <- function(metadata) {
+  required <- c(
+    "datasetName",
+    "fileName",
+    "scientificName",
+    "decimalLatitude",
+    "decimalLongitude"
+  )
+
+  problems <- character(0)
+  for (row_index in seq_len(nrow(metadata))) {
+    row <- metadata[row_index, , drop = FALSE]
+    is_missing <- vapply(
+      required,
+      \(field) !field %in% names(row) || is.na(row[[field]]),
+      logical(1)
+    )
+    missing_fields <- required[is_missing]
+    if (length(missing_fields) != 0) {
+      dataset_name <-
+        if ("datasetName" %in% names(row) && !is.na(row$datasetName)) {
+          row$datasetName
+        } else {
+          paste("row", row_index)
+        }
+      problems <- c(
+        problems,
+        paste0(
+          "`", dataset_name, "`: ",
+          paste0("`", missing_fields, "`", collapse = ", ")
+        )
+      )
+    }
+  }
+
+  if (length(problems) != 0) {
+    stop(
+      "[ERROR]: Required field(s) missing in the metadata for dataset(s) ",
+      paste(problems, collapse = "; "),
+      call. = FALSE
+    )
+  }
+
+  invisible(metadata)
+}
