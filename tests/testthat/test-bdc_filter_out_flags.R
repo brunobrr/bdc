@@ -49,7 +49,6 @@ test_that("a specific name removes only that column, dot-prefixed or not", {
 })
 
 test_that("a vector of names removes only those columns", {
-  skip("bdc_filter_out_flags() errors on more than one name (#310)")
   r <- suppressMessages(
     bdc_filter_out_flags(
       data = flags,

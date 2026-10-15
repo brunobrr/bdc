@@ -29,8 +29,11 @@ inspection? Default = FALSE.}
 }
 \value{
 List containing figures showing the results of data quality test
-implemented in one module of bdc. When save_figures = TRUE, figures are
-also saved locally in a png format.
+implemented in one module of bdc. Bar plots are named after their test
+column and maps after their test column with the suffix \verb{_map} (e.g.,
+\code{.equ} and \code{.equ_map}). When save_figures = TRUE, figures are also saved
+locally in a png format, one file per figure: bar plots as
+\verb{<step>_<column>_BAR.png} and those maps as \verb{<step>_<column>_MAP.png}.
 }
 \description{
 Creates figures (i.e., bar plots, maps, and histograms) reporting the results
@@ -62,12 +65,12 @@ x <- data.frame(
   .summary
 )
 
-figures <- 
-bdc_create_figures(
-  data = x, 
-  database_id = "database_id",
-  workflow_step = "prefilter",
-  save_figures = FALSE
-)
+figures <-
+  bdc_create_figures(
+    data = x,
+    database_id = "database_id",
+    workflow_step = "prefilter",
+    save_figures = FALSE
+  )
 }
 }
