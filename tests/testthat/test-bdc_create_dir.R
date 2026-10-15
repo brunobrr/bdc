@@ -1,14 +1,18 @@
-## skip("dont run")
-skip_on_cran()
-skip_on_ci()
+output_dirs <- c("Check", "Intermediate", "Report", "Figures")
 
-bdc_create_dir()
+test_that("bdc_create_dir() creates the Output folders under the project root", {
+  root <- local_temp_project()
 
-test_that("bdc dir exists", {
-  expect_true(dir.exists(here::here("Output/Check")))
-  expect_true(dir.exists(here::here("Output/Intermediate")))
-  expect_true(dir.exists(here::here("Output/Report")))
-  expect_true(dir.exists(here::here("Output/Figures")))
+  bdc_create_dir()
 
-  unlink(here::here("Output"), recursive = TRUE)
+  expect_true(all(dir.exists(file.path(root, "Output", output_dirs))))
+})
+
+test_that("bdc_create_dir() writes to the project root when run from a subfolder", {
+  root <- local_temp_project(subdir = "reports")
+
+  bdc_create_dir()
+
+  expect_true(all(dir.exists(file.path(root, "Output", output_dirs))))
+  expect_false(dir.exists(file.path(root, "reports", "Output")))
 })

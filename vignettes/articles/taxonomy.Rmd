@@ -115,7 +115,7 @@ parse_names <-
 #> >> Other issues, capitalizing the first letter of the generic name, replacing empty names by NA, and removing extra spaces, were flagged and corrected or removed from 0 records.
 #> >> Infraspecific terms were flagged and removed from 1 records.
 #>
-#> >> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.
+#> >> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_parsed_names.csv'.
 ```
 
 ```{r echo=FALSE, eval=TRUE}
@@ -146,7 +146,7 @@ DT::datatable(
 )
 ```
 
-**Let's merge the names parsed with the complete database.** As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of the parsing names process in "Output/Check/02_parsed_names.qs".
+**Let's merge the names parsed with the complete database.** As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of the parsing names process in "Output/Check/02_parsed_names.csv".
 
 ```{r}
 parse_names <-

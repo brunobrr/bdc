@@ -23,12 +23,14 @@ and WGS84. Default = "decimalLatitude".}
 WGS84. Default = "decimalLongitude".}
 
 \item{country}{character string. The column name with the country assignment
-of each record. Default = "country". If no column name is provided a new
-column "country" is created.}
+of each record. Default = "country". If \code{data} has no column with this
+name, a new column with this name is created.}
 }
 \value{
-A tibble containing country names for records missing such
-information.
+A tibble with the columns of \code{data}, where missing values in the
+column named by \code{country} are filled with country names derived from
+coordinates. If that column did not exist, it is added; no other column is
+added.
 }
 \description{
 Country names derived from valid geographic coordinates are added to records

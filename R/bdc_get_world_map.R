@@ -12,8 +12,7 @@
 bdc_get_world_map <- function() {
   name_long <- english_name <- english_name <- iso2c <- iso_a2 <- geometry <- alpha2 <- alpha3 <- cntr_original2 <- NULL
 
-  check_require_cran("rnaturalearth")
-  check_require_github("ropensci/rnaturalearthdata")
+  check_require_cran("rnaturalearthdata")
 
   suppressWarnings({
 

@@ -11,16 +11,18 @@
 #' @param lon character string. The column with longitude in decimal degrees and
 #' WGS84. Default = "decimalLongitude".
 #' @param  country character string. The column name with the country assignment
-#' of each record. Default = "country". If no column name is provided a new
-#' column "country" is created.
+#' of each record. Default = "country". If `data` has no column with this
+#' name, a new column with this name is created.
 #'
 #' @details This function assigns a country name for records missing such
 #' information. Country names are extracted from valid geographic coordinates
 #' using a high-quality map of the world (rnaturalearth package). No
 #' country name is added to records whose coordinates are in the sea.
 #'
-#' @return A tibble containing country names for records missing such
-#' information.
+#' @return A tibble with the columns of `data`, where missing values in the
+#' column named by `country` are filled with country names derived from
+#' coordinates. If that column did not exist, it is added; no other column is
+#' added.
 #'
 #' @importFrom CoordinateCleaner cc_val cc_sea
 #' @importFrom dplyr mutate filter select left_join as_tibble 
@@ -49,14 +51,13 @@ bdc_country_from_coordinates <-
            lon = "decimalLongitude",
            country = "country") {
     .data <- . <- name_long <- id_temp <- geometry <- NULL
+    decimalLatitude <- decimalLongitude <- NULL
     
-    suppressWarnings({
-      check_require_cran("rnaturalearth")
-      check_require_github("ropensci/rnaturalearthdata")
-    })
-    
-    # create an id_temp
-    data$id_temp <- 1:nrow(data)
+    check_require_cran("rnaturalearthdata")
+
+    # spherical geometry (s2) is turned off below; restore it on exit
+    old_s2 <- sf::sf_use_s2()
+    on.exit(suppressMessages(sf::sf_use_s2(old_s2)), add = TRUE)
     
     minimum_colnames <- c(lat, lon)
     
@@ -73,28 +74,33 @@ bdc_country_from_coordinates <-
     has_country <- any(colnames(data) == country)
     
     if (!has_country) {
-      data$country <- NA
+      data[[country]] <- NA
     }
     
-    # converts coordinates columns to numeric
-    data <-
-      data %>%
-      dplyr::mutate(decimalLatitude = as.numeric(.data[[lat]]),
-                    decimalLongitude = as.numeric(.data[[lon]]))
+    # Work on a helper table so the user's columns are left untouched: a
+    # temporary id plus numeric coordinates with fixed internal names.
+    coords <-
+      data.frame(
+        id_temp = seq_len(nrow(data)),
+        decimalLatitude = suppressWarnings(as.numeric(data[[lat]])),
+        decimalLongitude = suppressWarnings(as.numeric(data[[lon]]))
+      )
     
     worldmap <-
       rnaturalearth::ne_countries(scale = "large", returnclass = "sf") %>%
       bdc_reword_countries()
 
-    data_no_country <-
-      data %>%
-      dplyr::filter(is.na(country) | country == "")
+    no_country <- is.na(data[[country]]) | data[[country]] == ""
     
-    data_no_country <- data_no_country %>% 
-      dplyr::filter(!is.na(data_no_country[[lat]]), !is.na(data_no_country[[lon]]))
+    data_no_country <-
+      coords %>%
+      dplyr::filter(
+        no_country,
+        !is.na(decimalLatitude),
+        !is.na(decimalLongitude)
+      )
     
     if (nrow(data_no_country) == 0) {
-      data <- data %>% dplyr::select(-id_temp)
       message("All records already had country information. Nothing was done!")
     } else{
       # converts coordinates columns to spatial points
@@ -102,14 +108,14 @@ bdc_country_from_coordinates <-
         data_no_country <-
           CoordinateCleaner::cc_val(
             x = data_no_country,
-            lon = lon,
-            lat = lat,
+            lon = "decimalLongitude",
+            lat = "decimalLatitude",
             verbose = FALSE
           ) %>%
           CoordinateCleaner::cc_sea(
             x = .,
-            lon = lon,
-            lat = lat,
+            lon = "decimalLongitude",
+            lat = "decimalLatitude",
             verbose = FALSE,
             speedup = TRUE,
             ref = sf::as_Spatial(worldmap)
@@ -138,9 +144,7 @@ bdc_country_from_coordinates <-
       res <-
         dplyr::left_join(data_no_country, ext_country, by = "id_temp")
       
-      id_replace <- res$id_temp
-      data[id_replace, "country"] <- res$name_long
-      data <- data %>% dplyr::select(-id_temp)
+      data[[country]][res$id_temp] <- res$name_long
       
       if (has_country) {
         message(
@@ -155,13 +159,13 @@ bdc_country_from_coordinates <-
           paste(
             "\nbdc_country_from_coordinates:\nCountry names were added to",
             nrow(data_no_country),
-            "records in a new collumn named 'country'.\n"
+            paste0("records in a new collumn named '", country, "'.\n")
           )
         )
       }
       
     }
-    data[,country][data[,country]%in%c("", "NA")] <- NA
+    data[[country]][data[[country]] %in% c("", "NA")] <- NA
   
     return(dplyr::as_tibble(data))
     

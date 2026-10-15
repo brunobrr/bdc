@@ -121,3 +121,28 @@ test_that("common country names are resolved", {
     c(TRUE, TRUE, TRUE, TRUE, TRUE)
   )
 })
+
+test_that("bdc_coordinates_country_inconsistent() honours custom lat/lon/country names", {
+  x_custom <- data.frame(
+    pais = x0$country,
+    lon_x = x0$decimalLongitude,
+    lat_y = x0$decimalLatitude
+  )
+
+  res <- suppressMessages(
+    bdc_coordinates_country_inconsistent(
+      data = x_custom,
+      country_name = c("Brazil", "Argentina"),
+      country = "pais",
+      lon = "lon_x",
+      lat = "lat_y",
+      dist = 0.1
+    )
+  )
+
+  expect_named(res, c(names(x_custom), ".coordinates_country_inconsistent"))
+  expect_equal(
+    res$.coordinates_country_inconsistent,
+    x1$.coordinates_country_inconsistent
+  )
+})

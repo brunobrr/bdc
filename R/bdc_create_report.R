@@ -57,13 +57,16 @@ bdc_create_report <-
     . <- V1 <- Test_name <- Description <- notes <- NULL
     number_of_records <- .uncer_terms <- `NA` <- NULL
     
-    suppressWarnings({
-      check_require_cran("readr")
-      check_require_cran("DT")
-    })
-    
-    match.arg(arg = workflow_step,
-              choices = c("prefilter", "taxonomy", "space", "time"))
+    valid_steps <- c("prefilter", "taxonomy", "space", "time")
+    if (missing(workflow_step) || !is.character(workflow_step) ||
+      length(workflow_step) != 1 || !workflow_step %in% valid_steps) {
+      stop(
+        "`workflow_step` must be one of ",
+        paste0("'", valid_steps, "'", collapse = ", "),
+        ".",
+        call. = FALSE
+      )
+    }
     
     temp <- data %>% dplyr::select(tidyselect::starts_with("."))
     
@@ -94,7 +97,9 @@ bdc_create_report <-
       names_tab <- names(data)
       col_to_tests <- dplyr::intersect(tests, names_tab)
       
-      has_file <- file.exists("Output/Check/01_coordinates_transposed.csv")
+      has_file <- file.exists(
+        here::here("Output", "Check", "01_coordinates_transposed.csv")
+      )
       has_column <- "coordinates_transposed" %in% names(data)
       
       if (has_file & has_column) {

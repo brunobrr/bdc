@@ -44,12 +44,7 @@ bdc_country_standardized <-
       )
     }
 
-    suppressWarnings({
-      suppressMessages({
-        check_require_cran("rnaturalearth")
-        check_require_github("ropensci/rnaturalearthdata")
-      })
-    })
+    check_require_cran("rnaturalearthdata")
 
     # load auxiliary data
     message("Loading auxiliary data: country names\n")
