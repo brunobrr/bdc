@@ -436,8 +436,11 @@ bdc_query_names_taxadb <-
     } # end of not_found
     
     
-    # searching for accepted names for synonyms.
-    synonym_index <- which(found_name$taxonomicStatus == "synonym")
+    # searching for accepted names for synonyms. Synonyms linked to more than
+    # one accepted name were flagged "multipleAccepted" by
+    # bdc_clean_duplicates() and are not replaced.
+    synonym_index <- which(found_name$taxonomicStatus == "synonym" &
+                             !grepl("multipleAccepted", found_name$notes))
     nrow_synonym <- length(synonym_index)
     
     if (nrow_synonym > 0L) {
@@ -500,15 +503,6 @@ bdc_query_names_taxadb <-
           
           found_name[p, "notes"] <-
             paste(found_name[p, "notes"][[1]], "noAcceptedName", sep = "| ")
-        }
-        
-        # Flag synonyms with multiple accepted name
-        if (any(nrow_accepted > 1L)) {
-          p1 <- match(names(accepted_list[nrow_accepted > 1]),
-                      found_name$original_search)
-          
-          found_name[p1, "notes"] <-
-            paste(found_name[p1, "notes"][[1]], "multipleAccepted", sep = "| ")
         }
       } # end of replace_synonyms
     } # end of nrow_synonym

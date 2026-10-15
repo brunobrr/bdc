@@ -262,7 +262,6 @@ test_that("bdc_query_names_taxadb() flags a synonym without accepted name", {
 })
 
 test_that("bdc_query_names_taxadb() flags a synonym with several accepted names", {
-  skip("pro-parte synonyms are replaced by their first accepted name (#321)")
   local_fake_taxadb(fake_dwc_taxa(
     taxonID = c("T:1", "T:2", "T:3", "T:4"),
     scientificName = c("Aus bus", "Cus dus", "Eus fus", "Eus fus"),
@@ -276,6 +275,9 @@ test_that("bdc_query_names_taxadb() flags a synonym with several accepted names"
   expect_equal(res$original_search, "Eus fus")
   expect_match(res$notes, "multipleAccepted", fixed = TRUE)
   expect_false(grepl("replaceSynonym", res$notes, fixed = TRUE))
+  # Spec #327: the synonym is not replaced and keeps its name.
+  expect_equal(res$notes, "multipleAccepted")
+  expect_equal(res$scientificName, "Eus fus")
 })
 
 test_that("bdc_query_names_taxadb(replace_synonyms = FALSE) keeps synonyms", {

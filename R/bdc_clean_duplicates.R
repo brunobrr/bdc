@@ -61,8 +61,10 @@ bdc_clean_duplicates <-
 #' The rank filter is applied to every candidate record first, so the result
 #' does not depend on the order of the records in the taxonomic database. A
 #' name left with several accepted records is flagged "multipleAccepted" and
-#' its taxonomic columns are returned as NA. A name with no record in the
-#' requested rank is returned with its taxonomic columns as NA.
+#' its taxonomic columns are returned as NA. A synonym linked to more than one
+#' accepted name is also flagged "multipleAccepted"; it keeps the values its
+#' records share (its name) and the others are returned as NA. A name with no
+#' record in the requested rank is returned with its taxonomic columns as NA.
 #'
 #' @param rows data.frame. Every record matched by one name, accepted first.
 #' @param rank,rank_name See bdc_clean_duplicates().
@@ -83,9 +85,27 @@ bdc_resolve_candidates <- function(rows, rank = NULL, rank_name = NULL) {
     rows <- rows[in_rank, ]
   }
 
-  if (sum(rows$taxonomicStatus %in% "accepted") > 1) {
+  accepted <- rows$taxonomicStatus %in% "accepted"
+  if (sum(accepted) > 1) {
     rows <- rows[1, ]
     rows[taxon_cols] <- NA
+    rows$notes <- "multipleAccepted"
+    return(rows)
+  }
+
+  # A synonym linked to more than one accepted name is not replaced: it keeps
+  # the values shared by all its records (its name) and is flagged.
+  synonyms <- rows$taxonomicStatus %in% "synonym"
+  linked <- rows$acceptedNameUsageID[synonyms]
+  linked <- unique(linked[!is.na(linked)])
+  if (!any(accepted) && length(linked) > 1) {
+    synonym_rows <- rows[synonyms, ]
+    rows <- synonym_rows[1, ]
+    for (col in taxon_cols) {
+      if (length(unique(synonym_rows[[col]])) > 1) {
+        rows[[col]] <- NA
+      }
+    }
     rows$notes <- "multipleAccepted"
     return(rows)
   }
