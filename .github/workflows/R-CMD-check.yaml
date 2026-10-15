@@ -37,12 +37,13 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           use-public-rspm: true
-          # rnaturalearthhires is not on CRAN
+          # rnaturalearthhires (Suggests) is not on CRAN; see
+          # Additional_repositories in DESCRIPTION
           extra-repositories: https://ropensci.r-universe.dev
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::rcmdcheck, any::rnaturalearthhires
+          extra-packages: any::rcmdcheck
           needs: check
 
       # rgnparser::install_gnparser() is defunct since rgnparser 0.3.0, so
