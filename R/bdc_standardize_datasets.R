@@ -218,8 +218,10 @@ bdc_standardize_datasets <-
       merged_database <-
         written_files %>%
         purrr::map_dfr(
-          \(x) qs2::qs_read(x) %>%
-            dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
+          function(x) {
+            qs2::qs_read(x) %>%
+              dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
+          }
         )
     } else {
       merged_database <-

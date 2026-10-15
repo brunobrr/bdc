@@ -584,8 +584,10 @@ bdc_query_names_taxadb <-
     # Joining names queried to the original (complete) database. The key is
     # the unmodified input, so names differing only in case keep their own row.
     found_name <-
-      dplyr::left_join(raw_sci_name, found_name,
-                       by = "original_search", na_matches = "never")
+      dplyr::left_join(
+        raw_sci_name, found_name,
+        by = "original_search", na_matches = "never"
+      )
     bdc_check_alignment(found_name, raw_sci_name$original_search)
 
     # Converting the first letter of "scientificName" to uppercase (only after

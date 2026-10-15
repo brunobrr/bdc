@@ -81,14 +81,6 @@ test_that("bdc_country_from_coordinates correctly assigns country names",
             
           })
 
-
-
-
-
-
-
-
-
 # Custom (non Darwin Core) column names ---------------------------------------
 
 x_default <- data.frame(

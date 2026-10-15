@@ -73,6 +73,7 @@ test_that("bdc_create_report() does not attach packages", {
 })
 
 test_that("bdc_create_figures() does not attach packages", {
+  local_temp_project()
   x <- data.frame(
     database_id = c("GBIF_01", "GBIF_02", "GBIF_03", "FISH_04", "FISH_05"),
     decimalLatitude = c(-19.93580, -13.01667, -22.34161, -6.75000, -15.15806),

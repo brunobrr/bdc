@@ -32,11 +32,10 @@ y <-
     transposed_coordinates = c(TRUE, FALSE, TRUE)
   )
 
-test_that("test coordinates transposed" , {
+test_that("test coordinates transposed", {
   testthat::expect_equal(dim(report$x$data), c(6, 5))
-  
 })
- 
+
 # Transposed coordinates are read from the project root ----------------------
 
 transposed_input <- data.frame(
@@ -94,5 +93,21 @@ test_that("bdc_create_report() lists transposed coordinates from the root", {
   expect_true(
     "Records with transposed geographic coordinates" %in%
       report_descriptions(flagged)
+  )
+})
+
+# workflow_step validation ----------------------------------------------------
+
+test_that("bdc_create_report() requires a valid workflow_step", {
+  local_temp_project()
+  steps <- "prefilter.*taxonomy.*space.*time"
+
+  expect_error(bdc_create_report(x), steps)
+  # A partial match must not silently skip every step
+  expect_error(bdc_create_report(x, workflow_step = "pre"), steps)
+  expect_error(bdc_create_report(x, workflow_step = "taxa"), steps)
+  expect_error(
+    bdc_create_report(x, workflow_step = c("prefilter", "space")),
+    steps
   )
 })

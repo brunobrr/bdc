@@ -19,18 +19,18 @@ database_id <- c("GBIF_01", "GBIF_02", "GBIF_03", "FISH_04", "FISH_05")
    .summary
  )
 
-figures <-
- bdc_create_figures(
-   data = x,
-   database_id = "database_id",
-   workflow_step = "prefilter",
-   save_figures = FALSE
- )
-
 test_that("test figures object", {
+  local_temp_project()
+
+  figures <-
+    bdc_create_figures(
+      data = x,
+      database_id = "database_id",
+      workflow_step = "prefilter",
+      save_figures = FALSE
+    )
 
   testthat::expect_equal(names(figures), c(".invalid_basis_of_records", ".summary", "summary_all_tests"))
-
 })
 
 # Transposed coordinates are read from the project root ----------------------

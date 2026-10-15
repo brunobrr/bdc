@@ -79,7 +79,7 @@ bdc_create_figures <-
     
     valid_steps <- c("prefilter", "space", "time")
     if (!is.character(workflow_step) || length(workflow_step) != 1 ||
-        !workflow_step %in% valid_steps) {
+      !workflow_step %in% valid_steps) {
       stop(
         "`workflow_step` must be one of ",
         paste0("'", valid_steps, "'", collapse = ", "),

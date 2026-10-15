@@ -57,8 +57,16 @@ bdc_create_report <-
     . <- V1 <- Test_name <- Description <- notes <- NULL
     number_of_records <- .uncer_terms <- `NA` <- NULL
     
-    match.arg(arg = workflow_step,
-              choices = c("prefilter", "taxonomy", "space", "time"))
+    valid_steps <- c("prefilter", "taxonomy", "space", "time")
+    if (missing(workflow_step) || !is.character(workflow_step) ||
+      length(workflow_step) != 1 || !workflow_step %in% valid_steps) {
+      stop(
+        "`workflow_step` must be one of ",
+        paste0("'", valid_steps, "'", collapse = ", "),
+        ".",
+        call. = FALSE
+      )
+    }
     
     temp <- data %>% dplyr::select(tidyselect::starts_with("."))
     
