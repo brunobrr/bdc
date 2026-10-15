@@ -144,12 +144,31 @@ test_that("bdc_create_figures() has no transposed map without its check file", {
 })
 
 test_that("bdc_create_figures() says why the transposed map is missing", {
-  skip("the function silences its own diagnostic messages (#323)")
   local_temp_project()
 
-  expect_message(
-    bdc_create_figures(prefilter_records, workflow_step = "prefilter"),
-    "01_coordinates_transposed.csv' not found"
+  messages <- capture_messages(
+    bdc_create_figures(prefilter_records, workflow_step = "prefilter")
+  )
+
+  expect_match(messages, "01_coordinates_transposed.csv' not found", all = FALSE)
+})
+
+test_that("bdc_create_figures() says which figures it leaves out", {
+  local_temp_project()
+
+  messages <- capture_messages(
+    bdc_create_figures(prefilter_records, workflow_step = "prefilter")
+  )
+
+  expect_match(
+    messages,
+    "No records flagged for the following tests:\n.coordinates_empty",
+    all = FALSE
+  )
+  expect_match(
+    messages,
+    "At least one of the following columns must be provided for creating maps",
+    all = FALSE
   )
 })
 
