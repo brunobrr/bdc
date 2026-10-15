@@ -193,7 +193,6 @@ test_that("bdc_create_report() lists each space test", {
 })
 
 test_that("bdc_create_report() adds the summary row to the space report", {
-  skip("space report omits the summary row (#316)")
   local_temp_project()
   report <- bdc_create_report(space_input, workflow_step = "space")
   body <- report_body(report)

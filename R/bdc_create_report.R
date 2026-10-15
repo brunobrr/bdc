@@ -405,7 +405,8 @@ bdc_create_report <-
           space <-
             data %>%
             # dplyr::select(tidyselect::starts_with(".")) %>%
-            dplyr::select(col_to_tests) %>%
+            dplyr::select(all_of(col_to_tests)) %>%
+            bdc::bdc_summary_col() %>%
             dplyr::mutate_if(is.character, ~ as.logical(as.character(.))) %>%
             dplyr::summarise_all(., .funs = sum) %>%
             t() %>%
