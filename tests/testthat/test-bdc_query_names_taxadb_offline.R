@@ -425,7 +425,6 @@ test_that("bdc_query_names_taxadb(export_accepted = TRUE) writes the check file"
 })
 
 test_that("bdc_query_names_taxadb(export_accepted = TRUE) lists every candidate record", {
-  skip("the check file holds a single all-NA row (#320)")
   root <- local_temp_project()
   local_fake_taxadb(casearia_rows())
   path <- file.path(root, "Output", "Check", "02_names_multiple_accepted_names.csv")

@@ -558,10 +558,16 @@ bdc_query_names_taxadb <-
     if (export_accepted == TRUE) {
       bdc_create_dir()
       
+      # Look up the name that was matched: the taxonomic columns of these
+      # rows are NA, so scientificName cannot be used.
+      multiple <- grepl("multipleAccepted", found_name$notes)
+      matched_name <- found_name$original_search[multiple]
+      has_suggestion <- !is.na(found_name$suggested_name[multiple])
+      matched_name[has_suggestion] <-
+        found_name$suggested_name[multiple][has_suggestion]
+
       multi_accName <-
-        found_name %>%
-        dplyr::filter(stringr::str_detect(notes, regex("multiple"))) %>%
-        dplyr::pull(., scientificName) %>%
+        unique(matched_name) %>%
         bdc_filter_name(., db = db, db_version = db_version) %>%
         dplyr::pull(., acceptedNameUsageID) %>%
         bdc_filter_id(., db, db_version = db_version) %>%
