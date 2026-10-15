@@ -15,14 +15,14 @@ expected_cols <- c(
   "vernacularName", "input"
 )
 
-x <- bdc_filter_name("Puma concolor", db = "gbif")
+x <- taxadb_or_skip(bdc_filter_name("Puma concolor", db = "gbif"))
 
 
 test_that("testing filter name columns", {
   testthat::expect_equal(colnames(x), expected_cols)
 })
 
-x <- bdc_filter_name("Puma concoloar", db = "gbif")
+x <- taxadb_or_skip(bdc_filter_name("Puma concoloar", db = "gbif"))
 
 test_that("testing not found names", {
   testthat::expect_equal(is.na(x$scientificName), TRUE)
@@ -30,7 +30,7 @@ test_that("testing not found names", {
   testthat::expect_equal(is.numeric(x$sort), TRUE)
 })
 
-x <- bdc_filter_name(sci_names, db = "gbif")
+x <- taxadb_or_skip(bdc_filter_name(sci_names, db = "gbif"))
 
 test_that("testing multiple names", {
   testthat::expect_equal(class(x), c("tbl_df", "tbl", "data.frame"))
