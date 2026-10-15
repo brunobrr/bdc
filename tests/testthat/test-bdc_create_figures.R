@@ -72,8 +72,11 @@ test_that("bdc_create_figures() maps prefilter country inconsistencies", {
   # One bar plot, the summary of all tests, and one map.
   expect_length(figures, 3)
   expect_setequal(
-    unique(names(figures)),
-    c(".coordinates_country_inconsistent", "summary_all_tests")
+    names(figures),
+    c(
+      ".coordinates_country_inconsistent", "summary_all_tests",
+      ".coordinates_country_inconsistent_map"
+    )
   )
   expect_all_ggplots(figures)
 })
@@ -141,12 +144,31 @@ test_that("bdc_create_figures() has no transposed map without its check file", {
 })
 
 test_that("bdc_create_figures() says why the transposed map is missing", {
-  skip("the function silences its own diagnostic messages (#323)")
   local_temp_project()
 
-  expect_message(
-    bdc_create_figures(prefilter_records, workflow_step = "prefilter"),
-    "01_coordinates_transposed.csv' not found"
+  messages <- capture_messages(
+    bdc_create_figures(prefilter_records, workflow_step = "prefilter")
+  )
+
+  expect_match(messages, "01_coordinates_transposed.csv' not found", all = FALSE)
+})
+
+test_that("bdc_create_figures() says which figures it leaves out", {
+  local_temp_project()
+
+  messages <- capture_messages(
+    bdc_create_figures(prefilter_records, workflow_step = "prefilter")
+  )
+
+  expect_match(
+    messages,
+    "No records flagged for the following tests:\n.coordinates_empty",
+    all = FALSE
+  )
+  expect_match(
+    messages,
+    "At least one of the following columns must be provided for creating maps",
+    all = FALSE
   )
 })
 
@@ -213,14 +235,16 @@ test_that("bdc_create_figures() maps flagged space records", {
   # plot and the summary of all tests.
   expect_length(figures, 8)
   expect_setequal(
-    unique(names(figures)),
-    c(".equ", ".cen", ".rou", ".summary", "summary_all_tests")
+    names(figures),
+    c(
+      ".equ", ".cen", ".rou", ".summary", "summary_all_tests",
+      ".equ_map", ".cen_map", ".rou_map"
+    )
   )
   expect_all_ggplots(figures)
 })
 
 test_that("bdc_create_figures() saves each space map to its own file", {
-  skip("maps reuse their bar plot's name and overwrite its file (#312)")
   skip_if_not_installed("rnaturalearthdata")
   skip_if_not_installed("maps")
   root <- local_temp_project()
@@ -229,6 +253,16 @@ test_that("bdc_create_figures() saves each space map to its own file", {
 
   expect_equal(anyDuplicated(names(figures)), 0)
   expect_length(saved_figures(root), length(figures))
+  expect_setequal(
+    saved_figures(root),
+    c(
+      paste0("space_", c(".equ", ".cen", ".rou"), "_MAP.png"),
+      paste0(
+        "space_", c(".equ", ".cen", ".rou", ".summary", "summary_all_tests"),
+        "_BAR.png"
+      )
+    )
+  )
 })
 
 # time ------------------------------------------------------------------------
@@ -260,7 +294,6 @@ test_that("bdc_create_figures() plots time tests and the year histogram", {
 })
 
 test_that("bdc_create_figures() skips the year histogram without a year column", {
-  skip("the time step always builds the year histogram (#314)")
   local_temp_project()
   data <- time_records
   data$year <- NULL
@@ -270,6 +303,22 @@ test_that("bdc_create_figures() skips the year histogram without a year column",
     "Column 'year' not found"
   )
   expect_false("year" %in% names(figures))
+})
+
+test_that("bdc_create_figures() plots every year without a .summary column", {
+  local_temp_project()
+  data <- time_records
+  data$.summary <- NULL
+
+  figures <- create_figures(data, "time")
+
+  expect_equal(
+    names(figures),
+    c(".eventDate_empty", ".year_outOfRange", "summary_all_tests", "year")
+  )
+  expect_all_ggplots(figures)
+  # All six records reach the histogram, the one with a missing year included.
+  expect_equal(nrow(figures$year$data), 6)
 })
 
 # Nothing to plot -------------------------------------------------------------
