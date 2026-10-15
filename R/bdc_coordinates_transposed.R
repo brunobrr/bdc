@@ -37,10 +37,15 @@
 #' columns "country" and "countryCode" can be retrieved by using the function
 #' \code{\link{bdc_country_standardized}}.
 #'
-#' @return A data.frame containing the column "coordinates_transposed"
-#' indicating if verbatim coordinates were not transposed (TRUE). Otherwise
-#' records are flagged as (FALSE) and, in this case, verbatim coordinates are
-#' replaced by corrected coordinates.
+#' @return The input data, as a tibble with the original column names, plus
+#' the column "coordinates_transposed" when at least one record was corrected.
+#' The column indicates if verbatim coordinates were not transposed (TRUE).
+#' Otherwise records are flagged as (FALSE) and, in this case, verbatim
+#' coordinates are replaced by corrected coordinates in the columns named by
+#' `lat` and `lon`. "coordinates_transposed" is informational: transposed
+#' records are corrected, not invalidated, so the column has no leading dot
+#' and is not considered by \code{\link{bdc_summary_col}} or
+#' \code{\link{bdc_filter_out_flags}}.
 #'
 #' @importFrom readr write_csv
 #' @importFrom dplyr tibble rename mutate select contains pull
@@ -116,6 +121,9 @@ bdc_coordinates_transposed <-
       )
     }
 
+    # Keep the caller's column names so they can be restored on return.
+    original_names <- names(data)
+
     # Temporarily change names of the collumn .summary to avoid error of duplicated coordinates
     if(".summary" %in% names(data)){
       w <- which(names(data) == ".summary")
@@ -190,11 +198,8 @@ bdc_coordinates_transposed <-
       data$coordinates_transposed <- TRUE
       data[w, "coordinates_transposed"] <- FALSE
       
-      # Return collumn .summary
-      if("temp_summary" %in% names(data)){
-        w <- which(names(data) == "temp_summary")
-        names(data)[w] <- ".summary"
-      }
+      # Restore the caller's column names (including .summary)
+      names(data)[seq_along(original_names)] <- original_names
       
       message(
         paste(
@@ -207,11 +212,8 @@ bdc_coordinates_transposed <-
       return(data)
     } else{
       
-      # Return collumn .summary
-      if("temp_summary" %in% names(data)){
-        w <- which(names(data) == "temp_summary")
-        names(data)[w] <- ".summary"
-      }
+      # Restore the caller's column names (including .summary)
+      names(data)[seq_along(original_names)] <- original_names
       
       message("No latitude and longitude were transposed\n")
       return(data)
