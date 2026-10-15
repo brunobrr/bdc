@@ -332,7 +332,7 @@ bdc_create_figures <-
     w_bar <- dplyr::intersect(col_to_tests, bar)
     w_maps <- dplyr::intersect(col_to_tests, maps)
     w_tranposed <- dplyr::intersect(col_to_tests, "coordinates_transposed")
-    w_hist <- hist
+    w_hist <- dplyr::intersect(hist, names(data))
 
     # List for saving figures
     res <- list()
@@ -510,9 +510,12 @@ bdc_create_figures <-
     }
 
     if (length(w_hist) != 0 & workflow_step == "time") {
-      data <-
-        data %>%
-        dplyr::filter(.summary == TRUE)
+      # Without a .summary column, the histogram shows every record
+      if (".summary" %in% names(data)) {
+        data <-
+          data %>%
+          dplyr::filter(.summary == TRUE)
+      }
 
       min_year <- min(data$year, na.rm = T)
       max_year <- max(data$year, na.rm = T)

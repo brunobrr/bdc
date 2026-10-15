@@ -294,7 +294,6 @@ test_that("bdc_create_figures() plots time tests and the year histogram", {
 })
 
 test_that("bdc_create_figures() skips the year histogram without a year column", {
-  skip("the time step always builds the year histogram (#314)")
   local_temp_project()
   data <- time_records
   data$year <- NULL
@@ -304,6 +303,22 @@ test_that("bdc_create_figures() skips the year histogram without a year column",
     "Column 'year' not found"
   )
   expect_false("year" %in% names(figures))
+})
+
+test_that("bdc_create_figures() plots every year without a .summary column", {
+  local_temp_project()
+  data <- time_records
+  data$.summary <- NULL
+
+  figures <- create_figures(data, "time")
+
+  expect_equal(
+    names(figures),
+    c(".eventDate_empty", ".year_outOfRange", "summary_all_tests", "year")
+  )
+  expect_all_ggplots(figures)
+  # All six records reach the histogram, the one with a missing year included.
+  expect_equal(nrow(figures$year$data), 6)
 })
 
 # Nothing to plot -------------------------------------------------------------
