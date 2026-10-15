@@ -54,13 +54,17 @@ test_that("testing rank", {
 })
 
 test_that("rank_name without rank", {
-  message <- testthat::capture_message(suppressWarnings(bdc_clean_duplicates(expected, rank_name = "Mammalia")))
-
-  testthat::expect_equal(message$message, "Please, provide both 'rank_name' and 'rank' arguments\n")
+  expect_error(
+    bdc_clean_duplicates(expected, rank_name = "Mammalia"),
+    "provide both 'rank' and 'rank_name'",
+    fixed = TRUE
+  )
 })
 
 test_that("rank without rank_name", {
-  message <- testthat::capture_message(suppressWarnings(bdc_clean_duplicates(expected, rank = "class")))
-
-  testthat::expect_equal(message$message, "Please, provide both 'rank_name' and 'rank' arguments\n")
+  expect_error(
+    bdc_clean_duplicates(expected, rank = "class"),
+    "provide both 'rank' and 'rank_name'",
+    fixed = TRUE
+  )
 })

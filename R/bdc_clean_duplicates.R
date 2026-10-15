@@ -45,10 +45,8 @@ bdc_clean_duplicates <-
                data$taxonomicStatus == "accepted",] %>%
         dplyr::filter(., .data[[rank]] == rank_name |
                         is.na(.data[[rank]]))
-    } else if (is.null(rank_name) & !is.null(rank)) {
-      message("Please, provide both 'rank_name' and 'rank' arguments")
-    } else if (!is.null(rank_name) & is.null(rank)) {
-      message("Please, provide both 'rank_name' and 'rank' arguments")
+    } else if (is.null(rank_name) != is.null(rank)) {
+      stop("Please, provide both 'rank' and 'rank_name' arguments, or neither")
     } else {
       valid_duplicates <-
         data[duplicated(data$input) &

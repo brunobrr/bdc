@@ -1,9 +1,9 @@
 #' Harmonizing taxon names against local stored taxonomic databases
 #'
-# Harmonization of scientific names from several taxonomic groups against
-# taxonomic databases locally stored through the application of exact and
-# partial matching algorithms he results of the name harmonization process can
-# be accessed in the column “notes”.
+#' Harmonization of scientific names from several taxonomic groups against
+#' taxonomic databases locally stored through the application of exact and
+#' partial matching algorithms. The results of the name harmonization process
+#' can be accessed in the column "notes".
 #'
 #' @family taxonomy
 #' @param sci_name character string. Containing scientific names to be queried.
@@ -130,7 +130,7 @@
 #' synonym". Ambiguous synonyms, names that have been published more than once
 #' describing different species, have more than one accepted name and cannot be
 #' resolved. Such cases are flagged and left to be determined by the user.
-
+#'
 #' @return This function returns data.frame containing the results of the
 #' taxonomic harmonization process. The database is returned in the same order
 #' of sci_name.
@@ -214,35 +214,19 @@ bdc_query_names_taxadb <-
     if (db %in% c("tpl", "wd", "iucn")) {
       stop(db, " database is unavailable in taxadb package")
     }
-    
-    # Currently available databases and versions
-    switch(
-      EXPR = db,
-      itis = {
-        db_version <- "22.12"
-      },
-      ncbi = {
-        db_version <- "22.12"
-      },
-      col = {
-        db_version <- "22.12"
-      },
-      gbif = {
-        db_version <- "22.12"
-      },
-      iucn = {
-        db_version <- "22.12"
-      },
-      ott = {
-        db_version <- "22.12"
-      },
-      fb = {
-        db_version <- "22.12"
-      },
-      tpl = {
-        db_version <- "22.12"
-      }
-    )
+
+    # Filtering by a taxonomic rank needs both the rank and its name
+    if (is.null(rank) != is.null(rank_name)) {
+      stop(
+        "Please, provide both 'rank' and 'rank_name' arguments, or neither ",
+        "(supplied: ", if (is.null(rank)) "'rank_name'" else "'rank'", ")",
+        call. = FALSE
+      )
+    }
+
+    # Every available provider is pinned to the same taxadb version, for
+    # reproducibility.
+    db_version <- "22.12"
 
     message("\nQuerying using ", db, " database version ", db_version, "\n")
 
@@ -343,6 +327,7 @@ bdc_query_names_taxadb <-
             db_version = db_version,
             rank_name = rank_name,
             rank = rank,
+            parallel = parallel,
             ncores = ncores
           )
         

@@ -56,7 +56,10 @@ taxonomic harmonization process. The database is returned in the same order
 of sci_name.
 }
 \description{
-Harmonizing taxon names against local stored taxonomic databases
+Harmonization of scientific names from several taxonomic groups against
+taxonomic databases locally stored through the application of exact and
+partial matching algorithms. The results of the name harmonization process
+can be accessed in the column "notes".
 }
 \details{
 The taxonomic harmonization is based upon one taxonomic authority database.
