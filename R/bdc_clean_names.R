@@ -736,14 +736,15 @@ bdc_rem_other_issues <- function(data, sci_names) {
     gsub("^$", NA, .) # substitute empty records by NA
 
   # Re-case the generic name (POLYGONACEAE to Polygonaceae; myrcia to Myrcia)
-  # and lowercase later words written entirely in capitals without a period
-  # (SPLENDENS, VAR). Other words keep their casing, so authors such as
-  # "Link", "DC." or "L." reach gnparser as written (#311).
+  # and lowercase later words of two or more letters written entirely in
+  # capitals without a period (SPLENDENS, VAR). Other words keep their casing,
+  # so authors such as "Link", "DC.", "L." or "L" reach gnparser as written
+  # (#311).
   recase_words <- function(words) {
     if (anyNA(words)) {
       return(NA_character_)
     }
-    all_caps <- stringr::str_detect(words, "^[[:upper:]]+$")
+    all_caps <- stringr::str_detect(words, "^[[:upper:]]{2,}$")
     all_caps[1] <- TRUE
     words[all_caps] <- stringr::str_to_lower(words[all_caps])
     words[1] <- firstup(words[1])

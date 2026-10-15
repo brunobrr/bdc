@@ -254,7 +254,8 @@ test_that("bdc_clean_names() lowercases all-caps epithets but not authors", {
     "Myrcia SPLENDENS",
     "Myrcia SPLENDENS DC.",
     "MYRCIA SPLENDENS DC.",
-    "Inga vera VAR affinis"
+    "Inga vera VAR affinis",
+    "Eugenia uniflora L"
   )
   res <- clean_names_and_check(x)
 
@@ -263,11 +264,12 @@ test_that("bdc_clean_names() lowercases all-caps epithets but not authors", {
     res$out$names_clean,
     c(
       "Myrcia splendens", "Myrcia splendens", "Myrcia splendens",
-      "Inga vera affinis"
+      "Inga vera affinis", "Eugenia uniflora"
     )
   )
-  expect_equal(res$out$.infraesp_names, c(TRUE, TRUE, TRUE, FALSE))
-  expect_equal(res$out$quality, c(1, 1, 1, 1))
+  expect_equal(res$out$.infraesp_names, c(TRUE, TRUE, TRUE, FALSE, TRUE))
+  # gnparser itself rates the initial without a period 3
+  expect_equal(res$out$quality, c(1, 1, 1, 1, 3))
 })
 
 testthat::test_that("bdc_clean_names() saves and reports 02_parsed_names.csv", {
