@@ -37,6 +37,8 @@ License: GPL (>= 3)
 URL: https://brunobrr.github.io/bdc/ (website)
     https://github.com/brunobrr/bdc
 BugReports: https://github.com/brunobrr/bdc/issues
+Depends:
+    R (>= 4.1.0)
 Imports:
     CoordinateCleaner,
     doParallel,
