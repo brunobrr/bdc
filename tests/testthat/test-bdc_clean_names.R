@@ -135,6 +135,7 @@ test_that("bdc_clean_names() removes plant and animal family prefixes", {
       "Solanum lacerdae"
     )
   )
+  expect_equal(res$out$quality, c(1, 1, 1, 1, 1))
 })
 
 test_that("bdc_clean_names() flags and removes uncertainty terms", {
@@ -183,6 +184,7 @@ test_that("bdc_clean_names() flags and removes infraspecific ranks", {
     res$out$names_clean,
     c("Inga vera affinis", "Inga vera affinis", "Tabebuia aurea alba", "Inga vera")
   )
+  expect_equal(res$out$quality, c(1, 1, 1, 1))
   expect_true(all(res$out$.uncer_terms))
 })
 
@@ -203,18 +205,26 @@ test_that("bdc_clean_names() drops authorship with parentheses and ex", {
       "Panthera onca"
     )
   )
+  # gnparser itself rates "ex" authorship 2 (minor problems) in these names
+  expect_equal(res$out$quality, c(2, 1, 2, 1))
   expect_true(all(res$out$.uncer_terms))
   expect_true(all(res$out$.infraesp_names))
   expect_true(all(res$check$.family_names))
 })
 
 test_that("bdc_clean_names() drops a bare author name without initials", {
-  skip("authorship is lowercased and kept as an epithet (#311)")
-  x <- c("Bauhinia forficata Link", "Eugenia uniflora L.")
+  x <- c(
+    "Bauhinia forficata Link",
+    "Cecropia pachystachya Trécul",
+    "Eugenia uniflora L."
+  )
   res <- clean_names_and_check(x)
 
-  expect_equal(res$out$names_clean, c("Bauhinia forficata", "Eugenia uniflora"))
-  expect_equal(res$out$quality, c(1, 1))
+  expect_equal(
+    res$out$names_clean,
+    c("Bauhinia forficata", "Cecropia pachystachya", "Eugenia uniflora")
+  )
+  expect_equal(res$out$quality, c(1, 1, 1))
 })
 
 test_that("bdc_clean_names() fixes all-caps names and accented characters", {
@@ -236,7 +246,30 @@ test_that("bdc_clean_names() fixes all-caps names and accented characters", {
       "Mimosa caesalpiniaefolia", "Aspidosperma australe"
     )
   )
-  expect_equal(res$out$quality[1:4], c(1, 1, 1, 1))
+  expect_equal(res$out$quality, c(1, 1, 1, 1, 1))
+})
+
+test_that("bdc_clean_names() lowercases all-caps epithets but not authors", {
+  x <- c(
+    "Myrcia SPLENDENS",
+    "Myrcia SPLENDENS DC.",
+    "MYRCIA SPLENDENS DC.",
+    "Inga vera VAR affinis",
+    "Eugenia uniflora L"
+  )
+  res <- clean_names_and_check(x)
+
+  expect_equal(res$out$scientificName, x)
+  expect_equal(
+    res$out$names_clean,
+    c(
+      "Myrcia splendens", "Myrcia splendens", "Myrcia splendens",
+      "Inga vera affinis", "Eugenia uniflora"
+    )
+  )
+  expect_equal(res$out$.infraesp_names, c(TRUE, TRUE, TRUE, FALSE, TRUE))
+  # gnparser itself rates the initial without a period 3
+  expect_equal(res$out$quality, c(1, 1, 1, 1, 3))
 })
 
 testthat::test_that("bdc_clean_names() saves and reports 02_parsed_names.csv", {

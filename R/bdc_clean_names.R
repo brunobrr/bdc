@@ -5,21 +5,18 @@ is_windows <- function() .Platform$OS.type == "windows"
 is_macos <- function() unname(Sys.info()["sysname"] == "Darwin")
 is_linux <- function() unname(Sys.info()["sysname"] == "Linux")
 
-test_gnparser_setup <- function(bin_full_path){
-  
+test_gnparser_setup <- function(bin_full_path) {
   if (!exec_exists(bin_full_path)) message("GNparser is not installed in your machine. Please acess https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html to get help to install gnparser")
 }
 
-check_gnparser_setup <- function(){
-  
+check_gnparser_setup <- function() {
   if (is_windows() && !bin_on_path() && !bin_exec()) {
-      test_gnparser_setup(paste0(Sys.getenv("APPDATA"), "\\gnparser\\gnparser.exe"))
-    } else if (is_macos() && !bin_on_path() && !bin_exec()) {
-      test_gnparser_setup(normalizePath("~/Library/Application Support/gnparser"))
-    } else if (is_linux() && !bin_on_path() && !bin_exec()) {
-      test_gnparser_setup(normalizePath("~/bin/gnparser"))
-    }
-  
+    test_gnparser_setup(paste0(Sys.getenv("APPDATA"), "\\gnparser\\gnparser.exe"))
+  } else if (is_macos() && !bin_on_path() && !bin_exec()) {
+    test_gnparser_setup(normalizePath("~/Library/Application Support/gnparser"))
+  } else if (is_linux() && !bin_on_path() && !bin_exec()) {
+    test_gnparser_setup(normalizePath("~/bin/gnparser"))
+  }
 }
 
 
@@ -35,7 +32,7 @@ check_gnparser_setup <- function(){
 #' capitalize only the first letter of the genus name and remove extra
 #' whitespaces), and 5) parse names, i.e., separate author, date, annotations
 #' from taxon name.
-#' 
+#'
 #' The execution of these functions depends on the gnparser software, which is not installed automatically. Please follow this tutorial \url{https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html} to install gnparser.
 #'
 #' @family taxonomy
@@ -46,7 +43,7 @@ check_gnparser_setup <- function(){
 #' identification as well as infraspecific terms were obtained from Sigoviniet
 #' al. (2016; doi: 10.1111/2041-210X.12594). More details about the names
 #' parse process can be found in
-#' \href{https://github.com/gnames/gnparser}{gnparser}. 
+#' \href{https://github.com/gnames/gnparser}{gnparser}.
 #' \bold{Note: GNparser is not automatically installed. Please follow this tutorial \url{https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html} to install gnpaser}
 #'
 #' @return A five-column data.frame including
@@ -86,7 +83,7 @@ check_gnparser_setup <- function(){
 #'
 #' bdc_clean_names(scientificName, save_outputs = FALSE)
 #' }
-#' 
+#'
 bdc_clean_names <- function(sci_names, save_outputs = FALSE) {
   value <- scientificName <- X1 <- value <- . <- temp <- canonicalfull <- NULL
   cardinality <- quality <- verbatim <- id <- . <- .uncer_terms <- . <- NULL
@@ -733,34 +730,27 @@ bdc_rem_other_issues <- function(data, sci_names) {
   # Raw scientific names
   sci_names_raw <- data[[sci_names]] %>% stringr::str_squish()
 
-  res <- data[[sci_names]] %>% stringr::str_squish()
-  res <- stringr::str_to_lower(res) #### add here
-  
-  # count the number of res# count the number of words
-  word_count <- stringr::str_count(res, "\\w+")
-
-  # Convert to lower case and capitalize the only first letter of the generic
-  # names (POLYGONACEAE to Polygonaceae; polygonaceae to Polygonaceae)
-  w1 <- which(word_count == 1)
-  res[w1] <- stringr::str_to_lower(res[w1])
-  res[w1] <- firstup(res[w1])
-
   res <-
-    gsub("^$", NA, res) %>% # substitute empty records by NA
-    firstup(.) # Capitalize first letter
+    data[[sci_names]] %>%
+    stringr::str_squish() %>%
+    gsub("^$", NA, .) # substitute empty records by NA
 
-  # all_capitalize <- NULL
-  # for (i in 1:length(res)) {
-  #   all_capitalize[i] <- !stringr::str_detect(res[i], "[[:lower:]]")
-  # }
-  # 
-  # # cap_words <- which(all_capitalize == TRUE)
-  # # #  for (i in 1:length(cap_words)) {
-  # # for (i in cap_words) {
-  #   res[i] <-
-  #     stringr::str_to_lower(res[i]) %>%
-  #     firstup(.)
-  # # }
+  # Re-case the generic name (POLYGONACEAE to Polygonaceae; myrcia to Myrcia)
+  # and lowercase later words of two or more letters written entirely in
+  # capitals without a period (SPLENDENS, VAR). Other words keep their casing,
+  # so authors such as "Link", "DC.", "L." or "L" reach gnparser as written
+  # (#311).
+  recase_words <- function(words) {
+    if (anyNA(words)) {
+      return(NA_character_)
+    }
+    all_caps <- stringr::str_detect(words, "^[[:upper:]]{2,}$")
+    all_caps[1] <- TRUE
+    words[all_caps] <- stringr::str_to_lower(words[all_caps])
+    words[1] <- firstup(words[1])
+    paste(words, collapse = " ")
+  }
+  res <- vapply(strsplit(res, " "), recase_words, character(1))
 
   clean_other_issues <- res
   .other_issues <- sci_names_raw == clean_other_issues
@@ -963,7 +953,6 @@ bdc_gnparser <- function(data, sci_names) {
       ),
       w$temp
     )
-
   }
 
   df <-
@@ -971,5 +960,4 @@ bdc_gnparser <- function(data, sci_names) {
     dplyr::select(-c(id, temp))
 
   return(df)
-
 }
