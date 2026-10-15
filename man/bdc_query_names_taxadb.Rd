@@ -52,8 +52,10 @@ inspection. Default = FALSE.}
 }
 \value{
 This function returns data.frame containing the results of the
-taxonomic harmonization process. The database is returned in the same order
-of sci_name.
+taxonomic harmonization process, with exactly one row per element of
+sci_name, in the same order. The column "original_search" is identical to
+sci_name (names are not case-normalized), so the result can be bound to the
+occurrence table by position.
 }
 \description{
 Harmonizing taxon names against local stored taxonomic databases
