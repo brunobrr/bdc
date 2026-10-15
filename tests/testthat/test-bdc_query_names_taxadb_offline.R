@@ -229,7 +229,6 @@ test_that("bdc_query_names_taxadb() replaces a synonym with its accepted name", 
 })
 
 test_that("bdc_query_names_taxadb() returns the accepted taxonID for a replaced synonym", {
-  skip("the synonym's taxonID is kept after replacement (#322)")
   local_fake_taxadb(fake_dwc_taxa(
     taxonID = c("T:1", "T:2"),
     scientificName = c("Aus bus", "Cus dus"),

@@ -476,11 +476,13 @@ bdc_query_names_taxadb <-
         
         # Substitute synonyms by the accepted names
         if (any(one_accepted & accepted_empty == FALSE)) {
-          replace_tab <- purrr::map_dfr(accepted_list[one_accepted],
-                                        function(i)
-                                          i)[, -1]
-          
-          replace_tab <- replace_tab[order(replace_tab$sort),]
+          # Every taxonomic column, taxonID included, comes from the accepted
+          # record; only the helper columns of the id query are dropped.
+          replace_tab <-
+            purrr::map_dfr(accepted_list[one_accepted], function(i) i) %>%
+            dplyr::ungroup() %>%
+            dplyr::select(-c(sort, input))
+
           p0 <-
             match(replace_tab$original_search,
                   found_name$original_search)
