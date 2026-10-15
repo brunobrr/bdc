@@ -88,3 +88,64 @@ test_that("bdc_country_from_coordinates correctly assigns country names",
 
 
 
+
+# Custom (non Darwin Core) column names ---------------------------------------
+
+x_default <- data.frame(
+  decimalLatitude = c(-17.90000, -14.43333, -13.25000, -13.82444, -67.91667),
+  decimalLongitude = c(-63.43333, -67.91667, -41.90000, -46.69778, -14.43333),
+  country = c("", "NA", NA, "Brazil", "")
+)
+x_custom <- data.frame(
+  la = x_default$decimalLatitude,
+  lo = x_default$decimalLongitude,
+  pais = x_default$country
+)
+
+test_that("bdc_country_from_coordinates() fills a custom country column", {
+  res_default <- suppressMessages(bdc_country_from_coordinates(x_default))
+  res <- suppressMessages(
+    bdc_country_from_coordinates(
+      data = x_custom,
+      lat = "la",
+      lon = "lo",
+      country = "pais"
+    )
+  )
+
+  expect_named(res, names(x_custom))
+  expect_equal(res$pais, c("Bolivia", NA, "Brazil", "Brazil", NA))
+  expect_equal(res$pais, res_default$country)
+  expect_equal(res$la, x_custom$la)
+  expect_equal(res$lo, x_custom$lo)
+})
+
+test_that("bdc_country_from_coordinates() creates the custom country column when missing", {
+  res <- suppressMessages(
+    bdc_country_from_coordinates(
+      data = x_custom[c("la", "lo")],
+      lat = "la",
+      lon = "lo",
+      country = "pais"
+    )
+  )
+
+  expect_named(res, c("la", "lo", "pais"))
+  expect_equal(res$pais, c("Bolivia", "Bolivia", "Brazil", "Brazil", NA))
+})
+
+test_that("bdc_country_from_coordinates() adds no helper columns when nothing is done", {
+  y <- x_custom
+  y$pais <- "Brazil"
+
+  expect_message(
+    res <- bdc_country_from_coordinates(
+      data = y,
+      lat = "la",
+      lon = "lo",
+      country = "pais"
+    ),
+    "Nothing was done"
+  )
+  expect_named(res, names(y))
+})

@@ -132,8 +132,10 @@
 #' resolved. Such cases are flagged and left to be determined by the user.
 #'
 #' @return This function returns data.frame containing the results of the
-#' taxonomic harmonization process. The database is returned in the same order
-#' of sci_name.
+#' taxonomic harmonization process, with exactly one row per element of
+#' sci_name, in the same order. The column "original_search" is identical to
+#' sci_name (names are not case-normalized), so the result can be bound to the
+#' occurrence table by position.
 #'
 #' @importFrom dplyr rename distinct mutate filter pull full_join select arrange slice bind_cols left_join
 #' @importFrom fs dir_create
@@ -558,14 +560,6 @@ bdc_query_names_taxadb <-
     # Trimming extra-spaces from the column "notes"
     found_name$notes <- stringr::str_squish(found_name$notes)
     
-    # Converting the first letter of "scientificName" to uppercase
-    found_name$scientificName <-
-      stringr::str_to_sentence(found_name$scientificName)
-    
-    found_name$original_search <-
-      stringr::str_to_sentence(found_name$original_search)
-    
-    
     # Export a table containing names linked to multiple accepted names.
     if (export_accepted == TRUE) {
       bdc_create_dir()
@@ -587,9 +581,17 @@ bdc_query_names_taxadb <-
     }
     
     
-    # joining  names queried to the original (complete) database
+    # Joining names queried to the original (complete) database. The key is
+    # the unmodified input, so names differing only in case keep their own row.
     found_name <-
-      dplyr::left_join(raw_sci_name, found_name, by = "original_search")
+      dplyr::left_join(raw_sci_name, found_name,
+                       by = "original_search", na_matches = "never")
+    bdc_check_alignment(found_name, raw_sci_name$original_search)
+
+    # Converting the first letter of "scientificName" to uppercase (only after
+    # alignment, so it never touches the join key)
+    found_name$scientificName <-
+      stringr::str_to_sentence(found_name$scientificName)
 
     end <- Sys.time()
     total_time <- round(as.numeric(end - start, units = "mins"), 1)
@@ -611,3 +613,33 @@ bdc_query_names_taxadb <-
     
     return(found_name)
   }
+
+#' Internal function. Check that a taxonomy result is aligned with its input
+#'
+#' Stops when the result does not have exactly one row per supplied name, in
+#' the order supplied, so misaligned data is never returned.
+#'
+#' @param result data.frame. Result with an `original_search` column.
+#' @param sci_name character vector. Names as supplied by the user.
+#'
+#' @return `result`, invisibly.
+#' @noRd
+bdc_check_alignment <- function(result, sci_name) {
+  if (nrow(result) != length(sci_name)) {
+    stop(
+      "Internal error: the taxonomy result has ", nrow(result), " rows for ",
+      length(sci_name), " supplied names. Please report this at ",
+      "https://github.com/brunobrr/bdc/issues",
+      call. = FALSE
+    )
+  }
+  if (!identical(result$original_search, sci_name)) {
+    stop(
+      "Internal error: the taxonomy result is not in the order of the ",
+      "supplied names. Please report this at ",
+      "https://github.com/brunobrr/bdc/issues",
+      call. = FALSE
+    )
+  }
+  invisible(result)
+}

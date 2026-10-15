@@ -26,7 +26,7 @@ a value of 0 indicates no interpretable name that was not parsed).
 
 If save_outputs == TRUE, a data.frame containing all tests of the cleaning
 names process and the results of the parsing names process is saved in
-"Output/Check/02_parse_names.csv".
+"Output/Check/02_parsed_names.csv".
 }
 \description{
 This function is composed of a series of name-checking routines for cleaning

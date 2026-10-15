@@ -134,3 +134,45 @@ test_that("bdc_query_names_taxadb() pins taxadb version 22.12 for every provider
 
   expect_equal(versions, setNames(rep("22.12", 5), providers))
 })
+
+test_that("bdc_query_names_taxadb() returns one row per name, in input order", {
+  local_fake_taxadb()
+  sci_names <- c(
+    "Puma concolor", "puma concolor", "PUMA CONCOLOR", "Puma Concolor",
+    "", NA, "Felis concolor", "puma concolor", NA, ""
+  )
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(sci_names, db = "gbif", suggest_names = FALSE)
+  )
+
+  expect_equal(nrow(res), length(sci_names))
+  expect_identical(res$original_search, sci_names)
+  # Exact matching is case-sensitive: only the sentence-case spellings match.
+  expect_equal(
+    res$scientificName,
+    c(
+      "Puma concolor", NA, NA, NA, NA, NA, "Puma concolor", NA, NA, NA
+    )
+  )
+  expect_equal(
+    res$notes,
+    c(
+      "accepted", "notFound", "notFound", "notFound", NA, NA,
+      "accepted | replaceSynonym", "notFound", NA, NA
+    )
+  )
+})
+
+test_that("bdc_query_names_taxadb() keeps case variants aligned when suggesting names", {
+  local_fake_taxadb()
+  sci_names <- c(
+    "Puma concolor", "puma concolor", "PUMA CONCOLOR", "Puma Concolor", NA
+  )
+
+  res <- suppressMessages(bdc_query_names_taxadb(sci_names, db = "gbif"))
+
+  expect_equal(nrow(res), length(sci_names))
+  expect_identical(res$original_search, sci_names)
+  expect_equal(res$notes[1], "accepted")
+})

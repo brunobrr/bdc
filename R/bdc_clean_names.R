@@ -61,7 +61,7 @@ check_gnparser_setup <- function(){
 #'
 #' If save_outputs == TRUE, a data.frame containing all tests of the cleaning
 #' names process and the results of the parsing names process is saved in
-#' "Output/Check/02_parse_names.csv".
+#' "Output/Check/02_parsed_names.csv".
 #'
 #' @importFrom readr read_csv write_csv
 #' @importFrom dplyr rename distinct select mutate_all na_if filter tibble pull
@@ -123,13 +123,12 @@ bdc_clean_names <- function(sci_names, save_outputs = FALSE) {
     bdc_create_dir()
 
     # Save the results of the parsing names process
-    readr::write_csv(df_join,
-                     here::here("Output", "Check", "02_parsed_names.csv"))
+    parsed_file <- here::here("Output", "Check", "02_parsed_names.csv")
+    readr::write_csv(df_join, parsed_file)
 
     message(
-      paste(
-        ">> Scientific names were cleaned and parsed. Check the results in 'Output/Check/02_clean_names.csv'.\n"
-      )
+      ">> Scientific names were cleaned and parsed. Check the results in '",
+      parsed_file, "'.\n"
     )
   }
 
