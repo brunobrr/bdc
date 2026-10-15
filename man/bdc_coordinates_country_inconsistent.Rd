@@ -10,7 +10,7 @@ bdc_coordinates_country_inconsistent(
   country = "country_suggested",
   lat = "decimalLatitude",
   lon = "decimalLongitude",
-  dist = 0.1
+  dist = 0.1 
 )
 }
 \arguments{
@@ -26,10 +26,10 @@ recommended use a column with corrected and homogenized country names.
 Default = "country_suggested".}
 
 \item{lat}{character string. The column name with the latitude coordinates.
-Default = “decimallatitude”.}
+Default = "decimalLatitude".}
 
 \item{lon}{character string. The column name with the longitude coordinates.
-Default = “decimallongitude”.}
+Default = "decimalLongitude".}
 
 \item{dist}{numeric. The distance in decimal degrees used to created a buffer
 around the country. Default = 0.1 (~11 km at the equator).}
