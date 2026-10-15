@@ -269,7 +269,6 @@ test_that("bdc_create_report() lists the documented taxonomy entries", {
 })
 
 test_that("bdc_create_report() reports taxonomy without name-cleaning flags", {
-  skip("taxonomy report needs .uncer_terms (#317)")
   local_temp_project()
   harmonized_only <- taxonomy_input[names(taxonomy_input) != ".uncer_terms"]
   report <- bdc_create_report(harmonized_only, workflow_step = "taxonomy")

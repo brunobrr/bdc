@@ -290,10 +290,10 @@ bdc_create_report <-
               ) %>%
               dplyr::rename(notes = .uncer_terms) %>%
               dplyr::mutate(notes = ifelse(notes == "FALSE", "taxo_uncer", notes))
-          }
 
-          if (nrow(taxo_unc > 0)) {
-            names <- dplyr::bind_rows(names, taxo_unc)
+            if (nrow(taxo_unc) > 0) {
+              names <- dplyr::bind_rows(names, taxo_unc)
+            }
           }
 
           names$notes <- stringr::str_squish(names$notes)
