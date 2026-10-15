@@ -103,7 +103,7 @@
 
 
 
-      </header><script src="installing_gnparser_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Installing gnparser</h1>
@@ -117,8 +117,14 @@
 
     
     
-<p>This tutorial will guide you through the installation of <code>gnparser</code>, a required binary file for using our R package. The installation process varies depending on your operating system (Windows, macOS, or Linux).</p>
-<p>We provide two installation options: using reproducible code or following a manual step-by-step installation. The first option is a quick and easy way to install the software. In case of errors, you can try the manual step-by-step approach.</p>
+<p>This tutorial will guide you through the installation of
+<code>gnparser</code>, a required binary file for using our R package.
+The installation process varies depending on your operating system
+(Windows, macOS, or Linux).</p>
+<p>We provide two installation options: using reproducible code or
+following a manual step-by-step installation. The first option is a
+quick and easy way to install the software. In case of errors, you can
+try the manual step-by-step approach.</p>
 <div class="section level3">
 <h3 id="option-1-run-the-following-code">
 <strong>Option 1: Run the following code</strong><a class="anchor" aria-label="anchor" href="#option-1-run-the-following-code"></a>
@@ -128,7 +134,9 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://brunobrr.github.io/bdc/">bdc</a></span><span class="op">)</span></span></code></pre></div>
 <p><br></p>
-<p>⚠ <strong>Important</strong>: Get the latest version of gnparser. The execution of this step is required independently of our operation system.</p>
+<p>⚠ <strong>Important</strong>: Get the latest version of gnparser. The
+execution of this step is required independently of our operation
+system.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="va">get_latest_gnparser_version</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://github.com/gnames/gnparser/releases"</span></span>
@@ -194,7 +202,13 @@
 <h4 id="macos">
 <strong>macOS</strong><a class="anchor" aria-label="anchor" href="#macos"></a>
 </h4>
-<p>⚠️<strong>IMPORTANT:</strong> Before installing gnparser, it is highly recommend to install Homebrew, which is a package manager for macOS and Linux that simplifies the installation of software and libraries directly from the terminal. You can use the steps below to install Homebrew. Moreover, a detailed explanation on how to install homebrew can be found in <a href="https://www.youtube.com/watch?v=IWJKRmFLn-g&amp;ab_channel=EasyOSX" class="external-link">this video</a>.</p>
+<p>⚠️<strong>IMPORTANT:</strong> Before installing gnparser, it is
+highly recommend to install Homebrew, which is a package manager for
+macOS and Linux that simplifies the installation of software and
+libraries directly from the terminal. You can use the steps below to
+install Homebrew. Moreover, a detailed explanation on how to install
+homebrew can be found in <a href="https://www.youtube.com/watch?v=IWJKRmFLn-g&amp;ab_channel=EasyOSX" class="external-link">this
+video</a>.</p>
 <ol style="list-style-type: decimal">
 <li>
 <p><strong>Open Terminal</strong></p>
@@ -211,15 +225,16 @@
 </ul>
 </li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="ex">/bin/bash</span> -c <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="va">)</span><span class="st">"</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">/bin/bash</span> <span class="at">-c</span> <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="va">)</span><span class="st">"</span></span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>
 <strong>Install gnparser</strong> <strong>using brew</strong>
 </li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="ex">brew</span> tap gnames/gn </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="ex">brew</span> install gnparser</span></code></pre></div>
-<p>After that, close the terminal and <strong>refresh the R section</strong>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">brew</span> tap gnames/gn </span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="ex">brew</span> install gnparser</span></code></pre></div>
+<p>After that, close the terminal and <strong>refresh the R
+section</strong>.</p>
 <p><br></p>
 </div>
 </div>
@@ -235,9 +250,11 @@
 <li>
 <p><strong>Download the installer</strong></p>
 <ul>
-<li>Go to <a href="https://github.com/gnames/gnparser/releases" class="external-link">gnparser releases</a>
+<li>Go to <a href="https://github.com/gnames/gnparser/releases" class="external-link">gnparser
+releases</a>
 </li>
-<li>Download the Windows version (file ending in <code>-win-64.zip</code>)</li>
+<li>Download the Windows version (file ending in
+<code>-win-64.zip</code>)</li>
 <li>Save it to a known location on your computer</li>
 </ul>
 </li>
@@ -254,7 +271,7 @@
 <ul>
 <li>In the Command Prompt window, type:</li>
 </ul>
-<pre class="cmd"><code>mkdir C:\bin</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cmd"><code class="sourceCode dosbat"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="bu">mkdir</span> C:\bin</span></code></pre></div>
 </li>
 <li>
 <p><strong>Extract and move the file</strong></p>
@@ -266,7 +283,7 @@
 <li>Windows Explorer (drag and drop)</li>
 <li>Or Command Prompt:</li>
 </ul>
-<pre class="cmd"><code>copy path\to\downloaded\gnparser.exe C:\bin</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cmd"><code class="sourceCode dosbat"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="bu">copy</span> path\to\downloaded\gnparser.exe C:\bin</span></code></pre></div>
 </li>
 </ul>
 </li>
@@ -290,7 +307,7 @@
 <li>Open a new Command Prompt window</li>
 <li>Type:</li>
 </ul>
-<pre class="cmd"><code><span><span class="va">gnparser</span> <span class="op">-</span><span class="op">-</span><span class="va">version</span></span></code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode cmd"><code class="sourceCode dosbat"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>gnparser -<span class="at">-version</span></span></code></pre></div>
 <ul>
 <li>If you see a version number, the installation was successful</li>
 </ul>
@@ -316,18 +333,18 @@
 <ul>
 <li>In the Terminal window, run these commands:</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="co"># Create a temporary directory</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="fu">mkdir</span> -p ~/tmp</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="bu">cd</span> ~/tmp</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="co"># Download the latest Linux version</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="fu">wget</span> https://github.com/gnames/gnparser/releases/download/v1.10.1/gnparser-v1.10.1-linux.tar.gz</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a><span class="co"># Extract the file</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a><span class="fu">tar</span> xvf gnparser-*.tar.gz</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a><span class="co"># Move to system directory</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a><span class="fu">sudo</span> mv gnparser /usr/local/bin</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Create a temporary directory</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/tmp</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="bu">cd</span> ~/tmp</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co"># Download the latest Linux version</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="fu">wget</span> https://github.com/gnames/gnparser/releases/download/v1.10.1/gnparser-v1.10.1-linux.tar.gz</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co"># Extract the file</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="fu">tar</span> xvf gnparser-<span class="pp">*</span>.tar.gz</span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co"># Move to system directory</span></span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="fu">sudo</span> mv gnparser /usr/local/bin</span></code></pre></div>
 </li>
 <li>
 <p><strong>Verify installation</strong></p>
@@ -354,30 +371,32 @@
 <ul>
 <li>In the Terminal window, paste and run these commands:</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="co"># Install Homebrew if you haven't already</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="ex">/bin/bash</span> -c <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="va">)</span><span class="st">"</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a><span class="co"># Install gnparser</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="ex">brew</span> tap gnames/gn</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a><span class="ex">brew</span> install gnparser</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Install Homebrew if you haven't already</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="ex">/bin/bash</span> <span class="at">-c</span> <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="va">)</span><span class="st">"</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co"># Install gnparser</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="ex">brew</span> tap gnames/gn</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="ex">brew</span> install gnparser</span></code></pre></div>
 </li>
 <li>
 <p><strong>Manual Installation</strong></p>
 <ul>
-<li>Download the macOS version (file ending in <code>-mac.tar.gz</code>) from <a href="https://github.com/gnames/gnparser/releases" class="external-link">gnparser releases</a>
+<li>Download the macOS version (file ending in <code>-mac.tar.gz</code>)
+from <a href="https://github.com/gnames/gnparser/releases" class="external-link">gnparser
+releases</a>
 </li>
 <li>Open Terminal (Applications &gt; Utilities &gt; Terminal)</li>
 <li>Navigate to the download directory:</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="bu">cd</span> ~/Downloads</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads</span></code></pre></div>
 <ul>
 <li>Extract the file:</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="fu">tar</span> xvf gnparser-v*.tar.gz</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">tar</span> xvf gnparser-v<span class="pp">*</span>.tar.gz</span></code></pre></div>
 <ul>
 <li>Move to system directory:</li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="fu">sudo</span> mv gnparser /usr/local/bin</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">sudo</span> mv gnparser /usr/local/bin</span></code></pre></div>
 <ul>
 <li>You may need to allow the application in System Preferences:
 <ul>
@@ -401,7 +420,8 @@
 <li>
 <p><strong>Command not found</strong></p>
 <ul>
-<li>Make sure you’ve added the correct directory to your system PATH</li>
+<li>Make sure you’ve added the correct directory to your system
+PATH</li>
 <li>Try closing and reopening your terminal/command prompt</li>
 </ul>
 </li>
@@ -410,12 +430,13 @@
 <ul>
 <li>On macOS/Linux, you may need to make the file executable:</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="fu">chmod</span> +x /usr/local/bin/gnparser</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">chmod</span> +x /usr/local/bin/gnparser</span></code></pre></div>
 </li>
 <li>
 <p><strong>Security warnings</strong></p>
 <ul>
-<li>On macOS: Go to System Preferences &gt; Security &amp; Privacy and allow the application</li>
+<li>On macOS: Go to System Preferences &gt; Security &amp; Privacy and
+allow the application</li>
 <li>On Windows: You might need to run as administrator</li>
 </ul>
 </li>
