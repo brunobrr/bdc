@@ -18,7 +18,7 @@ to be transposed."><meta property="og:image" content="https://brunobrr.github.io
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6.9000</span>
       </span>
     </div>
 
@@ -156,10 +156,15 @@ saved for further inspection? Default = FALSE.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data.frame containing the column "coordinates_transposed"
-indicating if verbatim coordinates were not transposed (TRUE). Otherwise
-records are flagged as (FALSE) and, in this case, verbatim coordinates are
-replaced by corrected coordinates.</p>
+    <p>The input data, as a tibble with the original column names, plus
+the column "coordinates_transposed" when at least one record was corrected.
+The column indicates if verbatim coordinates were not transposed (TRUE).
+Otherwise records are flagged as (FALSE) and, in this case, verbatim
+coordinates are replaced by corrected coordinates in the columns named by
+<code>lat</code> and <code>lon</code>. "coordinates_transposed" is informational: transposed
+records are corrected, not invalidated, so the column has no leading dot
+and is not considered by <code><a href="bdc_summary_col.html">bdc_summary_col</a></code> or
+<code><a href="bdc_filter_out_flags.html">bdc_filter_out_flags</a></code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>

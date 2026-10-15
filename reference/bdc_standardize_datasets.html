@@ -20,7 +20,7 @@ provided by the user."><meta property="og:image" content="https://brunobrr.githu
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6.9000</span>
       </span>
     </div>
 
@@ -118,7 +118,9 @@ renamed. See @details.</p></dd>
 
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
 <dd><p>A logical vector indicating whether the final merged dataset
-should be overwritten. The default is FALSE.</p></dd>
+should be overwritten. The default is FALSE. When FALSE and the merged file
+(<code>Output/Intermediate/00_merged_database.&lt;format&gt;</code>) already exists, that
+file is read and returned without processing <code>metadata</code>.</p></dd>
 
 
 <dt id="arg-save-database">save_database<a class="anchor" aria-label="anchor" href="#arg-save-database"></a></dt>
@@ -129,7 +131,10 @@ saved? Default = FALSE.</p></dd>
     <div id="value">
     <h2>Value</h2>
     <p>A merged data.frame with column names following Darwin Core
-terminology.</p>
+terminology and all columns stored as character. It contains only the
+datasets described in <code>metadata</code>; a dataset whose file lacks a column named
+in the metadata, or that fails to be read, is excluded and named in a
+message.</p>
     </div>
     <div id="details">
     <h2>Details</h2>

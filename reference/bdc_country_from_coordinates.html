@@ -18,7 +18,7 @@ missing country names."><meta property="og:image" content="https://brunobrr.gith
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6.9000</span>
       </span>
     </div>
 
@@ -119,14 +119,16 @@ WGS84. Default = "decimalLongitude".</p></dd>
 
 <dt id="arg-country">country<a class="anchor" aria-label="anchor" href="#arg-country"></a></dt>
 <dd><p>character string. The column name with the country assignment
-of each record. Default = "country". If no column name is provided a new
-column "country" is created.</p></dd>
+of each record. Default = "country". If <code>data</code> has no column with this
+name, a new column with this name is created.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A tibble containing country names for records missing such
-information.</p>
+    <p>A tibble with the columns of <code>data</code>, where missing values in the
+column named by <code>country</code> are filled with country names derived from
+coordinates. If that column did not exist, it is added; no other column is
+added.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
