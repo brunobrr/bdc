@@ -370,17 +370,15 @@ bdc_query_names_taxadb <-
             )
           
           # Create a warning when one suggested name match multiple original
-          # names.
-          if (any(duplicated(suggested_names_filtered))) {
-            duplicated <- duplicated(suggested_names_filtered)
-            
-            report <-
-              which(suggested_names_filtered %in%
-                      suggested_names_filtered[duplicated])
-            
+          # names. The check looks at the suggestions before deduplication.
+          all_suggestions <- suggested_name[suggested]
+          if (any(duplicated(all_suggestions))) {
+            shared_suggestions <-
+              unique(all_suggestions[duplicated(all_suggestions)])
+
             names_to_check <-
               suggested_search[suggested_search[, "suggested"] %in%
-                                 suggested_names_filtered[report], 1:2]
+                                 shared_suggestions, 1:2]
             message(
               "There are more than one sci_name with the same suggested name.
                Please check whether they are not the same species with

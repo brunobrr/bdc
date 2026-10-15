@@ -384,7 +384,6 @@ test_that("bdc_query_names_taxadb() rank filtering ignores database record order
 })
 
 test_that("bdc_query_names_taxadb() reports misspellings sharing a suggestion", {
-  skip("the duplicate-suggestion message is never shown (#318)")
   local_fake_taxadb()
 
   expect_message(
