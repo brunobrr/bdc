@@ -30,44 +30,65 @@ bdc_clean_duplicates <-
   function(data,
            rank = NULL,
            rank_name = NULL) {
-    . <- .data <- scientificName <- NULL
-    # Filter all names except those flag as "accepted" (e.g.,  heterotypic,
-    # homotypic, pro-parte synonyms, and doubtful)
-    data <- data[order(data$taxonomicStatus),]
-    data <-
-      data[!(duplicated(data$input) &
-               data$taxonomicStatus != "accepted"),]
-    
-    # Filter out database according to a taxonomic rank
-    if (!is.null(rank_name) & !is.null(rank)) {
-      valid_duplicates <-
-        data[duplicated(data$input) &
-               data$taxonomicStatus == "accepted",] %>%
-        dplyr::filter(., .data[[rank]] == rank_name |
-                        is.na(.data[[rank]]))
-    } else if (is.null(rank_name) != is.null(rank)) {
+    if (is.null(rank_name) != is.null(rank)) {
       stop("Please, provide both 'rank' and 'rank_name' arguments, or neither")
-    } else {
-      valid_duplicates <-
-        data[duplicated(data$input) &
-               data$taxonomicStatus == "accepted",]
     }
-    
-    valid_duplicates <- 
-      valid_duplicates %>%
-      dplyr::select(scientificName)
-    
-    data <- data[!duplicated(data$input),]
-    uni_names <- unique(valid_duplicates$scientificName)
-    
-    # Add a flag to names with more than one accepted name found
-    if (length(uni_names) > 0) {
-      for (i in 1:length(uni_names)) {
-        index <- which(data$scientificName == uni_names[i])
-        data[index, 2:(ncol(data) - 4)] <- NA
-        data[index, "notes"] <- "multipleAccepted"
-      }
+
+    # Accepted records first; among the other statuses, the first one in
+    # alphabetical order is kept (as before).
+    data <- data[order(data$taxonomicStatus), ]
+
+    # Only names matching several records need a decision.
+    several <- data$input %in% data$input[duplicated(data$input)]
+    if (!any(several)) {
+      return(data)
     }
-    
-    return(data)
+
+    candidates <- data[several, ]
+    resolved <-
+      lapply(
+        split(candidates, factor(candidates$input, exclude = NULL)),
+        bdc_resolve_candidates,
+        rank = rank,
+        rank_name = rank_name
+      )
+
+    dplyr::bind_rows(c(list(data[!several, ]), unname(resolved)))
   }
+
+#' Internal function. Keep one record for a name matching several records
+#'
+#' The rank filter is applied to every candidate record first, so the result
+#' does not depend on the order of the records in the taxonomic database. A
+#' name left with several accepted records is flagged "multipleAccepted" and
+#' its taxonomic columns are returned as NA. A name with no record in the
+#' requested rank is returned with its taxonomic columns as NA.
+#'
+#' @param rows data.frame. Every record matched by one name, accepted first.
+#' @param rank,rank_name See bdc_clean_duplicates().
+#'
+#' @return A one-row data.frame.
+#' @noRd
+bdc_resolve_candidates <- function(rows, rank = NULL, rank_name = NULL) {
+  helper_cols <- c("sort", "input", "notes", "original_search", "distance")
+  taxon_cols <- setdiff(names(rows), helper_cols)
+
+  if (!is.null(rank)) {
+    in_rank <- is.na(rows[[rank]]) | rows[[rank]] == rank_name
+    if (!any(in_rank)) {
+      rows <- rows[1, ]
+      rows[taxon_cols] <- NA
+      return(rows)
+    }
+    rows <- rows[in_rank, ]
+  }
+
+  if (sum(rows$taxonomicStatus %in% "accepted") > 1) {
+    rows <- rows[1, ]
+    rows[taxon_cols] <- NA
+    rows$notes <- "multipleAccepted"
+    return(rows)
+  }
+
+  rows[1, ]
+}

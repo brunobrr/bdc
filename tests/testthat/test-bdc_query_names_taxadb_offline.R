@@ -367,7 +367,6 @@ test_that("bdc_query_names_taxadb() rank filtering keeps the requested kingdom",
 })
 
 test_that("bdc_query_names_taxadb() rank filtering ignores database record order", {
-  skip("rank filtering only checks the second record of a name (#319)")
   local_fake_taxadb(casearia_rows())
 
   res <- suppressMessages(
