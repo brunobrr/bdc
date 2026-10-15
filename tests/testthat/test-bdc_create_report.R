@@ -37,3 +37,62 @@ test_that("test coordinates transposed" , {
   
 })
  
+# Transposed coordinates are read from the project root ----------------------
+
+transposed_input <- data.frame(
+  scientificName = c(
+    "Rhinella major", "Scinax ruber",
+    "Siparuna guianensis", "Psychotria vellosiana"
+  ),
+  decimalLatitude = c(63.43333, -14.43333, -41.90000, -46.69778),
+  decimalLongitude = c(-17.90000, -67.91667, -13.25000, -13.82444),
+  country_suggested = c("Bolivia", "Bolivia", "Brazil", "Brazil"),
+  countryCode = c("BO", "BO", "BR", "BR"),
+  database_id = c("gbif_1", "gbif_2", "gbif_3", "gbif_4"),
+  .scientificName_empty = c(TRUE, FALSE, TRUE, TRUE)
+)
+
+flag_transposed <- function(data) {
+  suppressMessages(
+    bdc_coordinates_transposed(
+      data = data,
+      id = "database_id",
+      sci_names = "scientificName",
+      lat = "decimalLatitude",
+      lon = "decimalLongitude",
+      country = "country_suggested",
+      countryCode = "countryCode",
+      border_buffer = 0.2,
+      save_outputs = TRUE
+    )
+  )
+}
+
+report_descriptions <- function(data) {
+  report <- suppressMessages(
+    bdc_create_report(data = data, workflow_step = "prefilter")
+  )
+  report$x$data$Description
+}
+
+test_that("bdc_create_report() lists transposed coordinates from a subfolder", {
+  skip_on_cran()
+  local_temp_project(subdir = "reports")
+  flagged <- flag_transposed(transposed_input)
+
+  expect_true(
+    "Records with transposed geographic coordinates" %in%
+      report_descriptions(flagged)
+  )
+})
+
+test_that("bdc_create_report() lists transposed coordinates from the root", {
+  skip_on_cran()
+  local_temp_project()
+  flagged <- flag_transposed(transposed_input)
+
+  expect_true(
+    "Records with transposed geographic coordinates" %in%
+      report_descriptions(flagged)
+  )
+})
