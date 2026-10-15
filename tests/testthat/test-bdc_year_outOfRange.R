@@ -50,3 +50,25 @@ test_that("missing dates and the lower limit are compliant when year_threshold i
     c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
   )
 })
+
+test_that("a non-numeric year_threshold raises the documented error", {
+  x <- data.frame(date = c("2000", "1850"))
+
+  expect_error(
+    bdc_year_outOfRange(data = x, eventDate = "date", year_threshold = "1900"),
+    "not numeric"
+  )
+})
+
+test_that("a year_threshold without four digits raises the documented error", {
+  x <- data.frame(date = c("2000", "1850"))
+
+  expect_error(
+    bdc_year_outOfRange(data = x, eventDate = "date", year_threshold = 190),
+    "four digits"
+  )
+  expect_error(
+    bdc_year_outOfRange(data = x, eventDate = "date", year_threshold = 19000),
+    "four digits"
+  )
+})
