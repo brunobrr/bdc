@@ -146,7 +146,7 @@ bdc_create_figures(data = check_time,
                    save_figures = FALSE)
 
 # Check figures using
-figures$time_year_BAR
+figures$year
 ```
 
 <br/>

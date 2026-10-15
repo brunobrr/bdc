@@ -308,7 +308,7 @@ bdc_create_figures(data = check_pf,
                    save_figures = FALSE)
 
 # Check figures using
-figures$.coordinates_country_inconsistent
+figures$.coordinates_country_inconsistent_map
 ```
 
 ![Coordinates country inconsistent](https://raw.githubusercontent.com/brunobrr/bdc/master/vignettes/images/prefilter_.coordinates_country_inconsistent_MAP.png)
