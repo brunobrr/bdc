@@ -32,19 +32,23 @@
 #'
 #' @examples
 #' x <- data.frame(
-#'   lat = c(NA, NA, ""), 
-#'   lon = c("", NA, NA), 
-#'   locality = c("PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE", 
-#'                "Parque Estadual da Serra de Caldas Novas, Goias, Brazil", 
-#'                "Parque Nacional Iguazu"))
-#' 
+#'   lat = c(NA, NA, ""),
+#'   lon = c("", NA, NA),
+#'   locality = c(
+#'     "PARAGUAY: ALTO PARAGUAY: CO.; 64KM W PUERTO SASTRE",
+#'     "Parque Estadual da Serra de Caldas Novas, Goias, Brazil",
+#'     "Parque Nacional Iguazu"
+#'   )
+#' )
+#'
 #' bdc_coordinates_from_locality(
-#' data = x, 
-#' lat = "lat", 
-#' lon = "lon", 
-#' locality = "locality", 
-#' save_outputs = FALSE)
-#' 
+#'   data = x,
+#'   lat = "lat",
+#'   lon = "lon",
+#'   locality = "locality",
+#'   save_outputs = FALSE
+#' )
+#'
 bdc_coordinates_from_locality <-
   function(data,
            lat = "decimalLatitude",
@@ -55,9 +59,10 @@ bdc_coordinates_from_locality <-
 
     if (!locality %in% colnames(data)) {
       stop(
-        "Locality column was not found in your database")
+        "Locality column was not found in your database"
+      )
     }
-    
+
     suppressMessages({
       if (!any(".coordinates_empty" == names(data))) {
         data <-
@@ -80,10 +85,13 @@ bdc_coordinates_from_locality <-
 
     df <-
       data %>%
-      dplyr::mutate(locality = stringr::str_squish(locality)) %>%
       dplyr::filter(
-        locality != "" & !is.na(locality),
-        stringr::str_detect(locality, "^(\\. )", negate = T),
+        stringr::str_squish(.data[[locality]]) != "" &
+          !is.na(.data[[locality]]),
+        stringr::str_detect(
+          stringr::str_squish(.data[[locality]]), "^(\\. )",
+          negate = TRUE
+        ),
         .coordinates_empty == FALSE |
           .coordinates_outOfRange == FALSE
       )
@@ -96,8 +104,9 @@ bdc_coordinates_from_locality <-
       bdc_create_dir()
 
       df %>% readr::write_csv(
-        here::here("Output/Check/01_coordinates_from_locality.csv"))
-      
+        here::here("Output/Check/01_coordinates_from_locality.csv")
+      )
+
       message(
         paste(
           "\nbdc_coordinates_from_locality",
