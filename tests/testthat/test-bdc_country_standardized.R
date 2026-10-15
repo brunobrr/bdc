@@ -51,7 +51,7 @@ test_that("upper-case ISO alpha-3 codes are resolved", {
 })
 
 test_that("lower- and mixed-case ISO codes are resolved", {
-  skip("lower/mixed-case ISO codes map to the wrong country (#313)")
+  skip_if_not_installed("rnaturalearthdata")
   x <- data.frame(country = c("br", "Arg"))
 
   r <- standardize(data = x)
