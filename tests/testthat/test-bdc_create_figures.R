@@ -1,5 +1,7 @@
-skip_on_ci()
 skip_on_cran()
+skip_if_not_installed("cowplot")
+skip_if_not_installed("hexbin")
+skip_if_no_natural_earth()
 
 database_id <- c("GBIF_01", "GBIF_02", "GBIF_03", "FISH_04", "FISH_05")
  lat <- c(-19.93580, -13.01667, -22.34161, -6.75000, -15.15806)

@@ -76,6 +76,7 @@ report_descriptions <- function(data) {
 
 test_that("bdc_create_report() lists transposed coordinates from a subfolder", {
   skip_on_cran()
+  skip_if_no_natural_earth()
   local_temp_project(subdir = "reports")
   flagged <- flag_transposed(transposed_input)
 
@@ -87,6 +88,7 @@ test_that("bdc_create_report() lists transposed coordinates from a subfolder", {
 
 test_that("bdc_create_report() lists transposed coordinates from the root", {
   skip_on_cran()
+  skip_if_no_natural_earth()
   local_temp_project()
   flagged <- flag_transposed(transposed_input)
 

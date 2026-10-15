@@ -1,6 +1,6 @@
 ## skip("dont run")
 skip_on_cran()
-skip_if_not_installed("curl")
+skip_if_offline()
 
 sci_names <-
   c(
@@ -16,13 +16,14 @@ sci_names <-
     "Puma concolor"
   )
 
-test <-
+test <- taxadb_or_skip(
   bdc_query_names_taxadb(
     sci_name = sci_names,
     suggestion_distance = 0.9,
     db = "gbif",
     export_accepted = FALSE
   )
+)
 
 test_that("bdc_query_names_taxadb", {
   expect_equal(length(test$scientificName), length(sci_names))
@@ -33,14 +34,14 @@ test_that("bdc_get_taxa_taxadb datase order", {
 })
 
 
-test <- bdc_query_names_taxadb(c("Puma concola", "Cebus apela"),
+test <- taxadb_or_skip(bdc_query_names_taxadb(c("Puma concola", "Cebus apela"),
   suggestion_distance = 0.9,
   db = "gbif",
   suggest_names = FALSE,
   rank_name = "Mammalia",
   rank = "class",
   export_accepted = FALSE
-)
+))
 
 
 expected <- tibble(data.frame(
@@ -89,7 +90,7 @@ test_that("suggest_name FALSE", {
 
 test_that("availability of itis", {
 
-  query_itis <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "itis"))
+  query_itis <- taxadb_or_skip(bdc_query_names_taxadb(sci_name = sci_names, db = "itis"))
 
   expect_true(class(query_itis)[3] == "data.frame")
 
@@ -103,7 +104,7 @@ test_that("availability of itis", {
 
 test_that("availability of col", {
 
-  query_col <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "col"))
+  query_col <- taxadb_or_skip(bdc_query_names_taxadb(sci_name = sci_names, db = "col"))
 
   expect_true(class(query_col)[3] == "data.frame")
 
@@ -119,7 +120,7 @@ test_that("availability of col", {
 
 test_that("availability of gbif", {
 
-  query_gbif <- try(bdc_query_names_taxadb(sci_name = sci_names, db = "gbif"))
+  query_gbif <- taxadb_or_skip(bdc_query_names_taxadb(sci_name = sci_names, db = "gbif"))
 
   expect_true(class(query_gbif)[3] == "data.frame")
 

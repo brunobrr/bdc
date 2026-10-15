@@ -1,6 +1,6 @@
 ## skip("dont run")
 skip_on_cran()
-skip_if_not_installed("curl")
+skip_if_offline()
 
 sci_names <-
   c(
@@ -13,7 +13,7 @@ sci_names <-
     "Puma concolar"
   )
 
-res <-
+res <- taxadb_or_skip(
   suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
@@ -21,6 +21,7 @@ res <-
       provider = "gbif",
     )
   )
+)
 
 test_that("gbif - bdc_suggest_names_taxadb suggest valid names", {
   expect_equal(res, data.frame(
@@ -38,7 +39,7 @@ test_that("gbif - bdc_suggest_names_taxadb suggest valid names", {
   ))
 })
 
-res <-
+res <- taxadb_or_skip(
   suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
@@ -48,6 +49,7 @@ res <-
       parallel = FALSE
     )
   )
+)
 
 test_that("itis - bdc_suggest_names_taxadb suggest valid names", {
   expect_equal(res, data.frame(
@@ -64,7 +66,7 @@ test_that("itis - bdc_suggest_names_taxadb suggest valid names", {
   ))
 })
 
-res <-
+res <- taxadb_or_skip(
   suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
@@ -73,6 +75,7 @@ res <-
       parallel = FALSE
     )
   )
+)
 
 test_that("ncbi - bdc_suggest_names_taxadb suggest valid names", {
   expect_equal(res, data.frame(
@@ -89,7 +92,7 @@ test_that("ncbi - bdc_suggest_names_taxadb suggest valid names", {
   ))
 })
 
-res <-
+res <- taxadb_or_skip(
   suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
@@ -98,6 +101,7 @@ res <-
       parallel = FALSE
     )
   )
+)
 
 
 test_that("col - bdc_suggest_names_taxadb suggest valid names", {
@@ -115,7 +119,7 @@ test_that("col - bdc_suggest_names_taxadb suggest valid names", {
   ))
 })
 
-res <-
+res <- taxadb_or_skip(
   suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
@@ -125,6 +129,7 @@ res <-
       parallel = FALSE
     )
   )
+)
 
 res$distance
 test_that("ott - bdc_suggest_names_taxadb suggest valid names", {
@@ -142,7 +147,7 @@ test_that("ott - bdc_suggest_names_taxadb suggest valid names", {
   ))
 })
 
-res <-
+res <- taxadb_or_skip(
   suppressWarnings(
     bdc_suggest_names_taxadb(
       sci_name = sci_names,
@@ -152,6 +157,7 @@ res <-
       parallel = TRUE
     )
   )
+)
 
 test_that("testing parallelization", {
   expect_equal(res, data.frame(
@@ -168,17 +174,17 @@ test_that("testing parallelization", {
   ))
 })
 
-res <- suppressWarnings(
+res <- taxadb_or_skip(suppressWarnings(
   bdc_suggest_names_taxadb(
     sci_name = sci_names,
     rank_name = "Plantae",
     rank = "kingdom",
     max_distance = 0.75,
     provider = "itis",
-      db_version = "22.12",
+    db_version = "22.12",
     parallel = FALSE
   )
-)
+))
 
 test_that("testing ranks", {
   expect_equal(res, data.frame(
