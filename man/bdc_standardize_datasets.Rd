@@ -20,14 +20,19 @@ renamed. See @details.}
 "csv" and "qs2" (recommenced to save large datasets). Default == "csv".}
 
 \item{overwrite}{A logical vector indicating whether the final merged dataset
-should be overwritten. The default is FALSE.}
+should be overwritten. The default is FALSE. When FALSE and the merged file
+(\verb{Output/Intermediate/00_merged_database.<format>}) already exists, that
+file is read and returned without processing \code{metadata}.}
 
 \item{save_database}{logical. Should the standardized database be locally
 saved? Default = FALSE.}
 }
 \value{
 A merged data.frame with column names following Darwin Core
-terminology.
+terminology and all columns stored as character. It contains only the
+datasets described in \code{metadata}; a dataset whose file lacks a column named
+in the metadata, or that fails to be read, is excluded and named in a
+message.
 }
 \description{
 This function's main goal is to merge and standardize different
