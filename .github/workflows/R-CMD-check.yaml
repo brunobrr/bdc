@@ -45,9 +45,27 @@ jobs:
           extra-packages: any::rcmdcheck, any::rnaturalearthhires
           needs: check
 
+      # rgnparser::install_gnparser() is defunct since rgnparser 0.3.0, so
+      # fetch the release binary and put it on PATH, where rgnparser finds it
       - name: Install gnparser (needed by bdc_clean_names() tests)
-        run: rgnparser::install_gnparser()
-        shell: Rscript {0}
+        shell: bash
+        env:
+          GNPARSER_VERSION: v1.15.1
+        run: |
+          base="https://github.com/gnames/gnparser/releases/download/${GNPARSER_VERSION}"
+          dest="${RUNNER_TEMP}/gnparser"
+          mkdir -p "$dest"
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            zip="${RUNNER_TEMP}/gnparser.zip"
+            curl -fsSL -o "$zip" "${base}/gnparser-${GNPARSER_VERSION}-win-x86.zip"
+            unzip -o "$zip" -d "$dest"
+            "$dest/gnparser.exe" --version
+            cygpath -w "$dest" >> "$GITHUB_PATH"
+          else
+            curl -fsSL "${base}/gnparser-${GNPARSER_VERSION}-linux-x86.tar.gz" | tar -xz -C "$dest"
+            "$dest/gnparser" --version
+            echo "$dest" >> "$GITHUB_PATH"
+          fi
 
       - uses: r-lib/actions/check-r-package@v2
         with:
