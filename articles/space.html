@@ -246,14 +246,14 @@ package <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-21
 <span><span class="co">#&gt; Flagged 0 records.</span></span>
 <span><span class="co">#&gt; Testing duplicates</span></span>
 <span><span class="co">#&gt; Flagged 0 records.</span></span>
-<span><span class="co">#&gt; Flagged 6 of 115 records, EQ = 0.05.</span></span></code></pre></div>
+<span><span class="co">#&gt; Flagged 6 of 114 records, EQ = 0.05.</span></span></code></pre></div>
 <p>Here we update the column named <strong>.summary</strong> summing up
 the results of all tests. This column is <strong>FALSE</strong> if any
 test was flagged as “FALSE” (❌check carefully; potentially invalid or
 suspect record).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">check_space</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_summary_col.html">bdc_summary_col</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_space</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Column '.summary' already exist. It will be updated</span></span>
+<span><span class="co">#&gt; Column '.summary' already exists. It will be updated</span></span>
 <span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; bdc_summary_col:</span></span>
 <span><span class="co">#&gt; Flagged 9 records.</span></span>
@@ -299,7 +299,7 @@ can be automatically saved if <code>save_report = TRUE.</code></p>
 <span></span>
 <span><span class="va">report</span></span></code></pre></div>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"extensions":["FixedColumns"],"data":[["Identical coordinates","Plain zeros","Records around country capital centroid","Records around country or province centroids","Geographical outliers","Records around the GBIF headquarters","Records around biodiversity institutions","Duplicated coordinates per species","Rounded (probably imprecise) coordinates","Records within urban areas",null,"(*) calculated in relation to total number of records, i.e. 115 records"],[".equ",".zer",".cap",".cen",".otl",".gbf",".inst",".dpl",".rou",".urb",null,null],[0,0,0,0,0,0,0,0,2,6,null,null],[0,0,0,0,0,0,0,0,1.74,5.22,null,null]],"container":"<table class=\"stripe\">\n  <thead>\n    <tr>\n      <th>Description<\/th>\n      <th>Test_name<\/th>\n      <th>Records_flagged<\/th>\n      <th>perc_number_records(*)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","scrollX":true,"fixedColumns":{"leftColumns":2},"columnDefs":[{"className":"dt-right","targets":[2,3]},{"name":"Description","targets":0},{"name":"Test_name","targets":1},{"name":"Records_flagged","targets":2},{"name":"perc_number_records(*)","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"extensions":["FixedColumns"],"data":[["Identical coordinates","Plain zeros","Records around country capital centroid","Records around country or province centroids","Geographical outliers","Records around the GBIF headquarters","Records around biodiversity institutions","Duplicated coordinates per species","Rounded (probably imprecise) coordinates","Records within urban areas","Summary of all tests",null,"(*) calculated in relation to total number of records, i.e. 114 records"],[".equ",".zer",".cap",".cen",".otl",".gbf",".inst",".dpl",".rou",".urb",".summary",null,null],[0,0,0,0,0,0,0,0,2,6,8,null,null],[0,0,0,0,0,0,0,0,1.75,5.26,7.02,null,null]],"container":"<table class=\"stripe\">\n  <thead>\n    <tr>\n      <th>Description<\/th>\n      <th>Test_name<\/th>\n      <th>Records_flagged<\/th>\n      <th>perc_number_records(*)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","scrollX":true,"fixedColumns":{"leftColumns":2},"columnDefs":[{"className":"dt-right","targets":[2,3]},{"name":"Description","targets":0},{"name":"Test_name","targets":1},{"name":"Records_flagged","targets":2},{"name":"perc_number_records(*)","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level4">
 <h4 id="figures">

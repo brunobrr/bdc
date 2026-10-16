@@ -227,8 +227,7 @@ fossil records, among others.</p>
 <span>  names_to_keep <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#&gt; bdc_basisOfRecords_notStandard:</span></span>
-<span><span class="co">#&gt; Flagged 0 of the following specific nature:</span></span>
-<span><span class="co">#&gt;  character(0)</span></span>
+<span><span class="co">#&gt; Flagged 0 records.</span></span>
 <span><span class="co">#&gt; One column was added to the database.</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -300,7 +299,6 @@ positives.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co">#&gt; Correcting latitude and longitude transposed</span></span>
-<span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; 15 occurrences will be tested</span></span>
 <span><span class="co">#&gt; Processing occurrences from: BR (15)</span></span>
 <span><span class="co">#&gt; No latitude and longitude were transposed</span></span></code></pre></div>
@@ -329,7 +327,7 @@ marshland species).</p>
 <span><span class="co">#&gt; although coordinates are longitude/latitude, st_intersection assumes that they are planar</span></span>
 <span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; bdc_coordinates_country_inconsistent:</span></span>
-<span><span class="co">#&gt; Flagged 15 records.</span></span>
+<span><span class="co">#&gt; Flagged 16 records.</span></span>
 <span><span class="co">#&gt; One column was added to the database.</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -350,7 +348,7 @@ retrospective geo-referencing.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#&gt; bdc_coordinates_from_locality</span></span>
-<span><span class="co">#&gt; Found 38 records missing or with invalid coordinates but with potentially useful information on locality</span></span></code></pre></div>
+<span><span class="co">#&gt; Found 38 records missing or with invalid coordinates but with potentially useful information on locality.</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="report">
@@ -364,7 +362,7 @@ any data quality test (i.e. potentially invalid or suspect record).</p>
 <code class="sourceCode R"><span><span class="va">check_pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_summary_col.html">bdc_summary_col</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_pf</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#&gt; bdc_summary_col:</span></span>
-<span><span class="co">#&gt; Flagged 65 records.</span></span>
+<span><span class="co">#&gt; Flagged 66 records.</span></span>
 <span><span class="co">#&gt; One column was added to the database.</span></span></code></pre></div>
 <p>Creating a report summarizing the results of all tests. The report
 can be automatically saved if <code>save_report = TRUE.</code></p>
@@ -377,7 +375,7 @@ can be automatically saved if <code>save_report = TRUE.</code></p>
 <span></span>
 <span><span class="va">report</span></span></code></pre></div>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"extensions":["FixedColumns"],"data":[["Records with empty scientific name","Records with empty coordinates","Records with coordinates out-of-range","Records outside one or multiple reference countries","Summary of all tests",null,"(*) calculated in relation to total number of records, i.e. 180 records"],[".scientificName_empty",".coordinates_empty",".coordinates_outOfRange",".coordinates_country_inconsistent",".summary",null,null],[5,44,1,15,65,null,null],[2.78,24.44,0.5600000000000001,8.33,36.11,null,null]],"container":"<table class=\"stripe\">\n  <thead>\n    <tr>\n      <th>Description<\/th>\n      <th>Test_name<\/th>\n      <th>Records_flagged<\/th>\n      <th>perc_number_records(*)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","scrollX":true,"fixedColumns":{"leftColumns":2},"columnDefs":[{"className":"dt-right","targets":[2,3]},{"name":"Description","targets":0},{"name":"Test_name","targets":1},{"name":"Records_flagged","targets":2},{"name":"perc_number_records(*)","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"extensions":["FixedColumns"],"data":[["Records with empty scientific name","Records with empty coordinates","Records with coordinates out-of-range","Records from a doubtful source","Records outside one or multiple reference countries","Summary of all tests",null,"(*) calculated in relation to total number of records, i.e. 180 records"],[".scientificName_empty",".coordinates_empty",".coordinates_outOfRange",".basisOfRecords_notStandard",".coordinates_country_inconsistent",".summary",null,null],[5,44,1,0,16,66,null,null],[2.78,24.44,0.5600000000000001,0,8.890000000000001,36.67,null,null]],"container":"<table class=\"stripe\">\n  <thead>\n    <tr>\n      <th>Description<\/th>\n      <th>Test_name<\/th>\n      <th>Records_flagged<\/th>\n      <th>perc_number_records(*)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","scrollX":true,"fixedColumns":{"leftColumns":2},"columnDefs":[{"className":"dt-right","targets":[2,3]},{"name":"Description","targets":0},{"name":"Test_name","targets":1},{"name":"Records_flagged","targets":2},{"name":"perc_number_records(*)","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level4">
 <h4 id="figures">

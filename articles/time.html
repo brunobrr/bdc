@@ -181,7 +181,7 @@ unambiguously interpretable collecting dates.</p>
 <span>  <span class="fu"><a href="../reference/bdc_year_from_eventDate.html">bdc_year_from_eventDate</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span>, eventDate <span class="op">=</span> <span class="st">"verbatimEventDate"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; bdc_year_from_eventDate:</span></span>
-<span><span class="co">#&gt; Four-digit years were extracted from 51 records.</span></span></code></pre></div>
+<span><span class="co">#&gt; Four-digit years were extracted from 50 records.</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="records-with-out-of-range-collecting-year">
@@ -231,7 +231,7 @@ record).</p>
 <span></span>
 <span><span class="va">report</span></span></code></pre></div>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"extensions":["FixedColumns"],"data":[["Records with empty eventDate","Records with year out-of-range (i.e., year in the future or\n                collected before a threshold defined by the user).","Summary of all tests",null,"(*) calculated in relation to total number of records, i.e. 115 records"],[".eventDate_empty",".year_outOfRange",".summary",null,null],[64,0,64,null,null],[55.65,0,55.65,null,null]],"container":"<table class=\"stripe\">\n  <thead>\n    <tr>\n      <th>Description<\/th>\n      <th>Test_name<\/th>\n      <th>Records_flagged<\/th>\n      <th>perc_number_records(*)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","scrollX":true,"fixedColumns":{"leftColumns":2},"columnDefs":[{"className":"dt-right","targets":[2,3]},{"name":"Description","targets":0},{"name":"Test_name","targets":1},{"name":"Records_flagged","targets":2},{"name":"perc_number_records(*)","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"filter":"none","vertical":false,"extensions":["FixedColumns"],"data":[["Records with empty eventDate","Records with year out-of-range (i.e., year in the future or\n                collected before a threshold defined by the user).","Summary of all tests",null,"(*) calculated in relation to total number of records, i.e. 114 records"],[".eventDate_empty",".year_outOfRange",".summary",null,null],[64,0,64,null,null],[56.14,0,56.14,null,null]],"container":"<table class=\"stripe\">\n  <thead>\n    <tr>\n      <th>Description<\/th>\n      <th>Test_name<\/th>\n      <th>Records_flagged<\/th>\n      <th>perc_number_records(*)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bfrtip","scrollX":true,"fixedColumns":{"leftColumns":2},"columnDefs":[{"className":"dt-right","targets":[2,3]},{"name":"Description","targets":0},{"name":"Test_name","targets":1},{"name":"Records_flagged","targets":2},{"name":"perc_number_records(*)","targets":3}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level4">
 <h4 id="figures">
@@ -286,7 +286,7 @@ format.</p>
 <p>Let’s remove potentially erroneous or suspect records flagged by the
 data quality tests applied in all modules of the <em>bdc</em> package to
 get a “clean”, “fitness-for-use” database. Note that
-<strong>25%</strong> (45 out of 180 records) of original records were
+<strong>24%</strong> (44 out of 180 records) of original records were
 considered “fitness-for-use” after the data-cleaning process.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">output</span> <span class="op">&lt;-</span></span>
