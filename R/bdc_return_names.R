@@ -24,6 +24,15 @@
 #' )
 #' }
 bdc_return_names <- function(sci_name, max_distance, species_first_letter) {
+  # No candidate shares the first letter (or the rank): nothing to suggest
+  if (length(species_first_letter) == 0) {
+    return(data.frame(
+      original = sci_name,
+      suggested = NA,
+      distance = NA_real_
+    ))
+  }
+
   out <- stringdist::stringdist(sci_name, species_first_letter)
   min_dist_name <-
     species_first_letter[out == sort(out, decreasing = FALSE)[1]][1]

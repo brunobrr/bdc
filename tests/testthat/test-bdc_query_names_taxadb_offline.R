@@ -372,14 +372,12 @@ test_that("bdc_query_names_taxadb() rank filtering ignores database record order
 })
 
 test_that("bdc_query_names_taxadb() rank filtering also checks single-record names", {
-  # "Cedrela" gives the name suggestion step a Plantae candidate too far from
-  # "Casearia" to be suggested.
   local_fake_taxadb(fake_dwc_taxa(
-    taxonID = c("T:1", "T:2", "T:3"),
-    scientificName = c("Casearia", "Aus bus", "Cedrela"),
-    taxonRank = c("genus", "species", "genus"),
+    taxonID = c("T:1", "T:2"),
+    scientificName = c("Casearia", "Aus bus"),
+    taxonRank = c("genus", "species"),
     taxonomicStatus = "accepted",
-    kingdom = c("Animalia", NA, "Plantae")
+    kingdom = c("Animalia", NA)
   ))
 
   res <- suppressMessages(
@@ -419,6 +417,53 @@ test_that("bdc_query_names_taxadb() suggests one name for two misspellings", {
     res$notes,
     c("accepted | wasMisspelled", "accepted | wasMisspelled")
   )
+})
+
+test_that("bdc_query_names_taxadb() returns a name without candidates as not found", {
+  # No database name starts with "X", so there is nothing to suggest.
+  local_fake_taxadb(fake_dwc_taxa(
+    taxonID = "T:1",
+    scientificName = "Puma concolor",
+    taxonRank = "species",
+    taxonomicStatus = "accepted",
+    kingdom = "Animalia"
+  ))
+
+  res <- suppressMessages(bdc_query_names_taxadb("Xus bus", db = "gbif"))
+
+  expect_equal(res$original_search, "Xus bus")
+  expect_equal(res$notes, "notFound")
+  expect_true(is.na(res$suggested_name))
+  expect_true(is.na(res$scientificName))
+})
+
+test_that("bdc_query_names_taxadb() flags a misspelling whose suggestion has several accepted records", {
+  local_fake_taxadb(casearia_rows())
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb("Caseria", db = "gbif", suggestion_distance = 0.8)
+  )
+
+  expect_equal(res$suggested_name, "Casearia")
+  expect_equal(res$notes, "multipleAccepted")
+  expect_true(is.na(res$scientificName))
+})
+
+test_that("bdc_query_names_taxadb() rank filtering applies to suggested names", {
+  local_fake_taxadb(casearia_rows())
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(
+      "Caseria",
+      db = "gbif", suggestion_distance = 0.8,
+      rank = "kingdom", rank_name = "Plantae"
+    )
+  )
+
+  expect_equal(res$suggested_name, "Casearia")
+  expect_equal(res$notes, "accepted | wasMisspelled")
+  expect_equal(res$taxonID, "T:2")
+  expect_equal(res$kingdom, "Plantae")
 })
 
 test_that("bdc_query_names_taxadb(export_accepted = TRUE) writes the check file", {

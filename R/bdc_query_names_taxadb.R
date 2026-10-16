@@ -400,10 +400,15 @@ bdc_query_names_taxadb <-
             )
           }
 
-          # Filter duplicated names returned by filter_name (excluding synonyms
-          # when there are valid names)
-          if (any(duplicated(suggest_data$input))) {
-            suggest_data <- bdc_clean_duplicates(data = suggest_data)
+          # Flag suggested names with multiple accepted names and apply the
+          # rank filter, as for names found without a suggestion
+          if (any(duplicated(suggest_data$input)) || !is.null(rank)) {
+            suggest_data <-
+              bdc_clean_duplicates(
+                data = suggest_data,
+                rank = rank,
+                rank_name = rank_name
+              )
           }
 
           # Reordering the database
@@ -431,9 +436,13 @@ bdc_query_names_taxadb <-
           found_name[posi_misspelled_names, 1:ncol_tab_taxadb] <-
             suggest_data[, 1:ncol_tab_taxadb]
 
-          # Flag misspelled names
+          # Flag misspelled names, keeping the multipleAccepted flag
           found_name[posi_misspelled_names, "notes"] <-
-            "| wasMisspelled "
+            ifelse(
+              grepl("multipleAccepted", suggest_data$notes),
+              "multipleAccepted",
+              "| wasMisspelled "
+            )
         } else {
           suggested_search <-
             data.frame(
