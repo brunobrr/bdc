@@ -25,8 +25,12 @@ options("prefilter", "taxonomy", "space" or "time").}
 inspection? Default = FALSE.}
 }
 \value{
-A data.frame containing a report summarizing the results of data
-quality assessment.
+An HTML table widget (created with \code{\link[DT:datatable]{DT::datatable()}}) displaying the
+report summarizing the results of data quality assessment. It is shown when
+printed in RStudio or in an R Markdown document. When \code{save_report = TRUE},
+the same report is also saved as a data frame in a CSV file in
+"Output/Report" (e.g. "01_Report_Prefilter.csv"), which can be read back
+with \code{readr::read_csv()}.
 }
 \description{
 Create a report summarizing the results of data quality tests
@@ -47,13 +51,13 @@ x <- data.frame(
   .summary
 )
 
-report <- 
-bdc_create_report(
-  data = x,
-  database_id = "database_id",
-  workflow_step = "prefilter",
-  save_report = FALSE
-)
+report <-
+  bdc_create_report(
+    data = x,
+    database_id = "database_id",
+    workflow_step = "prefilter",
+    save_report = FALSE
+  )
 }
 
 }

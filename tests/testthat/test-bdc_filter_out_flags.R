@@ -68,3 +68,10 @@ test_that("an unknown name is ignored and the data is returned unchanged", {
 
   expect_equal(r, flags)
 })
+
+test_that("bdc_filter_out_flags() names itself in its message", {
+  expect_message(
+    bdc_filter_out_flags(data = x, col_to_remove = "all"),
+    "bdc_filter_out_flags:"
+  )
+})

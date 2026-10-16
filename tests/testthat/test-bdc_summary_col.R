@@ -22,7 +22,7 @@ test_that("bdc_summary_col recomputes an existing .summary instead of duplicatin
 
   expect_message(
     updated <- bdc_summary_col(data = stale),
-    "already exist"
+    "already exists"
   )
   fresh <- suppressMessages(bdc_summary_col(data = flags))
 

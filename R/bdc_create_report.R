@@ -9,8 +9,12 @@
 #' @param save_report logical. Should the report be saved for further
 #' inspection? Default = FALSE.
 #'
-#' @return A data.frame containing a report summarizing the results of data
-#' quality assessment.
+#' @return An HTML table widget (created with [DT::datatable()]) displaying the
+#' report summarizing the results of data quality assessment. It is shown when
+#' printed in RStudio or in an R Markdown document. When `save_report = TRUE`,
+#' the same report is also saved as a data frame in a CSV file in
+#' "Output/Report" (e.g. "01_Report_Prefilter.csv"), which can be read back
+#' with `readr::read_csv()`.
 #'
 #' @importFrom readr write_csv
 #' @importFrom dplyr summarise n pull mutate group_by add_row select everything

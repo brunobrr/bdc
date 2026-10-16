@@ -183,7 +183,7 @@ test_that("the missing-column message lists the columns absent from the file", {
   metadata$fileName[3] <- paths[["datafake4"]]
 
   msgs <- capture_messages(
-    bdc_standardize_datasets(metadata[3, ], format = "csv")
+    bdc_standardize_datasets(metadata, format = "csv")
   )
   expect_match(
     msgs,
@@ -213,4 +213,21 @@ test_that("a dataset whose file cannot be read is excluded and named", {
   )
   expect_match(msgs, "\\[ERROR\\].*datafake2", all = FALSE)
   expect_equal(id_prefixes(result), c("datafake1", "datafake3"))
+})
+
+test_that("an error is raised, and nothing saved, when no dataset can be standardized", {
+  paths <- local_fake_inputs()
+  metadata <- fake_metadata(paths)
+  metadata$fileName <- file.path(dirname(paths[[1]]), "missing.csv")
+
+  expect_error(
+    suppressMessages(bdc_standardize_datasets(
+      metadata,
+      format = "csv", save_database = TRUE
+    )),
+    "None of the 3 datasets"
+  )
+  expect_false(
+    file.exists(here::here("Output", "Intermediate", "00_merged_database.csv"))
+  )
 })

@@ -51,3 +51,26 @@ test_that("bdc_basisOfRecords testing default argument", {
 test_that("bdc_basisOfRecords expected class", {
   expect_type(r3, "list")
 })
+
+test_that("bdc_basisOfRecords_notStandard() lists the flagged names in its message", {
+  records <- data.frame(basisOfRecord = c("Specimen", "UNKNOWN", "Specimen"))
+
+  msgs <- capture_messages(
+    bdc_basisOfRecords_notStandard(
+      data = records,
+      basisOfRecord = "basisOfRecord",
+      names_to_keep = "unknown"
+    )
+  )
+  expect_match(msgs, "Flagged 2 records of the following basis of record: Specimen", all = FALSE)
+
+  msgs <- capture_messages(
+    bdc_basisOfRecords_notStandard(
+      data = records,
+      basisOfRecord = "basisOfRecord",
+      names_to_keep = "all"
+    )
+  )
+  expect_match(msgs, "Flagged 0 records", all = FALSE)
+  expect_no_match(paste(msgs, collapse = ""), "character\\(0\\)")
+})

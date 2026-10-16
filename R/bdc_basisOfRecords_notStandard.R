@@ -88,17 +88,20 @@ bdc_basisOfRecords_notStandard <-
     removed <-
       data %>%
       dplyr::filter(.basisOfRecords_notStandard == FALSE) %>%
-      dplyr::select(basisOfRecord) %>%
-      dplyr::distinct()
+      dplyr::pull(basisOfRecord) %>%
+      unique()
+
+    n_flagged <- sum(data$.basisOfRecords_notStandard == FALSE)
 
     message(
-      paste(
-        "\nbdc_basisOfRecords_notStandard:\nFlagged",
-        sum(data$.basisOfRecords_notStandard == FALSE),
-        "of the following specific nature:\n",
-        removed,
-        "\nOne column was added to the database.\n"
-      )
+      "\nbdc_basisOfRecords_notStandard:\nFlagged ", n_flagged, " records",
+      if (n_flagged > 0) {
+        paste0(
+          " of the following basis of record: ",
+          paste(removed, collapse = ", ")
+        )
+      },
+      ".\nOne column was added to the database.\n"
     )
     return(data)
   }

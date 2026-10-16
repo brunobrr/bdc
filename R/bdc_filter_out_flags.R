@@ -51,7 +51,7 @@ bdc_filter_out_flags <-
     }
 
     message(
-      "\nbdc_fiter_out_flags:\nThe following columns were removed from the database:\n",
+      "\nbdc_filter_out_flags:\nThe following columns were removed from the database:\n",
       paste(column_names, collapse = ", ")
     )
 
