@@ -79,13 +79,15 @@ rownames = FALSE,
 )
 ```
 
-**Changing the path containing the datasets.**
+**Changing the path containing the datasets (optional).**
+
+The configuration table above points to the example datasets on GitHub, so you can skip this step to run the example. Use it only when the datasets are saved in a folder on your computer, replacing the path below with that folder; otherwise, every dataset is excluded from the merged database because its file is not found.
 
 ```{r eval=FALSE}
-# Path to the folder containing the example datasets. For instance:
+# Path to the folder containing the datasets. For instance:
 path <- "C:/Users/myname/Documents/myproject/input_files/"
 
-# Change in the Configuration table the path to the folder in your computer containing the example datasets
+# Change in the Configuration table the path to the folder in your computer containing the datasets
 metadata$fileName <-
   gsub(pattern = "https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/",
        replacement = path,
@@ -105,17 +107,16 @@ bdc_standardize_datasets(metadata = metadata,
                          overwrite = TRUE,
                          save_database = TRUE)
 
-#>  0sStandardizing AT_EPIPHYTES file
-#>  0s 0sStandardizing BIEN file
-#>  0s 0sStandardizing DRYFLOR file
-#>  0s 0sStandardizing GBIF file
-#>  0s 0sStandardizing ICMBIO file
-#>  0s 0sStandardizing IDIGBIO file
-#>  0s 0sStandardizing NEOTROPTREE file
-#>  0s 0sStandardizing SIBBR file
-#>  0s 0sStandardizing SPECIESLINK file
-#>
-#> Standardized database was saved in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Intermediate/00_merged_database.csv
+#> Standardizing AT_EPIPHYTES file
+#> Standardizing BIEN file
+#> Standardizing DRYFLOR file
+#> Standardizing GBIF file
+#> Standardizing ICMBIO file
+#> Standardizing IDIGBIO file
+#> Standardizing NEOTROPTREE file
+#> Standardizing SIBBR file
+#> Standardizing SPECIESLINK file
+#> Standardized database was saved in /path/to/your/project/Output/Intermediate/00_merged_database.csv
 ```
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}

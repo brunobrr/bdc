@@ -123,15 +123,7 @@ check_space <-
 #> Flagged 0 records.
 #> Testing urban areas
 #> Downloading urban areas via rnaturalearth
-#> trying URL 'http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_urban_areas.zip'
-#> Content type 'application/zip' length 452644 bytes (442 KB)
-#> downloaded 442 KB
-#>
-#> OGR data source with driver: ESRI Shapefile
-#> Source: "C:\Users\Bruno R. Ribeiro\AppData\Local\Temp\RtmpCo3Lyf", layer: "ne_50m_urban_areas"
-#> with 2143 features
-#> It has 4 fields
-#> Integer64 fields read as strings:  scalerank
+#> Reading 'ne_50m_urban_areas.zip' from naturalearth...
 #> Flagged 6 records.
 #> Testing geographic outliers
 #> Testing GBIF headquarters, flagging records around Copenhagen

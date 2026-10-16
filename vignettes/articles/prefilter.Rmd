@@ -159,13 +159,10 @@ check_pf <- bdc_country_standardized(
   country = "country"
 )
 
+#> Loading auxiliary data: country names
 #> Standardizing country names
-#>
 #> country found: Bolivia
 #> country found: Brazil
-#>   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s
-#>   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s
-#>   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s
 #>
 #> bdc_country_standardized:
 #> The country names of 65 records were standardized.
