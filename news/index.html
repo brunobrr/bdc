@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bdc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.6.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -82,9 +82,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="development version" id="bdc-development-version">bdc (development version)<a class="anchor" aria-label="anchor" href="#bdc-development-version"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.0" id="bdc-120">bdc 1.2.0<a class="anchor" aria-label="anchor" href="#bdc-120"></a></h2>
 <div class="section level3">
-<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<h3 id="breaking-changes-1-2-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-2-0"></a></h3>
 <p>These changes can break scripts written for bdc 1.1.6. Details are in the bullets below.</p>
 <ul><li>bdc now requires R &gt;= 4.1.0 (<a href="https://github.com/brunobrr/bdc/issues/291" class="external-link">#291</a>) and taxadb &gt;= 0.3.0 (<a href="https://github.com/brunobrr/bdc/issues/278" class="external-link">#278</a>).</li>
 <li>
@@ -110,7 +110,7 @@
 </ul></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-and-other-changes-development-version">Bug fixes and other changes<a class="anchor" aria-label="anchor" href="#bug-fixes-and-other-changes-development-version"></a></h3>
+<h3 id="bug-fixes-and-other-changes-1-2-0">Bug fixes and other changes<a class="anchor" aria-label="anchor" href="#bug-fixes-and-other-changes-1-2-0"></a></h3>
 <ul><li>
 <code><a href="../reference/bdc_quickmap.html">bdc_quickmap()</a></code> now errors at call time when <code>col_to_map</code> is neither a column of <code>data</code> nor a colour, instead of returning a map that fails only when drawn. The help page now gives the actual default, <code>"red"</code> (<a href="https://github.com/brunobrr/bdc/issues/331" class="external-link">#331</a>).</li>
 <li>
@@ -153,7 +153,7 @@
 <li>Fixed deprecation warnings in <code>bdc_standardize_country()</code> (tidyselect <code>.data[[var]]</code> -&gt; <code>all_of()</code>) and <code><a href="../reference/bdc_quickmap.html">bdc_quickmap()</a></code> (ggplot2 <code>borders()</code> -&gt; <code>annotation_borders()</code>) (<a href="https://github.com/brunobrr/bdc/issues/281" class="external-link">#281</a>).</li>
 </ul></div>
 <div class="section level3">
-<h3 id="taxadb-compatibility-development-version">taxadb 0.3.0 compatibility (<a href="https://github.com/brunobrr/bdc/issues/278" class="external-link">#278</a>)<a class="anchor" aria-label="anchor" href="#taxadb-compatibility-development-version"></a></h3>
+<h3 id="taxadb-compatibility-1-2-0">taxadb 0.3.0 compatibility (<a href="https://github.com/brunobrr/bdc/issues/278" class="external-link">#278</a>)<a class="anchor" aria-label="anchor" href="#taxadb-compatibility-1-2-0"></a></h3>
 <ul><li>
 <code><a href="../reference/bdc_query_names_taxadb.html">bdc_query_names_taxadb()</a></code> and <code>bdc_filter_name()</code> / <code>bdc_filter_id()</code> pin <code>db_version = "22.12"</code>, which remains available and byte-identical at the new data location (source.coop Parquet). No change needed for existing scripts.</li>
 <li>
