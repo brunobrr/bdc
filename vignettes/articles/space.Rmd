@@ -132,14 +132,14 @@ check_space <-
 #> Flagged 0 records.
 #> Testing duplicates
 #> Flagged 0 records.
-#> Flagged 6 of 115 records, EQ = 0.05.
+#> Flagged 6 of 114 records, EQ = 0.05.
 ```
 
 Here we update the column named **.summary** summing up the results of all tests. This column is **FALSE** if any test was flagged as "FALSE" (❌check carefully; potentially invalid or suspect record).
 
 ```{r eval=FALSE}
 check_space <- bdc_summary_col(data = check_space)
-#> Column '.summary' already exist. It will be updated
+#> Column '.summary' already exists. It will be updated
 #>
 #> bdc_summary_col:
 #> Flagged 9 records.

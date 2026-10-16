@@ -175,7 +175,7 @@ check_time %>%
 
 #### **Filtering the database**
 
-Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all modules of the *bdc* package to get a "clean", "fitness-for-use" database. Note that **25%** (45 out of 180 records) of original records were considered "fitness-for-use" after the data-cleaning process.
+Let's remove potentially erroneous or suspect records flagged by the data quality tests applied in all modules of the *bdc* package to get a "clean", "fitness-for-use" database. Note that **24%** (44 out of 180 records) of original records were considered "fitness-for-use" after the data-cleaning process.
 
 ```{r}
 output <-
