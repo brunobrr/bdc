@@ -11,14 +11,14 @@
 #' expressed in decimal degree and in WGS84. Default = "decimalLongitude".
 #' @param col_to_map character string. Defining the column or color used to map.
 #' It can be a color name (e.g., "red") or the name of a column of data. Default
-#' = "blue"
+#' = "red"
 #' @param size numeric. The size of the points.
 #'
 #' @details Only records with valid coordinates can be plotted. Records missing
 #' or containing invalid coordinates are removed prior creating the map.
 #'
 #' @return A map of points created using ggplot2.
-#' 
+#'
 #' @importFrom ggplot2 theme_void theme element_blank ggplot labs aes
 #' coord_quickmap scale_color_manual
 #' @importFrom dplyr mutate filter select
@@ -41,6 +41,22 @@
 #' }
 bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude", col_to_map = "red", size = 1) {
   .data <- .coordinates_empty <- .coordinates_outOfRange <- z <- NULL
+
+  is_colour <- tryCatch(
+    {
+      grDevices::col2rgb(col_to_map)
+      TRUE
+    },
+    error = function(e) FALSE
+  )
+  if (!all(col_to_map %in% names(data)) && !is_colour) {
+    stop(
+      "`col_to_map` must be a column of `data` or a colour; '",
+      paste(col_to_map, collapse = "', '"),
+      "' is neither.",
+      call. = FALSE
+    )
+  }
 
   world_borders <-
     ggplot2::annotation_borders(
@@ -97,8 +113,8 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
 
 
   if (all(col_to_map %in% names(data))) {
-    # lon <- df[, lon] 
-    # lat <- df[, lat] 
+    # lon <- df[, lon]
+    # lat <- df[, lat]
     # col_to_map <- df[, col_to_map]
     our_map <-
       df %>%
@@ -110,20 +126,21 @@ bdc_quickmap <- function(data, lat = "decimalLatitude", lon = "decimalLongitude"
         y = "Latitude"
         # title = paste("Based on ", n_nrow_data, "points")
       ) +
-      ggplot2::geom_point(ggplot2::aes(
-        x = .data[[lon]],
-        y = .data[[lat]],
-        col = .data[[col_to_map]], # Map the column
-      ),
-      alpha = 1,
-      size = size
+      ggplot2::geom_point(
+        ggplot2::aes(
+          x = .data[[lon]],
+          y = .data[[lat]],
+          col = .data[[col_to_map]], # Map the column
+        ),
+        alpha = 1,
+        size = size
       ) +
       our_theme +
       ggplot2::coord_quickmap() +
       ggplot2::scale_color_manual(values = c("red", "blue"))
   } else {
-    # lon <- df[, lon] 
-    # lat <- df[, lat] 
+    # lon <- df[, lon]
+    # lat <- df[, lat]
     our_map <-
       df %>%
       ggplot2::ggplot() +
