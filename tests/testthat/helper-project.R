@@ -40,3 +40,49 @@ local_temp_project <- function(subdir = NULL, .local_envir = parent.frame()) {
 
   root
 }
+
+#' Expect the package checkout's own Output/Check file to stay untouched
+#'
+#' Records the modification time of `Output/Check/<file>` in the package
+#' checkout and, when `.local_envir` exits, expects it unchanged: a
+#' `save_outputs = TRUE` call must write into the test's own project, never
+#' into the checkout. Call it before `local_temp_project()`, which moves the
+#' working directory.
+#'
+#' @param file File name under `Output/Check`.
+#' @param .local_envir Environment whose exit triggers the check.
+#' @noRd
+local_package_check_untouched <- function(file, .local_envir = parent.frame()) {
+  pkg_file <- file.path(
+    testthat::test_path("..", ".."), "Output", "Check", file
+  )
+  pkg_file <- normalizePath(pkg_file, winslash = "/", mustWork = FALSE)
+  before <- file.info(pkg_file)$mtime
+  withr::defer(
+    expect_identical(
+      file.info(pkg_file)$mtime, before,
+      label = paste0("package checkout's Output/Check/", file, " mtime")
+    ),
+    envir = .local_envir
+  )
+  invisible(pkg_file)
+}
+
+#' Expect code to write nothing into the project
+#'
+#' Evaluates `code` inside a throwaway project (see `local_temp_project()`)
+#' and expects the project to hold nothing but its `.here` marker afterwards.
+#'
+#' @param code Code to evaluate, e.g. a call with `save_outputs = FALSE`.
+#' @return The value of `code`, invisibly.
+#' @noRd
+expect_writes_nothing <- function(code) {
+  root <- local_temp_project()
+  value <- code
+  expect_identical(
+    list.files(root, recursive = TRUE, all.files = TRUE),
+    ".here",
+    label = "files in the project after the call"
+  )
+  invisible(value)
+}

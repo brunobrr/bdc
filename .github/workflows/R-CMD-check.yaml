@@ -73,3 +73,88 @@ jobs:
           args: 'c("--no-manual", "--as-cran")'
           error-on: '"warning"'
           upload-snapshots: true
+
+  # Line coverage per file, written to the job summary as information for
+  # reviewers. There is no coverage service, badge or percentage gate: the
+  # coverage value never fails the build (#304).
+  coverage:
+    runs-on: ubuntu-latest
+
+    name: coverage
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+      # Same settings as the check: network and optional-package tests run
+      NOT_CRAN: true
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+          # rnaturalearthhires (Suggests) is not on CRAN; see
+          # Additional_repositories in DESCRIPTION
+          extra-repositories: https://ropensci.r-universe.dev
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::covr
+          needs: coverage
+
+      - name: Install gnparser (needed by bdc_clean_names() tests)
+        shell: bash
+        env:
+          GNPARSER_VERSION: v1.15.1
+        run: |
+          base="https://github.com/gnames/gnparser/releases/download/${GNPARSER_VERSION}"
+          dest="${RUNNER_TEMP}/gnparser"
+          mkdir -p "$dest"
+          curl -fsSL "${base}/gnparser-${GNPARSER_VERSION}-linux-x86.tar.gz" | tar -xz -C "$dest"
+          "$dest/gnparser" --version
+          echo "$dest" >> "$GITHUB_PATH"
+
+      - name: Measure coverage and write the job summary
+        shell: Rscript {0}
+        run: |
+          cov <- covr::package_coverage(
+            type = "tests",
+            quiet = FALSE,
+            clean = FALSE,
+            install_path = file.path(
+              normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"),
+              "package"
+            )
+          )
+          print(cov)
+
+          res <- covr::coverage_to_list(cov)
+          files <- sort(res$filecoverage)
+          summary <- c(
+            "## Test coverage (informational)",
+            "",
+            sprintf("**Total line coverage: %.1f%%**", res$totalcoverage),
+            "",
+            paste(
+              "Measured with `covr::package_coverage(type = \"tests\")`",
+              "and `NOT_CRAN=true` on Ubuntu. No threshold is enforced."
+            ),
+            "",
+            "| File | Line coverage |",
+            "|:-----|--------------:|",
+            sprintf("| `%s` | %.1f%% |", names(files), files)
+          )
+
+          out <- Sys.getenv("GITHUB_STEP_SUMMARY")
+          if (nzchar(out)) {
+            cat(summary, file = out, sep = "\n", append = TRUE)
+          } else {
+            cat(summary, sep = "\n")
+          }
+
+      - name: Show testthat output
+        if: always()
+        shell: bash
+        run: |
+          find "${RUNNER_TEMP}/package" -name 'testthat.Rout*' -exec cat '{}' \; || true

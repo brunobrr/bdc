@@ -176,3 +176,255 @@ test_that("bdc_query_names_taxadb() keeps case variants aligned when suggesting 
   expect_identical(res$original_search, sci_names)
   expect_equal(res$notes[1], "accepted")
 })
+
+# Branches and options ---------------------------------------------------------
+
+test_that("bdc_query_names_taxadb() rejects an unknown provider", {
+  local_fake_taxadb()
+
+  expect_error(
+    bdc_query_names_taxadb("Puma concolor", db = "not_a_db"),
+    "not_a_db provided is not a valid name"
+  )
+})
+
+test_that("bdc_query_names_taxadb() explains why fb and slb are unavailable", {
+  local_fake_taxadb()
+
+  for (db in c("fb", "slb")) {
+    expect_error(
+      bdc_query_names_taxadb("Puma concolor", db = db),
+      paste(db, "database is not available in taxadb version 22.12")
+    )
+  }
+})
+
+test_that("bdc_query_names_taxadb() rejects providers removed from taxadb", {
+  local_fake_taxadb()
+
+  for (db in c("iucn", "tpl", "wd")) {
+    expect_error(
+      bdc_query_names_taxadb("Puma concolor", db = db),
+      paste(db, "database is unavailable in taxadb package")
+    )
+  }
+})
+
+# "Aus bus" (T:1) is accepted; "Cus dus" (T:2) is a synonym whose accepted
+# name is `synonym_accepted_id`.
+synonym_rows <- function(synonym_accepted_id = "T:1") {
+  fake_dwc_taxa(
+    taxonID = c("T:1", "T:2"),
+    scientificName = c("Aus bus", "Cus dus"),
+    taxonRank = "species",
+    taxonomicStatus = c("accepted", "synonym"),
+    acceptedNameUsageID = c("T:1", synonym_accepted_id)
+  )
+}
+
+test_that("bdc_query_names_taxadb() replaces a synonym with its accepted name", {
+  local_fake_taxadb(synonym_rows())
+
+  res <- suppressMessages(bdc_query_names_taxadb("Cus dus", db = "gbif"))
+
+  expect_equal(res$original_search, "Cus dus")
+  expect_equal(res$scientificName, "Aus bus")
+  expect_equal(res$taxonomicStatus, "accepted")
+  expect_equal(res$acceptedNameUsageID, "T:1")
+  expect_equal(res$notes, "accepted | replaceSynonym")
+})
+
+test_that("bdc_query_names_taxadb() returns the accepted taxonID for a replaced synonym", {
+  skip("the synonym's taxonID is kept after replacement (#322)")
+  local_fake_taxadb(synonym_rows())
+
+  res <- suppressMessages(bdc_query_names_taxadb("Cus dus", db = "gbif"))
+
+  expect_equal(res$taxonID, "T:1")
+})
+
+test_that("bdc_query_names_taxadb() flags a synonym without accepted name", {
+  local_fake_taxadb(synonym_rows(synonym_accepted_id = NA))
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(c("Cus dus", "Aus bus"), db = "gbif")
+  )
+
+  # The synonym is kept as found, and only it is flagged.
+  expect_equal(res$scientificName, c("Cus dus", "Aus bus"))
+  expect_equal(res$taxonomicStatus, c("synonym", "accepted"))
+  expect_equal(res$notes, c("synonym | noAcceptedName", "accepted"))
+})
+
+test_that("bdc_query_names_taxadb() flags a synonym with several accepted names", {
+  skip("pro-parte synonyms are replaced by their first accepted name (#321)")
+  local_fake_taxadb(fake_dwc_taxa(
+    taxonID = c("T:1", "T:2", "T:3", "T:4"),
+    scientificName = c("Aus bus", "Cus dus", "Eus fus", "Eus fus"),
+    taxonRank = "species",
+    taxonomicStatus = c("accepted", "accepted", "synonym", "synonym"),
+    acceptedNameUsageID = c("T:1", "T:2", "T:1", "T:2")
+  ))
+
+  res <- suppressMessages(bdc_query_names_taxadb("Eus fus", db = "gbif"))
+
+  expect_equal(res$original_search, "Eus fus")
+  expect_match(res$notes, "multipleAccepted", fixed = TRUE)
+  expect_false(grepl("replaceSynonym", res$notes, fixed = TRUE))
+})
+
+test_that("bdc_query_names_taxadb(replace_synonyms = FALSE) keeps synonyms", {
+  local_fake_taxadb(synonym_rows())
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(
+      c("Cus dus", "Aus bus"),
+      db = "gbif", replace_synonyms = FALSE
+    )
+  )
+
+  expect_equal(res$scientificName, c("Cus dus", "Aus bus"))
+  expect_equal(res$taxonID, c("T:2", "T:1"))
+  expect_equal(res$taxonomicStatus, c("synonym", "accepted"))
+  expect_equal(res$acceptedNameUsageID, c("T:1", "T:1"))
+  expect_equal(res$notes, c("synonym", "accepted"))
+})
+
+test_that("bdc_query_names_taxadb(suggest_names = FALSE) does not fix misspellings", {
+  local_fake_taxadb()
+  taxa_tbl_calls <- 0
+  local_mocked_bindings(
+    taxa_tbl = function(...) {
+      taxa_tbl_calls <<- taxa_tbl_calls + 1
+      stop("fuzzy matching ran with suggest_names = FALSE")
+    },
+    .package = "taxadb"
+  )
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(
+      c("Puma concolar", "Puma concolor"),
+      db = "gbif", suggest_names = FALSE
+    )
+  )
+
+  expect_equal(taxa_tbl_calls, 0)
+  expect_equal(res$notes, c("notFound", "accepted"))
+  expect_true(all(is.na(res$suggested_name)))
+  expect_equal(res$scientificName, c(NA, "Puma concolor"))
+})
+
+# "Casearia" is an accepted genus name in both Animalia and Plantae, the
+# example given in the help page.
+casearia_rows <- function() {
+  fake_dwc_taxa(
+    taxonID = c("T:1", "T:2"),
+    scientificName = "Casearia",
+    taxonRank = "genus",
+    taxonomicStatus = "accepted",
+    kingdom = c("Animalia", "Plantae")
+  )
+}
+
+test_that("bdc_query_names_taxadb() flags a name with several accepted records", {
+  local_fake_taxadb(casearia_rows())
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(c("Casearia", "Casearia"), db = "gbif")
+  )
+
+  expect_equal(res$original_search, c("Casearia", "Casearia"))
+  expect_equal(res$notes, c("multipleAccepted", "multipleAccepted"))
+  expect_equal(res$scientificName, c(NA_character_, NA_character_))
+  expect_equal(res$kingdom, c(NA_character_, NA_character_))
+})
+
+test_that("bdc_query_names_taxadb() rank filtering keeps the requested kingdom", {
+  local_fake_taxadb(casearia_rows())
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(
+      "Casearia",
+      db = "gbif", rank = "kingdom", rank_name = "Animalia"
+    )
+  )
+
+  expect_equal(res$notes, "accepted")
+  expect_equal(res$scientificName, "Casearia")
+  expect_equal(res$taxonID, "T:1")
+  expect_equal(res$kingdom, "Animalia")
+})
+
+test_that("bdc_query_names_taxadb() rank filtering ignores database record order", {
+  skip("rank filtering only checks the second record of a name (#319)")
+  local_fake_taxadb(casearia_rows())
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(
+      "Casearia",
+      db = "gbif", rank = "kingdom", rank_name = "Plantae"
+    )
+  )
+
+  expect_equal(res$notes, "accepted")
+  expect_equal(res$taxonID, "T:2")
+  expect_equal(res$kingdom, "Plantae")
+})
+
+test_that("bdc_query_names_taxadb() reports misspellings sharing a suggestion", {
+  skip("the duplicate-suggestion message is never shown (#318)")
+  local_fake_taxadb()
+
+  expect_message(
+    bdc_query_names_taxadb(c("Puma concolar", "Puma concolr"), db = "gbif"),
+    "more than one sci_name with the same suggested name"
+  )
+})
+
+test_that("bdc_query_names_taxadb() suggests one name for two misspellings", {
+  local_fake_taxadb()
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(c("Puma concolar", "Puma concolr"), db = "gbif")
+  )
+
+  expect_equal(res$original_search, c("Puma concolar", "Puma concolr"))
+  expect_equal(res$suggested_name, c("Puma concolor", "Puma concolor"))
+  expect_equal(res$scientificName, c("Puma concolor", "Puma concolor"))
+  expect_equal(
+    res$notes,
+    c("accepted | wasMisspelled", "accepted | wasMisspelled")
+  )
+})
+
+test_that("bdc_query_names_taxadb(export_accepted = TRUE) writes the check file", {
+  root <- local_temp_project()
+  local_fake_taxadb(casearia_rows())
+  path <- file.path(root, "Output", "Check", "02_names_multiple_accepted_names.csv")
+
+  msgs <- capture_messages(
+    bdc_query_names_taxadb("Casearia", db = "gbif", export_accepted = TRUE)
+  )
+
+  # The message points to the file actually written.
+  expect_true(any(grepl(path, msgs, fixed = TRUE)))
+  expect_true(file.exists(path))
+  written <- readr::read_csv(path, show_col_types = FALSE)
+  expect_true(all(c("taxonID", "scientificName", "kingdom") %in% names(written)))
+})
+
+test_that("bdc_query_names_taxadb(export_accepted = TRUE) lists every candidate record", {
+  skip("the check file holds a single all-NA row (#320)")
+  root <- local_temp_project()
+  local_fake_taxadb(casearia_rows())
+  path <- file.path(root, "Output", "Check", "02_names_multiple_accepted_names.csv")
+
+  suppressMessages(
+    bdc_query_names_taxadb("Casearia", db = "gbif", export_accepted = TRUE)
+  )
+
+  written <- readr::read_csv(path, show_col_types = FALSE)
+  expect_setequal(written$taxonID, c("T:1", "T:2"))
+  expect_equal(written$scientificName, c("Casearia", "Casearia"))
+  expect_setequal(written$kingdom, c("Animalia", "Plantae"))
+})
