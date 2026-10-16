@@ -16,6 +16,14 @@
 #' "Output/Report" (e.g. "01_Report_Prefilter.csv"), which can be read back
 #' with `readr::read_csv()`.
 #'
+#' @details For "prefilter", "space" and "time", the report counts only the
+#' tests of that step (e.g., `.rou` and `.urb` for "space") and ignores test
+#' columns left by other steps, such as `.uncer_terms` from the taxonomy step.
+#' Its last row, "Summary of all tests", counts the records flagged by at least
+#' one test of that step. It can therefore be smaller than the number of
+#' records flagged in the `.summary` column created by [bdc_summary_col()],
+#' which considers every column starting with ".".
+#'
 #' @importFrom readr write_csv
 #' @importFrom dplyr summarise n pull mutate group_by add_row select everything
 #' mutate_if summarise_all rename if_else filter bind_rows

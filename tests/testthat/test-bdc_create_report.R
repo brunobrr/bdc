@@ -163,6 +163,22 @@ test_that("bdc_create_report() lists each space test", {
   expect_match(report_footnote(report), "4 records")
 })
 
+test_that("bdc_create_report() summarises only the tests of the step", {
+  local_temp_project()
+  # .uncer_terms comes from the taxonomy step, so the space report ignores it
+  x <- data.frame(
+    database_id = paste0("gbif_", 1:4),
+    .uncer_terms = c(FALSE, FALSE, TRUE, TRUE),
+    .rou = c(TRUE, TRUE, TRUE, FALSE)
+  )
+  report <- bdc_create_report(x, workflow_step = "space")
+  body <- report_body(report)
+
+  expect_equal(body$Test_name, c(".rou", ".summary"))
+  expect_equal(as.numeric(body$Records_flagged), c(1, 1))
+  expect_equal(sum(!bdc_summary_col(x)$.summary), 3)
+})
+
 test_that("bdc_create_report() adds the summary row to the space report", {
   local_temp_project()
   report <- bdc_create_report(space_input, workflow_step = "space")
