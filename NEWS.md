@@ -42,6 +42,7 @@ These changes can break scripts written for bdc 1.1.6. Details are in the bullet
 - `bdc_standardize_datasets()` now errors, and saves nothing, when none of the datasets in the `metadata` can be standardized. Previously it returned an empty table and, with `save_database = TRUE`, wrote an empty `00_merged_database` file that the next step read without explanation (#342).
 - `bdc_country_from_coordinates()`, `bdc_coordinates_transposed()` and `bdc_coordinates_country_inconsistent()` no longer print readr's column specification. `bdc_basisOfRecords_notStandard()` now lists the flagged values ("Flagged 0 records." when none) instead of printing `character(0)`. Typos fixed in messages from `bdc_filter_out_flags()`, `bdc_summary_col()` and `bdc_year_from_eventDate()` (#342).
 - `bdc_create_report()` help page now says it returns a `DT::datatable()` widget, not a data.frame (#342).
+- `bdc_create_report()`: the taxonomy report's `notFound` description no longer contains a line break and indentation (#344).
 - Fixed deprecation warnings in `bdc_standardize_country()` (tidyselect `.data[[var]]` -> `all_of()`) and `bdc_quickmap()` (ggplot2 `borders()` -> `annotation_borders()`) (#281).
 
 ## taxadb 0.3.0 compatibility (#278)
