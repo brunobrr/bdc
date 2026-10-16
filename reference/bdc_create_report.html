@@ -128,6 +128,16 @@ the same report is also saved as a data frame in a CSV file in
 "Output/Report" (e.g. "01_Report_Prefilter.csv"), which can be read back
 with <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_csv()</a></code>.</p>
     </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>For "prefilter", "space" and "time", the report counts only the
+tests of that step (e.g., <code>.rou</code> and <code>.urb</code> for "space") and ignores test
+columns left by other steps, such as <code>.uncer_terms</code> from the taxonomy step.
+Its last row, "Summary of all tests", counts the records flagged by at least
+one test of that step. It can therefore be smaller than the number of
+records flagged in the <code>.summary</code> column created by <code><a href="bdc_summary_col.html">bdc_summary_col()</a></code>,
+which considers every column starting with ".".</p>
+    </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
