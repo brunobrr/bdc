@@ -7,7 +7,8 @@ Geographical outliers,.otl,0,0
 Records around the GBIF headquarters,.gbf,0,0
 Records around biodiversity institutions,.inst,0,0
 Duplicated coordinates per species,.dpl,0,0
-Rounded (probably imprecise) coordinates,.rou,2,1.74
-Records within urban areas,.urb,6,5.22
+Rounded (probably imprecise) coordinates,.rou,2,1.75
+Records within urban areas,.urb,6,5.26
+Summary of all tests,.summary,8,7.02
 ,,,
-"(*) calculated in relation to total number of records, i.e. 115 records",,,
+"(*) calculated in relation to total number of records, i.e. 114 records",,,
