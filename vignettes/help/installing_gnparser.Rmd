@@ -12,303 +12,183 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
   out.width = "100%",
   echo = TRUE,
   warning = FALSE,
-  eval = F
+  eval = FALSE
 )
 ```
 
-This tutorial will guide you through the installation of `gnparser`, a required binary file for using our R package. The installation process varies depending on your operating system (Windows, macOS, or Linux).
+`bdc_clean_names()` uses [gnparser](https://github.com/gnames/gnparser), a
+small program that splits scientific names into their parts. gnparser is not
+an R package, so it must be installed separately, once per computer.
 
-We provide two installation options: using reproducible code or following a manual step-by-step installation. The first option is a quick and easy way to install the software. In case of errors, you can try the manual step-by-step approach.
+There are two ways to install it:
 
-### **Option 1: Run the following code**
+-   **Option 1** (recommended): copy one block of R code into the R console and
+    run it. It works on Windows, macOS and Linux, and needs no administrator
+    password.
+-   **Option 2**: download and copy the file by hand. Use it if Option 1 fails.
 
-Installing and loading bdc package
+### **Option 1: Install from R**
+
+**Step 1.** Install bdc, if you have not done so yet:
 
 ```{r}
 install.packages("bdc")
-library(bdc)
 ```
+
+**Step 2.** Copy the whole block below, paste it into the R console and press
+Enter. It finds out your operating system and processor, downloads the latest
+version of gnparser, and copies it to the folder where bdc looks for it.
+
+```{r}
+# Operating system ("win", "mac" or "linux") and processor ("x86" or "arm")
+os <- switch(Sys.info()[["sysname"]],
+  Windows = "win",
+  Darwin = "mac",
+  "linux"
+)
+arch <- if (R.version$arch %in% c("aarch64", "arm64")) "arm" else "x86"
+
+# Latest version of gnparser, e.g. "v1.15.1"
+version <- jsonlite::fromJSON(
+  "https://api.github.com/repos/gnames/gnparser/releases/latest"
+)$tag_name
+
+# Downloads and extracts gnparser into a temporary folder
+extension <- if (os == "win") ".zip" else ".tar.gz"
+url <- paste0(
+  "https://github.com/gnames/gnparser/releases/download/", version,
+  "/gnparser-", version, "-", os, "-", arch, extension
+)
+archive <- file.path(tempdir(), basename(url))
+download.file(url, archive, mode = "wb")
+if (os == "win") {
+  unzip(archive, exdir = tempdir())
+} else {
+  untar(archive, exdir = tempdir())
+}
+
+# Copies gnparser to the folder where bdc looks for it
+folder <- switch(os,
+  win = file.path(Sys.getenv("APPDATA"), "gnparser"),
+  mac = "~/Library/Application Support/gnparser",
+  linux = "~/bin"
+)
+program <- if (os == "win") "gnparser.exe" else "gnparser"
+dir.create(folder, recursive = TRUE, showWarnings = FALSE)
+file.copy(file.path(tempdir(), program), folder, overwrite = TRUE)
+Sys.chmod(file.path(folder, program), mode = "755")
+
+# Shows the installed version: if you see a version number, it worked
+rgnparser::gn_version()
+```
+
+**Step 3.** Restart R (in RStudio: *Session \> Restart R*) and go to
+[Testing the installation](#testing-the-installation).
 
 <br/>
 
-⚠ **Important**: Get the latest version of gnparser. The execution of this step is required independently of our operation system.
+### **Option 2: Manual installation**
 
-```{r}
-  get_latest_gnparser_version <- function() {
-    url <- "https://github.com/gnames/gnparser/releases"
-    
-    # Reads the content of the releases page
-    page <- xml2::read_html(url)
-    
-    # Extracts the first tag containing the version, using a CSS selector
-    version <- page %>%
-      rvest::html_element(".Link--primary") %>%
-      rvest::html_text2()
-    
-    version <- gsub("v", "", version)
-    return(version)
-  }
+First, download the file for your computer from the
+[gnparser releases page](https://github.com/gnames/gnparser/releases/latest),
+under *Assets*:
 
-  latest_version <- get_latest_gnparser_version()
-  message("Latest version of gnparser: ", latest_version)
-```
+| Computer                                       | File ending in     |
+|------------------------------------------------|--------------------|
+| Windows (most computers)                       | `-win-x86.zip`     |
+| Windows on ARM processors                      | `-win-arm.zip`     |
+| Mac with Apple processor (M1, M2, ...)         | `-mac-arm.tar.gz`  |
+| Mac with Intel processor                       | `-mac-x86.tar.gz`  |
+| Linux (most computers)                         | `-linux-x86.tar.gz`|
+| Linux on ARM processors                        | `-linux-arm.tar.gz`|
+
+To find your processor, run `R.version$arch` in R: `aarch64` or `arm64` means
+ARM (Apple processor on a Mac); anything else means x86.
 
 #### **Windows**
 
-**Download the lastest version of gnparser**
-
-```{r}
-link <- "https://github.com/gnames/gnparser/releases/download/"
-url_latest_version = paste0(link, "v", latest_version, "/gnparser-v", latest_version, "-win-arm.zip")
-file_name = here::here(paste0(latest_version, ".zip"))
-                      
-download.file(url_latest_version, file_name)
-```
-
-**Move file to the recommended directory**
-
-```{r}
-# Extracts the file in a temporary directory
-unzip(file_name, exdir = here::here())
-
-# Sets the destination filename
-AppData_path <- Sys.getenv("AppData")
-
-# Moves the executable to the target directory
-file.copy("gnparser.exe", AppData_path, recursive = TRUE)
-```
-
-<br/>
-
-#### **Linux**
-
-**Download the lastest version of gnparser**
-
-```{r}
-link <- "https://github.com/gnames/gnparser/releases/download/"
-url_latest_version = paste0(link, "v", latest_version, "/gnparser-v", latest_version, "-linux-arm.tar.gz")
-file_name = here::here(paste0(latest_version, ".tar.gz"))
-                      
-download.file(url_latest_version, file_name)
-```
-
-**Move file to the recommended directory**
-
-```{r}
-# Extracts the file in a temporary directory
-untar(file_name, exdir = here::here())
-
-# Moves the executable to the target directory
-file.copy(here::here("gnparser"), "~/bin")
-```
-
-<br/>
+1.  Open the *Downloads* folder, right-click the `.zip` file and choose
+    *Extract All*. You get a file named `gnparser.exe`.
+2.  Click the address bar of the File Explorer window, type `%APPDATA%` and
+    press Enter.
+3.  In that folder, create a new folder named `gnparser` and move
+    `gnparser.exe` into it. The file must end up in
+    `%APPDATA%\gnparser\gnparser.exe`.
 
 #### **macOS**
 
-⚠️**IMPORTANT:** Before installing gnparser, it is highly recommend to install Homebrew, which is a package manager for macOS and Linux that simplifies the installation of software and libraries directly from the terminal. You can use the steps below to install Homebrew. Moreover, a detailed explanation on how to install homebrew can be found in [this video](https://www.youtube.com/watch?v=IWJKRmFLn-g&ab_channel=EasyOSX).
+1.  Open the *Downloads* folder and double-click the `.tar.gz` file. You get a
+    file named `gnparser`.
+2.  In Finder, choose *Go \> Go to Folder...*, type
+    `~/Library/Application Support` and press Enter.
+3.  In that folder, create a new folder named `gnparser` and move the
+    `gnparser` file into it.
+4.  macOS blocks programs downloaded with a web browser. To unblock gnparser,
+    open Terminal (press `Command + Space`, type "Terminal" and press Enter),
+    paste this line and press Enter:
 
-1.  **Open Terminal**
-
-    -   Press `Command + Space` to open Spotlight Search
-    -   Type "Terminal" and press Enter
-    -   A new window will appear - this is your Terminal
-
-2.  **Using Homebrew (Recommended)**
-
-    -   In the Terminal window, paste and run these commands:
-
-``` bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-3.  **Install gnparser** **using brew**
-
-``` bash
-brew tap gnames/gn 
-brew install gnparser
-```
-
-After that, close the terminal and **refresh the R section**.
-
-<br/>
-
-### **Option 2: Manual Installation**
-
-#### **Windows**
-
-1.  **Download the installer**
-
-    -   Go to [gnparser releases](https://github.com/gnames/gnparser/releases)
-    -   Download the Windows version (file ending in `-win-64.zip`)
-    -   Save it to a known location on your computer
-
-2.  **Open Command Prompt**
-
-    -   Press `Windows + R` on your keyboard
-    -   Type `cmd` and press Enter
-    -   A black window will appear - this is your Command Prompt
-
-3.  **Create installation directory**
-
-    -   In the Command Prompt window, type:
-
-    ``` cmd
-    mkdir C:\bin
+    ``` bash
+    xattr -d com.apple.quarantine ~/Library/Application\ Support/gnparser/gnparser
     ```
 
-4.  **Extract and move the file**
-
-    -   Extract the downloaded zip file
-
-    -   Copy the `gnparser.exe` file to C:\bin using either:
-
-        -   Windows Explorer (drag and drop)
-        -   Or Command Prompt:
-
-        ``` cmd
-        copy path\to\downloaded\gnparser.exe C:\bin
-        ```
-
-5.  **Add to System Path**
-
-    -   Press `Windows + X` and select "System"
-    -   Click "Advanced system settings"
-    -   Click "Environment Variables"
-    -   Under "System variables", find and select "Path"
-    -   Click "Edit"
-    -   Click "New"
-    -   Add `C:\bin`
-    -   Click "OK" on all windows
-
-6.  **Verify installation**
-
-    -   Open a new Command Prompt window
-    -   Type:
-
-    ``` cmd
-    gnparser --version
-    ```
-
-    -   If you see a version number, the installation was successful
-
-<br/>
+If you use [Homebrew](https://brew.sh), you can instead run
+`brew tap gnames/gn` and then `brew install gnparser` in Terminal.
 
 #### **Linux**
 
-1.  **Open Terminal**
+Open a terminal (`Ctrl + Alt + T` on most distributions) and run the lines
+below. Replace `x86` with `arm` on ARM processors, and `v1.15.1` with the
+latest version shown on the releases page.
 
-    -   Press `Ctrl + Alt + T` (on most Linux distributions)
-    -   Or find Terminal in your applications menu
-    -   A new window will appear - this is your Terminal
-
-2.  **Download the binary**
-
-    -   In the Terminal window, run these commands:
-
-    ``` bash
-    # Create a temporary directory
-    mkdir -p ~/tmp
-    cd ~/tmp
-
-    # Download the latest Linux version
-    wget https://github.com/gnames/gnparser/releases/download/v1.10.1/gnparser-v1.10.1-linux.tar.gz
-
-    # Extract the file
-    tar xvf gnparser-*.tar.gz
-
-    # Move to system directory
-    sudo mv gnparser /usr/local/bin
-    ```
-
-3.  **Verify installation**
-
-    `bash gnparser --version`
+``` bash
+cd ~/Downloads
+curl -LO https://github.com/gnames/gnparser/releases/download/v1.15.1/gnparser-v1.15.1-linux-x86.tar.gz
+tar xvf gnparser-v1.15.1-linux-x86.tar.gz
+mkdir -p ~/bin
+mv gnparser ~/bin/
+```
 
 <br/>
 
-#### **macOS**
+### **Testing the installation**
 
-1.  **Open Terminal**
+Restart R and run:
 
-    -   Press `Command + Space` to open Spotlight Search
-    -   Type "Terminal" and press Enter
-    -   A new window will appear - this is your Terminal
+```{r}
+# Shows the installed version of gnparser
+rgnparser::gn_version()
 
-2.  **Using Homebrew (Recommended)**
+# Cleans three spellings of the same name
+bdc::bdc_clean_names(
+  c("OCOTEA odorifera", "ocotea odorifera", "ocotea cf. odorifera")
+)
+```
 
-    -   In the Terminal window, paste and run these commands:
-
-    ``` bash
-    # Install Homebrew if you haven't already
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    # Install gnparser
-    brew tap gnames/gn
-    brew install gnparser
-    ```
-
-3.  **Manual Installation**
-
-    -   Download the macOS version (file ending in `-mac.tar.gz`) from [gnparser releases](https://github.com/gnames/gnparser/releases)
-    -   Open Terminal (Applications \> Utilities \> Terminal)
-    -   Navigate to the download directory:
-
-    ``` bash
-    cd ~/Downloads
-    ```
-
-    -   Extract the file:
-
-    ``` bash
-    tar xvf gnparser-v*.tar.gz
-    ```
-
-    -   Move to system directory:
-
-    ``` bash
-    sudo mv gnparser /usr/local/bin
-    ```
-
-    -   You may need to allow the application in System Preferences:
-        -   Go to System Preferences \> Security & Privacy
-        -   Click the lock to make changes
-        -   Allow gnparser to run \`\`\`
+If you see a version number and a table with the cleaned names, gnparser is
+installed.
 
 <br/>
 
 ### **Troubleshooting**
 
-If you encounter any issues:
-
-1.  **Command not found**
-
-    -   Make sure you've added the correct directory to your system PATH
-    -   Try closing and reopening your terminal/command prompt
-
-2.  **Permission denied**
-
-    -   On macOS/Linux, you may need to make the file executable:
-
-    ``` bash
-    chmod +x /usr/local/bin/gnparser
-    ```
-
-3.  **Security warnings**
-
-    -   On macOS: Go to System Preferences \> Security & Privacy and allow the application
-    -   On Windows: You might need to run as administrator
-
-### **Testing the Installation**
-
-After installation, test if gnparser is working correctly:
-
-```{r}
-# In R, try parsing a scientific name
-test <-
-  bdc::bdc_clean_names(c("OCOTEA odorifera", "ocotea odorifera", "ocotea cf. odorifera"))
-```
+-   **"gnparser not found" or "GNparser is not installed in your machine"**:
+    restart R and try again. If the message persists, check that the file is in
+    the right folder: `%APPDATA%\gnparser\gnparser.exe` on Windows,
+    `~/Library/Application Support/gnparser/gnparser` on macOS, or
+    `~/bin/gnparser` on Linux.
+-   **Option 1 stops at `jsonlite::fromJSON()` with "HTTP error 403"**: GitHub
+    limits how often a computer can ask for the latest version. Wait an hour
+    and try again, or use Option 2.
+-   **Option 1 stops at `download.file()`**: check your internet connection.
+    Networks with a proxy or firewall (e.g. at universities) may block the
+    download; in that case, use Option 2.
+-   **macOS says gnparser "cannot be opened because the developer cannot be
+    verified"**: run the `xattr` line from step 4 of the macOS manual
+    installation.
+-   **Windows: the antivirus removes `gnparser.exe`**: allow the file in the
+    antivirus settings and copy it again.
+-   **Linux: "Permission denied"**: make the file executable with
+    `chmod +x ~/bin/gnparser`.

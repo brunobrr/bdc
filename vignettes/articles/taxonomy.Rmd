@@ -26,7 +26,7 @@ library(bdc)
 
 #### **Introduction**
 
-The combination of large datasets from several sources requires careful harmonization of taxon names. Non-standardized, incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The *bdc* package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one out of 10 taxonomic databases**. The taxonomic harmonization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
+The combination of large datasets from several sources requires careful harmonization of taxon names. Non-standardized, incorrect, ambiguous, or synonymous taxonomic names can lead to **unreliable results and conclusions**. The *bdc* package includes tools to help standardize **major taxonomic groups' names** (e.g., animals and plants) by comparing scientific names against **one of several taxonomic databases**. The taxonomic harmonization process borrows heavily from [Norman et al. (2020); taxadb package)](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440), which contains functions that allow **querying millions of taxonomic names** in a fast, automated, and consistent way using high-quality locally stored taxonomic databases.
 
 The functions used to harmonize names (*bdc_clean_name* and *bdc_query_names_taxadb*) **contain several additions to the *taxadb* package**, including tools for:
 
@@ -36,24 +36,19 @@ The functions used to harmonize names (*bdc_clean_name* and *bdc_query_names_tax
 4.  Flagging ambiguous results;
 5.  Reporting the results.
 
-The taxonomic harmonization is based on one taxonomic database chosen by the user. *taxadb* makes available the following taxonomic sources:
+The taxonomic harmonization is based on one taxonomic database chosen by the user. *bdc* reads version 22.12 of the *taxadb* databases, which makes available the following taxonomic sources:
 
-| Abbreviation | Taxonomic database                                        |
-|--------------|-----------------------------------------------------------|
-| col          | Catalogue of Life                                         |
-| fb           | FishBase                                                  |
-| itis         | Integrated Taxonomic Information System                   |
-| iucn         | International Union for Conservation of Nature's Red List |
-| gbif         | Global Biodiversity Information Facility                  |
-| ncbi         | National Center for Biotechnology Information             |
-| ott          | OpenTree Taxonomy                                         |
-| tpl          | The Plant List                                            |
-| slb          | SeaLifeBase                                               |
-| wd           | Wikidata                                                  |
+| Abbreviation | Taxonomic database                            |
+|--------------|-----------------------------------------------|
+| col          | Catalogue of Life                             |
+| gbif         | Global Biodiversity Information Facility      |
+| itis         | Integrated Taxonomic Information System       |
+| ncbi         | National Center for Biotechnology Information |
+| ott          | OpenTree Taxonomy                             |
 
 ⚠️**IMPORTANT:**
 
-Note that some taxonomic databases may be *momentarily unavailable* in taxadb. Check ?bdc_query_names_taxadb for a list of available taxonomic databases.
+FishBase (`fb`) and SeaLifeBase (`slb`) are published by *taxadb* only in its 2026 data version, so they are not available in *bdc*. The Plant List (`tpl`), Wikidata (`wd`), and the IUCN Red List (`iucn`) are no longer published by *taxadb*. Check ?bdc_query_names_taxadb for details.
 
 #### **Installation**
 
@@ -146,7 +141,7 @@ DT::datatable(
 )
 ```
 
-**Let's merge the names parsed with the complete database.** As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncert_terms" will be used in the downstream analyses. But don't worry, you can check the results of the parsing names process in "Output/Check/02_parsed_names.csv".
+**Let's merge the names parsed with the complete database.** As the column 'scientificName' is in the same order in both databases (i.e., parse_names and database), we can append names parsed in the database. Also, only the columns "names_clean" and ".uncer_terms" will be used in the downstream analyses. But don't worry, you can check the results of the parsing names process in "Output/Check/02_parsed_names.csv".
 
 ```{r}
 parse_names <-
@@ -274,7 +269,7 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 # output <-
 #   bdc_filter_out_names(
 #     data = database,
-#     taxonomic_notes = "accepted",
+#     taxonomic_status = "accepted",
 #     opposite = FALSE
 #   )
 ```
@@ -284,7 +279,7 @@ It is possible to remove records with unresolved or invalid names to get a 'clea
 You can use [qs2::qs_save()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
-# use qs2::qs_save() to save the database in a compressed format and then qs:qread() to load the database
+# use qs2::qs_save() to save the database in a compressed format and then qs2::qs_read() to load the database
 database %>%
   readr::write_csv(.,
             here::here("Output", "Intermediate", "02_taxonomy_database.csv"))

@@ -79,13 +79,15 @@ rownames = FALSE,
 )
 ```
 
-**Changing the path containing the datasets.**
+**Changing the path containing the datasets (optional).**
+
+The configuration table above points to the example datasets on GitHub, so you can skip this step to run the example. Use it only when the datasets are saved in a folder on your computer, replacing the path below with that folder; otherwise, every dataset is excluded from the merged database because its file is not found.
 
 ```{r eval=FALSE}
-# Path to the folder containing the example datasets. For instance:
+# Path to the folder containing the datasets. For instance:
 path <- "C:/Users/myname/Documents/myproject/input_files/"
 
-# Change in the Configuration table the path to the folder in your computer containing the example datasets
+# Change in the Configuration table the path to the folder in your computer containing the datasets
 metadata$fileName <-
   gsub(pattern = "https://raw.githubusercontent.com/brunobrr/bdc/master/inst/extdata/input_files/",
        replacement = path,
@@ -96,7 +98,7 @@ metadata$fileName <-
 
 #### **Standardization and integration of datasets**
 
-Now, let's merge the different datasets into a standardized database. Note that the standardized database integrating all dataset can be saved in the folder **"Output/Intermediate" as "00_merged_database"** if `save_database = TRUE` . The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package.
+Now, let's merge the different datasets into a standardized database. Note that the standardized database integrating all dataset can be saved in the folder **"Output/Intermediate" as "00_merged_database"** if `save_database = TRUE` . The database is saved with a **"csv"** or **"qs2"** extension, being "qs2" a helpful format for quickly saving and reading large databases. "qs2" files can be read using the function "qs_read" from the "qs2" package.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 database <-
@@ -105,17 +107,16 @@ bdc_standardize_datasets(metadata = metadata,
                          overwrite = TRUE,
                          save_database = TRUE)
 
-#>  0sStandardizing AT_EPIPHYTES file
-#>  0s 0sStandardizing BIEN file
-#>  0s 0sStandardizing DRYFLOR file
-#>  0s 0sStandardizing GBIF file
-#>  0s 0sStandardizing ICMBIO file
-#>  0s 0sStandardizing IDIGBIO file
-#>  0s 0sStandardizing NEOTROPTREE file
-#>  0s 0sStandardizing SIBBR file
-#>  0s 0sStandardizing SPECIESLINK file
-#>
-#> C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Intermediate/00_merged_database.csv was created
+#> Standardizing AT_EPIPHYTES file
+#> Standardizing BIEN file
+#> Standardizing DRYFLOR file
+#> Standardizing GBIF file
+#> Standardizing ICMBIO file
+#> Standardizing IDIGBIO file
+#> Standardizing NEOTROPTREE file
+#> Standardizing SIBBR file
+#> Standardizing SPECIESLINK file
+#> Standardized database was saved in /path/to/your/project/Output/Intermediate/00_merged_database.csv
 ```
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
