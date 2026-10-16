@@ -42,8 +42,6 @@ test_that("bdc_quickmap() colours records by a logical flag column", {
 })
 
 test_that("bdc_quickmap() rejects a col_to_map that is neither a column nor a colour", {
-  skip("a non-existent column only fails when the map is drawn (#331)")
-
   expect_error(
     bdc_quickmap(
       data = records,

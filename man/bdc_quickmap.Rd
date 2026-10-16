@@ -24,7 +24,7 @@ expressed in decimal degree and in WGS84. Default = "decimalLongitude".}
 
 \item{col_to_map}{character string. Defining the column or color used to map.
 It can be a color name (e.g., "red") or the name of a column of data. Default
-= "blue"}
+= "red"}
 
 \item{size}{numeric. The size of the points.}
 }
