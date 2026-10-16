@@ -83,23 +83,23 @@ bdc_suggest_names_taxadb <-
 
     first_letter <- toupper(first_letter)
 
-    # Should taxonomic database be filtered according to a taxonomic rank name?
-    if (!is.null(rank_name) & !is.null(rank)) {
-      species_first_letter <-
-        suppressMessages(taxadb::taxa_tbl(provider, version = db_version)) %>%
-        dplyr::filter(., .data[[rank]] == rank_name | is.na(.data[[rank]])) %>%
-        dplyr::pull(scientificName) %>%
-        grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
-    } else if (is.null(rank_name) & !is.null(rank)) {
+    if (is.null(rank_name) != is.null(rank)) {
       stop("Please, provide both 'rank_name' and 'rank' arguments")
-    } else if (!is.null(rank_name) & is.null(rank)) {
-      stop("Please, provide both 'rank_name' and 'rank' arguments")
-    } else {
-      species_first_letter <-
-        suppressMessages(taxadb::taxa_tbl(provider, version = db_version)) %>%
-        dplyr::pull(scientificName) %>%
-        grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
     }
+
+    taxa <- suppressMessages(taxadb::taxa_tbl(provider, version = db_version))
+
+    # Should taxonomic database be filtered according to a taxonomic rank name?
+    if (!is.null(rank)) {
+      taxa <-
+        taxa %>%
+        dplyr::filter(.data[[rank]] == rank_name | is.na(.data[[rank]]))
+    }
+
+    species_first_letter <-
+      taxa %>%
+      dplyr::pull(scientificName) %>%
+      grep(paste0("^", first_letter, collapse = "|"), ., value = TRUE)
 
     # Should parallel processing be used?
     if (parallel == TRUE) {

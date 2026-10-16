@@ -14,6 +14,22 @@ check_require_github <- function(pkg) {
   invisible(TRUE)
 }
 
+#' Internal function. Check that rank and rank_name come together
+#'
+#' @param rank,rank_name See bdc_query_names_taxadb().
+#' @return TRUE, invisibly; errors when only one of them is supplied.
+#' @noRd
+bdc_check_rank_args <- function(rank, rank_name) {
+  if (is.null(rank) != is.null(rank_name)) {
+    stop(
+      "Please, provide both 'rank' and 'rank_name' arguments, or neither ",
+      "(supplied: ", if (is.null(rank)) "'rank_name'" else "'rank'", ")",
+      call. = FALSE
+    )
+  }
+  invisible(TRUE)
+}
+
 has_table <- function(table = NULL, db = td_connect()) {
   if (is.null(db)) {
     return(FALSE)

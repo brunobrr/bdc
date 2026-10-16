@@ -221,13 +221,7 @@ bdc_query_names_taxadb <-
     }
 
     # Filtering by a taxonomic rank needs both the rank and its name
-    if (is.null(rank) != is.null(rank_name)) {
-      stop(
-        "Please, provide both 'rank' and 'rank_name' arguments, or neither ",
-        "(supplied: ", if (is.null(rank)) "'rank_name'" else "'rank'", ")",
-        call. = FALSE
-      )
-    }
+    bdc_check_rank_args(rank, rank_name)
 
     # Every available provider is pinned to the same taxadb version, for
     # reproducibility.
