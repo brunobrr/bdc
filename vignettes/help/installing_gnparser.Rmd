@@ -35,26 +35,20 @@ library(bdc)
 
 <br/>
 
-⚠ **Important**: Get the latest version of gnparser. The execution of this step is required independently of our operation system.
+⚠ **Important**: Get the latest version of gnparser and the binary for your processor. The execution of this step is required independently of your operating system.
 
 ```{r}
-  get_latest_gnparser_version <- function() {
-    url <- "https://github.com/gnames/gnparser/releases"
-    
-    # Reads the content of the releases page
-    page <- xml2::read_html(url)
-    
-    # Extracts the first tag containing the version, using a CSS selector
-    version <- page %>%
-      rvest::html_element(".Link--primary") %>%
-      rvest::html_text2()
-    
-    version <- gsub("v", "", version)
-    return(version)
-  }
+# Latest release, from the GitHub API
+latest_version <-
+  jsonlite::fromJSON(
+    "https://api.github.com/repos/gnames/gnparser/releases/latest"
+  )$tag_name
+latest_version <- sub("^v", "", latest_version)
+message("Latest version of gnparser: ", latest_version)
 
-  latest_version <- get_latest_gnparser_version()
-  message("Latest version of gnparser: ", latest_version)
+# Binaries are published for x86 (Intel/AMD) and arm (e.g., Apple silicon,
+# Windows on ARM) processors
+arch <- if (R.version$arch %in% c("aarch64", "arm64")) "arm" else "x86"
 ```
 
 #### **Windows**
@@ -63,7 +57,7 @@ library(bdc)
 
 ```{r}
 link <- "https://github.com/gnames/gnparser/releases/download/"
-url_latest_version = paste0(link, "v", latest_version, "/gnparser-v", latest_version, "-win-arm.zip")
+url_latest_version = paste0(link, "v", latest_version, "/gnparser-v", latest_version, "-win-", arch, ".zip")
 file_name = here::here(paste0(latest_version, ".zip"))
                       
 download.file(url_latest_version, file_name)
@@ -90,7 +84,7 @@ file.copy("gnparser.exe", AppData_path, recursive = TRUE)
 
 ```{r}
 link <- "https://github.com/gnames/gnparser/releases/download/"
-url_latest_version = paste0(link, "v", latest_version, "/gnparser-v", latest_version, "-linux-arm.tar.gz")
+url_latest_version = paste0(link, "v", latest_version, "/gnparser-v", latest_version, "-linux-", arch, ".tar.gz")
 file_name = here::here(paste0(latest_version, ".tar.gz"))
                       
 download.file(url_latest_version, file_name)
@@ -144,7 +138,7 @@ After that, close the terminal and **refresh the R section**.
 1.  **Download the installer**
 
     -   Go to [gnparser releases](https://github.com/gnames/gnparser/releases)
-    -   Download the Windows version (file ending in `-win-64.zip`)
+    -   Download the Windows version (file ending in `-win-x86.zip`, or `-win-arm.zip` on ARM processors)
     -   Save it to a known location on your computer
 
 2.  **Open Command Prompt**
@@ -215,8 +209,10 @@ After that, close the terminal and **refresh the R section**.
     mkdir -p ~/tmp
     cd ~/tmp
 
-    # Download the latest Linux version
-    wget https://github.com/gnames/gnparser/releases/download/v1.10.1/gnparser-v1.10.1-linux.tar.gz
+    # Download the Linux version; check the latest version number at
+    # https://github.com/gnames/gnparser/releases and use linux-arm
+    # instead of linux-x86 on ARM processors
+    wget https://github.com/gnames/gnparser/releases/download/v1.15.1/gnparser-v1.15.1-linux-x86.tar.gz
 
     # Extract the file
     tar xvf gnparser-*.tar.gz
@@ -254,7 +250,7 @@ After that, close the terminal and **refresh the R section**.
 
 3.  **Manual Installation**
 
-    -   Download the macOS version (file ending in `-mac.tar.gz`) from [gnparser releases](https://github.com/gnames/gnparser/releases)
+    -   Download the macOS version from [gnparser releases](https://github.com/gnames/gnparser/releases): the file ending in `-mac-arm.tar.gz` for Apple silicon (M1 and later) or `-mac-x86.tar.gz` for Intel Macs
     -   Open Terminal (Applications \> Utilities \> Terminal)
     -   Navigate to the download directory:
 
@@ -277,7 +273,7 @@ After that, close the terminal and **refresh the R section**.
     -   You may need to allow the application in System Preferences:
         -   Go to System Preferences \> Security & Privacy
         -   Click the lock to make changes
-        -   Allow gnparser to run \`\`\`
+        -   Allow gnparser to run
 
 <br/>
 
