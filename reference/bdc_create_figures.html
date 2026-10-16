@@ -129,8 +129,11 @@ inspection? Default = FALSE.</p></dd>
     <div id="value">
     <h2>Value</h2>
     <p>List containing figures showing the results of data quality test
-implemented in one module of bdc. When save_figures = TRUE, figures are
-also saved locally in a png format.</p>
+implemented in one module of bdc. Bar plots are named after their test
+column and maps after their test column with the suffix <code>_map</code> (e.g.,
+<code>.equ</code> and <code>.equ_map</code>). When save_figures = TRUE, figures are also saved
+locally in a png format, one file per figure: bar plots as
+<code>&lt;step&gt;_&lt;column&gt;_BAR.png</code> and those maps as <code>&lt;step&gt;_&lt;column&gt;_MAP.png</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -161,13 +164,13 @@ saved in "Output/Figures" if save_figures == TRUE.</p>
 <span class="r-in"><span>  <span class="va">.summary</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">figures</span> <span class="op">&lt;-</span> </span></span>
-<span class="r-in"><span><span class="fu">bdc_create_figures</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  data <span class="op">=</span> <span class="va">x</span>, </span></span>
-<span class="r-in"><span>  database_id <span class="op">=</span> <span class="st">"database_id"</span>,</span></span>
-<span class="r-in"><span>  workflow_step <span class="op">=</span> <span class="st">"prefilter"</span>,</span></span>
-<span class="r-in"><span>  save_figures <span class="op">=</span> <span class="cn">FALSE</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">figures</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu">bdc_create_figures</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">x</span>,</span></span>
+<span class="r-in"><span>    database_id <span class="op">=</span> <span class="st">"database_id"</span>,</span></span>
+<span class="r-in"><span>    workflow_step <span class="op">=</span> <span class="st">"prefilter"</span>,</span></span>
+<span class="r-in"><span>    save_figures <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
