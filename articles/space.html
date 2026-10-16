@@ -237,15 +237,7 @@ package <a href="https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-21
 <span><span class="co">#&gt; Flagged 0 records.</span></span>
 <span><span class="co">#&gt; Testing urban areas</span></span>
 <span><span class="co">#&gt; Downloading urban areas via rnaturalearth</span></span>
-<span><span class="co">#&gt; trying URL 'http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/50m/cultural/ne_50m_urban_areas.zip'</span></span>
-<span><span class="co">#&gt; Content type 'application/zip' length 452644 bytes (442 KB)</span></span>
-<span><span class="co">#&gt; downloaded 442 KB</span></span>
-<span><span class="co">#&gt;</span></span>
-<span><span class="co">#&gt; OGR data source with driver: ESRI Shapefile</span></span>
-<span><span class="co">#&gt; Source: "C:\Users\Bruno R. Ribeiro\AppData\Local\Temp\RtmpCo3Lyf", layer: "ne_50m_urban_areas"</span></span>
-<span><span class="co">#&gt; with 2143 features</span></span>
-<span><span class="co">#&gt; It has 4 fields</span></span>
-<span><span class="co">#&gt; Integer64 fields read as strings:  scalerank</span></span>
+<span><span class="co">#&gt; Reading 'ne_50m_urban_areas.zip' from naturalearth...</span></span>
 <span><span class="co">#&gt; Flagged 6 records.</span></span>
 <span><span class="co">#&gt; Testing geographic outliers</span></span>
 <span><span class="co">#&gt; Testing GBIF headquarters, flagging records around Copenhagen</span></span>
@@ -358,7 +350,7 @@ records will be removed in the final module of the package.</p>
 <p>You can use <u>qs2::qs_save()</u> instead of write_csv to save a
 large database in a compressed format.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># use qs2::qs_save() to save the database in a compressed format and then qs:qread() to load the database</span></span>
+<code class="sourceCode R"><span><span class="co"># use qs2::qs_save() to save the database in a compressed format and then qs2::qs_read() to load the database</span></span>
 <span><span class="va">check_space</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"03_space_database.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>

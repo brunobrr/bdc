@@ -271,7 +271,7 @@ package</div>
 <strong>Saving a “raw” database</strong><a class="anchor" aria-label="anchor" href="#saving-a-raw-database"></a>
 </h4>
 <p>Save the original database containing the results of all data quality
-tests appended in separate columns. You can use <u>qs2::qs_read()</u>
+tests appended in separate columns. You can use <u>qs2::qs_save()</u>
 instead of write_csv to save a large database in a compressed
 format.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -305,7 +305,7 @@ considered “fitness-for-use” after the data-cleaning process.</p>
 <p>You can use <u>qs2::qs_save()</u> instead of write_csv to save a
 large database in a compressed format.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># use qs2::qs_save() to save the database in a compressed format and then qs:qread() to load the database</span></span>
+<code class="sourceCode R"><span><span class="co"># use qs2::qs_save() to save the database in a compressed format and then qs2::qs_read() to load the database</span></span>
 <span><span class="va">output</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"05_cleaned_database.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>

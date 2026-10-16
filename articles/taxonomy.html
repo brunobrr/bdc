@@ -133,7 +133,7 @@ ambiguous, or synonymous taxonomic names can lead to <strong>unreliable
 results and conclusions</strong>. The <em>bdc</em> package includes
 tools to help standardize <strong>major taxonomic groups’ names</strong>
 (e.g., animals and plants) by comparing scientific names against
-<strong>one out of 10 taxonomic databases</strong>. The taxonomic
+<strong>one of several taxonomic databases</strong>. The taxonomic
 harmonization process borrows heavily from <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.13440" class="external-link">Norman
 et al. (2020); taxadb package)</a>, which contains functions that allow
 <strong>querying millions of taxonomic names</strong> in a fast,
@@ -151,13 +151,9 @@ matching application;</li>
 <li>Reporting the results.</li>
 </ol>
 <p>The taxonomic harmonization is based on one taxonomic database chosen
-by the user. <em>taxadb</em> makes available the following taxonomic
-sources:</p>
+by the user. <em>bdc</em> reads version 22.12 of the <em>taxadb</em>
+databases, which makes available the following taxonomic sources:</p>
 <table class="table">
-<colgroup>
-<col width="19%">
-<col width="80%">
-</colgroup>
 <thead><tr class="header">
 <th>Abbreviation</th>
 <th>Taxonomic database</th>
@@ -168,20 +164,12 @@ sources:</p>
 <td>Catalogue of Life</td>
 </tr>
 <tr class="even">
-<td>fb</td>
-<td>FishBase</td>
+<td>gbif</td>
+<td>Global Biodiversity Information Facility</td>
 </tr>
 <tr class="odd">
 <td>itis</td>
 <td>Integrated Taxonomic Information System</td>
-</tr>
-<tr class="even">
-<td>iucn</td>
-<td>International Union for Conservation of Nature’s Red List</td>
-</tr>
-<tr class="odd">
-<td>gbif</td>
-<td>Global Biodiversity Information Facility</td>
 </tr>
 <tr class="even">
 <td>ncbi</td>
@@ -191,24 +179,15 @@ sources:</p>
 <td>ott</td>
 <td>OpenTree Taxonomy</td>
 </tr>
-<tr class="even">
-<td>tpl</td>
-<td>The Plant List</td>
-</tr>
-<tr class="odd">
-<td>slb</td>
-<td>SeaLifeBase</td>
-</tr>
-<tr class="even">
-<td>wd</td>
-<td>Wikidata</td>
-</tr>
 </tbody>
 </table>
 <p>⚠️<strong>IMPORTANT:</strong></p>
-<p>Note that some taxonomic databases may be <em>momentarily
-unavailable</em> in taxadb. Check ?bdc_query_names_taxadb for a list of
-available taxonomic databases.</p>
+<p>FishBase (<code>fb</code>) and SeaLifeBase (<code>slb</code>) are
+published by <em>taxadb</em> only in its 2026 data version, so they are
+not available in <em>bdc</em>. The Plant List (<code>tpl</code>),
+Wikidata (<code>wd</code>), and the IUCN Red List (<code>iucn</code>)
+are no longer published by <em>taxadb</em>. Check
+?bdc_query_names_taxadb for details.</p>
 </div>
 <div class="section level4">
 <h4 id="installation">
@@ -274,8 +253,8 @@ name using gnpaser.</li>
 database.</strong> As the column ‘scientificName’ is in the same order
 in both databases (i.e., parse_names and database), we can append names
 parsed in the database. Also, only the columns “names_clean” and
-“.uncert_terms” will be used in the downstream analyses. But don’t
-worry, you can check the results of the parsing names process in
+“.uncer_terms” will be used in the downstream analyses. But don’t worry,
+you can check the results of the parsing names process in
 “Output/Check/02_parsed_names.csv”.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">parse_names</span> <span class="op">&lt;-</span></span>
@@ -381,7 +360,7 @@ suspect records will be removed in the final module of the package.</p>
 <code class="sourceCode R"><span><span class="co"># output &lt;-</span></span>
 <span><span class="co">#   bdc_filter_out_names(</span></span>
 <span><span class="co">#     data = database,</span></span>
-<span><span class="co">#     taxonomic_notes = "accepted",</span></span>
+<span><span class="co">#     taxonomic_status = "accepted",</span></span>
 <span><span class="co">#     opposite = FALSE</span></span>
 <span><span class="co">#   )</span></span></code></pre></div>
 </div>
@@ -392,7 +371,7 @@ suspect records will be removed in the final module of the package.</p>
 <p>You can use <u>qs2::qs_save()</u> instead of write_csv to save a
 large database in a compressed format.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># use qs2::qs_save() to save the database in a compressed format and then qs:qread() to load the database</span></span>
+<code class="sourceCode R"><span><span class="co"># use qs2::qs_save() to save the database in a compressed format and then qs2::qs_read() to load the database</span></span>
 <span><span class="va">database</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"02_taxonomy_database.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>

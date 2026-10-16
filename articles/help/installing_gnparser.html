@@ -117,340 +117,223 @@
 
     
     
-<p>This tutorial will guide you through the installation of
-<code>gnparser</code>, a required binary file for using our R package.
-The installation process varies depending on your operating system
-(Windows, macOS, or Linux).</p>
-<p>We provide two installation options: using reproducible code or
-following a manual step-by-step installation. The first option is a
-quick and easy way to install the software. In case of errors, you can
-try the manual step-by-step approach.</p>
+<p><code><a href="../../reference/bdc_clean_names.html">bdc_clean_names()</a></code> uses <a href="https://github.com/gnames/gnparser" class="external-link">gnparser</a>, a small program
+that splits scientific names into their parts. gnparser is not an R
+package, so it must be installed separately, once per computer.</p>
+<p>There are two ways to install it:</p>
+<ul>
+<li>
+<strong>Option 1</strong> (recommended): copy one block of R code
+into the R console and run it. It works on Windows, macOS and Linux, and
+needs no administrator password.</li>
+<li>
+<strong>Option 2</strong>: download and copy the file by hand. Use
+it if Option 1 fails.</li>
+</ul>
 <div class="section level3">
-<h3 id="option-1-run-the-following-code">
-<strong>Option 1: Run the following code</strong><a class="anchor" aria-label="anchor" href="#option-1-run-the-following-code"></a>
+<h3 id="option-1-install-from-r">
+<strong>Option 1: Install from R</strong><a class="anchor" aria-label="anchor" href="#option-1-install-from-r"></a>
 </h3>
-<p>Installing and loading bdc package</p>
+<p><strong>Step 1.</strong> Install bdc, if you have not done so
+yet:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://brunobrr.github.io/bdc/">bdc</a></span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-<p>⚠ <strong>Important</strong>: Get the latest version of gnparser. The
-execution of this step is required independently of our operation
-system.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"bdc"</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Step 2.</strong> Copy the whole block below, paste it into
+the R console and press Enter. It finds out your operating system and
+processor, downloads the latest version of gnparser, and copies it to
+the folder where bdc looks for it.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>  <span class="va">get_latest_gnparser_version</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://github.com/gnames/gnparser/releases"</span></span>
-<span>    </span>
-<span>    <span class="co"># Reads the content of the releases page</span></span>
-<span>    <span class="va">page</span> <span class="op">&lt;-</span> <span class="fu">xml2</span><span class="fu">::</span><span class="fu"><a href="http://xml2.r-lib.org/reference/read_xml.html" class="external-link">read_html</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
-<span>    </span>
-<span>    <span class="co"># Extracts the first tag containing the version, using a CSS selector</span></span>
-<span>    <span class="va">version</span> <span class="op">&lt;-</span> <span class="va">page</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span></span>
-<span>      <span class="fu">rvest</span><span class="fu">::</span><span class="fu"><a href="https://rvest.tidyverse.org/reference/html_element.html" class="external-link">html_element</a></span><span class="op">(</span><span class="st">".Link--primary"</span><span class="op">)</span> <span class="op"><a href="../../reference/pipe.html">%&gt;%</a></span></span>
-<span>      <span class="fu">rvest</span><span class="fu">::</span><span class="fu"><a href="https://rvest.tidyverse.org/reference/html_text.html" class="external-link">html_text2</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>    </span>
-<span>    <span class="va">version</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"v"</span>, <span class="st">""</span>, <span class="va">version</span><span class="op">)</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">version</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
+<code class="sourceCode R"><span><span class="co"># Operating system ("win", "mac" or "linux") and processor ("x86" or "arm")</span></span>
+<span><span class="va">os</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.info.html" class="external-link">Sys.info</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"sysname"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  Windows <span class="op">=</span> <span class="st">"win"</span>,</span>
+<span>  Darwin <span class="op">=</span> <span class="st">"mac"</span>,</span>
+<span>  <span class="st">"linux"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">arch</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="va">R.version</span><span class="op">$</span><span class="va">arch</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"aarch64"</span>, <span class="st">"arm64"</span><span class="op">)</span><span class="op">)</span> <span class="st">"arm"</span> <span class="kw">else</span> <span class="st">"x86"</span></span>
 <span></span>
-<span>  <span class="va">latest_version</span> <span class="op">&lt;-</span> <span class="fu">get_latest_gnparser_version</span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Latest version of gnparser: "</span>, <span class="va">latest_version</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Latest version of gnparser, e.g. "v1.15.1"</span></span>
+<span><span class="va">version</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">fromJSON</a></span><span class="op">(</span></span>
+<span>  <span class="st">"https://api.github.com/repos/gnames/gnparser/releases/latest"</span></span>
+<span><span class="op">)</span><span class="op">$</span><span class="va">tag_name</span></span>
+<span></span>
+<span><span class="co"># Downloads and extracts gnparser into a temporary folder</span></span>
+<span><span class="va">extension</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="va">os</span> <span class="op">==</span> <span class="st">"win"</span><span class="op">)</span> <span class="st">".zip"</span> <span class="kw">else</span> <span class="st">".tar.gz"</span></span>
+<span><span class="va">url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span>
+<span>  <span class="st">"https://github.com/gnames/gnparser/releases/download/"</span>, <span class="va">version</span>,</span>
+<span>  <span class="st">"/gnparser-"</span>, <span class="va">version</span>, <span class="st">"-"</span>, <span class="va">os</span>, <span class="st">"-"</span>, <span class="va">arch</span>, <span class="va">extension</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">archive</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="va">url</span>, <span class="va">archive</span>, mode <span class="op">=</span> <span class="st">"wb"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="va">os</span> <span class="op">==</span> <span class="st">"win"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="va">archive</span>, exdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/untar.html" class="external-link">untar</a></span><span class="op">(</span><span class="va">archive</span>, exdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Copies gnparser to the folder where bdc looks for it</span></span>
+<span><span class="va">folder</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch</a></span><span class="op">(</span><span class="va">os</span>,</span>
+<span>  win <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"APPDATA"</span><span class="op">)</span>, <span class="st">"gnparser"</span><span class="op">)</span>,</span>
+<span>  mac <span class="op">=</span> <span class="st">"~/Library/Application Support/gnparser"</span>,</span>
+<span>  linux <span class="op">=</span> <span class="st">"~/bin"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">program</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="va">os</span> <span class="op">==</span> <span class="st">"win"</span><span class="op">)</span> <span class="st">"gnparser.exe"</span> <span class="kw">else</span> <span class="st">"gnparser"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">folder</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span>, showWarnings <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">program</span><span class="op">)</span>, <span class="va">folder</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">Sys.chmod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">folder</span>, <span class="va">program</span><span class="op">)</span>, mode <span class="op">=</span> <span class="st">"755"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Shows the installed version: if you see a version number, it worked</span></span>
+<span><span class="fu">rgnparser</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/rgnparser/reference/gn_version.html" class="external-link">gn_version</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Step 3.</strong> Restart R (in RStudio: <em>Session &gt;
+Restart R</em>) and go to <a href="#testing-the-installation">Testing
+the installation</a>.</p>
+<p><br></p>
+</div>
+<div class="section level3">
+<h3 id="option-2-manual-installation">
+<strong>Option 2: Manual installation</strong><a class="anchor" aria-label="anchor" href="#option-2-manual-installation"></a>
+</h3>
+<p>First, download the file for your computer from the <a href="https://github.com/gnames/gnparser/releases/latest" class="external-link">gnparser
+releases page</a>, under <em>Assets</em>:</p>
+<table class="table">
+<thead><tr class="header">
+<th>Computer</th>
+<th>File ending in</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Windows (most computers)</td>
+<td><code>-win-x86.zip</code></td>
+</tr>
+<tr class="even">
+<td>Windows on ARM processors</td>
+<td><code>-win-arm.zip</code></td>
+</tr>
+<tr class="odd">
+<td>Mac with Apple processor (M1, M2, …)</td>
+<td><code>-mac-arm.tar.gz</code></td>
+</tr>
+<tr class="even">
+<td>Mac with Intel processor</td>
+<td><code>-mac-x86.tar.gz</code></td>
+</tr>
+<tr class="odd">
+<td>Linux (most computers)</td>
+<td><code>-linux-x86.tar.gz</code></td>
+</tr>
+<tr class="even">
+<td>Linux on ARM processors</td>
+<td><code>-linux-arm.tar.gz</code></td>
+</tr>
+</tbody>
+</table>
+<p>To find your processor, run <code>R.version$arch</code> in R:
+<code>aarch64</code> or <code>arm64</code> means ARM (Apple processor on
+a Mac); anything else means x86.</p>
 <div class="section level4">
 <h4 id="windows">
 <strong>Windows</strong><a class="anchor" aria-label="anchor" href="#windows"></a>
 </h4>
-<p><strong>Download the lastest version of gnparser</strong></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">link</span> <span class="op">&lt;-</span> <span class="st">"https://github.com/gnames/gnparser/releases/download/"</span></span>
-<span><span class="va">url_latest_version</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">link</span>, <span class="st">"v"</span>, <span class="va">latest_version</span>, <span class="st">"/gnparser-v"</span>, <span class="va">latest_version</span>, <span class="st">"-win-arm.zip"</span><span class="op">)</span></span>
-<span><span class="va">file_name</span> <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">latest_version</span>, <span class="st">".zip"</span><span class="op">)</span><span class="op">)</span></span>
-<span>                      </span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="va">url_latest_version</span>, <span class="va">file_name</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Move file to the recommended directory</strong></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Extracts the file in a temporary directory</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="va">file_name</span>, exdir <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Sets the destination filename</span></span>
-<span><span class="va">AppData_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"AppData"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Moves the executable to the target directory</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="st">"gnparser.exe"</span>, <span class="va">AppData_path</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
-</div>
-<div class="section level4">
-<h4 id="linux">
-<strong>Linux</strong><a class="anchor" aria-label="anchor" href="#linux"></a>
-</h4>
-<p><strong>Download the lastest version of gnparser</strong></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">link</span> <span class="op">&lt;-</span> <span class="st">"https://github.com/gnames/gnparser/releases/download/"</span></span>
-<span><span class="va">url_latest_version</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">link</span>, <span class="st">"v"</span>, <span class="va">latest_version</span>, <span class="st">"/gnparser-v"</span>, <span class="va">latest_version</span>, <span class="st">"-linux-arm.tar.gz"</span><span class="op">)</span></span>
-<span><span class="va">file_name</span> <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">latest_version</span>, <span class="st">".tar.gz"</span><span class="op">)</span><span class="op">)</span></span>
-<span>                      </span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="va">url_latest_version</span>, <span class="va">file_name</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Move file to the recommended directory</strong></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Extracts the file in a temporary directory</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/untar.html" class="external-link">untar</a></span><span class="op">(</span><span class="va">file_name</span>, exdir <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Moves the executable to the target directory</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"gnparser"</span><span class="op">)</span>, <span class="st">"~/bin"</span><span class="op">)</span></span></code></pre></div>
-<p><br></p>
+<ol style="list-style-type: decimal">
+<li>Open the <em>Downloads</em> folder, right-click the
+<code>.zip</code> file and choose <em>Extract All</em>. You get a file
+named <code>gnparser.exe</code>.</li>
+<li>Click the address bar of the File Explorer window, type
+<code>%APPDATA%</code> and press Enter.</li>
+<li>In that folder, create a new folder named <code>gnparser</code> and
+move <code>gnparser.exe</code> into it. The file must end up in
+<code>%APPDATA%\gnparser\gnparser.exe</code>.</li>
+</ol>
 </div>
 <div class="section level4">
 <h4 id="macos">
 <strong>macOS</strong><a class="anchor" aria-label="anchor" href="#macos"></a>
 </h4>
-<p>⚠️<strong>IMPORTANT:</strong> Before installing gnparser, it is
-highly recommend to install Homebrew, which is a package manager for
-macOS and Linux that simplifies the installation of software and
-libraries directly from the terminal. You can use the steps below to
-install Homebrew. Moreover, a detailed explanation on how to install
-homebrew can be found in <a href="https://www.youtube.com/watch?v=IWJKRmFLn-g&amp;ab_channel=EasyOSX" class="external-link">this
-video</a>.</p>
 <ol style="list-style-type: decimal">
+<li><p>Open the <em>Downloads</em> folder and double-click the
+<code>.tar.gz</code> file. You get a file named
+<code>gnparser</code>.</p></li>
+<li><p>In Finder, choose <em>Go &gt; Go to Folder…</em>, type
+<code>~/Library/Application Support</code> and press Enter.</p></li>
+<li><p>In that folder, create a new folder named <code>gnparser</code>
+and move the <code>gnparser</code> file into it.</p></li>
 <li>
-<p><strong>Open Terminal</strong></p>
-<ul>
-<li>Press <code>Command + Space</code> to open Spotlight Search</li>
-<li>Type “Terminal” and press Enter</li>
-<li>A new window will appear - this is your Terminal</li>
-</ul>
-</li>
-<li>
-<p><strong>Using Homebrew (Recommended)</strong></p>
-<ul>
-<li>In the Terminal window, paste and run these commands:</li>
-</ul>
-</li>
-</ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">/bin/bash</span> <span class="at">-c</span> <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="va">)</span><span class="st">"</span></span></code></pre></div>
-<ol start="3" style="list-style-type: decimal">
-<li>
-<strong>Install gnparser</strong> <strong>using brew</strong>
+<p>macOS blocks programs downloaded with a web browser. To unblock
+gnparser, open Terminal (press <code>Command + Space</code>, type
+“Terminal” and press Enter), paste this line and press Enter:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">xattr</span> <span class="at">-d</span> com.apple.quarantine ~/Library/Application\ Support/gnparser/gnparser</span></code></pre></div>
 </li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">brew</span> tap gnames/gn </span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="ex">brew</span> install gnparser</span></code></pre></div>
-<p>After that, close the terminal and <strong>refresh the R
-section</strong>.</p>
+<p>If you use <a href="https://brew.sh" class="external-link">Homebrew</a>, you can instead
+run <code>brew tap gnames/gn</code> and then
+<code>brew install gnparser</code> in Terminal.</p>
+</div>
+<div class="section level4">
+<h4 id="linux">
+<strong>Linux</strong><a class="anchor" aria-label="anchor" href="#linux"></a>
+</h4>
+<p>Open a terminal (<code>Ctrl + Alt + T</code> on most distributions)
+and run the lines below. Replace <code>x86</code> with <code>arm</code>
+on ARM processors, and <code>v1.15.1</code> with the latest version
+shown on the releases page.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LO</span> https://github.com/gnames/gnparser/releases/download/v1.15.1/gnparser-v1.15.1-linux-x86.tar.gz</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">tar</span> xvf gnparser-v1.15.1-linux-x86.tar.gz</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/bin</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">mv</span> gnparser ~/bin/</span></code></pre></div>
 <p><br></p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="option-2-manual-installation">
-<strong>Option 2: Manual Installation</strong><a class="anchor" aria-label="anchor" href="#option-2-manual-installation"></a>
+<h3 id="testing-the-installation">
+<strong>Testing the installation</strong><a class="anchor" aria-label="anchor" href="#testing-the-installation"></a>
 </h3>
-<div class="section level4">
-<h4 id="windows-1">
-<strong>Windows</strong><a class="anchor" aria-label="anchor" href="#windows-1"></a>
-</h4>
-<ol style="list-style-type: decimal">
-<li>
-<p><strong>Download the installer</strong></p>
-<ul>
-<li>Go to <a href="https://github.com/gnames/gnparser/releases" class="external-link">gnparser
-releases</a>
-</li>
-<li>Download the Windows version (file ending in
-<code>-win-64.zip</code>)</li>
-<li>Save it to a known location on your computer</li>
-</ul>
-</li>
-<li>
-<p><strong>Open Command Prompt</strong></p>
-<ul>
-<li>Press <code>Windows + R</code> on your keyboard</li>
-<li>Type <code>cmd</code> and press Enter</li>
-<li>A black window will appear - this is your Command Prompt</li>
-</ul>
-</li>
-<li>
-<p><strong>Create installation directory</strong></p>
-<ul>
-<li>In the Command Prompt window, type:</li>
-</ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cmd"><code class="sourceCode dosbat"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="bu">mkdir</span> C:\bin</span></code></pre></div>
-</li>
-<li>
-<p><strong>Extract and move the file</strong></p>
-<ul>
-<li><p>Extract the downloaded zip file</p></li>
-<li>
-<p>Copy the <code>gnparser.exe</code> file to C:using either:</p>
-<ul>
-<li>Windows Explorer (drag and drop)</li>
-<li>Or Command Prompt:</li>
-</ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode cmd"><code class="sourceCode dosbat"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="bu">copy</span> path\to\downloaded\gnparser.exe C:\bin</span></code></pre></div>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>Add to System Path</strong></p>
-<ul>
-<li>Press <code>Windows + X</code> and select “System”</li>
-<li>Click “Advanced system settings”</li>
-<li>Click “Environment Variables”</li>
-<li>Under “System variables”, find and select “Path”</li>
-<li>Click “Edit”</li>
-<li>Click “New”</li>
-<li>Add <code>C:\bin</code>
-</li>
-<li>Click “OK” on all windows</li>
-</ul>
-</li>
-<li>
-<p><strong>Verify installation</strong></p>
-<ul>
-<li>Open a new Command Prompt window</li>
-<li>Type:</li>
-</ul>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cmd"><code class="sourceCode dosbat"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>gnparser -<span class="at">-version</span></span></code></pre></div>
-<ul>
-<li>If you see a version number, the installation was successful</li>
-</ul>
-</li>
-</ol>
+<p>Restart R and run:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Shows the installed version of gnparser</span></span>
+<span><span class="fu">rgnparser</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/rgnparser/reference/gn_version.html" class="external-link">gn_version</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Cleans three spellings of the same name</span></span>
+<span><span class="fu">bdc</span><span class="fu">::</span><span class="fu"><a href="../../reference/bdc_clean_names.html">bdc_clean_names</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OCOTEA odorifera"</span>, <span class="st">"ocotea odorifera"</span>, <span class="st">"ocotea cf. odorifera"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>If you see a version number and a table with the cleaned names,
+gnparser is installed.</p>
 <p><br></p>
-</div>
-<div class="section level4">
-<h4 id="linux-1">
-<strong>Linux</strong><a class="anchor" aria-label="anchor" href="#linux-1"></a>
-</h4>
-<ol style="list-style-type: decimal">
-<li>
-<p><strong>Open Terminal</strong></p>
-<ul>
-<li>Press <code>Ctrl + Alt + T</code> (on most Linux distributions)</li>
-<li>Or find Terminal in your applications menu</li>
-<li>A new window will appear - this is your Terminal</li>
-</ul>
-</li>
-<li>
-<p><strong>Download the binary</strong></p>
-<ul>
-<li>In the Terminal window, run these commands:</li>
-</ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># Create a temporary directory</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/tmp</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="bu">cd</span> ~/tmp</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co"># Download the latest Linux version</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="fu">wget</span> https://github.com/gnames/gnparser/releases/download/v1.10.1/gnparser-v1.10.1-linux.tar.gz</span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co"># Extract the file</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="fu">tar</span> xvf gnparser-<span class="pp">*</span>.tar.gz</span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="co"># Move to system directory</span></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="fu">sudo</span> mv gnparser /usr/local/bin</span></code></pre></div>
-</li>
-<li>
-<p><strong>Verify installation</strong></p>
-<p><code>bash gnparser --version</code></p>
-</li>
-</ol>
-<p><br></p>
-</div>
-<div class="section level4">
-<h4 id="macos-1">
-<strong>macOS</strong><a class="anchor" aria-label="anchor" href="#macos-1"></a>
-</h4>
-<ol style="list-style-type: decimal">
-<li>
-<p><strong>Open Terminal</strong></p>
-<ul>
-<li>Press <code>Command + Space</code> to open Spotlight Search</li>
-<li>Type “Terminal” and press Enter</li>
-<li>A new window will appear - this is your Terminal</li>
-</ul>
-</li>
-<li>
-<p><strong>Using Homebrew (Recommended)</strong></p>
-<ul>
-<li>In the Terminal window, paste and run these commands:</li>
-</ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Install Homebrew if you haven't already</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="ex">/bin/bash</span> <span class="at">-c</span> <span class="st">"</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="va">)</span><span class="st">"</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co"># Install gnparser</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="ex">brew</span> tap gnames/gn</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="ex">brew</span> install gnparser</span></code></pre></div>
-</li>
-<li>
-<p><strong>Manual Installation</strong></p>
-<ul>
-<li>Download the macOS version (file ending in <code>-mac.tar.gz</code>)
-from <a href="https://github.com/gnames/gnparser/releases" class="external-link">gnparser
-releases</a>
-</li>
-<li>Open Terminal (Applications &gt; Utilities &gt; Terminal)</li>
-<li>Navigate to the download directory:</li>
-</ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="bu">cd</span> ~/Downloads</span></code></pre></div>
-<ul>
-<li>Extract the file:</li>
-</ul>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">tar</span> xvf gnparser-v<span class="pp">*</span>.tar.gz</span></code></pre></div>
-<ul>
-<li>Move to system directory:</li>
-</ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">sudo</span> mv gnparser /usr/local/bin</span></code></pre></div>
-<ul>
-<li>You may need to allow the application in System Preferences:
-<ul>
-<li>Go to System Preferences &gt; Security &amp; Privacy</li>
-<li>Click the lock to make changes</li>
-<li>Allow gnparser to run ```</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<p><br></p>
-</div>
 </div>
 <div class="section level3">
 <h3 id="troubleshooting">
 <strong>Troubleshooting</strong><a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
 </h3>
-<p>If you encounter any issues:</p>
-<ol style="list-style-type: decimal">
-<li>
-<p><strong>Command not found</strong></p>
 <ul>
-<li>Make sure you’ve added the correct directory to your system
-PATH</li>
-<li>Try closing and reopening your terminal/command prompt</li>
-</ul>
-</li>
 <li>
-<p><strong>Permission denied</strong></p>
-<ul>
-<li>On macOS/Linux, you may need to make the file executable:</li>
-</ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">chmod</span> +x /usr/local/bin/gnparser</span></code></pre></div>
-</li>
+<strong>“gnparser not found” or “GNparser is not installed in your
+machine”</strong>: restart R and try again. If the message persists,
+check that the file is in the right folder:
+<code>%APPDATA%\gnparser\gnparser.exe</code> on Windows,
+<code>~/Library/Application Support/gnparser/gnparser</code> on macOS,
+or <code>~/bin/gnparser</code> on Linux.</li>
 <li>
-<p><strong>Security warnings</strong></p>
-<ul>
-<li>On macOS: Go to System Preferences &gt; Security &amp; Privacy and
-allow the application</li>
-<li>On Windows: You might need to run as administrator</li>
+<strong>Option 1 stops at <code><a href="https://jeroen.r-universe.dev/jsonlite/reference/fromJSON.html" class="external-link">jsonlite::fromJSON()</a></code> with
+“HTTP error 403”</strong>: GitHub limits how often a computer can ask
+for the latest version. Wait an hour and try again, or use Option
+2.</li>
+<li>
+<strong>Option 1 stops at <code><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file()</a></code></strong>:
+check your internet connection. Networks with a proxy or firewall
+(e.g. at universities) may block the download; in that case, use Option
+2.</li>
+<li>
+<strong>macOS says gnparser “cannot be opened because the developer
+cannot be verified”</strong>: run the <code>xattr</code> line from step
+4 of the macOS manual installation.</li>
+<li>
+<strong>Windows: the antivirus removes
+<code>gnparser.exe</code></strong>: allow the file in the antivirus
+settings and copy it again.</li>
+<li>
+<strong>Linux: “Permission denied”</strong>: make the file
+executable with <code>chmod +x ~/bin/gnparser</code>.</li>
 </ul>
-</li>
-</ol>
-</div>
-<div class="section level3">
-<h3 id="testing-the-installation">
-<strong>Testing the Installation</strong><a class="anchor" aria-label="anchor" href="#testing-the-installation"></a>
-</h3>
-<p>After installation, test if gnparser is working correctly:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># In R, try parsing a scientific name</span></span>
-<span><span class="va">test</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">bdc</span><span class="fu">::</span><span class="fu"><a href="../../reference/bdc_clean_names.html">bdc_clean_names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OCOTEA odorifera"</span>, <span class="st">"ocotea odorifera"</span>, <span class="st">"ocotea cf. odorifera"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>
 

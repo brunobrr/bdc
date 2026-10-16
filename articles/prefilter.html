@@ -262,13 +262,10 @@ Organization for Standardization <a href="https://stefangabos.github.io/world_co
 <span>  country <span class="op">=</span> <span class="st">"country"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="co">#&gt; Loading auxiliary data: country names</span></span>
 <span><span class="co">#&gt; Standardizing country names</span></span>
-<span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; country found: Bolivia</span></span>
 <span><span class="co">#&gt; country found: Brazil</span></span>
-<span><span class="co">#&gt;   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s</span></span>
-<span><span class="co">#&gt;   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s</span></span>
-<span><span class="co">#&gt;   |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s</span></span>
 <span><span class="co">#&gt;</span></span>
 <span><span class="co">#&gt; bdc_country_standardized:</span></span>
 <span><span class="co">#&gt; The country names of 65 records were standardized.</span></span>
@@ -418,7 +415,7 @@ step</div>
 of interest or from distrustful sources are rarely suitable for
 biodiversity analyses. We can use the column <strong>.summary</strong>
 to filter valid records passing in all tests (i.e., flagged as “TRUE”).
-Next, we use the <em>bdc_filter_out_falgs</em> function to remove all
+Next, we use the <em>bdc_filter_out_flags</em> function to remove all
 tests’ columns (that is, those starting with “.”).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">output</span> <span class="op">&lt;-</span></span>
@@ -426,7 +423,7 @@ tests’ columns (that is, those starting with “.”).</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.summary</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/bdc_filter_out_flags.html">bdc_filter_out_flags</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, col_to_remove <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#&gt; bdc_fiter_out_flags:</span></span>
+<span><span class="co">#&gt; bdc_filter_out_flags:</span></span>
 <span><span class="co">#&gt; The following columns were removed from the database:</span></span>
 <span><span class="co">#&gt; .scientificName_empty, .coordinates_empty, .coordinates_outOfRange, .basisOfRecords_notStandard, .coordinates_country_inconsistent, .summary</span></span></code></pre></div>
 </div>
@@ -437,7 +434,7 @@ tests’ columns (that is, those starting with “.”).</p>
 <p>You can use <u>qs2::qs_save()</u> instead of write_csv to save a
 large database in a compressed format.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># use qs2::qs_save() to save the database in a compressed format and then qs:qread() to load the database</span></span>
+<code class="sourceCode R"><span><span class="co"># use qs2::qs_save() to save the database in a compressed format and then qs2::qs_read() to load the database</span></span>
 <span><span class="va">output</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span>            <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Output"</span>, <span class="st">"Intermediate"</span>, <span class="st">"01_prefilter_database.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
