@@ -30,10 +30,17 @@
 #' (FALSE). Records with invalid (e.g., NA or empty) and out-of-range
 #' coordinates are not tested and returned as TRUE.
 #'
+#' Only records whose `country` matches one of `country_name` are tested.
+#' Records assigned to another country, or with no country (NA or empty), are
+#' flagged as invalid (FALSE), even when their coordinates fall within the
+#' reference country. To test records without a country name, fill it from
+#' their coordinates first with [bdc_country_from_coordinates()].
+#'
 #' @return A data.frame containing the column
 #' '.coordinates_country_inconsistent'. Compliant (TRUE) if coordinates fall
 #' within the boundaries plus a specified distance (if 'dist' is supplied) of
-#' 'country_name'; otherwise "FALSE".
+#' 'country_name'; otherwise "FALSE", including records whose `country` is
+#' missing or is not one of 'country_name' (see Details).
 #'
 #' @importFrom dplyr select mutate filter full_join case_when left_join bind_cols
 #' @importFrom rnaturalearth ne_countries

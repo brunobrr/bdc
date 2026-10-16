@@ -10,7 +10,7 @@ bdc_coordinates_country_inconsistent(
   country = "country_suggested",
   lat = "decimalLatitude",
   lon = "decimalLongitude",
-  dist = 0.1 
+  dist = 0.1
 )
 }
 \arguments{
@@ -38,7 +38,8 @@ around the country. Default = 0.1 (~11 km at the equator).}
 A data.frame containing the column
 '.coordinates_country_inconsistent'. Compliant (TRUE) if coordinates fall
 within the boundaries plus a specified distance (if 'dist' is supplied) of
-'country_name'; otherwise "FALSE".
+'country_name'; otherwise "FALSE", including records whose \code{country} is
+missing or is not one of 'country_name' (see Details).
 }
 \description{
 This function flags geographic coordinates within a reference country. A
@@ -55,6 +56,12 @@ or at a specified distance from the coastline of the reference country
 records within the buffer but in other countries are flagged as invalid
 (FALSE). Records with invalid (e.g., NA or empty) and out-of-range
 coordinates are not tested and returned as TRUE.
+
+Only records whose \code{country} matches one of \code{country_name} are tested.
+Records assigned to another country, or with no country (NA or empty), are
+flagged as invalid (FALSE), even when their coordinates fall within the
+reference country. To test records without a country name, fill it from
+their coordinates first with \code{\link[=bdc_country_from_coordinates]{bdc_country_from_coordinates()}}.
 }
 \examples{
 \dontrun{
@@ -70,18 +77,18 @@ bdc_coordinates_country_inconsistent(
   country = "country",
   lon = "decimalLongitude",
   lat = "decimalLatitude",
-  dist = 0.1 
+  dist = 0.1
 )
 }
 }
 \seealso{
-Other prefilter: 
-\code{\link{bdc_basisOfRecords_notStandard}()},
-\code{\link{bdc_coordinates_empty}()},
-\code{\link{bdc_coordinates_from_locality}()},
-\code{\link{bdc_coordinates_outOfRange}()},
-\code{\link{bdc_coordinates_transposed}()},
-\code{\link{bdc_country_standardized}()},
-\code{\link{bdc_scientificName_empty}()}
+Other prefilter:
+\code{\link[=bdc_basisOfRecords_notStandard]{bdc_basisOfRecords_notStandard()}},
+\code{\link[=bdc_coordinates_empty]{bdc_coordinates_empty()}},
+\code{\link[=bdc_coordinates_from_locality]{bdc_coordinates_from_locality()}},
+\code{\link[=bdc_coordinates_outOfRange]{bdc_coordinates_outOfRange()}},
+\code{\link[=bdc_coordinates_transposed]{bdc_coordinates_transposed()}},
+\code{\link[=bdc_country_standardized]{bdc_country_standardized()}},
+\code{\link[=bdc_scientificName_empty]{bdc_scientificName_empty()}}
 }
 \concept{prefilter}

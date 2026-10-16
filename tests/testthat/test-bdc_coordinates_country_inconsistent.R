@@ -146,3 +146,27 @@ test_that("bdc_coordinates_country_inconsistent() honours custom lat/lon/country
     x1$.coordinates_country_inconsistent
   )
 })
+
+test_that("records without a country or with another country are flagged", {
+  x <- data.frame(
+    country = c("Brazil", NA, "", "Argentina", NA),
+    decimalLongitude = c(-47.88, -47.88, -47.88, -47.88, NA),
+    decimalLatitude = c(-15.79, -15.79, -15.79, -15.79, NA)
+  )
+
+  res <- bdc_coordinates_country_inconsistent(
+    data = x,
+    country_name = "Brazil",
+    country = "country",
+    lon = "decimalLongitude",
+    lat = "decimalLatitude",
+    dist = 0.1
+  )
+
+  # Same coordinates (Brasília): only the record assigned to Brazil passes;
+  # the record without coordinates is not tested.
+  expect_equal(
+    res$.coordinates_country_inconsistent,
+    c(TRUE, FALSE, FALSE, FALSE, TRUE)
+  )
+})
