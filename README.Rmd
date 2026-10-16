@@ -183,6 +183,12 @@ Load the package with:
 library(bdc)
 ```
 
+`bdc_clean_names()` also needs [gnparser](https://github.com/gnames/gnparser),
+an external program that is not installed with R packages. Install it once by
+following the [gnparser installation
+guide](https://brunobrr.github.io/bdc/articles/help/installing_gnparser.html).
+The other functions do not need it.
+
 #### **Package website**
 
 See *bdc* package website (<https://brunobrr.github.io/bdc/>) for detailed
