@@ -95,20 +95,24 @@ bdc_taxon_cols <- function(data) {
 bdc_resolve_candidates <- function(rows, rank = NULL, rank_name = NULL) {
   taxon_cols <- bdc_taxon_cols(rows)
 
+  # The name's first row with every taxonomic column set to NA
+  blank_row <- function(rows) {
+    rows <- rows[1, ]
+    rows[taxon_cols] <- NA
+    rows
+  }
+
   if (!is.null(rank)) {
     in_rank <- is.na(rows[[rank]]) | rows[[rank]] == rank_name
     if (!any(in_rank)) {
-      rows <- rows[1, ]
-      rows[taxon_cols] <- NA
-      return(rows)
+      return(blank_row(rows))
     }
     rows <- rows[in_rank, ]
   }
 
   accepted <- rows$taxonomicStatus %in% "accepted"
   if (sum(accepted) > 1) {
-    rows <- rows[1, ]
-    rows[taxon_cols] <- NA
+    rows <- blank_row(rows)
     rows$notes <- "multipleAccepted"
     return(rows)
   }

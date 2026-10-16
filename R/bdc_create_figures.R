@@ -553,7 +553,7 @@ bdc_create_figures <-
             "_",
             column_to_map,
             "_",
-            ifelse(is_map, "MAP", "BAR"),
+            if (is_map) "MAP" else "BAR",
             ".png",
             sep = ""
           ),

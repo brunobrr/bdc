@@ -55,7 +55,7 @@ bdc_coordinates_from_locality <-
            lon = "decimalLongitude",
            locality = "locality",
            save_outputs = FALSE) {
-    .data <- .coordinates_empty <- .coordinates_outOfRange <- NULL
+    .coordinates_empty <- .coordinates_outOfRange <- NULL
 
     if (!locality %in% colnames(data)) {
       stop(
@@ -83,22 +83,18 @@ bdc_coordinates_from_locality <-
       }
     })
 
+    squished <- stringr::str_squish(data[[locality]])
+    has_locality <-
+      !is.na(squished) & squished != "" &
+        stringr::str_detect(squished, "^(\\. )", negate = TRUE)
+
     df <-
       data %>%
       dplyr::filter(
-        stringr::str_squish(.data[[locality]]) != "" &
-          !is.na(.data[[locality]]),
-        stringr::str_detect(
-          stringr::str_squish(.data[[locality]]), "^(\\. )",
-          negate = TRUE
-        ),
+        !!has_locality,
         .coordinates_empty == FALSE |
           .coordinates_outOfRange == FALSE
       )
-
-    df <-
-      df %>%
-      dplyr::select(-all_of(c(.coordinates_empty, .coordinates_outOfRange)))
 
     if (save_outputs) {
       bdc_create_dir()

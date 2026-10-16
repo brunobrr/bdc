@@ -140,7 +140,6 @@
 #' @importFrom dplyr rename distinct mutate filter pull full_join select arrange slice bind_cols left_join
 #' @importFrom fs dir_create
 #' @importFrom here here
-#' @importFrom purrr map_dfr
 #' @importFrom stringr str_squish str_to_sentence str_detect
 #' @importFrom taxadb td_connect td_create
 #' @importFrom tibble as_tibble
@@ -500,7 +499,7 @@ bdc_query_names_taxadb <-
           # Every taxonomic column, taxonID included, comes from the accepted
           # record; only the helper columns of the id query are dropped.
           replace_tab <-
-            purrr::map_dfr(accepted_list[one_accepted], function(i) i) %>%
+            dplyr::bind_rows(accepted_list[one_accepted]) %>%
             dplyr::ungroup() %>%
             dplyr::select(-c(sort, input))
 
