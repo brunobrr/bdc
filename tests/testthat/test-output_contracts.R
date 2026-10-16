@@ -199,7 +199,8 @@ contract_table <- list(
       country = "country", countryCode = "countryCode"
     ),
     # Only the first record has coordinates in the right order; the others
-    # are transposed and get corrected in place.
+    # are transposed and get corrected in place (the second one also has
+    # inverted signs).
     build = function(cols) {
       cols_frame(
         cols, c("id", "sci_names", "lat", "lon", "country", "countryCode"),
@@ -216,7 +217,11 @@ contract_table <- list(
     },
     added = "coordinates_transposed",
     modifies = c("lat", "lon"),
-    expected = list(coordinates_transposed = c(TRUE, FALSE, FALSE, FALSE)),
+    expected = list(
+      decimalLatitude = c(-14.43333, -17.90000, -13.25000, -13.82444),
+      decimalLongitude = c(-67.91667, -63.43333, -41.90000, -46.69778),
+      coordinates_transposed = c(TRUE, FALSE, FALSE, FALSE)
+    ),
     args = list(save_outputs = FALSE),
     requires = skip_if_no_natural_earth
   )
