@@ -194,9 +194,6 @@ bdc_coordinates_transposed <-
       data$coordinates_transposed <- TRUE
       data[w, "coordinates_transposed"] <- FALSE
 
-      # Restore the caller's column names (including .summary)
-      names(data)[seq_along(original_names)] <- original_names
-
       message(
         paste(
           "\nbdc_coordinates_transposed:\nCorrected",
@@ -204,13 +201,12 @@ bdc_coordinates_transposed <-
           "records.\nOne columns were added to the database.\n"
         )
       )
-
-      return(data)
     } else {
-      # Restore the caller's column names (including .summary)
-      names(data)[seq_along(original_names)] <- original_names
-
       message("No latitude and longitude were transposed\n")
-      return(data)
     }
+
+    # Restore the caller's column names (including .summary)
+    names(data)[seq_along(original_names)] <- original_names
+
+    return(data)
   }
