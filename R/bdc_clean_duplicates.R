@@ -38,10 +38,19 @@ bdc_clean_duplicates <-
     # alphabetical order is kept (as before).
     data <- data[order(data$taxonomicStatus), ]
 
-    # Only names matching several records need a decision.
     several <- data$input %in% data$input[duplicated(data$input)]
+
+    # A name matching a single record obeys the same rank filter as a name
+    # matching several: outside the requested rank, it is not found.
+    single <- data[!several, ]
+    if (!is.null(rank)) {
+      out_of_rank <- !is.na(single[[rank]]) & single[[rank]] != rank_name
+      single[out_of_rank, bdc_taxon_cols(single)] <- NA
+    }
+
+    # Only names matching several records need a decision.
     if (!any(several)) {
-      return(data)
+      return(single)
     }
 
     candidates <- data[several, ]
@@ -53,8 +62,20 @@ bdc_clean_duplicates <-
         rank_name = rank_name
       )
 
-    dplyr::bind_rows(c(list(data[!several, ]), unname(resolved)))
+    dplyr::bind_rows(c(list(single), unname(resolved)))
   }
+
+#' Internal function. Taxonomic columns of a bdc_filter_name() result
+#'
+#' @param data data.frame. Records returned by bdc_filter_name(), with the
+#'   helper columns added by bdc_query_names_taxadb().
+#'
+#' @return Names of the columns that come from the taxonomic database.
+#' @noRd
+bdc_taxon_cols <- function(data) {
+  helper_cols <- c("sort", "input", "notes", "original_search", "distance")
+  setdiff(names(data), helper_cols)
+}
 
 #' Internal function. Keep one record for a name matching several records
 #'
@@ -72,23 +93,26 @@ bdc_clean_duplicates <-
 #' @return A one-row data.frame.
 #' @noRd
 bdc_resolve_candidates <- function(rows, rank = NULL, rank_name = NULL) {
-  helper_cols <- c("sort", "input", "notes", "original_search", "distance")
-  taxon_cols <- setdiff(names(rows), helper_cols)
+  taxon_cols <- bdc_taxon_cols(rows)
+
+  # The name's first row with every taxonomic column set to NA
+  blank_row <- function(rows) {
+    rows <- rows[1, ]
+    rows[taxon_cols] <- NA
+    rows
+  }
 
   if (!is.null(rank)) {
     in_rank <- is.na(rows[[rank]]) | rows[[rank]] == rank_name
     if (!any(in_rank)) {
-      rows <- rows[1, ]
-      rows[taxon_cols] <- NA
-      return(rows)
+      return(blank_row(rows))
     }
     rows <- rows[in_rank, ]
   }
 
   accepted <- rows$taxonomicStatus %in% "accepted"
   if (sum(accepted) > 1) {
-    rows <- rows[1, ]
-    rows[taxon_cols] <- NA
+    rows <- blank_row(rows)
     rows$notes <- "multipleAccepted"
     return(rows)
   }
