@@ -93,7 +93,9 @@ testthat::test_that("invalid suffix dae ", {
 # Names that clean to the same string make the join inside bdc_clean_names()
 # many-to-many. dplyr warns about that only for calls it sees as direct, which
 # happens under devtools::load_all() but not with the installed package, so
-# that one warning class is muffled here.
+# that one warning class is muffled here. The join is harmless (the output
+# keeps one row per input, in input order), which the helper asserts on every
+# call.
 
 clean_names_and_check <- function(x, .local_envir = parent.frame()) {
   root <- local_temp_project(.local_envir = .local_envir)
@@ -102,6 +104,8 @@ clean_names_and_check <- function(x, .local_envir = parent.frame()) {
     dplyr_warning_join_relationship_many_to_many =
       \(w) invokeRestart("muffleWarning")
   )
+  expect_identical(nrow(out), length(x), label = "output row count")
+  expect_identical(out$scientificName, x, label = "output names (input order)")
   check <- readr::read_csv(
     file.path(root, "Output", "Check", "02_parsed_names.csv"),
     show_col_types = FALSE
@@ -270,6 +274,23 @@ test_that("bdc_clean_names() lowercases all-caps epithets but not authors", {
   expect_equal(res$out$.infraesp_names, c(TRUE, TRUE, TRUE, FALSE, TRUE))
   # gnparser itself rates the initial without a period 3
   expect_equal(res$out$quality, c(1, 1, 1, 1, 3))
+})
+
+test_that("bdc_clean_names() keeps one row per input when names clean alike", {
+  x <- c(
+    "Felidae Panthera onca", "Inga vera", "Panthera onca",
+    "cf. Panthera onca", "Inga vera"
+  )
+  res <- clean_names_and_check(x)
+
+  expect_equal(
+    res$out$names_clean,
+    c(
+      "Panthera onca", "Inga vera", "Panthera onca", "Panthera onca",
+      "Inga vera"
+    )
+  )
+  expect_equal(res$out$.uncer_terms, c(TRUE, TRUE, TRUE, FALSE, TRUE))
 })
 
 testthat::test_that("bdc_clean_names() saves and reports 02_parsed_names.csv", {

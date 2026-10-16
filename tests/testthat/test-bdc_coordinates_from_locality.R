@@ -26,13 +26,7 @@ test_that("locality values are returned unchanged", {
 })
 
 test_that("save_outputs = TRUE writes the check file in the project's Output/Check", {
-  pkg_file <- file.path(
-    testthat::test_path("..", ".."),
-    "Output", "Check", "01_coordinates_from_locality.csv"
-  )
-  pkg_file <- normalizePath(pkg_file, winslash = "/", mustWork = FALSE)
-  pkg_file_before <- file.info(pkg_file)$mtime
-
+  local_package_check_untouched("01_coordinates_from_locality.csv")
   root <- local_temp_project()
   x <- data.frame(
     decimalLatitude = c(-15.79, NA, NA, 95),
@@ -54,19 +48,14 @@ test_that("save_outputs = TRUE writes the check file in the project's Output/Che
   )
   expect_equal(saved$recordNumber, c(2, 4))
   expect_equal(saved, res, ignore_attr = TRUE)
-
-  expect_identical(file.info(pkg_file)$mtime, pkg_file_before)
 })
 
 test_that("save_outputs = FALSE writes nothing", {
-  root <- local_temp_project()
   x <- data.frame(lat = NA, lon = NA, locality = "Parque Nacional Iguazu")
 
-  suppressMessages(
+  expect_writes_nothing(suppressMessages(
     bdc_coordinates_from_locality(
       data = x, lat = "lat", lon = "lon", save_outputs = FALSE
     )
-  )
-
-  expect_false(dir.exists(file.path(root, "Output")))
+  ))
 })
