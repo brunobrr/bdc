@@ -19,6 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,  r: 'release'}
 
@@ -63,7 +64,15 @@ jobs:
             "$dest/gnparser.exe" --version
             cygpath -w "$dest" >> "$GITHUB_PATH"
           else
-            curl -fsSL "${base}/gnparser-${GNPARSER_VERSION}-linux-x86.tar.gz" | tar -xz -C "$dest"
+            # macos-latest runs on arm64; follow the runner's architecture
+            if [ "$RUNNER_OS" = "macOS" ] && [ "$RUNNER_ARCH" = "ARM64" ]; then
+              asset="mac-arm"
+            elif [ "$RUNNER_OS" = "macOS" ]; then
+              asset="mac-x86"
+            else
+              asset="linux-x86"
+            fi
+            curl -fsSL "${base}/gnparser-${GNPARSER_VERSION}-${asset}.tar.gz" | tar -xz -C "$dest"
             "$dest/gnparser" --version
             echo "$dest" >> "$GITHUB_PATH"
           fi
