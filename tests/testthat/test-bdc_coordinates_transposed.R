@@ -220,13 +220,7 @@ test_that("bdc_create_report() and bdc_create_figures() detect coordinates_trans
 # Save to disk ------------------------------------------------------------------
 
 test_that("save_outputs = TRUE writes verbatim and corrected coordinates to Output/Check", {
-  pkg_file <- file.path(
-    testthat::test_path("..", ".."),
-    "Output", "Check", "01_coordinates_transposed.csv"
-  )
-  pkg_file <- normalizePath(pkg_file, winslash = "/", mustWork = FALSE)
-  pkg_file_before <- file.info(pkg_file)$mtime
-
+  local_package_check_untouched("01_coordinates_transposed.csv")
   root <- local_temp_project()
   x_dwc <- data.frame(
     database_id = paste0("rec_", id),
@@ -260,18 +254,12 @@ test_that("save_outputs = TRUE writes verbatim and corrected coordinates to Outp
   returned <- res[match(saved$database_id, res$database_id), ]
   expect_equal(saved$decimalLatitude_modified, returned$decimalLatitude)
   expect_equal(saved$decimalLongitude_modified, returned$decimalLongitude)
-
-  expect_identical(file.info(pkg_file)$mtime, pkg_file_before)
 })
 
 test_that("save_outputs = FALSE writes nothing", {
-  root <- local_temp_project()
-
-  suppressMessages(
+  expect_writes_nothing(suppressMessages(
     bdc_coordinates_transposed(
       data = x, id = "id", country = "country_suggested", save_outputs = FALSE
     )
-  )
-
-  expect_false(dir.exists(file.path(root, "Output")))
+  ))
 })

@@ -210,14 +210,20 @@ test_that("bdc_query_names_taxadb() rejects providers removed from taxadb", {
   }
 })
 
-test_that("bdc_query_names_taxadb() replaces a synonym with its accepted name", {
-  local_fake_taxadb(fake_dwc_taxa(
+# "Aus bus" (T:1) is accepted; "Cus dus" (T:2) is a synonym whose accepted
+# name is `synonym_accepted_id`.
+synonym_rows <- function(synonym_accepted_id = "T:1") {
+  fake_dwc_taxa(
     taxonID = c("T:1", "T:2"),
     scientificName = c("Aus bus", "Cus dus"),
     taxonRank = "species",
     taxonomicStatus = c("accepted", "synonym"),
-    acceptedNameUsageID = "T:1"
-  ))
+    acceptedNameUsageID = c("T:1", synonym_accepted_id)
+  )
+}
+
+test_that("bdc_query_names_taxadb() replaces a synonym with its accepted name", {
+  local_fake_taxadb(synonym_rows())
 
   res <- suppressMessages(bdc_query_names_taxadb("Cus dus", db = "gbif"))
 
@@ -230,13 +236,7 @@ test_that("bdc_query_names_taxadb() replaces a synonym with its accepted name", 
 
 test_that("bdc_query_names_taxadb() returns the accepted taxonID for a replaced synonym", {
   skip("the synonym's taxonID is kept after replacement (#322)")
-  local_fake_taxadb(fake_dwc_taxa(
-    taxonID = c("T:1", "T:2"),
-    scientificName = c("Aus bus", "Cus dus"),
-    taxonRank = "species",
-    taxonomicStatus = c("accepted", "synonym"),
-    acceptedNameUsageID = "T:1"
-  ))
+  local_fake_taxadb(synonym_rows())
 
   res <- suppressMessages(bdc_query_names_taxadb("Cus dus", db = "gbif"))
 
@@ -244,13 +244,7 @@ test_that("bdc_query_names_taxadb() returns the accepted taxonID for a replaced 
 })
 
 test_that("bdc_query_names_taxadb() flags a synonym without accepted name", {
-  local_fake_taxadb(fake_dwc_taxa(
-    taxonID = c("T:1", "T:2"),
-    scientificName = c("Aus bus", "Cus dus"),
-    taxonRank = "species",
-    taxonomicStatus = c("accepted", "synonym"),
-    acceptedNameUsageID = c("T:1", NA)
-  ))
+  local_fake_taxadb(synonym_rows(synonym_accepted_id = NA))
 
   res <- suppressMessages(
     bdc_query_names_taxadb(c("Cus dus", "Aus bus"), db = "gbif")
@@ -280,13 +274,7 @@ test_that("bdc_query_names_taxadb() flags a synonym with several accepted names"
 })
 
 test_that("bdc_query_names_taxadb(replace_synonyms = FALSE) keeps synonyms", {
-  local_fake_taxadb(fake_dwc_taxa(
-    taxonID = c("T:1", "T:2"),
-    scientificName = c("Aus bus", "Cus dus"),
-    taxonRank = "species",
-    taxonomicStatus = c("accepted", "synonym"),
-    acceptedNameUsageID = "T:1"
-  ))
+  local_fake_taxadb(synonym_rows())
 
   res <- suppressMessages(
     bdc_query_names_taxadb(
