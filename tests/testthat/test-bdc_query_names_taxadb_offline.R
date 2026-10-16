@@ -383,6 +383,31 @@ test_that("bdc_query_names_taxadb() rank filtering ignores database record order
   expect_equal(res$kingdom, "Plantae")
 })
 
+test_that("bdc_query_names_taxadb() rank filtering also checks single-record names", {
+  # "Cedrela" gives the name suggestion step a Plantae candidate too far from
+  # "Casearia" to be suggested.
+  local_fake_taxadb(fake_dwc_taxa(
+    taxonID = c("T:1", "T:2", "T:3"),
+    scientificName = c("Casearia", "Aus bus", "Cedrela"),
+    taxonRank = c("genus", "species", "genus"),
+    taxonomicStatus = "accepted",
+    kingdom = c("Animalia", NA, "Plantae")
+  ))
+
+  res <- suppressMessages(
+    bdc_query_names_taxadb(
+      c("Casearia", "Aus bus"),
+      db = "gbif", rank = "kingdom", rank_name = "Plantae"
+    )
+  )
+
+  # The only record of "Casearia" is an animal, so it is not found; a record
+  # without a kingdom is kept, as for names matching several records.
+  expect_equal(res$notes, c("notFound", "accepted"))
+  expect_equal(res$scientificName, c(NA, "Aus bus"))
+  expect_equal(res$taxonID, c(NA, "T:2"))
+})
+
 test_that("bdc_query_names_taxadb() reports misspellings sharing a suggestion", {
   local_fake_taxadb()
 

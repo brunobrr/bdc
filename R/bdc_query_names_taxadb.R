@@ -295,8 +295,8 @@ bdc_query_names_taxadb <-
       ) %>%
       dplyr::mutate(original_search = input)
 
-    # Flag names with names with multiple accepted names
-    if (nrow(found_name) != length(sci_name)) {
+    # Flag names with multiple accepted names and apply the rank filter
+    if (nrow(found_name) != length(sci_name) || !is.null(rank)) {
       found_name <-
         bdc_clean_duplicates(
           data = found_name,
