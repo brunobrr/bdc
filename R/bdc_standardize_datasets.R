@@ -83,6 +83,7 @@ bdc_standardize_datasets <-
     database_id <- NULL
 
     format <- match.arg(format, c("csv", "qs2"))
+    io <- bdc_format_io(format)
 
     merged_filename <-
       here::here(
@@ -96,18 +97,7 @@ bdc_standardize_datasets <-
     if (file.exists(merged_filename)) {
       message(paste(merged_filename, "already exists!"))
 
-      if (format == "qs2") {
-        merged_database <- qs2::qs_read(merged_filename)
-      } else {
-        merged_database <-
-          readr::read_csv(
-            merged_filename,
-            col_types = readr::cols(.default = "c"),
-            show_col_types = FALSE
-          )
-      }
-
-      return(merged_database)
+      return(io$read(merged_filename))
     }
 
     if (length(unique(metadata$datasetName)) != nrow(metadata)) {
@@ -198,11 +188,7 @@ bdc_standardize_datasets <-
 
           message(paste("Standardizing", dataset_name, "file"))
 
-          if (format == "qs2") {
-            qs2::qs_save(standard_dataset, save_in_filename)
-          } else {
-            readr::write_csv(standard_dataset, save_in_filename)
-          }
+          io$write(standard_dataset, save_in_filename)
           TRUE
         },
         error = \(e) exclude_dataset(dataset_name, e)
@@ -214,22 +200,14 @@ bdc_standardize_datasets <-
     }
 
     # Concatenate the standardized datasets written by this call
-    if (format == "qs2") {
-      merged_database <-
-        written_files %>%
-        purrr::map_dfr(
-          function(x) {
-            qs2::qs_read(x) %>%
-              dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
-          }
-        )
-    } else {
-      merged_database <-
-        written_files %>%
-        purrr::map_dfr(
-          \(x) readr::read_csv(x, col_types = readr::cols(.default = "c"))
-        )
-    }
+    merged_database <-
+      written_files %>%
+      purrr::map_dfr(
+        function(x) {
+          io$read(x) %>%
+            dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
+        }
+      )
 
     merged_database <-
       merged_database %>%
@@ -237,11 +215,7 @@ bdc_standardize_datasets <-
 
     if (save_database) {
       bdc_create_dir()
-      if (format == "qs2") {
-        qs2::qs_save(merged_database, merged_filename)
-      } else {
-        readr::write_csv(merged_database, merged_filename)
-      }
+      io$write(merged_database, merged_filename)
       message(paste("Standardized database was saved in", merged_filename))
     }
 
@@ -300,4 +274,27 @@ bdc_check_required_metadata <- function(metadata) {
   }
 
   invisible(metadata)
+}
+
+#' Read and write functions for a `bdc_standardize_datasets()` output format
+#'
+#' @param format "csv" or "qs2".
+#'
+#' @return A list with `read(file)`, which returns every column as character
+#'   for CSV, and `write(x, file)`.
+#' @noRd
+bdc_format_io <- function(format) {
+  switch(format,
+    csv = list(
+      read = function(file) {
+        readr::read_csv(
+          file,
+          col_types = readr::cols(.default = "c"),
+          show_col_types = FALSE
+        )
+      },
+      write = readr::write_csv
+    ),
+    qs2 = list(read = qs2::qs_read, write = qs2::qs_save)
+  )
 }
