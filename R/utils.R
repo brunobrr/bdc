@@ -5,15 +5,6 @@ check_require_cran <- function(pkg) {
   invisible(TRUE)
 }
 
-check_require_github <- function(pkg) {
-  userpkg <- pkg
-  pkg <- basename(pkg)
-  if (!requireNamespace(pkg, quietly = TRUE)) {
-    stop(paste0("Package `", pkg, "` needed for this function to work! Please, install it with: remotes::install_github(\"", userpkg, "\")"), call. = FALSE)
-  }
-  invisible(TRUE)
-}
-
 #' Internal function. Check that rank and rank_name come together
 #'
 #' @param rank,rank_name See bdc_query_names_taxadb().
