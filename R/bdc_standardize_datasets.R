@@ -83,6 +83,7 @@ bdc_standardize_datasets <-
     database_id <- NULL
 
     format <- match.arg(format, c("csv", "qs2"))
+    io <- bdc_format_io(format)
 
     merged_filename <-
       here::here(
@@ -96,18 +97,7 @@ bdc_standardize_datasets <-
     if (file.exists(merged_filename)) {
       message(paste(merged_filename, "already exists!"))
 
-      if (format == "qs2") {
-        merged_database <- qs2::qs_read(merged_filename)
-      } else {
-        merged_database <-
-          readr::read_csv(
-            merged_filename,
-            col_types = readr::cols(.default = "c"),
-            show_col_types = FALSE
-          )
-      }
-
-      return(merged_database)
+      return(io$read(merged_filename))
     }
 
     if (length(unique(metadata$datasetName)) != nrow(metadata)) {
@@ -123,43 +113,17 @@ bdc_standardize_datasets <-
     on.exit(unlink(save_in_dir, recursive = TRUE), add = TRUE)
     written_files <- character(0)
 
-    # A dataset that fails to be read or written is left out of the merge.
-    exclude_dataset <- function(dataset_name, e) {
-      message(
-        "[ERROR]: Could not standardize the ", dataset_name,
-        " file, which is excluded from the merged database: ",
-        conditionMessage(e)
-      )
-      FALSE
-    }
-
-    for (row_index in seq_len(nrow(metadata))) {
-      dataset_metadata <-
-        metadata[row_index, , drop = FALSE] %>%
-        dplyr::select_if(\(x) !is.na(x))
-
-      dataset_name <- dataset_metadata$datasetName
-      input_filename <- dataset_metadata$fileName
-
-      # Named vector: Darwin Core name -> column name in the input file.
-      vector_for_recode <-
-        dataset_metadata %>%
-        dplyr::select(-"datasetName", -"fileName") %>%
-        unlist()
-
-      imported_raw_dataset <- tryCatch(
+    # Standardizes one dataset and returns the file it wrote, or NULL when its
+    # file lacks a column named in the metadata.
+    standardize_dataset <- function(dataset_name, input_filename,
+                                    vector_for_recode) {
+      imported_raw_dataset <-
         readr::read_csv(
           input_filename,
           col_types = readr::cols(.default = "c"),
           n_max = 1,
           show_col_types = FALSE
-        ),
-        error = \(e) exclude_dataset(dataset_name, e)
-      )
-
-      if (isFALSE(imported_raw_dataset)) {
-        next
-      }
+        )
 
       cols_not_in_input <-
         setdiff(vector_for_recode, names(imported_raw_dataset))
@@ -177,59 +141,72 @@ bdc_standardize_datasets <-
             "column names in the", dataset_name, "file"
           )
         )
-        next
+        return(NULL)
       }
 
       save_in_filename <-
         file.path(save_in_dir, paste0("standard_", dataset_name, ".", format))
 
-      standardized <- tryCatch(
-        {
-          standard_dataset <-
-            readr::read_csv(
-              input_filename,
-              trim_ws = FALSE,
-              show_col_types = FALSE
-            ) %>%
-            dplyr::select(dplyr::all_of(vector_for_recode)) %>%
-            dplyr::mutate(database_id = paste0(dataset_name, "_", seq_len(dplyr::n()))) %>%
-            dplyr::select(database_id, dplyr::everything()) %>%
-            dplyr::mutate_if(is.numeric, as.character)
+      standard_dataset <-
+        readr::read_csv(
+          input_filename,
+          trim_ws = FALSE,
+          show_col_types = FALSE
+        ) %>%
+        dplyr::select(dplyr::all_of(vector_for_recode)) %>%
+        dplyr::mutate(database_id = paste0(dataset_name, "_", seq_len(dplyr::n()))) %>%
+        dplyr::select(database_id, dplyr::everything()) %>%
+        dplyr::mutate_if(is.numeric, as.character)
 
-          message(paste("Standardizing", dataset_name, "file"))
+      message(paste("Standardizing", dataset_name, "file"))
 
-          if (format == "qs2") {
-            qs2::qs_save(standard_dataset, save_in_filename)
-          } else {
-            readr::write_csv(standard_dataset, save_in_filename)
-          }
-          TRUE
-        },
-        error = \(e) exclude_dataset(dataset_name, e)
+      io$write(standard_dataset, save_in_filename)
+      save_in_filename
+    }
+
+    # A dataset that fails to be read or written is left out of the merge.
+    exclude_dataset <- function(dataset_name, e) {
+      message(
+        "[ERROR]: Could not standardize the ", dataset_name,
+        " file, which is excluded from the merged database: ",
+        conditionMessage(e)
       )
+      NULL
+    }
 
-      if (standardized) {
-        written_files <- c(written_files, save_in_filename)
-      }
+    for (row_index in seq_len(nrow(metadata))) {
+      dataset_metadata <-
+        metadata[row_index, , drop = FALSE] %>%
+        dplyr::select_if(\(x) !is.na(x))
+
+      dataset_name <- dataset_metadata$datasetName
+
+      # Named vector: Darwin Core name -> column name in the input file.
+      vector_for_recode <-
+        dataset_metadata %>%
+        dplyr::select(-"datasetName", -"fileName") %>%
+        unlist()
+
+      written_files <- c(
+        written_files,
+        tryCatch(
+          standardize_dataset(
+            dataset_name, dataset_metadata$fileName, vector_for_recode
+          ),
+          error = \(e) exclude_dataset(dataset_name, e)
+        )
+      )
     }
 
     # Concatenate the standardized datasets written by this call
-    if (format == "qs2") {
-      merged_database <-
-        written_files %>%
-        purrr::map_dfr(
-          function(x) {
-            qs2::qs_read(x) %>%
-              dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
-          }
-        )
-    } else {
-      merged_database <-
-        written_files %>%
-        purrr::map_dfr(
-          \(x) readr::read_csv(x, col_types = readr::cols(.default = "c"))
-        )
-    }
+    merged_database <-
+      written_files %>%
+      purrr::map_dfr(
+        function(x) {
+          io$read(x) %>%
+            dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
+        }
+      )
 
     merged_database <-
       merged_database %>%
@@ -237,11 +214,7 @@ bdc_standardize_datasets <-
 
     if (save_database) {
       bdc_create_dir()
-      if (format == "qs2") {
-        qs2::qs_save(merged_database, merged_filename)
-      } else {
-        readr::write_csv(merged_database, merged_filename)
-      }
+      io$write(merged_database, merged_filename)
       message(paste("Standardized database was saved in", merged_filename))
     }
 
@@ -300,4 +273,27 @@ bdc_check_required_metadata <- function(metadata) {
   }
 
   invisible(metadata)
+}
+
+#' Read and write functions for a `bdc_standardize_datasets()` output format
+#'
+#' @param format "csv" or "qs2".
+#'
+#' @return A list with `read(file)`, which returns every column as character
+#'   for CSV, and `write(x, file)`.
+#' @noRd
+bdc_format_io <- function(format) {
+  switch(format,
+    csv = list(
+      read = function(file) {
+        readr::read_csv(
+          file,
+          col_types = readr::cols(.default = "c"),
+          show_col_types = FALSE
+        )
+      },
+      write = readr::write_csv
+    ),
+    qs2 = list(read = qs2::qs_read, write = qs2::qs_save)
+  )
 }

@@ -30,9 +30,7 @@ bdc_clean_duplicates <-
   function(data,
            rank = NULL,
            rank_name = NULL) {
-    if (is.null(rank_name) != is.null(rank)) {
-      stop("Please, provide both 'rank' and 'rank_name' arguments, or neither")
-    }
+    bdc_check_rank_args(rank, rank_name)
 
     # Accepted records first; among the other statuses, the first one in
     # alphabetical order is kept (as before).
