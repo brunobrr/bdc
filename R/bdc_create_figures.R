@@ -104,8 +104,7 @@ bdc_create_figures <-
     }
 
     bdc_create_dir()
-    transposed_file <-
-      here::here("Output", "Check", "01_coordinates_transposed.csv")
+    transposed_file <- bdc_transposed_check_file()
 
     # Formatting y axis of ggplot bar
     fancy_scientific <- function(l) {

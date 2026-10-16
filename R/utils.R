@@ -30,6 +30,17 @@ bdc_check_rank_args <- function(rank, rank_name) {
   invisible(TRUE)
 }
 
+#' Internal function. Path of the transposed-coordinates check file
+#'
+#' Written by bdc_coordinates_transposed() and read by bdc_create_report() and
+#' bdc_create_figures(), always at the project root (#295).
+#'
+#' @return A file path.
+#' @noRd
+bdc_transposed_check_file <- function() {
+  here::here("Output", "Check", "01_coordinates_transposed.csv")
+}
+
 has_table <- function(table = NULL, db = td_connect()) {
   if (is.null(db)) {
     return(FALSE)

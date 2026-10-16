@@ -172,7 +172,7 @@ bdc_coordinates_transposed <-
       if (save_outputs) {
         bdc_create_dir()
         corrected_coordinates %>%
-          readr::write_csv(here::here("Output/Check/01_coordinates_transposed.csv"))
+          readr::write_csv(bdc_transposed_check_file())
         message(
           paste(
             "\nCheck database containing coordinates corrected in:\nOutput/Check/01_coordinates_transposed.csv"
