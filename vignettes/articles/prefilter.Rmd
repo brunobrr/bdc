@@ -321,7 +321,7 @@ figures$.coordinates_country_inconsistent_map
 
 #### **Filtering the database**
 
-We can remove records flagged as erroneous or suspect to obtain a "clean" database. Records missing names or coordinates, outside a region of interest or from distrustful sources are rarely suitable for biodiversity analyses. We can use the column **.summary** to filter valid records passing in all tests (i.e., flagged as "TRUE"). Next, we use the *bdc_filter_out_falgs* function to remove all tests' columns (that is, those starting with ".").
+We can remove records flagged as erroneous or suspect to obtain a "clean" database. Records missing names or coordinates, outside a region of interest or from distrustful sources are rarely suitable for biodiversity analyses. We can use the column **.summary** to filter valid records passing in all tests (i.e., flagged as "TRUE"). Next, we use the *bdc_filter_out_flags* function to remove all tests' columns (that is, those starting with ".").
 
 ```{r eval=FALSE}
 output <-
@@ -329,7 +329,7 @@ output <-
   dplyr::filter(.summary == TRUE) %>%
   bdc_filter_out_flags(data = ., col_to_remove = "all")
 
-#> bdc_fiter_out_flags:
+#> bdc_filter_out_flags:
 #> The following columns were removed from the database:
 #> .scientificName_empty, .coordinates_empty, .coordinates_outOfRange, .basisOfRecords_notStandard, .coordinates_country_inconsistent, .summary
 ```
@@ -339,7 +339,7 @@ output <-
 You can use [qs2::qs_save()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
-# use qs2::qs_save() to save the database in a compressed format and then qs:qread() to load the database
+# use qs2::qs_save() to save the database in a compressed format and then qs2::qs_read() to load the database
 output %>%
   readr::write_csv(.,
             here::here("Output", "Intermediate", "01_prefilter_database.csv"))

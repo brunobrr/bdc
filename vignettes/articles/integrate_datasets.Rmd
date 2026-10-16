@@ -96,7 +96,7 @@ metadata$fileName <-
 
 #### **Standardization and integration of datasets**
 
-Now, let's merge the different datasets into a standardized database. Note that the standardized database integrating all dataset can be saved in the folder **"Output/Intermediate" as "00_merged_database"** if `save_database = TRUE` . The database is saved with a **"csv"** or **"qs"** extension, being "qs" a helpful format for quickly saving and reading large databases. "qs" files can be read using the function "qread" from the "qs" package.
+Now, let's merge the different datasets into a standardized database. Note that the standardized database integrating all dataset can be saved in the folder **"Output/Intermediate" as "00_merged_database"** if `save_database = TRUE` . The database is saved with a **"csv"** or **"qs2"** extension, being "qs2" a helpful format for quickly saving and reading large databases. "qs2" files can be read using the function "qs_read" from the "qs2" package.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 database <-
@@ -115,7 +115,7 @@ bdc_standardize_datasets(metadata = metadata,
 #>  0s 0sStandardizing SIBBR file
 #>  0s 0sStandardizing SPECIESLINK file
 #>
-#> C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Intermediate/00_merged_database.csv was created
+#> Standardized database was saved in C:/Users/Bruno R. Ribeiro/Desktop/bdc/Output/Intermediate/00_merged_database.csv
 ```
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}

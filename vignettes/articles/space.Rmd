@@ -262,7 +262,7 @@ It is possible to remove flagged records (potentially problematic ones) to get a
 You can use [qs2::qs_save()]{.underline} instead of write_csv to save a large database in a compressed format.
 
 ```{r eval=FALSE}
-# use qs2::qs_save() to save the database in a compressed format and then qs:qread() to load the database
+# use qs2::qs_save() to save the database in a compressed format and then qs2::qs_read() to load the database
 check_space %>%
  readr::write_csv(.,
             here::here("Output", "Intermediate", "03_space_database.csv"))
