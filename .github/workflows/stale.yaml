@@ -1,0 +1,43 @@
+# Marks issues and pull requests with no activity for 60 days as stale, and
+# closes them 14 days later unless someone comments or updates them.
+# https://github.com/actions/stale
+
+name: stale
+
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v11
+        with:
+          days-before-stale: 60
+          days-before-close: 14
+          stale-issue-label: stale
+          stale-pr-label: stale
+          stale-issue-message: >
+            This issue has had no activity for 60 days. It will be closed in
+            14 days unless someone comments or updates it.
+          stale-pr-message: >
+            This pull request has had no activity for 60 days. It will be
+            closed in 14 days unless someone comments or pushes to it.
+          close-issue-message: >
+            Closed after 74 days without activity. Comment if it is still
+            relevant and it can be reopened.
+          close-pr-message: >
+            Closed after 74 days without activity. Comment if it is still
+            relevant and it can be reopened.
+          # Triaged or awaiting triage: never closed for inactivity.
+          exempt-issue-labels: needs-triage,ready-for-agent,ready-for-human
+          exempt-pr-labels: needs-triage,ready-for-agent,ready-for-human
+          exempt-all-milestones: true
+          exempt-all-assignees: true
+          exempt-draft-pr: true
