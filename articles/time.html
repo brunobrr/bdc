@@ -181,7 +181,7 @@ unambiguously interpretable collecting dates.</p>
 <span>  <span class="fu"><a href="../reference/bdc_year_from_eventDate.html">bdc_year_from_eventDate</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span>, eventDate <span class="op">=</span> <span class="st">"verbatimEventDate"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; bdc_year_from_eventDate:</span></span>
-<span><span class="co">#&gt; Four-digit year were extracted from 51 records.</span></span></code></pre></div>
+<span><span class="co">#&gt; Four-digit years were extracted from 51 records.</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="records-with-out-of-range-collecting-year">
@@ -214,7 +214,7 @@ quality test (❌check carefully. potentially invalid or suspect
 record).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">check_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bdc_summary_col.html">bdc_summary_col</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">check_time</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Column '.summary' already exist. It will be updated</span></span>
+<span><span class="co">#&gt; Column '.summary' already exists. It will be updated</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; bdc_summary_col:</span></span>
 <span><span class="co">#&gt; Flagged 70 records.</span></span>
@@ -294,7 +294,7 @@ considered “fitness-for-use” after the data-cleaning process.</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.summary</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/bdc_filter_out_flags.html">bdc_filter_out_flags</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>, col_to_remove <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; bdc_fiter_out_flags:</span></span>
+<span><span class="co">#&gt; bdc_filter_out_flags:</span></span>
 <span><span class="co">#&gt; The following columns were removed from the database:</span></span>
 <span><span class="co">#&gt; .uncer_terms, .rou, .val, .equ, .zer, .cap, .cen, .urb, .otl, .gbf, .inst, .dpl, .eventDate_empty, .year_outOfRange, .summary</span></span></code></pre></div>
 </div>
