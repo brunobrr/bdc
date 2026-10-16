@@ -1,5 +1,24 @@
 # bdc (development version)
 
+## Breaking changes
+
+These changes can break scripts written for bdc 1.1.6. Details are in the bullets below.
+
+- bdc now requires R >= 4.1.0 (#291) and taxadb >= 0.3.0 (#278).
+- `bdc_create_figures()` names maps `<column>_map` and saves them as `<step>_<column>_MAP.png`; code that reads a map as `figures$.<column>` needs the `_map` suffix (#312).
+- `bdc_coordinates_transposed()` returns the caller's column names for id, scientific name, coordinates and country code instead of Darwin Core names (#293).
+- `bdc_country_from_coordinates()` no longer adds `decimalLatitude`/`decimalLongitude` helper columns (#293).
+- `bdc_standardize_datasets()` returns only the datasets in the `metadata` of that call; with `format = "csv"` and `overwrite = FALSE` it returns the existing merged table instead of `NULL`; `save_database = TRUE` saves whenever a new merged file is built (#291).
+- Calls that used to return a result now stop with an error: `bdc_query_names_taxadb()` when it cannot return one row per name (#289), `bdc_create_report()` for a partial `workflow_step` such as `"pre"` (#295), and `bdc_quickmap()` for a `col_to_map` that is neither a column nor a colour (#331).
+- Results change for the same input, because of bug fixes:
+  - `bdc_query_names_taxadb()`: synonyms with several accepted names, the `taxonID` of replaced synonyms, and names outside the requested rank (#319, #321, #322, #328).
+  - `bdc_clean_names()`: `names_clean` and `quality` for names with authorship (#311).
+  - `bdc_year_outOfRange()`: records from the `year_threshold` year and records without a date are now compliant (#294).
+  - `bdc_country_standardized()`: lower- and mixed-case ISO codes (#313).
+  - `bdc_coordinates_country_inconsistent()`: countries given by common name or ISO code (#280).
+
+## Bug fixes and other changes
+
 - `bdc_quickmap()` now errors at call time when `col_to_map` is neither a column of `data` nor a colour, instead of returning a map that fails only when drawn. The help page now gives the actual default, `"red"` (#331).
 - `bdc_query_names_taxadb()`: a synonym linked to more than one accepted name is no longer replaced by the first one; it keeps its name, gets `notes = "multipleAccepted"`, and columns its records disagree on (such as `taxonID`) are `NA` (#321). A replaced synonym now gets the accepted record's `taxonID` instead of keeping its own (#322). `rank` and `rank_name` are now checked against every record a name matches, so results no longer depend on record order; a name with no record in the requested rank, whether it matches one record or several, is now not found instead of being kept (#319). With `export_accepted = TRUE`, `02_names_multiple_accepted_names.csv` now lists every candidate record instead of one row of `NA` (#320). The message about misspelled names that share the same suggestion now appears (#318). A misspelled name whose suggestion matches several accepted records is now flagged `multipleAccepted` instead of `notFound`, and `rank`/`rank_name` now pick among those records as for correctly spelled names (#328). A name with no candidate sharing its first letter (or its rank) is now returned as `notFound` instead of stopping with "missing value where TRUE/FALSE needed" (#330).
 - `bdc_clean_names()` behaviour change: authorship keeps its casing when names are parsed. Only the genus is re-cased, and later words written entirely in capitals with two or more letters (e.g. "SPLENDENS") are lowercased. Bare author names such as "Link" or "Trécul" are no longer kept as epithets in `names_clean`, and `quality` now matches gnparser's rating of the name instead of 4 for every authored name (#311).
