@@ -369,8 +369,10 @@ bdc_create_report <-
               ),
               Description = dplyr::if_else(
                 Description == "notFound",
-                "invalid: name not found in the taxonomic database or a non
-                -interpretable name",
+                paste(
+                  "invalid: name not found in the taxonomic database or a",
+                  "non-interpretable name"
+                ),
                 Description
               ),
               Description = dplyr::if_else(

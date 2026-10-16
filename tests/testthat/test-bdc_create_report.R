@@ -236,6 +236,13 @@ test_that("bdc_create_report() lists the documented taxonomy entries", {
     body$Description[body$notes == "taxo_uncer"],
     "check: doubtful taxonomic identification"
   )
+  expect_equal(
+    body$Description[body$notes == "notFound"],
+    paste(
+      "invalid: name not found in the taxonomic database or a",
+      "non-interpretable name"
+    )
+  )
   expect_match(report_footnote(report), "8 records")
 })
 

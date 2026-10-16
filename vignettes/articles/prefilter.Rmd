@@ -129,8 +129,7 @@ check_pf <- bdc_basisOfRecords_notStandard(
   names_to_keep = "all")
 
 #> bdc_basisOfRecords_notStandard:
-#> Flagged 0 of the following specific nature:
-#>  character(0)
+#> Flagged 0 records.
 #> One column was added to the database.
 ```
 
@@ -188,7 +187,6 @@ check_pf <-
   )
 
 #> Correcting latitude and longitude transposed
-#>
 #> 15 occurrences will be tested
 #> Processing occurrences from: BR (15)
 #> No latitude and longitude were transposed
@@ -213,7 +211,7 @@ check_pf <-
 #> although coordinates are longitude/latitude, st_intersection assumes that they are planar
 #>
 #> bdc_coordinates_country_inconsistent:
-#> Flagged 15 records.
+#> Flagged 16 records.
 #> One column was added to the database.
 ```
 
@@ -231,7 +229,7 @@ xyFromLocality <- bdc_coordinates_from_locality(
 )
 
 #> bdc_coordinates_from_locality
-#> Found 38 records missing or with invalid coordinates but with potentially useful information on locality
+#> Found 38 records missing or with invalid coordinates but with potentially useful information on locality.
 ```
 
 #### **Report**
@@ -242,7 +240,7 @@ Here we create a column named ".summary" summing up the results of all **VALIDAT
 check_pf <- bdc_summary_col(data = check_pf)
 
 #> bdc_summary_col:
-#> Flagged 65 records.
+#> Flagged 66 records.
 #> One column was added to the database.
 ```
 
