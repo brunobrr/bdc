@@ -35,6 +35,15 @@ with \code{readr::read_csv()}.
 \description{
 Create a report summarizing the results of data quality tests
 }
+\details{
+For "prefilter", "space" and "time", the report counts only the
+tests of that step (e.g., \code{.rou} and \code{.urb} for "space") and ignores test
+columns left by other steps, such as \code{.uncer_terms} from the taxonomy step.
+Its last row, "Summary of all tests", counts the records flagged by at least
+one test of that step. It can therefore be smaller than the number of
+records flagged in the \code{.summary} column created by \code{\link[=bdc_summary_col]{bdc_summary_col()}},
+which considers every column starting with ".".
+}
 \examples{
 \dontrun{
 database_id <- c("test_1", "test_2", "test_3", "test_4", "test_5")
