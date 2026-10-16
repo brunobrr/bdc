@@ -32,7 +32,8 @@ A merged data.frame with column names following Darwin Core
 terminology and all columns stored as character. It contains only the
 datasets described in \code{metadata}; a dataset whose file lacks a column named
 in the metadata, or that fails to be read, is excluded and named in a
-message.
+message. When every dataset is excluded, the function errors and saves
+nothing.
 }
 \description{
 This function's main goal is to merge and standardize different

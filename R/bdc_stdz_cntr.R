@@ -102,7 +102,11 @@ bdc_reword_countries <- function(data) {
   after <- name_long <- NULL
 
   reword <-
-    readr::read_delim(system.file("extdata/countries_names/reword-countries.txt", package = "bdc"), delim = "\t")
+    readr::read_delim(
+      system.file("extdata/countries_names/reword-countries.txt", package = "bdc"),
+      delim = "\t",
+      show_col_types = FALSE
+    )
 
   vec_reword <-
     reword %>%

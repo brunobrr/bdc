@@ -40,7 +40,7 @@ bdc_year_from_eventDate <-
 
     message(
       paste(
-        "\nbdc_year_from_eventDate:\nFour-digit year were extracted from",
+        "\nbdc_year_from_eventDate:\nFour-digit years were extracted from",
         sum(!is.na(year)),
         "records.\n"
       )

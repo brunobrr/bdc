@@ -22,7 +22,8 @@
 #' terminology and all columns stored as character. It contains only the
 #' datasets described in `metadata`; a dataset whose file lacks a column named
 #' in the metadata, or that fails to be read, is excluded and named in a
-#' message.
+#' message. When every dataset is excluded, the function errors and saves
+#' nothing.
 #'
 #' @importFrom readr read_csv
 #' @importFrom dplyr pull filter select select_if mutate n everything mutate_if
@@ -195,6 +196,15 @@ bdc_standardize_datasets <-
           ),
           error = \(e) exclude_dataset(dataset_name, e)
         )
+      )
+    }
+
+    if (length(written_files) == 0) {
+      stop(
+        "[ERROR]: None of the ", nrow(metadata), " datasets in the metadata ",
+        "could be standardized; see the messages above. Check the `fileName` ",
+        "paths and the column names in the metadata.",
+        call. = FALSE
       )
     }
 
