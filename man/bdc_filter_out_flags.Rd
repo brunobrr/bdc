@@ -23,7 +23,7 @@ tests (i.e., columns starting with '.') or other columns specified.
 \examples{
 x <- data.frame(
   database_id = c("test_1", "test_2", "test_3", "test_4", "test_5"),
-   kindom = c("Plantae", "Plantae", "Animalia", "Animalia", "Plantae"),
+  kindom = c("Plantae", "Plantae", "Animalia", "Animalia", "Plantae"),
   .bdc_scientificName_empty = c(TRUE, TRUE, TRUE, FALSE, FALSE),
   .bdc_coordinates_empty = c(TRUE, FALSE, FALSE, FALSE, FALSE),
   .bdc_coordinates_outOfRange = c(TRUE, FALSE, FALSE, FALSE, FALSE),

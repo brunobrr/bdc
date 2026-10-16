@@ -68,10 +68,7 @@ contract_table <- list(
       )
     },
     added = ".scientificName_empty",
-    expected = list(.scientificName_empty = c(TRUE, FALSE, FALSE)),
-    gaps = list(
-      columns_non_syntactic = "renames non-syntactic input columns (#325)"
-    )
+    expected = list(.scientificName_empty = c(TRUE, FALSE, FALSE))
   ),
   contract_row(
     fun = "bdc_eventDate_empty",
@@ -83,10 +80,7 @@ contract_table <- list(
       )
     },
     added = ".eventDate_empty",
-    expected = list(.eventDate_empty = c(TRUE, FALSE, FALSE)),
-    gaps = list(
-      columns_non_syntactic = "renames non-syntactic input columns (#325)"
-    )
+    expected = list(.eventDate_empty = c(TRUE, FALSE, FALSE))
   ),
   contract_row(
     fun = "bdc_year_from_eventDate",
@@ -133,8 +127,7 @@ contract_table <- list(
     expected = list(
       .coordinates_empty = c(FALSE, TRUE),
       .coordinates_outOfRange = c(TRUE, FALSE)
-    ),
-    gaps = list(custom_names = "ignores a custom `locality` column (#326)")
+    )
   ),
   contract_row(
     fun = "bdc_country_standardized",

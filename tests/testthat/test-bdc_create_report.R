@@ -193,7 +193,6 @@ test_that("bdc_create_report() lists each space test", {
 })
 
 test_that("bdc_create_report() adds the summary row to the space report", {
-  skip("space report omits the summary row (#316)")
   local_temp_project()
   report <- bdc_create_report(space_input, workflow_step = "space")
   body <- report_body(report)
@@ -270,7 +269,6 @@ test_that("bdc_create_report() lists the documented taxonomy entries", {
 })
 
 test_that("bdc_create_report() reports taxonomy without name-cleaning flags", {
-  skip("taxonomy report needs .uncer_terms (#317)")
   local_temp_project()
   harmonized_only <- taxonomy_input[names(taxonomy_input) != ".uncer_terms"]
   report <- bdc_create_report(harmonized_only, workflow_step = "taxonomy")
@@ -345,7 +343,6 @@ test_that("bdc_create_report() refuses to report when nothing was flagged", {
 })
 
 test_that("bdc_create_report() requires test columns starting with '.'", {
-  skip("'no test columns' error is unreachable (#315)")
   local_temp_project()
   no_tests <- data.frame(database_id = "gbif_1", scientificName = "Puma")
 

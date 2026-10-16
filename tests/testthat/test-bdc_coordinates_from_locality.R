@@ -10,6 +10,21 @@ test_that("test based on function example", {
   expect_equal(dim(r), c(3, 5))
 })
 
+test_that("locality values are returned unchanged", {
+  x <- data.frame(
+    lat = c(NA, NA),
+    lon = c(NA, NA),
+    place = c("  Parque Nacional   Iguazu ", "")
+  )
+
+  r <- suppressMessages(
+    bdc_coordinates_from_locality(x, lat = "lat", lon = "lon", locality = "place")
+  )
+
+  expect_equal(r$place, "  Parque Nacional   Iguazu ")
+  expect_false("locality" %in% names(r))
+})
+
 test_that("save_outputs = TRUE writes the check file in the project's Output/Check", {
   local_package_check_untouched("01_coordinates_from_locality.csv")
   root <- local_temp_project()

@@ -8,7 +8,7 @@
 #' scientific name. Default = "scientificName".
 #'
 #' @importFrom dplyr as_tibble
-#' 
+#'
 #' @details This test identifies records missing scientific names (i.e., empty
 #' or not applicable [NA] names)
 #'
@@ -35,7 +35,8 @@ bdc_scientificName_empty <-
 
     .scientificName_empty <- ifelse(is.na(sci_names) == FALSE, TRUE, FALSE)
 
-    df <- data.frame(data, .scientificName_empty)
+    df <- data
+    df$.scientificName_empty <- .scientificName_empty
 
     message(
       paste(
